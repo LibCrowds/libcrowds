@@ -15,6 +15,8 @@ import Api from '@/pages/help/Api'
 
 import Presenter from '@/pages/projects/Presenter'
 
+import Profile from '@/pages/users/Profile'
+
 const routes = [
   { path: '/', name: 'landing', component: Landing },
   { path: '/about', name: 'about', component: About },
@@ -42,6 +44,26 @@ const routes = [
         component: Presenter,
         props: (route) => ({
           shortname: route.params.shortname
+        })
+      }
+    ]
+  },
+
+  {
+    path: '/users/:username',
+    component: {
+      render (c) {
+        return c('router-view')
+      }
+    },
+    // TODO: Add navigation guard for non-existant users
+    children: [
+      {
+        path: '/',
+        name: 'profile',
+        component: Profile,
+        props: (route) => ({
+          username: route.params.username
         })
       }
     ]

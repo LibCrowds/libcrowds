@@ -164,18 +164,24 @@
           <div class="col-lg-12 pt-1">
             <ul class="list-unstyled">
               <li
-                :key="u.id"
+                :key="user.id"
                 class="text-center d-inline-block mx-1"
-                v-for="u in topUsers">
-                <a href="#" class="my-1">
+                v-for="user in topUsers">
+                <router-link :to="{
+                    name: 'profile',
+                    params: {
+                      username: user.name
+                    }
+                  }"
+                  class="my-1">
                   <div class="my-1">
                     <user-avatar
-                      :user="u"
+                      :user="user"
                       tooltipTriggers="hover">
                     </user-avatar>
                   </div>
-                </a>
-                <p class="badge badge-info">{{ u.score }}</p>
+                </router-link>
+                <p class="badge badge-info">{{ user.score }}</p>
               </li>
             </ul>
           </div>
@@ -310,7 +316,7 @@ export default {
 
   computed: {
     topUsersTaskRuns () {
-      const scores = this.topUsers.map((u) => u.score)
+      const scores = this.topUsers.map((user) => user.score)
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)

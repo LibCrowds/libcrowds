@@ -5,6 +5,7 @@
       <v-gravatar
         v-if="chosenType === 'gravatar'"
         :email="user.name"
+        :size="size"
         default-img="identicon"
         :alt="altTag"
         class="img-thumbnail rounded-circle">
@@ -40,6 +41,10 @@ export default {
     tooltipTriggers: {
       type: [Boolean, String, Array],
       default: () => []
+    },
+    size: {
+      type: Number,
+      default: 80
     }
   },
 
