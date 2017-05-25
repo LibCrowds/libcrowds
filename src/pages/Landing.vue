@@ -1,6 +1,6 @@
 <template>
   <div id="landing">
-    <fading-jumbotron :bgImg="crowdImg" :scrollTo="scrollTo" :header="header"></fading-jumbotron>
+    <fading-jumbotron :bgImg="crowdImg" :scrollAnchor="scrollAnchor" :header="header"></fading-jumbotron>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   data: function () {
     return {
       crowdImg: crowdImg,
-      scrollTo: '#intro',
+      scrollAnchor: '#intro',
       header: 'Crowdsourcing projects from the British Library'
     }
   },

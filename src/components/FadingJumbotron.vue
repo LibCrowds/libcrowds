@@ -4,7 +4,7 @@
       <div class="container" :style="containerStyle">
         <div></div>
         <h1>{{ header }}</h1>
-        <a :href="scrollTo">
+        <a :href="scrollAnchor">
           <p>Scroll Down</p>
           <transition name="pulse">
             <span class="fa fa-chevron-down fa-2x"></span>
@@ -29,12 +29,12 @@ export default {
         opacity: 1
       },
       header: this.header,
-      scrollTo: this.scrollTo
+      scrollAnchor: this.scrollAnchor
     }
   },
   props: [
     'bgImg',
-    'scrollTo',
+    'scrollAnchor',
     'header'
   ],
   methods: {
