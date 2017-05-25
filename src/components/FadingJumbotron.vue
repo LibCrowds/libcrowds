@@ -22,7 +22,7 @@ export default {
   data: function () {
     return {
       jtStyle: {
-        backgroundImage: `url('${this.bgImg}')`,
+        backgroundImage: `url("${this.bgImg}")`,
         filter: 'brightness(100%)'
       },
       containerStyle: {
