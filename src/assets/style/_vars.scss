@@ -1,0 +1,97 @@
+/* Fonts */
+$headings-font-family:             'Assistant', sans-serif;
+$base-font-family:                 'Roboto', sans-serif;
+$font-family-serif:                Times, serif;
+$headings-font-weight:             400;
+$font-size-sm:                     0.85rem;
+$badge-font-size:                  $font-size-sm;
+
+/* Colors */
+$white:                            #FFFFFF;
+$gray:                             #404446;
+$gray-light:                       #888888;
+$black:                            #000000;
+$sky:                              #7CC4F3;
+$twitter:                          #00ACEE;
+$facebook:                         #3B5998;
+$googleplus:                       #D34836;
+$linkedin:                         #0E76A8;
+$brand-primary:                    #D00000;
+$brand-success:                    #398439;
+$brand-info:                       #4190C2;
+$brand-warning:                    #E38D13;
+$brand-danger:                     #D00000;
+$brand-inverse:                    #111111;
+$body-color:                       #292A2B;
+
+/* Buttons */
+$btn-secondary-color:              $brand-inverse;
+$btn-secondary-bg:                 $white;
+$btn-secondary-border:             $brand-inverse;
+$btn-border-radius:                0px;
+$btn-border-radius-lg:             0px;
+$btn-border-radius-sm:             0px;
+
+/* Links */
+$link-color:                       $brand-danger;
+$link-hover-color:                 darken($link-color, 5%);
+$link-hover-decoration:            none;
+
+/* Navbar */
+$navbar-light-color:               rgba($black, .7);
+$navbar-inverse-color:             $white;
+$navbar-inverse-toggler-border:    none;
+
+/* Input */
+$input-padding-x:                  1.25rem;
+$input-padding-y:                  .75rem;
+$input-border-focus:               $brand-info;
+$custom-select-focus-border-color: lighten($brand-info, 25%);
+
+/* Tables */
+$table-cell-padding:               .75rem 1.25rem;
+$table-bg-accent:                  darken($white, 3%);
+$table-bg-hover:                   darken($white, 5%);
+$table-border-color:               rgba($black, .075);
+
+/* Pagination */
+$pagination-color:                 $brand-info;
+$pagination-hover-color:           darken($brand-info, 10%);
+$pagination-active-bg:             $brand-info;
+$pagination-active-border:         $brand-info;
+
+/* Cards */
+$card-border-radius:               0px;
+$card-spacer-y:                    3rem;
+$card-columns-count:               2;
+
+/* Spacing */
+$spacer:                           1.5rem;
+
+/* Box Shadows */
+$box-shadow-spread:                -5px;
+$box-shadow-blur:                  7px;
+$box-shadows: (
+    t: '0 4px',
+    l: '4px 0',
+    r: '-4 0',
+    b: '0 -4px'
+);
+
+/* Progress Circle */
+$progress-circle-font-size:        2.5rem;
+
+/* Hamburger */
+$hamburger-hover-opacity:          100%;
+$hamburger-types:                  (collapse, arrow);
+
+/* Font-Awesome */
+$fa-font-path:                     '~font-awesome/fonts';
+
+/* Light Gallery */
+$lg-path-fonts:                    '~lightgallery/src/fonts';
+$lg-path-images:                   '~lightgallery/src/img';
+
+/* Misc */
+$nav-pills-border-radius:          0px;
+$component-active-bg:              $brand-info;
