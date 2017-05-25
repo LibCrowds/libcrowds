@@ -1,5 +1,7 @@
 <template>
-  <fading-jumbotron :bgImg="crowdImg" :scrollTo="scrollTo"></fading-jumbotron>
+  <div id="landing">
+    <fading-jumbotron :bgImg="crowdImg" :scrollTo="scrollTo" :header="header"></fading-jumbotron>
+  </div>
 </template>
 
 <script>
@@ -11,7 +13,8 @@ export default {
   data: function () {
     return {
       crowdImg: crowdImg,
-      scrollTo: '#intro'
+      scrollTo: '#intro',
+      header: 'Crowdsourcing projects from the British Library'
     }
   },
   components: { FadingJumbotron }

@@ -3,11 +3,7 @@
     <div class="jumbotron" :style="jtStyle" ref="jt">
       <div class="container" :style="containerStyle">
         <div></div>
-        <h1>
-          Crowdsourcing projects
-          <br>
-          from the British Library
-        </h1>
+        <h1>{{ header }}</h1>
         <a :href="scrollTo">
           <p>Scroll Down</p>
           <transition name="pulse">
@@ -32,12 +28,14 @@ export default {
       containerStyle: {
         opacity: 1
       },
+      header: this.header,
       scrollTo: this.scrollTo
     }
   },
   props: [
     'bgImg',
-    'scrollTo'
+    'scrollTo',
+    'header'
   ],
   methods: {
     handleScroll: function () {
@@ -78,14 +76,14 @@ h1 {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
-  
+
   .container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     flex: 1 1 auto;
     text-align: center;
-    
+
     p {
       color: $white;
       text-transform: uppercase;
