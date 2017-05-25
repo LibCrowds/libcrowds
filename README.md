@@ -1,5 +1,7 @@
 # libcrowds-spa-theme
 
+[![Build Status](https://travis-ci.org/libcrowds/libcrowds-spa-theme.svg?branch=master)](https://travis-ci.org/libcrowds/libcrowds-spa-theme)
+
 > The LibCrowds front-end
 
 ## Build Setup
