@@ -13,7 +13,7 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "deploy": "npm run build && npm run test && gh-pages -d dist"
+    "deploy": "npm run test && npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "animate.css": "^3.5.2",
