@@ -6,7 +6,7 @@
 
 > The LibCrowds front-end
 
-## Build Setup
+## Building
 
 ``` bash
 # install dependencies
@@ -20,26 +20,29 @@ npm run build
 
 # build for production and view the bundle analyzer report
 npm run build --report
-
-# deploy to gh-pages
-npm run gh-pages
 ```
 
 ## Testing
 
-```
+``` bash
 # run unit tests
-npm test
+npm unit
 ```
 
 End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
 
 [![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
 
-To run these tests locally:
-
 ```
+# run e2e tests
 export BROWSERSTACK_USERNAME=<browserstack-username>
 export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 npm run e2e
+```
+
+## Deploying
+
+``` bash
+# deploy to gh-pages
+npm run gh-pages
 ```
