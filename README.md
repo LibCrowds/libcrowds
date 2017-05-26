@@ -29,15 +29,17 @@ npm run gh-pages
 
 ```
 # run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
 npm test
 ```
 
 End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
 
 [![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
+
+To run these tests locally:
+
+```
+export BROWSERSTACK_USERNAME=<browserstack-username>
+export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
+npm run e2e
+```

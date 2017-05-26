@@ -1,46 +1,55 @@
-require('babel-register')
-var config = require('../../config')
+// https://github.com/browserstack/nightwatch-browserstack
 
-// http://nightwatchjs.org/gettingstarted#settings-file
-module.exports = {
+nightwatch_config = {
   src_folders: ['test/e2e/specs'],
-  output_folder: 'test/e2e/reports',
-  custom_assertions_path: ['test/e2e/custom-assertions'],
 
   selenium: {
-    start_process: true,
-    server_path: require('selenium-server').path,
-    host: '127.0.0.1',
-    port: 4444,
-    cli_args: {
-      'webdriver.chrome.driver': require('chromedriver').path
-    }
+    start_process: false,
+    host: "hub-cloud.browserstack.com",
+    port: 80
+  },
+
+  common_capabilities: {
+    'build': 'nightwatch-browserstack',
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
+    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
+    'browserstack.debug': true
   },
 
   test_settings: {
-    default: {
-      selenium_port: 4444,
-      selenium_host: 'localhost',
-      silent: true,
-      globals: {
-        devServerURL: 'http://localhost:' + (process.env.PORT || config.dev.port)
-      }
-    },
-
+    default: {},
     chrome: {
       desiredCapabilities: {
-        browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true
+        browser: "chrome"
       }
     },
-
     firefox: {
       desiredCapabilities: {
-        browserName: 'firefox',
-        javascriptEnabled: true,
-        acceptSslCerts: true
+        browser: "firefox"
+      }
+    },
+    safari: {
+      desiredCapabilities: {
+        browser: "safari"
+      }
+    },
+    ie: {
+      desiredCapabilities: {
+        browser: "internet explorer"
       }
     }
   }
+};
+
+// Code to support common capabilites
+for(var i in nightwatch_config.test_settings){
+  var config = nightwatch_config.test_settings[i];
+  config['selenium_host'] = nightwatch_config.selenium.host;
+  config['selenium_port'] = nightwatch_config.selenium.port;
+  config['desiredCapabilities'] = config['desiredCapabilities'] || {};
+  for(var j in nightwatch_config.common_capabilities){
+    config['desiredCapabilities'][j] = config['desiredCapabilities'][j] || nightwatch_config.common_capabilities[j];
+  }
 }
+
+module.exports = nightwatch_config;
