@@ -7,7 +7,7 @@
         <a :href="scrollAnchor">
           <p>Scroll Down</p>
           <transition name="pulse">
-            <span class="fa fa-chevron-down fa-2x"></span>
+            <icon name="chevron-down" scale="2"></icon>
           </transition>
         </a>
       </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/chevron-down'
 import getScrollTop from '@/utils/get-scroll-top.js'
 
 export default {
