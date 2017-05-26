@@ -3,13 +3,17 @@
     <div class="jumbotron" :style="jtStyle" ref="jt">
       <div class="container" :style="containerStyle">
         <div></div>
-        <h1>{{ header }}</h1>
-        <a :href="scrollAnchor">
-          <p>Scroll Down</p>
-          <transition name="pulse">
-            <icon name="chevron-down" scale="2"></icon>
-          </transition>
-        </a>
+        <transition appear enter-active-class="animated zoomIn">
+          <h1>{{ header }}</h1>
+        </transition>
+        <transition appear enter-active-class="animated fadeInUp">
+          <a :href="scrollAnchor">
+            <p>Scroll Down</p>
+            <transition appear enter-active-class="pulse">
+              <icon name="chevron-down" scale="2"></icon>
+            </transition>
+          </a>
+        </transition>
       </div>
     </div>
   </div>
@@ -49,6 +53,9 @@ export default {
 
       this.jtStyle.filter = `brightness(${brightness}%)`
       this.containerStyle.opacity = opacity
+    },
+    makePulse: function (el) {
+      el.classList += 'pulse'
     }
   },
   created () {
@@ -63,6 +70,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
+@import '~animate.css';
 
 
 h1 {
@@ -70,7 +78,7 @@ h1 {
 }
 
 .jumbotron {
-  padding: 0;
+  padding: 2em;
   display: flex;
   height: 100vh;
   background-repeat: no-repeat;
@@ -81,28 +89,28 @@ h1 {
   .container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     flex: 1 1 auto;
     text-align: center;
 
     p {
       color: $white;
       text-transform: uppercase;
+      margin-bottom: 0.5rem;
     }
   }
 }
 
 .pulse {
-  color: blue;
-	animation: pulse 5s infinite;
+  animation: pulse 5s infinite;
 }
 
 @keyframes pulse {
     0%, 50%, 100% {
-	    transform: translateY(0);
+	    transform: translateY(10px);
     }
     25%, 75% {
-      transform: translateY(10px);
+      transform: translateY(0);
     }
 }
 </style>
