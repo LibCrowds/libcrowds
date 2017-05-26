@@ -17,7 +17,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+@import 'src/assets/style/_vars.scss';
+@import '~bootstrap/scss/bootstrap';
+
 body {
   display: flex;
   flex-direction: column;
