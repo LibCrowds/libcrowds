@@ -13,4 +13,4 @@ install:
 
 script:
   - npm run lint
-  - npm unit
+  - npm run unit
