@@ -8,6 +8,12 @@ node_js:
   - "5"
   - "4"
 
+addons:
+  browserstack:
+    username: "alexmendes1"
+    access_key:
+      secure: "Ox1wZ7zy0BN1u8KAXWw6wm0wUFSrXTXZ61cOJkjqbWTgkdM1PoHL+de8IB4GUvCifDRrMeiODXqlC6EqX4+3cW57RBzfUz3OO1BfW113mqJFjJ2d1U7xfeE8xjYtn9mLEOS0Hu8+sK8N6myv1/H+M0xf40nVxBDcf5VmNGfB1Zivs8YFGeMjbwxpyOM8998ZZkuy769CnoZy19J04TyYX7F24YPX8AilQVLFnawx4ikEpwmfyTQxtqFgJuYianUAM5bs7m2WByc/XbUIbeiFbqmMW8bVbXuyzwD5dJMzrnza4lGY/rodE/kgM8MShrVadfVt6DhUbZLQ1JEjkbxioEkGoaJTlH9Sk2I4Fi9Hgzxf/bXFYXCDtAtyOnUvfI5pcQD5KgJiXXcS0Y7qNoWMVeCHbHX0ouI0dWdvpG8XLxg1mQ+yuQws8R2uqDyNOSg/SOmTj4P/4KO7nOk/QMaUEet5Puis/FoszYC6mkfIJjZcVYoGhN3Y8UsB03pDAJFR+llh6Om1s2KP78/E2ChCd89V8eqgTcGSKRH0cw3/0qlYJUCMaeROUErKJreIJgg2+nc9upskTpBYRFHQqwmEBXwUTHCAUG02ezstbwiNSguzioZ6rAU/j+gLj0ieP0geqIWRhgnvYv4Ro9t21VwOrck0ls/5aadILRcrOPeVtgA="
+
 install:
   - npm install
 
