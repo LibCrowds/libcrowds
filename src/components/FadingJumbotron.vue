@@ -9,9 +9,9 @@
         <transition appear enter-active-class="animated fadeInUp">
           <a :href="scrollAnchor">
             <p>Scroll Down</p>
-            <transition appear enter-active-class="pulse">
+            <div class="pulse">
               <icon name="chevron-down" scale="2"></icon>
-            </transition>
+            </div>
           </a>
         </transition>
       </div>
@@ -53,9 +53,6 @@ export default {
 
       this.jtStyle.filter = `brightness(${brightness}%)`
       this.containerStyle.opacity = opacity
-    },
-    makePulse: function (el) {
-      el.classList += 'pulse'
     }
   },
   created () {
@@ -102,6 +99,7 @@ h1 {
 }
 
 .pulse {
+  -webkit-animation: mymove 5s infinite;
   animation: pulse 5s infinite;
 }
 
