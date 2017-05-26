@@ -3,45 +3,36 @@
     <div class="jumbotron" :style="jtStyle" ref="jt">
       <div class="container" :style="containerStyle">
         <div></div>
-        <transition appear enter-active-class="animated zoomIn">
-          <h1>{{ header }}</h1>
-        </transition>
-        <transition appear enter-active-class="animated fadeInUp">
-          <a :href="scrollAnchor">
-            <p>Scroll Down</p>
-            <div class="pulse">
-              <icon name="chevron-down" scale="2"></icon>
-            </div>
-          </a>
-        </transition>
+        <h1 v-cloak>
+          Crowdsourcing projects from<br>the British Library
+        </h1>
+        <a id="scrollDown" href="#" v-cloak>
+          <p>Scroll Down</p>
+          <div class="pulse">
+            <icon name="angle-down" scale="2"></icon>
+          </div>
+      </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import 'vue-awesome/icons/chevron-down'
+import ScrollReveal from 'scrollreveal'
+import 'vue-awesome/icons/angle-down'
 import getScrollTop from '@/utils/get-scroll-top.js'
 
 export default {
   data: function () {
     return {
       jtStyle: {
-        backgroundImage: `url("${this.bgImg}")`,
         filter: 'brightness(100%)'
       },
       containerStyle: {
         opacity: 1
-      },
-      header: this.header,
-      scrollAnchor: this.scrollAnchor
+      }
     }
   },
-  props: [
-    'bgImg',
-    'scrollAnchor',
-    'header'
-  ],
   methods: {
     handleScroll: function () {
       const jtElem = this.$refs.jt
@@ -60,6 +51,11 @@ export default {
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
+  },
+  mounted: function () {
+    const sr = ScrollReveal()
+    sr.reveal('h1', { duration: 1000 })
+    sr.reveal('#scrollDown', { delay: 200, duration: 800 })
   }
 }
 </script>
@@ -67,8 +63,6 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
-@import '~animate.css';
-
 
 h1 {
   color: $white;
@@ -81,6 +75,7 @@ h1 {
   height: 100vh;
   border-radius: 0;
   margin-bottom: 0;
+  background-image: url("../assets/img/crowd.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -94,11 +89,16 @@ h1 {
     text-align: center;
 
     p {
+      font-size: $font-size-sm;
       color: $white;
       text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.2em;
     }
   }
+}
+
+[v-cloak] {
+  visibility: hidden;
 }
 
 .pulse {

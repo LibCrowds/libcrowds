@@ -1,27 +1,23 @@
 <template>
   <div id="landing">
-    <fading-jumbotron :bgImg="crowdImg" :scrollAnchor="scrollAnchor" :header="header"></fading-jumbotron>
+    <landing-jumbotron>
+    </landing-jumbotron>
   </div>
 </template>
 
 <script>
-import crowdImg from '@/assets/img/crowd.png'
-import FadingJumbotron from '@/components/FadingJumbotron'
+import LandingJumbotron from '@/components/LandingJumbotron'
 
 export default {
   name: 'landing',
   data: function () {
-    return {
-      crowdImg: crowdImg,
-      scrollAnchor: '#intro',
-      header: 'Crowdsourcing projects from the British Library'
-    }
+    return {}
   },
-  components: { FadingJumbotron }
+  components: { LandingJumbotron }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 </style>

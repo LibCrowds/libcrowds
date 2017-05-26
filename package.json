@@ -16,7 +16,6 @@
     "deploy": "npm run unit && npm run build && gh-pages -d dist"
   },
   "dependencies": {
-    "animate.css": "^3.5.2",
     "bootstrap-vue": "^0.16.1",
     "scrollreveal": "^3.3.5",
     "vue": "^2.2.6",
