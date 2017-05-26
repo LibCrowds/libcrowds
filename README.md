@@ -21,6 +21,13 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 
+# deploy to gh-pages
+npm run gh-pages
+```
+
+## Testing
+
+```
 # run unit tests
 npm run unit
 
@@ -29,9 +36,8 @@ npm run e2e
 
 # run all tests
 npm test
-
-# deploy to gh-pages
-npm run gh-pages
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
+
+[![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
