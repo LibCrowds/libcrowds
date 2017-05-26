@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/LibCrowds/libcrowds-spa-theme.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds-spa-theme)
 [![dependencies Status](https://david-dm.org/LibCrowds/libcrowds-spa-theme/status.svg)](https://david-dm.org/LibCrowds/libcrowds-spa-theme)
+[![devDependencies Status](https://david-dm.org/LibCrowds/libcrowds-spa-theme/dev-status.svg)](https://david-dm.org/LibCrowds/libcrowds-spa-theme?type=dev)
 
 > The LibCrowds front-end
 
