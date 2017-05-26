@@ -72,12 +72,15 @@ export default {
 
 h1 {
   color: $white;
+  margin-bottom: 0;
 }
 
 .jumbotron {
   padding: 2em;
   display: flex;
   height: 100vh;
+  border-radius: 0;
+  margin-bottom: 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
