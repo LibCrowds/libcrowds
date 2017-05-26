@@ -6,7 +6,7 @@
         <h1 v-cloak>
           Crowdsourcing projects from<br>the British Library
         </h1>
-        <a id="scrollDown" href="#" v-cloak>
+        <a id="scrollDown" href="#" v-on:click="$emit('scrollDown')" v-cloak>
           <p>Scroll Down</p>
           <div class="pulse">
             <icon name="angle-down" scale="2"></icon>
@@ -87,8 +87,9 @@ h1 {
     justify-content: space-between;
     flex: 1 1 auto;
     text-align: center;
+    overflow: hidden;
 
-    p {
+    #scrollDown p {
       font-size: $font-size-sm;
       color: $white;
       text-transform: uppercase;

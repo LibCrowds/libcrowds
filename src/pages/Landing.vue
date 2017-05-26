@@ -1,6 +1,6 @@
 <template>
   <div id="landing">
-    <landing-jumbotron>
+    <landing-jumbotron v-on:scrollDown="nextComponent">
     </landing-jumbotron>
   </div>
 </template>
@@ -13,7 +13,14 @@ export default {
   data: function () {
     return {}
   },
-  components: { LandingJumbotron }
+  components: {
+    LandingJumbotron
+  },
+  methods: {
+    nextComponent () {
+      console.log('next')
+    }
+  }
 }
 </script>
 
