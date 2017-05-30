@@ -40,6 +40,7 @@ npm run e2e
 ## Developing
 
 Start up a local PyBossa instance as per the [documentation](http://docs.pybossa.com/en/latest/), then:
+
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
