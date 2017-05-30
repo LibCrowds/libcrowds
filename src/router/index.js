@@ -18,7 +18,7 @@ const router = new Router({
       component: Landing,
       props: {
         pybossaApi: process.env.NODE_ENV === 'production'
-                      ? 'http://'
+                      ? 'http://138.68.135.24:5000'
                       : 'http://localhost:5000'
       }
     },
