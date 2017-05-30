@@ -18,6 +18,5 @@ export default {
 </script>
 
 <style lang="scss">
-/* Use Bootstrap's reboot */
 @import '~bootstrap/scss/bootstrap';
 </style>

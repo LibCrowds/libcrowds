@@ -17,7 +17,7 @@ export default {
     LandingJumbotron
   },
   methods: {
-    fetchData () {
+    nextComponent () {
       console.log('next')
     }
   }

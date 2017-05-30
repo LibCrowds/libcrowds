@@ -48,6 +48,7 @@ npm run dev
 
 Note that the PyBossa should be run with the default settings at http://localhost:5000.
 
+See [config.js](src/config.js) for project configurations.
 
 ## Deploying
 

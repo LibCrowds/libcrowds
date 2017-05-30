@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landing from '@/pages/Landing'
-import Error from '@/pages/Error'
+import tld from 'tldjs'
+import store from '@/store'
+import config from '@/config'
 
 Vue.use(Router)
 
@@ -10,32 +11,37 @@ const router = new Router({
     {
       path: '/',
       name: 'landing',
-      component: Landing
+      component: require('@/pages/Landing')
     },
     {
-      path: '/site/playbills',
-      name: 'playbills',
-      component: Landing,
-      props: {
-        pybossaApi: process.env.NODE_ENV === 'production'
-                      ? 'http://138.68.135.24:5000'
-                      : 'http://localhost:5000'
-      }
+      path: '/about',
+      name: 'about',
+      component: require('@/pages/home/About')
     },
     {
       path: '*',
       name: '404',
-      component: Error,
-      meta: {
-        title: 'Page not found',
-        description: 'We can\'t find the page that you\'re looking for.'
-      }
+      component: require('@/pages/Error')
     }
   ]
 })
 
+// Check for project configuration
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title
+  const subdomain = tld.getSubdomain(window.location.host)
+  const siteConfig = process.env.NODE_ENV === 'development'
+                       ? config.sites.dev
+                       : config.sites[subdomain]
+
+  if (typeof siteConfig === 'undefined') {
+    next(false)
+  }
+
+  store.commit('SET_ITEM', {
+    key: 'siteConfig',
+    val: siteConfig
+  })
+
   next()
 })
 
