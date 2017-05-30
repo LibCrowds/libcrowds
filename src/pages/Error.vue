@@ -1,16 +1,12 @@
 <template>
   <div class="error">
     <b-jumbotron :header="title" :lead="description">
-      <b-btn variant="white" v-on:click="goBack">
-        <icon name="arrow-left"></icon> Go Back
-      </b-btn>
+      <b-btn variant="white" v-on:click="goBack">Go Back</b-btn>
     </b-jumbotron>
   </div>
 </template>
 
 <script>
-import 'vue-awesome/icons/arrow-left'
-
 export default {
   name: 'error',
   data: function () {
@@ -43,6 +39,7 @@ p {
 
 .btn-white {
   @include button-outline-variant($white, $black);
+  cursor: pointer;
 }
 
 .jumbotron {
@@ -50,7 +47,6 @@ p {
   height: 100vh;
   border-radius: 0;
   margin-bottom: 0;
-  justify-cintent: left;
   background-color: #7CC4F3;
   background-image: url("../assets/img/bl-graphic.png");
   background-repeat: no-repeat;
