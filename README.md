@@ -12,9 +12,6 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
 # build for production with minification
 npm run build
 
@@ -33,12 +30,23 @@ End-to-end tests are run using BrowserStack, a cross browser and real device web
 
 [![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
 
-```
+``` bash
 # run e2e tests
 export BROWSERSTACK_USERNAME=<browserstack-username>
 export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 npm run e2e
 ```
+
+## Developing
+
+Start up a local PyBossa instance as per the [documentation](http://docs.pybossa.com/en/latest/), then:
+``` bash
+# serve with hot reload at localhost:8080
+npm run dev
+```
+
+Note that the PyBossa should be run with the default settings at http://localhost:5000.
+
 
 ## Deploying
 
