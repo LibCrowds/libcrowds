@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import tld from 'tldjs'
-import store from '@/store'
 import config from '@/config'
+import getSiteKey from '@/utils/get-site-key'
 
 Vue.use(Router)
 
@@ -26,23 +25,15 @@ const router = new Router({
   ]
 })
 
-// Check for project configuration
+// Check for site config
 router.beforeEach((to, from, next) => {
-  const subdomain = tld.getSubdomain(window.location.host)
-  const siteConfig = process.env.NODE_ENV === 'development'
-                       ? config.sites.dev
-                       : config.sites[subdomain]
+  const key = getSiteKey()
 
-  if (typeof siteConfig === 'undefined') {
-    next(false)
+  if (key in config) {
+    next()
   }
 
-  store.commit('SET_ITEM', {
-    key: 'siteConfig',
-    val: siteConfig
-  })
-
-  next()
+  next(false)
 })
 
 export default router
