@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import config from '@/config'
-import getSiteKey from '@/utils/get-site-key'
 
 Vue.use(Router)
 
@@ -13,9 +12,23 @@ const router = new Router({
       component: require('@/pages/Landing')
     },
     {
-      path: '/about',
-      name: 'about',
-      component: require('@/pages/home/About')
+      path: '/site/:name',
+      name: 'site',
+      component: require('@/pages/Landing'),
+      beforeEnter: (to, from, next) => {
+        console.log(to.params.name in config)
+        if (!(to.params.name in config)) {
+          next({ name: '404' })
+        }
+
+        next()
+      },
+      children: [
+        {
+          path: 'about',
+          component: require('@/pages/home/About')
+        }
+      ]
     },
     {
       path: '*',
@@ -23,17 +36,6 @@ const router = new Router({
       component: require('@/pages/Error')
     }
   ]
-})
-
-// Check for site config
-router.beforeEach((to, from, next) => {
-  const key = getSiteKey()
-
-  if (key in config) {
-    next()
-  }
-
-  next(false)
 })
 
 export default router

@@ -1,9 +1,9 @@
 import Vue from 'vue'
-import FadingJumbotron from '@/components/FadingJumbotron'
+import LandingJumbotron from '@/components/LandingJumbotron'
 
-describe('FadingJumbotron.vue', () => {
+describe('LandingJumbotron.vue', () => {
   it('should render bgImage as background image', () => {
-    const Constructor = Vue.extend(FadingJumbotron)
+    const Constructor = Vue.extend(LandingJumbotron)
     const vm = new Constructor({
       propsData: {
         bgImg: 'img.jpg'
@@ -14,7 +14,7 @@ describe('FadingJumbotron.vue', () => {
   })
 
   it('should render header as h1 text content', () => {
-    const Constructor = Vue.extend(FadingJumbotron)
+    const Constructor = Vue.extend(LandingJumbotron)
     const vm = new Constructor({
       propsData: {
         header: 'Hello'
@@ -25,7 +25,7 @@ describe('FadingJumbotron.vue', () => {
   })
 
   it('should render scrollAnchor as href', () => {
-    const Constructor = Vue.extend(FadingJumbotron)
+    const Constructor = Vue.extend(LandingJumbotron)
     const vm = new Constructor({
       propsData: {
         scrollAnchor: '#anchor'

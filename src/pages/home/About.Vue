@@ -3,7 +3,11 @@
     <main :style="mainStyle">
       <div class="container">
         <section class="p-3 p-md-5" v-html="about"></section>
-        <section class="p-3 p-md-5" v-html="about"></section>
+        <section class="p-3 p-md-5">
+          <ul id="example-1">
+          <li v-for="member in team"></li>
+          </ul>
+        </section>
       </div>
     </main>
   </div>
@@ -17,14 +21,14 @@ export default {
   data: function () {
     return {
       mainStyle: {
-        backgroundImage: `url('${this.$store.state.siteConfig.bgImg}')`
+        backgroundImage: `url('')`
       },
-      team: this.$store.state.siteConfig.team
+      team: []
     }
   },
   computed: {
     about: function () {
-      return marked(this.$store.state.siteConfig.about)
+      return marked('')
     }
   }
 }
