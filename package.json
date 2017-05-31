@@ -16,6 +16,7 @@
     "deploy": "npm run unit && npm run build && gh-pages -d dist"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "bootstrap-vue": "^0.16.1",
     "marked": "^0.3.6",
     "scrollreveal": "^3.3.5",
