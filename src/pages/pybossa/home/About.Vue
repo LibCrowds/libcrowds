@@ -43,7 +43,7 @@
     </section>
     <section class="p-3 p-md-5">
       <h3 class="text-uppercase font-weight-bold display-4">
-        Contact {{ pbConfig.title }}
+        Contact
       </h3>
       <hr>
       <p>
