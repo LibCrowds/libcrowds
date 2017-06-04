@@ -8,7 +8,6 @@
 
 <script>
 import config from '@/config'
-import marked from 'marked'
 
 export default {
   name: 'stats',
