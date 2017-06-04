@@ -38,7 +38,7 @@
       <p>
         The {{ config.brand }} theme, all project templates and plugins are
         available on
-        <a :href="{{ config.githubUrl }}" target="_blank">GitHub</a>.
+        <a :href="config.githubUrl" target="_blank">GitHub</a>.
       </p>
     </section>
     <section class="p-3 p-md-5">
