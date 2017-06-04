@@ -1,14 +1,14 @@
 <template>
   <div id="about">
     <sub-navbar :items="subnavItems"></sub-navbar>
-    <section class="p-3 p-md-5">
+    <section id="background" class="p-3 p-md-5">
       <h1 class="text-uppercase text-center font-weight-bold display-4">
-        About {{ pbConfig.title }}
+        Background
       </h1>
       <hr>
       <span v-html="about"></span>
     </section>
-    <section class="p-3 p-md-5">
+    <section id="technology" class="p-3 p-md-5">
       <div class="d-flex flex-row align-items-center justify-content-between">
         <h2 class="text-uppercase font-weight-bold display-4">Technology</h2>
         <a :href="config.githubUrl"
@@ -42,7 +42,7 @@
         <a :href="config.githubUrl" target="_blank">GitHub</a>.
       </p>
     </section>
-    <section class="p-3 p-md-5">
+    <section id="contact" class="p-3 p-md-5">
       <h3 class="text-uppercase font-weight-bold display-4">
         Contact
       </h3>
@@ -86,7 +86,9 @@ export default {
       config: config,
       pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ],
       subnavItems: [
-        { value: 'About', href: '#about' }
+        { value: 'Background', href: '#background' },
+        { value: 'Technology', href: '#technology' },
+        { value: 'Contact', href: '#contact' }
       ]
     }
   },
