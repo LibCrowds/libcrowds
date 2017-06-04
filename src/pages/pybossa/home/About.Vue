@@ -1,5 +1,6 @@
 <template>
   <div id="about">
+    <sub-navbar :items="subnavItems"></sub-navbar>
     <section class="p-3 p-md-5">
       <h1 class="text-uppercase text-center font-weight-bold display-4">
         About {{ pbConfig.title }}
@@ -75,6 +76,7 @@
 <script>
 import config from '@/config'
 import marked from 'marked'
+import SubNavbar from '@/components/SubNavbar'
 import 'vue-awesome/icons/github'
 
 export default {
@@ -82,8 +84,15 @@ export default {
   data: function () {
     return {
       config: config,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ],
+      subnavItems: [
+        { value: 'About', href: '#about' }
+      ]
     }
+  },
+
+  components: {
+    SubNavbar
   },
 
   computed: {
