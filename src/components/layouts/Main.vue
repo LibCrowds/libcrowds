@@ -1,7 +1,7 @@
 <template>
   <div id="main-layout" :style="mainStyle">
     <app-navbar></app-navbar>
-    <main>
+    <main class="mt-md-4">
       <router-view></router-view>
     </main>
   </div>
