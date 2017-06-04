@@ -2,7 +2,7 @@
   <div id="about">
     <section class="p-3 p-md-5">
       <h1 class="text-uppercase text-center font-weight-bold display-4">
-        About {{ siteConfig.title }}
+        About {{ pbConfig.title }}
       </h1>
       <hr>
       <span v-html="about"></span>
@@ -17,7 +17,7 @@
         </a>
       </div>
       <p class="mt-3">
-        {{ siteConfig.title }} is part of the LibCrowds platform, which aims to
+        {{ pbConfig.title }} is part of the LibCrowds platform, which aims to
         increase access to the collections of the British Library through a
         range of experimental crowdsourcing projects. The platform was first
         launched in June 2015 with the Convert-a-Card project series, which used
@@ -42,7 +42,7 @@
     </section>
     <section class="p-3 p-md-5">
       <h3 class="text-uppercase font-weight-bold display-4">
-        Contact {{ siteConfig.title }}
+        Contact {{ pbConfig.title }}
       </h3>
       <hr>
       <span v-html="about"></span>
@@ -59,13 +59,14 @@ export default {
   name: 'about',
   data: function () {
     return {
-      siteConfig: config[ this.$store.state.route.params.sitename ]
+      config: config,
+      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
     }
   },
 
   computed: {
     about: function () {
-      return marked(this.siteConfig.about)
+      return marked(this.pbConfig.about)
     }
   }
 }

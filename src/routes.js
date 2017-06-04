@@ -9,7 +9,7 @@ export default [
     path: '/site/:sitename',
     component: require('@/components/layouts/Main'),
     beforeEnter: (to, from, next) => {
-      if (!(to.params.sitename in config)) {
+      if (!(to.params.sitename in config.pybossaSites)) {
         next({ name: '404' })
       }
       next()

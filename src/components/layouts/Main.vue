@@ -14,14 +14,14 @@ import config from '@/config'
 export default {
   data: function () {
     return {
-      siteConfig: config[ this.$store.state.route.params.sitename ]
+      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
     }
   },
 
   computed: {
     mainStyle: function () {
       return {
-        backgroundImage: `url('${this.siteConfig.bgImg}')`
+        backgroundImage: `url('${this.pbConfig.bgImg}')`
       }
     }
   },
