@@ -70,7 +70,7 @@ module.exports = {
       {
         test: /\.md$/,
         use: [
-          'url-loader',
+          'html-loader',
           'markdown-loader'
         ]
       }

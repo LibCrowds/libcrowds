@@ -1,7 +1,6 @@
 <template>
   <div id="landing">
-    <landing-jumbotron v-on:scrollDown="nextComponent">
-    </landing-jumbotron>
+    <landing-jumbotron></landing-jumbotron>
   </div>
 </template>
 

@@ -6,7 +6,7 @@
         <h1 v-cloak>
           Crowdsourcing projects from<br>the British Library
         </h1>
-        <a id="scrollDown" href="#" v-on:click="$emit('scrollDown')" v-cloak>
+        <a id="scrollDown" href="#" v-cloak>
           <p>Scroll Down</p>
           <div class="pulse">
             <icon name="angle-down" scale="2"></icon>
