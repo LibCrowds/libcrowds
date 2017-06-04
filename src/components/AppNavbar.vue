@@ -4,18 +4,18 @@
 
       <b-nav-toggle target="nav_collapse"></b-nav-toggle>
 
-      <b-link class="navbar-brand" to="#">
-        <span>{{  }}</span>
+      <b-link class="navbar-brand" :to="{ name: 'home', params: { sitename: sitename }}">
+        <span>{{ pbConfig.title }}</span>
       </b-link>
 
       <b-collapse is-nav id="nav_collapse">
 
         <b-nav is-nav-bar>
           <b-nav-item :to="{ name: 'about', params: { sitename: sitename }}">About</b-nav-item>
-          <b-nav-item>Projects</b-nav-item>
-          <b-nav-item>Statistics</b-nav-item>
-          <b-nav-item>Results</b-nav-item>
-          <b-nav-item>Data</b-nav-item>
+          <b-nav-item :to="{ name: 'projects', params: { sitename: sitename }}">Projects</b-nav-item>
+          <b-nav-item :to="{ name: 'stats', params: { sitename: sitename }}">Statistics</b-nav-item>
+          <b-nav-item :to="{ name: 'results', params: { sitename: sitename }}">Results</b-nav-item>
+          <b-nav-item :to="{ name: 'data', params: { sitename: sitename }}">Data</b-nav-item>
         </b-nav>
 
         <b-nav is-nav-bar class="ml-auto">
@@ -35,11 +35,15 @@
 </template>
 
 <script>
+import config from '@/config'
+
 export default {
   name: 'app-navbar',
   data: function () {
     return {
-      sitename: this.$store.state.route.params.sitename
+      config: config,
+      sitename: this.$store.state.route.params.sitename,
+      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
     }
   }
 }
