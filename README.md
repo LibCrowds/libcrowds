@@ -24,18 +24,16 @@ npm run build --report
 ``` bash
 # run unit tests
 npm unit
-```
 
-End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
-
-[![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
-
-``` bash
 # run e2e tests
 export BROWSERSTACK_USERNAME=<browserstack-username>
 export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 npm run e2e
 ```
+
+End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
+
+[![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
 
 ## Developing
 
