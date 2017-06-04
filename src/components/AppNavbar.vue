@@ -103,13 +103,6 @@ export default {
         opacity: 0;
       }
 
-      &.active .nav-link:after,
-      .nav-link:hover:after,
-      .nav-link:focus:after {
-        opacity: 1;
-        transform: none;
-      }
-
       .nav-link {
         transition: color 200ms;
         padding: .35rem 0;
@@ -120,10 +113,11 @@ export default {
             transform: translateY(10px);
           }
 
-          @include hover-focus {
-            &:after {
-              transform: none;
-            }
+          &.active:after,
+          &:hover:after,
+          &:focus:after {
+            opacity: 1;
+            transform: none;
           }
         }
       }
@@ -147,12 +141,6 @@ export default {
           }
         }
       }
-
-      &.active {
-        .nav-link:after {
-          transform: none;
-        }
-      }
     }
   }
 
@@ -161,7 +149,7 @@ export default {
   .dropdown-item.active,
   .nav-item .nav-link:focus,
   .nav-item .nav-link:hover,
-  .nav-item.active .nav-link {
+  .nav-item .nav-link.active {
     color: $brand-primary !important;
     background-color: transparent;
   }
@@ -244,10 +232,11 @@ export default {
             .nav-item {
               margin-left: 0;
 
-              &.active .nav-link:after,
+              .nav-link.active:after,
               .nav-link:hover:after,
               .nav-link:focus:after {
                 opacity: 0;
+                transform: none;
               }
             }
 
