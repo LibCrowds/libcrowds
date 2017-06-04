@@ -43,7 +43,7 @@ export default [
       {
         path: 'data',
         name: 'data',
-        component: require('@/pages/pybossa/home/About')
+        component: require('@/pages/pybossa/home/Data')
       }
     ]
   },
