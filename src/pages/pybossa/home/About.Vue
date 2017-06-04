@@ -17,16 +17,16 @@
         </a>
       </div>
       <p class="mt-3">
-        {{ pbConfig.title }} is part of the LibCrowds platform, which aims to
-        increase access to the collections of the British Library through a
-        range of experimental crowdsourcing projects. The platform was first
+        {{ pbConfig.title }} is part of the {{ config.brand }} platform, which
+        aims to increase access to the collections of the British Library through
+        a range of experimental crowdsourcing projects. The platform was first
         launched in June 2015 with the Convert-a-Card project series, which used
         a new method for transforming printed card catalogues into electronic
         records.
       </p>
       <p>
-        On the backend, each LibCrowds project series uses an instance of
-        <a href="http://pybossa.com/" target="_blank">PyBossa</a>, an
+        On the backend, each {{ config.brand }} project series uses an instance
+        of <a href="http://pybossa.com/" target="_blank">PyBossa</a>, an
         open-source framework for the creation of crowdsourcing projects, which
         in turn is based on the Python microframework, Flask. On the frontend, a
         custom theme has been developed using
@@ -36,8 +36,9 @@
         database searches via the Z39.50 protocol.
       </p>
       <p>
-        The LibCrowds theme, all project templates and plugins are available on
-        <a href="https://github.com/LibCrowds" target="_blank">GitHub</a>.
+        The {{ config.brand }} theme, all project templates and plugins are
+        available on
+        <a :href="{{ config.githubUrl }}" target="_blank">GitHub</a>.
       </p>
     </section>
     <section class="p-3 p-md-5">
@@ -46,9 +47,9 @@
       </h3>
       <hr>
       <p>
-        Visit the <a :href="config.discourseUrl">{{ config.brand }}</a>
-        forum to ask any questions, report issues, or to just let us know what
-        you've discovered.
+        Visit the <a :href="config.discourseUrl">{{ config.brand }} forum</a>
+        to ask any questions, report issues, or to just let us know what you've
+        discovered.
       </p>
       <p>
         Alternatively, you can get in touch via:
