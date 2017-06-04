@@ -4,7 +4,7 @@ import config from '@/config'
 
 Vue.use(Router)
 
-const router = new Router({
+export default new Router({
   routes: [
     {
       path: '/',
@@ -12,15 +12,13 @@ const router = new Router({
       component: require('@/pages/Landing')
     },
     {
-      path: '/site/:name',
+      path: '/site/:sitename',
       name: 'site',
       component: require('@/pages/Landing'),
       beforeEnter: (to, from, next) => {
-        console.log(to.params.name in config)
-        if (!(to.params.name in config)) {
+        if (!(to.params.sitename in config)) {
           next({ name: '404' })
         }
-
         next()
       },
       children: [
@@ -37,5 +35,3 @@ const router = new Router({
     }
   ]
 })
-
-export default router
