@@ -18,6 +18,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "bootstrap-vue": "^0.16.1",
+    "hamburgers": "^0.8.1",
     "marked": "^0.3.6",
     "scrollreveal": "^3.3.5",
     "vue": "^2.2.6",
