@@ -7,6 +7,7 @@ export default {
     email: 'crowdsourcing@bl.uk'
   },
   discourseUrl: 'http://community.libcrowds.com',
+  githubUrl: 'https://github.com/LibCrowds',
   pybossaSites: {
     playbills: {
       host: isDev ? 'http://localhost:5000' : 'http://138.68.135.24:5000',

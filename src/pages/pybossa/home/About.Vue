@@ -10,7 +10,7 @@
     <section class="p-3 p-md-5">
       <div class="d-flex flex-row align-items-center justify-content-between">
         <h2 class="text-uppercase font-weight-bold display-4">Technology</h2>
-        <a href="https://github.com/LibCrowds"
+        <a :href="config.githubUrl"
            class="text-muted hidden-md-down"
            target="_blank">
           <icon name="github" scale="5"></icon>
