@@ -20,7 +20,6 @@
     "bootstrap-vue": "^0.16.1",
     "marked": "^0.3.6",
     "scrollreveal": "^3.3.5",
-    "tldjs": "^1.7.0",
     "vue": "^2.2.6",
     "vue-awesome": "^2.3.1",
     "vue-router": "^2.3.1",
