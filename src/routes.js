@@ -38,7 +38,8 @@ export default [
         component: require('@/components/Tabs'),
         props: {
           tabs: [
-            { title: 'Terms of Service', content: require('@/pages/pybossa/help/TOS') }
+            { title: 'Terms of Service', content: require('@/pages/pybossa/help/TOS') },
+            { title: 'Privacy Policy', content: require('@/pages/pybossa/help/Privacy') }
           ]
         }
       },
