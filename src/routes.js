@@ -39,7 +39,8 @@ export default [
         props: {
           tabs: [
             { title: 'Terms of Service', content: require('@/pages/pybossa/help/TOS') },
-            { title: 'Privacy Policy', content: require('@/pages/pybossa/help/Privacy') }
+            { title: 'Privacy Policy', content: require('@/pages/pybossa/help/Privacy') },
+            { title: 'Cookies Policy', content: require('@/pages/pybossa/help/Cookies') }
           ]
         }
       },
