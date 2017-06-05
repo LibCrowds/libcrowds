@@ -2,13 +2,17 @@
   <div id="main-layout" :style="mainStyle">
     <app-navbar></app-navbar>
     <main class="mt-md-4">
-      <router-view></router-view>
+      <div class="container">
+        <router-view></router-view>
+      </div>
     </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import AppNavbar from '@/components/AppNavbar'
+import AppFooter from '@/components/AppFooter'
 import config from '@/config'
 
 export default {
@@ -27,7 +31,8 @@ export default {
   },
 
   components: {
-    AppNavbar
+    AppNavbar,
+    AppFooter
   }
 }
 </script>
@@ -39,12 +44,15 @@ export default {
 #main-layout {
   height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
 
 main {
+  flex: 1 1 auto;
   width: 90%;
   margin-right: auto;
   margin-left: auto;

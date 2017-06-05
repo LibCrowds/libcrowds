@@ -1,37 +1,38 @@
 <template>
   <div class="app-navbar">
     <b-navbar toggleable type="inverse" sticky="top">
+      <div class="container">
+        <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-      <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
+        <b-link class="navbar-brand" :to="{ name: 'home', params: { sitename: sitename }}">
+          <span>{{ pbConfig.title }}</span>
+        </b-link>
 
-      <b-link class="navbar-brand" :to="{ name: 'home', params: { sitename: sitename }}">
-        <span>{{ pbConfig.title }}</span>
-      </b-link>
+        <b-collapse is-nav id="main-nav-collapse">
 
-      <b-collapse is-nav id="main-nav-collapse">
+          <b-nav is-nav-bar>
+            <b-nav-item :to="{ name: 'about', params: { sitename: sitename }}">About</b-nav-item>
+            <b-nav-item :to="{ name: 'projects', params: { sitename: sitename }}">Projects</b-nav-item>
+            <b-nav-item :to="{ name: 'stats', params: { sitename: sitename }}">Statistics</b-nav-item>
+            <b-nav-item :to="{ name: 'results', params: { sitename: sitename }}">Results</b-nav-item>
+            <b-nav-item :to="{ name: 'data', params: { sitename: sitename }}">Data</b-nav-item>
+          </b-nav>
 
-        <b-nav is-nav-bar>
-          <b-nav-item :to="{ name: 'about', params: { sitename: sitename }}">About</b-nav-item>
-          <b-nav-item :to="{ name: 'projects', params: { sitename: sitename }}">Projects</b-nav-item>
-          <b-nav-item :to="{ name: 'stats', params: { sitename: sitename }}">Statistics</b-nav-item>
-          <b-nav-item :to="{ name: 'results', params: { sitename: sitename }}">Results</b-nav-item>
-          <b-nav-item :to="{ name: 'data', params: { sitename: sitename }}">Data</b-nav-item>
-        </b-nav>
+          <b-nav is-nav-bar>
+            <b-nav-item-dropdown text="current user" right>
+              <b-dropdown-item to="#">Profile</b-dropdown-item>
+              <b-dropdown-item to="#">Settings</b-dropdown-item>
+              <div role="separator" class="dropdown-divider"></div>
+              <b-dropdown-item to="#">New Project</b-dropdown-item>
+              <b-dropdown-item to="#">Open Project</b-dropdown-item>
+              <b-dropdown-item to="#">Admin</b-dropdown-item>
+              <div role="separator" class="dropdown-divider"></div>
+              <b-dropdown-item to="#">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
 
-        <b-nav is-nav-bar>
-          <b-nav-item-dropdown text="current user" right>
-            <b-dropdown-item to="#">Profile</b-dropdown-item>
-            <b-dropdown-item to="#">Settings</b-dropdown-item>
-            <div role="separator" class="dropdown-divider"></div>
-            <b-dropdown-item to="#">New Project</b-dropdown-item>
-            <b-dropdown-item to="#">Open Project</b-dropdown-item>
-            <b-dropdown-item to="#">Admin</b-dropdown-item>
-            <div role="separator" class="dropdown-divider"></div>
-            <b-dropdown-item to="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-        </b-nav>
-      </b-collapse>
+          </b-nav>
+        </b-collapse>
+      </div>
     </b-navbar>
   </div>
 </template>
@@ -56,11 +57,6 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .navbar {
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
   font-weight: 400;
   letter-spacing: 0.8px;
   justify-content: center;

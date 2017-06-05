@@ -2,6 +2,7 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export default {
   brand: 'LibCrowds',
+  copyright: 'The British Library, 2017',
   contact: {
     twitter: 'LibCrowds',
     email: 'crowdsourcing@bl.uk'
