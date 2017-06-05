@@ -35,5 +35,14 @@ export default {
   .tab-content {
     background-color: $white;
   }
+
+  .tab-pane {
+    opacity: 1;
+    transition: opacity 800ms;
+
+    &.v-enter {
+      opacity: 0;
+    }
+  }
 }
 </style>
