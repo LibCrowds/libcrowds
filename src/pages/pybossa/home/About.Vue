@@ -76,7 +76,6 @@
 <script>
 import config from '@/config'
 import marked from 'marked'
-import SubNavbar from '@/components/SubNavbar'
 import 'vue-awesome/icons/github'
 
 export default {
@@ -84,17 +83,8 @@ export default {
   data: function () {
     return {
       config: config,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ],
-      subnavItems: [
-        { value: 'Background', href: '#background' },
-        { value: 'Technology', href: '#technology' },
-        { value: 'Contact', href: '#contact' }
-      ]
+      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
     }
-  },
-
-  components: {
-    SubNavbar
   },
 
   computed: {
