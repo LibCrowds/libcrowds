@@ -1,9 +1,5 @@
 <template>
-  <b-tab title="Terms of Service" class="p-3 p-md-5">
-    <h2 class="text-uppercase text-center font-weight-bold display-4">
-      Terms of Service
-    </h2>
-    <hr>
+  <section>
     <p>
       These are the general terms and conditions on which we supply all our services. If you use our services,
       you agree to abide by these terms.
@@ -34,7 +30,7 @@
       All use of our web services are subject to our terms for web users. There are further terms if you have signed up
       for an account with one of our services.
     </p>
-    <h4 class="mt-4">Terms for use of our web services</h4>
+    <h3>Terms for use of our web services</h3>
     <p>
       Web services include our API’s as well as any of our websites.
     </p>
@@ -51,7 +47,7 @@
       Foundation</a> we cannot give any warranty that they will work in the way expected or should be used for any 
       specific purpose. If in doubt, you should take your own legal advice.
     </p>
-    <h4 class="mt-4">What you agree</h4>
+    <h3>What you agree</h3>
     <p>
       You agree not to use our websites to do any of the following:
     </p>
@@ -64,13 +60,13 @@
         that does not respect the robots exclusion policy.
       </li>
     </ul>
-    <h4 class="mt-4">Other websites</h4>
+    <h3>Other websites</h3>
     <p>
       Some of our activities are carried out on web platforms provided by third parties. For example the source code for 
       our projects and plugins are hosted on Github. If you make use of any service where that is the case, you are 
       responsible for complying with any terms of service of the third party platform.
     </p>
-    <h4 class="mt-4">Accounts</h4>
+    <h3>Accounts</h3>
     <p>
       Some of our services require you to create an account in order to make certain, or any, use of the service.
       All our accounts are subject to the following rules:
@@ -96,17 +92,17 @@
       </li>
       <li>We may suspend or terminate your account at any time. Equally, you may close your account at any time</li>
     </ul>
-    <h4 class="mt-4">Membership</h4>
+    <h3>Membership</h3>
     <p>
-      Our most important class of account is one <a href="{{ url_for('account.signin') }}">you may create</a> in order 
-      to become a member. By registering as a member, you are acknowledging your connection to us. You are subject to 
-      any rules for community members we may publish and we may send you email messages we think appropriate for 
-      members, for example in order to poll you on some important issue.
+      Our most important class of account is one you may create in order to become a member. By registering as a 
+      member, you are acknowledging your connection to us. You are subject to any rules for community members we may 
+      publish and we may send you email messages we think appropriate for members, for example in order to poll you on 
+      some important issue.
     </p>
     <p>
       Membership is not membership in the formal sense of membership of a company limited by guarantee.
     </p>
-    <h4 class="mt-4">Content and intellectual property</h2>
+    <h3>Content and intellectual property</h3>
     <p>
       If you contribute content to any of our services, for example by commenting on a task, or uploading data, then as 
       a general rule you agree to licence that content to us under the same licence as prevails for that service or 
@@ -122,7 +118,7 @@
       As a general rule, this agreement will not change the ownership of any intellectual property belonging to either 
       party. Where your content is used by us or vice versa both you and we would do so under a licence (see above).
     </p>
-    <h4 class="mt-4">Liability</h4>
+    <h3>Liability</h3>
     <p>
       If you breach any of your obligations under this agreement and, as a result, cause us to be sued by anyone else, 
       you will have to compensate us for any loss we have suffered as a result, which includes any costs, such as paying 
@@ -148,7 +144,7 @@
       </li>
       <li>We exclude, in so far as we are allowed, any warranties that would be implied by law.</li>
     </ul>
-    <h4 class="mt-4">Boilerplate</h4>
+    <h3>Boilerplate</h3>
     <p>
       These final “boilerplate” terms of should go without saying, but we are saying them anyway just to be clear.
     </p>
@@ -167,16 +163,13 @@
     <p>
       Neither party is liable for anything which is beyond their reasonable control.
     </p>
-  </b-tab>
+  </section>
 </template>
 
 <script>
 import config from '@/config'
-import marked from 'marked'
-import 'vue-awesome/icons/github'
 
 export default {
-  name: 'tos',
   data: function () {
     return {
       config: config
@@ -185,7 +178,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import 'src/assets/style/_vars.scss';
-@import '~bootstrap/scss/bootstrap';
+<style>
+h3 {
+  margin-top: 3rem;
+}
 </style>

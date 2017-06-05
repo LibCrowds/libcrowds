@@ -33,6 +33,16 @@ export default [
         }
       },
       {
+        path: 'help',
+        name: 'help',
+        component: require('@/components/Tabs'),
+        props: {
+          tabs: [
+            { title: 'Terms of Service', content: require('@/pages/pybossa/help/TOS') }
+          ]
+        }
+      },
+      {
         path: 'projects',
         name: 'projects',
         component: require('@/pages/pybossa/projects/Projects')
@@ -51,11 +61,6 @@ export default [
         path: 'data',
         name: 'data',
         component: require('@/pages/pybossa/home/Data')
-      },
-      {
-        path: 'help',
-        name: 'help',
-        component: require('@/pages/pybossa/help/Index')
       }
     ]
   },
