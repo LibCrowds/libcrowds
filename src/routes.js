@@ -44,6 +44,11 @@ export default [
         path: 'data',
         name: 'data',
         component: require('@/pages/pybossa/home/Data')
+      },
+      {
+        path: 'help',
+        name: 'help',
+        component: require('@/pages/pybossa/help/Index')
       }
     ]
   },

@@ -22,6 +22,7 @@
             <b-nav-item-dropdown text="current user" right>
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
+              <b-dropdown-item :to="{ name: 'help', params: { sitename: sitename }}">Help</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item to="#">New Project</b-dropdown-item>
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
