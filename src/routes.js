@@ -7,7 +7,7 @@ export default [
   },
   {
     path: '/site/:sitename',
-    component: require('@/components/layouts/Main'),
+    component: require('@/components/layouts/FloatingContainer'),
     beforeEnter: (to, from, next) => {
       if (!(to.params.sitename in config.pybossaSites)) {
         next({ name: '404' })
@@ -23,7 +23,14 @@ export default [
       {
         path: 'about',
         name: 'about',
-        component: require('@/pages/pybossa/home/About')
+        component: require('@/components/Tabs'),
+        props: {
+          tabs: [
+            { title: 'Background', content: require('@/pages/pybossa/about/Background') },
+            { title: 'Technology', content: require('@/pages/pybossa/about/Technology') },
+            { title: 'Contact', content: require('@/pages/pybossa/about/Contact') }
+          ]
+        }
       },
       {
         path: 'projects',

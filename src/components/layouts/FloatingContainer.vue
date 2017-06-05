@@ -1,10 +1,8 @@
 <template>
-  <div id="main-layout" :style="mainStyle">
+  <div class="floating-container" :style="mainStyle">
     <app-navbar></app-navbar>
-    <main class="mt-md-4">
-      <div class="container">
-        <router-view></router-view>
-      </div>
+    <main class="container mt-md-4 mb-5">
+      <router-view></router-view>
     </main>
     <app-footer></app-footer>
   </div>
@@ -41,9 +39,8 @@ export default {
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
-#main-layout {
-  height: 100vh;
-  overflow-y: auto;
+.floating-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   background-repeat: no-repeat;
@@ -53,31 +50,5 @@ export default {
 
 main {
   flex: 1 1 auto;
-  width: 90%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 5rem;
-}
-
-.tabs {
-  .nav-pills {
-    padding: $navbar-padding-y $navbar-padding-x;
-    background-color: rgba($gray-lighter, 0.85);
-
-    .nav-link {
-      padding: 0.35rem 0.75rem;
-      color: $navbar-light-color;
-
-      &.active {
-        background-color: transparent;
-        color: $brand-primary;
-        transition: color 250ms;
-      }
-    }
-  }
-
-  .tab-content {
-    background-color: $white;
-  }
 }
 </style>
