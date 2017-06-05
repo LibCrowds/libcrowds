@@ -50,4 +50,26 @@ main {
   margin-left: auto;
   margin-bottom: 5rem;
 }
+
+.tabs {
+  .nav-pills {
+    padding: $navbar-padding-y $navbar-padding-x;
+    background-color: rgba($gray-lighter, 0.85);
+
+    .nav-link {
+      padding: 0.35rem 0.75rem;
+      color: $navbar-light-color;
+
+      &.active {
+        background-color: transparent;
+        color: $brand-primary;
+        transition: color 250ms;
+      }
+    }
+  }
+
+  .tab-content {
+    background-color: $white;
+  }
+}
 </style>
