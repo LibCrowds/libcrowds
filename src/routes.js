@@ -62,7 +62,14 @@ export default [
       {
         path: 'data',
         name: 'data',
-        component: require('@/pages/pybossa/home/Data')
+        component: require('@/components/Tabs'),
+        props: {
+          tabs: [
+            { title: 'Datasets', content: require('@/pages/pybossa/data/Datasets') },
+            { title: 'Tasks', content: require('@/pages/pybossa/data/Tasks') },
+            { title: 'Task Runs', content: require('@/pages/pybossa/data/TaskRuns') }
+          ]
+        }
       }
     ]
   },

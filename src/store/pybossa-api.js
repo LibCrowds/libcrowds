@@ -1,12 +1,7 @@
-import config from '@/config'
-import store from '@/store'
-
 const axios = require('axios').create({
   timeout: 10000,
-  withCredentials: true, // cookie
-  headers: { 'X-Requested-With': 'XMLHttpRequest' },
+  headers: { 'Content-Type': 'application/json' },
   transformResponse: [function (data) {
-    console.log(data)
     let json = {}
 
     try {
@@ -26,13 +21,11 @@ const axios = require('axios').create({
 /**
  * Perform a request.
  */
-export default function (method, req) {
-  const sitename = store.state.route.params.sitename
-  const baseURL = config[ sitename ].host
+export const request = (method, host, endpoint, data) => {
   return axios({
-    baseURL: baseURL,
     method: method,
-    url: req.endpoint,
-    data: req.data
+    baseURL: host,
+    url: endpoint,
+    data: data
   })
 }
