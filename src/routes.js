@@ -1,4 +1,5 @@
 import config from '@/config'
+import store from '@/store'
 
 export default [
   {
@@ -6,12 +7,18 @@ export default [
     component: require('@/pages/Landing')
   },
   {
-    path: '/site/:sitename',
+    path: '/site/:shortname',
     component: require('@/components/layouts/FloatingContainer'),
     beforeEnter: (to, from, next) => {
-      if (!(to.params.sitename in config.pybossaSites)) {
+      let siteConfig = config.sites.find(function (site) {
+        return site.shortname === to.params.shortname
+      })
+
+      if (typeof siteConfig === 'undefined') {
         next({ name: '404' })
       }
+
+      store.commit('SET_SITE_CONFIG', siteConfig)
       next()
     },
     children: [

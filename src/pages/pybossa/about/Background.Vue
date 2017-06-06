@@ -5,19 +5,18 @@
 </template>
 
 <script>
-import config from '@/config'
 import marked from 'marked'
 
 export default {
   data: function () {
     return {
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      siteConfig: this.$store.state.siteConfig
     }
   },
 
   computed: {
     background: function () {
-      return marked(this.pbConfig.background)
+      return marked(this.siteConfig.background)
     }
   }
 }

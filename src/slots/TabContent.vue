@@ -3,7 +3,7 @@
     <slot name="item" v-for="tab in tabs" :text="item.text">
     <!-- fallback content here -->
     </slot>
-  </b-tabs>    
+  </b-tabs>
   <b-tab title="Contact" class="p-3 p-md-5">
     <h2 class="text-uppercase text-center font-weight-bold display-4">
       <slot name="title"></slot>
@@ -18,8 +18,7 @@ import config from '@/config'
 export default {
   data: function () {
     return {
-      config: config,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      config: config
     }
   }
 }

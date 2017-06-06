@@ -9,15 +9,16 @@ export default {
   },
   discourseUrl: 'http://community.libcrowds.com',
   githubUrl: 'https://github.com/LibCrowds',
-  pybossaSites: {
-    playbills: {
+  sites: [
+    {
+      shortname: 'playbills',
+      name: 'Playbills',
       host: isDev ? 'http://localhost:5000' : 'http://138.68.135.24:5000',
-      title: 'Playbills',
       bgImg: require('@/assets/img/playbills.jpg'),
       background: require('@/assets/markdown/playbills.md'),
       team: [
 
       ]
     }
-  }
+  ]
 }

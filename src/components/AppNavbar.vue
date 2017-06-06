@@ -4,25 +4,25 @@
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-        <b-link class="navbar-brand" :to="{ name: 'home', params: { sitename: sitename }}">
-          <span>{{ pbConfig.title }}</span>
+        <b-link class="navbar-brand" :to="{ name: 'home', params: { shortname: siteConfig.shortname }}">
+          <span>{{ siteConfig.name }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse">
 
           <b-nav is-nav-bar>
-            <b-nav-item :to="{ name: 'about', params: { sitename: sitename }}">About</b-nav-item>
-            <b-nav-item :to="{ name: 'projects', params: { sitename: sitename }}">Projects</b-nav-item>
-            <b-nav-item :to="{ name: 'stats', params: { sitename: sitename }}">Statistics</b-nav-item>
-            <b-nav-item :to="{ name: 'results', params: { sitename: sitename }}">Results</b-nav-item>
-            <b-nav-item :to="{ name: 'data', params: { sitename: sitename }}">Data</b-nav-item>
+            <b-nav-item :to="{ name: 'about', params: { shortname: siteConfig.shortname }}">About</b-nav-item>
+            <b-nav-item :to="{ name: 'projects', params: { shortname: siteConfig.shortname }}">Projects</b-nav-item>
+            <b-nav-item :to="{ name: 'stats', params: { shortname: siteConfig.shortname }}">Statistics</b-nav-item>
+            <b-nav-item :to="{ name: 'results', params: { shortname: siteConfig.shortname }}">Results</b-nav-item>
+            <b-nav-item :to="{ name: 'data', params: { shortname: siteConfig.shortname }}">Data</b-nav-item>
           </b-nav>
 
           <b-nav is-nav-bar>
             <b-nav-item-dropdown text="current user" right>
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
-              <b-dropdown-item :to="{ name: 'help', params: { sitename: sitename }}">Help</b-dropdown-item>
+              <b-dropdown-item :to="{ name: 'help', params: { shortname: siteConfig.shortname }}">Help</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item to="#">New Project</b-dropdown-item>
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
@@ -39,15 +39,11 @@
 </template>
 
 <script>
-import config from '@/config'
-
 export default {
   name: 'app-navbar',
   data: function () {
     return {
-      config: config,
-      sitename: this.$store.state.route.params.sitename,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      siteConfig: this.$store.state.siteConfig
     }
   }
 }

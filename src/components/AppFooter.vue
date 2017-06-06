@@ -47,9 +47,7 @@ export default {
   name: 'app-footer',
   data: function () {
     return {
-      config: config,
-      sitename: this.$store.state.route.params.sitename,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      config: config
     }
   }
 }

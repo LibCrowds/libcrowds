@@ -5,28 +5,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    pybossaUsers: {}
+    siteConfig: {}
   },
 
   mutations: {
-    SET_ITEM: (state, obj) => {
-      state[obj.key] = obj.val
-    },
-    DEL_ITEM: (state, obj) => {
-      state[obj.key].splice(obj.index, 1)
-    }
-  },
-
-  actions: {
-    login: ({ commit, state }, siteKey, csrf) => {
-    },
-
-    logout: ({ commit }, siteKey) => {
-    }
-  },
-
-  getters: {
-    loggedIn: (state, getters) => {
+    SET_SITE_CONFIG: (state, obj) => {
+      state.siteConfig = obj
     }
   }
 })

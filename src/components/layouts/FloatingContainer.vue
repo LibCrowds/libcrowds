@@ -11,19 +11,18 @@
 <script>
 import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
-import config from '@/config'
 
 export default {
   data: function () {
     return {
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      siteConfig: this.$store.state.siteConfig
     }
   },
 
   computed: {
     mainStyle: function () {
       return {
-        backgroundImage: `url('${this.pbConfig.bgImg}')`
+        backgroundImage: `url('${this.siteConfig.bgImg}')`
       }
     }
   },

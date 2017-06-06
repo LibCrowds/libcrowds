@@ -13,8 +13,7 @@ export default {
   name: 'stats',
   data: function () {
     return {
-      config: config,
-      pbConfig: config.pybossaSites[ this.$store.state.route.params.sitename ]
+      config: config
     }
   }
 }
