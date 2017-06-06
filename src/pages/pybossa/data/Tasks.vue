@@ -12,13 +12,28 @@
     </div>
 
     <!-- Main table element -->
-    <b-table striped show-empty :items="projects" :fields="fields">
+    <b-table
+      striped
+      show-empty
+      :items="projects"
+      :fields="fields"
+      empty-text="No projects are available for this category">
       <template slot="name" scope="project">
         {{ project.value }}
       </template>
       <template slot="actions" scope="project">
-        <b-btn @click="download(project.item.short_name, 'csv')">Download CSV</b-btn>
-        <b-btn @click="download(project.item.short_name, 'json')">Download JSON</b-btn>
+        <b-btn
+          size="sm"
+          variant="success"
+          @click="download(project.item.short_name, 'csv')">
+          <icon name="download"></icon> CSV
+        </b-btn>
+        <b-btn
+          size="sm"
+          variant="success"
+          @click="download(project.item.short_name, 'json')">
+          <icon name="download"></icon> JSON
+        </b-btn>
       </template>
     </b-table>
 
@@ -35,6 +50,7 @@
 
 <script>
 import FileSaver from 'file-saver'
+import 'vue-awesome/icons/download'
 
 export default {
   data: function () {
