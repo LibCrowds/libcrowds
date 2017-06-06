@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import pybossa from '@/api/pybossa'
+import { create } from '@/api/pybossa'
 
 Vue.use(Vuex)
 
@@ -11,11 +11,9 @@ const store = new Vuex.Store({
   },
 
   mutations: {
-    SET_SITE_CONFIG: (state, siteConfig) => {
+    SET_PYBOSSA_SITE: (state, siteConfig) => {
       state.siteConfig = siteConfig
-    },
-    SET_PYBOSSA_API: (state, siteConfig) => {
-      state.pybossaApi = pybossa(siteConfig)
+      state.pybossaApi = create(siteConfig)
     }
   }
 })

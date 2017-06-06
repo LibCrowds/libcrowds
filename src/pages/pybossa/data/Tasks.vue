@@ -27,16 +27,12 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
-import config from '@/config'
 import { debounce } from 'lodash'
 
 export default {
   data: function () {
     return {
-      config: config,
-      API: pybossa[ this.$store.state.route.params.shortname ],
-      siteConfig: this.$store.state.siteConfig,
+      pybossaApi: this.$store.state.pybossaApi,
       currentPage: 1,
       categoryId: null,
       perPage: 20,
@@ -56,7 +52,8 @@ export default {
 
   methods: {
     fetchCategories () {
-      this.API.get('/api/category').then(res => {
+      this.pybossaApi.get('/').then(res => {
+        console.log(res)
         this.categories = res.data.map(function (category) {
           return { text: category.name, value: category.id }
         })
@@ -67,7 +64,7 @@ export default {
     },
     updateTable: debounce(
       function () {
-        this.API.get('/').then(res => {
+        this.pybossaApi.get('posts').then(res => {
           console.log()
           this.projects = res.data
         }).catch(error => {

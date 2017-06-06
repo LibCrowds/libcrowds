@@ -3,10 +3,12 @@ import axios from 'axios'
 /**
  * Return a configured axios instance.
  */
-export default function (siteConfig) {
+export const create = (siteConfig) => {
   return axios.create({
-    baseUrl: siteConfig.host,
-    timeout: 10000,
-    headers: { 'Content-Type': 'application/json' }
+    baseURL: siteConfig.host,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: {}  // Must always be set otherwise Content-Type gets deleted
   })
 }
