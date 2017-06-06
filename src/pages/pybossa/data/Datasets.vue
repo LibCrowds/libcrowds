@@ -3,7 +3,9 @@
     <p>
       All datasets generated from the experimental crowdsourcing projects hosted
       on this platform are made available under
-      <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a>,
+      <a :href="config.dataLicense.url" target="_blank">
+        {{ config.dataLicense.name }}
+      </a>,
       meaning that they can be used by anyone, without any copyright
       restrictions.
     </p>
