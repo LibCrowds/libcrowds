@@ -3,7 +3,7 @@ export default {
   name: '404',
   alias: '*',
   component: require('@/pages/Error'),
-  meta: {
+  props: {
     title: 'Page Not Found',
     description: 'We could not find the page you were looking for'
   }

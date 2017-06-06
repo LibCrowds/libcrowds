@@ -9,16 +9,21 @@
 <script>
 export default {
   name: 'error',
-  data: function () {
-    return {
-      title: this.$route.meta.title,
-      description: this.$route.meta.description
-    }
-  },
+
   methods: {
     goBack: function () {
       this.$router.go(-1)
     }
+  },
+
+  props: {
+    title: "Uh oh, something's broken",
+    description: "We'll fix it as soon as we can."
+  },
+
+  metaInfo: {
+    title: this.title,
+    description: this.description
   }
 }
 </script>

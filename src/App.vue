@@ -6,6 +6,8 @@
 
 <script>
 import WebFont from 'webfontloader'
+import config from '@/config'
+
 WebFont.load({
   google: {
     families: ['Assistant', 'Roboto']
@@ -13,7 +15,14 @@ WebFont.load({
 })
 
 export default {
-  name: 'app'
+  name: 'app',
+  metaInfo: {
+    title: config.title,
+    titleTemplate: `%s | ${config.brand}`,
+    meta: [
+      { name: 'description', content: config.description }
+    ]
+  }
 }
 </script>
 

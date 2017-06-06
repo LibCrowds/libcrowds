@@ -2,6 +2,10 @@ const isDev = process.env.NODE_ENV === 'development'
 
 export default {
   brand: 'LibCrowds',
+  title: 'Crowdsourcing projects from the British Library',
+  description: 'LibCrowds is a platform for hosting experimental ' +
+               'crowdsourcing projects aimed at improving access to the ' +
+               'diverse collections held at the British Library.',
   copyright: 'The British Library, 2017',
   contact: {
     twitter: 'LibCrowds',
