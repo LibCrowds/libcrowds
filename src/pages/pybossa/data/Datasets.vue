@@ -8,16 +8,13 @@
       restrictions.
     </p>
     <p>
-      There are three types of dataset available:
+      There are currently two types of dataset available, both of which can be
+      downloaded in JSON or CSV format:
     </p>
     <ul>
-      <li><strong>Tasks: </strong>The original task input.</li>
+      <li><strong>Tasks: </strong>The original input data for the tasks.</li>
       <li><strong>Task Runs: </strong>The contribution data for each task.</li>
-      <li><strong>Results: </strong>The final results for each task.</li>
     </ul>
-    <p>
-      All datasets can be downloaded in JSON or CSV format.
-    </p>
     <p>
       We are keen for these datasets to be used in innovative ways, perhaps to
       further research into new technologies. For instance, the digitised images
