@@ -37,20 +37,22 @@ End-to-end tests are run using BrowserStack, a cross browser and real device web
 
 ## Developing
 
-Start up a local PyBossa instance as per the [documentation](http://docs.pybossa.com/en/latest/), then:
+Start up a local PyBossa instance using the default settings, then:
 
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
 ```
 
-Note that the PyBossa should be run with the default settings at http://localhost:5000.
-
-See [config.js](src/config.js) for project configurations.
-
 ## Deploying
+
+The LibCrowds front-end runs from GitHub pages, so to deploy you can just do this:
 
 ``` bash
 # deploy to gh-pages
 npm run gh-pages
 ```
+
+## Configuring
+
+Configuration settings can be found in [config.js](src/config.js).

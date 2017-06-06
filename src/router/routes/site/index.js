@@ -20,6 +20,7 @@ export default {
     }
 
     store.commit('SET_SITE_CONFIG', siteConfig)
+    store.commit('SET_PYBOSSA_API', siteConfig)
     next()
   },
 
