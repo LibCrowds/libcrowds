@@ -64,7 +64,7 @@ export default {
           sortable: true
         },
         actions: {
-          label: 'Actions'
+          label: 'Download'
         }
       },
       categoryShortName: 'featured',
