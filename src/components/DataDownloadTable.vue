@@ -1,43 +1,43 @@
 <template>
   <section>
-    <div class="justify-content-centermy-1 row">
 
+    <div class="justify-content-centermy-1 row">
       <b-form-fieldset horizontal label="Category" class="col-6">
         <b-form-select
           :options="categoryOpts"
           v-model="categoryShortName">
         </b-form-select>
       </b-form-fieldset>
-
     </div>
 
-    <!-- Main table element -->
-    <b-table
-      striped
-      show-empty
-      :items="projects"
-      :fields="fields"
-      empty-text="No projects are available for this category">
-      <template slot="name" scope="project">
-        {{ project.value }}
-      </template>
-      <template slot="actions" scope="project">
-        <b-btn
-          size="sm"
-          variant="success"
-          @click="download(project.item.short_name, 'csv')">
-          <icon name="download"></icon> CSV
-        </b-btn>
-        <b-btn
-          size="sm"
-          variant="success"
-          @click="download(project.item.short_name, 'json')">
-          <icon name="download"></icon> JSON
-        </b-btn>
-      </template>
-    </b-table>
+    <b-card no-block>
+      <b-table
+        striped
+        show-empty
+        :items="projects"
+        :fields="fields"
+        empty-text="No projects are available for this category">
+        <template slot="name" scope="project">
+          {{ project.value }}
+        </template>
+        <template slot="actions" scope="project">
+          <b-btn
+            size="sm"
+            variant="outline-success"
+            @click="download(project.item.short_name, 'csv')">
+            CSV
+          </b-btn>
+          <b-btn
+            size="sm"
+            variant="outline-success"
+            @click="download(project.item.short_name, 'json')">
+            JSON
+          </b-btn>
+        </template>
+      </b-table>
+    </b-card>
 
-    <div class="justify-content-center row my-1">
+    <div class="justify-content-center row mt-4">
       <b-pagination
         variant="info"
         :total-rows="pagination.total"
@@ -45,6 +45,7 @@
         v-model="currentPage">
       </b-pagination>
     </div>
+
   </section>
 </template>
 
@@ -135,3 +136,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import 'src/assets/style/_vars.scss';
+@import '~bootstrap/scss/bootstrap';
+
+.table {
+  font-size: $font-size-sm;
+  margin-bottom: 0;
+
+  th {
+    text-transform: uppercase;
+    color: $text-muted;
+    border-top: none;
+  }
+
+  tr *:nth-child(2) {
+    text-align: center;
+  }
+}
+</style>
