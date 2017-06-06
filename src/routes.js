@@ -57,16 +57,6 @@ export default [
         component: require('@/pages/pybossa/projects/Projects')
       },
       {
-        path: 'stats',
-        name: 'stats',
-        component: require('@/pages/pybossa/home/Stats')
-      },
-      {
-        path: 'results',
-        name: 'results',
-        component: require('@/pages/pybossa/home/Results')
-      },
-      {
         path: 'data',
         name: 'data',
         component: require('@/components/Tabs'),
