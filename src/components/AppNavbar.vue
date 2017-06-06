@@ -12,9 +12,9 @@
 
           <b-nav is-nav-bar>
             <b-nav-item :to="{ name: 'about', params: { shortname: siteConfig.shortname }}">About</b-nav-item>
-            <b-nav-item :to="{ name: 'projects', params: { shortname: siteConfig.shortname }}">Projects</b-nav-item>
-            <b-nav-item :to="{ name: 'stats', params: { shortname: siteConfig.shortname }}">Statistics</b-nav-item>
-            <b-nav-item :to="{ name: 'results', params: { shortname: siteConfig.shortname }}">Results</b-nav-item>
+            <b-nav-item to="#">Projects</b-nav-item>
+            <b-nav-item to="#">Statistics</b-nav-item>
+            <b-nav-item to="#">Results</b-nav-item>
             <b-nav-item :to="{ name: 'data', params: { shortname: siteConfig.shortname }}">Data</b-nav-item>
           </b-nav>
 

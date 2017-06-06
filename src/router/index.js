@@ -1,12 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import routes from '@/router/routes'
+
+import landing from '@/router/routes/landing'
+import site from '@/router/routes/site'
+import notFound from '@/router/routes/notFound'
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  routes: routes,
-  mode: 'history'
+  mode: 'history',
+  routes: [
+    landing,
+    site,
+    notFound
+  ]
 })
 
 export default router
