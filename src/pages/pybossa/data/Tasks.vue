@@ -17,8 +17,8 @@
         {{ project.value }}
       </template>
       <template slot="actions" scope="project">
-        <b-btn @click="downloadCsv(project.item)">Download CSV</b-btn>
-        <b-btn @click="downloadJson(project.item)">Download JSON</b-btn>
+        <b-btn @click="download(project.item.short_name, 'csv')">Download CSV</b-btn>
+        <b-btn @click="download(project.item.short_name, 'json')">Download JSON</b-btn>
       </template>
     </b-table>
 
@@ -80,11 +80,20 @@ export default {
         console.log(error)
       })
     },
-    downloadCsv (item) {
-      alert('CSV' + item)
-    },
-    downloadJson (item) {
-      alert('JSON')
+    download (shortName, format) {
+      const url = `/project/${shortName}/tasks/export?type=task&format=${format}`
+      this.pybossaApi.get(url, {
+        responseType: 'arraybuffer'
+      }).then(res => {
+        console.log(res)
+        let blob = new Blob([res.data], { type: 'application/zip' })
+        let link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = `${shortName}_tasks.zip`
+        link.click()
+      }).catch(error => {
+        console.log(error)
+      })
     }
   },
 
