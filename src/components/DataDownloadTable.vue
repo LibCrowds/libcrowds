@@ -106,7 +106,7 @@ export default {
     download (shortName, format) {
       this.pybossaApi.get(`/project/${shortName}/tasks/export`, {
         responseType: 'arraybuffer',
-        data: {
+        params: {
           type: this.type,
           format: format
         }

@@ -1,5 +1,5 @@
 <template>
-  <data-download-table :type="'taskrun'"></data-download-table>
+  <data-download-table :type="'task_run'"></data-download-table>
 </template>
 
 <script>
