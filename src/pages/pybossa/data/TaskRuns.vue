@@ -1,20 +1,13 @@
 <template>
-  <section>
-
-  </section>
+  <data-download-table :type="'taskrun'"></data-download-table>
 </template>
 
 <script>
-import config from '@/config'
+import DataDownloadTable from '@/components/DataDownloadTable'
 
 export default {
-  data: function () {
-    return {
-      config: config
-    }
+  components: {
+    DataDownloadTable
   }
 }
 </script>
-
-<style>
-</style>
