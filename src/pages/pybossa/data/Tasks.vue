@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
+
 export default {
   data: function () {
     return {
@@ -81,16 +83,16 @@ export default {
       })
     },
     download (shortName, format) {
-      const url = `/project/${shortName}/tasks/export?type=task&format=${format}`
-      this.pybossaApi.get(url, {
-        responseType: 'arraybuffer'
+      this.pybossaApi.get(`/project/${shortName}/tasks/export`, {
+        responseType: 'arraybuffer',
+        data: {
+          type: 'task',
+          format: format
+        }
       }).then(res => {
-        console.log(res)
-        let blob = new Blob([res.data], { type: 'application/zip' })
-        let link = document.createElement('a')
-        link.href = window.URL.createObjectURL(blob)
-        link.download = `${shortName}_tasks.zip`
-        link.click()
+        const blob = new Blob([res.data], {type: 'application/zip'})
+        const fn = `${shortName}_task.zip`
+        FileSaver.saveAs(blob, fn)
       }).catch(error => {
         console.log(error)
       })
