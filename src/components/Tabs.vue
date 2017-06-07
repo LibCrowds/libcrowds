@@ -1,7 +1,7 @@
 <template>
   <b-tabs pills>
     <b-tab v-for="tab in tabs" :title="tab.title" class="p-3 p-md-5" :key="tab.title">
-      <h2 class="text-uppercase text-center font-weight-bold display-4">
+      <h2 class="text-center font-weight-bold display-4">
         {{ tab.title }}
       </h2>
       <hr>
