@@ -68,9 +68,8 @@ export default {
           label: 'Download'
         }
       },
-      categoryShortName: this.siteConfig.categories[0],
+      categoryShortName: this.$store.state.siteConfig.categories[0].shortName,
       currentPage: 1,
-      categories: [],
       projects: [],
       pagination: {
         per_page: 20,
@@ -85,8 +84,8 @@ export default {
 
   computed: {
     categoryOpts: function () {
-      return this.categories.map(function (c) {
-        return { text: c.name, value: c.short_name }
+      return this.siteConfig.categories.map(function (c) {
+        return { text: c.name, value: c.shortName }
       })
     }
   },
@@ -98,11 +97,8 @@ export default {
         url += `page/${this.currentPage}/`
       }
       pybossaApi.get(url).then(res => {
-        this.categories = res.data.categories
         this.projects = res.data.projects
         this.pagination = res.data.pagination
-      }).catch(error => {
-        console.log(error)
       })
     },
     download (shortName, format) {
@@ -113,12 +109,9 @@ export default {
           format: format
         }
       }).then(res => {
-        console.log(res)
         const blob = new Blob([res.data], {type: 'application/zip'})
         const fn = `${shortName}_${this.type}.zip`
         FileSaver.saveAs(blob, fn)
-      }).catch(error => {
-        console.log(error)
       })
     }
   },

@@ -28,7 +28,7 @@ export default {
 
       ],
       categories: [
-        'thinking'
+        {name: 'Thinking', shortName: 'thinking'}
       ]
     }
   ]
