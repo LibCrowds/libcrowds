@@ -5,14 +5,7 @@
 </template>
 
 <script>
-import WebFont from 'webfontloader'
 import config from '@/config'
-
-WebFont.load({
-  google: {
-    families: ['Assistant', 'Roboto']
-  }
-})
 
 export default {
   name: 'app',

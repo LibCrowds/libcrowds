@@ -29,8 +29,7 @@
     "vue-meta": "^1.0.4",
     "vue-router": "^2.3.1",
     "vuex": "^2.3.1",
-    "vuex-router-sync": "^4.2.0",
-    "webfontloader": "^1.6.27"
+    "vuex-router-sync": "^4.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.1",
