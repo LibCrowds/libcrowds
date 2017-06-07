@@ -11,6 +11,7 @@ export default {
     twitter: 'LibCrowds',
     email: 'crowdsourcing@bl.uk'
   },
+  companyLogo: require('@/assets/img/bl-logo.svg'),
   dataLicense: {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
