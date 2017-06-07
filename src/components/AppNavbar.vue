@@ -70,9 +70,7 @@
     </b-navbar>
 
     <b-modal id="new-project-modal" title="New Project">
-      <form>
-        <b-form-input type="text" placeholder="Enter your name"></b-form-input>
-      </form>
+      <new-project-form></new-project-form>
     </b-modal>
 
   </div>

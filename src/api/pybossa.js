@@ -14,7 +14,6 @@ instance.interceptors.response.use((res) => {
   if ('next' in res.data) {
     console.log('next parameter in response')
   }
-  console.log(res)
   return res
 }, function (error) {
   // TODO: Log these errors and notify the user
