@@ -89,6 +89,8 @@ export default {
       let opts = this.categories.map(function (c) {
         return { text: c.name, value: c.short_name }
       })
+
+      // TODO: Fix: this will cause data to be fetched twice on load if no featured category exists
       if (opts.length) {
         this.categoryShortName = opts[0].value
       }
@@ -103,7 +105,6 @@ export default {
         url += `page/${this.currentPage}/`
       }
       this.pybossaApi.get(url).then(res => {
-        console.log('fetching ' + this.type)
         this.categories = res.data.categories
         this.projects = res.data.projects
         this.pagination = res.data.pagination
