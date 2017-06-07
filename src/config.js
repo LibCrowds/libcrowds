@@ -14,7 +14,7 @@ export default {
   dataLicense: {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
-  }
+  },
   discourseUrl: 'http://community.libcrowds.com',
   githubUrl: 'https://github.com/LibCrowds',
   sites: [

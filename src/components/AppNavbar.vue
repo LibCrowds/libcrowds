@@ -4,27 +4,60 @@
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-        <b-link class="navbar-brand" :to="{ name: 'home', params: { shortname: siteConfig.shortname }}">
+        <b-link
+          class="navbar-brand"
+          :to="{
+            name: 'home',
+            params: {
+              shortname: siteConfig.shortname
+            }
+          }">
           <span>{{ siteConfig.name }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse">
 
           <b-nav is-nav-bar>
-            <b-nav-item :to="{ name: 'about', params: { shortname: siteConfig.shortname }}">About</b-nav-item>
+            <b-nav-item
+              :to="{
+                name: 'about',
+                params: {
+                  shortname: siteConfig.shortname
+                }
+              }">
+              About
+            </b-nav-item>
             <b-nav-item to="#">Projects</b-nav-item>
             <b-nav-item to="#">Statistics</b-nav-item>
             <b-nav-item to="#">Results</b-nav-item>
-            <b-nav-item :to="{ name: 'data', params: { shortname: siteConfig.shortname }}">Data</b-nav-item>
+            <b-nav-item
+              :to="{
+                name: 'data',
+                params: {
+                  shortname: siteConfig.shortname
+                }
+              }">
+              Data
+            </b-nav-item>
           </b-nav>
 
           <b-nav is-nav-bar>
             <b-nav-item-dropdown text="current user" right>
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
-              <b-dropdown-item :to="{ name: 'help', params: { shortname: siteConfig.shortname }}">Help</b-dropdown-item>
+              <b-dropdown-item
+                :to="{
+                  name: 'help',
+                  params: {
+                    shortname: siteConfig.shortname
+                  }
+                }">
+                Help
+              </b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item to="#">New Project</b-dropdown-item>
+              <b-dropdown-item v-b-modal.new-project-modal>
+                New Project
+              </b-dropdown-item>
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
               <b-dropdown-item to="#">Admin</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -35,16 +68,29 @@
         </b-collapse>
       </div>
     </b-navbar>
+
+    <b-modal id="new-project-modal" title="New Project">
+      <form>
+        <b-form-input type="text" placeholder="Enter your name"></b-form-input>
+      </form>
+    </b-modal>
+
   </div>
 </template>
 
 <script>
+import NewProjectForm from '@/components/forms/projects/New'
+
 export default {
   name: 'app-navbar',
   data: function () {
     return {
       siteConfig: this.$store.state.siteConfig
     }
+  },
+
+  components: {
+    NewProjectForm
   }
 }
 </script>
