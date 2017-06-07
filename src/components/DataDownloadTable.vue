@@ -67,6 +67,8 @@ export default {
           label: 'Download'
         }
       },
+
+      // There will be an endpoint for featured even if the category doesn't exist
       categoryShortName: 'featured',
       currentPage: 1,
       categories: [],
@@ -84,9 +86,13 @@ export default {
 
   computed: {
     categoryOpts: function () {
-      return this.categories.map(function (c) {
+      let opts = this.categories.map(function (c) {
         return { text: c.name, value: c.short_name }
       })
+      if (opts.length) {
+        this.categoryShortName = opts[0].value
+      }
+      return opts
     }
   },
 
@@ -97,6 +103,7 @@ export default {
         url += `page/${this.currentPage}/`
       }
       this.pybossaApi.get(url).then(res => {
+        console.log('fetching ' + this.type)
         this.categories = res.data.categories
         this.projects = res.data.projects
         this.pagination = res.data.pagination
