@@ -1,4 +1,7 @@
 export default {
   path: '/',
-  component: require('@/pages/Landing')
+  component: require('@/components/layouts/Core.vue'),
+  children: [
+
+  ]
 }
