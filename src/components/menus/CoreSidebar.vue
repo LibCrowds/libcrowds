@@ -1,23 +1,30 @@
 <template>
-  <nav id="core-menu">  
+  <nav id="core-menu">
 
     <b-link class="nav-brand" to="/"><h1>{{ config.brand }}</h1></b-link>
-    
+
     <b-list-group>
       <b-list-group-item active>Home</b-list-group-item>
       <b-list-group-item to="#">
-        Playbills
+        Projects
       </b-list-group-item>
       <b-list-group-item to="#">
-        Convert-a-Card
+        Statistics
+      </b-list-group-item>
+      <b-list-group-item to="#">
+        Data
       </b-list-group-item>
     </b-list-group>
-  
+
     <div id="sidebar-icons">
-      <b-link to="/"><icon name="github"></icon></b-link>
-      <b-link to="/"><icon name="twitter"></icon></b-link>
+      <a :href="config.githubUrl" target="_blank">
+        <icon name="github"></icon>
+      </a>
+      <a :href="twitterUrl" target="_blank">
+        <icon name="twitter"></icon>
+      </a>
     </div>
-  
+
   </nav>
 </template>
 <script>
@@ -30,6 +37,12 @@ export default {
     return {
       config: config
     }
+  },
+
+  computed: {
+    twitterUrl () {
+      return `https://twitter.com/${config.contact.twitter}`
+    }
   }
 }
 </script>
@@ -39,44 +52,52 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 #core-menu {
+  background-color: rgba($black, 0.85);
   display: flex;
-  
+  overflow-y: auto;
+
   .nav-brand {
     color: $white;
+    margin-bottom: 0;
   }
-  
+
   .list-group {
     .list-group-item {
       color: $white;
       border: none;
       background: transparent;
+
+      &.active {
+        color: $brand-primary;
+      }
     }
   }
-  
+
   #sidebar-icons {
     margin-bottom: 1rem;
-    
+
     a {
       margin: 0.5rem;
       color: white;
     }
   }
-  
+
   @include media-breakpoint-up(md) {
     align-items: center;
     flex-direction: column;
     width: 350px;
     border-right: 1px solid $gray;
     justify-content: space-between;
-    
+
     .nav-brand {
       margin-top: 6rem;
     }
-    
+
     .list-group {
-    
+
       .list-group-item {
-        line-height: 2;
+        justify-content: center;
+        line-height: 1.5;
         font-size: 2rem;
       }
     }
