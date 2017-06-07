@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import pybossaApi from '@/api/pybossa'
 import FileSaver from 'file-saver'
 import 'vue-awesome/icons/download'
 
@@ -57,7 +58,6 @@ export default {
   name: 'data-download-table',
   data: function () {
     return {
-      pybossaApi: this.$store.state.pybossaApi,
       fields: {
         name: {
           label: 'Project',
@@ -104,7 +104,7 @@ export default {
       if (this.currentPage > 1) {
         url += `page/${this.currentPage}/`
       }
-      this.pybossaApi.get(url).then(res => {
+      pybossaApi.get(url).then(res => {
         this.categories = res.data.categories
         this.projects = res.data.projects
         this.pagination = res.data.pagination
@@ -113,7 +113,7 @@ export default {
       })
     },
     download (shortName, format) {
-      this.pybossaApi.get(`/project/${shortName}/tasks/export`, {
+      pybossaApi.get(`/project/${shortName}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
           type: this.type,

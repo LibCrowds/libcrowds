@@ -5,16 +5,12 @@
 </template>
 
 <script>
-export default {
-  data: function () {
-    return {
-      pybossaApi: this.$store.state.pybossaApi
-    }
-  },
+import pybossaApi from '@/api/pybossa'
 
+export default {
   methods: {
     fetchData () {
-      this.pybossaApi.get('project/new').then(res => {
+      pybossaApi.get('project/new').then(res => {
         console.log(res)
       }).catch(error => {
         console.log(error)
