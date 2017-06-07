@@ -58,6 +58,7 @@ export default {
   name: 'data-download-table',
   data: function () {
     return {
+      siteConfig: this.$store.state.siteConfig,
       fields: {
         name: {
           label: 'Project',
@@ -67,9 +68,7 @@ export default {
           label: 'Download'
         }
       },
-
-      // There will be an endpoint for featured even if the category doesn't exist
-      categoryShortName: 'featured',
+      categoryShortName: this.siteConfig.categories[0],
       currentPage: 1,
       categories: [],
       projects: [],
@@ -86,15 +85,9 @@ export default {
 
   computed: {
     categoryOpts: function () {
-      let opts = this.categories.map(function (c) {
+      return this.categories.map(function (c) {
         return { text: c.name, value: c.short_name }
       })
-
-      // TODO: Fix: this will cause data to be fetched twice on load if no featured category exists
-      if (opts.length) {
-        this.categoryShortName = opts[0].value
-      }
-      return opts
     }
   },
 
