@@ -1,7 +1,7 @@
 <template>
   <div class="error">
     <b-jumbotron :header="title" :lead="description">
-      <b-btn variant="white" v-on:click="goBack">Go Back</b-btn>
+      <b-btn variant="white" :to="{ path: '/' }">Go Home</b-btn>
     </b-jumbotron>
   </div>
 </template>
@@ -10,16 +10,10 @@
 export default {
   name: 'error',
 
-  methods: {
-    goBack: function () {
-      this.$router.go(-1)
-    }
-  },
-
-  props: {
-    title: "Uh oh, something's broken",
-    description: "We'll fix it as soon as we can."
-  },
+  props: [
+    'title',
+    'description'
+  ],
 
   metaInfo: {
     title: this.title,
