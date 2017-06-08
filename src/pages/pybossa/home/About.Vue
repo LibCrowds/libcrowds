@@ -6,9 +6,6 @@
       <b-nav-item href="#background">Background</b-nav-item>
       <b-nav-item href="#technology">Technology</b-nav-item>
       <b-nav-item href="#contact">Contact</b-nav-item>
-      <b-nav-item href="#background">Background</b-nav-item>
-      <b-nav-item href="#technology">Technology</b-nav-item>
-      <b-nav-item href="#contact">Contact</b-nav-item>
     </b-nav>
 
     <section id="background">
