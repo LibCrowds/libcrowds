@@ -7,7 +7,7 @@
     </p>
     <pre class="my-2">
       <code>
-        {{ apiUrl }}
+        {{ config.pybossaHost }}/api
       </code>
     </pre>
     <p>
@@ -15,12 +15,12 @@
       operation. You can find your API key listed in your profile.
     </p>
     <p>
-      The API is extensive; rather than replicating the documentation here
-      please refer to the official
+      Rather than replicating the documentation here please refer to the 
+      official
       <a href="http://docs.pybossa.com/en/latest/api.html">
         PYBOSSA API documentation
-      </a> for details. Note that currently only the RESTful API is exposed 
-      via the route above (not the PYBOSSA endpoints).
+      </a> 
+      for details.
     </p>
   </section>
 </template>
@@ -31,8 +31,7 @@ import config from '@/config'
 export default {
   data: function () {
     return {
-      config: config,
-      apiUrl: `${this.$store.state.route.path}/api`
+      config: config
     }
   }
 }
