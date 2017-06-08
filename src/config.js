@@ -6,7 +6,7 @@ export default {
   description: 'LibCrowds is a platform for hosting experimental ' +
                'crowdsourcing projects aimed at improving access to the ' +
                'diverse collections held at the British Library.',
-  copyright: 'The British Library, 2017',
+  company: 'The British Library',
   contact: {
     twitter: 'LibCrowds',
     email: 'crowdsourcing@bl.uk'
@@ -29,7 +29,7 @@ export default {
 
       ],
       categories: [
-        {name: 'Thinking', shortName: 'thinking'}
+        { name: 'Thinking', shortName: 'thinking' }
       ]
     }
   ]

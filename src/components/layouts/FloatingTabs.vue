@@ -1,22 +1,22 @@
 <template>
   <div class="floating-tabs" :style="mainStyle">
     <app-navbar></app-navbar>
-      <div class="container mt-md-4 mb-5">
+    <div class="container mt-md-4 mb-5">
 
-        <slot name="nav"></slot>
+      <slot name="nav"></slot>
 
-        <main>
-          <slot></slot>
-        </main>
+      <main>
+        <slot></slot>
+      </main>
 
-      </div>
-    <app-footer></app-footer>
+    </div>
+    <site-footer></site-footer>
   </div>
 </template>
 
 <script>
 import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
+import SiteFooter from '@/components/SiteFooter'
 
 export default {
   data: function () {
@@ -35,7 +35,7 @@ export default {
 
   components: {
     AppNavbar,
-    AppFooter
+    SiteFooter
   }
 }
 </script>
