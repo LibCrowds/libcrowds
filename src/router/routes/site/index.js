@@ -1,15 +1,22 @@
 import config from '@/config'
 import store from '@/store'
 
-import home from '@/router/routes/site/home'
-import about from '@/router/routes/site/about'
-import help from '@/router/routes/site/help'
-import data from '@/router/routes/site/data'
+import Landing from '@/pages/Landing'
+
+import About from '@/pages/pybossa/home/About'
+import Data from '@/pages/pybossa/home/Data'
+
+import TOS from '@/pages/pybossa/help/TOS'
+import Privacy from '@/pages/pybossa/help/Privacy'
+import Cookies from '@/pages/pybossa/help/Cookies'
 
 export default {
   path: '/site/:shortname',
-  component: require('@/components/layouts/FloatingContainer'),
+  component: {
+    render (c) { return c('router-view') }
+  },
 
+  // Check if the site is configured
   beforeEnter: (to, from, next) => {
     let siteConfig = config.sites.find(function (site) {
       return site.shortname === to.params.shortname
@@ -24,9 +31,12 @@ export default {
   },
 
   children: [
-    home,
-    about,
-    help,
-    data
+    { path: '', name: 'home', component: Landing },
+    { path: 'about', name: 'about', component: About },
+    { path: 'data', name: 'data', component: Data },
+
+    { path: 'tos', name: 'tos', component: TOS },
+    { path: 'privacy', name: 'privacy', component: Privacy },
+    { path: 'cookies', name: 'cookies', component: Cookies }
   ]
 }

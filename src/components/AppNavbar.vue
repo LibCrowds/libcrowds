@@ -45,7 +45,7 @@
             <b-nav-item-dropdown text="current user" right>
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
-              <b-dropdown-item
+              <!-- <b-dropdown-item
                 :to="{
                   name: 'help',
                   params: {
@@ -53,11 +53,11 @@
                   }
                 }">
                 Help
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item v-b-modal.new-project-modal>
+              <!-- <b-dropdown-item v-b-modal.new-project-modal>
                 New Project
-              </b-dropdown-item>
+              </b-dropdown-item> -->
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
               <b-dropdown-item to="#">Admin</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -69,9 +69,9 @@
       </div>
     </b-navbar>
 
-    <b-modal id="new-project-modal" title="New Project">
+    <!-- <b-modal id="new-project-modal" title="New Project">
       <new-project-form></new-project-form>
-    </b-modal>
+    </b-modal> -->
 
   </div>
 </template>
