@@ -9,6 +9,7 @@ import Data from '@/pages/pybossa/home/Data'
 import TOS from '@/pages/pybossa/help/TOS'
 import Privacy from '@/pages/pybossa/help/Privacy'
 import Cookies from '@/pages/pybossa/help/Cookies'
+import Api from '@/pages/pybossa/help/Api'
 
 export default [
 
@@ -17,6 +18,7 @@ export default [
   { path: 'tos', name: 'tos', component: TOS },
   { path: 'privacy', name: 'privacy', component: Privacy },
   { path: 'cookies', name: 'cookies', component: Cookies },
+  { path: 'api', name: 'api', component: Api },
 
   // PYBOSSA meta-category sites
   {

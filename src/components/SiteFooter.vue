@@ -30,7 +30,7 @@
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'tos' }">
+            <router-link :to="{ name: 'api' }">
               API
             </router-link>
           </li>
