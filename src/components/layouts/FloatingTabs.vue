@@ -53,6 +53,19 @@ export default {
 
 main {
   flex: 1 1 auto;
+
+  & > * {
+    background-color: $white;
+    padding: 2rem 2.5rem;
+
+    @include media-breakpoint-up(md) {
+      padding: 3rem 4.5rem;
+    }
+
+    &:nth-child(even) {
+      @extend .bg-faded;
+    }
+  }
 }
 
 .nav {
@@ -62,19 +75,6 @@ main {
 
   .nav-link {
     color: $navbar-light-color;
-  }
-}
-
-section {
-  background-color: $white;
-  padding: 2rem 2.5rem;
-
-  @include media-breakpoint-up(md) {
-    padding: 3rem 4.5rem;
-  }
-
-  &:nth-child(even) {
-    @extend .bg-faded;
   }
 }
 
