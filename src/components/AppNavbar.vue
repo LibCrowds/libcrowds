@@ -42,7 +42,11 @@
           </b-nav>
 
           <b-nav is-nav-bar>
-            <b-nav-item-dropdown text="current user" right>
+            
+            <b-nav-item-dropdown 
+              right
+              text="current user" 
+              v-if="currentUser.length">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -54,7 +58,10 @@
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item to="#">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
-
+            
+            <b-nav-item v-else :to="{ name: 'signin' }">
+              Sign in
+            </b-nav-item>
           </b-nav>
         </b-collapse>
       </div>
@@ -74,7 +81,8 @@ export default {
   name: 'app-navbar',
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig
+      siteConfig: this.$store.state.siteConfig,
+      currentUser: this.$store.state.currentUser
     }
   },
 

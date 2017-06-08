@@ -8,10 +8,21 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
+  xsrfCookieName: 'csrftoken',
+  xsrfHeaderName: 'X-CSRFToken',
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
+instance.interceptors.request.use(function (config) {
+  console.log(config)
+  return config
+}, function (error) {
+  return Promise.reject(error)
+})
+
 instance.interceptors.response.use((r) => {
+  console.log(document.cookie)
+  console.log(r)
   if (r.data.template === 'account/signin.html') {
     router.push({
       name: 'signin',

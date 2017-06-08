@@ -10,6 +10,7 @@ import TOS from '@/pages/pybossa/help/TOS'
 import Privacy from '@/pages/pybossa/help/Privacy'
 import Cookies from '@/pages/pybossa/help/Cookies'
 import Api from '@/pages/pybossa/help/Api'
+import Signin from '@/pages/pybossa/account/Signin'
 
 export default [
 
@@ -19,6 +20,7 @@ export default [
   { path: '/help/privacy', name: 'privacy', component: Privacy },
   { path: '/help/cookies', name: 'cookies', component: Cookies },
   { path: '/help/api', name: 'api', component: Api },
+  { path: '/account/signin', name: 'signin', component: Signin },
 
   // PYBOSSA meta-category sites
   {
