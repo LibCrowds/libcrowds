@@ -8,7 +8,7 @@
     </b-nav>
 
     <section id="datasets">
-      <h2 class="text-center font-weight-bold display-4">Datasets</h2>
+      <h2 class="text-center">Datasets</h2>
       <hr>
       <p>
         All datasets generated from the experimental crowdsourcing projects
@@ -28,7 +28,7 @@
           <strong>Tasks: </strong>The original input data for the tasks.
         </li>
         <li>
-          <strong>Task Runs: </strong>The contribution data for each task.
+          <strong>Task Runs: </strong>The contribution data for all tasks.
         </li>
       </ul>
       <p>
@@ -46,12 +46,12 @@
     </section>
 
     <section id="tasks">
-      <h2 class="text-center font-weight-bold display-4">Tasks</h2>
+      <h3 class="text-center">Tasks</h3>
       <data-download-table :type="'task'"></data-download-table>
     </section>
 
     <section id="taskruns">
-      <h2 class="text-center font-weight-bold display-4">Task Runs</h2>
+      <h3 class="text-center">Task Runs</h3>
       <data-download-table :type="'task_run'"></data-download-table>
     </section>
 
