@@ -3,7 +3,14 @@
     <app-navbar></app-navbar>
     <div class="container mt-md-4 mb-5">
 
-      <slot name="nav"></slot>
+      <b-nav>
+        <b-nav-item
+          v-for="item in navItems"
+          v-on:click="jump('#' + item.id)"
+          :key="item.id">
+          {{ item.text }}
+        </b-nav-item>
+      </b-nav>
 
       <main>
         <slot></slot>
@@ -15,6 +22,7 @@
 </template>
 
 <script>
+import jump from 'jump.js'
 import AppNavbar from '@/components/AppNavbar'
 import SiteFooter from '@/components/SiteFooter'
 
@@ -36,6 +44,14 @@ export default {
   components: {
     AppNavbar,
     SiteFooter
+  },
+
+  props: [
+    'nav-items'
+  ],
+
+  methods: {
+    jump: jump
   }
 }
 </script>

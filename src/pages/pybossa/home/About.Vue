@@ -1,12 +1,6 @@
 <template>
 
-  <floating-tabs>
-
-    <b-nav slot="nav">
-      <b-nav-item href="#background">Background</b-nav-item>
-      <b-nav-item href="#technology">Technology</b-nav-item>
-      <b-nav-item href="#contact">Contact</b-nav-item>
-    </b-nav>
+  <floating-tabs :nav-items="navItems">
 
     <section id="background">
       <h2 class="text-center">Background</h2>
@@ -82,7 +76,12 @@ export default {
   data: function () {
     return {
       config: config,
-      siteConfig: this.$store.state.siteConfig
+      siteConfig: this.$store.state.siteConfig,
+      navItems: [
+        { id: 'background', text: 'Background' },
+        { id: 'technology', text: 'Technology' },
+        { id: 'contact', text: 'Contact' }
+      ]
     }
   },
 

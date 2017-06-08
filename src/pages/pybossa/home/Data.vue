@@ -1,11 +1,6 @@
 <template>
-  <floating-tabs>
 
-    <b-nav slot="nav">
-      <b-nav-item href="#background">Datasets</b-nav-item>
-      <b-nav-item href="#tasks">Tasks</b-nav-item>
-      <b-nav-item href="#taskruns">Task Runs</b-nav-item>
-    </b-nav>
+  <floating-tabs :nav-items="navItems">
 
     <section id="datasets">
       <h2 class="text-center">Datasets</h2>
@@ -56,6 +51,7 @@
     </section>
 
   </floating-tabs>
+  
 </template>
 
 <script>
@@ -66,7 +62,12 @@ import FloatingTabs from '@/components/layouts/FloatingTabs'
 export default {
   data: function () {
     return {
-      config: config
+      config: config,
+      navItems: [
+        { id: 'datasets', text: 'Datasets' },
+        { id: 'tasks', text: 'Tasks' },
+        { id: 'taskruns', text: 'Task Runs' }
+      ]
     }
   },
 
