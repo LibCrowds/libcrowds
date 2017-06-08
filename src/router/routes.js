@@ -15,10 +15,10 @@ export default [
 
   // Core site
   { path: '/', name: 'core', component: Core },
-  { path: 'tos', name: 'tos', component: TOS },
-  { path: 'privacy', name: 'privacy', component: Privacy },
-  { path: 'cookies', name: 'cookies', component: Cookies },
-  { path: 'api', name: 'api', component: Api },
+  { path: '/help/tos', name: 'tos', component: TOS },
+  { path: '/help/privacy', name: 'privacy', component: Privacy },
+  { path: '/help/cookies', name: 'cookies', component: Cookies },
+  { path: '/help/api', name: 'api', component: Api },
 
   // PYBOSSA meta-category sites
   {
