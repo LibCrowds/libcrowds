@@ -17,22 +17,22 @@
         :items="projects"
         :fields="fields"
         empty-text="No projects are available for this category">
-        <template slot="name" scope="project">
-          {{ project.value }}
+        <template slot="overall_progress" scope="project">
+          {{ project.item.overall_progress }}%
         </template>
-        <template slot="actions" scope="project">
-          <b-btn
-            size="sm"
-            variant="outline-success"
-            @click="download(project.item.short_name, 'csv')">
-            CSV
-          </b-btn>
-          <b-btn
-            size="sm"
-            variant="outline-success"
-            @click="download(project.item.short_name, 'json')">
+        <template slot="download" scope="project">
+          <data-download-button
+            :type="downloadType"
+            :format="'json'"
+            :projectShortName="project.item.short_name">
             JSON
-          </b-btn>
+          </data-download-button>
+          <data-download-button
+            :type="downloadType"
+            :format="'csv'"
+            :projectShortName="project.item.short_name">
+            CSV
+          </data-download-button>
         </template>
       </b-table>
     </b-card>
@@ -50,9 +50,8 @@
 </template>
 
 <script>
+import DataDownloadButton from '@/components/buttons/DataDownloadButton'
 import pybossaApi from '@/api/pybossa'
-import FileSaver from 'file-saver'
-import 'vue-awesome/icons/download'
 
 export default {
   name: 'data-download-table',
@@ -60,13 +59,11 @@ export default {
     return {
       siteConfig: this.$store.state.siteConfig,
       fields: {
-        name: {
-          label: 'Project',
-          sortable: true
-        },
-        actions: {
-          label: 'Download'
-        }
+        name: { label: 'Name' },
+        n_tasks: { label: 'Tasks' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        download: { label: 'Download' }
       },
       categoryShortName: this.$store.state.siteConfig.categories[0].shortName,
       currentPage: 1,
@@ -79,8 +76,12 @@ export default {
   },
 
   props: [
-    'type'
+    'downloadType'
   ],
+
+  components: {
+    DataDownloadButton
+  },
 
   computed: {
     categoryOpts: function () {
@@ -91,7 +92,8 @@ export default {
   },
 
   methods: {
-    fetchData () {
+    fetchProjects () {
+      // Fetch all projects for the selected category
       let url = `/project/category/${this.categoryShortName}/`
       if (this.currentPage > 1) {
         url += `page/${this.currentPage}/`
@@ -100,33 +102,20 @@ export default {
         this.projects = res.data.projects
         this.pagination = res.data.pagination
       })
-    },
-    download (shortName, format) {
-      pybossaApi.get(`/project/${shortName}/tasks/export`, {
-        responseType: 'arraybuffer',
-        params: {
-          type: this.type,
-          format: format
-        }
-      }).then(res => {
-        const blob = new Blob([res.data], {type: 'application/zip'})
-        const fn = `${shortName}_${this.type}.zip`
-        FileSaver.saveAs(blob, fn)
-      })
     }
   },
 
   watch: {
     categoryShortName: function () {
-      this.fetchData()
+      this.fetchProjects()
     },
     currentPage: function () {
-      this.fetchData()
+      this.fetchProjects()
     }
   },
 
   mounted () {
-    this.fetchData()
+    this.fetchProjects()
   }
 }
 </script>
@@ -140,12 +129,13 @@ export default {
   margin-bottom: 0;
 
   th {
+    font-weight: 400;
     text-transform: uppercase;
     color: $text-muted;
     border-top: none;
   }
 
-  tr *:nth-child(2) {
+  tr *:not(:first-child) {
     text-align: center;
   }
 }

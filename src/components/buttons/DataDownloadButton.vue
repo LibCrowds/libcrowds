@@ -4,7 +4,7 @@
     size="sm"
     variant="outline-success"
     @click="download()">
-    {{ btnText }}
+    <slot></slot>
   </b-btn>
 </template>
 
@@ -13,12 +13,6 @@ import pybossaApi from '@/api/pybossa'
 import FileSaver from 'file-saver'
 
 export default {
-  data: function () {
-    return {
-      btnText: `Download ${this.format.toUpperCase()}`
-    }
-  },
-
   props: [
     'projectShortName',
     'type',
@@ -35,7 +29,7 @@ export default {
         }
       }).then(res => {
         const blob = new Blob([res.data], {type: 'application/zip'})
-        const fn = `${this.projectShortName}_${this.type}.zip`
+        const fn = `${this.projectShortName}_${this.type}_${this.format}.zip`
         FileSaver.saveAs(blob, fn)
       })
     }

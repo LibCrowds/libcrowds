@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs :nav-items="navItems">
+  <floating-tabs :nav-items="floatingTabNavItems">
 
     <section id="datasets">
       <h2 class="text-center">Datasets</h2>
@@ -42,12 +42,12 @@
 
     <section id="tasks">
       <h3 class="text-center">Tasks</h3>
-      <data-download-table :type="'task'"></data-download-table>
+      <data-download-table :downloadType="'task'"></data-download-table>
     </section>
 
     <section id="taskruns">
       <h3 class="text-center">Task Runs</h3>
-      <data-download-table :type="'task_run'"></data-download-table>
+      <data-download-table :downloadType="'task_run'"></data-download-table>
     </section>
 
   </floating-tabs>
@@ -56,14 +56,14 @@
 
 <script>
 import config from '@/config'
-import DataDownloadTable from '@/components/DataDownloadTable'
+import DataDownloadTable from '@/components/tables/DataDownloadTable'
 import FloatingTabs from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
       config: config,
-      navItems: [
+      floatingTabNavItems: [
         { id: 'datasets', text: 'Datasets' },
         { id: 'tasks', text: 'Tasks' },
         { id: 'taskruns', text: 'Task Runs' }
@@ -72,8 +72,8 @@ export default {
   },
 
   components: {
-    DataDownloadTable,
-    FloatingTabs
+    FloatingTabs,
+    DataDownloadTable
   }
 }
 </script>
