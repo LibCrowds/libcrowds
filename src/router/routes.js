@@ -11,6 +11,7 @@ import Privacy from '@/pages/pybossa/help/Privacy'
 import Cookies from '@/pages/pybossa/help/Cookies'
 import Api from '@/pages/pybossa/help/Api'
 import Signin from '@/pages/pybossa/account/Signin'
+import Projects from '@/pages/pybossa/Projects/Projects'
 
 export default [
 
@@ -45,7 +46,8 @@ export default [
     children: [
       { path: '', name: 'home', component: Landing },
       { path: 'about', name: 'about', component: About },
-      { path: 'data', name: 'data', component: Data }
+      { path: 'data', name: 'data', component: Data },
+      { path: 'projects', name: 'projects', component: Projects }
     ]
   },
 

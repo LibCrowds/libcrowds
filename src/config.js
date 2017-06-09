@@ -25,6 +25,7 @@ export default {
       name: 'Playbills',
       bgImg: require('@/assets/img/playbills.jpg'),
       background: require('@/assets/markdown/playbills.md'),
+      categorisation: require('@/assets/markdown/playbills-categorisation.md'),
       team: [
 
       ],

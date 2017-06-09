@@ -27,7 +27,15 @@
               }">
               About
             </b-nav-item>
-            <b-nav-item to="#">Projects</b-nav-item>
+            <b-nav-item
+              :to="{
+                name: 'projects',
+                params: {
+                  shortname: siteConfig.shortname
+                }
+              }">
+              Projects
+            </b-nav-item>
             <b-nav-item to="#">Statistics</b-nav-item>
             <b-nav-item to="#">Results</b-nav-item>
             <b-nav-item
