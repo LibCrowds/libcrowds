@@ -1,8 +1,8 @@
-# libcrowds-spa-theme
+# libcrowds-frontend
 
-[![Build Status](https://travis-ci.org/LibCrowds/libcrowds-spa-theme.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds-spa-theme)
-[![dependencies Status](https://david-dm.org/LibCrowds/libcrowds-spa-theme/status.svg)](https://david-dm.org/LibCrowds/libcrowds-spa-theme)
-[![devDependencies Status](https://david-dm.org/LibCrowds/libcrowds-spa-theme/dev-status.svg)](https://david-dm.org/LibCrowds/libcrowds-spa-theme?type=dev)
+[![Build Status](https://travis-ci.org/LibCrowds/libcrowds-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds-frontend)
+[![dependencies Status](https://david-dm.org/LibCrowds/libcrowds-frontend/status.svg)](https://david-dm.org/LibCrowds/libcrowds-frontend)
+[![devDependencies Status](https://david-dm.org/LibCrowds/libcrowds-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/libcrowds-frontend?type=dev)
 
 > The LibCrowds front-end
 
