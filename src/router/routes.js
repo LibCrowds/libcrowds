@@ -6,6 +6,7 @@ import Landing from '@/pages/Landing'
 import Home from '@/pages/pybossa/home/Home'
 import About from '@/pages/pybossa/home/About'
 import Data from '@/pages/pybossa/home/Data'
+import Results from '@/pages/pybossa/home/Results'
 import TOS from '@/pages/pybossa/help/TOS'
 import Privacy from '@/pages/pybossa/help/Privacy'
 import Cookies from '@/pages/pybossa/help/Cookies'
@@ -47,7 +48,8 @@ export default [
       { path: '', name: 'home', component: Home },
       { path: 'about', name: 'about', component: About },
       { path: 'data', name: 'data', component: Data },
-      { path: 'projects', name: 'projects', component: Projects }
+      { path: 'projects', name: 'projects', component: Projects },
+      { path: 'results', name: 'results', component: Results }
     ]
   },
 

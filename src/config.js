@@ -27,6 +27,7 @@ export default {
       bgImg: require('@/assets/custom/playbills/background.jpg'),
       about: require('@/assets/custom/playbills/about.md'),
       categorisation: require('@/assets/custom/playbills/categorisation.md'),
+      results: require('@/assets/custom/playbills/results.md'),
       team: [
 
       ],

@@ -37,7 +37,15 @@
               Projects
             </b-nav-item>
             <b-nav-item to="#">Statistics</b-nav-item>
-            <b-nav-item to="#">Results</b-nav-item>
+            <b-nav-item
+              :to="{
+                name: 'results',
+                params: {
+                  shortname: siteConfig.shortname
+                }
+              }">
+              Results
+            </b-nav-item>
             <b-nav-item
               :to="{
                 name: 'data',
@@ -50,10 +58,10 @@
           </b-nav>
 
           <b-nav is-nav-bar>
-            
-            <b-nav-item-dropdown 
+
+            <b-nav-item-dropdown
               right
-              text="current user" 
+              text="current user"
               v-if="currentUser.length">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
@@ -66,7 +74,7 @@
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item to="#">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
-            
+
             <b-nav-item v-else :to="{ name: 'signin' }">
               Sign in
             </b-nav-item>
