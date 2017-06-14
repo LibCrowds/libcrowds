@@ -2,8 +2,8 @@
 
   <floating-tabs :nav-items="floatingTabNavItems">
 
-    <section id="datasets">
-      <h2 class="text-center">Datasets</h2>
+    <section id="data">
+      <h2 class="text-center">Data</h2>
       <hr>
       <p>
         All datasets generated from the experimental crowdsourcing projects
@@ -51,7 +51,7 @@
     </section>
 
   </floating-tabs>
-  
+
 </template>
 
 <script>
@@ -64,7 +64,7 @@ export default {
     return {
       config: config,
       floatingTabNavItems: [
-        { id: 'datasets', text: 'Datasets' },
+        { id: 'data', text: 'Top' },
         { id: 'tasks', text: 'Tasks' },
         { id: 'taskruns', text: 'Task Runs' }
       ]

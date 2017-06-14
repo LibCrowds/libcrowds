@@ -2,8 +2,8 @@
 
   <floating-tabs :nav-items="navItems">
 
-    <section id="background">
-      <h2 class="text-center">Background</h2>
+    <section id="about">
+      <h2 class="text-center">About</h2>
       <hr>
       <span v-html="about"></span>
     </section>
@@ -78,7 +78,7 @@ export default {
       config: config,
       siteConfig: this.$store.state.siteConfig,
       navItems: [
-        { id: 'background', text: 'Background' },
+        { id: 'about', text: 'Top' },
         { id: 'technology', text: 'Technology' },
         { id: 'contact', text: 'Contact' }
       ]
