@@ -3,8 +3,8 @@
   <site-base>
 
     <div class="container text-center">
-      <h1>{{ siteConfig.tagline }}</h1>
-      <div class="my-3">
+      <h1 id="tagline" v-cloak>{{ siteConfig.tagline }}</h1>
+      <div id="intro-buttons" class="my-3" v-cloak>
         <b-button
           variant="secondary"
           :to="{
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import ScrollReveal from 'scrollreveal'
 import SiteBase from '@/components/layouts/SiteBase'
 
 export default {
@@ -44,6 +45,12 @@ export default {
 
   components: {
     SiteBase
+  },
+
+  mounted: function () {
+    const sr = ScrollReveal()
+    sr.reveal('#tagline')
+    sr.reveal('#intro-buttons')
   }
 }
 </script>
@@ -62,5 +69,9 @@ export default {
 
 h1 {
   color: $white;
+}
+
+[v-cloak] {
+  visibility: hidden;
 }
 </style>
