@@ -1,16 +1,16 @@
 <template>
   <form>
-    <b-form-input 
-      type="text" 
+    <b-form-input
+      type="text"
       placeholder="Enter a name for the project"
       v-model="form.name">
     </b-form-input>
-    <b-form-input 
-      type="text" 
-      placeholder="Enter a tagline for the project" 
+    <b-form-input
+      type="text"
+      placeholder="Enter a tagline for the project"
       v-model="form.description">
     </b-form-input>
-    <b-form-input 
+    <b-form-input
       type="text"
       textarea
       placeholder="Enter a description of the project"
