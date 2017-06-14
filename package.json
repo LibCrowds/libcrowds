@@ -24,6 +24,7 @@
     "jump.js": "^1.0.2",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
+    "pnotify": "^3.2.0",
     "scrollreveal": "^3.3.5",
     "vue": "^2.3.4",
     "vue-awesome": "^2.3.1",
