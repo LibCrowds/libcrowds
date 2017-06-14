@@ -36,7 +36,6 @@
               }">
               Projects
             </b-nav-item>
-            <b-nav-item to="#">Statistics</b-nav-item>
             <b-nav-item
               :to="{
                 name: 'results',
