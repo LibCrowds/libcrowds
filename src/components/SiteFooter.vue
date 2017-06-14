@@ -8,10 +8,27 @@
             {{ siteConfig.name }} is part of the LibCrowds crowdsourcing platform
           </p>
         </router-link>
-        <li class="list-inline-item" v-html="copyright"></li>
+        <p v-html="copyright"></p>
+        <ul class="list-inline">
+          <li class="list-inline-item m-0">
+            <a :href="twitterUrl">
+              <icon name="twitter"></icon>
+            </a>
+          </li>
+          <li class="list-inline-item mx-3">
+            <a :href="mailto">
+              <icon name="envelope"></icon>
+           </a>
+          </li>
+          <li class="list-inline-item m-0">
+            <a :href="config.githubUrl">
+              <icon name="github"></icon>
+           </a>
+          </li>
+        </ul>
       </section>
 
-      <section class="my-3 my-md-0">
+      <section class="hidden-md-down">
         <h5 class="list-title">Sites</h5>
         <ul class="list-unstyled">
           <li class="list-item" v-for="site in config.sites">
@@ -28,7 +45,7 @@
         </ul>
       </section>
 
-      <section class="my-3 my-md-0">
+      <section class="hidden-md-down">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
@@ -54,24 +71,6 @@
         </ul>
       </section>
 
-      <ul class="list-inline">
-        <li class="list-inline-item mx-2">
-          <a :href="twitterUrl">
-            <icon name="twitter"></icon>
-          </a>
-        </li>
-        <li class="list-inline-item mx-2">
-          <a :href="mailto">
-            <icon name="envelope"></icon>
-         </a>
-        </li>
-        <li class="list-inline-item mx-2">
-          <a :href="config.githubUrl">
-            <icon name="github"></icon>
-         </a>
-        </li>
-      </ul>
-
     </div>
   </footer>
 </template>
@@ -96,7 +95,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars.scss';
+@import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
 
 #site-footer.footer {
@@ -110,13 +109,13 @@ export default {
   .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-between;
+    text-align: center;
 
-    @include media-breakpoint-up(md) {
-      align-items: baseline;
-      flex-direction: row;
-    }
+      @include media-breakpoint-up(lg) {
+        flex-direction: row;
+        text-align: left;
+      }
   }
 
   .list-title {
@@ -134,6 +133,10 @@ export default {
 
   .brand-link {
     font-family: $headings-font-family;
+  }
+
+  #bg-img-attribution {
+    font-size: $font-size-xs;
   }
 }
 </style>
