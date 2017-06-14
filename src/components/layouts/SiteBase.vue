@@ -1,7 +1,9 @@
 <template>
   <div class="site-base" :style="mainStyle">
     <app-navbar></app-navbar>
-    <slot></slot>
+    <main>
+      <slot></slot>
+    </main>
     <site-footer></site-footer>
   </div>
 </template>
@@ -45,5 +47,11 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 1 auto;
 }
 </style>

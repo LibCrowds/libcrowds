@@ -13,9 +13,9 @@
         </b-nav-item>
       </b-nav>
 
-      <main>
+      <section id="content">
         <slot></slot>
-      </main>
+      </section>
 
     </div>
 
@@ -60,9 +60,7 @@ export default {
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
-main {
-  flex: 1 1 auto;
-
+section#content {
   & > * {
     background-color: $white;
     padding: 2rem 2.5rem;
