@@ -47,7 +47,7 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
         use: [{
           loader: 'url-loader',
           options: {
@@ -58,6 +58,10 @@ module.exports = {
         {
           loader: 'img-loader'
         }]
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

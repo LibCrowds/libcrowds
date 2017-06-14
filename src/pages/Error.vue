@@ -1,14 +1,21 @@
 <template>
   <div class="error">
-    <b-jumbotron :header="title" :lead="description">
-      <b-btn variant="white" :to="{ path: '/' }">Go Home</b-btn>
-    </b-jumbotron>
+    <div class="error-message container">
+      <h1>{{ title }}</h1>
+      <p class="lead">{{ description }}</p>
+    </div>
+    <div v-html="blOutlineSvg"></div>
   </div>
 </template>
 
 <script>
+import blOutlineSvg from '@/assets/img/bl-outline.svg'
+
 export default {
   name: 'error',
+  data: () => ({
+    blOutlineSvg: blOutlineSvg
+  }),
 
   props: [
     'title',
@@ -23,40 +30,51 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars.scss';
+@import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
-@import '~bootstrap-vue/dist/bootstrap-vue';
 
-h1 {
+.error-message {
   color: $white;
-  font-weight: 600 !important;
+  text-align: center;
+
+  h1 {
+    font-weight: 600 !important;
+    font-family: $headings-font-family;
+  }
+
+  @include media-breakpoint-up(md) {
+    margin-left: 5%;
+    width: 40%;
+  }
 }
 
 p {
   color: $white;
 }
 
-.btn-white {
-  @include button-outline-variant($white, $black);
-  cursor: pointer;
-}
-
-.jumbotron {
+.error {
+  background-color: $black;
   display: flex;
   height: 100vh;
-  border-radius: 0;
-  margin-bottom: 0;
-  background-color: #7CC4F3;
-  background-image: url("../assets/img/bl-graphic.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
+  flex-direction: column;
+  justify-content: space-between;
 
-  .container {
-    margin-left: 0;
-    text-align: center;
-    width: 40%;
+  svg {
+    width: 100%;
+  }
+}
+
+path#mainline {
+  animation: dash 3s linear forwards;
+}
+
+path:not(#mainline) {
+  animation: dash 500ms linear 3s forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 </style>
