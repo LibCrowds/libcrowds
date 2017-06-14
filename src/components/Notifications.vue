@@ -1,7 +1,7 @@
 <template>
   <div id="notifications">
     <span v-if="notification">
-      {{ notify(notification.msg, notification.type) }}
+      {{ notify(notification) }}
     </span>
   </div>
 </template>
@@ -12,6 +12,7 @@ import store from '@/store'
 import 'pnotify/src/pnotify.buttons'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
+import 'pnotify/src/pnotify.desktop'
 
 export default {
   computed: {
@@ -19,11 +20,14 @@ export default {
   },
 
   methods: {
-    notify (msg, type) {
+    notify (n) {
+      const title = n.type
+                      ? n.type.charAt(0).toUpperCase() + n.type.slice(1)
+                      : 'Info'
       const opts = {
-        title: type ? type.charAt(0).toUpperCase() + type.slice(1) : 'Info',
-        text: msg,
-        type: type || 'info',
+        title: title,
+        text: n.msg,
+        type: n.type || 'info',
         hide: true,
         width: '400px',
         delay: 2500,
@@ -35,13 +39,16 @@ export default {
         mobile: {
           styling: true
         },
+        desktop: {
+          desktop: n.desktop || false
+        },
         addclass: 'p-sm-4',
         after_close: () => {
           store.commit('SET_NOTIFICATION', null)
         }
       }
 
-      switch (type) {
+      switch (opts.type) {
         case 'message':
           opts.type = 'info'
           break
@@ -57,6 +64,10 @@ export default {
       /* eslint-disable no-new */
       new PNotify(opts)
     }
+  },
+
+  mounted () {
+    PNotify.desktop.permission()
   }
 }
 </script>
