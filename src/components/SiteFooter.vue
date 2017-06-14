@@ -1,7 +1,7 @@
 <template>
   <footer id="site-footer" class="footer">
     <div class="container">
-      
+
       <section>
         <router-link :to="{ path: '/' }">
           <p class="brand-link">
@@ -10,7 +10,24 @@
         </router-link>
         <li class="list-inline-item" v-html="copyright"></li>
       </section>
-      
+
+      <section class="my-3 my-md-0">
+        <h5 class="list-title">Sites</h5>
+        <ul class="list-unstyled">
+          <li class="list-item" v-for="site in config.sites">
+            <router-link
+              :to="{
+                name: 'home',
+                params: {
+                  shortname: site.shortname
+                }
+              }">
+              {{ site.name }}
+            </router-link>
+          </li>
+        </ul>
+      </section>
+
       <section class="my-3 my-md-0">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
@@ -36,7 +53,7 @@
           </li>
         </ul>
       </section>
-      
+
       <ul class="list-inline">
         <li class="list-inline-item mx-2">
           <a :href="twitterUrl">
@@ -49,12 +66,12 @@
          </a>
         </li>
         <li class="list-inline-item mx-2">
-          <a :href="githubUrl">
+          <a :href="config.githubUrl">
             <icon name="github"></icon>
          </a>
         </li>
       </ul>
-      
+
     </div>
   </footer>
 </template>
@@ -68,11 +85,11 @@ import 'vue-awesome/icons/envelope'
 export default {
   data: function () {
     return {
+      config: config,
       siteConfig: this.$store.state.siteConfig,
       twitterUrl: `https://twitter.com/${config.contact.twitter}`,
       mailto: `mailto:${config.contact.email}`,
-      copyright: `&copy; ${config.company}, ${new Date().getFullYear()}`,
-      githubUrl: config.githubUrl
+      copyright: `&copy; ${config.company}, ${new Date().getFullYear()}`
     }
   }
 }
@@ -89,32 +106,32 @@ export default {
   letter-spacing: 0.8px;
   color: $gray-light;
   font-size: $font-size-sm;
-  
+
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    
+
     @include media-breakpoint-up(md) {
       align-items: baseline;
       flex-direction: row;
     }
   }
-  
+
   .list-title {
     text-transform: uppercase;
     font-size: $font-size-sm;
   }
-  
+
   ul {
     margin: 0;
   }
-  
+
   a {
     color: $gray-lighter;
   }
-  
+
   .brand-link {
     font-family: $headings-font-family;
   }
