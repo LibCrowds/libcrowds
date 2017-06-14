@@ -21,6 +21,7 @@ instance.interceptors.response.use(undefined, (error) => {
 // Forward unauthenticated users to signin page
 instance.interceptors.response.use((r) => {
   if (r.data.template === 'account/signin.html') {
+    store.commit('SET_CURRENT_USER', null)
     router.push({
       name: 'signin',
       params: {
@@ -46,7 +47,7 @@ instance.interceptors.response.use((r) => {
 // TODO: Handle next params
 instance.interceptors.response.use((r) => {
   if ('next' in r.data) {
-    router.push({ path: r.data.next })
+    // router.push({ path: r.data.next })
   }
   return r
 }, function (error) {  // TODO: Log these errors and notify the user

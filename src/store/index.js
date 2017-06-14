@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import pybossaApi from '@/api/pybossa'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,17 @@ const store = new Vuex.Store({
     },
     SET_NOTIFICATION: (state, notification) => {
       state.notification = notification
+    },
+    SET_CURRENT_USER: (state, currentUser) => {
+      state.currentUser = currentUser
+    }
+  },
+
+  actions: {
+    UPDATE_CURRENT_USER: (context) => {
+      pybossaApi.get('/account/profile').then(r => {
+        context.commit('SET_CURRENT_USER', r.data.user)
+      })
     }
   }
 })

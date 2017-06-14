@@ -60,8 +60,8 @@
 
             <b-nav-item-dropdown
               right
-              text="current user"
-              v-if="currentUser.length">
+              :text="currentUser.name"
+              v-if="currentUser">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -71,7 +71,7 @@
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
               <b-dropdown-item to="#">Admin</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item to="#">Sign Out</b-dropdown-item>
+              <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item v-else :to="{ name: 'signin' }">
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import pybossaApi from '@/api/pybossa'
 import NewProjectForm from '@/components/forms/projects/New'
 
 export default {
@@ -103,6 +104,14 @@ export default {
 
   components: {
     NewProjectForm
+  },
+
+  methods: {
+    signout () {
+      pybossaApi.get('/account/signout').then(r => {
+        this.$store.dispatch('UPDATE_CURRENT_USER')
+      })
+    }
   }
 }
 </script>

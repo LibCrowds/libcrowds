@@ -8,6 +8,7 @@
 <script>
 import config from '@/config'
 import Notifications from '@/components/Notifications'
+import store from '@/store'
 
 export default {
   name: 'app',
@@ -22,6 +23,10 @@ export default {
     meta: [
       { name: 'description', content: config.description }
     ]
+  },
+
+  mounted () {
+    store.dispatch('UPDATE_CURRENT_USER')
   }
 }
 </script>
