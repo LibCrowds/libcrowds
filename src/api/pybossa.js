@@ -46,7 +46,7 @@ instance.interceptors.response.use((r) => {
 // TODO: Handle next params
 instance.interceptors.response.use((r) => {
   if ('next' in r.data) {
-    console.log('next parameter in response')
+    router.push({ path: r.data.next })
   }
   return r
 }, function (error) {  // TODO: Log these errors and notify the user
