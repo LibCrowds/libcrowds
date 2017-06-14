@@ -7,7 +7,8 @@ const store = new Vuex.Store({
   state: {
     siteConfig: {},
     currentUser: {},
-    csrfToken: null
+    csrfToken: null,
+    notification: null
   },
 
   mutations: {
@@ -16,6 +17,9 @@ const store = new Vuex.Store({
     },
     SET_CSRF_TOKEN: (state, csrfToken) => {
       state.csrfToken = csrfToken
+    },
+    SET_NOTIFICATION: (state, notification) => {
+      state.notification = notification
     }
   }
 })

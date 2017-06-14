@@ -12,6 +12,12 @@ const instance = axios.create({
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
+// Default error handler
+instance.interceptors.response.use(undefined, (error) => {
+  const notification = { msg: error, type: 'error' }
+  store.commit('SET_NOTIFICATION', notification)
+})
+
 // Forward unauthenticated users to signin page
 instance.interceptors.response.use((r) => {
   if (r.data.template === 'account/signin.html') {
