@@ -4,18 +4,22 @@
 
     <div class="container mt-md-4 mb-5">
 
-      <b-nav class="nav-unstyled">
-        <b-nav-item
-          v-for="item in navItems"
-          v-on:click="jump('#' + item.id)"
-          :key="item.id">
-          {{ item.text }}
-        </b-nav-item>
-      </b-nav>
+      <transition-group appear>
 
-      <section id="content">
-        <slot></slot>
-      </section>
+        <b-nav class="nav-unstyled" key="fading-nav">
+          <b-nav-item
+            v-for="item in navItems"
+            v-on:click="jump('#' + item.id)"
+            :key="item.id">
+            {{ item.text }}
+          </b-nav-item>
+        </b-nav>
+
+        <section id="content" key="fading-content">
+          <slot></slot>
+        </section>
+
+      </transition-group>
 
     </div>
 
@@ -61,8 +65,19 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 section#content {
+  background-color: $white;
+
+  &.v-enter,
+  &.v-leave-to {
+    & > * {
+      opacity: 0;
+    }
+  }
+
+  /* Internal sections */
   & > * {
-    background-color: $white;
+    opacity: 1;
+    transition: opacity 600ms;
     padding: 2rem 2.5rem;
 
     @include media-breakpoint-up(md) {
@@ -72,10 +87,10 @@ section#content {
     &:nth-child(even) {
       @extend .bg-faded;
     }
-  }
 
-  @include media-breakpoint-up(md) {
-    h2 { font-size: 3.5rem; }
+    @include media-breakpoint-up(md) {
+      h2 { font-size: 3.5rem; }
+    }
   }
 }
 
@@ -85,16 +100,16 @@ section#content {
   background-color: rgba($gray-lighter, 0.85);
 
   .nav-link {
+    opacity: 1;
+    transition: opacity 600ms;
     color: $navbar-light-color;
   }
-}
 
-.tab-pane {
-  opacity: 1;
-  transition: opacity 800ms;
-
-  &.v-enter {
-    opacity: 0;
+  &.v-enter,
+  &.v-leave-to {
+    .nav-link {
+      opacity: 0;
+    }
   }
 }
 </style>
