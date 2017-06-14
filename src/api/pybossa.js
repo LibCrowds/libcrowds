@@ -12,7 +12,7 @@ const instance = axios.create({
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
-// Default error handler
+// Handle errors
 instance.interceptors.response.use(undefined, (error) => {
   const notification = { msg: error, type: 'error' }
   store.commit('SET_NOTIFICATION', notification)
@@ -34,19 +34,13 @@ instance.interceptors.response.use((r) => {
   return Promise.reject(error)
 })
 
+// Handle flash messages
 instance.interceptors.response.use((r) => {
-  if (r.data.template === 'account/signin.html') {
-    router.push({
-      name: 'signin',
-      params: {
-        next: store.state.route.path
-      }
-    })
+  if ('flash' in r.data) {
+    const notification = { msg: r.data.flash, type: r.data.status }
+    store.commit('SET_NOTIFICATION', notification)
   }
   return r
-}, function (error) {
-  console.error(error.response)
-  return Promise.reject(error)
 })
 
 // TODO: Handle next params
