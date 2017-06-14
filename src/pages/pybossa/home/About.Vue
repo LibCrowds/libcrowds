@@ -5,7 +5,7 @@
     <section id="background">
       <h2 class="text-center">Background</h2>
       <hr>
-      <span v-html="background"></span>
+      <span v-html="about"></span>
     </section>
 
     <section id="technology">
@@ -90,8 +90,8 @@ export default {
   },
 
   computed: {
-    background: function () {
-      return marked(this.siteConfig.background)
+    about: function () {
+      return marked(this.siteConfig.about)
     }
   }
 }

@@ -2,7 +2,7 @@
 
   <floating-tabs :nav-items="floatingTabNavItems">
 
-    <section id="Projects">
+    <section id="projects">
       <h2 class="text-center">Projects</h2>
       <hr>
       <span v-html="categorisation"></span>
