@@ -23,6 +23,7 @@ export default {
     {
       shortname: 'playbills',
       name: 'Playbills',
+      tagline: 'Build a database of historic playbills',
       bgImg: require('@/assets/img/playbills.jpg'),
       background: require('@/assets/markdown/playbills.md'),
       categorisation: require('@/assets/markdown/playbills-categorisation.md'),
