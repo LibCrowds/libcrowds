@@ -74,7 +74,14 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item v-else :to="{ name: 'signin' }">
+            <b-nav-item 
+              v-else 
+              :to="{ 
+                name: 'signin',
+                query: {
+                  next: currentPath
+                }
+              }">
               Sign in
             </b-nav-item>
           </b-nav>
@@ -98,7 +105,8 @@ export default {
   name: 'app-navbar',
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig
+      siteConfig: this.$store.state.siteConfig,
+      currentPath: this.$store.state.route.path
     }
   },
 
