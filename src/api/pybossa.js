@@ -15,13 +15,13 @@ const instance = axios.create({
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
   const notification = { msg: error, type: 'error' }
-  store.commit('SET_NOTIFICATION', notification)
+  store.commit('SET_ITEM', { key: 'notification', value: notification })
 })
 
 // Forward unauthenticated users to signin page
 instance.interceptors.response.use((r) => {
   if (r.data.template === 'account/signin.html') {
-    store.commit('SET_CURRENT_USER', null)
+    store.commit('DELETE_ITEM', 'currentUser')
     router.push({
       name: 'signin',
       params: {
@@ -39,7 +39,7 @@ instance.interceptors.response.use((r) => {
 instance.interceptors.response.use((r) => {
   if ('flash' in r.data) {
     const notification = { msg: r.data.flash, type: r.data.status }
-    store.commit('SET_NOTIFICATION', notification)
+    store.commit('SET_ITEM', { key: 'notification', value: notification })
   }
   return r
 })

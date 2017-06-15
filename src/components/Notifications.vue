@@ -44,7 +44,7 @@ export default {
         },
         addclass: 'p-sm-4',
         after_close: () => {
-          store.commit('SET_NOTIFICATION', null)
+          store.commit('DELETE_ITEM', 'notification')
         }
       }
 

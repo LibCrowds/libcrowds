@@ -60,7 +60,7 @@
 
             <b-nav-item-dropdown
               right
-              :text="currentUser.name"
+              :text="currentUser"
               v-if="currentUser">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>

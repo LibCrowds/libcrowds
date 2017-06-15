@@ -6,31 +6,25 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    siteConfig: {},
-    currentUser: {},
+    siteConfig: null,
+    currentUser: null,
     csrfToken: null,
     notification: null
   },
 
   mutations: {
-    SET_SITE_CONFIG: (state, siteConfig) => {
-      state.siteConfig = siteConfig
+    SET_ITEM: (state, obj) => {
+      state[obj.key] = obj.value
     },
-    SET_CSRF_TOKEN: (state, csrfToken) => {
-      state.csrfToken = csrfToken
-    },
-    SET_NOTIFICATION: (state, notification) => {
-      state.notification = notification
-    },
-    SET_CURRENT_USER: (state, currentUser) => {
-      state.currentUser = currentUser
+    DELETE_ITEM: (state, key) => {
+      state[key] = null
     }
   },
 
   actions: {
     UPDATE_CURRENT_USER: (context) => {
       pybossaApi.get('/account/profile').then(r => {
-        context.commit('SET_CURRENT_USER', r.data.user)
+        context.commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
       })
     }
   }

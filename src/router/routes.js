@@ -41,7 +41,7 @@ export default [
         next({ name: '404' })
       }
 
-      store.commit('SET_SITE_CONFIG', siteConfig)
+      store.commit('SET_ITEM', { key: 'siteConfig', value: siteConfig })
       next()
     },
     children: [
