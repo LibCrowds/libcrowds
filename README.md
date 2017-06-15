@@ -52,12 +52,3 @@ Start up a local PyBossa instance using the default settings, then:
 # serve with hot reload at localhost:8080
 npm run dev
 ```
-
-## Deploying
-
-The LibCrowds front-end runs from GitHub pages, so to deploy you can just do this:
-
-``` bash
-# deploy to gh-pages
-npm run gh-pages
-```
