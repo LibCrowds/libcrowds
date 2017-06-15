@@ -6,6 +6,15 @@
 
 > The LibCrowds front-end
 
+## Configuring
+
+To configure the theme locally copy [src/config.js.tmpl](src/config.js.tmpl)
+to **src/config.js** and edit. Note that the server will not run until this
+stage has been completed.
+
+There are also various files in [src/custom](src/custom) that can be edited to
+modify the theme locally.
+
 ## Building
 
 ``` bash
@@ -52,7 +61,3 @@ The LibCrowds front-end runs from GitHub pages, so to deploy you can just do thi
 # deploy to gh-pages
 npm run gh-pages
 ```
-
-## Configuring
-
-Configuration settings can be found in [config.js](src/config.js).
