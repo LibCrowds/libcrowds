@@ -3,22 +3,21 @@
     <div class="jumbotron" :style="jtStyle" ref="jt">
       <div class="container" :style="containerStyle">
         <div></div>
-        <h1 v-cloak>
+        <h1>
           Crowdsourcing projects from<br>the British Library
         </h1>
-        <a id="scrollDown" href="#" v-cloak>
+        <a id="scrollDown" href="#">
           <p>Scroll Down</p>
           <div class="pulse">
             <icon name="angle-down" scale="2"></icon>
           </div>
-      </a>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/angle-down'
 import getScrollTop from '@/utils/get-scroll-top.js'
 
@@ -51,11 +50,6 @@ export default {
   },
   destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
-  },
-  mounted: function () {
-    const sr = ScrollReveal()
-    sr.reveal('h1', { duration: 1000 })
-    sr.reveal('#scrollDown', { delay: 200, duration: 800 })
   }
 }
 </script>
@@ -96,10 +90,6 @@ h1 {
       margin-bottom: 0.2em;
     }
   }
-}
-
-[v-cloak] {
-  visibility: hidden;
 }
 
 .pulse {

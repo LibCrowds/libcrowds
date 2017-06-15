@@ -2,38 +2,39 @@
 
   <site-base>
 
-    <div class="container text-center">
-      <h1 id="tagline" v-cloak>{{ siteConfig.tagline }}</h1>
-      <div id="intro-buttons" class="my-3" v-cloak>
-        <b-button
-          variant="secondary"
-          :to="{
-          name: 'about',
-          params: {
-            shortname: siteConfig.shortname
-          }
-        }">
-        Learn More
-        </b-button>
-        <b-button
-          variant="success"
-          :to="{
-          name: 'projects',
-          params: {
-            shortname: siteConfig.shortname
-          }
-        }">
-        Get Started
-        </b-button>
+    <transition appear>
+      <div class="container text-center">
+        <h1 id="tagline">{{ siteConfig.tagline }}</h1>
+        <div id="intro-buttons" class="my-3">
+          <b-button
+            variant="secondary"
+            :to="{
+            name: 'about',
+            params: {
+              shortname: siteConfig.shortname
+            }
+          }">
+          Learn More
+          </b-button>
+          <b-button
+            variant="success"
+            :to="{
+            name: 'projects',
+            params: {
+              shortname: siteConfig.shortname
+            }
+          }">
+          Get Started
+          </b-button>
+        </div>
       </div>
-    </div>
+    </transition>
 
   </site-base>
 
 </template>
 
 <script>
-import ScrollReveal from 'scrollreveal'
 import SiteBase from '@/components/layouts/SiteBase'
 
 export default {
@@ -45,12 +46,6 @@ export default {
 
   components: {
     SiteBase
-  },
-
-  mounted: function () {
-    const sr = ScrollReveal()
-    sr.reveal('#tagline')
-    sr.reveal('#intro-buttons')
   }
 }
 </script>
@@ -65,13 +60,17 @@ export default {
   height: 85vh;
   justify-content: center;
   margin-bottom: 15vh;
+  opacity: 1;
+  transition: opacity 800ms;
+
+  &.v-enter,
+  &.v-leave-to {
+    opacity: 0;
+  }
 }
 
 h1 {
   color: $white;
 }
 
-[v-cloak] {
-  visibility: hidden;
-}
 </style>
