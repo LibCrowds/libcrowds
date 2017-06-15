@@ -67,7 +67,6 @@
       </div>
     </section>
 
-    <site-footer></site-footer>
   </div>
 </template>
 
@@ -75,7 +74,6 @@
 import 'vue-awesome/icons/angle-down'
 import config from '@/config'
 import CrowdContainer from '@/components/layouts/CrowdContainer'
-import SiteFooter from '@/components/SiteFooter'
 
 export default {
   data: function () {
@@ -91,8 +89,7 @@ export default {
   },
 
   components: {
-    CrowdContainer,
-    SiteFooter
+    CrowdContainer
   }
 }
 </script>
