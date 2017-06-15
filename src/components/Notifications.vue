@@ -12,7 +12,6 @@ import store from '@/store'
 import 'pnotify/src/pnotify.buttons'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
-import 'pnotify/src/pnotify.desktop'
 
 export default {
   computed: {
@@ -39,9 +38,6 @@ export default {
         mobile: {
           styling: true
         },
-        desktop: {
-          desktop: n.desktop || false
-        },
         addclass: 'p-sm-4',
         after_close: () => {
           store.commit('DELETE_ITEM', 'notification')
@@ -64,10 +60,6 @@ export default {
       /* eslint-disable no-new */
       new PNotify(opts)
     }
-  },
-
-  mounted () {
-    PNotify.desktop.permission()
   }
 }
 </script>
