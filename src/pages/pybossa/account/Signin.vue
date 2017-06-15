@@ -4,38 +4,39 @@
     <h1>Sign in</h1>
     <p class="lead">Using your {{ config.brand }} account details</p>
 
-    <div class="d-flex flex-row">
-      <b-form-fieldset
-      :feedback="getFeedback('email')"
-      :state="getState('email')">
-        <b-form-input
-          type="text"
-          placeholder="Email address"
-          :state="getState('email')">
-          v-model="form.email"
-          v-on:keyup.enter="submit">
-        </b-form-input>
-      </b-form-fieldset>
-      <b-form-fieldset
-      :feedback="getFeedback('password')"
-      :state="getState('password')">
-        <b-form-input
-          type="text"
-          placeholder="Password"
-          :state="getState('password')">
-          v-model="form.password"
-          v-on:keyup.enter="submit">
-        </b-form-input>
-      </b-form-fieldset>
-    </div>
-
-    <div class="d-flex">
+    <form v-on:submit.prevent>
+      <div class="d-flex flex-row">
+        <b-form-fieldset
+        :feedback="getFeedback('email')"
+        :state="getState('email')">
+          <b-form-input
+            required
+            type="email"
+            placeholder="Email address"
+            :state="getState('email')"
+            v-model="form.email"
+            v-on:keyup.enter="submit">
+          </b-form-input>
+        </b-form-fieldset>
+        <b-form-fieldset
+        :feedback="getFeedback('password')"
+        :state="getState('password')">
+          <b-form-input
+            required
+            type="password"
+            placeholder="Password"
+            :state="getState('password')"
+            v-model="form.password"
+            v-on:keyup.enter="submit">
+          </b-form-input>
+        </b-form-fieldset>
+      </div>
       <b-button
         variant="success"
         v-on:click="submit">
         Sign in
       </b-button>
-    </div>
+    </form>
 
     <div v-if="auth.facebook || auth.twitter || auth.google">
       <p class="lead my-2">or use</p>
@@ -108,13 +109,15 @@ export default {
       })
     },
     submit () {
-      pybossaApi.post('/account/signin', this.form, {
-        headers: {
-          'X-CSRFToken': this.form.csrf
-        }
-      }).then(r => {
-        this.handleResponse(r)
-      })
+      if (document.querySelector('form').checkValidity()) {
+        pybossaApi.post('/account/signin', this.form, {
+          headers: {
+            'X-CSRFToken': this.form.csrf
+          }
+        }).then(r => {
+          this.handleResponse(r)
+        })
+      }
     },
     redirect (endpoint) {
       const url = `${config.pybossaHost}/${endpoint}`
