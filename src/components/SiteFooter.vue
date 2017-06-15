@@ -5,7 +5,7 @@
       <section>
         <router-link :to="{ path: '/' }">
           <p class="brand-link">
-            {{ siteConfig.name }} is part of the LibCrowds crowdsourcing platform
+            Part of the LibCrowds crowdsourcing platform
           </p>
         </router-link>
         <p v-html="copyright"></p>
@@ -85,7 +85,6 @@ export default {
   data: function () {
     return {
       config: config,
-      siteConfig: this.$store.state.siteConfig,
       twitterUrl: `https://twitter.com/${config.contact.twitter}`,
       mailto: `mailto:${config.contact.email}`,
       copyright: `&copy; ${config.company}, ${new Date().getFullYear()}`
