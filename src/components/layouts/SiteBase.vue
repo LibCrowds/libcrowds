@@ -10,7 +10,7 @@
 
 <script>
 import AppNavbar from '@/components/AppNavbar'
-import SiteFooter from '@/components/SiteFooter'
+import AppFooter from '@/components/AppFooter'
 
 export default {
   data: function () {
@@ -29,7 +29,7 @@ export default {
 
   components: {
     AppNavbar,
-    SiteFooter
+    AppFooter
   },
 
   props: [

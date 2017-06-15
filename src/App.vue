@@ -9,7 +9,7 @@
 <script>
 import config from '@/config'
 import Notifications from '@/components/Notifications'
-import SiteFooter from '@/components/SiteFooter'
+import AppFooter from '@/components/AppFooter'
 import store from '@/store'
 
 export default {
@@ -17,7 +17,7 @@ export default {
 
   components: {
     Notifications,
-    SiteFooter
+    AppFooter
   },
 
   metaInfo: {
