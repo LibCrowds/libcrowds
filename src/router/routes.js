@@ -3,16 +3,16 @@ import store from '@/store'
 
 import Landing from '@/pages/Landing'
 
-import Home from '@/pages/pybossa/home/Home'
-import About from '@/pages/pybossa/home/About'
-import Data from '@/pages/pybossa/home/Data'
-import Results from '@/pages/pybossa/home/Results'
-import TOS from '@/pages/pybossa/help/TOS'
-import Privacy from '@/pages/pybossa/help/Privacy'
-import Cookies from '@/pages/pybossa/help/Cookies'
-import Api from '@/pages/pybossa/help/Api'
-import Signin from '@/pages/pybossa/account/Signin'
-import Projects from '@/pages/pybossa/Projects/Projects'
+import Home from '@/pages/home/Home'
+import About from '@/pages/home/About'
+import Data from '@/pages/home/Data'
+import Results from '@/pages/home/Results'
+import Projects from '@/pages/home/Projects'
+import TOS from '@/pages/help/TOS'
+import Privacy from '@/pages/help/Privacy'
+import Cookies from '@/pages/help/Cookies'
+import Api from '@/pages/help/Api'
+import Signin from '@/pages/account/Signin'
 
 export default [
 
