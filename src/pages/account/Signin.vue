@@ -60,8 +60,8 @@ export default {
     return {
       config: config,
       fields: [
-        { name: 'email', type: 'email' },
-        { name: 'password', type: 'password' }
+        { name: 'email', type: 'email', placeholder: 'Email address' },
+        { name: 'password', type: 'password', placeholder: 'Password' }
       ],
       auth: {}
     }

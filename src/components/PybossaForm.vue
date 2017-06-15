@@ -9,7 +9,7 @@
       <b-form-input
         required
         :type="f.type"
-        :placeholder="f.name"
+        :placeholder="f.placeholder"
         :state="getState(f.name)"
         v-model="form[f.name]"
         v-on:keyup.enter="submit">

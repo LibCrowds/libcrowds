@@ -22,11 +22,11 @@ export default {
     return {
       config: config,
       fields: [
-        { name: 'name', type: 'text' },
-        { name: 'fullname', type: 'text' },
-        { name: 'email_addr', type: 'email' },
-        { name: 'password', type: 'password' },
-        { name: 'confirm', type: 'password' }
+        { name: 'name', type: 'text', placeholder: 'Username' },
+        { name: 'fullname', type: 'text', placeholder: 'Full name' },
+        { name: 'email_addr', type: 'email', placeholder: 'Email address' },
+        { name: 'password', type: 'password', placeholder: 'Password' },
+        { name: 'confirm', type: 'password', placeholder: 'Confirm password' }
       ]
     }
   },
