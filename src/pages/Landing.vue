@@ -19,7 +19,6 @@
 
 <script>
 import 'vue-awesome/icons/angle-down'
-import getScrollTop from '@/utils/get-scroll-top.js'
 import CrowdContainer from '@/components/layouts/CrowdContainer'
 
 export default {
@@ -36,26 +35,6 @@ export default {
 
   components: {
     CrowdContainer
-  },
-
-  methods: {
-    handleScroll: function () {
-      const jtElem = this.$refs.jt
-      const scrollTop = getScrollTop()
-      const visPixels = jtElem.offsetHeight - scrollTop - jtElem.offsetTop
-      const visPercent = Math.round(visPixels * 100 / jtElem.offsetHeight)
-      const brightness = visPercent < 100 ? visPercent : 100
-      const opacity = visPercent < 100 ? visPercent / 100 : 1
-
-      this.jtStyle.filter = `brightness(${brightness}%)`
-      this.containerStyle.opacity = opacity
-    }
-  },
-  created () {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  destroyed () {
-    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
