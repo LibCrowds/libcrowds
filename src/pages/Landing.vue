@@ -1,25 +1,26 @@
 <template>
   <div id="landing">
-    <div class="jumbotron" :style="jtStyle" ref="jt">
-      <div class="container" :style="containerStyle">
-        <div></div>
-        <h1>
-          Crowdsourcing projects from<br>the British Library
-        </h1>
-        <a id="scrollDown" href="#">
-          <p>Scroll Down</p>
-          <div class="pulse">
-            <icon name="angle-down" scale="2"></icon>
-          </div>
-        </a>
-      </div>
-    </div>
+
+    <crowd-container>
+      <div></div>
+      <h1>
+        Crowdsourcing projects from<br>the British Library
+      </h1>
+      <a id="scrollDown" href="#">
+        <p>Scroll Down</p>
+        <div class="pulse">
+          <icon name="angle-down" scale="2"></icon>
+        </div>
+      </a>
+    </crowd-container>
+
   </div>
 </template>
 
 <script>
 import 'vue-awesome/icons/angle-down'
 import getScrollTop from '@/utils/get-scroll-top.js'
+import CrowdContainer from '@/components/layouts/CrowdContainer'
 
 export default {
   data: function () {
@@ -32,6 +33,11 @@ export default {
       }
     }
   },
+
+  components: {
+    CrowdContainer
+  },
+
   methods: {
     handleScroll: function () {
       const jtElem = this.$refs.jt
@@ -63,33 +69,11 @@ h1 {
   margin-bottom: 0;
 }
 
-.jumbotron {
-  padding: 2em;
-  display: flex;
-  height: 100vh;
-  border-radius: 0;
-  margin-bottom: 0;
-  background-image: url("../assets/img/crowd.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1 1 auto;
-    text-align: center;
-    overflow: hidden;
-
-    #scrollDown p {
-      font-size: $font-size-sm;
-      color: $white;
-      text-transform: uppercase;
-      margin-bottom: 0.2em;
-    }
-  }
+#scrollDown p {
+  font-size: $font-size-sm;
+  color: $white;
+  text-transform: uppercase;
+  margin-bottom: 0.2em;
 }
 
 .pulse {
