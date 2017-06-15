@@ -6,9 +6,16 @@ import store from '@/store'
 import router from '@/router'
 import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
+import VueProgressBar from 'vue-progressbar'
 import Icon from 'vue-awesome/components/Icon'
 
 Vue.use(BootstrapVue)
+
+Vue.use(VueProgressBar, {
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '2px'
+})
 
 Vue.component('icon', Icon)
 
