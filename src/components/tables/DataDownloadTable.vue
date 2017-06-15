@@ -57,7 +57,6 @@ export default {
   name: 'data-download-table',
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig,
       fields: {
         name: { label: 'Name' },
         n_tasks: { label: 'Tasks' },

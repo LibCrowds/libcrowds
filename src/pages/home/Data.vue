@@ -31,9 +31,9 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="config.discourseUrl">
-        Head over to the 
-        <a :href="config.discourseUrl">
+      <p v-if="config.forumUrl">
+        Head over to the
+        <a :href="config.forumUrl">
           {{ config.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you

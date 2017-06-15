@@ -1,5 +1,5 @@
 <template>
-  <crowd-container>
+  <default-layout>
 
     <h1>Register</h1>
     <p class="lead">Create a new {{ config.brand }} account</p>
@@ -9,12 +9,12 @@
       :fields="fields">
     </pybossa-form>
 
-  </crowd-container>
+  </default-layout>
 </template>
 
 <script>
 import config from '@/config'
-import CrowdContainer from '@/components/layouts/CrowdContainer'
+import DefaultLayout from '@/components/layouts/Default'
 import PybossaForm from '@/components/PybossaForm'
 
 export default {
@@ -32,7 +32,7 @@ export default {
   },
 
   components: {
-    CrowdContainer,
+    DefaultLayout,
     PybossaForm
   }
 }

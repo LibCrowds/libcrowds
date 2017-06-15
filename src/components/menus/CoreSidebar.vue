@@ -28,9 +28,9 @@
   </nav>
 </template>
 <script>
-import config from '@/config'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/twitter'
+import config from '@/config'
 
 export default {
   data: function () {

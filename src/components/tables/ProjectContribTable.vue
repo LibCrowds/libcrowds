@@ -21,7 +21,7 @@
           {{ project.item.overall_progress }}%
         </template>
         <template slot="actions" scope="project">
-          
+
         </template>
       </b-table>
     </b-card>
@@ -44,7 +44,6 @@ import pybossaApi from '@/api/pybossa'
 export default {
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig,
       fields: {
         name: { label: 'Name' },
         n_tasks: { label: 'Tasks' },

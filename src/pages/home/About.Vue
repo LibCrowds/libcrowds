@@ -5,44 +5,34 @@
     <section id="about">
       <h2 class="text-center">About</h2>
       <hr>
-      <span v-html="about"></span>
+      <span v-if="customAbout" v-html="customAbout"></span>
+      <p v-else>
+        {{ config.brand }} is a platform for hosting experimental crowdsourcing
+        projects from {{ config.company }}. By contributing to the projects
+        on this platform you will be directly helping to enable future research.
+      </p>
     </section>
 
     <section id="technology">
       <h3>Technology</h3>
-      <p>
-        {{ siteConfig.name }} is part of the {{ config.brand }} platform,
-        which aims to increase access to the collections of the British Library
-        through a range of experimental crowdsourcing projects. The platform
-        was first launched in June 2015 with the Convert-a-Card project
-        series, which used a new method for transforming printed card
-        catalogues into electronic
-        records.
-      </p>
-      <p>
-        On the backend, each {{ config.brand }} project series uses an
-        instance of <a href="http://pybossa.com/" target="_blank">PyBossa</a>,
+      <span v-if="customTechnology" v-html="customTechnology"></span>
+      <p v-else>
+        On the backend, {{ config.brand }} uses an instance of
+        <a href="http://pybossa.com/" target="_blank">PyBossa</a>,
         an open-source framework for the creation of crowdsourcing projects,
         which in turn is based on the Python microframework, Flask. On the
         frontend, a custom theme has been developed using
         <a href="https://vuejs.org/" target="_blank">Vue.js</a>, a JavaScript
-        framework for building user interfaces. A range of plugins have also
-        been developed to provide additional functionality, such performing
-        database searches via the Z39.50 protocol.
-      </p>
-      <p>
-        The {{ config.brand }} theme, all project templates and plugins are
-        available on
-        <a :href="config.githubUrl" target="_blank">GitHub</a>.
+        framework for building user interfaces.
       </p>
     </section>
 
     <section id="contact">
       <h3>Contact</h3>
       <p>
-        Visit the <a :href="config.discourseUrl">{{ config.brand }} forum</a>
+        Visit the <a :href="config.forumUrl">{{ config.brand }} forum</a>
         to ask any questions, report issues, or to just let us know what
-        you've discovered.
+        you have discovered.
       </p>
       <p>
         Alternatively, you can get in touch via:
@@ -50,33 +40,35 @@
       <ul class="list-unstyled">
         <li>
           <strong>Twitter: </strong>
-          <a :href="'https://twitter.com/' + config.contact.twitter">
+          <a :href="twitterUrl">
             @{{ config.contact.twitter }}
           </a>
         </li>
         <li>
           <strong>Email: </strong>
-          <a :href="'mailto:' + config.contact.email">
+          <a :href="mailto">
             {{ config.contact.email }}
           </a>
         </li>
       </ul>
+
     </section>
 
   </floating-tabs>
 
 </template>
 
-<script id="#contact">
-import marked from 'marked'
+<script>
 import config from '@/config'
+import marked from 'marked'
 import FloatingTabs from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
       config: config,
-      siteConfig: this.$store.state.siteConfig,
+      twitterUrl: `https://twitter.com/${config.contact.twitter}`,
+      mailto: `mailto:${config.contact.email}`,
       navItems: [
         { id: 'about', text: 'Top' },
         { id: 'technology', text: 'Technology' },
@@ -85,13 +77,28 @@ export default {
     }
   },
 
+  metaInfo: {
+    title: 'About'
+  },
+
   components: {
     FloatingTabs
   },
 
   computed: {
-    about: function () {
-      return marked(this.siteConfig.about)
+    customAbout: function () {
+      try {
+        return marked(require('@/assets/about.md'))
+      } catch (e) {
+        return null
+      }
+    },
+    customTechnology: function () {
+      try {
+        return marked(require('@/assets/technology.md'))
+      } catch (e) {
+        return null
+      }
     }
   }
 }

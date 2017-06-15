@@ -1,5 +1,5 @@
 <template>
-  <crowd-container>
+  <default-layout>
 
     <h1>Sign in</h1>
     <p class="lead">Using your {{ config.brand }} account details</p>
@@ -44,7 +44,7 @@
       </div>
     </div>
 
-  </crowd-container>
+  </default-layout>
 </template>
 
 <script>
@@ -52,7 +52,7 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
 import config from '@/config'
-import CrowdContainer from '@/components/layouts/CrowdContainer'
+import DefaultLayout from '@/components/layouts/Default'
 import PybossaForm from '@/components/PybossaForm'
 
 export default {
@@ -68,7 +68,7 @@ export default {
   },
 
   components: {
-    CrowdContainer,
+    DefaultLayout,
     PybossaForm
   },
 

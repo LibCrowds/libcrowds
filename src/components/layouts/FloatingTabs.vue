@@ -1,6 +1,6 @@
 <template>
 
-  <site-base>
+  <default-layout>
 
     <div class="container mt-md-4 mb-5">
 
@@ -23,31 +23,17 @@
 
     </div>
 
-  </site-base>
+  </default-layout>
 
 </template>
 
 <script>
 import jump from 'jump.js'
-import SiteBase from '@/components/layouts/SiteBase'
+import DefaultLayout from '@/components/layouts/Default'
 
 export default {
-  data: function () {
-    return {
-      siteConfig: this.$store.state.siteConfig
-    }
-  },
-
-  computed: {
-    mainStyle: function () {
-      return {
-        backgroundImage: `url('${this.siteConfig.bgImg}')`
-      }
-    }
-  },
-
   components: {
-    SiteBase
+    DefaultLayout
   },
 
   props: [

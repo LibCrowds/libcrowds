@@ -1,37 +1,36 @@
 <template>
-  <div class="site-base" :style="mainStyle">
+  <div class="default-layout" :style="defaultStyle">
     <app-navbar></app-navbar>
     <main>
       <slot></slot>
     </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import AppNavbar from '@/components/AppNavbar'
+import AppFooter from '@/components/AppFooter'
 
 export default {
-  data: function () {
-    return {
-      siteConfig: this.$store.state.siteConfig
-    }
-  },
-
   computed: {
-    mainStyle: function () {
-      return {
-        backgroundImage: `url('${this.siteConfig.bgImg}')`
+    defaultStyle: function () {
+      try {
+        return {
+          backgroundImage: `url('${require('@/custom/background.png')}')`
+        }
+      } catch (e) {
+        return {
+          backgroundImage: `url('${require('@/assets/img/background.png')}')`
+        }
       }
     }
   },
 
   components: {
-    AppNavbar
-  },
-
-  props: [
-    'nav-items'
-  ]
+    AppNavbar,
+    AppFooter
+  }
 }
 </script>
 
@@ -39,16 +38,16 @@ export default {
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
-.site-base {
+.default-layout {
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
-}
 
-main {
-  flex: 1 1 auto;
+  main {
+    flex: 1 1 auto;
+  }
 }
 </style>

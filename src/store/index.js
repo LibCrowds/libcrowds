@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    siteConfig: null,
     currentUser: null,
     csrfToken: null,
     notification: null

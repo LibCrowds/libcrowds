@@ -32,13 +32,7 @@
         <h5 class="list-title">Sites</h5>
         <ul class="list-unstyled">
           <li class="list-item" v-for="site in config.sites">
-            <router-link
-              :to="{
-                name: 'home',
-                params: {
-                  sitename: site.shortname
-                }
-              }">
+            <router-link :to="{ name: 'landing' }">
               {{ site.name }}
             </router-link>
           </li>

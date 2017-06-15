@@ -19,7 +19,6 @@ import FloatingTabs from '@/components/layouts/FloatingTabs'
 export default {
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig,
       navItems: [
         { id: 'top', text: 'Top' }
       ]

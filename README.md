@@ -6,6 +6,20 @@
 
 > The LibCrowds front-end
 
+## Configuring
+
+``` bash		
+# create a site config file (then edit as required)
+cp src/config.js.tmpl src/config.js
+```
+
+You can also modify various pages by adding the following files to
+[src/custom](src/custom):
+
+- **background.png:** Main background image.
+- **about.md:** Text for the main section of the about page.
+- **technology.md:** Text for the technology section of the about page.
+
 ## Building
 
 ``` bash
@@ -45,14 +59,10 @@ npm run dev
 ```
 
 ## Deploying		
-		
+
 The LibCrowds front-end runs from GitHub pages, so to deploy:
-		
+
 ``` bash		
 # deploy to gh-pages		
 npm run gh-pages		
 ```
-
-## Configuring
-
-Configuration settings can be found in [src/config.js](src/config.js).

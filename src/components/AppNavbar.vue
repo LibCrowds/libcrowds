@@ -4,54 +4,23 @@
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-        <b-link
-          class="navbar-brand"
-          :to="{
-            name: 'home',
-            params: {
-              sitename: siteConfig.shortname
-            }
-          }">
-          <span>{{ siteConfig.name }}</span>
+        <b-link class="navbar-brand" :to="{ name: 'landing' }">
+          <span>{{ config.brand }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse">
 
           <b-nav is-nav-bar>
-            <b-nav-item
-              :to="{
-                name: 'about',
-                params: {
-                  sitename: siteConfig.shortname
-                }
-              }">
+            <b-nav-item :to="{ name: 'about' }">
               About
             </b-nav-item>
-            <b-nav-item
-              :to="{
-                name: 'projects',
-                params: {
-                  sitename: siteConfig.shortname
-                }
-              }">
+            <b-nav-item :to="{ name: 'projects' }">
               Projects
             </b-nav-item>
-            <b-nav-item
-              :to="{
-                name: 'results',
-                params: {
-                  sitename: siteConfig.shortname
-                }
-              }">
+            <b-nav-item :to="{ name: 'results' }">
               Results
             </b-nav-item>
-            <b-nav-item
-              :to="{
-                name: 'data',
-                params: {
-                  sitename: siteConfig.shortname
-                }
-              }">
+            <b-nav-item :to="{ name: 'data' }">
               Data
             </b-nav-item>
           </b-nav>
@@ -74,14 +43,7 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item 
-              v-else 
-              :to="{ 
-                name: 'signin',
-                query: {
-                  next: currentPath
-                }
-              }">
+            <b-nav-item v-else :to="{ name: 'signin' }">
               Sign in
             </b-nav-item>
           </b-nav>
@@ -97,6 +59,7 @@
 </template>
 
 <script>
+import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import NewProjectForm from '@/components/forms/projects/New'
 import store from '@/store'
@@ -105,7 +68,7 @@ export default {
   name: 'app-navbar',
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig,
+      config: config,
       currentPath: this.$store.state.route.path
     }
   },
