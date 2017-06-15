@@ -7,12 +7,10 @@
       <hr>
       <p>
         All datasets generated from the experimental crowdsourcing projects
-        hosted on this platform are made available under
+        hosted on this platform are made available under a
         <a :href="config.dataLicense.url" target="_blank">
           {{ config.dataLicense.name }}
-        </a>,
-        meaning that they can be used by anyone, without any copyright
-        restrictions.
+        </a> license.
       </p>
       <p>
         There are currently two types of dataset available, both of which
@@ -33,8 +31,11 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p>
-        Head over to the <a :href="config.discourseUrl">LibCrowds Forum</a>
+      <p v-if="config.discourseUrl">
+        Head over to the 
+        <a :href="config.discourseUrl">
+          {{ config.brand }} Forum
+        </a>
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
       </p>
