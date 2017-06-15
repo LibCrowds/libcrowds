@@ -2,7 +2,7 @@
   <div id="app">
     <notifications></notifications>
     <router-view></router-view>
-    <site-footer></site-footer>
+    <app-footer></app-footer>
   </div>
 </template>
 

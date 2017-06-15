@@ -4,13 +4,11 @@
     <main>
       <slot></slot>
     </main>
-    <site-footer></site-footer>
   </div>
 </template>
 
 <script>
 import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
 
 export default {
   data: function () {
@@ -28,8 +26,7 @@ export default {
   },
 
   components: {
-    AppNavbar,
-    AppFooter
+    AppNavbar
   },
 
   props: [
