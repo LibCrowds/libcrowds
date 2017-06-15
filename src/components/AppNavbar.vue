@@ -60,8 +60,8 @@
 
             <b-nav-item-dropdown
               right
-              :text="currentUser"
-              v-if="currentUser">
+              v-if="currentUser"
+              :text="currentUser.name">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -92,14 +92,18 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import NewProjectForm from '@/components/forms/projects/New'
+import store from '@/store'
 
 export default {
   name: 'app-navbar',
   data: function () {
     return {
-      siteConfig: this.$store.state.siteConfig,
-      currentUser: this.$store.state.currentUser
+      siteConfig: this.$store.state.siteConfig
     }
+  },
+
+  computed: {
+    currentUser: () => store.state.currentUser
   },
 
   components: {

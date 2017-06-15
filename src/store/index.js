@@ -22,9 +22,10 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    UPDATE_CURRENT_USER: (context) => {
+    UPDATE_CURRENT_USER: ({ commit }) => {
       pybossaApi.get('/account/profile').then(r => {
-        context.commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
+        console.log(r.data.user)
+        commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
       })
     }
   }
