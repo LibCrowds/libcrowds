@@ -13,6 +13,7 @@ import Privacy from '@/pages/help/Privacy'
 import Cookies from '@/pages/help/Cookies'
 import Api from '@/pages/help/Api'
 import Signin from '@/pages/account/Signin'
+import Register from '@/pages/account/Register'
 
 export default [
 
@@ -23,6 +24,7 @@ export default [
   { path: '/help/cookies', name: 'cookies', component: Cookies },
   { path: '/help/api', name: 'api', component: Api },
   { path: '/account/signin', name: 'signin', component: Signin },
+  { path: '/account/register', name: 'register', component: Register },
 
   // PYBOSSA meta-category sites
   {
