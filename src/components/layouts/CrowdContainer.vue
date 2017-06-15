@@ -38,7 +38,6 @@ export default {
     flex-direction: column;
     text-align: center;
     color: $white;
-    overflow: auto;
   }
 }
 </style>
