@@ -4,39 +4,11 @@
     <h1>Sign in</h1>
     <p class="lead">Using your {{ config.brand }} account details</p>
 
-    <form v-on:submit.prevent>
-      <div class="d-flex flex-row">
-        <b-form-fieldset
-        :feedback="getFeedback('email')"
-        :state="getState('email')">
-          <b-form-input
-            required
-            type="email"
-            placeholder="Email address"
-            :state="getState('email')"
-            v-model="form.email"
-            v-on:keyup.enter="submit">
-          </b-form-input>
-        </b-form-fieldset>
-        <b-form-fieldset
-        :feedback="getFeedback('password')"
-        :state="getState('password')">
-          <b-form-input
-            required
-            type="password"
-            placeholder="Password"
-            :state="getState('password')"
-            v-model="form.password"
-            v-on:keyup.enter="submit">
-          </b-form-input>
-        </b-form-fieldset>
-      </div>
-      <b-button
-        variant="success"
-        v-on:click="submit">
-        Sign in
-      </b-button>
-    </form>
+    <pybossa-form
+      endpoint="/account/signin"
+      :fields="fields"
+      @response="onFormResponse">
+    </pybossa-form>
 
     <div v-if="auth.facebook || auth.twitter || auth.google">
       <p class="lead my-2">or use</p>
@@ -76,74 +48,38 @@
 </template>
 
 <script>
-import config from '@/config'
-import CrowdContainer from '@/components/layouts/CrowdContainer'
-import pybossaApi from '@/api/pybossa'
-import router from '@/router'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
+import config from '@/config'
+import CrowdContainer from '@/components/layouts/CrowdContainer'
+import PybossaForm from '@/components/PybossaForm'
 
 export default {
   data: function () {
     return {
       config: config,
-      form: {
-        csrf: null,
-        email: null,
-        errors: {},
-        password: null
-      },
+      fields: [
+        { name: 'email', type: 'email' },
+        { name: 'password', type: 'password' }
+      ],
       auth: {}
     }
   },
 
   components: {
-    CrowdContainer
+    CrowdContainer,
+    PybossaForm
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get('/account/signin').then(r => {
-        this.handleResponse(r)
-      })
-    },
-    submit () {
-      if (document.querySelector('form').checkValidity()) {
-        pybossaApi.post('/account/signin', this.form, {
-          headers: {
-            'X-CSRFToken': this.form.csrf
-          }
-        }).then(r => {
-          this.handleResponse(r)
-        })
-      }
-    },
     redirect (endpoint) {
       const url = `${config.pybossaHost}/${endpoint}`
       window.location.replace(url)
     },
-    handleResponse (r) {
-      if ('next' in r.data) {
-        router.push({ path: r.data.next })
-      }
-      this.form = r.data.form
+    onFormResponse (r) {
       this.auth = r.data.auth
-    },
-    getFeedback (field) {
-      const fb = this.form.errors[field]
-      if (!fb) {
-        return
-      }
-      return fb.join()
-    },
-    getState (field) {
-      return field in this.form.errors ? 'danger' : null
     }
-  },
-
-  mounted () {
-    this.fetchData()
   }
 }
 </script>
