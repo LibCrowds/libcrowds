@@ -36,7 +36,7 @@
               :to="{
                 name: 'home',
                 params: {
-                  shortname: site.shortname
+                  sitename: site.shortname
                 }
               }">
               {{ site.name }}

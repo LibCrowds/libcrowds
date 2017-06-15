@@ -21,6 +21,7 @@
           {{ project.item.overall_progress }}%
         </template>
         <template slot="actions" scope="project">
+          
         </template>
       </b-table>
     </b-card>
@@ -77,6 +78,7 @@ export default {
         url += `page/${this.currentPage}/`
       }
       pybossaApi.get(url).then(res => {
+        console.log(res.data.projects)
         this.projects = res.data.projects
         this.pagination = res.data.pagination
       })

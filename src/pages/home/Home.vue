@@ -11,7 +11,7 @@
             :to="{
             name: 'about',
             params: {
-              shortname: siteConfig.shortname
+              sitename: siteConfig.shortname
             }
           }">
           Learn More
@@ -21,7 +21,7 @@
             :to="{
             name: 'projects',
             params: {
-              shortname: siteConfig.shortname
+              sitename: siteConfig.shortname
             }
           }">
           Get Started

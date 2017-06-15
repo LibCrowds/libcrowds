@@ -9,7 +9,7 @@
           :to="{
             name: 'home',
             params: {
-              shortname: siteConfig.shortname
+              sitename: siteConfig.shortname
             }
           }">
           <span>{{ siteConfig.name }}</span>
@@ -22,7 +22,7 @@
               :to="{
                 name: 'about',
                 params: {
-                  shortname: siteConfig.shortname
+                  sitename: siteConfig.shortname
                 }
               }">
               About
@@ -31,7 +31,7 @@
               :to="{
                 name: 'projects',
                 params: {
-                  shortname: siteConfig.shortname
+                  sitename: siteConfig.shortname
                 }
               }">
               Projects
@@ -40,7 +40,7 @@
               :to="{
                 name: 'results',
                 params: {
-                  shortname: siteConfig.shortname
+                  sitename: siteConfig.shortname
                 }
               }">
               Results
@@ -49,7 +49,7 @@
               :to="{
                 name: 'data',
                 params: {
-                  shortname: siteConfig.shortname
+                  sitename: siteConfig.shortname
                 }
               }">
               Data

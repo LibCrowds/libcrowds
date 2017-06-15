@@ -15,6 +15,8 @@ import Api from '@/pages/help/Api'
 import Signin from '@/pages/account/Signin'
 import Register from '@/pages/account/Register'
 
+import Presenter from '@/pages/projects/Presenter'
+
 export default [
 
   // Core site
@@ -28,7 +30,7 @@ export default [
 
   // PYBOSSA meta-category sites
   {
-    path: '/site/:shortname',
+    path: '/site/:sitename',
     component: {
       render (c) {
         return c('router-view')
@@ -36,7 +38,7 @@ export default [
     },
     beforeEnter: (to, from, next) => {
       let siteConfig = config.sites.find(function (site) {
-        return site.shortname === to.params.shortname
+        return site.shortname === to.params.sitename
       })
 
       if (typeof siteConfig === 'undefined') {
@@ -51,7 +53,19 @@ export default [
       { path: 'about', name: 'about', component: About },
       { path: 'data', name: 'data', component: Data },
       { path: 'projects', name: 'projects', component: Projects },
-      { path: 'results', name: 'results', component: Results }
+      { path: 'results', name: 'results', component: Results },
+
+      {
+        path: 'projects/:projectname',
+        component: {
+          render (c) {
+            return c('router-view')
+          }
+        },
+        children: [
+          { path: 'presenter', name: 'presenter', component: Presenter }
+        ]
+      }
     ]
   },
 
