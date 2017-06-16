@@ -1,7 +1,7 @@
 {
-  "name": "libcrowds-frontend",
+  "name": "vue-pybossa-frontend",
   "version": "0.0.1",
-  "description": "The LibCrowds front-end",
+  "description": "A Vue.js-based frontend for PyBossa.",
   "author": "Alex Mendes <alex.mendes@bl.uk>",
   "license": "MIT",
   "private": true,

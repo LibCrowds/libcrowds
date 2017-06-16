@@ -1,10 +1,10 @@
-# libcrowds-frontend
+# vue-pybossa-frontend
 
-[![Build Status](https://travis-ci.org/LibCrowds/libcrowds-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds-frontend)
-[![dependencies Status](https://david-dm.org/LibCrowds/libcrowds-frontend/status.svg)](https://david-dm.org/LibCrowds/libcrowds-frontend)
-[![devDependencies Status](https://david-dm.org/LibCrowds/libcrowds-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/libcrowds-frontend?type=dev)
+[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
+[![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
+[![devDependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend?type=dev)
 
-> The LibCrowds front-end
+> A Vue.js-based frontend for PyBossa
 
 ## Configuring
 
@@ -56,13 +56,4 @@ Start up a local PyBossa instance using the default settings, then:
 ``` bash
 # serve with hot reload at localhost:8080
 npm run dev
-```
-
-## Deploying		
-
-The LibCrowds front-end runs from GitHub pages, so to deploy:
-
-``` bash		
-# deploy to gh-pages		
-npm run gh-pages		
 ```
