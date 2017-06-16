@@ -1,15 +1,19 @@
 <template>
+
   <default-layout>
 
-    <h1>Register</h1>
-    <p class="lead">Create a new {{ config.brand }} account</p>
+    <div class="container text-center">
+      <h1>Register</h1>
+      <p class="lead">Create a new {{ config.brand }} account</p>
 
-    <pybossa-form
-      endpoint="/account/register"
-      :fields="fields">
-    </pybossa-form>
+      <pybossa-form
+        endpoint="/account/register"
+        :fields="fields">
+      </pybossa-form>
+    </div>
 
   </default-layout>
+
 </template>
 
 <script>
