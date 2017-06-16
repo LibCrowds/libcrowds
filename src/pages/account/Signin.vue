@@ -96,17 +96,51 @@ export default {
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
-.btn-google {
-  @include button-variant($white, $googleplus, $googleplus);
-}
-.btn-twitter {
-  @include button-variant($white, $twitter, $twitter);
-}
-.btn-facebook {
-  @include button-variant($white, $facebook, $facebook);
+.btn {
+  @include hover-focus;
+  border-radius: 0;
+  color: $white;
+
+  @include hover-focus {
+    color: $white;
+  }
+
+  &.btn-twitter {
+    background: $twitter;
+
+    @include hover-focus {
+      background: darken($twitter, 5%);
+    }
+  }
+
+  &.btn-facebook {
+    background: $facebook;
+
+    @include hover-focus {
+      background: darken($facebook, 5%);
+    }
+  }
+
+  &.btn-googleplus {
+    background: $googleplus;
+
+    @include hover-focus {
+      background: darken($googleplus, 5%);
+    }
+  }
+
+  &.btn-linkedin {
+    background: $linkedin;
+
+    @include hover-focus {
+      background: darken($linkedin, 5%);
+    }
+  }
 }
 
-.fa-icon {
-  width: 3rem;
+/* Fix inconsistend heights */
+svg {
+  display: flex;
+  height: 1.2rem;
 }
 </style>
