@@ -27,7 +27,7 @@
 
           <div v-if="auth.google">
             <b-button
-              variant="google"
+              variant="googleplus"
               class="h-100 d-flex"
               v-on:click="redirect('google')">
               <icon name="google-plus"></icon>
