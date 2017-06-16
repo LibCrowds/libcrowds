@@ -1,5 +1,5 @@
 <template>
-  <div class="floating-tabs-layout" :style="floatingTabsStyle">
+  <div class="floating-tabs-layout">
     <main>
       <div class="container mt-md-4 mb-5">
 
