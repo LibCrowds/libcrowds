@@ -37,7 +37,7 @@ export default {
 
   metaInfo: {
     title: 'Register'
-  }
+  },
 
   components: {
     DefaultLayout,
