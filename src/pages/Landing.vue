@@ -181,10 +181,30 @@
         </div>
       </b-jumbotron>
     </section>
+    
+    <section id="final-cta" class="bg-white">
+      <div class="container">
+        <div class="row pt-5">
+          <div class="col-sm-10 offset-sm-1 text-center">
+            <h3 class="text-uppercase display-4">Get Involved</h3>
+            <p class="lead">
+              Your contributions will have a direct impact on enabling future 
+              reasearch at {{ config.company }}.
+            </p>
+            <b-button 
+              variant="outline-primary" 
+              size="lg" 
+              :to="{ name: 'projects' }">
+              Choose a project
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section id="social-media" class="invert-navbar bg-white">
       <div class="container py-5 text-center">
-        <hr class="mb-5" v-if="topUsers.length">
+        <hr class="mt-0 mb-5">
         <social-media-buttons>
         </social-media-buttons>
       </div>
