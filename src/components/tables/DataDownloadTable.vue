@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import DataDownloadButton from '@/components/buttons/DataDownloadButton'
+import DataDownloadButton from '@/components/buttons/DataDownload'
 import pybossaApi from '@/api/pybossa'
 
 export default {
