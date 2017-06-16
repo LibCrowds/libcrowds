@@ -52,6 +52,7 @@ export default {
   }
 
   main {
+    color: $white;
     justify-content: center;
     align-content: center;
     flex: 1 1 auto;

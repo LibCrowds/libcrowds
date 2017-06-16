@@ -59,8 +59,4 @@ export default {
   }
 }
 
-h1 {
-  color: $white;
-}
-
 </style>
