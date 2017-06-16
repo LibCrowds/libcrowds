@@ -97,7 +97,7 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .btn-google {
-  @include button-variant($white, $google, $google);
+  @include button-variant($white, $googleplus, $googleplus);
 }
 .btn-twitter {
   @include button-variant($white, $twitter, $twitter);

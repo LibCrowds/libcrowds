@@ -15,13 +15,13 @@
         </div>
       </div>
     </transition>
-    
+
     <section id="intro" class="bg-white invert-navbar">
       <div class="container py-5 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p class="font-family-serif display-4 mb-0">
-              Have a direct impact on enabling future research at  
+              Have a direct impact on enabling future research at
               {{ config.company }}.
             </p>
           </div>
@@ -54,7 +54,7 @@
         </div>
       </div>
     </section>
-    
+
     <section id="featured-projects" class="invert-navbar" v-if="featured">
       <div class="container text-center text-lg-left">
         <div class="row">
@@ -80,7 +80,7 @@
         </div>
       </div>
     </section>
-    
+
     <section id="data">
       <b-jumbotron>
         <div class="container py-4">
@@ -92,11 +92,11 @@
           <div class="row py-3">
             <div class="col-sm-6 offset-sm-3">
               <p class="lead">
-                All datasets generated from the crowdsourcing projects hosted 
+                All datasets generated from the crowdsourcing projects hosted
                 on this platform are made available under a
                 <a :href="config.dataLicense.url" target="_blank">
                   {{ config.dataLicense.name }}
-                </a> license. Datasets can be downloaded by anyone in JSON and 
+                </a> license. Datasets can be downloaded by anyone in JSON and
                 CSV formats, visit our data page to find out more.
               </p>
             </div>
@@ -111,10 +111,10 @@
         </div>
       </b-jumbotron>
     </section>
-    
-    <section 
-      id="top-users" 
-      class="bg-white invert-navbar" 
+
+    <section
+      id="top-users"
+      class="bg-white invert-navbar"
       v-if="topUsers.length">
       <div class="container py-5">
         <div class="row">
@@ -124,7 +124,7 @@
             </h3>
             <hr class="wide w-50">
             <p class="text-uppercase lead">
-              To date, our top {{ topUsers.length }} volunteers have made an 
+              To date, our top {{ topUsers.length }} volunteers have made an
               amazing N contributions!
             </p>
             <b-button variant="secondary" :to="{ name: 'projects' }">
@@ -150,11 +150,12 @@
         </div>
       </div>
     </section>
-    
+
     <section id="social-media" class="invert-navbar bg-white">
-      <div class="container py-5">
-        <hr>
-        Social media buttons helper
+      <div class="container py-5 text-center">
+        <hr class="mb-5" v-if="topUsers.length">
+        <social-media-buttons>
+        </social-media-buttons>
       </div>
     </section>
 
@@ -171,6 +172,7 @@ import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 export default {
 
@@ -188,6 +190,10 @@ export default {
     meta: [
       { name: 'description', content: config.description }
     ]
+  },
+
+  components: {
+    SocialMediaButtons
   },
 
   methods: {
@@ -235,23 +241,23 @@ export default {
       opacity: 0;
     }
   }
-  
+
   .bg-white {
     background-color: $white;
   }
-  
+
   .font-family-serif {
     font-family: $font-family-serif;
   }
-  
+
   hr.wide {
     border-width: 3px;
   }
-  
+
   .btn-outline-white {
     @include button-outline-variant($white, $black);
   }
-  
+
   .black-ul-link  {
     color: $black;
     border-bottom: 3px solid rgba($black, 0);
@@ -262,7 +268,7 @@ export default {
       border-bottom: 3px solid rgba($black, 1);
     }
   }
-  
+
   #featured-projects {
     color: $gray-dark;
     background-image: url('../assets/img/white-wall.png');
@@ -270,7 +276,7 @@ export default {
     -webkit-box-shadow: 0 0 3px rgba($black, 0.2);
     border: 1px solid $white;
   }
-  
+
   #ribbon {
     text-align: center;
     display:block;
@@ -296,7 +302,7 @@ export default {
       border-color: $gray-lighter $gray-lighter transparent $gray-lighter;
     }
   }
-  
+
   #data {
     .jumbotron {
       color: $white;
@@ -305,7 +311,7 @@ export default {
       margin-bottom: 0;
     }
   }
-  
+
   #top-users {
     color: $gray-dark;
   }
