@@ -61,12 +61,20 @@ export default {
   data: function () {
     return {
       config: config,
-      currentPath: this.$store.state.route.path
+      currentPath: this.$store.state.route.path,
+      invertNodes: document.getElementsByClassName('invert-navbar')
     }
   },
 
   computed: {
-    currentUser: () => store.state.currentUser
+    currentUser: () => store.state.currentUser,
+    invertBounds: function () {
+      let bounds = []
+      for (let node of this.invertNodes) {
+        bounds.push([ node.offsetTop, node.offsetTop + node.offsetHeight ])
+      }
+      return bounds
+    }
   },
 
   methods: {
@@ -76,30 +84,29 @@ export default {
       })
     },
     styleNavbar () {
-      let bounds = []
-	    let ieScrollTop = document.documentElement.scrollTop
-	    let scrollTop = document.body.scrollTop == 0 
-                        ? ieScrollTop 
+      let ieScrollTop = document.documentElement.scrollTop
+      let scrollTop = document.body.scrollTop === 0
+                        ? ieScrollTop
                         : document.body.scrollTop
-      let nodes = document.getElementsByClassName('style-navbar')
-      for (let node of nodes) {
-        console.log(node)
+
+      for (let b of this.invertBounds) {
+        if (scrollTop >= b[0] - 50 && scrollTop <= b[1] + 25) {
+          document.querySelector('.navbar').classList.add('navbar-light')
+          document.querySelector('.navbar').classList.remove('navbar-inverse')
+          return
+        }
       }
+      document.querySelector('.navbar').classList.remove('navbar-light')
+      document.querySelector('.navbar').classList.add('navbar-inverse')
     }
   },
-  
-  methods: {
-    handleScroll () {
-      this.scrolled = window.scrollY > 0;
-    }
-  },
-  
+
   created () {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.styleNavbar)
   },
-  
+
   destroyed () {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.styleNavbar)
   }
 }
 </script>
