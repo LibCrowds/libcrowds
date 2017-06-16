@@ -1,50 +1,54 @@
 <template>
+
   <default-layout>
 
-    <h1>Sign in</h1>
-    <p class="lead">Using your {{ config.brand }} account details</p>
+    <div class="container text-center">
+      <h1>Sign in</h1>
+      <p class="lead">Using your {{ config.brand }} account details</p>
 
-    <pybossa-form
-      endpoint="/account/signin"
-      :fields="fields"
-      @response="onFormResponse">
-    </pybossa-form>
+      <pybossa-form
+        endpoint="/account/signin"
+        :fields="fields"
+        @response="onFormResponse">
+      </pybossa-form>
 
-    <div v-if="auth.facebook || auth.twitter || auth.google">
-      <p class="lead my-2">or use</p>
-      <div class="d-flex flex-row">
+      <div v-if="auth.facebook || auth.twitter || auth.google">
+        <p class="lead my-2">or use</p>
+        <div class="d-flex flex-row">
 
-        <div v-if="auth.facebook">
-          <b-button
-            variant="facebook"
-            class="h-100 d-flex"
-            v-on:click="redirect('facebook')">
-            <icon name="facebook"></icon>
-          </b-button>
+          <div v-if="auth.facebook">
+            <b-button
+              variant="facebook"
+              class="h-100 d-flex"
+              v-on:click="redirect('facebook')">
+              <icon name="facebook"></icon>
+            </b-button>
+          </div>
+
+          <div v-if="auth.google">
+            <b-button
+              variant="google"
+              class="h-100 d-flex"
+              v-on:click="redirect('google')">
+              <icon name="google-plus"></icon>
+            </b-button>
+          </div>
+
+          <div v-if="auth.twitter">
+            <b-button
+              variant="twitter"
+              class="h-100 d-flex"
+              v-on:click="redirect('twitter')">
+              <icon name="twitter"></icon>
+            </b-button>
+          </div>
+
         </div>
-
-        <div v-if="auth.google">
-          <b-button
-            variant="google"
-            class="h-100 d-flex"
-            v-on:click="redirect('google')">
-            <icon name="google-plus"></icon>
-          </b-button>
-        </div>
-
-        <div v-if="auth.twitter">
-          <b-button
-            variant="twitter"
-            class="h-100 d-flex"
-            v-on:click="redirect('twitter')">
-            <icon name="twitter"></icon>
-          </b-button>
-        </div>
-
       </div>
     </div>
 
   </default-layout>
+
 </template>
 
 <script>
@@ -84,7 +88,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
