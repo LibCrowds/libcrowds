@@ -1,6 +1,7 @@
 <template>
   <div id="app" :style="appStyle">
     <notifications></notifications>
+    <cookie-consent></cookie-consent>
     <app-navbar></app-navbar>
     <main>
       <router-view></router-view>
@@ -12,6 +13,7 @@
 <script>
 import config from '@/config'
 import Notifications from '@/components/Notifications'
+import CookieConsent from '@/components/CookieConsent'
 import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
 
@@ -24,6 +26,7 @@ export default {
 
   components: {
     Notifications,
+    CookieConsent,
     AppNavbar,
     AppFooter
   },
