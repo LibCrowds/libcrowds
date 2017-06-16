@@ -1,60 +1,34 @@
 <template>
   <div class="floating-tabs-layout" :style="floatingTabsStyle">
-    <div class="full-height">
-      <app-navbar></app-navbar>
-      <main>
+    <main>
+      <div class="container mt-md-4 mb-5">
 
-        <div class="container mt-md-4 mb-5">
+        <transition-group appear>
 
-          <transition-group appear>
+          <b-nav class="nav-unstyled" key="fading-nav">
+            <b-nav-item
+              v-for="item in navItems"
+              v-on:click="jump('#' + item.id)"
+              :key="item.id">
+              {{ item.text }}
+            </b-nav-item>
+          </b-nav>
 
-            <b-nav class="nav-unstyled" key="fading-nav">
-              <b-nav-item
-                v-for="item in navItems"
-                v-on:click="jump('#' + item.id)"
-                :key="item.id">
-                {{ item.text }}
-              </b-nav-item>
-            </b-nav>
+          <section id="content" key="fading-content">
+            <slot></slot>
+          </section>
 
-            <section id="content" key="fading-content">
-              <slot></slot>
-            </section>
+        </transition-group>
 
-          </transition-group>
-
-        </div>
-      </main>
-      <app-footer></app-footer>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
 import jump from 'jump.js'
-import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
 
 export default {
-  components: {
-    AppNavbar,
-    AppFooter
-  },
-
-  computed: {
-    floatingTabsStyle: function () {
-      try {
-        return {
-          backgroundImage: `url('${require('@/custom/background.png')}')`
-        }
-      } catch (e) {
-        return {
-          backgroundImage: `url('${require('@/assets/img/background.png')}')`
-        }
-      }
-    }
-  },
-
   props: [
     'nav-items'
   ],
