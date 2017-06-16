@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
       <p class="lead">{{ description }}</p>
     </div>
-    <div v-html="blOutlineSvg"></div>
+    <div id="bl-outline" v-html="blOutlineSvg"></div>
   </div>
 </template>
 
@@ -33,23 +33,8 @@ export default {
 @import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
 
-.error-message {
-  color: $white;
-  text-align: center;
-
-  h1 {
-    font-weight: 600 !important;
-    font-family: $headings-font-family;
-  }
-
-  @include media-breakpoint-up(md) {
-    margin-left: 5%;
-    width: 40%;
-  }
-}
-
-p {
-  color: $white;
+.navbar {
+    position: absolute;
 }
 
 .error {
@@ -59,22 +44,42 @@ p {
   flex-direction: column;
   justify-content: space-between;
 
-  svg {
+  #bl-outline {
+    position: absolute;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
-}
 
-path#mainline {
-  animation: dash 3s linear forwards;
-}
+  .error-message {
+    color: $white;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 
-path:not(#mainline) {
-  animation: dash 500ms linear 3s forwards;
-}
+    @include media-breakpoint-up(md) {
+      margin-left: 5%;
+      width: 40%;
+    }
+  }
 
-@keyframes dash {
-  to {
-    stroke-dashoffset: 0;
+  path#mainline {
+    animation: dash 3s linear forwards;
+  }
+
+  path:not(#mainline) {
+    animation: dash 500ms linear 3s forwards;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: 0;
+    }
   }
 }
 </style>
