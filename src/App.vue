@@ -32,11 +32,11 @@ export default {
     appStyle: function () {
       try {
         return {
-          backgroundImage: `url('${require('@/custom/background.png')}')`
+          backgroundImage: `url('${require('@/custom/background.jpg')}')`
         }
       } catch (e) {
         return {
-          backgroundImage: `url('${require('@/assets/img/background.png')}')`
+          backgroundImage: `url('${require('@/assets/img/background.jpg')}')`
         }
       }
     }
