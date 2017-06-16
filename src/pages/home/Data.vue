@@ -57,7 +57,7 @@
 
 <script>
 import config from '@/config'
-import DataDownloadTable from '@/components/tables/DataDownloadTable'
+import DataDownloadTable from '@/components/tables/DataDownload'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
