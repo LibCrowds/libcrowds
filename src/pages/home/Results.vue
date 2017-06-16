@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs :nav-items="navItems">
+  <floating-tabs-layout :nav-items="navItems">
 
     <section id="about">
       <h2 class="text-center">Results</h2>
@@ -8,13 +8,13 @@
       <span v-html="results"></span>
     </section>
 
-  </floating-tabs>
+  </floating-tabs-layout>
 
 </template>
 
 <script id="#contact">
 import marked from 'marked'
-import FloatingTabs from '@/components/layouts/FloatingTabs'
+import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
@@ -26,7 +26,7 @@ export default {
   },
 
   components: {
-    FloatingTabs
+    FloatingTabsLayout
   },
 
   computed: {

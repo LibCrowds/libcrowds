@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs :nav-items="navItems">
+  <floating-tabs-layout :nav-items="navItems">
 
     <section id="about">
       <h2 class="text-center">About</h2>
@@ -54,14 +54,14 @@
 
     </section>
 
-  </floating-tabs>
+  </floating-tabs-layout>
 
 </template>
 
 <script>
 import config from '@/config'
 import marked from 'marked'
-import FloatingTabs from '@/components/layouts/FloatingTabs'
+import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
@@ -82,7 +82,7 @@ export default {
   },
 
   components: {
-    FloatingTabs
+    FloatingTabsLayout
   },
 
   computed: {

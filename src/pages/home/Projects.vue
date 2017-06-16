@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs :nav-items="floatingTabNavItems">
+  <floating-tabs-layout :nav-items="navItems">
 
     <section id="projects">
       <h2 class="text-center">Projects</h2>
@@ -13,19 +13,19 @@
       <project-contrib-table></project-contrib-table>
     </section>
 
-  </floating-tabs>
+  </floating-tabs-layout>
 
 </template>
 
 <script>
 import marked from 'marked'
 import ProjectContribTable from '@/components/tables/ProjectContribTable'
-import FloatingTabs from '@/components/layouts/FloatingTabs'
+import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
-      floatingTabNavItems: [
+      navItems: [
         { id: 'projects', text: 'Top' },
         { id: 'contribute', text: 'Contribute' }
       ]
@@ -33,7 +33,7 @@ export default {
   },
 
   components: {
-    FloatingTabs,
+    FloatingTabsLayout,
     ProjectContribTable
   },
 
