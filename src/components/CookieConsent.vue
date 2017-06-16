@@ -9,6 +9,11 @@ export default {
     const cookiesRoute = this.$router.resolve({ name: 'cookies' }).route
     const cookiesUrl = window.location.origin + cookiesRoute.path
     window.cookieconsent.initialise({
+      content: {
+        message: 'This website uses cookies to ensure you get the best ' +
+                 'experience (mmm...cookies).',
+        href: cookiesUrl
+      },
       palette: {
         popup: {
           background: '#000'
@@ -16,9 +21,6 @@ export default {
         button: {
           background: '#BA0000'
         }
-      },
-      content: {
-        href: cookiesUrl
       }
     })
   }
