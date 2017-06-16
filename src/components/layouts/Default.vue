@@ -21,6 +21,5 @@ export default {
   align-content: center;
   color: $white;
   flex: 1 1 auto;
-  min-height: 90vh;
 }
 </style>
