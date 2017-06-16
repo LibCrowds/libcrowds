@@ -115,7 +115,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers.length">
+      v-if="topUsers">
       <div class="container py-5">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-3 text-center">
@@ -149,6 +149,34 @@
           </div>
         </div>
       </div>
+    </section>
+    
+    <section id="results" class="bg-black">
+      <b-jumbotron>
+        <div class="container py-4">
+          <div class="row py-2 text-center">
+            <div class="col-sm-12">
+              <h3 class="display-2">Results</h3>
+            </div>
+          </div>
+          <div class="row py-3">
+            <div class="col-sm-6 offset-sm-3">
+              <p class="lead">
+                As each task is completed contributions will be analysed and 
+                the outcome made available via our results page, making the 
+                efforts of our volunteers immediately.
+              </p>
+            </div>
+          </div>
+          <div class="row py-3 text-center">
+            <div class="col-sm-12">
+              <b-button variant="outline-white" :to="{ name: 'results' }">
+                See the results
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </b-jumbotron>
     </section>
 
     <section id="social-media" class="invert-navbar bg-white">
@@ -319,6 +347,16 @@ export default {
 
   #top-users {
     color: $gray-dark;
+  }
+  
+  #results {
+    .jumbotron {
+      color: $white;
+      font-weight: 300;
+      background-repeat: no-repeat;
+      background: url('../assets/img/newton.jpg') bottom right / cover fixed;
+      margin-bottom: 0;
+    }
   }
 }
 </style>
