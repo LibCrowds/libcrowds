@@ -128,14 +128,6 @@ export default {
       background: darken($googleplus, 5%);
     }
   }
-
-  &.btn-linkedin {
-    background: $linkedin;
-
-    @include hover-focus {
-      background: darken($linkedin, 5%);
-    }
-  }
 }
 
 /* Fix inconsistend heights */
