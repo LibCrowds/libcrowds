@@ -19,7 +19,7 @@
 
 <script>
 import marked from 'marked'
-import ProjectContribTable from '@/components/tables/ProjectContribTable'
+import ProjectContribTable from '@/components/tables/ProjectContrib'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
