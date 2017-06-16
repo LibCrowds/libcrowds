@@ -1,9 +1,11 @@
 <template>
   <div class="default-layout" :style="defaultStyle">
-    <app-navbar></app-navbar>
-    <main>
-      <slot></slot>
-    </main>
+    <div class="full-height">
+      <app-navbar></app-navbar>
+      <main>
+        <slot></slot>
+      </main>
+    </div>
     <app-footer></app-footer>
   </div>
 </template>
@@ -39,15 +41,22 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .default-layout {
-  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  display: flex;
-  flex-direction: column;
+
+  .full-height {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
   main {
+    justify-content: center;
+    align-content: center;
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

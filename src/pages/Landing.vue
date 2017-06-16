@@ -50,11 +50,6 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .container {
-  display: flex;
-  flex-direction: column;
-  height: 85vh;
-  justify-content: center;
-  margin-bottom: 15vh;
   opacity: 1;
   transition: opacity 800ms;
 
