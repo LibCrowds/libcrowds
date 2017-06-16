@@ -111,6 +111,10 @@ export default {
     return {
       config: config
     }
+  },
+
+  metaInfo: {
+    title: 'Privacy Policy'
   }
 }
 </script>

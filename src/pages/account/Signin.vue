@@ -71,6 +71,10 @@ export default {
     }
   },
 
+  metaInfo: {
+    title: 'Sign in'
+  }
+
   components: {
     DefaultLayout,
     PybossaForm

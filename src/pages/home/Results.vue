@@ -25,6 +25,10 @@ export default {
     }
   },
 
+  metaInfo: {
+    title: 'Results'
+  },
+
   components: {
     FloatingTabsLayout
   },

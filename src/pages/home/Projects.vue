@@ -37,6 +37,10 @@ export default {
     ProjectContribTable
   },
 
+  metaInfo: {
+    title: 'Projects'
+  },
+
   computed: {
     categorisation: function () {
       return marked(this.siteConfig.categorisation)

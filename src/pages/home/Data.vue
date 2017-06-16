@@ -72,6 +72,10 @@ export default {
     }
   },
 
+  metaInfo: {
+    title: 'Data'
+  },
+
   components: {
     FloatingTabsLayout,
     DataDownloadTable

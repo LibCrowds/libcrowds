@@ -219,6 +219,10 @@ export default {
     return {
       config: config
     }
+  },
+
+  metaInfo: {
+    title: 'Terms of Service'
   }
 }
 </script>

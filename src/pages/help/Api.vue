@@ -33,6 +33,10 @@ export default {
     return {
       config: config
     }
+  },
+
+  metaInfo: {
+    title: 'API'
   }
 }
 </script>

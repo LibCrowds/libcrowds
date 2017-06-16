@@ -58,6 +58,10 @@ export default {
     return {
       config: config
     }
+  },
+
+  metaInfo: {
+    title: 'Cookies Policy'
   }
 }
 </script>
