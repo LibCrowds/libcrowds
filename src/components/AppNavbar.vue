@@ -34,9 +34,6 @@
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
-              <!-- <b-dropdown-item v-b-modal.new-project-modal>
-                New Project
-              </b-dropdown-item> -->
               <b-dropdown-item to="#">Open Project</b-dropdown-item>
               <b-dropdown-item to="#">Admin</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
@@ -51,17 +48,12 @@
       </div>
     </b-navbar>
 
-    <!-- <b-modal id="new-project-modal" title="New Project">
-      <new-project-form></new-project-form>
-    </b-modal> -->
-
   </div>
 </template>
 
 <script>
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
-import NewProjectForm from '@/components/forms/projects/New'
 import store from '@/store'
 
 export default {
@@ -77,16 +69,37 @@ export default {
     currentUser: () => store.state.currentUser
   },
 
-  components: {
-    NewProjectForm
-  },
-
   methods: {
     signout () {
       pybossaApi.get('/account/signout').then(r => {
         this.$store.dispatch('UPDATE_CURRENT_USER')
       })
+    },
+    styleNavbar () {
+      let bounds = []
+	    let ieScrollTop = document.documentElement.scrollTop
+	    let scrollTop = document.body.scrollTop == 0 
+                        ? ieScrollTop 
+                        : document.body.scrollTop
+      let nodes = document.getElementsByClassName('style-navbar')
+      for (let node of nodes) {
+        console.log(node)
+      }
     }
+  },
+  
+  methods: {
+    handleScroll () {
+      this.scrolled = window.scrollY > 0;
+    }
+  },
+  
+  created () {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 }
 </script>
