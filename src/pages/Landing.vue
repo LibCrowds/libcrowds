@@ -55,7 +55,10 @@
       </div>
     </section>
 
-    <section id="featured-projects" class="invert-navbar" v-if="featured">
+    <section 
+      id="featured-projects" 
+      class="invert-navbar" 
+      v-if="featured.length">
       <div class="container text-center text-lg-left">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 text-uppercase py-5">
@@ -115,7 +118,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers">
+      v-if="topUsers.length">
       <div class="container py-5">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-3 text-center">
