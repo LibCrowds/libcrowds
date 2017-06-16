@@ -188,7 +188,12 @@ export default {
   metaInfo: {
     title: config.tagline,
     meta: [
-      { name: 'description', content: config.description }
+      { name: 'description', content: config.description },
+
+      // Facebook Open Graph Markup
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:title', content: config.tagline },
+      { property: 'og:description', content: config.description }
     ]
   },
 
