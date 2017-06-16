@@ -154,7 +154,7 @@
       </div>
     </section>
     
-    <section id="results" class="bg-black">
+    <section id="results">
       <b-jumbotron>
         <div class="container py-4">
           <div class="row py-2 text-center">
