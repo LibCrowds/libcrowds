@@ -4,21 +4,17 @@
 [![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
 [![devDependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend?type=dev)
 
-> A Vue.js-based frontend for PyBossa
+> A Vue.js frontend for PyBossa.
 
 ## Configuring
 
+All settings can be found in [src/config.js.tmpl](src/config.js.tmpl); to use
+the theme you will need to make a copy of this file locally.
+
 ``` bash		
-# create a site config file (then edit as required)
+# create local configuration file
 cp src/config.js.tmpl src/config.js
 ```
-
-You can also modify various pages by adding the following files to
-[src/custom](src/custom):
-
-- **background.png:** Main background image.
-- **about.md:** Text for the main section of the about page.
-- **technology.md:** Text for the technology section of the about page.
 
 ## Building
 

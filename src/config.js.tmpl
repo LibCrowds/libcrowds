@@ -1,10 +1,11 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-// Settings commented out are optional.
 module.exports = {
-  brand: 'LibCrowds',
-  tagline: 'Crowdsourcing projects from the British Library',
-  description: 'A platform for hosting experimental crowdsourcing projects',
+
+  // Basic configuration
+  brand: 'Convert-a-Card',
+  tagline: 'A crowdsourcing platform from the British Library',
+  description: 'Transform printed card catalogues into a searchable database.',
   company: 'The British Library',
   contact: {
     twitter: 'LibCrowds',
@@ -16,15 +17,19 @@ module.exports = {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
   },
-  forumUrl: 'http://community.libcrowds.com',
 
-  // The following files are used to theme the site further
-  // You can store your custom files in the src/custom folder
-  bgImg: require('@/assets/img/background.jpg'),
+  // Forum URL
+  // forumUrl: 'http://community.libcrowds.com',
 
-  // If this site is part of a larger platform you can enter it's details here
-  // platform: {
-  //   name: 'LibCrowds',
+  // Main background image
+  // bgImg: require('@/custom/backgound.jpg'),
+
+  // Main about page text
+  // aboutMd: require('@/custom/about.md'),
+
+  // Footer lead text
+  // footer: {
+  //   name: 'Part of the LibCrowds crowdsourcing platform',
   //   url: 'http://www.libcrowds.com'
   // }
 }
