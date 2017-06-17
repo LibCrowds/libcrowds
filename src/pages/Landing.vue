@@ -231,6 +231,8 @@ import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import project from '@/assets/img/project.svg'
+import getNumberWithCommas from '@/utils/get-number-with-commas'
+import mapValues from 'lodash/mapValues'
 
 export default {
 
@@ -264,7 +266,7 @@ export default {
   methods: {
     fetchData () {
       pybossaApi.get('stats/').then(r => {
-        this.stats = r.data.stats
+        this.stats = mapValues(r.data.stats, (n) => getNumberWithCommas(n))
       })
       pybossaApi.get('/').then(r => {
         if ('featured' in r.data.categories_projects) {
