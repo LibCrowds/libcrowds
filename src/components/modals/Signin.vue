@@ -1,5 +1,10 @@
 <template>
-  <b-modal :id="name" title="Sign in" style="display: block;" @ok="submit">
+  <b-modal
+    :id="name"
+    title="Sign in"
+    style="display: block;"
+    @ok="submit"
+    @hidden="clear">
 
     <div v-if="formLoading">
       <loading></loading>
@@ -132,6 +137,9 @@ export default {
         this.auth = r.data.auth
         this.form = r.data.form
       })
+    },
+    clear () {
+      this.form.errors = {}
     },
     getFeedback (field) {
       const fb = this.form.errors[field]
