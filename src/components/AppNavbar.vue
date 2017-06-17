@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import store from '@/store'
@@ -61,23 +62,12 @@ export default {
   data: function () {
     return {
       config: config,
-      currentPath: this.$store.state.route.path,
-      invertNodes: document.getElementsByClassName('invert-navbar')
+      currentPath: this.$store.state.route.path
     }
   },
 
   computed: {
-    currentUser: () => store.state.currentUser,
-    invertBounds: function () {
-      let bounds = []
-      for (let node of this.invertNodes) {
-        bounds.push({
-          top: node.offsetTop,
-          bottom: node.offsetTop + node.offsetHeight
-        })
-      }
-      return bounds
-    }
+    currentUser: () => store.state.currentUser
   },
 
   methods: {
@@ -86,22 +76,34 @@ export default {
         this.$store.dispatch('UPDATE_CURRENT_USER')
       })
     },
-    styleNavbar () {
-      let ieScrollTop = document.documentElement.scrollTop
-      let scrollTop = document.body.scrollTop === 0
-                        ? ieScrollTop
-                        : document.body.scrollTop
+    styleNavbar: throttle(
+      function () {
+        let ieScrollTop = document.documentElement.scrollTop
+        let scrollTop = document.body.scrollTop === 0
+                          ? ieScrollTop
+                          : document.body.scrollTop
 
-      for (let b of this.invertBounds) {
-        if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
-          document.querySelector('.navbar').classList.add('navbar-light')
-          document.querySelector('.navbar').classList.remove('navbar-inverse')
-          return
+        let bounds = []
+        let nodes = document.getElementsByClassName('invert-navbar')
+        for (let node of nodes) {
+          bounds.push({
+            top: node.offsetTop,
+            bottom: node.offsetTop + node.offsetHeight
+          })
         }
-      }
-      document.querySelector('.navbar').classList.remove('navbar-light')
-      document.querySelector('.navbar').classList.add('navbar-inverse')
-    }
+
+        for (let b of bounds) {
+          if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
+            document.querySelector('.navbar').classList.add('navbar-light')
+            document.querySelector('.navbar').classList.remove('navbar-inverse')
+            return
+          }
+        }
+        document.querySelector('.navbar').classList.remove('navbar-light')
+        document.querySelector('.navbar').classList.add('navbar-inverse')
+      },
+      10
+    )
   },
 
   created () {

@@ -22,6 +22,7 @@
     "hamburgers": "^0.8.1",
     "ionicons": "^3.0.0",
     "jump.js": "^1.0.2",
+    "lodash": "^4.17.4",
     "marked": "^0.3.6",
     "path-exists": "^3.0.0",
     "pnotify": "^3.2.0",
