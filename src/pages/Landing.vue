@@ -152,7 +152,9 @@
         </div>
         <div class="row text-center mt-1">
           <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
-            <b-btn variant="black-underline" @click="$root.$emit('show::modal','lb-modal')">
+            <b-btn
+              variant="black-underline"
+              v-b-modal.lb-modal>
               <icon name="eye"></icon> View the leaderboard
             </b-btn>
           </div>
@@ -216,7 +218,7 @@
       </div>
     </section>
 
-    <leaderboard-modal name="'lb-modal'"></leaderboard-modal>
+    <leaderboard-modal name="lb-modal"></leaderboard-modal>
 
   </div>
 

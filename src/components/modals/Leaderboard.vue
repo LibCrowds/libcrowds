@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="lb-modal" title="Leaderboard">
+  <b-modal :id="name" title="Leaderboard">
 
     <b-table
       striped
@@ -73,7 +73,7 @@ export default {
 
   .modal-footer {
     padding: 25px 15px;
-  }  
+  }
 }
 
 .table {
