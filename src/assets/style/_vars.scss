@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Varela+Round:300,400,700);
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,400,700);
 
-/* Fonts */
+/* Text */
 $headings-font-family:             'Varela Round', sans-serif;
 $font-family-base:                 'Roboto', sans-serif;
 $font-family-serif:                Times, serif;
 $headings-font-weight:             400;
+$line-height-base:                 1.6;
 
 /* Colors */
 $white:                            #FFFFFF;
@@ -70,7 +71,7 @@ $card-spacer-y:                    3rem;
 $card-columns-count:               2;
 
 /* Spacing */
-$spacer:                           1.5rem;
+$spacer:                           2.5rem;
 
 /* Box Shadows */
 $box-shadow-spread:                -5px;
@@ -95,5 +96,3 @@ $fa-font-path:                     '~font-awesome/fonts';
 /* Light Gallery */
 $lg-path-fonts:                    '~lightgallery/src/fonts';
 $lg-path-images:                   '~lightgallery/src/img';
-
-

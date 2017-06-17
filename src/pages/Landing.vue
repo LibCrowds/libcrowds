@@ -5,7 +5,7 @@
     <transition appear>
       <div class="container full-height">
         <h1 id="tagline">{{ config.tagline }}</h1>
-        <div id="intro-buttons" class="my-3">
+        <div id="intro-buttons" class="my-2">
           <b-button variant="secondary" :to="{ name: 'about' }">
             Learn More
           </b-button>
@@ -26,27 +26,27 @@
             </p>
           </div>
         </div>
-        <hr class="my-4 w-75 sr">
+        <hr class="my-3 w-75 sr">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
-            <p class="lead my-2">
+            <p class="lead my-1">
               {{ config.description }}
             </p>
           </div>
         </div>
-        <hr class="my-4 w-75 sr">
+        <hr class="my-3 w-75 sr">
         <div class="row">
-          <div class="col-md-4 my-3 sr">
+          <div class="col-md-4 my-2 sr">
             <icon name="desktop" scale="4"></icon>
             <p class="my-1">{{ stats.n_published_projects }}</p>
             <p>Projects</p>
           </div>
-          <div class="col-md-4 my-3 sr">
+          <div class="col-md-4 my-2 sr">
             <icon name="tasks" scale="4"></icon>
             <p class="my-1">{{ stats.n_task_runs }}</p>
             <p>Contributions</p>
           </div>
-          <div class="col-md-4 my-3 sr">
+          <div class="col-md-4 my-2 sr">
             <icon name="users" scale="4"></icon>
             <p class="my-1">{{ stats.n_total_users }}</p>
             <p>Volunteers</p>
@@ -55,14 +55,14 @@
       </div>
     </section>
 
-    <section 
-      id="featured-projects" 
-      class="invert-navbar" 
+    <section
+      id="featured-projects"
+      class="invert-navbar"
       v-if="featured.length">
       <div class="container text-center text-lg-left">
         <div class="row">
-          <div class="col-lg-5 offset-lg-1 text-uppercase py-5">
-            <h2 class="font-weight-bold display-4">
+          <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
+            <h2 class="font-weight-bold display-4 pt-1">
               Featured Projects
             </h2>
             <hr class="wide mr-lg-5">
@@ -87,13 +87,13 @@
     <section id="data">
       <b-jumbotron>
         <div class="container py-4">
-          <div class="row py-2 text-center">
+          <div class="row text-center">
             <div class="col-sm-12">
-              <h3 class="display-2">Open Data</h3>
+              <h3 class="display-3">Open Data</h3>
             </div>
           </div>
           <div class="row py-3">
-            <div class="col-sm-6 offset-sm-3">
+            <div class="col-md-8 offset-md-2">
               <p class="lead">
                 All datasets generated from the crowdsourcing projects hosted
                 on this platform are made available under a
@@ -104,7 +104,7 @@
               </p>
             </div>
           </div>
-          <div class="row py-3 text-center">
+          <div class="row pt-2 text-center">
             <div class="col-sm-12">
               <b-button variant="outline-white" :to="{ name: 'data' }">
                 Get the data
@@ -119,14 +119,14 @@
       id="top-users"
       class="bg-white invert-navbar"
       v-if="topUsers.length">
-      <div class="container py-5">
+      <div class="container py-4">
         <div class="row">
-          <div class="col-lg-5 offset-lg-1 pt-3 text-center">
+          <div class="col-lg-5 offset-lg-1 pt-2 text-center">
             <h3 class="text-uppercase font-weight-bold display-4">
               Most Active Volunteers
             </h3>
-            <hr class="wide w-50">
-            <p class="text-uppercase lead">
+            <hr class="wide w-50 my-2">
+            <p class="text-uppercase lead pb-2">
               To date, our top {{ topUsers.length }} volunteers have made an
               amazing N contributions!
             </p>
@@ -140,12 +140,12 @@
           </div>
         </div>
         <div class="row text-center mt-4">
-          <div class="col-lg-12 pt-2">
+          <div class="col-lg-12 pt-1">
             Render Avatar list
           </div>
         </div>
         <div class="row text-center mt-1">
-          <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-4">
+          <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
             <a href="#" class="black-ul-link">
               <icon name="eye"></icon> View the leaderboard
             </a>
@@ -153,25 +153,25 @@
         </div>
       </div>
     </section>
-    
+
     <section id="results">
       <b-jumbotron>
         <div class="container py-4">
-          <div class="row py-2 text-center">
+          <div class="row text-center">
             <div class="col-sm-12">
-              <h3 class="display-2">Results</h3>
+              <h3 class="display-3">Results</h3>
             </div>
           </div>
-          <div class="row py-3">
-            <div class="col-sm-6 offset-sm-3">
+          <div class="row py-2">
+            <div class="col-md-8 offset-md-2">
               <p class="lead">
-                As each task is completed contributions will be analysed and 
-                the outcome made available via our results page, making the 
-                efforts of our volunteers immediately.
+                As each task is completed, contributions are analysed and
+                the outcome provided via our results page, making the
+                efforts of our volunteers immediately apparent.
               </p>
             </div>
           </div>
-          <div class="row py-3 text-center">
+          <div class="row pt-2 text-center">
             <div class="col-sm-12">
               <b-button variant="outline-white" :to="{ name: 'results' }">
                 See the results
@@ -181,19 +181,19 @@
         </div>
       </b-jumbotron>
     </section>
-    
+
     <section id="final-cta" class="bg-white">
-      <div class="container">
-        <div class="row pt-5">
+      <div class="container pt-5 pb-4">
+        <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
-            <h3 class="text-uppercase display-4">Get Involved</h3>
-            <p class="lead">
-              Your contributions will have a direct impact on enabling future 
+            <h3 class="text-uppercase display-4 mb-0">Get Involved</h3>
+            <p class="lead my-3">
+              Your contributions will have a direct impact on enabling future
               reasearch at {{ config.company }}.
             </p>
-            <b-button 
-              variant="outline-primary" 
-              size="lg" 
+            <b-button
+              variant="outline-primary"
+              size="lg"
               :to="{ name: 'projects' }">
               Choose a project
             </b-button>
@@ -203,8 +203,8 @@
     </section>
 
     <section id="social-media" class="invert-navbar bg-white">
-      <div class="container py-5 text-center">
-        <hr class="mt-0 mb-5">
+      <div class="container pb-5 text-center">
+        <hr class="mt-0 mb-4">
         <social-media-buttons>
         </social-media-buttons>
       </div>
@@ -371,7 +371,7 @@ export default {
   #top-users {
     color: $gray-dark;
   }
-  
+
   #results {
     .jumbotron {
       color: $white;
