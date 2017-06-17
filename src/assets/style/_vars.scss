@@ -74,8 +74,10 @@ $card-columns-count:               2;
 $spacer:                           2.5rem;
 
 /* Modals */
-$modal-backdrop-opacity:           0.1;
+$modal-backdrop-opacity:           0.8;
 $modal-inner-padding:              0;
+$modal-dialog-margin-y-sm-up:      50px;
+$modal-backdrop-bg:                #EFEFEF;
 
 /* Box Shadows */
 $box-shadow-spread:                -5px;

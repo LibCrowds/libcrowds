@@ -57,22 +57,39 @@ export default {
 
 .modal {
   display: block;
+
+  .modal-dialog{
+      overflow-y: initial !important
+  }
+
+  .modal-content {
+    max-height: 500px;
+    border-radius: 0;
+  }
+
+  .modal-body{
+      overflow-y: auto;
+  }
+
+  .modal-footer {
+    padding: 25px 15px;
+  }  
 }
 
-.modal-content {
-  border-radius: 0;
-}
+.table {
+  font-size: $font-size-sm;
+  margin-bottom: 0;
 
-.modal-dialog{
-    overflow-y: initial !important
-}
+  th {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: $text-muted;
+    border-top: none;
+  }
 
-.modal-body{
-    height: 400px;
-    overflow-y: auto;
-}
-
-.modal-footer {
-  padding: 25px 15px;
+  tr *:first-child,
+  tr *:last-child {
+    text-align: center;
+  }
 }
 </style>
