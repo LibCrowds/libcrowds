@@ -1,17 +1,35 @@
 <template>
-  <b-modal :id="name" title="Sign in" style="display: block;">
-    <div class="p-2 text-center">
+  <b-modal :id="name" title="Sign in" style="display: block;" @ok="submit">
 
-      <p class="lead">Enter your {{ config.brand }} account details</p>
+    <div v-if="formLoading">
+      <loading></loading>
+    </div>
 
-      <pybossa-form
-        endpoint="/account/signin"
-        :fields="fields"
-        @response="onFormResponse">
-      </pybossa-form>
+    <div class="p-2" v-else>
+
+      <p class="lead text-center">
+        Enter your {{ config.brand }} account details
+      </p>
+
+      <b-form-fieldset
+        v-for="f in fields"
+        :key="f.name"
+        :feedback="getFeedback(f.name)"
+        :state="getState(f.name)">
+        <b-form-input
+          required
+          :type="f.type"
+          :placeholder="f.placeholder"
+          :state="getState(f.name)"
+          v-model="form[f.name]"
+          v-on:keyup.enter="submit">
+        </b-form-input>
+      </b-form-fieldset>
 
       <div v-if="auth.facebook || auth.twitter || auth.google">
-        <p class="lead my-2">or sign in with</p>
+        <p class="lead my-2 text-center">
+          or sign in with
+        </p>
         <div class="row-btn-social">
 
           <div v-if="auth.facebook">
@@ -55,8 +73,10 @@
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
+import isEmpty from 'lodash/isEmpty'
 import config from '@/config'
-import PybossaForm from '@/components/PybossaForm'
+import pybossaApi from '@/api/pybossa'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
@@ -66,12 +86,9 @@ export default {
         { name: 'email', type: 'email', placeholder: 'Email address' },
         { name: 'password', type: 'password', placeholder: 'Password' }
       ],
-      auth: {}
+      auth: {},
+      form: {}
     }
-  },
-
-  components: {
-    PybossaForm
   },
 
   props: {
@@ -81,19 +98,60 @@ export default {
     }
   },
 
+  components: {
+    Loading
+  },
+
+  computed: {
+    formLoading () {
+      return isEmpty(this.form)
+    }
+  },
+
   methods: {
+    loadForm () {
+      pybossaApi.get('account/signin').then(r => {
+        this.auth = r.data.auth
+        this.form = r.data.form
+      })
+    },
     redirect (endpoint) {
       const url = `${config.pybossaHost}/${endpoint}`
       window.location.replace(url)
     },
-    onFormResponse (r) {
-      this.auth = r.data.auth
+    submit (e) {
+      e.cancel()
+      pybossaApi.post('account/signin', this.form, {
+        headers: {
+          'X-CSRFToken': this.form.csrf
+        }
+      }).then(r => {
+        if (r.data.status !== 'success') {
+          e.cancel()
+        }
+        this.auth = r.data.auth
+        this.form = r.data.form
+      })
+    },
+    getFeedback (field) {
+      const fb = this.form.errors[field]
+      if (!fb) {
+        return
+      }
+      return fb.join()
+    },
+    getState (field) {
+      return field in this.form.errors ? 'danger' : null
     }
+  },
+
+  created () {
+    this.loadForm()
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'src/assets/style/_vars';
 @import 'src/assets/style/partials/_modals';
 @import '~bootstrap/scss/bootstrap';
