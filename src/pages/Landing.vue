@@ -182,7 +182,7 @@
       </b-jumbotron>
     </section>
 
-    <section id="final-cta" class="bg-white">
+    <section id="final-cta" class="bg-white invert-navbar">
       <div class="container pt-5 pb-4">
         <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
@@ -202,7 +202,7 @@
       </div>
     </section>
 
-    <section id="social-media" class="invert-navbar bg-white">
+    <section id="social-media" class="bg-white invert-navbar">
       <div class="container pb-5 text-center">
         <hr class="mt-0 mb-4">
         <social-media-buttons>
@@ -270,9 +270,16 @@ export default {
     }
   },
 
+  destroyed () {
+    document.querySelector('.navbar').classList.add('sticky-top')
+    document.querySelector('.navbar').classList.remove('fixed-top')
+  },
+
   mounted () {
     this.fetchData()
     this.scrollReveal()
+    document.querySelector('.navbar').classList.add('fixed-top')
+    document.querySelector('.navbar').classList.remove('sticky-top')
   }
 }
 </script>

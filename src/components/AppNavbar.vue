@@ -71,7 +71,10 @@ export default {
     invertBounds: function () {
       let bounds = []
       for (let node of this.invertNodes) {
-        bounds.push([ node.offsetTop, node.offsetTop + node.offsetHeight ])
+        bounds.push({
+          top: node.offsetTop,
+          bottom: node.offsetTop + node.offsetHeight
+        })
       }
       return bounds
     }
@@ -90,7 +93,7 @@ export default {
                         : document.body.scrollTop
 
       for (let b of this.invertBounds) {
-        if (scrollTop >= b[0] - 50 && scrollTop <= b[1] + 25) {
+        if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
           document.querySelector('.navbar').classList.add('navbar-light')
           document.querySelector('.navbar').classList.remove('navbar-inverse')
           return
@@ -120,11 +123,13 @@ export default {
   letter-spacing: 0.8px;
   justify-content: center;
   align-items: baseline;
+  transition: background-color 200ms;
 
   .navbar-brand {
     font-family: $headings-font-family;
     font-size: $font-size-h3;
     font-weight: 300;
+    transition: color 200ms;
   }
 
   .hamburger {
@@ -274,6 +279,7 @@ export default {
           overflow-x: hidden;
           overflow-y: auto;
           text-align: center;
+          transition: transform 450ms !important;
 
           &:not(.show) {
             transform: translateX(-100%);
