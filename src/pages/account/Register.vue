@@ -1,7 +1,5 @@
 <template>
 
-  <default-layout>
-
     <div class="container text-center">
       <h1>Register</h1>
       <p class="lead">Create a new {{ config.brand }} account</p>
@@ -12,13 +10,10 @@
       </pybossa-form>
     </div>
 
-  </default-layout>
-
 </template>
 
 <script>
 import config from '@/config'
-import DefaultLayout from '@/components/layouts/Default'
 import PybossaForm from '@/components/PybossaForm'
 
 export default {
@@ -40,7 +35,6 @@ export default {
   },
 
   components: {
-    DefaultLayout,
     PybossaForm
   }
 }
