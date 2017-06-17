@@ -1,5 +1,5 @@
 <template>
-  <footer id="app-footer" class="footer">
+  <footer id="app-footer" class="footer invert-navbar">
     <div class="container">
 
       <section>
