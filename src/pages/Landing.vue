@@ -263,8 +263,8 @@ export default {
         this.stats = r.data.stats
       })
       pybossaApi.get('/').then(r => {
-        if ('featured' in r.categoriesProjects) {
-          this.featured = r.categoriesProjects.featured
+        if ('featured' in r.data.categories_projects) {
+          this.featured = r.data.categories_projects.featured
         }
         this.topUsers = r.data.top_users
       })
