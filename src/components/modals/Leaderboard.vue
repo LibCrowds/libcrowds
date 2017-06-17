@@ -50,12 +50,10 @@ export default {
 
   methods: {
     fetchData () {
-      setTimeout(function () {
-        pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
-          this.loading = false
-          this.topUsers = r.data.top_users
-        })
-      }, 10000)
+      pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
+        this.loading = false
+        this.topUsers = r.data.top_users
+      })
     }
   },
 
