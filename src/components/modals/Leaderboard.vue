@@ -1,7 +1,12 @@
 <template>
   <b-modal :id="name" title="Leaderboard" @shown="fetchData">
 
+    <div v-if="loading">
+      <loading></loading>
+    </div>
+
     <b-table
+      v-else
       striped
       show-empty
       :items="topUsers"
@@ -13,10 +18,12 @@
 
 <script>
 import pybossaApi from '@/api/pybossa'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
+      loading: true,
       topUsers: [],
       fields: {
         rank: { label: 'Rank' },
@@ -24,6 +31,10 @@ export default {
         score: { label: 'Score' }
       }
     }
+  },
+
+  components: {
+    Loading
   },
 
   props: {
@@ -39,9 +50,12 @@ export default {
 
   methods: {
     fetchData () {
-      pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
-        this.topUsers = r.data.top_users
-      })
+      setTimeout(function () {
+        pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
+          this.loading = false
+          this.topUsers = r.data.top_users
+        })
+      }, 10000)
     }
   },
 
@@ -54,6 +68,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
+@import '~spinkit/scss/spinners/10-fading-circle';
 
 .modal {
   display: block;
