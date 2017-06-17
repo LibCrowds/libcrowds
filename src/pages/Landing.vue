@@ -124,7 +124,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers.length">
+      v-if="topUsers">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-2 text-center">
@@ -152,9 +152,9 @@
         </div>
         <div class="row text-center mt-1">
           <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
-            <a href="#" class="black-ul-link">
+            <b-btn variant="black-underline" @click="$root.$emit('show::modal','lb-modal')">
               <icon name="eye"></icon> View the leaderboard
-            </a>
+            </b-btn>
           </div>
         </div>
       </div>
@@ -216,6 +216,8 @@
       </div>
     </section>
 
+    <leaderboard-modal name="'lb-modal'"></leaderboard-modal>
+
   </div>
 
 </template>
@@ -227,6 +229,7 @@ import 'vue-awesome/icons/eye'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import LeaderboardModal from '@/components/modals/Leaderboard'
 import project from '@/assets/img/project.svg'
 
 export default {
@@ -254,7 +257,8 @@ export default {
   },
 
   components: {
-    SocialMediaButtons
+    SocialMediaButtons,
+    LeaderboardModal
   },
 
   methods: {
@@ -326,8 +330,9 @@ export default {
     @include button-outline-variant($white, $black);
   }
 
-  .black-ul-link  {
+  .btn-black-underline  {
     color: $black;
+    background: none;
     border-bottom: 3px solid rgba($black, 0);
     display: inline-block;
     transition: border-bottom 500ms;
