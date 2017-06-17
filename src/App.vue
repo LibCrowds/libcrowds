@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="appStyle">
+  <div id="app">
     <notifications></notifications>
     <cookie-consent></cookie-consent>
     <app-navbar></app-navbar>
@@ -21,7 +21,11 @@ export default {
   name: 'app',
 
   metaInfo: {
-    titleTemplate: `%s - ${config.brand}`
+    titleTemplate: `%s - ${config.brand}`,
+    bodyAttrs: {
+      style: `background: url('${config.bgImg}')
+             no-repeat center center / cover fixed;`
+    }
   },
 
   components: {
@@ -31,34 +35,17 @@ export default {
     AppFooter
   },
 
-  computed: {
-    appStyle: function () {
-      try {
-        return {
-          backgroundImage: `url('${require('@/custom/background.jpg')}')`
-        }
-      } catch (e) {
-        return {
-          backgroundImage: `url('${require('@/assets/img/background.jpg')}')`
-        }
-      }
-    }
-  },
-
   mounted () {
     this.$store.dispatch('UPDATE_CURRENT_USER')
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
 
 #app {
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
   min-height: 100vh;
 
   main {

@@ -3,28 +3,35 @@
     <div class="error-message container">
       <h1>{{ title }}</h1>
       <p class="lead">{{ description }}</p>
+      <router-link :to="{ path: '/' }">
+        <icon name="home" scale="2"></icon>
+      </router-link>
     </div>
-    <div id="bl-outline" v-html="blOutlineSvg"></div>
   </div>
 </template>
 
 <script>
-import blOutlineSvg from '@/assets/img/bl-outline.svg'
+import 'vue-awesome/icons/home'
 
 export default {
-  name: 'error',
-  data: () => ({
-    blOutlineSvg: blOutlineSvg
-  }),
-
-  props: [
-    'title',
-    'description'
-  ],
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    }
+  },
 
   metaInfo: {
     title: this.title,
-    description: this.description
+    bodyAttrs: {
+      style: `background: #7CC4F3
+             url('${require('../assets/img/bl-graphic.png')}')
+             no-repeat center bottom / cover fixed;`
+    }
   }
 }
 </script>
@@ -33,52 +40,20 @@ export default {
 @import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
 
-.navbar {
-    position: absolute;
-}
-
 .error {
-  background-color: $black;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
-
-  #bl-outline {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-
   .error-message {
+    margin-top: 1rem;
     color: $white;
-    flex: 1 1 auto;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
     text-align: center;
 
+    a {
+      color: $white;
+    }
+
     @include media-breakpoint-up(md) {
+      margin-top: 5rem;
       margin-left: 5%;
       width: 40%;
-    }
-  }
-
-  path#mainline {
-    animation: dash 3s linear forwards;
-  }
-
-  path:not(#mainline) {
-    animation: dash 500ms linear 3s forwards;
-  }
-
-  @keyframes dash {
-    to {
-      stroke-dashoffset: 0;
     }
   }
 }
