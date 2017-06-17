@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="name" title="Leaderboard">
+  <b-modal :id="name" title="Leaderboard" @shown="fetchData">
 
     <b-table
       striped
@@ -45,7 +45,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.fetchData()
   }
 }
