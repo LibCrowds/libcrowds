@@ -5,7 +5,7 @@
     <transition appear>
       <div class="container full-height">
         <h1 id="tagline">{{ config.tagline }}</h1>
-        <div id="intro-buttons" class="my-2">
+        <div id="intro-buttons" class="mt-2">
           <b-button variant="secondary" :to="{ name: 'about' }">
             Learn More
           </b-button>
@@ -26,7 +26,7 @@
             </p>
           </div>
         </div>
-        <hr class="my-3 w-75 sr">
+        <hr class="my-2 w-75 sr">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p class="lead my-1">
@@ -34,22 +34,28 @@
             </p>
           </div>
         </div>
-        <hr class="my-3 w-75 sr">
+        <hr class="my-2 w-75 sr">
         <div class="row">
-          <div class="col-md-4 my-1 sr">
+          <div class="col-md-4 my-1 sr stat">
             <icon name="projects" scale="4"></icon>
-            <p class="my-1 font-weight-bold lead">{{ stats.n_published_projects }}</p>
+            <p class="mb-0">
+              {{ stats.n_published_projects }}
+            </p>
             <p>Projects</p>
           </div>
-          <div class="col-md-4 my-1 sr">
-            <icon name="taskruns" scale="4"></icon>
-            <p class="my-1 font-weight-bold lead">{{ stats.n_task_runs }}</p>
-            <p>Contributions</p>
-          </div>
-          <div class="col-md-4 my-1 sr">
+          <div class="col-md-4 my-1 sr stat">
             <icon name="users" scale="4"></icon>
-            <p class="my-1 font-weight-bold lead">{{ stats.n_total_users }}</p>
+            <p class="mb-0">
+              {{ stats.n_total_users }}
+            </p>
             <p>Volunteers</p>
+          </div>
+          <div class="col-md-4 my-1 sr stat">
+            <icon name="taskruns" scale="4"></icon>
+            <p class="mb-0">
+              {{ stats.n_task_runs }}
+            </p>
+            <p>Contributions</p>
           </div>
         </div>
       </div>
@@ -328,6 +334,14 @@ export default {
 
     @include hover-focus {
       border-bottom: 3px solid rgba($black, 1);
+    }
+  }
+
+  #intro {
+    .stat {
+      font-weight: 400;
+      font-family: $headings-font-family;
+      font-size: $font-size-lg;
     }
   }
 
