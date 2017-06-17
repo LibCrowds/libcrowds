@@ -40,13 +40,15 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item v-else :to="{ name: 'signin' }">
+            <b-nav-item @click="$root.$emit('show::modal','signin-modal')">
               Sign in
             </b-nav-item>
           </b-nav>
         </b-collapse>
       </div>
     </b-navbar>
+
+    <signin-modal name="signin-modal"></signin-modal>
 
   </div>
 </template>
@@ -56,6 +58,7 @@ import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import store from '@/store'
+import SigninModal from '@/components/modals/Signin'
 
 export default {
   name: 'app-navbar',
@@ -64,6 +67,10 @@ export default {
       config: config,
       currentPath: this.$store.state.route.path
     }
+  },
+
+  components: {
+    SigninModal
   },
 
   computed: {

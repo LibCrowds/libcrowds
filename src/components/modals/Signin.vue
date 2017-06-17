@@ -1,10 +1,8 @@
 <template>
+  <b-modal :id="name" title="Sign in" style="display: block;">
+    <div class="p-2 text-center">
 
-  <default-layout>
-
-    <div class="container text-center">
-      <h1>Sign in</h1>
-      <p class="lead">Using your {{ config.brand }} account details</p>
+      <p class="lead">Enter your {{ config.brand }} account details</p>
 
       <pybossa-form
         endpoint="/account/signin"
@@ -13,42 +11,44 @@
       </pybossa-form>
 
       <div v-if="auth.facebook || auth.twitter || auth.google">
-        <p class="lead my-2">or use</p>
-        <div class="d-flex flex-row">
+        <p class="lead my-2">or sign in with</p>
+        <div class="row-btn-social">
 
           <div v-if="auth.facebook">
             <b-button
+              class="mx-1"
               variant="facebook"
-              class="h-100 d-flex"
               v-on:click="redirect('facebook')">
               <icon name="facebook"></icon>
+              <span class="ml-1 hidden-md-down">Facebook</span>
             </b-button>
           </div>
 
           <div v-if="auth.google">
             <b-button
+              class="mx-1"
               variant="googleplus"
-              class="h-100 d-flex"
               v-on:click="redirect('google')">
               <icon name="google-plus"></icon>
+              <span class="ml-1 hidden-md-down">Google Plus</span>
             </b-button>
           </div>
 
           <div v-if="auth.twitter">
             <b-button
+              class="mx-1"
               variant="twitter"
-              class="h-100 d-flex"
               v-on:click="redirect('twitter')">
               <icon name="twitter"></icon>
+              <span class="ml-1 hidden-md-down">Twitter</span>
             </b-button>
           </div>
 
         </div>
       </div>
+
     </div>
-
-  </default-layout>
-
+  </b-modal>
 </template>
 
 <script>
@@ -56,7 +56,6 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
 import config from '@/config'
-import DefaultLayout from '@/components/layouts/Default'
 import PybossaForm from '@/components/PybossaForm'
 
 export default {
@@ -71,13 +70,15 @@ export default {
     }
   },
 
-  metaInfo: {
-    title: 'Sign in'
+  components: {
+    PybossaForm
   },
 
-  components: {
-    DefaultLayout,
-    PybossaForm
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
   },
 
   methods: {
@@ -92,40 +93,53 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import 'src/assets/style/_vars.scss';
+<style lang="scss">
+@import 'src/assets/style/_vars';
+@import 'src/assets/style/partials/_modals';
 @import '~bootstrap/scss/bootstrap';
 
-.btn {
-  @include hover-focus;
-  border-radius: 0;
-  color: $white;
+.row-btn-social {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-  @include hover-focus {
+  @include media-breakpoint-up(md) {
+    justify-content: space-around;
+  }
+
+  .btn {
+    @include hover-focus;
+    border-radius: 0;
     color: $white;
-  }
-
-  &.btn-twitter {
-    background: $twitter;
+    height: 100%;
+    display: flex;
 
     @include hover-focus {
-      background: darken($twitter, 5%);
+      color: $white;
     }
-  }
 
-  &.btn-facebook {
-    background: $facebook;
+    &.btn-twitter {
+      background: $twitter;
 
-    @include hover-focus {
-      background: darken($facebook, 5%);
+      @include hover-focus {
+        background: darken($twitter, 5%);
+      }
     }
-  }
 
-  &.btn-googleplus {
-    background: $googleplus;
+    &.btn-facebook {
+      background: $facebook;
 
-    @include hover-focus {
-      background: darken($googleplus, 5%);
+      @include hover-focus {
+        background: darken($facebook, 5%);
+      }
+    }
+
+    &.btn-googleplus {
+      background: $googleplus;
+
+      @include hover-focus {
+        background: darken($googleplus, 5%);
+      }
     }
   }
 }

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import router from '@/router'
 import store from '@/store'
 import config from '@/config'
 
@@ -22,12 +21,7 @@ instance.interceptors.response.use(undefined, (error) => {
 instance.interceptors.response.use((r) => {
   if (r.data.template === 'account/signin.html') {
     store.commit('DELETE_ITEM', 'currentUser')
-    router.push({
-      name: 'signin',
-      params: {
-        next: store.state.route.path
-      }
-    })
+    // TODO: Handle this
   }
   return r
 }, function (error) {

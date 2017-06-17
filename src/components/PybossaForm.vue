@@ -1,5 +1,10 @@
 <template>
-  <form v-on:submit.prevent>
+
+  <div v-if="loading">
+    <loading></loading>
+  </div>
+
+  <form v-on:submit.prevent v-else>
 
     <b-form-fieldset
       v-for="f in fields"
@@ -16,21 +21,18 @@
       </b-form-input>
     </b-form-fieldset>
 
-    <b-button
-      variant="success"
-      v-on:click="submit">
-      Sign in
-    </b-button>
   </form>
 </template>
 
 <script>
 import pybossaApi from '@/api/pybossa'
 import router from '@/router'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
+      loading: true,
       form: {
         csrf: null,
         email: null,
@@ -40,15 +42,26 @@ export default {
     }
   },
 
-  props: [
-    'endpoint',
-    'fields'
-  ],
+  components: {
+    Loading
+  },
+
+  props: {
+    endpoint: {
+      type: String,
+      required: true
+    },
+    fields: {
+      type: Array,
+      required: true
+    }
+  },
 
   methods: {
     fetch () {
       pybossaApi.get(this.endpoint).then(r => {
         this.handleResponse(r)
+        this.loading = false
       })
     },
     submit () {
