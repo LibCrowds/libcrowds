@@ -93,7 +93,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/assets/style/_vars';
 @import 'src/assets/style/partials/_modals';
 @import '~bootstrap/scss/bootstrap';
@@ -142,11 +142,11 @@ export default {
       }
     }
   }
-}
 
-/* Fix inconsistend heights */
-svg {
-  display: flex;
-  height: 1.2rem;
+  /* Fix inconsistend heights */
+  svg {
+    display: flex;
+    height: 1.2rem;
+  }
 }
 </style>
