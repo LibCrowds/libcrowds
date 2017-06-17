@@ -1,16 +1,15 @@
 <template>
   <footer id="app-footer" class="footer invert-navbar">
-    <div class="container py-3">
+    <div class="container py-4">
 
       <section>
         <a
-          :href="platform.url"
-          class="brand-link my-2"
+          :href="config.platform.url"
           v-if="config.platform">
           Part of the {{ config.platform.name }} crowdsourcing platform
         </a>
         <p v-html="copyright" class="my-2"></p>
-        <ul class="list-inline my-2">
+        <ul class="list-inline mt-2 mb-0">
           <li class="list-inline-item m-0">
             <a :href="twitterUrl" class="text-muted">
               <icon name="twitter"></icon>
@@ -29,7 +28,7 @@
         </ul>
       </section>
 
-      <section class="hidden-md-down my-2">
+      <section class="hidden-md-down">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
