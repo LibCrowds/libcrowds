@@ -1,5 +1,5 @@
 <template>
-  <footer id="app-footer" class="footer invert-navbar">
+  <footer id="app-footer" class="footer">
     <div class="container py-4">
 
       <section>
