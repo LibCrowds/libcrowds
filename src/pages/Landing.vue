@@ -36,19 +36,19 @@
         </div>
         <hr class="my-3 w-75 sr">
         <div class="row">
-          <div class="col-md-4 my-2 sr">
-            <icon name="desktop" scale="4"></icon>
-            <p class="my-1">{{ stats.n_published_projects }}</p>
+          <div class="col-md-4 my-1 sr">
+            <icon name="projects" scale="4"></icon>
+            <p class="my-1 font-weight-bold lead">{{ stats.n_published_projects }}</p>
             <p>Projects</p>
           </div>
-          <div class="col-md-4 my-2 sr">
-            <icon name="tasks" scale="4"></icon>
-            <p class="my-1">{{ stats.n_task_runs }}</p>
+          <div class="col-md-4 my-1 sr">
+            <icon name="taskruns" scale="4"></icon>
+            <p class="my-1 font-weight-bold lead">{{ stats.n_task_runs }}</p>
             <p>Contributions</p>
           </div>
-          <div class="col-md-4 my-2 sr">
+          <div class="col-md-4 my-1 sr">
             <icon name="users" scale="4"></icon>
-            <p class="my-1">{{ stats.n_total_users }}</p>
+            <p class="my-1 font-weight-bold lead">{{ stats.n_total_users }}</p>
             <p>Volunteers</p>
           </div>
         </div>
@@ -216,14 +216,12 @@
 
 <script>
 import ScrollReveal from 'scrollreveal'
-import 'vue-awesome/icons/desktop'
-import 'vue-awesome/icons/tasks'
-import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import project from '@/assets/img/project.svg'
 
 export default {
 
@@ -232,7 +230,8 @@ export default {
       config: config,
       stats: {},
       featured: [],
-      topUsers: []
+      topUsers: [],
+      project: project
     }
   },
 

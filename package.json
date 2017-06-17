@@ -23,6 +23,7 @@
     "fs": "0.0.1-security",
     "fullpage.js": "^2.9.4",
     "hamburgers": "^0.8.1",
+    "ionicons": "^3.0.0",
     "jump.js": "^1.0.2",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
