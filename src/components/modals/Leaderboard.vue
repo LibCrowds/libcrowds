@@ -66,7 +66,6 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/_vars';
 @import '~bootstrap/scss/bootstrap';
-@import '~spinkit/scss/spinners/10-fading-circle';
 
 .modal {
   display: block;
