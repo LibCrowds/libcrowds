@@ -29,13 +29,10 @@
 
     <section id="contact">
       <h3>Contact</h3>
-      <p>
+      <p v-if="config.forumUrl">
         Visit the <a :href="config.forumUrl">{{ config.brand }} forum</a>
         to ask any questions, report issues, or to just let us know what
         you have discovered.
-      </p>
-      <p>
-        Alternatively, you can get in touch via:
       </p>
       <ul class="list-unstyled">
         <li>
