@@ -10,32 +10,30 @@
       </b-form-fieldset>
     </div>
 
-    <b-card no-block>
-      <b-table
-        striped
-        show-empty
-        :items="projects"
-        :fields="fields"
-        empty-text="No projects are available for this category">
-        <template slot="overall_progress" scope="project">
-          {{ project.item.overall_progress }}%
-        </template>
-        <template slot="download" scope="project">
-          <data-download-button
-            :type="downloadType"
-            :format="'json'"
-            :projectShortName="project.item.short_name">
-            JSON
-          </data-download-button>
-          <data-download-button
-            :type="downloadType"
-            :format="'csv'"
-            :projectShortName="project.item.short_name">
-            CSV
-          </data-download-button>
-        </template>
-      </b-table>
-    </b-card>
+    <b-table
+      striped
+      show-empty
+      :items="projects"
+      :fields="fields"
+      empty-text="This category is currently empty">
+      <template slot="overall_progress" scope="project">
+        {{ project.item.overall_progress }}%
+      </template>
+      <template slot="download" scope="project">
+        <data-download-button
+          :type="downloadType"
+          :format="'json'"
+          :projectShortName="project.item.short_name">
+          JSON
+        </data-download-button>
+        <data-download-button
+          :type="downloadType"
+          :format="'csv'"
+          :projectShortName="project.item.short_name">
+          CSV
+        </data-download-button>
+      </template>
+    </b-table>
 
     <div class="justify-content-center row mt-4">
       <b-pagination
@@ -54,7 +52,6 @@ import DataDownloadButton from '@/components/buttons/DataDownload'
 import pybossaApi from '@/api/pybossa'
 
 export default {
-  name: 'data-download-table',
   data: function () {
     return {
       fields: {
@@ -64,9 +61,10 @@ export default {
         overall_progress: { label: 'Progress' },
         download: { label: 'Download' }
       },
-      categoryShortName: this.$store.state.siteConfig.categories[0].shortName,
+      categoryShortName: null,
       currentPage: 1,
       projects: [],
+      categories: [],
       pagination: {
         per_page: 20,
         total: 5
@@ -74,9 +72,12 @@ export default {
     }
   },
 
-  props: [
-    'downloadType'
-  ],
+  props: {
+    downloadType: {
+      type: String,
+      required: true
+    }
+  },
 
   components: {
     DataDownloadButton
@@ -84,15 +85,21 @@ export default {
 
   computed: {
     categoryOpts: function () {
-      return this.siteConfig.categories.map(function (c) {
-        return { text: c.name, value: c.shortName }
+      const opts = this.categories.map(function (c) {
+        return { text: c.name, value: c.short_name }
       })
+      this.categoryShortName = opts.length ? opts[0].value : null
+      return opts
     }
   },
 
   methods: {
+    fetchCategories () {
+      pybossaApi.get('/').then(res => {
+        this.categories = res.data.categories
+      })
+    },
     fetchProjects () {
-      // Fetch all projects for the selected category
       let url = `/project/category/${this.categoryShortName}/`
       if (this.currentPage > 1) {
         url += `page/${this.currentPage}/`
@@ -106,15 +113,17 @@ export default {
 
   watch: {
     categoryShortName: function () {
-      this.fetchProjects()
+      if (typeof this.categoryShortName !== 'undefined') {
+        this.fetchProjects()
+      }
     },
     currentPage: function () {
       this.fetchProjects()
     }
   },
 
-  mounted () {
-    this.fetchProjects()
+  created () {
+    this.fetchCategories()
   }
 }
 </script>
@@ -126,6 +135,8 @@ export default {
 .table {
   font-size: $font-size-sm;
   margin-bottom: 0;
+  background-color: $white;
+  border: $table-border-width solid $table-border-color;
 
   th {
     font-weight: 400;
