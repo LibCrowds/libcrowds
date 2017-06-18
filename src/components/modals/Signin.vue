@@ -12,11 +12,9 @@
 
     <div class="p-2" v-else>
 
-    <transition name="fade">
-      <b-alert :state="status" :show="flash.length">
-        {{ flash }}
+      <b-alert :variant="status" show v-for="f in flashMsg">
+        {{ f }}
       </b-alert>
-    </transition>
 
       <p class="lead text-center">
         Enter your {{ config.brand }} account details
@@ -118,6 +116,10 @@ export default {
   computed: {
     formLoading () {
       return isEmpty(this.form)
+    },
+    flashMsg: function () {
+      // To handle disappearing and multiple alerts
+      return this.flash.length ? [this.flash] : []
     }
   },
 
@@ -149,6 +151,7 @@ export default {
     },
     clear () {
       this.form.errors = {}
+      this.flash = ''
     },
     getFeedback (field) {
       const fb = this.form.errors[field]
@@ -173,18 +176,6 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 .alert-error {
   @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
-}
-
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.fade-enter-active {
-  transition: all .3s ease;
-}
-.fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
 }
 </style>
 
