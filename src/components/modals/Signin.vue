@@ -12,6 +12,12 @@
 
     <div class="p-2" v-else>
 
+    <transition name="fade">
+      <b-alert :state="status" :show="flash.length">
+        {{ flash }}
+      </b-alert>
+    </transition>
+
       <p class="lead text-center">
         Enter your {{ config.brand }} account details
       </p>
@@ -92,7 +98,9 @@ export default {
         { name: 'password', type: 'password', placeholder: 'Password' }
       ],
       auth: {},
-      form: {}
+      form: {},
+      status: null,
+      flash: ''
     }
   },
 
@@ -132,10 +140,11 @@ export default {
         }
       }).then(r => {
         if (r.data.status !== 'success') {
-          e.cancel()
+          this.auth = r.data.auth
+          this.form = r.data.form
+          this.flash = r.data.flash
+          this.status = r.data.status
         }
-        this.auth = r.data.auth
-        this.form = r.data.form
       })
     },
     clear () {
@@ -158,6 +167,26 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import 'src/assets/style/_vars';
+@import '~bootstrap/scss/bootstrap';
+.alert-error {
+  @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
+}
+
+/* Enter and leave animations can use different */
+/* durations and timing functions.              */
+.fade-enter-active {
+  transition: all .3s ease;
+}
+.fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>
 
 <style lang="scss">
 @import 'src/assets/style/_vars';
