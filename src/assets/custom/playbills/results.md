@@ -1,2 +1,0 @@
-
-Results page coming soon!
