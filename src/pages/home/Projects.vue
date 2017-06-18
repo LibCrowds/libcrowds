@@ -5,7 +5,12 @@
     <section id="projects">
       <h2 class="text-center">Projects</h2>
       <hr>
-      <span v-html="categorisation"></span>
+      <span v-html="config.projectsMd" v-if="this.projectsMd"></span>
+      <p v-else>
+        Each {{ config.brand }} project comprises a collection of similar tasks.
+        With each completed task you will be directly contributing towards
+        important research. Choose a project from the list below to get started!
+      </p>
     </section>
 
     <section id="contribute">
@@ -19,12 +24,14 @@
 
 <script>
 import marked from 'marked'
+import config from '@/config'
 import ProjectContribTable from '@/components/tables/ProjectContrib'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
+      config: config,
       navItems: [
         { id: 'projects', text: 'Top' },
         { id: 'contribute', text: 'Contribute' }
@@ -42,8 +49,11 @@ export default {
   },
 
   computed: {
-    categorisation: function () {
-      return marked(this.siteConfig.categorisation)
+    projectsMd: function () {
+      if ('projectsMd' in this.config) {
+        return marked(this.config.projectsMd)
+      }
+      return ''
     }
   }
 }
