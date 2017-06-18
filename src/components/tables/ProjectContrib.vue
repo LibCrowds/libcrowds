@@ -10,7 +10,6 @@
       </b-form-fieldset>
     </div>
 
-    <b-card no-block>
       <b-table
         striped
         show-empty
@@ -24,7 +23,6 @@
 
         </template>
       </b-table>
-    </b-card>
 
     <div class="justify-content-center row mt-4">
       <b-pagination
@@ -51,9 +49,10 @@ export default {
         overall_progress: { label: 'Progress' },
         actions: { label: 'Contribute' }
       },
-      categoryShortName: this.$store.state.siteConfig.categories[0].shortName,
+      categoryShortName: null,
       currentPage: 1,
       projects: [],
+      categories: [],
       pagination: {
         per_page: 20,
         total: 5
@@ -63,21 +62,26 @@ export default {
 
   computed: {
     categoryOpts: function () {
-      return this.siteConfig.categories.map(function (c) {
-        return { text: c.name, value: c.shortName }
+      const opts = this.categories.map(function (c) {
+        return { text: c.name, value: c.short_name }
       })
+      this.categoryShortName = opts.length ? opts[0].value : null
+      return opts
     }
   },
 
   methods: {
+    fetchCategories () {
+      pybossaApi.get('/').then(res => {
+        this.categories = res.data.categories
+      })
+    },
     fetchProjects () {
-      // Fetch all projects for the selected category
       let url = `/project/category/${this.categoryShortName}/`
       if (this.currentPage > 1) {
         url += `page/${this.currentPage}/`
       }
       pybossaApi.get(url).then(res => {
-        console.log(res.data.projects)
         this.projects = res.data.projects
         this.pagination = res.data.pagination
       })
@@ -86,15 +90,17 @@ export default {
 
   watch: {
     categoryShortName: function () {
-      this.fetchProjects()
+      if (typeof this.categoryShortName !== 'undefined') {
+        this.fetchProjects()
+      }
     },
     currentPage: function () {
       this.fetchProjects()
     }
   },
 
-  mounted () {
-    this.fetchProjects()
+  created () {
+    this.fetchCategories()
   }
 }
 </script>
@@ -106,6 +112,8 @@ export default {
 .table {
   font-size: $font-size-sm;
   margin-bottom: 0;
+  background-color: $white;
+  border: $table-border-width solid $table-border-color;
 
   th {
     font-weight: 400;
