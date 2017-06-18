@@ -13,8 +13,8 @@
       </p>
     </section>
 
-    <section id="contribute">
-      <h3 class="text-center">Contribute</h3>
+    <section id="choose">
+      <h3 class="text-center">Choose a Project</h3>
       <project-contrib-table></project-contrib-table>
     </section>
 
@@ -34,7 +34,7 @@ export default {
       config: config,
       navItems: [
         { id: 'projects', text: 'Top' },
-        { id: 'contribute', text: 'Contribute' }
+        { id: 'choose', text: 'Choose a Project' }
       ]
     }
   },
