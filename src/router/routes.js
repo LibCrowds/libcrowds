@@ -12,6 +12,8 @@ import Api from '@/pages/help/Api'
 
 import Register from '@/pages/account/Register'
 
+import Presenter from '@/pages/projects/Presenter'
+
 export default [
 
   // Core site
@@ -27,6 +29,19 @@ export default [
   { path: '/help/api', name: 'api', component: Api },
 
   { path: '/account/register', name: 'register', component: Register },
+
+  {
+    path: '/projects/:shortname',
+    component: {
+      render (c) {
+        return c('router-view')
+      }
+    },
+    // TODO: Add navigation guard for non-existant projects
+    children: [
+      { path: 'presenter', name: 'presenter', component: Presenter }
+    ]
+  },
 
   // Errors
   {
