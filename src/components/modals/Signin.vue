@@ -1,15 +1,11 @@
 <template>
-  <div>
   <pybossa-modal-form
     :modalId="modalId"
     :schema="schema"
     :endpoint="endpoint"
+    :lead="lead"
     @response="setAuth"
     @success="updateCurrentUser">
-
-    <p class="lead text-center" slot="above">
-      Enter your {{ config.brand }} account details
-    </p>
 
     <div v-if="auth.facebook || auth.twitter || auth.google" slot="below">
       <p class="lead my-2 text-center">
@@ -57,7 +53,6 @@
     </div>
 
   </pybossa-modal-form>
-</div>
 </template>
 
 <script>
@@ -73,6 +68,7 @@ export default {
     return {
       config: config,
       endpoint: '/account/signin',
+      lead: `Enter your ${config.brand} account details`,
       schema: {
         fields: [{
           model: 'email',

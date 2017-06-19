@@ -19,7 +19,9 @@
         {{ f }}
       </b-alert>
 
-      <slot name="above"></slot>
+      <p class="lead text-center" v-if="lead">
+        {{ lead }}
+      </p>
 
       <vue-form-generator
         :schema="schema"
@@ -62,7 +64,8 @@ export default {
     schema: {
       type: Object,
       required: true
-    }
+    },
+    lead: String
   },
 
   components: {

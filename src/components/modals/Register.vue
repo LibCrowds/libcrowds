@@ -3,12 +3,8 @@
     :modalId="modalId"
     :schema="schema"
     :endpoint="endpoint"
+    :lead="lead"
     @success="updateCurrentUser">
-
-    <p class="lead text-center" slot="above">
-      Create a {{ config.brand }} account
-    </p>
-
   </pybossa-modal-form>
 </template>
 
@@ -20,6 +16,7 @@ export default {
     return {
       config: config,
       endpoint: '/account/register/',
+      lead: `Create a ${config.brand} account`,
       schema: {
         fields: [
         {
