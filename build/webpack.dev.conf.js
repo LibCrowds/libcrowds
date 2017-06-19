@@ -5,6 +5,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var FaviconsPlugin = require('favicons-webpack-plugin')
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -29,6 +30,11 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true
+    }),
+    // Generate favicons
+    new FaviconsPlugin('./src/assets/img/favicon.png', {
+      background: "#DA0000",
+      theme_color: "#DA0000"
     }),
     new FriendlyErrorsPlugin()
   ]
