@@ -148,7 +148,7 @@
         <div class="row text-center mt-4">
           <div class="col-lg-12 pt-1">
             <ul class="list-unstyled">
-              <li 
+              <li
                 class="text-center d-inline-block mx-1"
                 v-for="u in topUsers">
                 <a href="#" class="my-1">
@@ -293,6 +293,12 @@ export default {
     scrollReveal () {
       const sr = ScrollReveal()
       sr.reveal('.sr', { duration: 600 }, 75)
+    }
+  },
+
+  watch: {
+    '$route' () {
+      this.fetchData()
     }
   },
 

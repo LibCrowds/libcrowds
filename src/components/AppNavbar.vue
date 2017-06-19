@@ -40,7 +40,9 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item @click="$root.$emit('show::modal','signin-modal')">
+            <b-nav-item
+              v-else
+              @click="$root.$emit('show::modal','signin-modal')">
               Sign in
             </b-nav-item>
           </b-nav>

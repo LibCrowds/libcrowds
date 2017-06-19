@@ -104,6 +104,9 @@ export default {
     },
     currentPage: function () {
       this.fetchProjects()
+    },
+    '$route' () {
+      this.fetchCategories()
     }
   },
 
