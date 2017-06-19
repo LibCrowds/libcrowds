@@ -1,20 +1,20 @@
-.modal {
-  display: block;
-}
-
-.modal-dialog{
+.modal.show {
+  display: block !important;
+  
+  .modal-dialog{
     overflow-y: initial !important
-}
+  }
 
-.modal-content {
-  max-height: 500px;
-  border-radius: 0;
-}
+  .modal-content {
+    max-height: 500px;
+    border-radius: 0;
+  }
 
-.modal-body{
+  .modal-body{
     overflow-y: auto;
-}
+  }
 
-.modal-footer {
-  padding: 25px 15px;
+  .modal-footer {
+    padding: 25px 15px;
+  }
 }

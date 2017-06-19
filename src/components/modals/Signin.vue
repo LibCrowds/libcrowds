@@ -2,7 +2,6 @@
   <b-modal
     :id="name"
     title="Sign in"
-    style="display: block;"
     @ok="submit"
     @shown="load">
 
@@ -185,7 +184,6 @@ label {
 
 <style lang="scss" scoped>
 @import 'src/assets/style/_vars';
-@import 'src/assets/style/partials/_modals';
 @import '~bootstrap/scss/bootstrap';
 
 .row-btn-social {
