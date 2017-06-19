@@ -4,7 +4,7 @@
     title="Sign in"
     style="display: block;"
     @ok="submit"
-    @shown="fetchData">
+    @shown="load">
 
     <div v-if="formLoading">
       <loading></loading>
@@ -122,12 +122,14 @@ export default {
     },
     flashMsg: function () {
       // To handle disappearing and multiple alerts
-      return this.flash.length ? [this.flash] : []
+      return this.flash ? [this.flash] : []
     }
   },
 
   methods: {
-    fetchData () {
+    load () {
+      this.status = null
+      this.flash = null
       pybossaApi.get('account/signin').then(r => {
         this.auth = r.data.auth
         this.form = r.data.form
@@ -144,7 +146,11 @@ export default {
           'X-CSRFToken': this.form.csrf
         }
       }).then(r => {
-        if (r.data.status !== 'success') {
+        if (r.data.status === 'success') {
+          this.$store.dispatch('UPDATE_CURRENT_USER')
+          document.querySelector(`#${this.name}`).classList.remove('show')
+          document.querySelector('.modal-backdrop').classList.remove('show')
+        } else {
           this.flash = r.data.flash
           this.status = r.data.status
         }
