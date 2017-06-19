@@ -4,7 +4,7 @@
     title="Sign in"
     style="display: block;"
     @ok="submit"
-    @hidden="clear">
+    @shown="fetchData">
 
     <div v-if="formLoading">
       <loading></loading>
@@ -127,7 +127,7 @@ export default {
   },
 
   methods: {
-    loadForm () {
+    fetchData () {
       pybossaApi.get('account/signin').then(r => {
         this.auth = r.data.auth
         this.form = r.data.form
@@ -164,10 +164,6 @@ export default {
     getState (field) {
       return field in this.form.errors ? 'danger' : null
     }
-  },
-
-  created () {
-    this.loadForm()
   }
 }
 </script>
