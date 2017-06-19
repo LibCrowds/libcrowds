@@ -19,21 +19,11 @@
       <p class="lead text-center">
         Enter your {{ config.brand }} account details
       </p>
-
-      <b-form-fieldset
-        v-for="f in fields"
-        :key="f.name"
-        :feedback="getFeedback(f.name)"
-        :state="getState(f.name)">
-        <b-form-input
-          required
-          :type="f.type"
-          :placeholder="f.placeholder"
-          :state="getState(f.name)"
-          v-model="form[f.name]"
-          v-on:keyup.enter="submit">
-        </b-form-input>
-      </b-form-fieldset>
+      
+      <vue-form-generator 
+        :schema="schema"
+        :model="form">
+      </vue-form-generator>
 
       <div v-if="auth.facebook || auth.twitter || auth.google">
         <p class="lead my-2 text-center">
@@ -91,10 +81,21 @@ export default {
   data: function () {
     return {
       config: config,
-      fields: [
-        { name: 'email', type: 'email', placeholder: 'Email address' },
-        { name: 'password', type: 'password', placeholder: 'Password' }
-      ],
+      schema: {
+        fields: [{
+          model: 'email',
+          label: 'Email',
+          type: 'input',
+          inputType: 'email',
+          placeholder: 'Email address'
+        }, {
+          model: 'password',
+          label: 'Password',
+          type: 'input',
+          inputType: 'password',
+          placeholder: 'Password'
+        }]
+      },
       auth: {},
       form: {},
       status: null,
