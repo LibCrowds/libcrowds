@@ -12,7 +12,10 @@
 
     <div class="p-2" v-else>
 
-      <b-alert :variant="status" show v-for="f in flashMsg">
+      <b-alert 
+        show
+        :variant="status === 'error' ? 'danger' : status"
+        v-for="f in flashMsg">
         {{ f }}
       </b-alert>
 
@@ -177,14 +180,6 @@ export default {
 <style lang="scss">
 label {
   display: none !important;
-}
-</style>
-
-<style lang="scss">
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
-.alert-error {
-  @include alert-variant($alert-danger-bg, $alert-danger-border, $alert-danger-text);
 }
 </style>
 
