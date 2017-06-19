@@ -30,15 +30,6 @@ instance.interceptors.response.use((r) => {
   return Promise.reject(error)
 })
 
-// Handle flash messages
-instance.interceptors.response.use((r) => {
-  if ('flash' in r.data) {
-    const notification = { msg: r.data.flash, type: r.data.status }
-    store.commit('SET_ITEM', { key: 'notification', value: notification })
-  }
-  return r
-})
-
 // TODO: Handle next params
 instance.interceptors.response.use((r) => {
   if ('next' in r.data) {
