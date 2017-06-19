@@ -84,7 +84,6 @@ export default {
 
   computed: {
     aboutMd: function () {
-      console.log(marked(this.config.aboutMd))
       if ('aboutMd' in this.config) {
         return marked(this.config.aboutMd)
       }
