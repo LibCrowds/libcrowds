@@ -147,7 +147,18 @@
         </div>
         <div class="row text-center mt-4">
           <div class="col-lg-12 pt-1">
-            Render Avatar list
+            <ul class="list-unstyled">
+              <li 
+                class="text-center d-inline-block mx-1"
+                v-for="u in topUsers">
+                <a href="#" class="my-1">
+                  <div class="my-1">
+                    <user-avatar :user="u"></user-avatar>
+                  </div>
+                </a>
+                <p class="badge badge-info">{{ u.score }}</p>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="row text-center mt-1">
@@ -232,6 +243,7 @@ import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
+import UserAvatar from '@/components/user/Avatar'
 import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
@@ -262,7 +274,8 @@ export default {
 
   components: {
     SocialMediaButtons,
-    LeaderboardModal
+    LeaderboardModal,
+    UserAvatar
   },
 
   methods: {

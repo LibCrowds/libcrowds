@@ -7,8 +7,11 @@ import store from '@/store'
 import router from '@/router'
 import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
+import VueGravatar from 'vue-gravatar'
 
 Vue.use(BootstrapVue)
+
+Vue.component('v-gravatar', VueGravatar)
 
 Vue.config.productionTip = false
 
