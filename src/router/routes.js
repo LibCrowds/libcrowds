@@ -10,8 +10,6 @@ import Privacy from '@/pages/help/Privacy'
 import Cookies from '@/pages/help/Cookies'
 import Api from '@/pages/help/Api'
 
-import Register from '@/pages/account/Register'
-
 import Presenter from '@/pages/projects/Presenter'
 
 export default [
@@ -27,8 +25,6 @@ export default [
   { path: '/help/privacy', name: 'privacy', component: Privacy },
   { path: '/help/cookies', name: 'cookies', component: Cookies },
   { path: '/help/api', name: 'api', component: Api },
-
-  { path: '/account/register', name: 'register', component: Register },
 
   {
     path: '/projects/:shortname',
