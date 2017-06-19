@@ -4,9 +4,9 @@
 
       <section>
         <a
-          :href="config.platform.url"
-          v-if="config.platform">
-          Part of the {{ config.platform.name }} crowdsourcing platform
+          :href="config.footer.url"
+          v-if="config.footer">
+          {{ config.footer.text }}
         </a>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
