@@ -9,6 +9,7 @@ import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueFormGenerator from 'vue-form-generator'
+import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 
 // Global styles
 import '@/assets/style/_vars.scss'
@@ -21,6 +22,8 @@ Vue.use(BootstrapVue)
 Vue.use(VueFormGenerator)
 
 Vue.component('v-gravatar', VueGravatar)
+
+Vue.component('pybossa-modal-form', PyBossaModalForm)
 
 Vue.config.productionTip = false
 

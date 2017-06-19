@@ -1,88 +1,78 @@
 <template>
-  <b-modal
-    :id="name"
-    title="Sign in"
-    @ok="submit"
-    @shown="load">
+  <div>
+  <pybossa-modal-form
+    :modalId="modalId"
+    :schema="schema"
+    :endpoint="endpoint"
+    @response="setAuth"
+    @success="updateCurrentUser">
 
-    <div v-if="formLoading">
-      <loading></loading>
-    </div>
+    <p class="lead text-center" slot="above">
+      Enter your {{ config.brand }} account details
+    </p>
 
-    <div class="p-2" v-else>
-
-      <b-alert 
-        show
-        :variant="status === 'error' ? 'danger' : status"
-        v-for="f in flashMsg">
-        {{ f }}
-      </b-alert>
-
-      <p class="lead text-center">
-        Enter your {{ config.brand }} account details
+    <div v-if="auth.facebook || auth.twitter || auth.google" slot="below">
+      <p class="lead my-2 text-center">
+        or sign in with
       </p>
-      
-      <vue-form-generator 
-        :schema="schema"
-        :model="form">
-      </vue-form-generator>
+      <div class="row-btn-social">
 
-      <div v-if="auth.facebook || auth.twitter || auth.google">
-        <p class="lead my-2 text-center">
-          or sign in with
-        </p>
-        <div class="row-btn-social">
-
-          <div v-if="auth.facebook">
-            <b-button
-              class="mx-1"
-              variant="facebook"
-              v-on:click="redirect('facebook')">
-              <icon name="facebook"></icon>
-              <span class="ml-1 hidden-md-down">Facebook</span>
-            </b-button>
-          </div>
-
-          <div v-if="auth.google">
-            <b-button
-              class="mx-1"
-              variant="googleplus"
-              v-on:click="redirect('google')">
-              <icon name="google-plus"></icon>
-              <span class="ml-1 hidden-md-down">Google Plus</span>
-            </b-button>
-          </div>
-
-          <div v-if="auth.twitter">
-            <b-button
-              class="mx-1"
-              variant="twitter"
-              v-on:click="redirect('twitter')">
-              <icon name="twitter"></icon>
-              <span class="ml-1 hidden-md-down">Twitter</span>
-            </b-button>
-          </div>
-
+        <div v-if="auth.facebook">
+          <b-button
+            class="mx-1"
+            variant="facebook"
+            v-on:click="window.location.replace(
+              `${config.pybossaHost}/facebook`
+            )">
+            <icon name="facebook"></icon>
+            <span class="ml-1 hidden-md-down">Facebook</span>
+          </b-button>
         </div>
-      </div>
 
+        <div v-if="auth.google">
+          <b-button
+            class="mx-1"
+            variant="googleplus"
+            v-on:click="window.location.replace(
+              `${config.pybossaHost}/google`
+            )">
+            <icon name="google-plus"></icon>
+            <span class="ml-1 hidden-md-down">Google Plus</span>
+          </b-button>
+        </div>
+
+        <div v-if="auth.twitter">
+          <b-button
+            class="mx-1"
+            variant="twitter"
+            v-on:click="window.location.replace(
+              `${config.pybossaHost}/twitter`
+            )">
+            <icon name="twitter"></icon>
+            <span class="ml-1 hidden-md-down">Twitter</span>
+          </b-button>
+        </div>
+
+      </div>
     </div>
-  </b-modal>
+
+  </pybossa-modal-form>
+</div>
 </template>
 
 <script>
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
-import isEmpty from 'lodash/isEmpty'
 import config from '@/config'
-import pybossaApi from '@/api/pybossa'
-import Loading from '@/components/Loading'
 
 export default {
+  name: 'signin-modal',
+
   data: function () {
     return {
       config: config,
+      endpoint: '/account/signin',
       schema: {
         fields: [{
           model: 'email',
@@ -100,87 +90,27 @@ export default {
           required: true
         }]
       },
-      auth: {},
-      form: {},
-      status: null,
-      flash: ''
+      auth: {}
     }
   },
 
   props: {
-    name: {
+    modalId: {
       type: String,
       required: true
     }
   },
 
-  components: {
-    Loading
-  },
-
-  computed: {
-    formLoading () {
-      return isEmpty(this.form)
-    },
-    flashMsg: function () {
-      // To handle disappearing and multiple alerts
-      return this.flash ? [this.flash] : []
-    }
-  },
-
   methods: {
-    load () {
-      this.status = null
-      this.flash = null
-      pybossaApi.get('account/signin').then(r => {
-        this.auth = r.data.auth
-        this.form = r.data.form
-      })
+    updateCurrentUser () {
+      this.$store.dispatch('UPDATE_CURRENT_USER')
     },
-    redirect (endpoint) {
-      const url = `${config.pybossaHost}/${endpoint}`
-      window.location.replace(url)
-    },
-    submit (e) {
-      e.cancel()
-      pybossaApi.post('account/signin', this.form, {
-        headers: {
-          'X-CSRFToken': this.form.csrf
-        }
-      }).then(r => {
-        if (r.data.status === 'success') {
-          this.$store.dispatch('UPDATE_CURRENT_USER')
-          document.querySelector(`#${this.name}`).classList.remove('show')
-          document.querySelector('.modal-backdrop').classList.remove('show')
-        } else {
-          this.flash = r.data.flash
-          this.status = r.data.status
-        }
-      })
-    },
-    clear () {
-      this.form.errors = {}
-      this.flash = ''
-    },
-    getFeedback (field) {
-      const fb = this.form.errors[field]
-      if (!fb) {
-        return
-      }
-      return fb.join()
-    },
-    getState (field) {
-      return field in this.form.errors ? 'danger' : null
+    setAuth (r) {
+      console.log(r)
     }
   }
 }
 </script>
-
-<style lang="scss">
-label {
-  display: none !important;
-}
-</style>
 
 <style lang="scss" scoped>
 @import 'src/assets/style/_vars';
