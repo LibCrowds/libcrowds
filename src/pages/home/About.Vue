@@ -5,7 +5,7 @@
     <section id="about">
       <h2 class="text-center">About</h2>
       <hr>
-      <span v-if="customAbout" v-html="customAbout"></span>
+      <span v-if="aboutMd" v-html="aboutMd"></span>
       <p v-else>
         {{ config.brand }} is a platform for hosting experimental crowdsourcing
         projects from {{ config.company }}. By contributing to the projects
@@ -15,7 +15,7 @@
 
     <section id="technology">
       <h3>Technology</h3>
-      <span v-if="customTechnology" v-html="customTechnology"></span>
+      <span v-if="technologyMd" v-html="technologyMd"></span>
       <p v-else>
         On the backend, {{ config.brand }} uses an instance of
         <a href="http://pybossa.com/" target="_blank">PyBossa</a>,
@@ -83,19 +83,18 @@ export default {
   },
 
   computed: {
-    customAbout: function () {
-      try {
-        return marked(require('@/assets/about.md'))
-      } catch (e) {
-        return null
+    aboutMd: function () {
+      console.log(marked(this.config.aboutMd))
+      if ('aboutMd' in this.config) {
+        return marked(this.config.aboutMd)
       }
+      return ''
     },
-    customTechnology: function () {
-      try {
-        return marked(require('@/assets/technology.md'))
-      } catch (e) {
-        return null
+    technologyMd: function () {
+      if ('technologyMd' in this.config) {
+        return marked(this.config.technologyMd)
       }
+      return ''
     }
   }
 }
