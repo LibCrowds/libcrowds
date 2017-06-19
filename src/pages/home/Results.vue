@@ -2,10 +2,13 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="about">
+    <section id="results">
       <h2 class="text-center">Results</h2>
       <hr>
-      <span v-html="results"></span>
+      <span v-if="resultsHtml" v-html="resultsHtml"></span>
+      <p v-else class="text-center">
+        Results page coming soon!
+      </p>
     </section>
 
   </floating-tabs-layout>
@@ -13,7 +16,7 @@
 </template>
 
 <script id="#contact">
-import marked from 'marked'
+import config from '@/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
@@ -34,8 +37,11 @@ export default {
   },
 
   computed: {
-    results: function () {
-      return marked(this.siteConfig.results)
+    resultsHtml: function () {
+      if ('resultsHtml' in config) {
+        return this.config.resultsHtml
+      }
+      return ''
     }
   }
 }
