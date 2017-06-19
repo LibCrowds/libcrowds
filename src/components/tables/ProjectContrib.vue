@@ -20,7 +20,10 @@
           {{ project.item.overall_progress }}%
         </template>
         <template slot="actions" scope="project">
-
+          <project-contrib-button
+            shortname="project.short_name"
+            size="sm">
+          </project-contrib-button>
         </template>
       </b-table>
 
@@ -38,6 +41,7 @@
 
 <script>
 import pybossaApi from '@/api/pybossa'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   data: function () {
@@ -47,7 +51,7 @@ export default {
         n_tasks: { label: 'Tasks' },
         n_volunteers: { label: 'Volunteers' },
         overall_progress: { label: 'Progress' },
-        actions: { label: 'Contribute' }
+        actions: { label: 'Actions' }
       },
       categoryShortName: null,
       currentPage: 1,
@@ -58,6 +62,10 @@ export default {
         total: 5
       }
     }
+  },
+
+  components: {
+    ProjectContribButton
   },
 
   computed: {
