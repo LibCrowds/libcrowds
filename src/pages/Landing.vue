@@ -292,7 +292,7 @@ export default {
     },
     scrollReveal () {
       const sr = ScrollReveal()
-      sr.reveal('.sr', { delay: 300, duration: 600 }, 75)
+      sr.reveal('.sr', { duration: 600 }, 75)
     }
   },
 
