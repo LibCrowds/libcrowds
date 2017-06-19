@@ -8,7 +8,7 @@ const store = new Vuex.Store({
   state: {
     currentUser: null,
     csrfToken: null,
-    notification: null
+    notification: {}
   },
 
   mutations: {
@@ -23,9 +23,17 @@ const store = new Vuex.Store({
   actions: {
     UPDATE_CURRENT_USER: ({ commit }) => {
       pybossaApi.get('/account/profile').then(r => {
-        console.log(r.data.user)
         commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
       })
+    },
+    NOTIFY: ({ commit, state }, notification) => {
+      // Avoid repeated notifications
+      if (state.notification !== null &&
+          notification.type === state.notification.type &&
+          notification.msg === state.notification.msg) {
+        return
+      }
+      commit('SET_ITEM', { key: 'notification', value: notification })
     }
   }
 })

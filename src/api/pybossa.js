@@ -14,8 +14,8 @@ const instance = axios.create({
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
-  const notification = { msg: error, type: 'error' }
-  store.commit('SET_ITEM', { key: 'notification', value: notification })
+  const notification = { msg: error.message, type: 'error' }
+  store.dispatch('NOTIFY', notification)
 })
 
 // Forward unauthenticated users to signin page
