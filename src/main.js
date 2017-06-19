@@ -9,6 +9,10 @@ import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 
+import '@/assets/style/_vars.scss'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 Vue.use(BootstrapVue)
 
 Vue.component('v-gravatar', VueGravatar)
