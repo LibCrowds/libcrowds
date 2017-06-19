@@ -87,13 +87,15 @@ export default {
           label: 'Email',
           type: 'input',
           inputType: 'email',
-          placeholder: 'Email address'
+          placeholder: 'Email address',
+          required: true
         }, {
           model: 'password',
           label: 'Password',
           type: 'input',
           inputType: 'password',
-          placeholder: 'Password'
+          placeholder: 'Password',
+          required: true
         }]
       },
       auth: {},
@@ -143,8 +145,6 @@ export default {
         }
       }).then(r => {
         if (r.data.status !== 'success') {
-          this.auth = r.data.auth
-          this.form = r.data.form
           this.flash = r.data.flash
           this.status = r.data.status
         }
