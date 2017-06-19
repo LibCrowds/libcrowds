@@ -1,15 +1,35 @@
 <template>
-  <div v-html="project.info.task_presenter"></div>
+  <div class="presenter">
+
+    <div v-if="loading">
+      <loading></loading>
+    </div>
+
+    <div v-else v-html="presenter"></div>
+
+  </div>
 </template>
 
 <script>
 import pybossaApi from '@/api/pybossa'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
+      loading: true,
       project: {},
       title: null
+    }
+  },
+
+  components: {
+    Loading
+  },
+
+  computed: {
+    presenter: function () {
+      return 'info' in this.project ? this.project.info.task_presenter : ''
     }
   },
 
@@ -20,6 +40,7 @@ export default {
       pybossaApi.get(url).then(res => {
         this.project = res.data.project
         this.title = res.data.title
+        this.loading = false
       }).catch(error => {
         console.log(error)
       })
@@ -38,8 +59,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'src/assets/style/_vars.scss';
-@import '~bootstrap/scss/bootstrap';
-</style>

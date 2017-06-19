@@ -21,7 +21,7 @@
         </template>
         <template slot="actions" scope="project">
           <project-contrib-button
-            shortname="project.short_name"
+            :shortname="project.item.short_name"
             size="sm">
           </project-contrib-button>
         </template>
