@@ -26,6 +26,7 @@
     "marked": "^0.3.6",
     "path-exists": "^3.0.0",
     "pnotify": "^3.2.0",
+    "progressbar.js": "^1.0.1",
     "scrollreveal": "^3.3.5",
     "spinkit": "^1.2.5",
     "vue": "^2.3.4",
