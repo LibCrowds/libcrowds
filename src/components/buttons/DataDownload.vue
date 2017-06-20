@@ -1,6 +1,5 @@
 <template>
   <b-btn
-    class="mx-1"
     size="sm"
     variant="outline-success"
     @click="download()">
