@@ -65,7 +65,7 @@
       id="featured-projects"
       class="invert-navbar"
       v-if="featured.length">
-      <div class="container text-center text-lg-left">
+      <div class="container text-center text-lg-left pb-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
             <h2 class="font-weight-bold display-4 pt-1">
@@ -82,13 +82,20 @@
             </span>
           </div>
         </div>
-        <div class="row">
+        <div class="row text-center">
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
               <li v-for="project in featured">
                 <project-card :project="project"></project-card>
               </li>
             </ul>
+            <b-button
+              class="mt-2 bg-white"
+              variant="outline-primary"
+              size="lg"
+              :to="{ name: 'projects' }">
+              Browse all projects
+            </b-button>
           </div>
         </div>
       </div>
