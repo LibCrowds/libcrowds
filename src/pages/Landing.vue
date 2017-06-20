@@ -90,7 +90,7 @@
               </li>
             </ul>
             <b-button
-              class="mt-2 bg-white"
+              class="mt-2 btn-bg-white"
               variant="outline-primary"
               size="lg"
               :to="{ name: 'projects' }">
@@ -352,6 +352,12 @@ export default {
 
   .bg-white {
     background-color: $white;
+  }
+  
+  .btn-bg-white {
+    &:not(:hover):not(:focus):not(.active) {
+        background-color: $white;
+    }
   }
 
   .font-family-serif {
