@@ -8,7 +8,7 @@
     @success="updateCurrentUser">
 
     <div v-if="auth.facebook || auth.twitter || auth.google" slot="below">
-      <p class="lead my-2 text-center">
+      <p class="lead text-center">
         or sign in with
       </p>
       <div class="row-btn-social">
@@ -17,9 +17,7 @@
           <b-button
             class="mx-1"
             variant="facebook"
-            v-on:click="window.location.replace(
-              `${config.pybossaHost}/facebook`
-            )">
+            @click="redirect('facebook')">
             <icon name="facebook"></icon>
             <span class="ml-1 hidden-md-down">Facebook</span>
           </b-button>
@@ -29,9 +27,7 @@
           <b-button
             class="mx-1"
             variant="googleplus"
-            v-on:click="window.location.replace(
-              `${config.pybossaHost}/google`
-            )">
+            @click="redirect('google')">
             <icon name="google-plus"></icon>
             <span class="ml-1 hidden-md-down">Google Plus</span>
           </b-button>
@@ -41,9 +37,7 @@
           <b-button
             class="mx-1"
             variant="twitter"
-            v-on:click="window.location.replace(
-              `${config.pybossaHost}/twitter`
-            )">
+            @click="redirect('twitter')">
             <icon name="twitter"></icon>
             <span class="ml-1 hidden-md-down">Twitter</span>
           </b-button>
@@ -102,7 +96,11 @@ export default {
       this.$store.dispatch('UPDATE_CURRENT_USER')
     },
     setAuth (r) {
-      console.log(r)
+      this.auth = r.data.auth
+    },
+    redirect (endpoint) {
+      const next = window.location.href
+      window.location = `${config.pybossaHost}/${endpoint}?next=${next}`
     }
   }
 }
