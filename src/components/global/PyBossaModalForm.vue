@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    ref="child-modal"
     :id="modalId"
     :title="title"
     @ok="submit"
@@ -28,10 +29,15 @@
         :model="form">
       </vue-form-generator>
 
-      <slot name="below"></slot>
+      <slot></slot>
 
     </div>
-
+    
+    <template slot="modal-footer">
+      <span class="mr-auto" slot="footer-left"></span>
+      <b-button variant="secondary" @click="hide(false)">Close</b-button>
+      <b-button variant="success" @click="hide(true)">OK</b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -109,6 +115,10 @@ export default {
         }
         this.$emit('response', r)
       })
+    },
+    hide (isOk) {
+      // Call b-modal's hide method directly
+      this.$refs['child-modal'].hide(isOk)
     }
   }
 }
