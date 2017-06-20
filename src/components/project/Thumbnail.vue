@@ -1,14 +1,14 @@
 <template>
-  <img 
+  <img
     v-if="showPlaceholder"
-    :src="src" 
+    :src="src"
     :alt="alt"
     class="img-responsive"
     onerror="imgError = true">
   </img>
-  <v-gravatar 
+  <v-gravatar
     v-else
-    email="project.short_name" 
+    email="project.short_name"
     default-img="retro"
     :alt="alt"
     class="img-responsive">

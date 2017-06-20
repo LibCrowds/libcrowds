@@ -1,24 +1,35 @@
 <template>
-  <img 
-    v-if="user.info.avatar"
-    :src="src" 
-    alt="`User avatar for ${user.name}`" 
-    class="img-thumbnail rounded-circle">
-  <v-gravatar 
-    v-else 
-    email="user.email_addr" 
+  <img
+    v-if="showPlaceholder"
+    :src="src"
+    :alt="alt"
+    class="img-thumbnail rounded-circle"
+    onerror="imgError = true">
+  <v-gravatar
+    v-else
+    email="user.email_addr"
     default-img="identicon"
-    alt="User avatar for ${user.name}`"
+    :alt="alt"
     class="img-thumbnail rounded-circle">
   </v-gravatar>
 </template>
 
 <script>
 export default {
-  computed: {
-    src: function () {
-      // TODO: Figure out how to determine PyBossa upload folder
+  data () {
+    return {
+      imgError: false
     }
+  },
+
+  computed: {
+    showPlaceholder () {
+      return this.imgError || !('avatar' in this.user.info)
+    },
+    src () {
+      // TODO: Figure out how to determine PyBossa upload folder
+    },
+    alt () { return `User avatar for ${this.user.name}` }
   },
 
   props: {
@@ -30,8 +41,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped>
 img {
-  width: 200px
+  width: 100%;
+  height: auto;
 }
-<style>
+</style>
