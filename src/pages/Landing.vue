@@ -3,7 +3,7 @@
   <div id="landing">
 
     <transition appear>
-      <div class="container full-height">
+      <div class="container full-height text-center">
         <h1 id="tagline">{{ config.tagline }}</h1>
         <div id="intro-buttons" class="mt-2">
           <b-button variant="secondary" :to="{ name: 'about' }">
