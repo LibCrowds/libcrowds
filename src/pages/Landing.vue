@@ -17,7 +17,7 @@
     </transition>
 
     <section id="intro" class="bg-white invert-navbar">
-      <div class="container py-5 text-center">
+      <div class="container py-3 py-md-5 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p class="font-family-serif display-4 mb-0">
@@ -68,7 +68,7 @@
       <div class="container text-center text-lg-left pb-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
-            <h2 class="font-weight-bold display-4 pt-1">
+            <h2 class="font-weight-bold pt-1">
               Featured Projects
             </h2>
             <hr class="wide mr-lg-5">
@@ -106,10 +106,10 @@
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
-              <h3 class="display-3">Open Data</h3>
+              <h3>Open Data</h3>
             </div>
           </div>
-          <div class="row py-3">
+          <div class="row py-md-3">
             <div class="col-md-8 offset-md-2">
               <p class="lead">
                 All datasets generated from the crowdsourcing projects hosted
@@ -139,7 +139,7 @@
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-2 text-center">
-            <h3 class="text-uppercase font-weight-bold display-4">
+            <h3 class="text-uppercase font-weight-bold">
               Most Active Volunteers
             </h3>
             <hr class="wide w-50 my-2">
@@ -189,7 +189,7 @@
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
-              <h3 class="display-3">Results</h3>
+              <h3>Results</h3>
             </div>
           </div>
           <div class="row py-2">
@@ -216,7 +216,7 @@
       <div class="container pt-5 pb-4">
         <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
-            <h3 class="text-uppercase display-4 mb-0">Get Involved</h3>
+            <h3 class="text-uppercase mb-0">Get Involved</h3>
             <p class="lead my-3">
               Your contributions will have a direct impact on enabling future
               reasearch at {{ config.company }}.
@@ -348,6 +348,11 @@ export default {
     &.v-leave-to {
       opacity: 0;
     }
+  }
+  
+  @include media-breakpoint-up(md) {
+    h2 { font-size: 4rem; }
+    h3 { font-size: 3.5rem; }
   }
 
   .bg-white {
