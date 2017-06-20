@@ -1,7 +1,7 @@
 <template>
   <b-modal
     ref="child-modal"
-    :id="modalId"
+    :id="name"
     :title="title"
     @ok="submit"
     @shown="load">
@@ -34,7 +34,9 @@
     </div>
     
     <template slot="modal-footer">
-      <span class="mr-auto" slot="footer-left"></span>
+      <span class="mr-auto">
+        <slot name="footer-left"></slot>
+      </span>
       <b-button variant="secondary" @click="hide(false)">Close</b-button>
       <b-button variant="success" @click="hide(true)">OK</b-button>
     </template>
@@ -59,7 +61,7 @@ export default {
   },
 
   props: {
-    modalId: {
+    name: {
       type: String,
       required: true
     },
@@ -105,10 +107,9 @@ export default {
           'X-CSRFToken': this.form.csrf
         }
       }).then(r => {
+        console.log(r.data)
         if (r.data.status === 'success') {
-          document.querySelector(`#${this.name}`).classList.remove('show')
-          document.querySelector('.modal-backdrop').classList.remove('show')
-          this.$emit('success')
+          this.$refs['child-modal'].hide(true)
         } else {
           this.flash = r.data.flash
           this.status = r.data.status
@@ -118,6 +119,7 @@ export default {
     },
     hide (isOk) {
       // Call b-modal's hide method directly
+      this.$emit('hidden')
       this.$refs['child-modal'].hide(isOk)
     }
   }
