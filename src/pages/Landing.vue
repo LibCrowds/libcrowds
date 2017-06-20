@@ -84,7 +84,11 @@
         </div>
         <div class="row my-5">
           <div class="col-lg-10 offset-lg-1">
-            Load projects here
+            <ul class="list-unstyled">
+              <li v-for="project in featured">
+                <project-card :project="project"></project-card>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -243,6 +247,7 @@ import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
+import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
 import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
@@ -275,7 +280,8 @@ export default {
   components: {
     SocialMediaButtons,
     LeaderboardModal,
-    UserAvatar
+    UserAvatar,
+    ProjectCard
   },
 
   methods: {

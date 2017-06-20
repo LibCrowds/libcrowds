@@ -7,7 +7,7 @@
     @response="setAuth"
     @success="updateCurrentUser">
 
-    <div v-if="auth.facebook || auth.twitter || auth.google" slot="below">
+    <div v-if="auth.facebook || auth.twitter || auth.google">
       <p class="lead text-center">
         or sign in with
       </p>
@@ -95,6 +95,7 @@ export default {
       this.$store.dispatch('UPDATE_CURRENT_USER')
     },
     setAuth (r) {
+      console.log(r)
       if ('auth' in r.data) {
         this.auth = r.data.auth
       }

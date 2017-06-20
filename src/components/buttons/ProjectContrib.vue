@@ -7,7 +7,7 @@
       }
     }"
     :size="size"
-    variant="outline-success">
+    :variant="variant">
     Contribute
   </b-btn>
 </template>
@@ -22,6 +22,10 @@ export default {
     size: {
       type: String,
       default: 'md'
+    },
+    variant: {
+      type: String,
+      default: 'outline-success'
     }
   }
 }

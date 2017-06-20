@@ -107,7 +107,6 @@ export default {
           'X-CSRFToken': this.form.csrf
         }
       }).then(r => {
-        console.log(r.data)
         if (r.data.status === 'success') {
           this.$refs['child-modal'].hide(true)
         } else {
