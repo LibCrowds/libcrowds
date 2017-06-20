@@ -50,7 +50,7 @@
       </div>
     </b-navbar>
 
-    <signin-modal modalId="signin-modal"></signin-modal>
+    <signin-modal name="signin-modal"></signin-modal>
 
   </div>
 </template>

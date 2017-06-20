@@ -1,6 +1,6 @@
 <template>
   <pybossa-modal-form
-    :modalId="modalId"
+    :name="name"
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead"
@@ -60,7 +60,6 @@ export default {
 
   data: function () {
     return {
-      config: config,
       endpoint: '/account/signin',
       lead: `Enter your ${config.brand} account details`,
       schema: {
@@ -85,7 +84,7 @@ export default {
   },
 
   props: {
-    modalId: {
+    name: {
       type: String,
       required: true
     }
@@ -96,7 +95,9 @@ export default {
       this.$store.dispatch('UPDATE_CURRENT_USER')
     },
     setAuth (r) {
-      this.auth = r.data.auth
+      if ('auth' in r.data) {
+        this.auth = r.data.auth
+      }
     },
     redirect (endpoint) {
       const next = window.location.href
