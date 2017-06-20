@@ -82,7 +82,7 @@
             </span>
           </div>
         </div>
-        <div class="row my-5">
+        <div class="row">
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
               <li v-for="project in featured">
