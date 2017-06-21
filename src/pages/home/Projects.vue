@@ -34,7 +34,6 @@ export default {
     return {
       config: config,
       navItems: [
-        { id: 'projects', text: 'Top' },
         { id: 'choose', text: 'Choose a Project' }
       ]
     }

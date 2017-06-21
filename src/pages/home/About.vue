@@ -67,7 +67,6 @@ export default {
       twitterUrl: `https://twitter.com/${config.contact.twitter}`,
       mailto: `mailto:${config.contact.email}`,
       navItems: [
-        { id: 'about', text: 'Top' },
         { id: 'technology', text: 'Technology' },
         { id: 'contact', text: 'Contact' }
       ]

@@ -23,7 +23,6 @@ export default {
   data: function () {
     return {
       navItems: [
-        { id: 'top', text: 'Top' }
       ]
     }
   },

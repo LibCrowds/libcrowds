@@ -74,7 +74,6 @@ export default {
     return {
       config: config,
       navItems: [
-        { id: 'data', text: 'Top' },
         { id: 'tasks', text: 'Tasks' },
         { id: 'taskruns', text: 'Task Runs' },
         { id: 'results', text: 'Results' }
