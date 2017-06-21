@@ -4,7 +4,14 @@
 [![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
 [![devDependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend?type=dev)
 
-> A Vue.js frontend for PyBossa.
+> A Vue.js frontend for PyBossa (>=2.5.0).
+
+## Installing
+
+``` bash
+# install dependencies
+npm install
+```
 
 ## Configuring
 
@@ -19,9 +26,6 @@ cp src/config.js.tmpl src/config.js
 ## Building
 
 ``` bash
-# install dependencies
-npm install
-
 # build for production with minification
 npm run build
 
