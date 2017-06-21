@@ -1,6 +1,6 @@
 <template>
   <footer id="app-footer" class="footer">
-    <div class="container py-4">
+    <div class="container pt-3 pb-2">
 
       <section>
         <a
@@ -55,6 +55,25 @@
       </section>
 
     </div>
+
+    <div class="footer-end">
+      <div class="container py-2">
+        <b-input-group
+          id="subscribe-input-group"
+          class="ml-auto">
+          <b-form-input
+            placeholder="Sign up for our email newsletter"
+            type="email"
+            size="sm">
+          </b-form-input>
+          <b-input-group-button slot="right">
+            <b-btn>
+              Subscribe
+            </b-btn>
+          </b-input-group-button>
+        </b-input-group>
+      </div>
+    </div>
   </footer>
 </template>
 
@@ -86,6 +105,26 @@ export default {
   color: $gray-light;
   font-size: $font-size-sm;
   line-height: 2;
+
+  .footer-end {
+  }
+
+  #subscribe-input-group {
+    input {
+      background-color: $gray-dark;
+      border-radius: 0;
+    }
+
+    .btn {
+      background-color: $gray-dark;
+      color: $white;
+      font-size: 0.85rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 50%;
+    }
+  }
 
   .container {
     display: flex;
