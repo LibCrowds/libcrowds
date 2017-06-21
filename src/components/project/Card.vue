@@ -43,8 +43,7 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 export default {
   data () {
     return {
-      pbCircleId: `${this.project.short_name}-pb-circle`,
-      pbLineId: `${this.project.short_name}-pb-line`
+      pbCircleId: `${this.project.short_name}-pb-circle`
     }
   },
 
