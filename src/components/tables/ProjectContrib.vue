@@ -1,31 +1,54 @@
 <template>
   <section>
 
-    <div class="justify-content-centermy-1 row">
-      <b-form-fieldset horizontal label="Category" class="col-6">
+    <div class="justify-content-centermy-1 row mt-4 mb-2">
+      <b-form-fieldset horizontal label="Category:" class="col-6">
         <b-form-select
           :options="categoryOpts"
           v-model="categoryShortName">
         </b-form-select>
       </b-form-fieldset>
+
+      <b-form-fieldset class="col-6 text-right">
+        <b-button-group>
+          <b-button
+            variant="outline-info"
+            @click="activeView = 'list'">
+            <icon name="list"></icon>
+          </b-button>
+          <b-button
+            variant="outline-info"
+            @click="activeView = 'table'">
+            <icon name="table"></icon>
+          </b-button>
+        </b-button-group>
+      </b-form-fieldset>
+
     </div>
 
-      <b-table
-        striped
-        show-empty
-        :items="projects"
-        :fields="fields"
-        empty-text="No projects are available for this category">
-        <template slot="overall_progress" scope="project">
-          {{ project.item.overall_progress }}%
-        </template>
-        <template slot="actions" scope="project">
-          <project-contrib-button
-            :shortname="project.item.short_name"
-            size="sm">
-          </project-contrib-button>
-        </template>
-      </b-table>
+    <b-table
+      v-if="activeView === 'table'"
+      striped
+      show-empty
+      :items="projects"
+      :fields="fields"
+      empty-text="No projects are available for this category">
+      <template slot="overall_progress" scope="project">
+        {{ project.item.overall_progress }}%
+      </template>
+      <template slot="actions" scope="project">
+        <project-contrib-button
+          :shortname="project.item.short_name"
+          size="sm">
+        </project-contrib-button>
+      </template>
+    </b-table>
+
+    <ul class="list-unstyled" v-if="activeView === 'list'">
+      <li v-for="p in projects">
+        <project-card :project="p"></project-card>
+      </li>
+    </ul>
 
     <div class="justify-content-center row mt-4">
       <b-pagination
@@ -40,12 +63,16 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/table'
+import 'vue-awesome/icons/list'
 import pybossaApi from '@/api/pybossa'
+import ProjectCard from '@/components/project/Card'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   data: function () {
     return {
+      activeView: 'list',
       fields: {
         name: { label: 'Name' },
         n_tasks: { label: 'Tasks' },
@@ -65,7 +92,8 @@ export default {
   },
 
   components: {
-    ProjectContribButton
+    ProjectContribButton,
+    ProjectCard
   },
 
   computed: {
