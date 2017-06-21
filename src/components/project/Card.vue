@@ -3,13 +3,18 @@
     <div class="card-img-overlay-wrapper">
       <project-thumbnail :project="project"></project-thumbnail>
       <div class="card-img-overlay">
-        <div :id="progressContinerId" class="h-100 w-100"></div>
+        <div :id="pbCircleId" class="h-100 w-100"></div>
       </div>
     </div>
+    
     <div class="card-block p-0">
       <h4 class="card-title mb-2 px-2 pt-2">{{ project.name }}</h4>
       <p class="card-text mb-0 px-2 pb-2">{{ project.description }}</p>
+      
       <div class="card-footer p-2">
+        <span class="card-stat text-muted mb-2 mb-md-0">
+          {{ project.overall_progress }}% complete
+        </span>
         <span class="card-stat text-muted mb-1 mb-md-0">
           <icon name="users"></icon> {{ project.n_volunteers }} volunteers
         </span>
@@ -24,6 +29,7 @@
         </div>
       </div>
     </div>
+    
   </b-card>
 </template>
 
@@ -37,7 +43,8 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 export default {
   data () {
     return {
-      progressContinerId: `${this.project.short_name}-progress`
+      pbCircleId: `${this.project.short_name}-pb-circle`,
+      pbLineId: `${this.project.short_name}-pb-line`
     }
   },
 
@@ -53,20 +60,26 @@ export default {
     ProjectThumbnail
   },
 
+  methods: {
+    setProgressCircle () {
+      let pb = new ProgressBar.Circle(`#${this.pbCircleId}`, {
+        strokeWidth: 5,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#FFFFFF',
+        trailColor: '#BA0000',
+        trailWidth: 5,
+        svgStyle: null,
+        text: {
+          value: `${this.project.overall_progress}%`
+        }
+      })
+      pb.animate(this.project.overall_progress / 100)
+    }
+  },
+
   mounted () {
-    let bar = new ProgressBar.Circle(`#${this.progressContinerId}`, {
-      strokeWidth: 5,
-      easing: 'easeInOut',
-      duration: 1400,
-      color: '#FFFFFF',
-      trailColor: '#B00000',
-      trailWidth: 5,
-      svgStyle: null,
-      text: {
-        value: `${this.project.overall_progress}%`
-      }
-    })
-    bar.animate(this.project.overall_progress / 100)
+    this.setProgressCircle()
   }
 }
 </script>
@@ -150,6 +163,10 @@ export default {
       margin-right: 0.5em;
     }
   }
+}
+
+.progressbar-text {
+  font-size: $font-size-lg;
 }
 
 </style>
