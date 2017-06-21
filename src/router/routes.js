@@ -4,6 +4,7 @@ import About from '@/pages/home/About'
 import Data from '@/pages/home/Data'
 import Results from '@/pages/home/Results'
 import Projects from '@/pages/home/Projects'
+import Statistics from '@/pages/home/Statistics'
 
 import TOS from '@/pages/help/TOS'
 import Privacy from '@/pages/help/Privacy'
@@ -20,6 +21,7 @@ export default [
   { path: '/data', name: 'data', component: Data },
   { path: '/projects', name: 'projects', component: Projects },
   { path: '/results', name: 'results', component: Results },
+  { path: '/statistics', name: 'statistics', component: Statistics },
 
   { path: '/help/tos', name: 'tos', component: TOS },
   { path: '/help/privacy', name: 'privacy', component: Privacy },

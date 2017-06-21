@@ -17,6 +17,12 @@
             <b-nav-item :to="{ name: 'projects' }">
               Projects
             </b-nav-item>
+            <b-nav-item :to="{ name: 'projects' }">
+              Discuss
+            </b-nav-item>
+            <b-nav-item :to="{ name: 'statistics' }">
+              Statistics
+            </b-nav-item>
             <b-nav-item :to="{ name: 'results' }">
               Results
             </b-nav-item>
