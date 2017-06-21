@@ -61,7 +61,10 @@ export default {
       color: '#FFFFFF',
       trailColor: '#B00000',
       trailWidth: 5,
-      svgStyle: null
+      svgStyle: null,
+      text: {
+        value: `${this.project.overall_progress}%`
+      }
     })
     bar.animate(this.project.overall_progress / 100)
   }
