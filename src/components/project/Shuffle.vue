@@ -1,23 +1,36 @@
 <template>
-  <section>
+  <div class="project-shuffle">
 
-    <div class="justify-content-centermy-1 row mt-4 mb-2">
-      <b-form-fieldset horizontal label="Category:" class="col-6">
+    <div id="sorting-options" class="justify-content-centermy-1 row my-2">
+
+      <b-form-fieldset horizontal label="Category:">
         <b-form-select
           :options="categoryOpts"
           v-model="categoryShortName">
         </b-form-select>
       </b-form-fieldset>
 
-      <b-form-fieldset class="col-6 text-right">
-        <b-button-group>
+      <b-form-fieldset horizontal label="Sorting:">
+        <b-form-select
+          :options="sortingOpts"
+          v-model="sortKey">
+        </b-form-select>
+      </b-form-fieldset>
+
+      <b-form-fieldset horizontal class="col-3">
+       <toggle-button :value="false" :sync="true" :labels="true">
+       </toggle-button>
+      </b-form-fieldset>
+
+      <b-form-fieldset class="col-3">
+        <b-button-group class="bg-white">
           <b-button
-            variant="outline-info"
+            :variant="getViewBtnVariant('list')"
             @click="activeView = 'list'">
             <icon name="list"></icon>
           </b-button>
           <b-button
-            variant="outline-info"
+            :variant="getViewBtnVariant('table')"
             @click="activeView = 'table'">
             <icon name="table"></icon>
           </b-button>
@@ -26,26 +39,13 @@
 
     </div>
 
-    <b-table
-      v-if="activeView === 'table'"
-      striped
-      show-empty
-      :items="projects"
-      :fields="fields"
-      empty-text="No projects are available for this category">
-      <template slot="overall_progress" scope="project">
-        {{ project.item.overall_progress }}%
-      </template>
-      <template slot="actions" scope="project">
-        <project-contrib-button
-          :shortname="project.item.short_name"
-          size="sm">
-        </project-contrib-button>
-      </template>
-    </b-table>
+    <project-contrib-table
+       v-if="activeView === 'table'"
+      :projects="projects">
+    </project-contrib-table>
 
-    <ul class="list-unstyled" v-if="activeView === 'list'">
-      <li v-for="p in projects">
+    <ul ref="shuffle-grid" class="list-unstyled" v-if="activeView === 'list'">
+      <li ref="shuffle-grid-item" v-for="p in projects">
         <project-card :project="p"></project-card>
       </li>
     </ul>
@@ -59,27 +59,21 @@
       </b-pagination>
     </div>
 
-  </section>
+  </div>
 </template>
 
 <script>
 import 'vue-awesome/icons/table'
 import 'vue-awesome/icons/list'
+import { sortBy, forEach } from 'lodash'
 import pybossaApi from '@/api/pybossa'
 import ProjectCard from '@/components/project/Card'
-import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import ProjectContribTable from '@/components/project/ContribTable'
 
 export default {
   data: function () {
     return {
       activeView: 'list',
-      fields: {
-        name: { label: 'Name' },
-        n_tasks: { label: 'Tasks' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        actions: { label: 'Actions' }
-      },
       categoryShortName: null,
       currentPage: 1,
       projects: [],
@@ -87,13 +81,19 @@ export default {
       pagination: {
         per_page: 20,
         total: 5
-      }
+      },
+      sortKey: 'overall_progress',
+      sortingOpts: [
+        { text: 'Closest to Completion', value: 'overall_progress' },
+        { text: 'Most Tasks Remaining', value: 'n_tasks' },
+        { text: 'Most Popular', value: 'n_volunteers' }
+      ]
     }
   },
 
   components: {
-    ProjectContribButton,
-    ProjectCard
+    ProjectCard,
+    ProjectContribTable
   },
 
   computed: {
@@ -121,6 +121,15 @@ export default {
         this.projects = res.data.projects
         this.pagination = res.data.pagination
       })
+    },
+    getViewBtnVariant (view) {
+      return view === this.activeView ? 'info' : 'outline-info'
+    },
+    sort () {
+      const sortedProjects = sortBy(this.projects, this.sortKey)
+      this.projects = forEach(sortedProjects, function (p) {
+        return p
+      })
     }
   },
 
@@ -135,11 +144,18 @@ export default {
     },
     '$route' () {
       this.fetchCategories()
+    },
+    sortKey: function () {
+      this.sort()
     }
   },
 
   created () {
     this.fetchCategories()
+  },
+
+  mounted () {
+    this.sort()
   }
 }
 </script>
@@ -164,5 +180,9 @@ export default {
   tr *:not(:first-child) {
     text-align: center;
   }
+}
+
+.bg-white {
+  background-color: $white;
 }
 </style>

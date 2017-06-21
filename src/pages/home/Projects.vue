@@ -15,7 +15,8 @@
 
     <section id="choose">
       <h3 class="text-center">Choose a Project</h3>
-      <project-contrib-table></project-contrib-table>
+      <hr class="w-50"></hr>
+      <project-shuffle></project-shuffle>
     </section>
 
   </floating-tabs-layout>
@@ -25,7 +26,7 @@
 <script>
 import marked from 'marked'
 import config from '@/config'
-import ProjectContribTable from '@/components/tables/ProjectContrib'
+import ProjectShuffle from '@/components/project/Shuffle'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
@@ -41,7 +42,7 @@ export default {
 
   components: {
     FloatingTabsLayout,
-    ProjectContribTable
+    ProjectShuffle
   },
 
   metaInfo: {

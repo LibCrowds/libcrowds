@@ -9,6 +9,7 @@ import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueFormGenerator from 'vue-form-generator'
+import ToggleButton from 'vue-js-toggle-button'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 
 // Global styles
@@ -20,6 +21,8 @@ import '@/assets/style/_main.scss'
 Vue.use(BootstrapVue)
 
 Vue.use(VueFormGenerator)
+
+Vue.use(ToggleButton)
 
 Vue.component('v-gravatar', VueGravatar)
 
