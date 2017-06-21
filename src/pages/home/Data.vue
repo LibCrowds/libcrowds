@@ -13,7 +13,7 @@
         </a> license.
       </p>
       <p>
-        There are currently two types of dataset available, both of which
+        There are three types of dataset available, all of which
         can be downloaded in JSON or CSV format:
       </p>
       <ul>
@@ -22,6 +22,10 @@
         </li>
         <li>
           <strong>Task Runs: </strong>The contribution data for all tasks.
+        </li>
+        <li>
+          <strong>Results: </strong>The final results, following any analysis
+          of the contribution data.
         </li>
       </ul>
       <p>
@@ -51,6 +55,11 @@
       <data-download-table :downloadType="'task_run'"></data-download-table>
     </section>
 
+    <section id="results">
+      <h3 class="text-center">Results</h3>
+      <data-download-table :downloadType="'results'"></data-download-table>
+    </section>
+
   </floating-tabs-layout>
 
 </template>
@@ -67,7 +76,8 @@ export default {
       navItems: [
         { id: 'data', text: 'Top' },
         { id: 'tasks', text: 'Tasks' },
-        { id: 'taskruns', text: 'Task Runs' }
+        { id: 'taskruns', text: 'Task Runs' },
+        { id: 'results', text: 'Results' }
       ]
     }
   },
