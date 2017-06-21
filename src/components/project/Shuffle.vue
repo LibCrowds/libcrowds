@@ -18,7 +18,11 @@
       </b-form-fieldset>
 
       <b-form-fieldset horizontal class="col-3">
-       <toggle-button :value="false" :sync="true" :labels="true">
+       <toggle-button 
+         :value="showCompleted" 
+         :sync="true" 
+         :labels="true"
+         @change="toggleCompleted">
        </toggle-button>
       </b-form-fieldset>
 
@@ -50,7 +54,8 @@
       tag="ul"
       class="list-unstyled">
       <li class="shuffle-grid-item" 
-        v-for="p in projects" 
+        v-for="p in projects"
+        v-if="filter(p)"
         :key="p.short_name">
         <project-card :project="p"></project-card>
       </li>
@@ -94,7 +99,8 @@ export default {
         { text: 'Most Tasks Remaining', value: 'n_tasks' },
         { text: 'Most Popular', value: 'n_volunteers' },
         { text: 'Most Recently Added', value: 'created' }
-      ]
+      ],
+      showCompleted: false
     }
   },
 
@@ -137,6 +143,15 @@ export default {
       this.projects = forEach(sortedProjects, function (p) {
         return p
       })
+    },
+    filter (project) {
+      if (!this.showCompleted && project.overall_progress === 100) {
+        return false
+      }
+      return true
+    },
+    toggleCompleted (obj) {
+      this.showCompleted = obj.value
     }
   },
 
