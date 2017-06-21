@@ -44,11 +44,17 @@
       :projects="projects">
     </project-contrib-table>
 
-    <ul ref="shuffle-grid" class="list-unstyled" v-if="activeView === 'list'">
-      <li ref="shuffle-grid-item" v-for="p in projects">
+    <transition-group
+      v-if="activeView === 'list'"
+      ref="shuffle-grid" 
+      tag="ul"
+      class="list-unstyled">
+      <li class="shuffle-grid-item" 
+        v-for="p in projects" 
+        :key="p.short_name">
         <project-card :project="p"></project-card>
       </li>
-    </ul>
+    </transition-group>
 
     <div class="justify-content-center row mt-4">
       <b-pagination
@@ -180,6 +186,10 @@ export default {
   tr *:not(:first-child) {
     text-align: center;
   }
+}
+
+.shuffle-grid-item {
+  transition: all 400ms;
 }
 
 .bg-white {
