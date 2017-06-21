@@ -50,17 +50,26 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item
-              v-else
-              @click="$root.$emit('show::modal','signin-modal')">
-              Sign in
-            </b-nav-item>
+            <b-nav is-nav-bar v-else>
+              <b-nav-item
+                @click="$root.$emit('show::modal','signin-modal')">
+                Sign in
+              </b-nav-item>
+              <b-nav-item
+                class="nav-button"
+                @click="$root.$emit('show::modal','register-modal')">
+                Sign up
+              </b-nav-item>
+            </b-nav>
+
           </b-nav>
         </b-collapse>
       </div>
     </b-navbar>
 
     <signin-modal name="signin-modal"></signin-modal>
+
+    <register-modal name="register-modal"></register-modal>
 
   </div>
 </template>
@@ -71,6 +80,7 @@ import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import store from '@/store'
 import SigninModal from '@/components/modals/Signin'
+import RegisterModal from '@/components/modals/Register'
 
 export default {
   name: 'app-navbar',
@@ -82,7 +92,8 @@ export default {
   },
 
   components: {
-    SigninModal
+    SigninModal,
+    RegisterModal
   },
 
   computed: {
@@ -173,7 +184,7 @@ export default {
       margin-right: 0;
       position: relative;
 
-      &:not(.dropdown) .nav-link:after {
+      &:not(.dropdown):not(.nav-button) .nav-link:after {
         position: absolute;
         left: 0;
         bottom: 0;
@@ -182,6 +193,28 @@ export default {
         content: '';
         background-color: $brand-primary;
         opacity: 0;
+      }
+
+      &.nav-button {
+        @include button-outline-variant($white, $black);
+        border: 1px solid $white;
+        border-radius: 2.5rem;
+        padding: 0 0.5rem;
+        transition: background-color 250ms;
+
+        .nav-link {
+          transition: color 250ms;
+
+          &:after {
+            content: none;
+          }
+
+          &:focus,
+          &:hover,
+          &.active {
+            color: initial;
+          }
+        }
       }
 
       .nav-link {
@@ -228,9 +261,9 @@ export default {
   .dropdown-item:focus,
   .dropdown-item:hover,
   .dropdown-item.active,
-  .nav-item .nav-link:focus,
-  .nav-item .nav-link:hover,
-  .nav-item .nav-link.active {
+  .nav-item:not(.nav-button) .nav-link:focus,
+  .nav-item:not(.nav-button) .nav-link:hover,
+  .nav-item:not(.nav-button) .nav-link.active {
     color: $brand-primary !important;
     background-color: transparent;
   }
@@ -257,6 +290,11 @@ export default {
   &.navbar-light {
     background: $white;
     border-bottom: 1px solid $gray-lighter;
+
+    .nav-item.nav-button {
+      transition: border-color 400ms;
+      border-color: $gray-light;
+    }
   }
 
   &.navbar-dashboard {

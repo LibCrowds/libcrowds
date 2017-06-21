@@ -1,6 +1,6 @@
 <template>
   <pybossa-modal-form
-    :modalId="modalId"
+    :name="name"
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead"
@@ -15,11 +15,10 @@ export default {
   data: function () {
     return {
       config: config,
-      endpoint: '/account/register/',
+      endpoint: '/account/register',
       lead: `Create a ${config.brand} account`,
       schema: {
-        fields: [
-        {
+        fields: [{
           model: 'name',
           label: 'Username',
           type: 'input',
@@ -56,7 +55,7 @@ export default {
   },
 
   props: {
-    modalId: {
+    name: {
       type: String,
       required: true
     }
