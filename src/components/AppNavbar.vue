@@ -1,6 +1,10 @@
 <template>
   <div class="app-navbar">
-    <b-navbar toggleable type="inverse" sticky="top">
+    <b-navbar
+      toggleable
+      toggle-breakpoint="lg"
+      type="inverse"
+      sticky="top">
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
