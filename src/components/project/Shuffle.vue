@@ -92,7 +92,8 @@ export default {
       sortingOpts: [
         { text: 'Closest to Completion', value: 'overall_progress' },
         { text: 'Most Tasks Remaining', value: 'n_tasks' },
-        { text: 'Most Popular', value: 'n_volunteers' }
+        { text: 'Most Popular', value: 'n_volunteers' },
+        { text: 'Most Recently Added', value: 'created' }
       ]
     }
   },
