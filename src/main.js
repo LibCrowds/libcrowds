@@ -9,7 +9,6 @@ import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueFormGenerator from 'vue-form-generator'
-import VueChartist from 'vue-chartist'
 import ToggleButton from 'vue-js-toggle-button'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 
