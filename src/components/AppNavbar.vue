@@ -162,6 +162,7 @@ export default {
     font-size: $font-size-h3;
     font-weight: 300;
     transition: color 200ms;
+    margin-right: 1rem;
   }
 
   .hamburger {
@@ -201,6 +202,7 @@ export default {
         border-radius: 2.5rem;
         padding: 0 0.5rem;
         transition: background-color 250ms;
+        margin-left: 1rem;
 
         .nav-link {
           transition: color 250ms;
