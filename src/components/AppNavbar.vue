@@ -21,7 +21,7 @@
             <b-nav-item :to="{ name: 'projects' }">
               Projects
             </b-nav-item>
-            <b-nav-item :to="{ name: 'projects' }">
+            <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
               Discuss
             </b-nav-item>
             <b-nav-item :to="{ name: 'statistics' }">

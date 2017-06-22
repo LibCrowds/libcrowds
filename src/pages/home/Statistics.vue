@@ -56,6 +56,7 @@ export default {
         if (r.data.show_locs) {
           this.locs = r.data.locs
         }
+        console.log(r)
       })
     },
     fetchTopUsers () {

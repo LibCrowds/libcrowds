@@ -7,7 +7,7 @@
     onerror="imgError = true">
   <v-gravatar
     v-else
-    email="user.email_addr"
+    :email="user.name"
     default-img="identicon"
     :alt="alt"
     class="img-thumbnail rounded-circle">
