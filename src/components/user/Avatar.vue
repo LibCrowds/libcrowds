@@ -1,17 +1,19 @@
 <template>
-  <img
-    v-if="showPlaceholder"
-    :src="src"
-    :alt="alt"
-    class="img-thumbnail rounded-circle"
-    onerror="imgError = true">
-  <v-gravatar
-    v-else
-    :email="user.name"
-    default-img="identicon"
-    :alt="alt"
-    class="img-thumbnail rounded-circle">
-  </v-gravatar>
+  <b-tooltip :content="user.name" triggers="hover">
+    <img
+      v-if="showPlaceholder"
+      :src="src"
+      :alt="alt"
+      class="img-thumbnail rounded-circle"
+      onerror="imgError = true">
+    <v-gravatar
+      v-else
+      :email="user.name"
+      default-img="identicon"
+      :alt="alt"
+      class="img-thumbnail rounded-circle">
+    </v-gravatar>
+  </b-tooltip>
 </template>
 
 <script>
