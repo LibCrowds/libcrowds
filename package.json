@@ -41,8 +41,6 @@
     "vue-js-toggle-button": "^1.1.0",
     "vue-meta": "^1.0.4",
     "vue-router": "^2.6.0",
-    "vue2-leaflet": "0.0.50",
-    "vue2-leaflet-markercluster": "^1.0.0",
     "vuex": "^2.3.1",
     "vuex-router-sync": "^4.2.0"
   },
