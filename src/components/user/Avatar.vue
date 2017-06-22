@@ -1,5 +1,5 @@
 <template>
-  <b-tooltip :content="user.name" triggers="hover">
+  <b-tooltip :content="user.name" triggers="hover" v-if="showTooltip">
     <img
       v-if="showPlaceholder"
       :src="src"
@@ -38,6 +38,10 @@ export default {
     user: {
       type: Object,
       required: true
+    },
+    showTooltip: {
+      type: Boolean,
+      default: false
     }
   }
 }
