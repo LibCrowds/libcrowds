@@ -6,8 +6,10 @@
       <h2 class="text-center">Statistics</h2>
       <hr>
 
-      <h3 class="text-center">Most Active Volunteers</h3>
-      <div id="top-users-chart" class="ct-major-seventh"></div>
+      <div id="top-users">
+        <h3 class="text-center">Most Active Volunteers</h3>
+        <div id="top-users-chart" class="ct-major-seventh"></div>
+      </div>
 
       <div v-if="locs.length">
         <hr>
@@ -16,6 +18,8 @@
           <div id="locs-map" style="height: 200px"></div>
         </div>
       </div>
+
+
 
     </section>
 
@@ -26,6 +30,7 @@
 <script>
 import L from 'leaflet'
 import Chartist from 'chartist'
+import 'chartist-plugin-tooltips'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
@@ -35,10 +40,13 @@ export default {
     return {
       config: config,
       navItems: [
-        { id: 'top-users-chart', text: 'Most Active Volunteers' }
+        { id: 'top-users', text: 'Most Active Volunteers' }
       ],
       topUsers: [],
-      locs: []
+      locs: [],
+      chartPlugins: [
+        Chartist.plugins.tooltip()
+      ]
     }
   },
 
@@ -48,7 +56,6 @@ export default {
         if (r.data.show_locs) {
           this.locs = r.data.locs
         }
-        console.log(r)
       })
     },
     fetchTopUsers () {
@@ -63,10 +70,12 @@ export default {
       const data = {
         labels: this.topUsers.map((u) => u.name),
         series: [
-          this.topUsers.map((u) => u.score)
+          this.topUsers.map(function (u) {
+            return { meta: u.name, value: u.score }
+          })
         ]
       }
-      Chartist.Bar('#top-users-chart', data)
+      Chartist.Bar('#top-users-chart', data, { plugins: this.chartPlugins })
     },
     locs: function () {
       const baseUrl = 'https://api.tiles.mapbox.com/v4'
@@ -119,6 +128,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/_vars';
 @import '~chartist/dist/scss/chartist';
+@import '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip';
 @import '~leaflet.markercluster/dist/MarkerCluster';
 @import '~leaflet.markercluster/dist/MarkerCluster.Default';
 </style>
