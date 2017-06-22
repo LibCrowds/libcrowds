@@ -10,6 +10,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueFormGenerator from 'vue-form-generator'
 import VueChartist from 'vue-chartist'
+import Vue2Leaflet from 'vue2-leaflet'
 import ToggleButton from 'vue-js-toggle-button'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 
@@ -25,7 +26,9 @@ Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
 
 Vue.component('v-gravatar', VueGravatar)
-
+Vue.component('v-map', Vue2Leaflet.Map)
+Vue.component('v-tilelayer', Vue2Leaflet.TileLayer)
+Vue.component('v-marker', Vue2Leaflet.Marker)
 Vue.component('pybossa-modal-form', PyBossaModalForm)
 
 Vue.config.productionTip = false

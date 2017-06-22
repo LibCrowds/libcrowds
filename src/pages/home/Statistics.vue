@@ -70,4 +70,5 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/_vars';
 @import '~chartist/dist/scss/chartist';
+@import "~leaflet/dist/leaflet.css";
 </style>
