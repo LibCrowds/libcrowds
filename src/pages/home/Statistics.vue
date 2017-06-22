@@ -24,13 +24,18 @@ export default {
       navItems: [
         { id: 'top-users-chart', text: 'Most Active Volunteers' }
       ],
-      topUsers: []
+      topUsers: [],
+      locs: []
     }
   },
 
   methods: {
     fetchGlobalStats () {
       pybossaApi.get('/stats/').then(r => {
+        console.log(r.data.show_locs)
+        if (r.data.show_locs) {
+          this.locs = r.data.locs
+        }
       })
     },
     fetchTopUsers () {
@@ -49,6 +54,9 @@ export default {
         ]
       }
       Chartist.Bar('#top-users-chart', data)
+    },
+    locs: function () {
+      console.log(this.locs)
     }
   },
 
