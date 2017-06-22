@@ -164,7 +164,10 @@
                 v-for="u in topUsers">
                 <a href="#" class="my-1">
                   <div class="my-1">
-                    <user-avatar :user="u"></user-avatar>
+                    <user-avatar
+                      :user="u"
+                      tooltipTriggers="hover">
+                    </user-avatar>
                   </div>
                 </a>
                 <p class="badge badge-info">{{ u.score }}</p>
@@ -349,7 +352,7 @@ export default {
       opacity: 0;
     }
   }
-  
+
   @include media-breakpoint-up(md) {
     h2 { font-size: 4rem; }
     h3 { font-size: 3.5rem; }
@@ -358,7 +361,7 @@ export default {
   .bg-white {
     background-color: $white;
   }
-  
+
   .btn-bg-white {
     &:not(:hover):not(:focus):not(.active) {
         background-color: $white;
