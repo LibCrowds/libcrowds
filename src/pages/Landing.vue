@@ -145,7 +145,7 @@
             <hr class="wide w-50 my-2">
             <p class="text-uppercase lead pb-2">
               To date, our top {{ topUsers.length }} volunteers have made an
-              amazing N contributions!
+              amazing {{ topUsersTaskRuns }} contributions!
             </p>
             <b-button variant="secondary" :to="{ name: 'projects' }">
               Get Involved
@@ -292,6 +292,16 @@ export default {
     LeaderboardModal,
     UserAvatar,
     ProjectCard
+  },
+
+  computed: {
+    topUsersTaskRuns () {
+      const scores = this.topUsers.map((u) => u.score)
+      const sum = scores.reduce(function (acc, val) {
+        return acc + val
+      }, 0)
+      return getNumberWithCommas(sum)
+    }
   },
 
   methods: {
