@@ -41,17 +41,17 @@ Assuming this is the only application running on your server you can deploy
 it like this:
 
 ``` bash
+# install nginx
+sudo apt-get install nginx
+
 # copy nginx config (editting paths according to your environment)
-cp /contrib/vue-pybossa-frontend /etc/nginx/sites-available/vue-pybossa-frontend
+cp contrib/vue-pybossa-frontend /etc/nginx/sites-available/.
 
 # remove default nginx config
 sudo rm /etc/nginx/sites-enabled/default
 
 # enable
 sudo ln -s /etc/nginx/sites-available/vue-pybossa-frontend /etc/nginx/sites-enabled/vue-pybossa-frontend
-
-# build for production and view the bundle analyzer report
-npm run build --report
 
 # restart
 sudo service nginx restart
