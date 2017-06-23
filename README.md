@@ -35,6 +35,28 @@ npm run build
 npm run build --report
 ```
 
+## Deploying using nginx
+
+Assuming this is the only application running on your server you can deploy 
+it like this:
+
+``` bash
+# copy nginx config (editting paths according to your environment)
+cp /contrib/vue-pybossa-frontend /etc/nginx/sites-available/vue-pybossa-frontend
+
+# remove default nginx config
+sudo rm /etc/nginx/sites-enabled/default
+
+# enable
+sudo ln -s /etc/nginx/sites-available/vue-pybossa-frontend /etc/nginx/sites-enabled/vue-pybossa-frontend
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# restart
+sudo service nginx restart
+```
+
 ## Testing
 
 ``` bash
