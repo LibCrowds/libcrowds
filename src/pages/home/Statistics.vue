@@ -11,6 +11,8 @@
         <div id="top-users-chart" class="ct-major-seventh"></div>
       </div>
 
+      <div id="locs-map" style="height: 200px"></div>
+
       <div v-if="locs.length">
         <hr>
         <h3 class="text-center">Locations of Anonymous Volunteers</h3>
@@ -40,6 +42,7 @@ export default {
     return {
       config: config,
       navItems: [
+        { id: 'top-users', text: 'Most Active Volunteers' },
         { id: 'top-users', text: 'Most Active Volunteers' }
       ],
       topUsers: [],
@@ -56,7 +59,6 @@ export default {
         if (r.data.show_locs) {
           this.locs = r.data.locs
         }
-        console.log(r)
       })
     },
     fetchTopUsers () {
@@ -64,7 +66,37 @@ export default {
         this.topUsers = r.data.top_users
       })
     },
-    buildTopUsersChart () {
+    mapTileOpts: function () {
+      if ('mapboxApiToken' in config) {
+        return {
+          maxZoom: 18,
+          attribution: `
+            Map data:
+            &copy; <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
+            &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>
+            <strong><a href='https://www.mapbox.com/feedback/' target='_blank'>
+            Improve this map</a></strong>
+          `,
+          id: 'mapboxId' in config ? config.mapboxId : 'mapbox.streets',
+          accessToken: config.mapboxApiToken
+        }
+      }
+      return {
+        maxZoom: 18
+      }
+    },
+    mapProviderUrl: function () {
+      if ('mapboxApiToken' in config) {
+        const baseUrl = 'https://api.tiles.mapbox.com/v4'
+        const token = config.mapboxApiToken
+        return `${baseUrl}/{id}/{z}/{x}/{y}.png?access_token=${token}`
+      }
+      return 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+    }
+  },
+
+  watch: {
+    topUsers: function () {
       const data = {
         labels: this.topUsers.map((u) => u.name),
         series: [
@@ -75,26 +107,11 @@ export default {
       }
       Chartist.Bar('#top-users-chart', data, { plugins: this.chartPlugins })
     },
-    buildLocationsMap () {
-      const baseUrl = 'https://api.tiles.mapbox.com/v4'
-      const token = config.mapboxToken
-      const url = `${baseUrl}/{id}/{z}/{x}/{y}.png?access_token=${token}`
-      const map = L.map('locs-map', { scrollWheelZoom: false, minZoom: 1 })
+    locs: function () {
+      let map = L.map('locs-map', { scrollWheelZoom: false, minZoom: 1 })
       map.fitWorld()
       map.setZoom(2)
-      L.tileLayer(url, {
-        attribution: `
-          Map data:
-          &copy; <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
-          &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>
-          <strong><a href='https://www.mapbox.com/feedback/' target='_blank'>
-          Improve this map</a></strong>
-        `,
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: config.mapboxToken
-      }).addTo(map)
-
+      L.tileLayer(this.mapProviderUrl(), this.mapTileOpts()).addTo(map)
       let markers = new L.MarkerClusterGroup()
       for (let l of this.locs) {
         if (l.loc !== null) {
@@ -107,15 +124,6 @@ export default {
     }
   },
 
-  watch: {
-    topUsers: function () {
-      this.buildTopUsersChart()
-    },
-    locs: function () {
-      this.buildLocationsMap()
-    }
-  },
-
   metaInfo: {
     title: 'Statistics'
   },
@@ -124,10 +132,9 @@ export default {
     FloatingTabsLayout
   },
 
-  created () {
-    this.fetchGlobalStats()
+  mounted () {
     this.fetchTopUsers()
-    console.log(this.map)
+    this.fetchGlobalStats()
   }
 }
 </script>
