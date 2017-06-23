@@ -15,7 +15,7 @@
         <hr>
         <h3 class="text-center">Locations of Anonymous Volunteers</h3>
         <div class="ct-major-seventh">
-          <div id="locs-map" style="height: 200px"></div>
+          <div id="locs-map"></div>
         </div>
       </div>
 
