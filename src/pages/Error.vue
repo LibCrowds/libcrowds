@@ -26,7 +26,6 @@ export default {
   },
 
   metaInfo: {
-    title: this.title,
     bodyAttrs: {
       style: `background: #7CC4F3
              url('${require('../assets/img/bl-graphic.png')}')
