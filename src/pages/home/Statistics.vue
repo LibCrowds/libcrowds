@@ -31,6 +31,7 @@
 
 <script>
 import L from 'leaflet'
+import 'leaflet.markercluster'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
 import config from '@/config'
