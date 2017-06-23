@@ -4,7 +4,7 @@
     :src="src"
     :alt="alt"
     class="img-responsive"
-    onerror="imgError = true">
+    :onerror="imgError = true">
   </img>
   <v-gravatar
     v-else
@@ -28,7 +28,12 @@ export default {
       return this.imgError || !('thumbnail' in this.project.info)
     },
     src () {
-      // TODO: Figure out how to determine PyBossa upload folder
+      const file = `${this.user.info.container}/${this.user.info.avatar}`
+      if (config.uploadMethod === 'local') {
+        return `${config.pybossaHost}/uploads/${file}`
+      } else if (config.uploadMethod === 'rackspace') {
+        // TODO: Add rackspace URL
+      }
     },
     alt () { return `Project thumbnail for ${this.project.name}` }
   },
