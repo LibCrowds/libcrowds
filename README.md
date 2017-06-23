@@ -8,6 +8,8 @@
 
 ## Installing
 
+Install [Node.js](https://nodejs.org/en/), then:
+
 ``` bash
 # install dependencies
 npm install
