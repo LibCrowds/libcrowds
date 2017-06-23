@@ -1,12 +1,20 @@
-server {
-  listen 80 default_server;
-  listen [::]:80 default_server;
+# Uncomment the following if SSL is enabled
+# Also replace 80 with 443 in the server block below
+#
+# server {
+# 	listen 80 default_server;
+# 	listen [::]:80 default_server;
+# 	server_name your.server.name;
+# 	return 301 https://$server_name$request_uri;
+# }
 
+server {  
+  listen 80 default_server;
+  server_name your.server.name;
+  
   root /var/www/vue-pybossa-frontend;
 
   index index.html;
-
-  server_name your.server.com;
 
   location / {
     try_files $uri $uri/ @rewrites;
