@@ -63,11 +63,8 @@ export default {
       pybossaApi.get(`/`).then(r => {
         this.topUsers = r.data.top_users
       })
-    }
-  },
-
-  watch: {
-    topUsers: function () {
+    },
+    buildTopUsersChart () {
       const data = {
         labels: this.topUsers.map((u) => u.name),
         series: [
@@ -78,7 +75,7 @@ export default {
       }
       Chartist.Bar('#top-users-chart', data, { plugins: this.chartPlugins })
     },
-    locs: function () {
+    buildLocationsMap () {
       const baseUrl = 'https://api.tiles.mapbox.com/v4'
       const token = config.mapboxToken
       const url = `${baseUrl}/{id}/{z}/{x}/{y}.png?access_token=${token}`
@@ -107,6 +104,15 @@ export default {
         }
       }
       map.addLayer(markers)
+    }
+  },
+
+  watch: {
+    topUsers: function () {
+      this.buildTopUsersChart()
+    },
+    locs: function () {
+      this.buildLocationsMap()
     }
   },
 
