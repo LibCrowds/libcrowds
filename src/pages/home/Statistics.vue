@@ -19,8 +19,6 @@
         </div>
       </div>
 
-
-
     </section>
 
   </floating-tabs-layout>
@@ -86,9 +84,9 @@ export default {
     },
     mapProviderUrl: function () {
       if ('mapboxApiToken' in config) {
-        const baseUrl = 'https://api.tiles.mapbox.com/v4'
-        const token = config.mapboxApiToken
-        return `${baseUrl}/{id}/{z}/{x}/{y}.png?access_token=${token}`
+        return `https://api.tiles.mapbox.com/v4` +
+               `/{id}/{z}/{x}/{y}.png` +
+               `?access_token=${config.mapboxApiToken}`
       }
       return 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
     }
@@ -139,7 +137,7 @@ export default {
     FloatingTabsLayout
   },
 
-  mounted () {
+  created () {
     this.fetchTopUsers()
     this.fetchGlobalStats()
   }
