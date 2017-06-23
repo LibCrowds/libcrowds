@@ -33,7 +33,6 @@ export default {
       return !this.imgError && 'avatar' in this.user.info
     },
     src () {
-      console.log(this.tooltipTriggers)
       const file = `${this.user.info.container}/${this.user.info.avatar}`
       if (config.uploadMethod === 'local') {
         return `${config.pybossaHost}/uploads/${file}`
