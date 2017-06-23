@@ -5,7 +5,7 @@
       :src="src"
       :alt="alt"
       class="img-thumbnail rounded-circle"
-      onerror="imgError = true">
+      :onerror="imgError = true">
     <v-gravatar
       v-else
       :email="user.name"
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import config from '@/config'
+
 export default {
   data () {
     return {
@@ -26,10 +28,15 @@ export default {
 
   computed: {
     showPlaceholder () {
-      return this.imgError || !('avatar' in this.user.info)
+      return !this.imgError && 'avatar' in this.user.info
     },
     src () {
-      // TODO: Figure out how to determine PyBossa upload folder
+      const file = `${this.user.info.container}/${this.user.info.avatar}`
+      if (config.uploadMethod === 'local') {
+        return `${config.pybossaHost}/uploads/${file}`
+      } else if (config.uploadMethod === 'rackspace') {
+        // TODO: Add rackspace URL
+      }
     },
     alt () { return `User avatar for ${this.user.name}` }
   },
