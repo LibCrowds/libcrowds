@@ -17,13 +17,14 @@ npm install
 
 ## Configuring
 
-All settings can be found in [src/config.js.tmpl](src/config.js.tmpl); to use
-the theme you will need to make a copy of this file locally.
+Settings can be found in [src/config.js.tmpl](src/config.js.tmpl), to use
+this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash		
 # create local configuration file
 cp src/config.js.tmpl src/config.js
 ```
+
 
 ## Building
 
