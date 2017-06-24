@@ -6,7 +6,7 @@ if [ $TRAVIS_BRANCH == 'master' ] ; then
     git init
 
     # Add remote LibCrowds repos here
-    git remote add deploy "deploy@playbills.libcrowds.com:/var/www/vue-pybossa-frontend"
+    git remote add deploy "deploy@46.101.87.176:/var/www/vue-pybossa-frontend"
 
     # Configure git
     git config user.name "Alex Mendes"
