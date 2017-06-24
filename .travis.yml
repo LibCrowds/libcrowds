@@ -22,7 +22,6 @@ before_script:
 script:
   - npm run lint
   - npm run unit
-  - npm run build
 
 after_success:
   - openssl aes-256-cbc -K $encrypted_1d262b48bc9b_key -iv $encrypted_1d262b48bc9b_iv -in deploy-key.enc -out deploy-key -d
