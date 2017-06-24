@@ -54,5 +54,3 @@ In the `after_success` section of [.travis.yml](.travis.yml) add the following l
 Once master has been updated with this change, all future changes to
 master that successfully pass tests will be deployed to the remote
 vue-pybossa-frontend instance configured above.
-
-All done :smile:
