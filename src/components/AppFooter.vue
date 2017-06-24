@@ -29,6 +29,38 @@
       </section>
 
       <section class="hidden-md-down">
+        <h5 class="list-title">Contribute</h5>
+        <ul class="list-unstyled">
+          <li class="list-item">
+            <router-link :to="{ name: 'projects' }">
+              Projects
+            </router-link>
+          </li>
+        </ul>
+      </section>
+
+      <section class="hidden-md-down">
+        <h5 class="list-title">Analysis</h5>
+        <ul class="list-unstyled">
+          <li class="list-item">
+            <router-link :to="{ name: 'results' }">
+              Results
+            </router-link>
+          </li>
+          <li class="list-item">
+            <router-link :to="{ name: 'statistics' }">
+              Statistics
+            </router-link>
+          </li>
+          <li class="list-item">
+            <router-link :to="{ name: 'data' }">
+              Data
+            </router-link>
+          </li>
+        </ul>
+      </section>
+
+      <section class="hidden-md-down">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
