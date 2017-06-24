@@ -38,11 +38,9 @@ chmod 600 .ssh/authorized_keys
 # create a post-receive hook
 cp contrib/deploy/post-receive .git/hooks
 chmod +x .git/hooks/post-receive
-
-# exit
 ```
 
-All done, you can now exit the server.
+You can now exit the server.
 
 
 ## Modifying travis.yml
@@ -53,6 +51,8 @@ In the `after_success` section of [.travis.yml](.travis.yml) add the following l
 - git remote add deploy "deploy@{frontend-server-ip}:/var/www/vue-pybossa-frontend"
 ```
 
-Now push this change (or submit a pull request) to master. All future changes to
-master that successfully pass tests will now be deployed to the remote
+Once master has been updated with this change, all future changes to
+master that successfully pass tests will be deployed to the remote
 vue-pybossa-frontend instance configured above.
+
+All done :smile:
