@@ -32,7 +32,9 @@
         <h5 class="list-title">Contribute</h5>
         <ul class="list-unstyled">
           <li class="list-item">
-            <router-link :to="{ name: 'projects' }">
+            <router-link
+              :to="{ name: 'projects' }"
+              @click.native="scrollIfCurrent">
               Projects
             </router-link>
           </li>
@@ -43,17 +45,23 @@
         <h5 class="list-title">Analysis</h5>
         <ul class="list-unstyled">
           <li class="list-item">
-            <router-link :to="{ name: 'results' }">
+            <router-link
+              :to="{ name: 'results' }"
+              @click.native="scrollIfCurrent">
               Results
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'statistics' }">
+            <router-link
+              :to="{ name: 'statistics' }"
+              @click.native="scrollIfCurrent">
               Statistics
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'data' }">
+            <router-link
+              :to="{ name: 'data' }"
+              @click.native="scrollIfCurrent">
               Data
             </router-link>
           </li>
@@ -64,22 +72,30 @@
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
-            <router-link :to="{ name: 'tos' }">
+            <router-link
+              :to="{ name: 'tos' }"
+              @click.native="scrollIfCurrent">
               Terms
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'privacy' }">
+            <router-link
+              :to="{ name: 'privacy' }"
+              @click.native="scrollIfCurrent">
               Privacy
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'cookies' }">
+            <router-link
+              :to="{ name: 'cookies' }"
+              @click.native="scrollIfCurrent">
               Cookies
             </router-link>
           </li>
           <li class="list-item">
-            <router-link :to="{ name: 'api' }">
+            <router-link
+              :to="{ name: 'api' }"
+              @click.native="scrollIfCurrent">
               API
             </router-link>
           </li>
@@ -91,6 +107,7 @@
 </template>
 
 <script>
+import jump from 'jump.js'
 import config from '@/config'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
@@ -103,6 +120,14 @@ export default {
       twitterUrl: `https://twitter.com/${config.contact.twitter}`,
       mailto: `mailto:${config.contact.email}`,
       copyright: `&copy; ${config.company}, ${new Date().getFullYear()}`
+    }
+  },
+
+  methods: {
+    scrollIfCurrent: function (evt) {
+      if (evt.target.href === window.location.href) {
+        jump('body')
+      }
     }
   }
 }
