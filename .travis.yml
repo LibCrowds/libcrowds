@@ -30,4 +30,4 @@ after_success:
   - git config user.name "Alex Mendes"
   - git config user.email "alexanderhmendes@gmail.com"
   - git remote add deploy "deploy@46.101.87.176:/var/www/vue-pybossa-frontend"
-  - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ $TRAVIS_BRANCH == 'master' ]; echo "Deploying"; echo git push deploy
+  - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; echo "Deploying"; echo git push deploy
