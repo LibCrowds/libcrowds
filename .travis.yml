@@ -21,4 +21,5 @@ before_script:
   - cp ./src/config.js.tmpl ./src/config.js
 
 script:
-  - npm run test
+  - npm run lint
+  - npm run unit
