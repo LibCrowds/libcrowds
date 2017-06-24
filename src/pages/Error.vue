@@ -26,6 +26,7 @@ export default {
   },
 
   metaInfo: {
+    title: 'Error',
     bodyAttrs: {
       style: `background: #7CC4F3
              url('${require('../assets/img/bl-graphic.png')}')
