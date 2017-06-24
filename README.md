@@ -8,7 +8,7 @@
 
 ## Installing
 
-Install [Node.js](https://nodejs.org/en/), then:
+Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
 
 ``` bash
 # install dependencies
@@ -37,7 +37,7 @@ npm run build --report
 
 ## Deploying using nginx
 
-Assuming this is the only application running on your server you can deploy 
+Assuming this is the only application running on your server you can deploy
 it like this:
 
 ``` bash
