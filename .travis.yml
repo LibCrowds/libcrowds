@@ -18,7 +18,7 @@ install:
   - npm install
 
 before_script:
-  - cp config.js.tmpl config.js
+  - cp ./src/config.js.tmpl ./src/config.js
 
 script:
   - npm run test
