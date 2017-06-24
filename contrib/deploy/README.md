@@ -8,7 +8,7 @@ different.
 
 Login to the server, then:
 
-```
+``` bash
 # clone and change directory
 cd /var/www
 git clone https://github.com/LibCrowds/vue-pybossa-frontend
@@ -49,7 +49,7 @@ All done, you can now exit the server.
 
 In the `after_success` section of [.travis.yml](.travis.yml) add the following line:
 
-```
+``` yaml
 - git remote add deploy "deploy@{frontend-server-ip}:/var/www/vue-pybossa-frontend"
 ```
 
