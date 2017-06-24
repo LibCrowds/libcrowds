@@ -5,10 +5,8 @@ import router from '@/router'
 import Error from '@/pages/Error'
 
 describe('Error.vue', () => {
-
   Vue.use(VueRouter)
   Vue.component('icon', Icon)
-
   const Constructor = Vue.extend(Error)
   const vm = new Constructor({
     router,

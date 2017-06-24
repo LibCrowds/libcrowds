@@ -17,5 +17,8 @@ addons:
 install:
   - npm install
 
+before script:
+  - cp config.js.tmpl config.js
+
 script:
   - npm run test
