@@ -2,7 +2,7 @@
 set -x
 if [ $TRAVIS_BRANCH == 'master' ] ; then
     # Initialise a new git repo in dist
-    cd dist
+    cd ../dist
     git init
 
     # Add remote LibCrowds repos here
