@@ -151,7 +151,7 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .navbar {
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.8px;
   justify-content: center;
   align-items: baseline;
@@ -197,7 +197,6 @@ export default {
       }
 
       &.nav-button {
-        @include button-outline-variant($white, $black);
         border: 1px solid $white;
         border-radius: 2.5rem;
         padding: 0 0.5rem;
@@ -214,7 +213,7 @@ export default {
           &:focus,
           &:hover,
           &.active {
-            color: initial;
+            color: $white;
           }
         }
       }
