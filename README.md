@@ -38,7 +38,6 @@ CORS_RESOURCES = {r"/*": {"origins": [
                                             'Authorization',
                                             'X-XCSRFToken'],
                           "supports_credentials": True
-                          "methods": "*"
                           }}
 ```
 
