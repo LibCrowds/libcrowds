@@ -17,6 +17,9 @@ cd vue-pybossa-frontend
 # install
 npm install
 
+# build
+npm run install
+
 # copy default config
 cp ./src/config.js.tmpl ./src/config.js
 
