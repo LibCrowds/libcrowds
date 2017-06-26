@@ -151,6 +151,8 @@ export default {
 @import '~bootstrap/scss/bootstrap';
 
 .navbar {
+  color: $white;
+  font-family: $font-family-base;
   font-weight: 500;
   letter-spacing: 0.8px;
   justify-content: center;
