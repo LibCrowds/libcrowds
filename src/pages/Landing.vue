@@ -136,7 +136,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers">
+      v-if="topUsers.length < 5">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-2 text-center">
