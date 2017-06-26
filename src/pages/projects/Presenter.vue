@@ -48,7 +48,6 @@ export default {
   },
 
   metaInfo: {
-    title: this.title,
     bodyAttrs: {
       style: 'background: #000000'
     }

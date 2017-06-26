@@ -8,7 +8,7 @@
 
 ## Installing
 
-Install [Node.js](https://nodejs.org/en/), then:
+Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
 
 ``` bash
 # install dependencies
@@ -17,13 +17,14 @@ npm install
 
 ## Configuring
 
-All settings can be found in [src/config.js.tmpl](src/config.js.tmpl); to use
-the theme you will need to make a copy of this file locally.
+Settings can be found in [src/config.js.tmpl](src/config.js.tmpl), to use
+this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash		
 # create local configuration file
 cp src/config.js.tmpl src/config.js
 ```
+
 
 ## Building
 
@@ -37,7 +38,7 @@ npm run build --report
 
 ## Deploying using nginx
 
-Assuming this is the only application running on your server you can deploy 
+Assuming this is the only application running on your server you can deploy
 it like this:
 
 ``` bash

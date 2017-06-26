@@ -16,6 +16,7 @@ module.exports = function (config) {
     reporters: ['spec', 'coverage'],
     files: [
       '../../node_modules/es6-promise/dist/es6-promise.auto.js',
+      '../../node_modules/babel-polyfill/dist/polyfill.js',
       './index.js'
     ],
     preprocessors: {
