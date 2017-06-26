@@ -8,29 +8,41 @@
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-        <b-link class="navbar-brand" :to="{ name: 'landing' }">
+        <b-link class="navbar-brand" 
+          :to="{ name: 'landing' }"
+          @click.native="scrollIfCurrent">
           <span>{{ config.brand }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse">
 
           <b-nav is-nav-bar>
-            <b-nav-item :to="{ name: 'about' }">
+            <b-nav-item 
+              :to="{ name: 'about' }" 
+              @click.native="scrollIfCurrent">
               About
             </b-nav-item>
-            <b-nav-item :to="{ name: 'projects' }">
+            <b-nav-item 
+              :to="{ name: 'projects' }"
+              @click.native="scrollIfCurrent">
               Projects
             </b-nav-item>
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
               Discuss
             </b-nav-item>
-            <b-nav-item :to="{ name: 'statistics' }">
+            <b-nav-item 
+              :to="{ name: 'statistics' }"
+              @click.native="scrollIfCurrent">
               Statistics
             </b-nav-item>
-            <b-nav-item :to="{ name: 'results' }">
+            <b-nav-item 
+              :to="{ name: 'results' }"
+              @click.native="scrollIfCurrent">
               Results
             </b-nav-item>
-            <b-nav-item :to="{ name: 'data' }">
+            <b-nav-item 
+              :to="{ name: 'data' }"
+              @click.native="scrollIfCurrent">
               Data
             </b-nav-item>
           </b-nav>
@@ -75,6 +87,7 @@
 </template>
 
 <script>
+import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
@@ -133,7 +146,12 @@ export default {
         document.querySelector('.navbar').classList.add('navbar-inverse')
       },
       10
-    )
+    ),
+    scrollIfCurrent: function (evt) {
+      if (evt.target.baseURI === window.location.href) {
+        jump('body')
+      }
+    }
   },
 
   created () {
