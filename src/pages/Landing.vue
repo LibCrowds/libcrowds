@@ -102,7 +102,8 @@
     </section>
 
     <section id="data">
-      <b-jumbotron>
+      <span :style="dataStyle"></span>
+      <b-jumbotron :style="dataStyle">
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
@@ -188,7 +189,7 @@
     </section>
 
     <section id="results">
-      <b-jumbotron>
+      <b-jumbotron :style="resultsStyle">
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
@@ -262,6 +263,8 @@ import UserAvatar from '@/components/user/Avatar'
 import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
+import codeImage from '@/assets/img/code.png'
+import newtonImage from '@/assets/img/newton.jpg'
 
 export default {
 
@@ -271,7 +274,13 @@ export default {
       stats: {},
       featured: [],
       topUsers: [],
-      project: project
+      project: project,
+      dataStyle: {
+        backgroundImage: `url(${codeImage})`
+      },
+      resultsStyle: {
+        backgroundImage: `url(${newtonImage})`
+      }
     }
   },
 
@@ -448,8 +457,10 @@ export default {
     .jumbotron {
       color: $white;
       font-weight: 300;
-      background: url('../assets/img/code.png') no-repeat left fixed;
       margin-bottom: 0;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: left;
     }
   }
 
@@ -462,7 +473,9 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background: url('../assets/img/newton.jpg') bottom right / cover fixed;
+      background-attachment: fixed;
+      background-position: left;
+      background-size: cover;
       margin-bottom: 0;
     }
   }
