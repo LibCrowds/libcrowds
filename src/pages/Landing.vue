@@ -145,8 +145,8 @@
             </h3>
             <hr class="wide w-50 my-2">
             <p class="text-uppercase lead pb-2">
-              To date, our top {{ topUsers.length }} volunteers have made an
-              amazing {{ topUsersTaskRuns }} contributions!
+              To date, our top {{ topUsers.length }} volunteers have made 
+              {{ topUsersTaskRuns }} contributions!
             </p>
             <b-button variant="secondary" :to="{ name: 'projects' }">
               Get Involved
