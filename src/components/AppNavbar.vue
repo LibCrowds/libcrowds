@@ -8,7 +8,7 @@
       <div class="container">
         <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
 
-        <b-link class="navbar-brand" 
+        <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
           @click.native="scrollIfCurrent">
           <span>{{ config.brand }}</span>
@@ -17,12 +17,12 @@
         <b-collapse is-nav id="main-nav-collapse">
 
           <b-nav is-nav-bar>
-            <b-nav-item 
-              :to="{ name: 'about' }" 
+            <b-nav-item
+              :to="{ name: 'about' }"
               @click.native="scrollIfCurrent">
               About
             </b-nav-item>
-            <b-nav-item 
+            <b-nav-item
               :to="{ name: 'projects' }"
               @click.native="scrollIfCurrent">
               Projects
@@ -30,17 +30,17 @@
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
               Discuss
             </b-nav-item>
-            <b-nav-item 
+            <b-nav-item
               :to="{ name: 'statistics' }"
               @click.native="scrollIfCurrent">
               Statistics
             </b-nav-item>
-            <b-nav-item 
+            <b-nav-item
               :to="{ name: 'results' }"
               @click.native="scrollIfCurrent">
               Results
             </b-nav-item>
-            <b-nav-item 
+            <b-nav-item
               :to="{ name: 'data' }"
               @click.native="scrollIfCurrent">
               Data
@@ -56,7 +56,10 @@
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item to="#">Open Project</b-dropdown-item>
+              <b-dropdown-item
+                @click="$root.$emit('show::modal','open-project-modal')">
+                Open Project
+              </b-dropdown-item>
               <b-dropdown-item to="#">Admin</b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
@@ -80,8 +83,8 @@
     </b-navbar>
 
     <signin-modal name="signin-modal"></signin-modal>
-
     <register-modal name="register-modal"></register-modal>
+    <open-project-modal name="open-project-modal"></open-project-modal>
 
   </div>
 </template>
@@ -94,6 +97,7 @@ import pybossaApi from '@/api/pybossa'
 import store from '@/store'
 import SigninModal from '@/components/modals/Signin'
 import RegisterModal from '@/components/modals/Register'
+import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
   name: 'app-navbar',
@@ -106,7 +110,8 @@ export default {
 
   components: {
     SigninModal,
-    RegisterModal
+    RegisterModal,
+    OpenProjectModal
   },
 
   computed: {
