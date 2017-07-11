@@ -37,9 +37,10 @@ export default {
   methods: {
     fetchProject () {
       const shortname = this.$store.state.route.params.shortname
-      pybossaApi.get(`/project/${shortname}/`).then(res => {
-        this.project = res.data.project
-        this.title = res.data.title
+      pybossaApi.get(`/project/${shortname}/`).then(r => {
+        stripAndExecuteScript(r.data.project.info.task_presenter)
+        this.project = r.data.project
+        this.title = r.data.title
         this.loading = false
       })
     }
@@ -48,12 +49,6 @@ export default {
   metaInfo: {
     bodyAttrs: {
       style: 'background: #000000'
-    }
-  },
-
-  watch: {
-    presenter: function () {
-      stripAndExecuteScript(this.project.info.task_presenter)
     }
   },
 

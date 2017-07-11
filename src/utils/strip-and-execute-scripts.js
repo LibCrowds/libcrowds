@@ -15,7 +15,7 @@ export default function (text) {
   if (window.execScript) {
     window.execScript(scripts)
   } else {
-    let body = document.getElementsByTagName('body')[0]
+    let body = document.getElementsByTagName('head')[0]
     let scriptNode = document.createElement('script')
     scriptNode.setAttribute('type', 'text/javascript')
     scriptNode.innerHTML = scripts
