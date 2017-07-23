@@ -85,7 +85,7 @@
         <div class="row text-center">
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
-              <li v-for="project in featured">
+              <li v-for="project in featured" :key="project.id">
                 <project-card :project="project"></project-card>
               </li>
             </ul>
@@ -161,6 +161,7 @@
           <div class="col-lg-12 pt-1">
             <ul class="list-unstyled">
               <li
+                :key="u.id"
                 class="text-center d-inline-block mx-1"
                 v-for="u in topUsers">
                 <a href="#" class="my-1">
