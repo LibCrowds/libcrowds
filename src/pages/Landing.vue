@@ -102,7 +102,8 @@
     </section>
 
     <section id="data">
-      <b-jumbotron>
+      <span :style="dataStyle"></span>
+      <b-jumbotron :style="dataStyle">
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
@@ -135,7 +136,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers">
+      v-if="topUsers.length < 5">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-2 text-center">
@@ -144,8 +145,8 @@
             </h3>
             <hr class="wide w-50 my-2">
             <p class="text-uppercase lead pb-2">
-              To date, our top {{ topUsers.length }} volunteers have made an
-              amazing {{ topUsersTaskRuns }} contributions!
+              To date, our top {{ topUsers.length }} volunteers have made
+              {{ topUsersTaskRuns }} contributions!
             </p>
             <b-button variant="secondary" :to="{ name: 'projects' }">
               Get Involved
@@ -188,7 +189,7 @@
     </section>
 
     <section id="results">
-      <b-jumbotron>
+      <b-jumbotron :style="resultsStyle">
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
@@ -262,6 +263,8 @@ import UserAvatar from '@/components/user/Avatar'
 import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
+import codeImage from '@/assets/img/code.png'
+import newtonImage from '@/assets/img/newton.jpg'
 
 export default {
 
@@ -271,7 +274,13 @@ export default {
       stats: {},
       featured: [],
       topUsers: [],
-      project: project
+      project: project,
+      dataStyle: {
+        backgroundImage: `url(${codeImage})`
+      },
+      resultsStyle: {
+        backgroundImage: `url(${newtonImage})`
+      }
     }
   },
 
@@ -448,8 +457,10 @@ export default {
     .jumbotron {
       color: $white;
       font-weight: 300;
-      background: url('../assets/img/code.png') no-repeat left fixed;
       margin-bottom: 0;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: left;
     }
   }
 
@@ -462,7 +473,10 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background: url('../assets/img/newton.jpg') center / cover fixed;
+      background: url('../assets/img/newton.jpg');
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
       margin-bottom: 0;
     }
   }

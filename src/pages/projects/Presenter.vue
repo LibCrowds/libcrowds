@@ -13,6 +13,7 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
+import stripAndExecuteScript from '@/utils/strip-and-execute-scripts'
 
 export default {
   data: function () {
@@ -36,13 +37,11 @@ export default {
   methods: {
     fetchProject () {
       const shortname = this.$store.state.route.params.shortname
-      const url = `/project/${shortname}/`
-      pybossaApi.get(url).then(res => {
-        this.project = res.data.project
-        this.title = res.data.title
+      pybossaApi.get(`/project/${shortname}/`).then(r => {
+        stripAndExecuteScript(r.data.project.info.task_presenter)
+        this.project = r.data.project
+        this.title = r.data.title
         this.loading = false
-      }).catch(error => {
-        console.log(error)
       })
     }
   },

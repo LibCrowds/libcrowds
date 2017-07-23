@@ -25,6 +25,26 @@ this theme you will need to make a copy of the settings file and edit locally.
 cp src/config.js.tmpl src/config.js
 ```
 
+On your PyBossa server, you will need to update the `CORS_RESOURCES` settings
+to allow requests from vue-pybossa-frontend. Something like this (modify
+origins according to your environement):
+
+``` python
+CORS_RESOURCES = {r"/*": {"origins": [
+                            "http://127.0.0.1:8080",
+                            "http://127.0.0.1:8080"
+                          ],
+                          "allow_headers": ['Content-Type',
+                                            'Authorization',
+                                            'X-XCSRFToken'],
+                          "supports_credentials": True
+                          }}
+```
+
+For a full list of options see the 
+[Flask-CORS documentation](https://flask-cors.readthedocs.io/en/latest/).
+
+See the 
 
 ## Building
 
