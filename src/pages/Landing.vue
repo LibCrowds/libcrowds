@@ -462,7 +462,7 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background: url('../assets/img/newton.jpg') bottom right / cover fixed;
+      background: url('../assets/img/newton.jpg') center / cover fixed;
       margin-bottom: 0;
     }
   }
