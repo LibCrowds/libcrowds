@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="name" title="Open Project" @shown="fetchData">
+  <b-modal :id="name" title="Open Project" @shown="fetchData" size="lg">
 
     <div v-if="loading">
       <loading></loading>
@@ -111,7 +111,7 @@ export default {
     border-top: none;
   }
 
-  tr *:not(:first-child) {
+  td:not(:first-child) {
     text-align: center;
   }
 }
