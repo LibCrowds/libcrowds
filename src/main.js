@@ -19,7 +19,6 @@ import config from '@/config'
 
 // Global styles
 import '@/assets/style/_vars.scss'
-import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/assets/style/_main.scss'
 
