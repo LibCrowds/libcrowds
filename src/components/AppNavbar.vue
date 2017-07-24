@@ -1,5 +1,5 @@
 <template>
-  <div class="app-navbar">
+  <div id="app-navbar">
     <b-navbar
       toggleable
       toggle-breakpoint="md"
