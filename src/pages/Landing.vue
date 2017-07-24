@@ -85,7 +85,7 @@
         <div class="row text-center">
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
-              <li v-for="project in featured">
+              <li v-for="project in featured" :key="project.id">
                 <project-card :project="project"></project-card>
               </li>
             </ul>
@@ -145,7 +145,7 @@
             </h3>
             <hr class="wide w-50 my-2">
             <p class="text-uppercase lead pb-2">
-              To date, our top {{ topUsers.length }} volunteers have made 
+              To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
             <b-button variant="secondary" :to="{ name: 'projects' }">
@@ -161,6 +161,7 @@
           <div class="col-lg-12 pt-1">
             <ul class="list-unstyled">
               <li
+                :key="u.id"
                 class="text-center d-inline-block mx-1"
                 v-for="u in topUsers">
                 <a href="#" class="my-1">
@@ -473,8 +474,9 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
+      background: url('../assets/img/newton.jpg');
       background-attachment: fixed;
-      background-position: left;
+      background-position: center;
       background-size: cover;
       margin-bottom: 0;
     }

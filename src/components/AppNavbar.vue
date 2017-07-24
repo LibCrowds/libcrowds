@@ -2,11 +2,23 @@
   <div class="app-navbar">
     <b-navbar
       toggleable
-      toggle-breakpoint="lg"
+      toggle-breakpoint="md"
       type="inverse"
       sticky="top">
       <div class="container">
-        <b-nav-toggle target="main-nav-collapse"></b-nav-toggle>
+        <button
+          ref="hamburger"
+          class="hamburger hamburger--collapse navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#main-nav-collapse"
+          aria-controls="main-nav-collapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
 
         <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
@@ -156,15 +168,36 @@ export default {
       if (evt.target.baseURI === window.location.href) {
         jump('body')
       }
+    },
+
+    /**
+     * Style the hamburger and sidebar.
+     */
+    onHamburgerClick () {
+      const hamburger = this.$refs.hamburger
+      const target = hamburger.dataset.target
+      const isActive = hamburger.classList.contains('is-active')
+      const colorTimeout = isActive ? 50 : 300
+
+      document.querySelector(target).classList.toggle('show')
+      hamburger.classList.toggle('is-active')
+      hamburger.blur()
+
+      // Hamburger color should always be white over the sidebar
+      setTimeout(function () {
+        hamburger.classList.toggle('white')
+      }, colorTimeout)
     }
   },
 
-  created () {
+  mounted () {
     window.addEventListener('scroll', this.styleNavbar)
+    this.$refs.hamburger.addEventListener('click', this.onHamburgerClick)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.styleNavbar)
+    this.$refs.hamburger.removeEventListener('click', this.onHamburgerClick)
   }
 }
 </script>
@@ -172,6 +205,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/_vars.scss';
 @import '~bootstrap/scss/bootstrap';
+@import '~hamburgers/_sass/hamburgers/hamburgers';
 
 .navbar {
   color: $white;
@@ -181,6 +215,16 @@ export default {
   justify-content: center;
   align-items: baseline;
   transition: background-color 200ms;
+
+  .container {
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-down(xs) {
+      margin: 0;
+      width: 100%;
+    }
+  }
 
   .navbar-brand {
     font-family: $headings-font-family;
@@ -196,7 +240,17 @@ export default {
   }
 
   .navbar-toggler {
+    margin-right: -2.5rem;
     border: none;
+    align-self: center;
+
+    &.white {
+      .hamburger-inner,
+      .hamburger-inner:before,
+      .hamburger-inner:after {
+        background-color: $white;
+      }
+    }
   }
 
   .navbar-nav {
@@ -222,8 +276,6 @@ export default {
       }
 
       &.nav-button {
-        border: 1px solid $white;
-        border-radius: 2.5rem;
         padding: 0 0.5rem;
         transition: background-color 250ms;
         margin-left: 1rem;
@@ -240,6 +292,11 @@ export default {
           &.active {
             color: $white;
           }
+        }
+
+        @include media-breakpoint-up(lg) {
+          border: 1px solid $white;
+          border-radius: 2.5rem;
         }
       }
 
@@ -296,13 +353,10 @@ export default {
 
   .hamburger {
     z-index: 20;
-
-  	&.hamburger--arrow {
-  	  transform: rotate(180deg);
-  	}
   }
 
-  &.navbar-transparent {
+  &.navbar-transparent,
+  &.navbar-inverse {
     @extend .navbar-inverse;
     background-color: transparent;
 
@@ -351,11 +405,11 @@ export default {
         }
 
         .navbar-collapse {
-          display: flex;
+          display: flex !important;
           flex-direction: column;
           justify-content: center;
           height: 100%;
-          width: 260px;
+          width: 100%;
           position: fixed;
           z-index: 10;
           top: 0;
@@ -364,11 +418,11 @@ export default {
           overflow-x: hidden;
           overflow-y: auto;
           text-align: center;
-          transition: transform 450ms !important;
+          transition: all 450ms !important;
+          transform: translateX(-100%);
 
-          &:not(.show) {
-            transform: translateX(-100%);
-            transition: transform 450ms !important;
+          &.show {
+            transform: translateX(0);
           }
 
           .navbar-nav {
