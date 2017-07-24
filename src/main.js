@@ -13,6 +13,7 @@ import VueGravatar from 'vue-gravatar'
 import VueChartist from 'vue-chartist'
 import VueFormGenerator from 'vue-form-generator'
 import VueAnalytics from 'vue-analytics'
+import LibcrowdsViewer from 'libcrowds-viewer'
 import ToggleButton from 'vue-js-toggle-button'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 import config from '@/config'
@@ -26,6 +27,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueChartist)
 Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
+Vue.use(LibcrowdsViewer)
 
 // Google analytics
 if ('analytics' in config && process.env.NODE_ENV === 'production') {
