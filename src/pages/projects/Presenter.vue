@@ -86,12 +86,12 @@ export default {
           'info': data.annotations
         }
         taskrun = JSON.stringify(taskrun)
-        console.log(taskrun)
         return this.saveTaskRun(taskrun)
       }).then(r => {
-        console.log('task saved', r)
-      }).catch(error => {
-        console.log(error)
+        this.$store.dispatch('NOTIFY', {
+          msg: 'Answer saved!',
+          type: 'success'
+        })
       })
     }
   },
@@ -109,21 +109,15 @@ export default {
     }).then(r => {
       this.tasks = r.data
       this.loading = false
-    }).catch(error => {
-      console.log(error)
     })
   }
 }
 </script>
 
 <style>
-#app-footer {
-  display: none;
-}
-
+#app-footer,
 #app-navbar {
-  background-color: #0D0D0D;
-  border-bottom: 1px solid #000;
+  display: none;
 }
 
 .presenter {
