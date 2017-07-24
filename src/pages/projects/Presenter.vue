@@ -98,7 +98,7 @@ export default {
      * Handle the task liked event.
      */
     handleTaskLiked (data) {
-      if (task.liked) {
+      if (data.liked) {
         this.addFavourite(data.id)
       } else {
         this.deleteFavourite(data.id)
