@@ -12,8 +12,10 @@ import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueChartist from 'vue-chartist'
 import VueFormGenerator from 'vue-form-generator'
+import VueAnalytics from 'vue-analytics'
 import ToggleButton from 'vue-js-toggle-button'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
+import config from '@/config'
 
 // Global styles
 import '@/assets/style/_vars.scss'
@@ -25,6 +27,14 @@ Vue.use(BootstrapVue)
 Vue.use(VueChartist)
 Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
+
+// Google analytics
+if ('analytics' in config && process.env.NODE_ENV === 'production') {
+  Vue.use(VueAnalytics, {
+    id: config.analytics,
+    router
+  })
+}
 
 Vue.component('v-gravatar', VueGravatar)
 Vue.component('pybossa-modal-form', PyBossaModalForm)
