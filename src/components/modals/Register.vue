@@ -16,7 +16,7 @@ export default {
     return {
       config: config,
       endpoint: '/account/register',
-      lead: `Create a ${config.brand} account`,
+      lead: `Create an account for ${config.brand}`,
       schema: {
         fields: [{
           model: 'name',
