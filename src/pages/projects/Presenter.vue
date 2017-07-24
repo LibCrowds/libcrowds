@@ -7,11 +7,12 @@
 
     <libcrowds-viewer
       v-else
-      show-like
+      :show-like="currentUser.length"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
-      @submit="handleLibCrowdsViewerSubmit">
+      @submit="handleSubmit"
+      @taskliked="handleTaskLiked">
     </libcrowds-viewer>
 
   </div>
@@ -26,6 +27,7 @@ export default {
     return {
       loading: true,
       project: null,
+      currentUser: this.$store.state.currentUser,
       tasks: []
     }
   },
@@ -76,7 +78,37 @@ export default {
       return pybossaApi.post(`/api/taskrun`, data)
     },
 
-    handleLibCrowdsViewerSubmit (data) {
+    /**
+     * Add a task to the user's favourites.
+     */
+    addFavourite (taskId) {
+      return pybossaApi.delete(`/api/favorites`, {
+        task_id: taskId
+      })
+    },
+
+    /**
+     * Delete a task from the user's favourites.
+     */
+    deleteFavourite (taskId) {
+      return pybossaApi.delete(`/api/favorites/${taskId}`)
+    },
+
+    /**
+     * Handle the task liked event.
+     */
+    handleTaskLiked (data) {
+      if (task.liked) {
+        this.addFavourite(data.id)
+      } else {
+        this.deleteFavourite(data.id)
+      }
+    },
+
+    /**
+     * Handle the submit event.
+     */
+    handleSubmit (data) {
       this.fetchTask(data.id).then(r => {
         let task = r.data
         task.answer = data.annotations
