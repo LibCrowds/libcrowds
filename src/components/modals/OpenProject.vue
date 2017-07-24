@@ -8,6 +8,7 @@
     <span v-else>
       <h5 class="p-2 mb-0">Published</h5>
       <b-table
+        responsive
         striped
         show-empty
         :items="projectsPublished"
@@ -16,6 +17,7 @@
 
       <h5 class="p-2 mb-0 mt-1">Draft</h5>
       <b-table
+        responsive
         striped
         show-empty
         :items="projectsDraft"
