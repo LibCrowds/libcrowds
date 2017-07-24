@@ -240,7 +240,6 @@ export default {
   }
 
   .navbar-toggler {
-    margin-right: -2.5rem;
     border: none;
     align-self: center;
 
