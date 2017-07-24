@@ -5,7 +5,7 @@
       <loading></loading>
     </div>
 
-    <div v-else v-html="presenter"></div>
+    <div v-else-if="presenter" v-html="presenter"></div>
 
   </div>
 </template>
@@ -19,8 +19,7 @@ export default {
   data: function () {
     return {
       loading: true,
-      project: {},
-      title: null
+      presenter: null
     }
   },
 
@@ -28,19 +27,14 @@ export default {
     Loading
   },
 
-  computed: {
-    presenter: function () {
-      return 'info' in this.project ? this.project.info.task_presenter : ''
-    }
-  },
-
   methods: {
     fetchProject () {
       const shortname = this.$store.state.route.params.shortname
       pybossaApi.get(`/project/${shortname}/`).then(r => {
-        stripAndExecuteScript(r.data.project.info.task_presenter)
-        this.project = r.data.project
-        this.title = r.data.title
+        this.presenter = 'info' in this.project
+          ? this.project.info.task_presenter
+          : ''
+        stripAndExecuteScript(this.presenter)
         this.loading = false
       })
     }
