@@ -8,18 +8,17 @@
 
     <libcrowds-viewer
       v-else
-      :show-like="currentUser.length"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
-      @submit="handleSubmit"
-      @taskliked="handleTaskLiked">
+      @submit="handleSubmit">
     </libcrowds-viewer>
 
   </div>
 </template>
 
 <script>
+import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
@@ -40,22 +39,31 @@ export default {
   computed: {
     taskOpts: function () {
       return this.tasks.map(function (task) {
-        console.log(task)
         let opts = task.info
         opts.id = task.id
         return opts
       })
     },
     creator: function () {
+      const baseApiUrl = config.pybossaHost
+      if (this.currentUser) {
+        return {
+          id: `${baseApiUrl}/api/user/${this.currentUser.id}`,
+          type: 'Person',
+          name: this.currentUser.fullname,
+          nickname: this.currentUser.name
+        }
+      }
       return null
     },
     generator: function () {
+      const baseApiUrl = config.pybossaHost
       if (this.project) {
         return {
-          id: `/api/project/${this.project.id}`,
+          id: `${baseApiUrl}/api/project/${this.project.id}`,
           type: 'Software',
-          name: this.project.name,
-          homepage: `/project/${this.project.short_name}`
+          name: `${config.brand} - ${this.project.name}`,
+          homepage: `${window.location.protocol}//${window.location.hostname}`
         }
       }
     }
@@ -130,6 +138,7 @@ export default {
   },
 
   metaInfo: {
+    title: 'Task Presenter',
     bodyAttrs: {
       style: 'background: #000000'
     }
@@ -163,7 +172,12 @@ export default {
 
 <style>
 .presenter {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 9999999;
+  background-color: #000;
   width: 100%;
   height: 100%;
   display: flex;
