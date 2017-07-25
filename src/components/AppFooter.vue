@@ -134,8 +134,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 #app-footer.footer {
   background-color: darken($gray-dark, 5%);

@@ -6,11 +6,11 @@
         <div :id="pbCircleId" class="h-100 w-100"></div>
       </div>
     </div>
-    
+
     <div class="card-block p-0">
       <h4 class="card-title mb-2 px-2 pt-2">{{ project.name }}</h4>
       <p class="card-text mb-0 px-2 pb-2">{{ project.description }}</p>
-      
+
       <div class="card-footer p-2">
         <span class="card-stat text-muted mb-2 mb-md-0">
           {{ project.overall_progress }}% complete
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    
+
   </b-card>
 </template>
 
@@ -84,8 +84,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .card.project-card {
   text-align: center;

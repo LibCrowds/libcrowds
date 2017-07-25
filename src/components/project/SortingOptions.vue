@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars.scss';
+@import 'src/assets/style/main';
 
 .bg-white {
   background-color: $white;

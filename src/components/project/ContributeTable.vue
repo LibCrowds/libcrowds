@@ -50,8 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars.scss';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .project-contribute-table {
     .table {

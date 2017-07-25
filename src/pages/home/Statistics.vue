@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars';
+@import 'src/assets/style/main';
 @import '~chartist/dist/scss/chartist';
 @import '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip';
 @import '~leaflet.markercluster/dist/MarkerCluster';

@@ -65,8 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .modal {
   display: block;
