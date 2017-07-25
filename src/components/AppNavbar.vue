@@ -214,6 +214,7 @@ export default {
       setTimeout(function () {
         hamburger.classList.toggle('white')
       }, colorTimeout)
+      hamburger.classList.toggle('is-active')
     },
 
     /**
