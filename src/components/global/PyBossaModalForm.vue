@@ -17,6 +17,7 @@
         show
         :variant="status === 'error' ? 'danger' : status"
         v-for="f in flashMsg"
+        :key="f"
         key="flash">
         {{ f }}
       </b-alert>
@@ -82,9 +83,6 @@ export default {
   },
 
   computed: {
-    formLoading () {
-      return isEmpty(this.form)
-    },
     flashMsg: function () {
       // To handle disappearing and multiple alerts
       return this.flash ? [this.flash] : []
@@ -92,6 +90,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Load the form.
+     */
     load () {
       this.status = null
       this.flash = null
@@ -101,6 +102,10 @@ export default {
         this.$emit('response', r)
       })
     },
+
+    /**
+     * Submit the form.
+     */
     submit (e) {
       e.cancel()
       pybossaApi.post(this.endpoint, this.form, {
@@ -117,8 +122,11 @@ export default {
         this.$emit('response', r)
       })
     },
+
+    /**
+     * Hide the modal.
+     */
     hide (isOk) {
-      // Call b-modal's hide method directly
       this.$emit('hidden')
       this.$refs['child-modal'].hide(isOk)
     }
