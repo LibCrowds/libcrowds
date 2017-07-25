@@ -210,43 +210,69 @@ export default {
      * Toggle the collapsible sidebar.
      */
     toggleCollapsibleSidebar () {
-      const hamburger = this.$refs.hamburger
-      const sidebar = this.$refs.sidebar
+      if (window.innerWidth < 992) {
+        const hamburger = this.$refs.hamburger
+        const sidebar = this.$refs.sidebar
 
-      this.styleHamburger()
-      hamburger.blur()
+        this.styleHamburger()
+        hamburger.blur()
 
-      sidebar.$el.classList.toggle('show')
-      hamburger.classList.toggle('is-active')
+        sidebar.$el.classList.toggle('show')
+        hamburger.classList.toggle('is-active')
 
-      // Hide main content when sidebar made visible and scroll to top
-      // after collapse, if moving to a new location
-      if (sidebar.$el.classList.contains('show')) {
-        setTimeout(function () {
-          document.querySelector('body').style.height = '100vh'
-          document.querySelector('body').style.overflow = 'hidden'
-        }, 450)
+        // Restrict body and scroll to top after collapse if new location
+        if (sidebar.$el.classList.contains('show')) {
+          setTimeout(() => {
+            this.restrictBody(true)
+          }, 450)
+        } else {
+          this.restrictBody(false)
+          if (this.currentPath !== window.location.pathname) {
+            jump('body', {
+              duration: 0
+            })
+          }
+        }
+
+        this.currentPath = window.location.pathname
+        this.styleNavbar()
+      }
+    },
+
+    /**
+     * Restrict body content to avoid scroll bar while sidebar is open.
+     */
+    restrictBody (restrict = true) {
+      if (restrict) {
+        document.querySelector('body').style.height = '100vh'
+        document.querySelector('body').style.overflow = 'hidden'
       } else {
         document.querySelector('body').style.height = '100%'
         document.querySelector('body').style.overflow = 'initial'
-        if (this.currentPath !== window.location.pathname) {
-          jump('body', {
-            duration: 0
-          })
-        }
       }
+    },
 
-      this.currentPath = window.location.pathname
-      this.styleNavbar()
+    /**
+     * Handle window resize
+     */
+    onWindowResize () {
+      const sidebar = this.$refs.sidebar
+      if (window.innerWidth >= 992) {
+        this.restrictBody(false)
+      } else if (sidebar.$el.classList.contains('show')) {
+        this.restrictBody(true)
+      }
     }
   },
 
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
+    window.addEventListener('resize', this.onWindowResize)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.onWindowScroll)
+    window.removeEventListener('resize', this.onWindowResize)
   }
 }
 </script>
