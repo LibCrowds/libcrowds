@@ -42,7 +42,7 @@ if ('analytics' in config && process.env.NODE_ENV === 'production') {
 }
 
 // Sentry error logging
-if ('sentry' in config) {
+if ('sentryPublicDsn' in config) {
   Raven
     .config(config.sentryPublicDsn, {
       environment: process.env.NODE_ENV
