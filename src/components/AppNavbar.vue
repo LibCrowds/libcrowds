@@ -179,15 +179,11 @@ export default {
     ),
 
     /**
-     * Scroll to the top, smoothly if the link is the current location.
+     * Scroll to the top smoothly if target is the same as the current URI.
      */
     scrollToTop (evt) {
-      if (evt !== undefined && evt.target.baseURI === window.location.href) {
+      if (evt.target.baseURI === window.location.href) {
         jump('body')
-      } else {
-        jump('body', {
-          duration: 0
-        })
       }
     },
 
@@ -216,7 +212,6 @@ export default {
     toggleCollapsibleSidebar () {
       const hamburger = this.$refs.hamburger
       const sidebar = this.$refs.sidebar
-      console.log(sidebar, hamburger)
 
       this.styleHamburger()
       hamburger.blur()
@@ -225,16 +220,23 @@ export default {
       hamburger.classList.toggle('is-active')
 
       // Hide main content when sidebar made visible and scroll to top
-      // after collapse
+      // after collapse, if moving to a new location
       if (sidebar.$el.classList.contains('show')) {
         setTimeout(function () {
-          document.querySelector('main').style.display = 'none'
+          document.querySelector('body').style.height = '100vh'
+          document.querySelector('body').style.overflow = 'hidden'
         }, 450)
       } else {
-        document.querySelector('main').style.display = 'flex'
-        this.scrollToTop()
+        document.querySelector('body').style.height = '100%'
+        document.querySelector('body').style.overflow = 'initial'
+        if (this.currentPath !== window.location.pathname) {
+          jump('body', {
+            duration: 0
+          })
+        }
       }
 
+      this.currentPath = window.location.pathname
       this.styleNavbar()
     }
   },
