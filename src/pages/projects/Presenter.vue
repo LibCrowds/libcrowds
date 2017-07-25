@@ -49,11 +49,12 @@ export default {
       if (this.currentUser) {
         return {
           id: `${baseApiUrl}/api/user/${this.currentUser.id}`,
-          type: 'Software',
-          name: this.project.name,
-          homepage: `/project/${this.project.short_name}`
+          type: 'Person',
+          name: this.currentUser.fullname,
+          nickname: this.currentUser.name
         }
       }
+      return null
     },
     generator: function () {
       const baseApiUrl = config.pybossaHost
@@ -61,7 +62,7 @@ export default {
         return {
           id: `${baseApiUrl}/api/project/${this.project.id}`,
           type: 'Software',
-          name: this.project.name,
+          name: `${config.brand} - ${this.project.name}`,
           homepage: `${window.location.protocol}//${window.location.hostname}`
         }
       }
