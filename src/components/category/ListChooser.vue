@@ -8,7 +8,7 @@
             v-for="c in categories"
             :key="c.id"
             :active="activeCategory === c"
-            @click.native="onCategoryClick(c)">
+            @click.native="changeCategory(c)">
             {{ c.name }}
           </b-list-group-item>
         </b-list-group>
@@ -55,16 +55,16 @@ export default {
     loadCategories () {
       pybossaApi.get('/').then(r => {
         this.categories = r.data.categories
-        this.activeCategory = this.categories[0]
+        this.changeCategory(this.categories[0])
       })
     },
 
     marked: marked,
 
     /**
-     * Handle a category item click.
+     * Change the category.
      */
-    onCategoryClick (category) {
+    changeCategory (category) {
       this.$emit('change', category)
       this.activeCategory = category
     }
