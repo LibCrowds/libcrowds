@@ -190,10 +190,7 @@ export default {
      * Collapse the sidebar when nav item clicked.
      */
     handleSidebarNavItemClick () {
-      const sidebar = this.$refs.sidebar
-      const hamburger = this.$refs.hamburger
-      sidebar.$el.classList.remove('show')
-      hamburger.$el.classList.remove('is-active')
+      this.onHamburgerClick()
     },
 
     /**
