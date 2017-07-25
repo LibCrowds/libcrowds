@@ -19,15 +19,15 @@ instance.interceptors.response.use(undefined, (error) => {
 })
 
 // Forward unauthenticated users to signin page
-instance.interceptors.response.use((r) => {
-  if (r.data.template === 'account/signin.html') {
-    store.commit('DELETE_ITEM', 'currentUser')
-    // TODO: Handle this
-  }
-  return r
-}, function (error) {
-  console.error(error.response)
-  return Promise.reject(error)
-})
+// instance.interceptors.response.use((r) => {
+//   if (r.data.template === 'account/signin.html') {
+//     store.commit('DELETE_ITEM', 'currentUser')
+//     // TODO: Handle this
+//   }
+//   return r
+// }, function (error) {
+//   console.error(error.response)
+//   return Promise.reject(error)
+// })
 
 export default instance
