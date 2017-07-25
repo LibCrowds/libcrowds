@@ -3,9 +3,7 @@
     <div class="col-md-4">
       <b-card id="categories-card">
 
-        <div v-if="loading">
-          <loading></loading>
-        </div>
+        <loading v-if="loading"></loading>
 
         <b-list-group v-else>
           <b-list-group-item
@@ -23,9 +21,7 @@
     <div class="col-md-8">
       <b-card>
 
-        <div v-if="loading">
-          <loading></loading>
-        </div>
+        <loading v-if="loading"></loading>
 
         <p
           v-else-if="activeCategory === c"
