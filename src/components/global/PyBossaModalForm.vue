@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
