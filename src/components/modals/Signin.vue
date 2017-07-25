@@ -95,7 +95,6 @@ export default {
       this.$store.dispatch('UPDATE_CURRENT_USER')
     },
     setAuth (r) {
-      console.log(r)
       if ('auth' in r.data) {
         this.auth = r.data.auth
       }
