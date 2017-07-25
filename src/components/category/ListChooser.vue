@@ -2,7 +2,12 @@
   <div id="category-list-chooser" class="row">
     <div class="col-md-4">
       <b-card id="categories-card">
-        <b-list-group>
+
+        <div v-if="loading">
+          <loading></loading>
+        </div>
+
+        <b-list-group v-else>
           <b-list-group-item
             action
             v-for="c in categories"
@@ -12,16 +17,23 @@
             {{ c.name }}
           </b-list-group-item>
         </b-list-group>
+
       </b-card>
     </div>
     <div class="col-md-8">
       <b-card>
+
+        <div v-if="loading">
+          <loading></loading>
+        </div>
+
         <p
+          v-else-if="activeCategory === c"
           v-for="c in categories"
           :key="c.id"
-          v-if="activeCategory === c"
           v-html="marked(c.description)">
         </p>
+
       </b-card>
     </div>
   </div>
@@ -30,13 +42,19 @@
 <script>
 import marked from 'marked'
 import pybossaApi from '@/api/pybossa'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
+      loading: true,
       categories: [],
       activeCategory: null
     }
+  },
+
+  components: {
+    Loading
   },
 
   computed: {
