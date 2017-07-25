@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
@@ -82,6 +83,9 @@ export default {
   },
 
   computed: {
+    loading () {
+      return isEmpty(this.form)
+    },
     flashMsg: function () {
       // To handle disappearing and multiple alerts
       return this.flash ? [this.flash] : []
