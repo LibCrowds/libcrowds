@@ -3,7 +3,6 @@
     class="project-contribute-table"
     hover
     striped
-    responsive
     show-empty
     :items="projects"
     :fields="fields"
@@ -53,7 +52,7 @@ export default {
 @import 'src/assets/style/main';
 
 .project-contribute-table {
-    .table {
+  .table {
     font-size: $font-size-sm;
     margin-bottom: 0;
     background-color: $white;
@@ -66,8 +65,14 @@ export default {
       border-top: none;
     }
 
-    tr *:not(:first-child) {
-      text-align: center;
+    tr {
+      &*:not(:first-child) {
+        text-align: center;
+
+        &:first-child {
+          width: 99%;
+        }
+      }
     }
   }
 }
