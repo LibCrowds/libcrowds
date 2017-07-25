@@ -29,6 +29,9 @@ Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
 Vue.use(LibcrowdsViewer)
 
+Vue.component('v-gravatar', VueGravatar)
+Vue.component('pybossa-modal-form', PyBossaModalForm)
+
 // Google analytics
 if ('analytics' in config && process.env.NODE_ENV === 'production') {
   Vue.use(VueAnalytics, {
@@ -37,10 +40,7 @@ if ('analytics' in config && process.env.NODE_ENV === 'production') {
   })
 }
 
-Vue.component('v-gravatar', VueGravatar)
-Vue.component('pybossa-modal-form', PyBossaModalForm)
-
-Vue.config.productionTip = false
+Vue.config.productionTip = (process.env.NODE_ENV !== 'production')
 
 sync(store, router)
 
