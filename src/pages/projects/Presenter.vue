@@ -8,18 +8,17 @@
 
     <libcrowds-viewer
       v-else
-      :show-like="currentUser.length"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
-      @submit="handleSubmit"
-      @taskliked="handleTaskLiked">
+      @submit="handleSubmit">
     </libcrowds-viewer>
 
   </div>
 </template>
 
 <script>
+import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
@@ -40,22 +39,30 @@ export default {
   computed: {
     taskOpts: function () {
       return this.tasks.map(function (task) {
-        console.log(task)
         let opts = task.info
         opts.id = task.id
         return opts
       })
     },
     creator: function () {
-      return null
-    },
-    generator: function () {
-      if (this.project) {
+      const baseApiUrl = config.pybossaHost
+      if (this.currentUser) {
         return {
-          id: `/api/project/${this.project.id}`,
+          id: `${baseApiUrl}/api/user/${this.currentUser.id}`,
           type: 'Software',
           name: this.project.name,
           homepage: `/project/${this.project.short_name}`
+        }
+      }
+    },
+    generator: function () {
+      const baseApiUrl = config.pybossaHost
+      if (this.project) {
+        return {
+          id: `${baseApiUrl}/api/project/${this.project.id}`,
+          type: 'Software',
+          name: this.project.name,
+          homepage: `${window.location.protocol}//${window.location.hostname}`
         }
       }
     }
