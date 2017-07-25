@@ -1,41 +1,35 @@
 <template>
-  <div id="project-sorting-options">
-    <div class="justify-content-centermy-1 row my-2">
-      <b-form-fieldset
-        horizontal
-        label="Sort:"
-        class="col-4">
-        <b-form-select
-          :options="sortingOpts"
-          v-model="sortKey"
-          @change="onSortKeyChange">
-        </b-form-select>
-      </b-form-fieldset>
+  <div class="project-sorting-options">
 
-      <b-form-fieldset
-        horizontal
-        label="Show completed:"
-        class="col-4">
-        <toggle-button
-          :value="showCompleted"
-          :sync="true"
-          :labels="true"
-          @change="onToggleCompleted">
-        </toggle-button>
-      </b-form-fieldset>
-
-      <b-form-fieldset class="col-4">
-        <b-button-group class="bg-white">
-          <b-button
-            v-for="view in views"
-            :key="view"
-            :variant="getViewBtnVariant(view)"
-            @click="onViewChange(view)">
-            <icon :name="view"></icon>
-          </b-button>
-        </b-button-group>
-      </b-form-fieldset>
+    <div class="form-group">
+      <label>Sort:</label>
+      <b-form-select
+        :options="sortingOpts"
+        v-model="sortKey"
+        @change="onSortKeyChange">
+      </b-form-select>
     </div>
+
+    <div class="form-group">
+      <label>Show completed:</label>
+      <toggle-button
+        :value="showCompleted"
+        :sync="true"
+        :labels="true"
+        @change="onToggleCompleted">
+      </toggle-button>
+    </div>
+
+    <b-button-group class="bg-white">
+      <b-button
+        v-for="view in views"
+        :key="view"
+        :variant="getViewBtnVariant(view)"
+        @click="onViewChange(view)">
+        <icon :name="view"></icon>
+      </b-button>
+    </b-button-group>
+
   </div>
 </template>
 
@@ -107,11 +101,33 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-.bg-white {
-  background-color: $white;
-}
+.project-sorting-options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
-.form-group {
-  margin-bottom: 0;
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
+
+  .bg-white {
+    background-color: $white;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: 0;
+    }
+  }
+
+  label {
+    margin-right: 1rem;
+    margin-bottom: 0;
+  }
 }
 </style>
