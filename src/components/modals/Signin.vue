@@ -95,7 +95,6 @@ export default {
       this.$store.dispatch('UPDATE_CURRENT_USER')
     },
     setAuth (r) {
-      console.log(r)
       if ('auth' in r.data) {
         this.auth = r.data.auth
       }
@@ -109,8 +108,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .row-btn-social {
   display: flex;

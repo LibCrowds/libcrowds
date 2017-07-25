@@ -1,9 +1,8 @@
 <template>
   <b-table
-    class="project-contrib-table"
+    class="project-contribute-table"
     hover
     striped
-    responsive
     show-empty
     :items="projects"
     :fields="fields"
@@ -50,24 +49,31 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars.scss';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
-.project-contrib-table.table {
-  font-size: $font-size-sm;
-  margin-bottom: 0;
-  background-color: $white;
-  border: $table-border-width solid $table-border-color;
+.project-contribute-table {
+  .table {
+    font-size: $font-size-sm;
+    margin-bottom: 0;
+    background-color: $white;
+    border: $table-border-width solid $table-border-color;
 
-  th {
-    font-weight: 400;
-    text-transform: uppercase;
-    color: $text-muted;
-    border-top: none;
-  }
+    th {
+      font-weight: 400;
+      text-transform: uppercase;
+      color: $text-muted;
+      border-top: none;
+    }
 
-  tr *:not(:first-child) {
-    text-align: center;
+    tr {
+      &*:not(:first-child) {
+        text-align: center;
+
+        &:first-child {
+          width: 99%;
+        }
+      }
+    }
   }
 }
 </style>

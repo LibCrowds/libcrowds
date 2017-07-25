@@ -1,8 +1,9 @@
 <template>
 
-  <div v-if="loading">
-    <loading></loading>
-  </div>
+  <loading
+    v-if="loading"
+    text="Loading form">
+  </loading>
 
   <form v-on:submit.prevent v-else>
 

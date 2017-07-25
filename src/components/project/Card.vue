@@ -6,11 +6,15 @@
         <div :id="pbCircleId" class="h-100 w-100"></div>
       </div>
     </div>
-    
-    <div class="card-block p-0">
-      <h4 class="card-title mb-2 px-2 pt-2">{{ project.name }}</h4>
-      <p class="card-text mb-0 px-2 pb-2">{{ project.description }}</p>
-      
+
+    <div class="card-block project-details p-0">
+      <h4 class="card-title mb-2 px-2 pt-2">
+        {{ project.name }}
+      </h4>
+      <p class="card-text project-description mb-0 px-2 pb-2">
+        {{ project.description }}
+      </p>
+
       <div class="card-footer p-2">
         <span class="card-stat text-muted mb-2 mb-md-0">
           {{ project.overall_progress }}% complete
@@ -23,13 +27,14 @@
         </span>
         <div class="">
           <project-contrib-button
+            class="mt-2 mt-lg-0"
             :shortname="project.short_name"
             variant="success">
           </project-contrib-button>
         </div>
       </div>
     </div>
-    
+
   </b-card>
 </template>
 
@@ -84,8 +89,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .card.project-card {
   text-align: center;
@@ -96,8 +100,9 @@ export default {
   margin-right: auto;
   max-width: 300px;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(lg) {
     max-width: 100%;
+    max-height: 300px;
     text-align: left;
     flex-direction: row;
   }
@@ -125,7 +130,7 @@ export default {
         background-color: $white;
       }
 
-      @include media-breakpoint-up(md) {
+      @include media-breakpoint-up(lg) {
         display: flex;
         flex-direction: column;
         border-top: none;
@@ -138,14 +143,19 @@ export default {
     }
   }
 
+  .project-description {
+    overflow: scroll;
+  }
+
   .card-img-overlay-wrapper {
     position: relative;
     overflow: hidden;
     height: 100%;
     width: 100%;
 
-    @include media-breakpoint-up(md) {
-      width: 30%;
+    @include media-breakpoint-up(lg) {
+      min-width: 300px;
+      width: 300px;
     }
 
     .card-img-overlay {
@@ -155,6 +165,7 @@ export default {
   }
 
   .card-stat {
+    font-size: $font-size-sm;
     display: flex;
     align-items: center;
 

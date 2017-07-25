@@ -30,15 +30,4 @@ instance.interceptors.response.use((r) => {
   return Promise.reject(error)
 })
 
-// TODO: Handle next params
-instance.interceptors.response.use((r) => {
-  if ('next' in r.data) {
-    // router.push({ path: r.data.next })
-  }
-  return r
-}, function (error) {  // TODO: Log these errors and notify the user
-  console.error(error.response)
-  return Promise.reject(error)
-})
-
 export default instance

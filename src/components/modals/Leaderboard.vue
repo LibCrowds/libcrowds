@@ -1,9 +1,10 @@
 <template>
   <b-modal :id="name" title="Leaderboard" @shown="fetchData">
 
-    <div v-if="loading">
-      <loading></loading>
-    </div>
+    <loading
+      v-if="loading"
+      text="Loading leaderboard">
+    </loading>
 
     <b-table
       responsive
@@ -65,8 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .modal {
   display: block;

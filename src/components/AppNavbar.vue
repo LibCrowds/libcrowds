@@ -179,15 +179,11 @@ export default {
     ),
 
     /**
-     * Scroll to the top, smoothly if the link is the current location.
+     * Scroll to the top smoothly if target is the same as the current URI.
      */
     scrollToTop (evt) {
-      if (evt !== undefined && evt.target.baseURI === window.location.href) {
+      if (evt.target.baseURI === window.location.href) {
         jump('body')
-      } else {
-        jump('body', {
-          duration: 0
-        })
       }
     },
 
@@ -214,44 +210,75 @@ export default {
      * Toggle the collapsible sidebar.
      */
     toggleCollapsibleSidebar () {
-      const hamburger = this.$refs.hamburger
-      const sidebar = this.$refs.sidebar
-      console.log(sidebar, hamburger)
+      if (window.innerWidth < 992) {
+        const hamburger = this.$refs.hamburger
+        const sidebar = this.$refs.sidebar
 
-      this.styleHamburger()
-      hamburger.blur()
+        this.styleHamburger()
+        hamburger.blur()
 
-      sidebar.$el.classList.toggle('show')
-      hamburger.classList.toggle('is-active')
+        sidebar.$el.classList.toggle('show')
+        hamburger.classList.toggle('is-active')
 
-      // Hide main content when sidebar made visible and scroll to top
-      // after collapse
-      if (sidebar.$el.classList.contains('show')) {
-        setTimeout(function () {
-          document.querySelector('main').style.display = 'none'
-        }, 450)
-      } else {
-        document.querySelector('main').style.display = 'flex'
-        this.scrollToTop()
+        // Restrict body and scroll to top after collapse if new location
+        if (sidebar.$el.classList.contains('show')) {
+          setTimeout(() => {
+            this.restrictBody(true)
+          }, 450)
+        } else {
+          this.restrictBody(false)
+          if (this.currentPath !== window.location.pathname) {
+            jump('body', {
+              duration: 0
+            })
+          }
+        }
+
+        this.currentPath = window.location.pathname
+        this.styleNavbar()
       }
+    },
 
-      this.styleNavbar()
+    /**
+     * Restrict body content to avoid scroll bar while sidebar is open.
+     */
+    restrictBody (restrict = true) {
+      if (restrict) {
+        document.querySelector('body').style.height = '100vh'
+        document.querySelector('body').style.overflow = 'hidden'
+      } else {
+        document.querySelector('body').style.height = '100%'
+        document.querySelector('body').style.overflow = 'initial'
+      }
+    },
+
+    /**
+     * Handle window resize
+     */
+    onWindowResize () {
+      const sidebar = this.$refs.sidebar
+      if (window.innerWidth >= 992) {
+        this.restrictBody(false)
+      } else if (sidebar.$el.classList.contains('show')) {
+        this.restrictBody(true)
+      }
     }
   },
 
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
+    window.addEventListener('resize', this.onWindowResize)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.onWindowScroll)
+    window.removeEventListener('resize', this.onWindowResize)
   }
 }
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars.scss';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 .navbar {

@@ -1,9 +1,10 @@
 <template>
   <b-modal :id="name" title="Open Project" @shown="fetchData" size="lg">
 
-    <div v-if="loading">
-      <loading></loading>
-    </div>
+    <loading
+      v-if="loading"
+      text="Loading projects">
+    </loading>
 
     <span v-else>
       <h5 class="p-2 mb-0">Published</h5>
@@ -78,8 +79,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'src/assets/style/_vars';
-@import '~bootstrap/scss/bootstrap';
+@import 'src/assets/style/main';
 
 .modal {
   display: block;

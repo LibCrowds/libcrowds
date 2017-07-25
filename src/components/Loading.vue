@@ -1,27 +1,54 @@
 <template>
-  <div class="sk-fading-circle">
-    <div class="sk-circle1 sk-circle"></div>
-    <div class="sk-circle2 sk-circle"></div>
-    <div class="sk-circle3 sk-circle"></div>
-    <div class="sk-circle4 sk-circle"></div>
-    <div class="sk-circle5 sk-circle"></div>
-    <div class="sk-circle6 sk-circle"></div>
-    <div class="sk-circle7 sk-circle"></div>
-    <div class="sk-circle8 sk-circle"></div>
-    <div class="sk-circle9 sk-circle"></div>
-    <div class="sk-circle10 sk-circle"></div>
-    <div class="sk-circle11 sk-circle"></div>
-    <div class="sk-circle12 sk-circle"></div>
+  <div class="loading">
+    <div class="sk-wave">
+      <div class="sk-rect sk-rect1"></div>
+      <div class="sk-rect sk-rect2"></div>
+      <div class="sk-rect sk-rect3"></div>
+      <div class="sk-rect sk-rect4"></div>
+      <div class="sk-rect sk-rect5"></div>
+    </div>
+    <p class="loading-text">
+      {{ text }}
+    </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'loading'
+  props: {
+    text: {
+      type: String,
+      default: 'Loading'
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/_vars';
-@import '~spinkit/scss/spinners/10-fading-circle';
+@import 'src/assets/style/main';
+@import '~spinkit/scss/spinners/3-wave';
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-content: center;
+  justify-content: center;
+
+  .sk-wave {
+    margin-top: 25px;
+    margin-bottom: 5px;
+    width: 50px;
+  }
+
+  .loading-text {
+    font-size: $font-size-sm;
+    text-align: center;
+    color: $spinkit-spinner-color;
+    margin-bottom: 25px;
+    width: 100px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
 </style>

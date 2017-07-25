@@ -35,10 +35,20 @@ to allow requests from vue-pybossa-frontend. Something like this (modify
 origins according to your environement):
 
 ``` python
-CORS_RESOURCES = {r"/*": {"origins": ["http://127.0.0.1:8080", "http://localhost:8080"],
-                          "allow_headers": ['Content-Type', 'Authorization', 'X-XCSRFToken'],
-                          "supports_credentials": True
-                          }}
+CORS_RESOURCES = {
+  r"/*": {
+    "origins": [
+      "http://127.0.0.1:8080",
+      "http://localhost:8080"
+    ],
+    "allow_headers": [
+      'Content-Type',
+      'Authorization',
+      'X-CSRFToken'
+    ],
+    "supports_credentials": True
+  }
+}
 ```
 
 For a full list of options see the

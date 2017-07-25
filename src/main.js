@@ -20,9 +20,7 @@ import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 import config from '@/config'
 
 // Global styles
-import '@/assets/style/_vars.scss'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import '@/assets/style/_main.scss'
+import '@/assets/style/main.scss'
 
 Vue.use(BootstrapVue)
 Vue.use(VueChartist)
