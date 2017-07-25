@@ -224,9 +224,18 @@ export default {
       sidebar.$el.classList.toggle('show')
       hamburger.classList.toggle('is-active')
 
-      if (!(sidebar.$el.classList.contains('show'))) {
+      // Hide main content when sidebar made visible and scroll to top
+      // after collapse
+      if (sidebar.$el.classList.contains('show')) {
+        setTimeout(function () {
+          document.querySelector('main').style.display = 'none'
+        }, 450)
+      } else {
+        document.querySelector('main').style.display = 'flex'
         this.scrollToTop()
       }
+
+      this.styleNavbar()
     }
   },
 
