@@ -22,6 +22,7 @@
       </category-list-chooser>
       <hr class="w-50"></hr>
 
+    <span v-if="projects.length">
       <project-sorting-options
         :views="views"
         :showCompleted="showCompleted"
@@ -45,6 +46,12 @@
         :pagination="pagination"
         @change="onPageChange">
       </project-pagination>
+    </span>
+    <span v-else-if="this.category">
+      <p class="lead text-center mb-0">
+        Sorry, no projects have been published in this category yet.
+      </p>
+    </span>
 
     </section>
 
@@ -79,7 +86,7 @@ export default {
         { id: 'choose', text: 'Choose a Project' }
       ],
       projects: [],
-      category: {}
+      category: null
     }
   },
 
