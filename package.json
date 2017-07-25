@@ -32,6 +32,7 @@
     "marked": "^0.3.6",
     "pnotify": "^3.2.0",
     "progressbar.js": "^1.0.1",
+    "raven-js": "^3.17.0",
     "scrollreveal": "^3.3.6",
     "spinkit": "^1.2.5",
     "vue": "^2.4.2",

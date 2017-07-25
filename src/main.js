@@ -1,10 +1,6 @@
 import 'es6-promise/auto'
 
-import '@/icons'
 import Vue from 'vue'
-import App from '@/App'
-import store from '@/store'
-import router from '@/router'
 import { sync } from 'vuex-router-sync'
 import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
@@ -13,6 +9,13 @@ import VueFormGenerator from 'vue-form-generator'
 import VueAnalytics from 'vue-analytics'
 import LibcrowdsViewer from 'libcrowds-viewer'
 import ToggleButton from 'vue-js-toggle-button'
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
+
+import '@/icons'
+import App from '@/App'
+import store from '@/store'
+import router from '@/router'
 import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 import config from '@/config'
 
@@ -36,6 +39,14 @@ if ('analytics' in config && process.env.NODE_ENV === 'production') {
     id: config.analytics,
     router
   })
+}
+
+// Sentry error logging
+if ('sentry' in config) {
+  Raven
+    .config(config.sentryPublicDsn)
+    .addPlugin(RavenVue, Vue)
+    .install()
 }
 
 Vue.config.productionTip = (process.env.NODE_ENV !== 'production')
