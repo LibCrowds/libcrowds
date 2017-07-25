@@ -44,7 +44,9 @@ if ('analytics' in config && process.env.NODE_ENV === 'production') {
 // Sentry error logging
 if ('sentry' in config) {
   Raven
-    .config(config.sentryPublicDsn)
+    .config(config.sentryPublicDsn, {
+      environment: process.env.NODE_ENV
+    })
     .addPlugin(RavenVue, Vue)
     .install()
 }
