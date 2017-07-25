@@ -1,9 +1,10 @@
 <template>
   <b-modal :id="name" title="Leaderboard" @shown="fetchData">
 
-    <div v-if="loading">
-      <loading></loading>
-    </div>
+    <loading
+      v-if="loading"
+      text="Loading leaderboard">
+    </loading>
 
     <b-table
       responsive

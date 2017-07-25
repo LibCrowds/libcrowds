@@ -1,9 +1,10 @@
 <template>
   <div class="presenter">
 
-    <div v-if="loading">
-      <loading></loading>
-    </div>
+    <loading
+      v-if="loading"
+      text="Loading project">
+    </loading>
 
     <libcrowds-viewer
       v-else

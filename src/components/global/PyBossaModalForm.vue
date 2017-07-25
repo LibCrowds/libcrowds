@@ -6,9 +6,10 @@
     @ok="submit"
     @shown="load">
 
-    <div v-if="formLoading">
-      <loading></loading>
-    </div>
+    <loading
+      v-if="loading"
+      text="Loading form">
+    </loading>
 
     <div class="p-2" v-else>
 
@@ -32,7 +33,7 @@
       <slot></slot>
 
     </div>
-    
+
     <template slot="modal-footer">
       <span class="mr-auto">
         <slot name="footer-left"></slot>

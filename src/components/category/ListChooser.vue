@@ -3,7 +3,10 @@
     <div class="col-md-4">
       <b-card id="categories-card">
 
-        <loading v-if="loading" text="Loading categories"></loading>
+        <loading
+          v-if="loading"
+          text="Loading categories">
+        </loading>
 
         <b-list-group v-else>
           <b-list-group-item
@@ -21,7 +24,10 @@
     <div class="col-md-8">
       <b-card>
 
-        <loading v-if="loading" text="Loading descriptions"></loading>
+        <loading
+          v-if="loading"
+          text="Loading descriptions">
+        </loading>
 
         <span v-else>
           <p
@@ -72,7 +78,7 @@ export default {
       pybossaApi.get('/').then(r => {
         this.categories = r.data.categories
         this.changeCategory(this.categories[0])
-        // this.loading = false
+        this.loading = false
       })
     },
 
