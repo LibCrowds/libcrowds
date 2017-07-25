@@ -148,36 +148,34 @@ export default {
     /**
      * Style the navbar, switching colors if over an invert-navbar element.
      */
-    styleNavbar () {
-      throttle(
-        function () {
-          let ieScrollTop = document.documentElement.scrollTop
-          let scrollTop = document.body.scrollTop === 0
-                            ? ieScrollTop
-                            : document.body.scrollTop
+    styleNavbar: throttle(
+      function () {
+        let ieScrollTop = document.documentElement.scrollTop
+        let scrollTop = document.body.scrollTop === 0
+                          ? ieScrollTop
+                          : document.body.scrollTop
 
-          let bounds = []
-          let nodes = document.getElementsByClassName('invert-navbar')
-          for (let node of nodes) {
-            bounds.push({
-              top: node.offsetTop,
-              bottom: node.offsetTop + node.offsetHeight
-            })
-          }
+        let bounds = []
+        let nodes = document.getElementsByClassName('invert-navbar')
+        for (let node of nodes) {
+          bounds.push({
+            top: node.offsetTop,
+            bottom: node.offsetTop + node.offsetHeight
+          })
+        }
 
-          for (let b of bounds) {
-            if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
-              document.querySelector('.navbar').classList.add('navbar-light')
-              document.querySelector('.navbar').classList.remove('navbar-inverse')
-              return
-            }
+        for (let b of bounds) {
+          if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
+            document.querySelector('.navbar').classList.add('navbar-light')
+            document.querySelector('.navbar').classList.remove('navbar-inverse')
+            return
           }
-          document.querySelector('.navbar').classList.remove('navbar-light')
-          document.querySelector('.navbar').classList.add('navbar-inverse')
-        },
-        10
-      )
-    },
+        }
+        document.querySelector('.navbar').classList.remove('navbar-light')
+        document.querySelector('.navbar').classList.add('navbar-inverse')
+      },
+      10
+    ),
 
     /**
      * Scroll to the top of the window if the link is to the current URI.
