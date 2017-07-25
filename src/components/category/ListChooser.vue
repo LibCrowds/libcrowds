@@ -20,8 +20,8 @@
         <span
           v-for="c in categories"
           :key="c.id"
-          v-show="activeCategory === c">
-          {{ c.description }}
+          v-show="activeCategory === c"
+          v-html="marked(c.description)">
         </span>
         </transition-group>
       </b-card>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import pybossaApi from '@/api/pybossa'
 
 export default {
@@ -59,6 +60,8 @@ export default {
         this.activeCategory = this.categories[0]
       })
     },
+
+    marked: marked,
 
     /**
      * Handle a category item click.
