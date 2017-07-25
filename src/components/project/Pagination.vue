@@ -1,7 +1,7 @@
 <template>
   <div id="project-pagination">
 
-    <div class="justify-content-center row mt-4">
+    <div class="justify-content-center row mt-2">
       <b-pagination
         variant="info"
         :total-rows="pagination.total"
