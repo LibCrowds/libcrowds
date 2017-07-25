@@ -7,8 +7,13 @@
       sticky="top">
       <div class="container">
         <button
+          @click="toggleCollapsibleSidebar"
           ref="hamburger"
-          class="hamburger hamburger--collapse navbar-toggler navbar-toggler-right"
+          class="
+            hamburger
+            hamburger--collapse
+            navbar-toggler
+            navbar-toggler-right"
           type="button"
           data-toggle="collapse"
           data-target="#main-nav-collapse"
@@ -22,21 +27,21 @@
 
         <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
-          @click.native="scrollIfCurrent">
+          @click.native="scrollToTop">
           <span>{{ config.brand }}</span>
         </b-link>
 
-        <b-collapse is-nav id="main-nav-collapse">
+        <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
           <b-nav is-nav-bar>
             <b-nav-item
               :to="{ name: 'about' }"
-              @click.native="scrollIfCurrent">
+              @click.native="toggleCollapsibleSidebar">
               About
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'projects' }"
-              @click.native="scrollIfCurrent">
+              @click.native="toggleCollapsibleSidebar">
               Projects
             </b-nav-item>
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
@@ -44,17 +49,17 @@
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'statistics' }"
-              @click.native="scrollIfCurrent">
+              @click.native="toggleCollapsibleSidebar">
               Statistics
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'results' }"
-              @click.native="scrollIfCurrent">
+              @click.native="toggleCollapsibleSidebar">
               Results
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'data' }"
-              @click.native="scrollIfCurrent">
+              @click.native="toggleCollapsibleSidebar">
               Data
             </b-nav-item>
           </b-nav>
@@ -131,11 +136,19 @@ export default {
   },
 
   methods: {
+
+    /**
+     * Sign the user out.
+     */
     signout () {
       pybossaApi.get('/account/signout').then(r => {
         this.$store.dispatch('UPDATE_CURRENT_USER')
       })
     },
+
+    /**
+     * Style the navbar, switching colors if over an invert-navbar element.
+     */
     styleNavbar: throttle(
       function () {
         let ieScrollTop = document.documentElement.scrollTop
@@ -164,40 +177,74 @@ export default {
       },
       10
     ),
-    scrollIfCurrent: function (evt) {
-      if (evt.target.baseURI === window.location.href) {
+
+    /**
+     * Scroll to the top, smoothly if the link is the current location.
+     */
+    scrollToTop (evt) {
+      if (evt !== undefined && evt.target.baseURI === window.location.href) {
         jump('body')
+      } else {
+        jump('body', {
+          duration: 0
+        })
       }
     },
 
     /**
-     * Style the hamburger and sidebar.
+     * Style the hamburger so that it always turns white over the sidebar.
      */
-    onHamburgerClick () {
+    styleHamburger () {
       const hamburger = this.$refs.hamburger
-      const target = hamburger.dataset.target
       const isActive = hamburger.classList.contains('is-active')
       const colorTimeout = isActive ? 50 : 300
-
-      document.querySelector(target).classList.toggle('show')
-      hamburger.classList.toggle('is-active')
-      hamburger.blur()
-
-      // Hamburger color should always be white over the sidebar
       setTimeout(function () {
         hamburger.classList.toggle('white')
       }, colorTimeout)
+    },
+
+    /**
+     * Handle window scroll.
+     */
+    onWindowScroll () {
+      this.styleNavbar()
+    },
+
+    /**
+     * Toggle the collapsible sidebar.
+     */
+    toggleCollapsibleSidebar () {
+      const hamburger = this.$refs.hamburger
+      const sidebar = this.$refs.sidebar
+      console.log(sidebar, hamburger)
+
+      this.styleHamburger()
+      hamburger.blur()
+
+      sidebar.$el.classList.toggle('show')
+      hamburger.classList.toggle('is-active')
+
+      // Hide main content when sidebar made visible and scroll to top
+      // after collapse
+      if (sidebar.$el.classList.contains('show')) {
+        setTimeout(function () {
+          document.querySelector('main').style.display = 'none'
+        }, 450)
+      } else {
+        document.querySelector('main').style.display = 'flex'
+        this.scrollToTop()
+      }
+
+      this.styleNavbar()
     }
   },
 
   mounted () {
-    window.addEventListener('scroll', this.styleNavbar)
-    this.$refs.hamburger.addEventListener('click', this.onHamburgerClick)
+    window.addEventListener('scroll', this.onWindowScroll)
   },
 
   destroyed () {
-    window.removeEventListener('scroll', this.styleNavbar)
-    this.$refs.hamburger.removeEventListener('click', this.onHamburgerClick)
+    window.removeEventListener('scroll', this.onWindowScroll)
   }
 }
 </script>
