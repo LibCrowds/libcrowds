@@ -16,14 +16,12 @@
     </div>
     <div class="col-md-8">
       <b-card>
-        <transition-group name="descriptions" tag="p">
-        <span
+        <p
           v-for="c in categories"
           :key="c.id"
-          v-show="activeCategory === c"
+          v-if="activeCategory === c"
           v-html="marked(c.description)">
-        </span>
-        </transition-group>
+        </p>
       </b-card>
     </div>
   </div>
@@ -82,12 +80,15 @@ export default {
 #category-list-chooser{
   .card {
     height: 200px;
+
+    .card-block {
+      overflow: scroll;
+    }
   }
 
   #categories-card {
     .card-block {
       padding: 0;
-      overflow: scroll;
 
       .list-group-item {
         border-left: none;
@@ -99,17 +100,5 @@ export default {
       }
     }
   }
-}
-
-.descriptions-item {
-  position: absolute;
-}
-.descriptions-enter-active,
-.descriptions-leave-active {
-  transition: all 200ms;
-}
-.descriptions-enter,
-.descriptions-leave-to {
-  opacity: 0;
 }
 </style>
