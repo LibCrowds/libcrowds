@@ -12,6 +12,7 @@
 
     <b-table
       striped
+      responsive
       show-empty
       :items="projects"
       :fields="fields"

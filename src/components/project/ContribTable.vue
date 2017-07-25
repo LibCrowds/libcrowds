@@ -3,6 +3,7 @@
     class="project-contrib-table"
     hover
     striped
+    responsive
     show-empty
     :items="projects"
     :fields="fields"

@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="name" title="Open Project" @shown="fetchData">
+  <b-modal :id="name" title="Open Project" @shown="fetchData" size="lg">
 
     <div v-if="loading">
       <loading></loading>
@@ -8,6 +8,7 @@
     <span v-else>
       <h5 class="p-2 mb-0">Published</h5>
       <b-table
+        responsive
         striped
         show-empty
         :items="projectsPublished"
@@ -16,6 +17,7 @@
 
       <h5 class="p-2 mb-0 mt-1">Draft</h5>
       <b-table
+        responsive
         striped
         show-empty
         :items="projectsDraft"
@@ -111,7 +113,7 @@ export default {
     border-top: none;
   }
 
-  tr *:not(:first-child) {
+  td:not(:first-child) {
     text-align: center;
   }
 }

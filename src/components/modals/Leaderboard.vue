@@ -6,6 +6,7 @@
     </div>
 
     <b-table
+      responsive
       v-else
       striped
       show-empty

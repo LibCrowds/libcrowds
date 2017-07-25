@@ -6,6 +6,11 @@
 
 > A Vue.js frontend for PyBossa (>=2.5.0).
 
+When no task presenter is present for a project 100 new tasks will be retrieved
+for the user and the info fields of those tasks passed directly to an instance of [LibCrowds Viewer](https://github.com/LibCrowds/libcrowds-viewer). The
+annotations returned are saved as the task run.
+
+
 ## Installing
 
 Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
