@@ -1,7 +1,7 @@
 <template>
   <div class="floating-tabs-layout">
     <main>
-      <div class="container mt-md-4 mb-5">
+      <div class="container mb-5">
 
         <transition-group appear>
 
