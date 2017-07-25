@@ -3,7 +3,7 @@
     <div class="col-md-4">
       <b-card id="categories-card">
 
-        <loading v-if="loading"></loading>
+        <loading v-if="loading" text="Loading categories"></loading>
 
         <b-list-group v-else>
           <b-list-group-item
@@ -21,14 +21,16 @@
     <div class="col-md-8">
       <b-card>
 
-        <loading v-if="loading"></loading>
+        <loading v-if="loading" text="Loading descriptions"></loading>
 
-        <p
-          v-else-if="activeCategory === c"
-          v-for="c in categories"
-          :key="c.id"
-          v-html="marked(c.description)">
-        </p>
+        <span v-else>
+          <p
+            v-if="activeCategory === c"
+            v-for="c in categories"
+            :key="c.id"
+            v-html="marked(c.description)">
+          </p>
+        </span>
 
       </b-card>
     </div>
@@ -70,6 +72,7 @@ export default {
       pybossaApi.get('/').then(r => {
         this.categories = r.data.categories
         this.changeCategory(this.categories[0])
+        // this.loading = false
       })
     },
 
@@ -96,6 +99,8 @@ export default {
     height: 200px;
 
     .card-block {
+      display: flex;
+      flex-direction: column;
       overflow: scroll;
     }
   }

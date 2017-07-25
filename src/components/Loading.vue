@@ -29,15 +29,26 @@ export default {
 @import '~spinkit/scss/spinners/3-wave';
 
 .loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  align-content: center;
+  justify-content: center;
+
   .sk-wave {
     margin-top: 25px;
     margin-bottom: 5px;
+    width: 50px;
   }
 
   .loading-text {
+    font-size: $font-size-sm;
     text-align: center;
     color: $spinkit-spinner-color;
     margin-bottom: 25px;
+    width: 100px;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
 </style>
