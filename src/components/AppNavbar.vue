@@ -7,6 +7,7 @@
       sticky="top">
       <div class="container">
         <button
+          @click="toggleCollapsibleSidebar"
           ref="hamburger"
           class="
             hamburger
@@ -35,12 +36,12 @@
           <b-nav is-nav-bar>
             <b-nav-item
               :to="{ name: 'about' }"
-              @click.native="handleSidebarNavItemClick">
+              @click.native="toggleCollapsibleSidebar">
               About
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'projects' }"
-              @click.native="handleSidebarNavItemClick">
+              @click.native="toggleCollapsibleSidebar">
               Projects
             </b-nav-item>
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
@@ -48,17 +49,17 @@
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'statistics' }"
-              @click.native="handleSidebarNavItemClick">
+              @click.native="toggleCollapsibleSidebar">
               Statistics
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'results' }"
-              @click.native="handleSidebarNavItemClick">
+              @click.native="toggleCollapsibleSidebar">
               Results
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'data' }"
-              @click.native="handleSidebarNavItemClick">
+              @click.native="toggleCollapsibleSidebar">
               Data
             </b-nav-item>
           </b-nav>
@@ -187,22 +188,7 @@ export default {
     },
 
     /**
-     * Collapse the sidebar when nav item clicked.
-     */
-    handleSidebarNavItemClick () {
-      this.onHamburgerClick()
-    },
-
-    /**
-     * Toggle the collapsible sidebar.
-     */
-    toggleCollapsibleSidebar () {
-      const sidebar = this.$refs.sidebar
-      sidebar.$el.classList.toggle('show')
-    },
-
-    /**
-     * Style the hamburger
+     * Style the hamburger so that it always turns white over the sidebar.
      */
     styleHamburger () {
       const hamburger = this.$refs.hamburger
@@ -211,7 +197,6 @@ export default {
       setTimeout(function () {
         hamburger.classList.toggle('white')
       }, colorTimeout)
-      hamburger.classList.toggle('is-active')
     },
 
     /**
@@ -222,24 +207,27 @@ export default {
     },
 
     /**
-     * Handle hamburger click.
+     * Toggle the collapsible sidebar.
      */
-    onHamburgerClick () {
+    toggleCollapsibleSidebar () {
       const hamburger = this.$refs.hamburger
+      const sidebar = this.$refs.sidebar
+      console.log(sidebar, hamburger)
+
       this.styleHamburger()
-      this.toggleCollapsibleSidebar()
       hamburger.blur()
+
+      sidebar.$el.classList.toggle('show')
+      hamburger.classList.toggle('is-active')
     }
   },
 
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
-    this.$refs.hamburger.addEventListener('click', this.onHamburgerClick)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.onWindowScroll)
-    this.$refs.hamburger.removeEventListener('click', this.onHamburgerClick)
   }
 }
 </script>
