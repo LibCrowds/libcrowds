@@ -3,13 +3,6 @@
 
     <div id="sorting-options" class="justify-content-centermy-1 row my-2">
 
-      <b-form-fieldset horizontal label="Category:">
-        <b-form-select
-          :options="categoryOpts"
-          v-model="categoryShortName">
-        </b-form-select>
-      </b-form-fieldset>
-
       <b-form-fieldset horizontal label="Sorting:">
         <b-form-select
           :options="sortingOpts"
@@ -18,9 +11,9 @@
       </b-form-fieldset>
 
       <b-form-fieldset horizontal class="col-3">
-       <toggle-button 
-         :value="showCompleted" 
-         :sync="true" 
+       <toggle-button
+         :value="showCompleted"
+         :sync="true"
          :labels="true"
          @change="toggleCompleted">
        </toggle-button>
@@ -50,10 +43,10 @@
 
     <transition-group
       v-if="activeView === 'list'"
-      ref="shuffle-grid" 
+      ref="shuffle-grid"
       tag="ul"
       class="list-unstyled">
-      <li class="shuffle-grid-item" 
+      <li class="shuffle-grid-item"
         v-for="p in projects"
         v-if="filter(p)"
         :key="p.short_name">
@@ -120,11 +113,6 @@ export default {
   },
 
   methods: {
-    fetchCategories () {
-      pybossaApi.get('/').then(res => {
-        this.categories = res.data.categories
-      })
-    },
     fetchProjects () {
       let url = `/project/category/${this.categoryShortName}/`
       if (this.currentPage > 1) {
@@ -164,16 +152,9 @@ export default {
     currentPage: function () {
       this.fetchProjects()
     },
-    '$route' () {
-      this.fetchCategories()
-    },
     sortKey: function () {
       this.sort()
     }
-  },
-
-  created () {
-    this.fetchCategories()
   },
 
   mounted () {

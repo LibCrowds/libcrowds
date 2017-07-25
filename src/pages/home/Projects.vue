@@ -16,6 +16,8 @@
     <section id="choose">
       <h3 class="text-center">Choose a Project</h3>
       <hr class="w-50"></hr>
+      <category-list-chooser></category-list-chooser>
+      <hr class="w-50"></hr>
       <project-shuffle></project-shuffle>
     </section>
 
@@ -28,6 +30,7 @@ import marked from 'marked'
 import config from '@/config'
 import ProjectShuffle from '@/components/project/Shuffle'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
+import CategoryListChooser from '@/components/category/ListChooser'
 
 export default {
   data: function () {
@@ -41,7 +44,8 @@ export default {
 
   components: {
     FloatingTabsLayout,
-    ProjectShuffle
+    ProjectShuffle,
+    CategoryListChooser
   },
 
   metaInfo: {
