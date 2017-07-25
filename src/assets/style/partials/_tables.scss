@@ -3,6 +3,9 @@
   margin-bottom: 0;
   background-color: $white;
   border: $table-border-width solid $table-border-color;
+  display: block;
+  overflow-y: scroll;
+
   th {
     font-weight: 400;
     text-transform: uppercase;
