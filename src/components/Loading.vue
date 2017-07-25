@@ -14,12 +14,20 @@
       <div class="sk-circle11 sk-circle"></div>
       <div class="sk-circle12 sk-circle"></div>
     </div>
+    <p class="loading-text">
+      {{ text }}
+    </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'loading'
+  props: {
+    text: {
+      type: String,
+      default: 'Loading'
+    }
+  }
 }
 </script>
 
@@ -35,5 +43,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-content: center;
+}
+
+.loading-text {
+  color: $spinkit-spinner-color;
 }
 </style>
