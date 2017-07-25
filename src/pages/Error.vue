@@ -36,12 +36,6 @@ export default {
 }
 </script>
 
-<style>
-#app-footer {
-  display: none;
-}
-</style>
-
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
