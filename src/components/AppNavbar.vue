@@ -8,7 +8,11 @@
       <div class="container">
         <button
           ref="hamburger"
-          class="hamburger hamburger--collapse navbar-toggler navbar-toggler-right"
+          class="
+            hamburger
+            hamburger--collapse
+            navbar-toggler
+            navbar-toggler-right"
           type="button"
           data-toggle="collapse"
           data-target="#main-nav-collapse"
@@ -22,21 +26,21 @@
 
         <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
-          @click.native="scrollIfCurrent">
+          @click.native="scrollToTopIfCurrent">
           <span>{{ config.brand }}</span>
         </b-link>
 
-        <b-collapse is-nav id="main-nav-collapse">
+        <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
           <b-nav is-nav-bar>
             <b-nav-item
               :to="{ name: 'about' }"
-              @click.native="scrollIfCurrent">
+              @click.native="handleSidebarNavItemClick">
               About
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'projects' }"
-              @click.native="scrollIfCurrent">
+              @click.native="handleSidebarNavItemClick">
               Projects
             </b-nav-item>
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
@@ -44,17 +48,17 @@
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'statistics' }"
-              @click.native="scrollIfCurrent">
+              @click.native="handleSidebarNavItemClick">
               Statistics
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'results' }"
-              @click.native="scrollIfCurrent">
+              @click.native="handleSidebarNavItemClick">
               Results
             </b-nav-item>
             <b-nav-item
               :to="{ name: 'data' }"
-              @click.native="scrollIfCurrent">
+              @click.native="handleSidebarNavItemClick">
               Data
             </b-nav-item>
           </b-nav>
@@ -131,72 +135,114 @@ export default {
   },
 
   methods: {
+
+    /**
+     * Sign the user out.
+     */
     signout () {
       pybossaApi.get('/account/signout').then(r => {
         this.$store.dispatch('UPDATE_CURRENT_USER')
       })
     },
-    styleNavbar: throttle(
-      function () {
-        let ieScrollTop = document.documentElement.scrollTop
-        let scrollTop = document.body.scrollTop === 0
-                          ? ieScrollTop
-                          : document.body.scrollTop
 
-        let bounds = []
-        let nodes = document.getElementsByClassName('invert-navbar')
-        for (let node of nodes) {
-          bounds.push({
-            top: node.offsetTop,
-            bottom: node.offsetTop + node.offsetHeight
-          })
-        }
+    /**
+     * Style the navbar, switching colors if over an invert-navbar element.
+     */
+    styleNavbar () {
+      throttle(
+        function () {
+          let ieScrollTop = document.documentElement.scrollTop
+          let scrollTop = document.body.scrollTop === 0
+                            ? ieScrollTop
+                            : document.body.scrollTop
 
-        for (let b of bounds) {
-          if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
-            document.querySelector('.navbar').classList.add('navbar-light')
-            document.querySelector('.navbar').classList.remove('navbar-inverse')
-            return
+          let bounds = []
+          let nodes = document.getElementsByClassName('invert-navbar')
+          for (let node of nodes) {
+            bounds.push({
+              top: node.offsetTop,
+              bottom: node.offsetTop + node.offsetHeight
+            })
           }
-        }
-        document.querySelector('.navbar').classList.remove('navbar-light')
-        document.querySelector('.navbar').classList.add('navbar-inverse')
-      },
-      10
-    ),
-    scrollIfCurrent: function (evt) {
+
+          for (let b of bounds) {
+            if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
+              document.querySelector('.navbar').classList.add('navbar-light')
+              document.querySelector('.navbar').classList.remove('navbar-inverse')
+              return
+            }
+          }
+          document.querySelector('.navbar').classList.remove('navbar-light')
+          document.querySelector('.navbar').classList.add('navbar-inverse')
+        },
+        10
+      )
+    },
+
+    /**
+     * Scroll to the top of the window if the link is to the current URI.
+     */
+    scrollToTopIfCurrent (evt) {
       if (evt.target.baseURI === window.location.href) {
         jump('body')
       }
     },
 
     /**
-     * Style the hamburger and sidebar.
+     * Collapse the sidebar when nav item clicked.
      */
-    onHamburgerClick () {
+    handleSidebarNavItemClick () {
+      const sidebar = this.$refs.sidebar
       const hamburger = this.$refs.hamburger
-      const target = hamburger.dataset.target
+      sidebar.$el.classList.remove('show')
+      hamburger.$el.classList.remove('is-active')
+    },
+
+    /**
+     * Toggle the collapsible sidebar.
+     */
+    toggleCollapsibleSidebar () {
+      const sidebar = this.$refs.sidebar
+      sidebar.$el.classList.toggle('show')
+    },
+
+    /**
+     * Style the hamburger
+     */
+    styleHamburger () {
+      const hamburger = this.$refs.hamburger
       const isActive = hamburger.classList.contains('is-active')
       const colorTimeout = isActive ? 50 : 300
-
-      document.querySelector(target).classList.toggle('show')
-      hamburger.classList.toggle('is-active')
-      hamburger.blur()
-
-      // Hamburger color should always be white over the sidebar
       setTimeout(function () {
         hamburger.classList.toggle('white')
       }, colorTimeout)
+    },
+
+    /**
+     * Handle window scroll.
+     */
+    onWindowScroll () {
+      this.styleNavbar()
+    },
+
+    /**
+     * Handle hamburger click.
+     */
+    onHamburgerClick () {
+      const hamburger = this.$refs.hamburger
+      this.styleHamburger()
+      this.toggleCollapsibleSidebar()
+      hamburger.blur()
     }
   },
 
   mounted () {
-    window.addEventListener('scroll', this.styleNavbar)
+    window.addEventListener('scroll', this.onWindowScroll)
     this.$refs.hamburger.addEventListener('click', this.onHamburgerClick)
   },
 
   destroyed () {
-    window.removeEventListener('scroll', this.styleNavbar)
+    window.removeEventListener('scroll', this.onWindowScroll)
     this.$refs.hamburger.removeEventListener('click', this.onHamburgerClick)
   }
 }
