@@ -1,18 +1,11 @@
 <template>
   <div class="loading">
-    <div class="sk-fading-circle">
-      <div class="sk-circle1 sk-circle"></div>
-      <div class="sk-circle2 sk-circle"></div>
-      <div class="sk-circle3 sk-circle"></div>
-      <div class="sk-circle4 sk-circle"></div>
-      <div class="sk-circle5 sk-circle"></div>
-      <div class="sk-circle6 sk-circle"></div>
-      <div class="sk-circle7 sk-circle"></div>
-      <div class="sk-circle8 sk-circle"></div>
-      <div class="sk-circle9 sk-circle"></div>
-      <div class="sk-circle10 sk-circle"></div>
-      <div class="sk-circle11 sk-circle"></div>
-      <div class="sk-circle12 sk-circle"></div>
+    <div class="sk-wave">
+      <div class="sk-rect sk-rect1"></div>
+      <div class="sk-rect sk-rect2"></div>
+      <div class="sk-rect sk-rect3"></div>
+      <div class="sk-rect sk-rect4"></div>
+      <div class="sk-rect sk-rect5"></div>
     </div>
     <p class="loading-text">
       {{ text }}
@@ -33,19 +26,18 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
-@import '~spinkit/scss/spinners/10-fading-circle';
+@import '~spinkit/scss/spinners/3-wave';
 
 .loading {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
+  .sk-wave {
+    margin-top: 25px;
+    margin-bottom: 5px;
+  }
 
-.loading-text {
-  color: $spinkit-spinner-color;
+  .loading-text {
+    text-align: center;
+    color: $spinkit-spinner-color;
+    margin-bottom: 25px;
+  }
 }
 </style>
