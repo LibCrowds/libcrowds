@@ -1,7 +1,10 @@
 <template>
   <div id="project-sorting-options">
     <div class="justify-content-centermy-1 row my-2">
-      <b-form-fieldset horizontal label="Sort:">
+      <b-form-fieldset
+        horizontal
+        label="Sort:"
+        class="col-4">
         <b-form-select
           :options="sortingOpts"
           v-model="sortKey"
@@ -9,7 +12,10 @@
         </b-form-select>
       </b-form-fieldset>
 
-      <b-form-fieldset horizontal class="col-3">
+      <b-form-fieldset
+        horizontal
+        label="Show completed:"
+        class="col-4">
         <toggle-button
           :value="showCompleted"
           :sync="true"
@@ -18,7 +24,7 @@
         </toggle-button>
       </b-form-fieldset>
 
-      <b-form-fieldset class="col-3">
+      <b-form-fieldset class="col-4">
         <b-button-group class="bg-white">
           <b-button
             v-for="view in views"
@@ -103,5 +109,9 @@ export default {
 
 .bg-white {
   background-color: $white;
+}
+
+.form-group {
+  margin-bottom: 0;
 }
 </style>

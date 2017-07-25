@@ -7,7 +7,6 @@
       class="list-unstyled">
       <li class="shuffle-grid-item"
         v-for="p in projects"
-        v-if="filter(p)"
         :key="p.short_name">
         <project-card :project="p"></project-card>
       </li>
