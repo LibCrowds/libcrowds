@@ -27,7 +27,7 @@
 
         <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
-          @click.native="scrollToTopIfCurrent">
+          @click.native="scrollToTop">
           <span>{{ config.brand }}</span>
         </b-link>
 
@@ -179,11 +179,15 @@ export default {
     ),
 
     /**
-     * Scroll to the top of the window if the link is to the current URI.
+     * Scroll to the top, smoothly if the link is the current location.
      */
-    scrollToTopIfCurrent (evt) {
-      if (evt.target.baseURI === window.location.href) {
+    scrollToTop (evt) {
+      if (evt !== undefined && evt.target.baseURI === window.location.href) {
         jump('body')
+      } else {
+        jump('body', {
+          duration: 0
+        })
       }
     },
 
@@ -219,6 +223,10 @@ export default {
 
       sidebar.$el.classList.toggle('show')
       hamburger.classList.toggle('is-active')
+
+      if (!(sidebar.$el.classList.contains('show'))) {
+        this.scrollToTop()
+      }
     }
   },
 
