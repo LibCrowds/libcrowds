@@ -144,7 +144,7 @@ export default {
   }
 
   .project-description {
-    overflow: scroll;
+    overflow-y: auto;
   }
 
   .card-img-overlay-wrapper {

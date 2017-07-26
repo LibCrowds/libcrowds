@@ -107,7 +107,7 @@ export default {
     .card-block {
       display: flex;
       flex-direction: column;
-      overflow: scroll;
+      overflow-y: auto;
     }
   }
 
