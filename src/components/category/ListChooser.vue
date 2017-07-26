@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { sortBy } from 'lodash'
 import marked from 'marked'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
@@ -76,7 +77,7 @@ export default {
      */
     loadCategories () {
       pybossaApi.get('/').then(r => {
-        this.categories = r.data.categories
+        this.categories = sortBy(r.data.categories, 'name')
         this.changeCategory(this.categories[0])
         this.loading = false
       })
