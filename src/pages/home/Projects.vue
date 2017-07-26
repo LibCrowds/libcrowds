@@ -2,7 +2,7 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="projects">
+    <section id="intro">
       <h2 class="text-center">Projects</h2>
       <hr>
       <span v-html="config.projectsMd" v-if="'projectsMd' in config"></span>
@@ -13,45 +13,54 @@
       </p>
     </section>
 
-    <section id="choose">
-      <h3 class="text-center">Choose a Project</h3>
+    <section :id="navItems[0].id">
+      <h3 class="text-center">{{ navItems[0].text }}</h3>
       <hr class="w-50"></hr>
-
       <category-list-chooser
         @change="onCategoryChange">
       </category-list-chooser>
       <hr class="w-50"></hr>
+    </section>
 
-    <span v-if="projects.length">
-      <project-sorting-options
-        :views="views"
-        :showCompleted="showCompleted"
-        @sort="onSort"
-        @viewchange="onViewChange"
-        @onToggleCompleted="onToggleCompleted">
-      </project-sorting-options>
-      <hr class="w-50"></hr>
+    <section :id="navItems[1].id">
+      <h3 class="text-center">{{ navItems[1].text }}</h3>
+      <hr>
 
-      <project-card-list
-        v-if="activeView === 'list'"
-        :projects="filteredProjects">
-      </project-card-list>
+      <span v-if="projects.length">
+        <project-sorting-options
+          :views="views"
+          :showCompleted="showCompleted"
+          @sort="onSort"
+          @viewchange="onViewChange"
+          @onToggleCompleted="onToggleCompleted">
+        </project-sorting-options>
+        <hr>
 
-      <project-contribute-table
-        v-if="activeView === 'table'"
-        :projects="filteredProjects">
-      </project-contribute-table>
+        <project-card-list
+          v-if="activeView === 'list'"
+          :projects="filteredProjects">
+        </project-card-list>
 
-      <project-pagination
-        :pagination="pagination"
-        @change="onPageChange">
-      </project-pagination>
-    </span>
-    <span v-else-if="this.category">
-      <p class="lead text-center mb-0">
-        Sorry, no projects have been published in this category yet.
-      </p>
-    </span>
+        <project-contribute-table
+          v-if="activeView === 'table'"
+          :projects="filteredProjects">
+        </project-contribute-table>
+
+        <project-pagination
+          :pagination="pagination"
+          @change="onPageChange">
+        </project-pagination>
+      </span>
+      <span v-else-if="this.category">
+        <p class="lead text-center mb-0">
+          Sorry, no projects have been published for this category.
+        </p>
+      </span>
+      <span v-else>
+        <p class="lead text-center mb-0">
+          Please choose a category first.
+        </p>
+      </span>
 
     </section>
 
@@ -83,7 +92,8 @@ export default {
       },
       config: config,
       navItems: [
-        { id: 'choose', text: 'Choose a Project' }
+        { id: 'categories', text: 'Choose a Category' },
+        { id: 'projects', text: 'Choose a Project' }
       ],
       projects: [],
       category: null
