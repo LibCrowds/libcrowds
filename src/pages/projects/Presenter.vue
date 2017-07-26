@@ -150,15 +150,6 @@ export default {
     }
   },
 
-  /**
-   * Hide the main navbar and footer.
-   */
-  hideNavbarAndFooter (hide) {
-    const displayStyle = hide ? 'none' : 'block'
-    document.querySelector('#app-navbar').style.display = displayStyle
-    document.querySelector('#app-footer').style.display = displayStyle
-  },
-
   mounted () {
     this.fetchProjects().then(r => {
       this.project = r.data[0]
@@ -167,11 +158,6 @@ export default {
       this.tasks = r.data
       this.loading = false
     })
-    this.hideNavbarAndFooter(true)
-  },
-
-  beforeDestoy () {
-    this.hideNavbarAndFooter(false)
   }
 }
 </script>
