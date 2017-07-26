@@ -44,8 +44,8 @@ export default {
 
         // Attempt to use HTTPS image source if server protocol is HTTPS
         const isHttps = window.location.protocol === 'https:'
-        if (isHttps && opts.imageInfoUrl.startsWith('http:')) {
-          opts.imageInfoUrl = opts.imageInfoUrl.replace('http://', 'https://')
+        if (isHttps && opts.img_info_uri.startsWith('http:')) {
+          opts.img_info_uri = opts.img_info_uri.replace('http://', 'https://')
         }
         return opts
       })
