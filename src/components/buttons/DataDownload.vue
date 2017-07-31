@@ -13,17 +13,17 @@
         Tasks JSON
       </b-dropdown-item>
       <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item @click="download('taskrun', 'csv')">
+      <b-dropdown-item @click="download('task_run', 'csv')">
         Task Runs CSV
       </b-dropdown-item>
-      <b-dropdown-item @click="download('taskrun', 'json')">
+      <b-dropdown-item @click="download('task_run', 'json')">
         Task Runs JSON
       </b-dropdown-item>
       <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item @click="download('results', 'csv')">
+      <b-dropdown-item @click="download('result', 'csv')">
         Results CSV
       </b-dropdown-item>
-      <b-dropdown-item @click="download('results', 'json')">
+      <b-dropdown-item @click="download('result', 'json')">
         Results JSON
       </b-dropdown-item>
     </b-dropdown>
