@@ -2,23 +2,26 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="statistics">
+    <section>
       <h2 class="text-center">Statistics</h2>
       <hr>
+      <p class="text-center lead" v-if="stats">
+        {{ stats.n_total_users }} volunteers have participated in
+        {{ stats.n_published_projects }} projects and made
+        {{ stats.n_task_runs }} contributions.
+      </p>
+    </section>
 
-      <div id="top-users">
-        <h3 class="text-center">Most Active Volunteers</h3>
-        <div id="top-users-chart" class="ct-major-seventh"></div>
+    <section  :id="navItems[0].id">
+      <h3 class="text-center">{{ navItems[0].text }}</h3>
+      <div id="top-users-chart" class="ct-major-seventh"></div>
+    </section>
+
+    <section :id="navItems[1].id">
+      <h3 class="text-center">{{ navItems[1].text }}</h3>
+      <div class="container">
+        <div id="locs-map"></div>
       </div>
-
-      <div :style="mapStyle">
-        <hr>
-        <h3 class="text-center">Locations of Anonymous Volunteers</h3>
-        <div class="ct-major-seventh">
-          <div id="locs-map"></div>
-        </div>
-      </div>
-
     </section>
 
   </floating-tabs-layout>
@@ -40,30 +43,43 @@ export default {
       config: config,
       navItems: [
         { id: 'top-users', text: 'Most Active Volunteers' },
-        { id: 'top-users', text: 'Most Active Volunteers' }
+        { id: 'top-users', text: 'Locations of Anonymous Volunteers' }
       ],
       topUsers: [],
       locs: [],
       chartPlugins: [
         Chartist.plugins.tooltip()
-      ]
+      ],
+      stats: null
     }
   },
 
   methods: {
+    /**
+     * Fetch global stats.
+     */
     fetchGlobalStats () {
       pybossaApi.get('/stats/').then(r => {
+        this.stats = r.data.stats
         if (r.data.show_locs) {
           this.locs = r.data.locs
         }
       })
     },
-    fetchTopUsers () {
-      pybossaApi.get(`/`).then(r => {
-        this.topUsers = r.data.top_users
+
+    /**
+     * Fetch the leaderboard.
+     */
+    fetchLeaderboard () {
+      pybossaApi.get(`leaderboard/window/0`).then(r => {
+        this.topUsers = r.data.top_users.slice(0, 10)
       })
     },
-    mapTileOpts: function () {
+
+    /**
+     * Return the map tile options.
+     */
+    getMapTileOpts () {
       if ('mapboxApiToken' in config) {
         return {
           maxZoom: 18,
@@ -82,21 +98,17 @@ export default {
         maxZoom: 18
       }
     },
-    mapProviderUrl: function () {
+
+    /**
+     * Return the map provider URL.
+     */
+    getMapProviderUrl () {
       if ('mapboxApiToken' in config) {
         return `https://api.tiles.mapbox.com/v4` +
                `/{id}/{z}/{x}/{y}.png` +
                `?access_token=${config.mapboxApiToken}`
       }
       return 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-    }
-  },
-
-  computed: {
-    mapStyle: function () {
-      return {
-        display: this.locs.length ? 'block' : 'none'
-      }
     }
   },
 
@@ -112,11 +124,12 @@ export default {
       }
       Chartist.Bar('#top-users-chart', data, { plugins: this.chartPlugins })
     },
+
     locs: function () {
       let map = L.map('locs-map', { scrollWheelZoom: false, minZoom: 1 })
       map.fitWorld()
       map.setZoom(2)
-      L.tileLayer(this.mapProviderUrl(), this.mapTileOpts()).addTo(map)
+      L.tileLayer(this.getMapProviderUrl(), this.getMapTileOpts()).addTo(map)
       let markers = new L.MarkerClusterGroup()
       for (let l of this.locs) {
         if (l.loc !== null) {
@@ -137,8 +150,8 @@ export default {
     FloatingTabsLayout
   },
 
-  created () {
-    this.fetchTopUsers()
+  mounted () {
+    this.fetchLeaderboard()
     this.fetchGlobalStats()
   }
 }
@@ -150,4 +163,10 @@ export default {
 @import '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip';
 @import '~leaflet.markercluster/dist/MarkerCluster';
 @import '~leaflet.markercluster/dist/MarkerCluster.Default';
+
+#locs-map {
+  display: block;
+  height: 500px;
+  width: 100%;
+}
 </style>
