@@ -10,10 +10,12 @@
       v-else
       confirm-before-unload="true"
       disable-complete="true"
+      show-like="true"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
-      @submit="handleSubmit">
+      @submit="onSubmit"
+      @taskliked="onTaskLiked">
     </libcrowds-viewer>
 
   </div>
@@ -117,7 +119,7 @@ export default {
     /**
      * Handle the task liked event.
      */
-    handleTaskLiked (data) {
+    onTaskLiked (data) {
       if (data.liked) {
         this.addFavourite(data.id)
       } else {
@@ -128,7 +130,7 @@ export default {
     /**
      * Handle the submit event.
      */
-    handleSubmit (data) {
+    onSubmit (data) {
       this.fetchTask(data.id).then(r => {
         let task = r.data
         task.answer = data.annotations
