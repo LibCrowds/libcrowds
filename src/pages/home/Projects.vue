@@ -32,7 +32,7 @@
           :showCompleted="showCompleted"
           @sort="onSort"
           @viewchange="onViewChange"
-          @onToggleCompleted="onToggleCompleted">
+          @togglecompleted="onToggleCompleted">
         </project-sorting-options>
         <hr>
 
