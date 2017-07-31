@@ -1,34 +1,30 @@
 <template>
-  <div id="data-download">
-
-    <b-dropdown
-      right
-      text="Download"
-      size="sm"
-      variant="outline-success">
-      <b-dropdown-item @click="download('task', 'csv')">
-        Tasks CSV
-      </b-dropdown-item>
-      <b-dropdown-item @click="download('task', 'json')">
-        Tasks JSON
-      </b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item @click="download('task_run', 'csv')">
-        Task Runs CSV
-      </b-dropdown-item>
-      <b-dropdown-item @click="download('task_run', 'json')">
-        Task Runs JSON
-      </b-dropdown-item>
-      <b-dropdown-divider></b-dropdown-divider>
-      <b-dropdown-item @click="download('result', 'csv')">
-        Results CSV
-      </b-dropdown-item>
-      <b-dropdown-item @click="download('result', 'json')">
-        Results JSON
-      </b-dropdown-item>
-    </b-dropdown>
-
-  </div>
+  <b-dropdown
+    right
+    text="Download"
+    size="sm"
+    variant="outline-success">
+    <b-dropdown-item @click="download('task', 'csv')">
+      Tasks CSV
+    </b-dropdown-item>
+    <b-dropdown-item @click="download('task', 'json')">
+      Tasks JSON
+    </b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item @click="download('task_run', 'csv')">
+      Task Runs CSV
+    </b-dropdown-item>
+    <b-dropdown-item @click="download('task_run', 'json')">
+      Task Runs JSON
+    </b-dropdown-item>
+    <b-dropdown-divider></b-dropdown-divider>
+    <b-dropdown-item @click="download('result', 'csv')">
+      Results CSV
+    </b-dropdown-item>
+    <b-dropdown-item @click="download('result', 'json')">
+      Results JSON
+    </b-dropdown-item>
+  </b-dropdown>
 </template>
 
 <script>
