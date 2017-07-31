@@ -33,8 +33,14 @@
           <p
             v-if="activeCategory === c"
             v-for="c in categories"
-            :key="c.id"
-            v-html="marked(c.description)">
+            :key="c.short_name">
+            <span v-if="c.description" v-html="marked(c.description)"></span>
+            <span v-else-if="c.short_name === 'featured'">
+              A selection of featured projects.
+            </span>
+            <span v-else>
+              No description.
+            </span>
           </p>
         </span>
 
