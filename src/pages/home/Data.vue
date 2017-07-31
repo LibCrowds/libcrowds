@@ -45,19 +45,26 @@
       </p>
     </section>
 
-    <section id="tasks">
-      <h3 class="text-center">Tasks</h3>
-      <data-download-table :downloadType="'task'"></data-download-table>
+    <section :id="navItems[0].id">
+      <h3 class="text-center">{{ navItems[0].text }}</h3>
+      <hr class="w-50"></hr>
+      <category-list-chooser
+        @change="onCategoryChange">
+      </category-list-chooser>
+      <hr class="w-50"></hr>
     </section>
 
-    <section id="taskruns">
-      <h3 class="text-center">Task Runs</h3>
-      <data-download-table :downloadType="'task_run'"></data-download-table>
-    </section>
+    <section :id="navItems[0].id">
+      <h3 class="text-center">{{ navItems[0].text }}</h3>
 
-    <section id="results">
-      <h3 class="text-center">Results</h3>
-      <data-download-table :downloadType="'results'"></data-download-table>
+      <project-contribute-table
+        :projects="projects">
+      </project-contribute-table>
+
+      <project-pagination
+        :pagination="pagination"
+        @change="onPageChange">
+      </project-pagination>
     </section>
 
   </floating-tabs-layout>
@@ -66,18 +73,27 @@
 
 <script>
 import config from '@/config'
-import DataDownloadTable from '@/components/tables/DataDownload'
+import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
+import ProjectContributeTable from '@/components/project/ContributeTable'
+import CategoryListChooser from '@/components/category/ListChooser'
+import ProjectPagination from '@/components/project/Pagination'
 
 export default {
   data: function () {
     return {
       config: config,
       navItems: [
-        { id: 'tasks', text: 'Tasks' },
-        { id: 'taskruns', text: 'Task Runs' },
-        { id: 'results', text: 'Results' }
-      ]
+        { id: 'categories', text: 'Choose a Category' },
+        { id: 'download', text: 'Download' }
+      ],
+      page: 1,
+      pagination: {
+        per_page: 0,
+        total: 0
+      },
+      projects: [],
+      category: null
     }
   },
 
@@ -87,7 +103,41 @@ export default {
 
   components: {
     FloatingTabsLayout,
-    DataDownloadTable
+    ProjectContributeTable,
+    CategoryListChooser,
+    ProjectPagination
+  },
+
+  methods: {
+    /**
+     * Handle category change.
+     */
+    onCategoryChange (category) {
+      this.category = category
+      this.fetchProjects(category)
+    },
+
+    /**
+     * Fetch the projects in a category.
+     */
+    fetchProjects () {
+      let url = `/project/category/${this.category.short_name}/`
+      if (this.page > 1) {
+        url += `page/${this.page}/`
+      }
+      pybossaApi.get(url).then(r => {
+        this.projects = r.data.projects
+        this.pagination = r.data.pagination
+      })
+    },
+
+    /**
+     * Handle page change.
+     */
+    onPageChange (page) {
+      this.page = page
+      this.fetchProjects()
+    }
   }
 }
 </script>
