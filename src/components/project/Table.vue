@@ -10,7 +10,7 @@
     <template slot="overall_progress" scope="project">
       {{ project.item.overall_progress }}%
     </template>
-    <template slot="actions" scope="project">
+    <template slot="action" scope="project">
 
       <project-contrib-button
         :shortname="project.item.short_name"
@@ -33,7 +33,7 @@ export default {
         n_tasks: { label: 'Tasks' },
         n_volunteers: { label: 'Volunteers' },
         overall_progress: { label: 'Progress' },
-        actions: { label: 'Actions' }
+        action: { label: 'Action' }
       }
     }
   },
