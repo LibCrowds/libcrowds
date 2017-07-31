@@ -2,7 +2,7 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="about">
+    <section>
       <h2 class="text-center">About</h2>
       <hr>
       <span v-if="aboutMd" v-html="aboutMd"></span>
@@ -13,8 +13,8 @@
       </p>
     </section>
 
-    <section id="technology">
-      <h3>Technology</h3>
+    <section :id="navItems[0].id">
+      <h3 class="text-center">{{ navItems[0].text }}</h3>
       <span v-if="technologyMd" v-html="technologyMd"></span>
       <p v-else>
         On the backend, {{ config.brand }} uses an instance of
@@ -27,8 +27,8 @@
       </p>
     </section>
 
-    <section id="contact">
-      <h3>Contact</h3>
+    <section :id="navItems[1].id">
+      <h3 class="text-center">{{ navItems[1].text }}</h3>
       <p v-if="config.forumUrl">
         Visit the <a :href="config.forumUrl">{{ config.brand }} forum</a>
         to ask any questions, report issues, or to just let us know what
