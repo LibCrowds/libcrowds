@@ -57,9 +57,9 @@
     <section :id="navItems[0].id">
       <h3 class="text-center">{{ navItems[0].text }}</h3>
 
-      <project-contribute-table
+      <project-table
         :projects="projects">
-      </project-contribute-table>
+      </project-table>
 
       <project-pagination
         :pagination="pagination"
@@ -75,7 +75,7 @@
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
-import ProjectContributeTable from '@/components/project/ContributeTable'
+import ProjectTable from '@/components/project/Table'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
 
@@ -103,7 +103,7 @@ export default {
 
   components: {
     FloatingTabsLayout,
-    ProjectContributeTable,
+    ProjectTable,
     CategoryListChooser,
     ProjectPagination
   },

@@ -41,10 +41,11 @@
           :projects="filteredProjects">
         </project-card-list>
 
-        <project-contribute-table
+        <project-table
           v-if="activeView === 'table'"
+          :action="'contribute'"
           :projects="filteredProjects">
-        </project-contribute-table>
+        </project-table>
 
         <project-pagination
           :pagination="pagination"
@@ -74,7 +75,7 @@ import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
-import ProjectContributeTable from '@/components/project/ContributeTable'
+import ProjectTable from '@/components/project/Table'
 import ProjectCardList from '@/components/project/CardList'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 import CategoryListChooser from '@/components/category/ListChooser'
@@ -116,7 +117,7 @@ export default {
     FloatingTabsLayout,
     ProjectSortingOptions,
     ProjectPagination,
-    ProjectContributeTable,
+    ProjectTable,
     ProjectCardList,
     CategoryListChooser
   },

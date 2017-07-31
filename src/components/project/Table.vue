@@ -11,10 +11,13 @@
       {{ project.item.overall_progress }}%
     </template>
     <template slot="actions" scope="project">
+
       <project-contrib-button
         :shortname="project.item.short_name"
+        v-if="action === 'contribute'"
         size="sm">
       </project-contrib-button>
+
     </template>
   </b-table>
 </template>
@@ -43,6 +46,13 @@ export default {
     projects: {
       type: Array,
       required: true
+    },
+    action: {
+      type: String,
+      required: true,
+      validator: value => {
+        return value in ['contribute', 'download', 'open']
+      }
     }
   }
 }
