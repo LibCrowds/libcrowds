@@ -1,12 +1,12 @@
 .modal.show {
   display: block !important;
-  
+
   .modal-dialog{
     overflow-y: initial !important
   }
 
   .modal-content {
-    max-height: 500px;
+    max-height: 600px;
     border-radius: 0;
   }
 
