@@ -177,6 +177,7 @@ export default {
 
 .progressbar-text {
   font-size: $font-size-lg;
+  font-family: $headings-font-family;
 }
 
 </style>
