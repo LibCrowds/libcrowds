@@ -52,27 +52,9 @@ export default {
 @import 'src/assets/style/main';
 
 .project-contribute-table {
-  .table {
-    font-size: $font-size-sm;
-    margin-bottom: 0;
-    background-color: $white;
-    border: $table-border-width solid $table-border-color;
-
-    th {
-      font-weight: 400;
-      text-transform: uppercase;
-      color: $text-muted;
-      border-top: none;
-    }
-
-    tr {
-      &*:not(:first-child) {
-        text-align: center;
-
-        &:first-child {
-          width: 99%;
-        }
-      }
+  tr {
+    *:not(:first-child) {
+      text-align: center;
     }
   }
 }

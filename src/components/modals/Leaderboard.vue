@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/assets/style/main';
 
 .modal {
@@ -90,15 +90,7 @@ export default {
 }
 
 .table {
-  font-size: $font-size-sm;
   margin-bottom: 0;
-
-  th {
-    font-weight: 400;
-    text-transform: uppercase;
-    color: $text-muted;
-    border-top: none;
-  }
 
   tr *:first-child,
   tr *:last-child {

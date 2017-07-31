@@ -133,19 +133,8 @@ export default {
 @import 'src/assets/style/main';
 
 .table {
-  font-size: $font-size-sm;
-  margin-bottom: 0;
-  background-color: $white;
-  border: $table-border-width solid $table-border-color;
-
-  th {
-    font-weight: 400;
-    text-transform: uppercase;
-    color: $text-muted;
-    border-top: none;
-  }
-
-  tr *:not(:first-child) {
+  th:not(:first-child),
+  td:not(:first-child) {
     text-align: center;
   }
 }
