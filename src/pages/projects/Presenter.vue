@@ -8,6 +8,8 @@
 
     <libcrowds-viewer
       v-else
+      confirm-before-unload="true"
+      disable-complete="true"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
