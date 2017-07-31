@@ -48,7 +48,6 @@ export default {
      * Download the data.
      */
     download (type, format) {
-      console.log(this.project)
       pybossaApi.get(`/project/${this.project.short_name}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
