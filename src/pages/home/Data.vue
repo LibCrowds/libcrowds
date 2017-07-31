@@ -54,10 +54,11 @@
       <hr class="w-50"></hr>
     </section>
 
-    <section :id="navItems[0].id">
-      <h3 class="text-center">{{ navItems[0].text }}</h3>
+    <section :id="navItems[1].id">
+      <h3 class="text-center">{{ navItems[1].text }}</h3>
 
       <project-table
+        :action="'download'"
         :projects="projects">
       </project-table>
 

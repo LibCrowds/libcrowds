@@ -18,12 +18,19 @@
         size="sm">
       </project-contrib-button>
 
+      <data-download-button
+        :project="project.item"
+        else-if="action === 'download'"
+        size="sm">
+      </data-download-button>
+
     </template>
   </b-table>
 </template>
 
 <script>
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import DataDownloadButton from '@/components/buttons/DataDownload'
 
 export default {
   data: function () {
@@ -39,7 +46,8 @@ export default {
   },
 
   components: {
-    ProjectContribButton
+    ProjectContribButton,
+    DataDownloadButton
   },
 
   props: {
@@ -51,7 +59,12 @@ export default {
       type: String,
       required: true,
       validator: value => {
-        return value in ['contribute', 'download', 'open']
+        const validActions = [
+          'contribute',
+          'download',
+          'open'
+        ]
+        return validActions.indexOf(value) > -1
       }
     }
   }
