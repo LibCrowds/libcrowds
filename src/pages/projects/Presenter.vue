@@ -8,10 +8,14 @@
 
     <libcrowds-viewer
       v-else
+      confirm-before-unload="true"
+      disable-complete="true"
+      show-like="true"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
-      @submit="handleSubmit">
+      @submit="onSubmit"
+      @taskliked="onTaskLiked">
     </libcrowds-viewer>
 
   </div>
@@ -41,6 +45,15 @@ export default {
       return this.tasks.map(function (task) {
         let opts = task.info
         opts.id = task.id
+
+        // Attempt to use HTTPS image source if server protocol is HTTPS
+        const isHttps = window.location.protocol === 'https:'
+        if (isHttps && opts.imgInfoUri.startsWith('http:')) {
+          opts.imgInfoUri = opts.imgInfoUri.replace('http://', 'https://')
+        }
+        if (isHttps && opts.manifestUri.startsWith('http:')) {
+          opts.manifestUri = opts.manifestUri.replace('http://', 'https://')
+        }
         return opts
       })
     },
@@ -106,7 +119,7 @@ export default {
     /**
      * Handle the task liked event.
      */
-    handleTaskLiked (data) {
+    onTaskLiked (data) {
       if (data.liked) {
         this.addFavourite(data.id)
       } else {
@@ -117,7 +130,7 @@ export default {
     /**
      * Handle the submit event.
      */
-    handleSubmit (data) {
+    onSubmit (data) {
       this.fetchTask(data.id).then(r => {
         let task = r.data
         task.answer = data.annotations
@@ -144,15 +157,6 @@ export default {
     }
   },
 
-  /**
-   * Hide the main navbar and footer.
-   */
-  hideNavbarAndFooter (hide) {
-    const displayStyle = hide ? 'none' : 'block'
-    document.querySelector('#app-navbar').style.display = displayStyle
-    document.querySelector('#app-footer').style.display = displayStyle
-  },
-
   mounted () {
     this.fetchProjects().then(r => {
       this.project = r.data[0]
@@ -161,11 +165,6 @@ export default {
       this.tasks = r.data
       this.loading = false
     })
-    this.hideNavbarAndFooter(true)
-  },
-
-  beforeDestoy () {
-    this.hideNavbarAndFooter(false)
   }
 }
 </script>
