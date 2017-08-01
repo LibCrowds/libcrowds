@@ -5,11 +5,8 @@
     <section id="intro">
       <h2 class="text-center">Projects</h2>
       <hr>
-      <span v-html="config.projectsMd" v-if="'projectsMd' in config"></span>
-      <p v-else>
-        Each {{ config.brand }} project comprises a collection of similar tasks.
-        With each completed task you will be directly contributing towards
-        important research. Choose a project from the list below to get started!
+      <p class="lead text-center">
+        Choose a project from the list below to get started!
       </p>
     </section>
 
@@ -71,7 +68,6 @@
 
 <script>
 import { sortBy, forEach } from 'lodash'
-import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
@@ -91,7 +87,6 @@ export default {
         per_page: 0,
         total: 0
       },
-      config: config,
       navItems: [
         { id: 'categories', text: 'Choose a Category' },
         { id: 'projects', text: 'Choose a Project' }
