@@ -3,7 +3,7 @@ import Landing from '@/pages/Landing'
 import About from '@/pages/home/About'
 import Data from '@/pages/home/Data'
 import Results from '@/pages/home/Results'
-import Projects from '@/pages/home/Projects'
+import Contribute from '@/pages/home/Contribute'
 import Statistics from '@/pages/home/Statistics'
 
 import TOS from '@/pages/help/TOS'
@@ -19,7 +19,7 @@ export default [
   { path: '/', name: 'landing', component: Landing },
   { path: '/about', name: 'about', component: About },
   { path: '/data', name: 'data', component: Data },
-  { path: '/projects', name: 'projects', component: Projects },
+  { path: '/contribute', name: 'contribute', component: Contribute },
   { path: '/results', name: 'results', component: Results },
   { path: '/statistics', name: 'statistics', component: Statistics },
 
