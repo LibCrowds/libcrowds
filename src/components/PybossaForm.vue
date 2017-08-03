@@ -10,7 +10,7 @@
     <b-form-fieldset
       v-for="f in fields"
       :key="f.name"
-      :feedback="getFeedback(f.name)"
+      :feedback="getErrors(f.name)"
       :state="getState(f.name)">
       <b-form-input
         required
@@ -27,7 +27,6 @@
 
 <script>
 import pybossaApi from '@/api/pybossa'
-import router from '@/router'
 import Loading from '@/components/Loading'
 
 export default {
@@ -36,9 +35,7 @@ export default {
       loading: true,
       form: {
         csrf: null,
-        email: null,
-        errors: {},
-        password: null
+        errors: {}
       }
     }
   },
@@ -59,12 +56,19 @@ export default {
   },
 
   methods: {
-    fetch () {
+    /**
+     * Get the form.
+     */
+    fetchForm () {
       pybossaApi.get(this.endpoint).then(r => {
-        this.handleResponse(r)
+        this.form = r.data.form
         this.loading = false
       })
     },
+
+    /**
+     * Submit the form, update it and emit the response.
+     */
     submit () {
       if (document.querySelector('form').checkValidity()) {
         pybossaApi.post(this.endpoint, this.form, {
@@ -72,31 +76,41 @@ export default {
             'X-CSRFToken': this.form.csrf
           }
         }).then(r => {
-          this.handleResponse(r)
+          this.form = r.data.form
+          this.$emit('response', r)
         })
       }
     },
-    handleResponse (r) {
-      if ('next' in r.data) {
-        router.push({ path: r.data.next })
-      }
-      this.form = r.data.form
-      this.$emit('response', r)
-    },
-    getFeedback (field) {
-      const fb = this.form.errors[field]
-      if (!fb) {
+
+    /**
+     * Get the errors for a form field.
+     * @param {String} field
+     *   The form field key.
+     * @returns {String}
+     *   The feedback.
+     */
+    getErrors (field) {
+      const feedback = this.form.errors[field]
+      if (!feedback) {
         return
       }
-      return fb.join()
+      return feedback.join()
     },
+
+    /**
+     * Return 'danger' if the field has an error, else null.
+     * @param {String} field
+     *   The form field key.
+     * @returns {String|null}
+     *   The state class.
+     */
     getState (field) {
       return field in this.form.errors ? 'danger' : null
     }
   },
 
-  mounted () {
-    this.fetch()
+  created () {
+    this.fetchForm()
   }
 }
 </script>
