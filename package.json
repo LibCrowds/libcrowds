@@ -9,7 +9,7 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "npm install && node build/build.js",
-    "unit": "cross-env BABEL_ENV=test jest test/unit/specs --coverage",
+    "unit": "cross-env BABEL_ENV=test jest test/specs  --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
@@ -138,6 +138,7 @@
       "!src/main.js",
       "!src/router/index.js",
       "!**/node_modules/**"
-    ]
+    ],
+    "coverageDirectory": "<rootDir>/test/unit/coverage"
   }
 }
