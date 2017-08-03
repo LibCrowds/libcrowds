@@ -3,7 +3,6 @@
     ref="child-modal"
     :id="name"
     :title="title"
-    @ok="submit"
     @shown="load">
 
     <loading
@@ -40,7 +39,7 @@
         <slot name="footer-left"></slot>
       </span>
       <b-button variant="secondary" @click="hide(false)">Close</b-button>
-      <b-button variant="success" @click="hide(true)">OK</b-button>
+      <b-button variant="success" @click="submit">OK</b-button>
     </template>
   </b-modal>
 </template>
@@ -109,29 +108,20 @@ export default {
     /**
      * Submit the form.
      */
-    submit (e) {
-      e.cancel()
+    submit () {
       pybossaApi.post(this.endpoint, this.form, {
         headers: {
           'X-CSRFToken': this.form.csrf
         }
       }).then(r => {
         if (r.data.status === 'success') {
-          this.$refs['child-modal'].hide(true)
+          this.$refs['child-modal'].hide()
         } else {
           this.flash = r.data.flash
           this.status = r.data.status
         }
         this.$emit('response', r)
       })
-    },
-
-    /**
-     * Hide the modal.
-     */
-    hide (isOk) {
-      this.$emit('hidden')
-      this.$refs['child-modal'].hide(isOk)
     }
   }
 }
