@@ -8,9 +8,9 @@
 
     <libcrowds-viewer
       v-else
-      confirm-before-unload="true"
-      disable-complete="true"
-      :show-like="currentUser"
+      :confirm-before-unload="true"
+      :disable-complete="true"
+      :show-like="currentUser !== null && currentUser !== undefined"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
