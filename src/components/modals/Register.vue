@@ -3,8 +3,7 @@
     :name="name"
     :schema="schema"
     :endpoint="endpoint"
-    :lead="lead"
-    @success="updateCurrentUser">
+    :lead="lead">
   </pybossa-modal-form>
 </template>
 
@@ -58,12 +57,6 @@ export default {
     name: {
       type: String,
       required: true
-    }
-  },
-
-  methods: {
-    updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER')
     }
   }
 }
