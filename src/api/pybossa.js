@@ -1,6 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import config from '@/config'
+import manageSession from '@/api/interceptors/manageSession'
 
 const instance = axios.create({
   baseURL: config.pybossaHost,
@@ -11,6 +12,8 @@ const instance = axios.create({
   timeout: 30000,
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
+
+instance.interceptors.response.use(() => manageSession(store, document.cookie))
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
