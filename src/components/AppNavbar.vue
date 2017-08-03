@@ -78,7 +78,11 @@
                 @click="$root.$emit('show::modal','open-project-modal')">
                 Open Project
               </b-dropdown-item>
-              <b-dropdown-item to="#">Admin</b-dropdown-item>
+              <b-dropdown-item
+                v-if="currentUser.admin"
+                to="#">
+                Admin
+              </b-dropdown-item>
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
