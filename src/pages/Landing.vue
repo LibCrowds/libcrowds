@@ -189,7 +189,7 @@
       </div>
     </section>
 
-    <section id="results">
+    <section id="results" v-if="config.resultsComponent">
       <b-jumbotron :style="resultsStyle">
         <div class="container py-4">
           <div class="row text-center">
