@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import config from '@/config'
-import manageSession from '@/api/interceptors/manageSession'
+import manageSession from '@/utils/manageSession'
 
 const instance = axios.create({
   baseURL: config.pybossaHost,

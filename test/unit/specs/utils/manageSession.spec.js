@@ -1,4 +1,4 @@
-import manageSession from '@/api/interceptors/manageSession'
+import manageSession from '@/utils/manageSession'
 
 describe('manageSession', () => {
   let store = null
