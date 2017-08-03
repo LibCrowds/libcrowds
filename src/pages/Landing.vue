@@ -9,7 +9,7 @@
           <b-button variant="secondary" :to="{ name: 'about' }">
             Learn More
           </b-button>
-          <b-button variant="success" :to="{ name: 'projects' }">
+          <b-button variant="success" :to="{ name: 'contribute' }">
             Get Started
           </b-button>
         </div>
@@ -93,7 +93,7 @@
               class="mt-2 btn-bg-white"
               variant="outline-primary"
               size="lg"
-              :to="{ name: 'projects' }">
+              :to="{ name: 'contribute' }">
               Browse all projects
             </b-button>
           </div>
@@ -148,7 +148,7 @@
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
-            <b-button variant="secondary" :to="{ name: 'projects' }">
+            <b-button variant="secondary" :to="{ name: 'contribute' }">
               Get Involved
             </b-button>
           </div>
@@ -229,7 +229,7 @@
             <b-button
               variant="outline-primary"
               size="lg"
-              :to="{ name: 'projects' }">
+              :to="{ name: 'contribute' }">
               Choose a project
             </b-button>
           </div>

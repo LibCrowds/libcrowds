@@ -3,7 +3,7 @@
   <floating-tabs-layout :nav-items="navItems">
 
     <section>
-      <h2 class="text-center">Projects</h2>
+      <h2 class="text-center">Contribute</h2>
       <hr>
       <p class="lead text-center">
         Choose a project from the list below to get started!

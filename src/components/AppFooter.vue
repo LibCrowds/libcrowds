@@ -29,13 +29,13 @@
       </section>
 
       <section class="hidden-md-down">
-        <h5 class="list-title">Contribute</h5>
+        <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li class="list-item">
             <router-link
-              :to="{ name: 'projects' }"
+              :to="{ name: 'contribute' }"
               @click.native="scrollIfCurrent">
-              Projects
+              Contribute
             </router-link>
           </li>
         </ul>

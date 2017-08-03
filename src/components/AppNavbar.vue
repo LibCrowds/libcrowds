@@ -40,9 +40,9 @@
               About
             </b-nav-item>
             <b-nav-item
-              :to="{ name: 'projects' }"
+              :to="{ name: 'contribute' }"
               @click.native="toggleCollapsibleSidebar">
-              Projects
+              Contribute
             </b-nav-item>
             <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
               Discuss
