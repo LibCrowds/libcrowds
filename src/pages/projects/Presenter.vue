@@ -164,10 +164,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'Task Presenter',
-    bodyAttrs: {
-      style: 'background: #000000'
-    }
+    title: 'Task Presenter'
   },
 
   mounted () {
