@@ -140,6 +140,6 @@
       "!**/node_modules/**"
     ],
     "coverageDirectory": "<rootDir>/test/unit/coverage",
-    "testRegex": "(/tests/unit/specs/.*|(\\.|/)(test|spec))\\.jsx?$"
+    "testRegex": "/test/unit/specs/.*(test|spec)\\.jsx?$"
   }
 }
