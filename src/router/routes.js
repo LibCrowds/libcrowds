@@ -1,3 +1,5 @@
+import config from '@/config'
+
 import Landing from '@/pages/Landing'
 
 import About from '@/pages/home/About'
@@ -13,14 +15,11 @@ import Api from '@/pages/help/Api'
 
 import Presenter from '@/pages/projects/Presenter'
 
-export default [
-
-  // Core site
+const routes = [
   { path: '/', name: 'landing', component: Landing },
   { path: '/about', name: 'about', component: About },
   { path: '/data', name: 'data', component: Data },
   { path: '/contribute', name: 'contribute', component: Contribute },
-  { path: '/results', name: 'results', component: Results },
   { path: '/statistics', name: 'statistics', component: Statistics },
 
   { path: '/help/tos', name: 'tos', component: TOS },
@@ -53,3 +52,9 @@ export default [
     }
   }
 ]
+
+if (config.resultsComponent) {
+  routes.push({ path: '/results', name: 'results', component: Results })
+}
+
+export default routes

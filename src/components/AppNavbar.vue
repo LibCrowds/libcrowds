@@ -53,6 +53,7 @@
               Statistics
             </b-nav-item>
             <b-nav-item
+              v-if="config.resultsComponent"
               :to="{ name: 'results' }"
               @click.native="toggleCollapsibleSidebar">
               Results

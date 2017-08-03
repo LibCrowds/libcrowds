@@ -44,7 +44,8 @@
       <section class="hidden-md-down">
         <h5 class="list-title">Analysis</h5>
         <ul class="list-unstyled">
-          <li class="list-item">
+          <li class="list-item"
+            v-if="config.resultsComponent">
             <router-link
               :to="{ name: 'results' }"
               @click.native="scrollIfCurrent">
