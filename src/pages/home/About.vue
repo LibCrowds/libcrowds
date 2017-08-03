@@ -27,8 +27,14 @@
       </p>
     </section>
 
-    <section :id="navItems[1].id">
+    <section :id="navItems[1].id" v-if="'projectsMd' in config">
       <h3 class="text-center">{{ navItems[1].text }}</h3>
+      <hr class="w-50">
+      <span v-html="config.projectsMd"></span>
+    </section>
+
+    <section :id="navItems[2].id">
+      <h3 class="text-center">{{ navItems[2].text }}</h3>
       <p v-if="config.forumUrl">
         Visit the <a :href="config.forumUrl">{{ config.brand }} forum</a>
         to ask any questions, report issues, or to just let us know what
@@ -48,7 +54,6 @@
           </a>
         </li>
       </ul>
-
     </section>
 
   </floating-tabs-layout>
@@ -68,6 +73,7 @@ export default {
       mailto: `mailto:${config.contact.email}`,
       navItems: [
         { id: 'technology', text: 'Technology' },
+        { id: 'projects', text: 'Projects' },
         { id: 'contact', text: 'Contact' }
       ]
     }

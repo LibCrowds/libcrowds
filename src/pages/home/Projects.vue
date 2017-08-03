@@ -2,14 +2,18 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="intro">
+    <section>
       <h2 class="text-center">Projects</h2>
       <hr>
-      <span v-html="config.projectsMd" v-if="'projectsMd' in config"></span>
-      <p v-else>
-        Each {{ config.brand }} project comprises a collection of similar tasks.
-        With each completed task you will be directly contributing towards
-        important research. Choose a project from the list below to get started!
+      <p class="lead text-center">
+        Choose a project from the list below to get started!
+      </p>
+      <p class="text-center" v-if="config.projectsMd">
+        <small>
+          For more information about how projects are organised,
+          see the
+          <router-link :to="{ name: 'about' }">about page</router-link>.
+        </small>
       </p>
     </section>
 
@@ -83,6 +87,7 @@ import CategoryListChooser from '@/components/category/ListChooser'
 export default {
   data: function () {
     return {
+      config: config,
       views: ['list', 'table'],
       activeView: 'list',
       showCompleted: false,
@@ -91,10 +96,9 @@ export default {
         per_page: 0,
         total: 0
       },
-      config: config,
       navItems: [
-        { id: 'categories', text: 'Choose a Category' },
-        { id: 'projects', text: 'Choose a Project' }
+        { id: 'categories', text: 'Categories' },
+        { id: 'projects', text: 'Projects' }
       ],
       projects: [],
       category: null
