@@ -10,7 +10,7 @@
       v-else
       confirm-before-unload="true"
       disable-complete="true"
-      show-like="true"
+      :show-like="currentUser"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
@@ -83,19 +83,32 @@ export default {
   },
 
   methods: {
+    /**
+     * Fetch projects with the given short name.
+     */
     fetchProjects () {
       const shortname = this.$store.state.route.params.shortname
       return pybossaApi.get(`/api/project?short_name=${shortname}`)
     },
 
-    fetchNewTasks () {
-      return pybossaApi.get(`/api/project/${this.project.id}/newtask?limit=100`)
+    /**
+     * Fetch new tasks.
+     */
+    fetchNewTasks (limit = 100) {
+      const url = `/api/project/${this.project.id}/newtask?limit=${limit}`
+      return pybossaApi.get(url)
     },
 
+    /**
+     * Fetch a task.
+     */
     fetchTask (id) {
       return pybossaApi.get(`/api/task/${id}`)
     },
 
+    /**
+     * Save the task run.
+     */
     saveTaskRun (data) {
       return pybossaApi.post(`/api/taskrun`, data)
     },
