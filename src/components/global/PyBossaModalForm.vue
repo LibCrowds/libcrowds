@@ -93,9 +93,11 @@ export default {
 
   methods: {
     /**
-     * Load the form.
+     * Load the form when the modal is shown.
+     *
+     * Done when the modal is shown to ensure we have the latest CSRF token.
      */
-    load () {
+    onShown () {
       this.status = null
       this.flash = null
       pybossaApi.get(this.endpoint).then(r => {
@@ -107,6 +109,9 @@ export default {
 
     /**
      * Submit the form.
+     *
+     * If successful the modal is hidden, otherwise the flash message and any
+     * errors are shown.
      */
     submit () {
       pybossaApi.post(this.endpoint, this.form, {
