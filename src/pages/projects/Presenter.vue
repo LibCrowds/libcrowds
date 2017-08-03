@@ -117,7 +117,7 @@ export default {
      * Add a task to the user's favourites.
      */
     addFavourite (taskId) {
-      return pybossaApi.delete(`/api/favorites`, {
+      return pybossaApi.post(`/api/favorites`, {
         task_id: taskId
       })
     },
