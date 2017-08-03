@@ -3,7 +3,7 @@
     ref="child-modal"
     :id="name"
     :title="title"
-    @shown="load">
+    @shown="onShown">
 
     <loading
       v-if="loading"
