@@ -2,15 +2,20 @@
  * Check for a PyBossa session cookie for the current user, update accordingly.
  * @param {Object} store
  *   The vuex store.
- * @param {Object} cookie
- *   The document cookie.
+ * @param {String} cookie
+ *   The document cookie string.
  */
 export default function (store, cookie) {
   const currentUser = store.state.currentUser
-  const hasSession = cookie.indexOf('remember_token=') > -1
+  const allCookies = cookie.split(';')
+  let hasSession = false
   let sessionName = null
-  if (hasSession) {
-    sessionName = cookie.split('|')[0].split('=')[1]
+
+  for (let cookie of allCookies) {
+    if (cookie.indexOf('remember_token=') > -1) {
+      hasSession = true
+      sessionName = cookie.split('|')[0].split('=')[1]
+    }
   }
 
   const update = (
