@@ -2,11 +2,18 @@
 
   <floating-tabs-layout :nav-items="navItems">
 
-    <section id="intro">
+    <section>
       <h2 class="text-center">Projects</h2>
       <hr>
       <p class="lead text-center">
         Choose a project from the list below to get started!
+      </p>
+      <p class="text-center" v-if="config.projectsMd">
+        <small>
+          For more information about how projects are organised,
+          see the
+          <router-link :to="{ name: 'about' }">about page</router-link>.
+        </small>
       </p>
     </section>
 
@@ -68,6 +75,7 @@
 
 <script>
 import { sortBy, forEach } from 'lodash'
+import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
@@ -79,6 +87,7 @@ import CategoryListChooser from '@/components/category/ListChooser'
 export default {
   data: function () {
     return {
+      config: config,
       views: ['list', 'table'],
       activeView: 'list',
       showCompleted: false,
@@ -88,8 +97,8 @@ export default {
         total: 0
       },
       navItems: [
-        { id: 'categories', text: 'Choose a Category' },
-        { id: 'projects', text: 'Choose a Project' }
+        { id: 'categories', text: 'Categories' },
+        { id: 'projects', text: 'Projects' }
       ],
       projects: [],
       category: null
