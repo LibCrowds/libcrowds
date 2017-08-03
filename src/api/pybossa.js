@@ -13,7 +13,7 @@ const instance = axios.create({
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
-
+// Handle user session
 instance.interceptors.response.use((r) => {
   manageSession(store, document.cookie)
   return r
