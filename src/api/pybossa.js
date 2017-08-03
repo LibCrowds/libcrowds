@@ -13,6 +13,7 @@ const instance = axios.create({
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
+
 instance.interceptors.response.use((r) => {
   manageSession(store, document.cookie)
   return r
@@ -23,17 +24,5 @@ instance.interceptors.response.use(undefined, (error) => {
   const notification = { msg: error.message, type: 'error' }
   store.dispatch('NOTIFY', notification)
 })
-
-// Forward unauthenticated users to signin page
-// instance.interceptors.response.use((r) => {
-//   if (r.data.template === 'account/signin.html') {
-//     store.commit('DELETE_ITEM', 'currentUser')
-//     // TODO: Handle this
-//   }
-//   return r
-// }, function (error) {
-//   console.error(error.response)
-//   return Promise.reject(error)
-// })
 
 export default instance
