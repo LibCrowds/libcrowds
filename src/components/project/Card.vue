@@ -1,7 +1,7 @@
 <template>
   <b-card class="project-card" no-block>
-    <div class="card-img-overlay-wrapper">
-      <!--<project-thumbnail :project="project"></project-thumbnail>-->
+    <div class="thumbnail-wrapper">
+      <project-thumbnail :project="project"></project-thumbnail>
     </div>
 
     <div class="card-block project-details p-0">
@@ -132,7 +132,7 @@ export default {
     overflow-y: auto;
   }
 
-  .card-img-overlay-wrapper {
+  .thumbnail-wrapper {
     position: relative;
     overflow: hidden;
     height: 100%;
