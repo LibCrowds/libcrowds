@@ -1,7 +1,16 @@
 <template>
-  <div class="project-thumbnail">
+  <div class="project-thumbnail" :data-type="chosenType">
+
+    <v-gravatar
+      v-if="thumbnail === 'gravatar'"
+      :email="project.short_name"
+      :size="200"
+      default-img="identicon"
+      :alt="altTag">
+    </v-gravatar>
 
     <img
+      v-else
       :src="thumbnail"
       :alt="altTag">
 
@@ -14,11 +23,12 @@ import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 
 export default {
-  data () {
+  data: function () {
     return {
       altTag: `Thumbnail for ${this.project.name}`,
       preference: JSON.parse(JSON.stringify(config.thumbnailPreference)),
-      thumbnail: null
+      thumbnail: null,
+      chosenType: null
     }
   },
 
@@ -40,14 +50,15 @@ export default {
       const taskUrl = `/api/task?project_id=${this.project.id}&limit=1`
       pybossaApi.get(taskUrl).then((r) => {
         if (r.data.length && 'manifestUri' in r.data[0].info) {
-          return axios.get(r.data[0].info.manifestUri)
-        }
-        this.loadNext()
-      }).then((r) => {
-        if ('thumbnail' in r.data && Array.isArray(r.data.thumbnail)) {
-          this.thumbnail = r.data.thumbail[0]['@id']
-        } else if ('thumbnail' in r.data) {
-          this.thumbnail = r.data.thumbnail['@id']
+          axios.get(r.data[0].info.manifestUri).then((r) => {
+            if ('thumbnail' in r.data && Array.isArray(r.data.thumbnail)) {
+              this.thumbnail = r.data.thumbail[0]['@id']
+            } else if ('thumbnail' in r.data) {
+              this.thumbnail = r.data.thumbnail['@id']
+            } else {
+              this.loadNext()
+            }
+          })
         } else {
           this.loadNext()
         }
@@ -62,6 +73,7 @@ export default {
 
       if (custom === undefined || custom === null) {
         this.loadNext()
+        return
       }
 
       if (custom.startsWith('/uploads')) {
@@ -75,19 +87,14 @@ export default {
      * Attempt to load the thumbnail of the next type.
      */
     loadNext () {
-      console.log(this.preference)
       const type = this.preference.shift()
+      this.chosenType = type
       if (type === 'custom') {
-        console.log('custom')
         this.setCustomThumbnail()
       } else if (type === 'iiif') {
-        console.log('iiif')
         this.setIiifThumbnail()
       } else if (type === 'gravatar') {
-        console.log('gravatar')
-        this.setGravatarThumbnail()
-      } else {
-
+        this.thumbnail = 'gravatar'
       }
     }
   },
@@ -102,14 +109,23 @@ export default {
 .project-thumbnail {
   max-width: 100%;
   height: 100%;
-  background-color: black;
-  display: flex;
-  justify-content: center;
+  width: auto;
 
   img {
-    margin: 25px;
-    position: relative;
-    height: calc(100% - 50px);
+    height: 100%;
+    width: auto;
+  }
+
+  &[data-type="iiif"] {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+
+    img {
+      margin: 25px;
+      position: relative;
+      height: calc(100% - 50px);
+    }
   }
 }
 </style>
