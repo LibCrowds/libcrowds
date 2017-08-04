@@ -26,6 +26,14 @@ export default {
           required: true
         },
         {
+          model: 'fullname',
+          label: 'Full name',
+          type: 'input',
+          inputType: 'text',
+          placeholder: 'Full name',
+          required: true
+        },
+        {
           model: 'email_addr',
           label: 'Email',
           type: 'input',
