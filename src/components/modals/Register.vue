@@ -14,7 +14,6 @@ export default {
   data: function () {
     return {
       config: config,
-      modalId: 'register-modal',
       endpoint: '/account/register',
       lead: `Create an account for ${config.brand}`,
       schema: {
@@ -54,6 +53,13 @@ export default {
           placeholder: 'Confirm password'
         }]
       }
+    }
+  },
+
+  props: {
+    modalId: {
+      type: String,
+      required: true
     }
   }
 }

@@ -36,7 +36,6 @@ import Loading from '@/components/Loading'
 export default {
   data: function () {
     return {
-      modalId: 'open-project-modal',
       loading: true,
       projectsDraft: [],
       projectsPublished: [],
@@ -45,6 +44,13 @@ export default {
         overall_progress: { label: 'Progress' },
         actions: { label: 'Actions' }
       }
+    }
+  },
+
+  props: {
+    modalId: {
+      type: String,
+      required: true
     }
   },
 

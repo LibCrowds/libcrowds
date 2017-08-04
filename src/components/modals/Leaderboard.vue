@@ -25,7 +25,6 @@ import Loading from '@/components/Loading'
 export default {
   data: function () {
     return {
-      modalId: 'leaderboard-modal',
       loading: true,
       topUsers: [],
       fields: {
@@ -41,6 +40,10 @@ export default {
   },
 
   props: {
+    modalId: {
+      type: String,
+      required: true
+    },
     win: {
       type: Number,
       default: 0

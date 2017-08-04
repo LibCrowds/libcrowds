@@ -57,7 +57,6 @@ import config from '@/config'
 export default {
   data: function () {
     return {
-      modalId: 'signin-modal',
       endpoint: '/account/signin',
       lead: `Enter your ${config.brand} account details`,
       schema: {
@@ -78,6 +77,13 @@ export default {
         }]
       },
       auth: {}
+    }
+  },
+
+  props: {
+    modalId: {
+      type: String,
+      required: true
     }
   },
 
