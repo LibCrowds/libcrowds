@@ -133,13 +133,11 @@ import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
-import store from '@/store'
 import SigninModal from '@/components/modals/Signin'
 import RegisterModal from '@/components/modals/Register'
 import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
-  name: 'app-navbar',
   data: function () {
     return {
       config: config,
@@ -157,8 +155,11 @@ export default {
   },
 
   computed: {
-    currentUser: () => store.state.currentUser,
-    showProjectManagement: () => {
+    currentUser: function () {
+      return this.$store.state.currentUser
+    },
+
+    showProjectManagement: function () {
       return (
         !this.config.requiresAdmin.projectManagement ||
         this.currentUser.admin
@@ -303,6 +304,16 @@ export default {
       }
     }
   },
+
+  // watch: {
+  //   currentTask: function () {
+  //     this.viewer.close()
+  //     this.viewer.open({
+  //       tileSource: this.currentTask.imgInfoUri,
+  //       success: () => this.configureMode(this.currentTask)
+  //     })
+  //   }
+  // },
 
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
