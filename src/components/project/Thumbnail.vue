@@ -2,7 +2,7 @@
   <div class="project-thumbnail" :data-type="chosenType">
 
     <v-gravatar
-      v-if="thumbnail === 'gravatar'"
+      v-if="chosenType === 'gravatar'"
       :email="project.short_name"
       :size="200"
       default-img="identicon"
