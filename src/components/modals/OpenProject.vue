@@ -54,7 +54,7 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      defaut: 'open-project-modal'
     }
   },
 
