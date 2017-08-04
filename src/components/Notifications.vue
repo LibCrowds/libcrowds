@@ -1,7 +1,8 @@
 <template>
   <div id="notifications">
-    <span v-if="notification && notification.msg">
-      {{ notify(notification) }}
+    <span
+      v-if="notification && notification.msg"
+      v-html="notify(notification)">
     </span>
   </div>
 </template>
