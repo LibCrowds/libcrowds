@@ -3,8 +3,7 @@
     :name="name"
     :schema="schema"
     :endpoint="endpoint"
-    :lead="lead"
-    @success="updateCurrentUser">
+    :lead="lead">
   </pybossa-modal-form>
 </template>
 
@@ -23,32 +22,35 @@ export default {
           label: 'Username',
           type: 'input',
           inputType: 'text',
-          placeholder: 'Username',
-          required: true
+          placeholder: 'Username'
+        },
+        {
+          model: 'fullname',
+          label: 'Full name',
+          type: 'input',
+          inputType: 'text',
+          placeholder: 'Full name'
         },
         {
           model: 'email_addr',
           label: 'Email',
           type: 'input',
           inputType: 'email',
-          placeholder: 'Email address',
-          required: true
+          placeholder: 'Email address'
         },
         {
           model: 'password',
           label: 'Password',
           type: 'input',
           inputType: 'password',
-          placeholder: 'Password',
-          required: true
+          placeholder: 'Password'
         },
         {
           model: 'confirm',
           label: 'Password',
           type: 'input',
           inputType: 'password',
-          placeholder: 'Confirm password',
-          required: true
+          placeholder: 'Confirm password'
         }]
       }
     }
@@ -58,12 +60,6 @@ export default {
     name: {
       type: String,
       required: true
-    }
-  },
-
-  methods: {
-    updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER')
     }
   }
 }

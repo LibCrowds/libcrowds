@@ -12,6 +12,7 @@
 
 <script>
 import config from '@/config'
+import manageSession from '@/utils/manageSession'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
 import AppNavbar from '@/components/AppNavbar'
@@ -35,8 +36,8 @@ export default {
     AppFooter
   },
 
-  mounted () {
-    this.$store.dispatch('UPDATE_CURRENT_USER')
+  created () {
+    manageSession(this.$store, document.cookie)
   }
 }
 </script>

@@ -156,9 +156,7 @@ export default {
      * Sign the user out.
      */
     signout () {
-      pybossaApi.get('/account/signout').then(r => {
-        this.$store.dispatch('UPDATE_CURRENT_USER')
-      })
+      pybossaApi.get('/account/signout')
     },
 
     /**

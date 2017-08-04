@@ -4,8 +4,7 @@
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead"
-    @response="setAuth"
-    @success="updateCurrentUser">
+    @response="setAuth">
 
     <div v-if="auth.facebook || auth.twitter || auth.google">
       <p class="lead text-center">
@@ -91,9 +90,6 @@ export default {
   },
 
   methods: {
-    updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER')
-    },
     setAuth (r) {
       if ('auth' in r.data) {
         this.auth = r.data.auth
