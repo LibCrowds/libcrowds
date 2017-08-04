@@ -38,7 +38,7 @@
       <span class="mr-auto">
         <slot name="footer-left"></slot>
       </span>
-      <b-button variant="secondary" @click="hide(false)">Close</b-button>
+      <b-button variant="secondary" @click="hide">Close</b-button>
       <b-button variant="success" @click="submit">OK</b-button>
     </template>
   </b-modal>
@@ -120,13 +120,20 @@ export default {
         }
       }).then(r => {
         if (r.data.status === 'success') {
-          this.$refs['child-modal'].hide()
+          this.hide()
         } else {
           this.flash = r.data.flash
           this.status = r.data.status
         }
         this.$emit('response', r)
       })
+    },
+
+    /**
+     * Hide the modal.
+     */
+    hide () {
+      this.$refs['child-modal'].hide()
     }
   }
 }
