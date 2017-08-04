@@ -30,10 +30,14 @@ const store = new Vuex.Store({
       let currentUser = null
 
       pybossaApi.get('/account/profile').then(r => {
-        currentUser = r.data.user
+        if ('user' in r.data) {
+          currentUser = r.data.user
+        }
         return pybossaApi.get('/api/user')
       }).then(r => {
-        currentUser.admin = 'id' in r.data[0]
+        if (currentUser) {
+          currentUser.admin = 'id' in r.data[0]
+        }
         commit('SET_ITEM', { key: 'currentUser', value: currentUser })
         this.updatingCurrentUser = false
       })
