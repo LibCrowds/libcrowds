@@ -73,12 +73,20 @@
               :text="currentUser.name">
               <b-dropdown-item to="#">Profile</b-dropdown-item>
               <b-dropdown-item to="#">Settings</b-dropdown-item>
-              <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item
-                @click="$root.$emit('show::modal','open-project-modal')">
-                Open Project
-              </b-dropdown-item>
-              <b-dropdown-item to="#">Admin</b-dropdown-item>
+
+              <span v-if="showProjectManagement">
+                <div role="separator" class="dropdown-divider"></div>
+                <b-dropdown-item
+                  @click="$root.$emit('show::modal','open-project-modal')">
+                  Open Project
+                </b-dropdown-item>
+                <b-dropdown-item
+                  v-if="currentUser.admin"
+                  to="#">
+                  Admin
+                </b-dropdown-item>
+              </span>
+
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
@@ -133,7 +141,13 @@ export default {
   },
 
   computed: {
-    currentUser: () => store.state.currentUser
+    currentUser: () => store.state.currentUser,
+    showProjectManagement: () => {
+      return (
+        !this.config.requiresAdmin.projectManagement ||
+        this.currentUser.admin
+      )
+    }
   },
 
   methods: {
