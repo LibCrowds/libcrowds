@@ -2,9 +2,6 @@
   <b-card class="project-card" no-block>
     <div class="card-img-overlay-wrapper">
       <project-thumbnail :project="project"></project-thumbnail>
-      <div class="card-img-overlay">
-        <div :id="pbCircleId" class="h-100 w-100"></div>
-      </div>
     </div>
 
     <div class="card-block project-details p-0">
@@ -39,19 +36,12 @@
 </template>
 
 <script>
-import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/tasks'
 import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
-  data () {
-    return {
-      pbCircleId: `${this.project.short_name}-pb-circle`
-    }
-  },
-
   props: {
     project: {
       type: Object,
@@ -62,28 +52,6 @@ export default {
   components: {
     ProjectContribButton,
     ProjectThumbnail
-  },
-
-  methods: {
-    setProgressCircle () {
-      let pb = new ProgressBar.Circle(`#${this.pbCircleId}`, {
-        strokeWidth: 5,
-        easing: 'easeInOut',
-        duration: 1400,
-        color: '#FFFFFF',
-        trailColor: '#BA0000',
-        trailWidth: 5,
-        svgStyle: null,
-        text: {
-          value: `${this.project.overall_progress}%`
-        }
-      })
-      pb.animate(this.project.overall_progress / 100)
-    }
-  },
-
-  mounted () {
-    this.setProgressCircle()
   }
 }
 </script>
@@ -105,15 +73,6 @@ export default {
     max-height: 300px;
     text-align: left;
     flex-direction: row;
-  }
-
-  @include hover-focus {
-    .card-img-overlay-wrapper {
-      .card-img-overlay {
-        transition: transform 450ms;
-        transform: translateY(0);
-      }
-    }
   }
 
   .card-block {
@@ -157,11 +116,6 @@ export default {
       min-width: 300px;
       width: 300px;
     }
-
-    .card-img-overlay {
-      background-color: $brand-primary;
-      transform: translateY(100%);
-    }
   }
 
   .card-stat {
@@ -174,10 +128,4 @@ export default {
     }
   }
 }
-
-.progressbar-text {
-  font-size: $font-size-lg;
-  font-family: $headings-font-family;
-}
-
 </style>
