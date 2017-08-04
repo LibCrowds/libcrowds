@@ -168,11 +168,16 @@ export default {
   },
 
   mounted () {
+    let limit = 100
+    if ('limit' in this.$store.state.route.query) {
+      limit = this.$store.state.route.query.limit
+    }
+
     this.fetchProjects().then(r => {
       this.project = r.data[0]
-      return this.fetchNewTasks()
+      return this.fetchNewTasks(limit)
     }).then(r => {
-      this.tasks = r.data
+      this.tasks = Array.isArray(r.data) ? r.data : [r.data]
       this.loading = false
     })
   }
