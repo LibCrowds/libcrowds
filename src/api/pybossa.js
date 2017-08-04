@@ -15,6 +15,16 @@ const instance = axios.create({
 
 // Handle user session
 instance.interceptors.response.use((r) => {
+  let dontCheck = [
+    '/api'
+  ]
+
+  for (let endpoint of dontCheck) {
+    if (r.request.responseURL.startsWith(`${config.pybossaHost}${endpoint}`)) {
+      return r
+    }
+  }
+
   manageSession(store, document.cookie)
   return r
 })
