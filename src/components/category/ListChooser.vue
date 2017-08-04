@@ -1,27 +1,7 @@
 <template>
   <div id="category-list-chooser" class="row">
-    <div class="col-md-4">
-      <b-card id="categories-card">
 
-        <loading
-          v-if="loading"
-          text="Loading categories">
-        </loading>
-
-        <b-list-group v-else>
-          <b-list-group-item
-            action
-            v-for="c in categories"
-            :key="c.id"
-            :active="activeCategory === c"
-            @click.native="changeCategory(c)">
-            {{ c.name }}
-          </b-list-group-item>
-        </b-list-group>
-
-      </b-card>
-    </div>
-    <div class="col-md-8">
+    <div class="col-lg-8 push-lg-4 my-1">
       <b-card>
 
         <loading
@@ -46,6 +26,29 @@
 
       </b-card>
     </div>
+
+    <div class="col-lg-4 pull-lg-8 my-1">
+      <b-card id="categories-card">
+
+        <loading
+          v-if="loading"
+          text="Loading categories">
+        </loading>
+
+        <b-list-group v-else>
+          <b-list-group-item
+            action
+            v-for="c in categories"
+            :key="c.id"
+            :active="activeCategory === c"
+            @click.native="changeCategory(c)">
+            {{ c.name }}
+          </b-list-group-item>
+        </b-list-group>
+
+      </b-card>
+    </div>
+
   </div>
 </template>
 
