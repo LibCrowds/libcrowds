@@ -1,7 +1,8 @@
 <template>
   <div id="notifications">
-    <span v-if="notification && notification.msg">
-      {{ notify(notification) }}
+    <span
+      v-if="notification && notification.msg"
+      v-html="notify(notification)">
     </span>
   </div>
 </template>
@@ -9,9 +10,9 @@
 <script>
 import PNotify from 'pnotify'
 import store from '@/store'
-import 'pnotify/src/pnotify.buttons'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
+import 'pnotify/src/pnotify.nonblock'
 
 export default {
   computed: {
@@ -30,17 +31,15 @@ export default {
         hide: true,
         width: '400px',
         delay: 2500,
-        buttons: {
-          closer: true,
-          sticker: false,
-          closer_hover: false
-        },
         mobile: {
           styling: true
         },
         addclass: 'p-sm-4',
         after_close: () => {
           store.commit('DELETE_ITEM', 'notification')
+        },
+        nonblock: {
+          nonblock: true
         }
       }
 
@@ -67,8 +66,8 @@ export default {
 <style lang="scss">
 @import '~pnotify/src/pnotify';
 @import '~pnotify/src/pnotify.mobile';
-@import '~pnotify/src/pnotify.buttons';
 @import '~pnotify/src/pnotify.brighttheme';
+@import '~pnotify/src/pnotify.nonblock';
 
 .ui-pnotify .ui-pnotify-text {
     word-wrap: break-word;

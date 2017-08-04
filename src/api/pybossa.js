@@ -35,4 +35,15 @@ instance.interceptors.response.use(undefined, (error) => {
   store.dispatch('NOTIFY', notification)
 })
 
+// Handle success flash messages
+instance.interceptors.response.use((r) => {
+  if (r.data.status === 'success' && 'flash' in r.data) {
+    store.dispatch('NOTIFY', {
+      msg: r.data.flash,
+      type: 'success'
+    })
+  }
+  return r
+})
+
 export default instance
