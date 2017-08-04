@@ -45,15 +45,6 @@ export default {
       return this.tasks.map(function (task) {
         let opts = task.info
         opts.id = task.id
-
-        // Attempt to use HTTPS image source if server protocol is HTTPS
-        const isHttps = window.location.protocol === 'https:'
-        if (isHttps && opts.imgInfoUri.startsWith('http:')) {
-          opts.imgInfoUri = opts.imgInfoUri.replace('http://', 'https://')
-        }
-        if (isHttps && opts.manifestUri.startsWith('http:')) {
-          opts.manifestUri = opts.manifestUri.replace('http://', 'https://')
-        }
         return opts
       })
     },
