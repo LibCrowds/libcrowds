@@ -2,7 +2,7 @@
   <div id="pybossa-modal-form">
     <b-modal
       ref="child-modal"
-      :id="name"
+      :id="modalId"
       :title="title"
       @shown="onShown">
 
@@ -54,8 +54,6 @@ import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
 export default {
-  name: 'pybossa-modal-form',
-
   data: function () {
     return {
       form: {},
@@ -70,7 +68,7 @@ export default {
   },
 
   props: {
-    name: {
+    modalId: {
       type: String,
       required: true
     },

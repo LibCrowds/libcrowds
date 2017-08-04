@@ -1,6 +1,6 @@
 <template>
   <pybossa-modal-form
-    :name="name"
+    :modalId="modalId"
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead"
@@ -55,8 +55,6 @@ import 'vue-awesome/icons/facebook'
 import config from '@/config'
 
 export default {
-  name: 'signin-modal',
-
   data: function () {
     return {
       endpoint: '/account/signin',
@@ -83,9 +81,9 @@ export default {
   },
 
   props: {
-    name: {
+    modalId: {
       type: String,
-      defaut: 'signin-modal'
+      required: true
     }
   },
 

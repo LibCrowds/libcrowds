@@ -1,6 +1,6 @@
 <template>
   <pybossa-modal-form
-    :name="name"
+    :modalId="modalId"
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead">
@@ -57,9 +57,9 @@ export default {
   },
 
   props: {
-    name: {
+    modalId: {
       type: String,
-      defaut: 'register-modal'
+      required: true
     }
   }
 }

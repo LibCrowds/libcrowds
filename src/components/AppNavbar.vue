@@ -88,7 +88,7 @@
               <span v-if="showProjectManagement">
                 <div role="separator" class="dropdown-divider"></div>
                 <b-dropdown-item
-                  @click="showModal('open-project-modal')">
+                  @click="showModal(openProjectModalId)">
                   Open Project
                 </b-dropdown-item>
                 <b-dropdown-item
@@ -106,12 +106,12 @@
             <!-- Sign in/sign up -->
             <b-nav is-nav-bar v-else>
               <b-nav-item
-                @click="showModal('signin-modal')">
+                @click="showModal(signinModalId)">
                 Sign in
               </b-nav-item>
               <b-nav-item
                 class="nav-button"
-                @click="showModal('register-modal')">
+                @click="showModal(registerModalId)">
                 Sign up
               </b-nav-item>
             </b-nav>
@@ -121,9 +121,9 @@
       </div>
     </b-navbar>
 
-    <signin-modal name="signin-modal"></signin-modal>
-    <register-modal name="register-modal"></register-modal>
-    <open-project-modal name="open-project-modal"></open-project-modal>
+    <signin-modal :modalId="signinModalId"></signin-modal>
+    <register-modal :modalId="registerModalId"></register-modal>
+    <open-project-modal :modalId="openProjectModalId"></open-project-modal>
 
   </div>
 </template>
@@ -143,7 +143,10 @@ export default {
   data: function () {
     return {
       config: config,
-      currentPath: this.$store.state.route.path
+      currentPath: this.$store.state.route.path,
+      signinModalId: 'signin-modal',
+      registerModalId: 'register-modal',
+      openProjectModalId: 'open-project-modal'
     }
   },
 

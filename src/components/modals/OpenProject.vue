@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="name" title="Open Project" @shown="fetchData" size="lg">
+  <b-modal :id="modalId" title="Open Project" @shown="fetchData" size="lg">
 
     <loading
       v-if="loading"
@@ -47,15 +47,15 @@ export default {
     }
   },
 
-  components: {
-    Loading
+  props: {
+    modalId: {
+      type: String,
+      required: true
+    }
   },
 
-  props: {
-    name: {
-      type: String,
-      defaut: 'open-project-modal'
-    }
+  components: {
+    Loading
   },
 
   methods: {

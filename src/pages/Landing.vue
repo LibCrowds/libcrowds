@@ -136,7 +136,7 @@
     <section
       id="top-users"
       class="bg-white invert-navbar"
-      v-if="topUsers.length < 5">
+      v-if="topUsers.length > 1">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 pt-2 text-center">
@@ -181,7 +181,7 @@
           <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
             <b-btn
               variant="black-underline"
-              v-b-modal.lb-modal>
+              v-b-modal="leaderboardModalId">
               <icon name="eye"></icon> View the leaderboard
             </b-btn>
           </div>
@@ -245,7 +245,7 @@
       </div>
     </section>
 
-    <leaderboard-modal name="lb-modal"></leaderboard-modal>
+    <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
 
   </div>
 
@@ -281,7 +281,8 @@ export default {
       },
       resultsStyle: {
         backgroundImage: `url(${newtonImage})`
-      }
+      },
+      leaderboardModalId: 'leaderboard-modal'
     }
   },
 
