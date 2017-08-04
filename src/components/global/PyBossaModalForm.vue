@@ -131,6 +131,7 @@ export default {
      * Inject errors into the form generator.
      */
     injectErrors (errors) {
+      this.$refs.form.errors = []
       for (let field of this.schema.fields) {
         if (field.model in errors) {
           for (let error of errors[field.model]) {
