@@ -1,3 +1,5 @@
+import throttle from 'lodash/throttle'
+
 /**
  * Check for a PyBossa session cookie for the current user, update accordingly.
  * @param {Object} store
@@ -5,7 +7,7 @@
  * @param {String} cookie
  *   The document cookie string.
  */
-export default function (store, cookie) {
+export default throttle((store, cookie) => {
   const currentUser = store.state.currentUser
   const allCookies = cookie.split(';')
   let hasSession = false
@@ -26,4 +28,4 @@ export default function (store, cookie) {
   if (update) {
     store.dispatch('UPDATE_CURRENT_USER')
   }
-}
+}, 200)
