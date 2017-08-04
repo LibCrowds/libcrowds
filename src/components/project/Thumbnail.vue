@@ -1,18 +1,23 @@
 <template>
-  <img
-    v-if="showPlaceholder"
-    :src="src"
-    :alt="alt"
-    class="img-responsive"
-    :onerror="imgError = true">
-  </img>
-  <v-gravatar
-    v-else
-    :email="project.short_name"
-    default-img="retro"
-    :alt="alt"
-    class="img-responsive">
-  </v-gravatar>
+  <div class="project-thumbnail">
+
+    <img
+      v-if="customThumbnail"
+      :src="customThumbnail"
+      :alt="altTag"
+      class="img-responsive">
+    </img>
+
+    <v-gravatar
+      v-else
+      :email="project.short_name"
+      default-img="retro"
+      :alt="altTag"
+      class="img-responsive">
+    </v-gravatar>
+
+
+  </div>
 </template>
 
 <script>
@@ -21,29 +26,33 @@ import config from '@/config'
 export default {
   data () {
     return {
-      imgError: false
+      imgError: false,
+      altTag: `Thumbnail for ${this.project.name}`
     }
-  },
-
-  computed: {
-    showPlaceholder () {
-      return this.imgError || !('thumbnail' in this.project.info)
-    },
-    src () {
-      const file = `${this.user.info.container}/${this.user.info.avatar}`
-      if (config.uploadMethod === 'local') {
-        return `${config.pybossaHost}/uploads/${file}`
-      } else if (config.uploadMethod === 'rackspace') {
-        // TODO: Add rackspace URL
-      }
-    },
-    alt () { return `Project thumbnail for ${this.project.name}` }
   },
 
   props: {
     project: {
       type: Object,
       required: true
+    }
+  },
+
+  computed: {
+    customThumbnail: function () {
+      const hasCustom = (
+        'thumbnail_url' in this.project.info &&
+        this.project.info.thumbnail_url !== null
+      )
+
+      if (!hasCustom) {
+        return null
+      }
+
+      if (this.project.info.thumbnail_url.startsWith('/uploads')) {
+        return config.pybossaHost + this.project.info.thumbnail_url
+      }
+      return this.project.info.thumbnail_url
     }
   }
 }
