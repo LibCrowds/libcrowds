@@ -80,7 +80,7 @@ img {
 
 /* Variables */
 $thumbnail-width: 1200px;
-$thumbnail-height: 800px;
+$thumbnail-height: 1000px;
 $thumbnail-zoom: 0.25;
 
 /* This container helps the thumbnail behave as if it were an unscaled IMG element */
@@ -130,6 +130,12 @@ $thumbnail-zoom: 0.25;
 .thumbnail iframe {
   opacity: 0;
   transition: all 300ms ease-in-out;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .thumbnail:after {

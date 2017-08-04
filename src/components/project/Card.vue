@@ -129,14 +129,14 @@ export default {
   }
 
   .project-description {
+    flex: 1 1 auto;
     overflow-y: auto;
   }
 
   .thumbnail-wrapper {
     position: relative;
     overflow: hidden;
-    height: 100%;
-    width: 100%;
+    line-height: 0;
 
     @include media-breakpoint-up(lg) {
       min-width: 300px;
