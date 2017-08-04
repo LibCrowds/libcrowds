@@ -136,7 +136,9 @@ export default {
   .thumbnail-wrapper {
     position: relative;
     overflow: hidden;
+    height: 300px;
     line-height: 0;
+
 
     @include media-breakpoint-up(lg) {
       min-width: 300px;
