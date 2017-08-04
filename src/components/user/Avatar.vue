@@ -1,19 +1,20 @@
 <template>
   <b-tooltip :content="user.name" :triggers="tooltipTriggers">
     <div id="wrapper">
-      <img
-        v-if="showPlaceholder"
-        :src="src"
-        :alt="alt"
-        class="img-thumbnail rounded-circle"
-        :onerror="imgError = true">
+
       <v-gravatar
-        v-else
+        v-if="chosenType === 'gravatar'"
         :email="user.name"
         default-img="identicon"
-        :alt="alt"
+        :alt="altTag"
         class="img-thumbnail rounded-circle">
       </v-gravatar>
+
+      <img
+        v-else
+        :src="avatar"
+        :alt="altTag">
+
     </div>
   </b-tooltip>
 </template>
@@ -24,23 +25,11 @@ import config from '@/config'
 export default {
   data () {
     return {
-      imgError: false
+      altTag: `Thumbnail for ${this.user.name}`,
+      preference: JSON.parse(JSON.stringify(config.avatarPreference)),
+      avatar: null,
+      chosenType: null
     }
-  },
-
-  computed: {
-    showPlaceholder () {
-      return !this.imgError && 'avatar' in this.user.info
-    },
-    src () {
-      const file = `${this.user.info.container}/${this.user.info.avatar}`
-      if (config.uploadMethod === 'local') {
-        return `${config.pybossaHost}/uploads/${file}`
-      } else if (config.uploadMethod === 'rackspace') {
-        // TODO: Add rackspace URL
-      }
-    },
-    alt () { return `User avatar for ${this.user.name}` }
   },
 
   props: {
@@ -52,6 +41,41 @@ export default {
       type: [Boolean, String, Array],
       default: () => []
     }
+  },
+
+  methods: {
+    /**
+     * Set a custom avatar.
+     */
+    setCustomAvatar () {
+      const custom = this.user.info.avatar_url
+
+      if (custom === undefined || custom === null) {
+        this.loadNext()
+        return
+      }
+
+      if (custom.startsWith('/uploads')) {
+        this.avatar = config.pybossaHost + custom
+        return
+      }
+      this.avatar = custom
+    },
+
+    /**
+     * Attempt to load the avatar of the next type.
+     */
+    loadNext () {
+      const type = this.preference.shift()
+      this.chosenType = type
+      if (type === 'custom') {
+        this.setCustomAvatar()
+      }
+    }
+  },
+
+  created () {
+    this.loadNext()
   }
 }
 </script>
