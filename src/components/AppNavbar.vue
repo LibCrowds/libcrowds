@@ -6,6 +6,7 @@
       type="inverse"
       sticky="top">
       <div class="container">
+
         <button
           @click="toggleCollapsibleSidebar"
           ref="hamburger"
@@ -33,6 +34,7 @@
 
         <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
+          <!-- Main menu -->
           <b-nav is-nav-bar>
             <b-nav-item
               :to="{ name: 'about' }"
@@ -71,9 +73,18 @@
               right
               v-if="currentUser"
               :text="currentUser.name">
-              <b-dropdown-item to="#">Profile</b-dropdown-item>
-              <b-dropdown-item to="#">Settings</b-dropdown-item>
 
+              <!-- Profile/settings -->
+              <b-dropdown-item
+                to="#"
+                @click.native="toggleCollapsibleSidebar">Profile
+              </b-dropdown-item>
+              <b-dropdown-item
+                to="#"
+                @click.native="toggleCollapsibleSidebar">Settings
+              </b-dropdown-item>
+
+              <!-- Project management/admin -->
               <span v-if="showProjectManagement">
                 <div role="separator" class="dropdown-divider"></div>
                 <b-dropdown-item
@@ -81,8 +92,9 @@
                   Open Project
                 </b-dropdown-item>
                 <b-dropdown-item
+                  to="#"
                   v-if="currentUser.admin"
-                  to="#">
+                  @click.native="toggleCollapsibleSidebar">
                   Admin
                 </b-dropdown-item>
               </span>
@@ -91,6 +103,7 @@
               <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
 
+            <!-- Sign in/sign up -->
             <b-nav is-nav-bar v-else>
               <b-nav-item
                 @click="showModal('signin-modal')">
