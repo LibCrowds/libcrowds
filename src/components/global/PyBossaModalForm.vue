@@ -157,6 +157,12 @@ export default {
         }
       }).then(r => {
         if (r.data.status === 'success') {
+          if ('flash' in r.data) {
+            this.$store.dispatch('NOTIFY', {
+              msg: r.data.flash,
+              type: 'success'
+            })
+          }
           this.hide()
         } else {
           this.flash = r.data.flash
