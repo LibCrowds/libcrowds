@@ -77,7 +77,7 @@
               <span v-if="showProjectManagement">
                 <div role="separator" class="dropdown-divider"></div>
                 <b-dropdown-item
-                  @click="$root.$emit('show::modal','open-project-modal')">
+                  @click="showModal('open-project-modal')">
                   Open Project
                 </b-dropdown-item>
                 <b-dropdown-item
@@ -93,12 +93,12 @@
 
             <b-nav is-nav-bar v-else>
               <b-nav-item
-                @click="$root.$emit('show::modal','signin-modal')">
+                @click="showModal('signin-modal')">
                 Sign in
               </b-nav-item>
               <b-nav-item
                 class="nav-button"
-                @click="$root.$emit('show::modal','register-modal')">
+                @click="showModal('register-modal')">
                 Sign up
               </b-nav-item>
             </b-nav>
@@ -250,6 +250,16 @@ export default {
         this.currentPath = window.location.pathname
         this.styleNavbar()
       }
+    },
+
+    /**
+     * Show a modal and toggle the sidebar.
+     * @param {String} name
+     *   The modal name.
+     */
+    showModal (name) {
+      this.toggleCollapsibleSidebar()
+      this.$root.$emit('show::modal', name)
     },
 
     /**
