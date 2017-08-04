@@ -12,7 +12,6 @@
 
 <script>
 import config from '@/config'
-import manageSession from '@/utils/manageSession'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
 import AppNavbar from '@/components/AppNavbar'
@@ -34,10 +33,6 @@ export default {
     CookieConsent,
     AppNavbar,
     AppFooter
-  },
-
-  created () {
-    manageSession(this.$store, document.cookie)
   }
 }
 </script>

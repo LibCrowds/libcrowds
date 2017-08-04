@@ -1,43 +1,35 @@
 <template>
-  <img
-    v-if="showPlaceholder"
-    :src="src"
-    :alt="alt"
-    class="img-responsive"
-    :onerror="imgError = true">
-  </img>
-  <v-gravatar
-    v-else
-    :email="project.short_name"
-    default-img="retro"
-    :alt="alt"
-    class="img-responsive">
-  </v-gravatar>
+  <div class="project-thumbnail" :data-type="chosenType">
+
+    <v-gravatar
+      v-if="thumbnail === 'gravatar'"
+      :email="project.short_name"
+      :size="200"
+      default-img="identicon"
+      :alt="altTag">
+    </v-gravatar>
+
+    <img
+      v-else
+      :src="thumbnail"
+      :alt="altTag">
+
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
 import config from '@/config'
+import pybossaApi from '@/api/pybossa'
 
 export default {
-  data () {
+  data: function () {
     return {
-      imgError: false
+      altTag: `Thumbnail for ${this.project.name}`,
+      preference: JSON.parse(JSON.stringify(config.thumbnailPreference)),
+      thumbnail: null,
+      chosenType: null
     }
-  },
-
-  computed: {
-    showPlaceholder () {
-      return this.imgError || !('thumbnail' in this.project.info)
-    },
-    src () {
-      const file = `${this.user.info.container}/${this.user.info.avatar}`
-      if (config.uploadMethod === 'local') {
-        return `${config.pybossaHost}/uploads/${file}`
-      } else if (config.uploadMethod === 'rackspace') {
-        // TODO: Add rackspace URL
-      }
-    },
-    alt () { return `Project thumbnail for ${this.project.name}` }
   },
 
   props: {
@@ -45,13 +37,95 @@ export default {
       type: Object,
       required: true
     }
+  },
+
+  methods: {
+    /**
+     * Set a IIIF thumbnail.
+     *
+     * Searches the first task of the project for a manifestUri and returns
+     * the first thumbnail URL contained within, if any.
+     */
+    setIiifThumbnail () {
+      const taskUrl = `/api/task?project_id=${this.project.id}&limit=1`
+      pybossaApi.get(taskUrl).then((r) => {
+        if (r.data.length && 'manifestUri' in r.data[0].info) {
+          axios.get(r.data[0].info.manifestUri).then((r) => {
+            if ('thumbnail' in r.data && Array.isArray(r.data.thumbnail)) {
+              this.thumbnail = r.data.thumbail[0]['@id']
+            } else if ('thumbnail' in r.data) {
+              this.thumbnail = r.data.thumbnail['@id']
+            } else {
+              this.loadNext()
+            }
+          })
+        } else {
+          this.loadNext()
+        }
+      })
+    },
+
+    /**
+     * Set a custom thumbnail.
+     */
+    setCustomThumbnail () {
+      const custom = this.project.info.thumbnail_url
+
+      if (custom === undefined || custom === null) {
+        this.loadNext()
+        return
+      }
+
+      if (custom.startsWith('/uploads')) {
+        this.thumbnail = config.pybossaHost + custom
+        return
+      }
+      this.thumbnail = custom
+    },
+
+    /**
+     * Attempt to load the thumbnail of the next type.
+     */
+    loadNext () {
+      const type = this.preference.shift()
+      this.chosenType = type
+      if (type === 'custom') {
+        this.setCustomThumbnail()
+      } else if (type === 'iiif') {
+        this.setIiifThumbnail()
+      } else if (type === 'gravatar') {
+        this.thumbnail = 'gravatar'
+      }
+    }
+  },
+
+  created () {
+    this.loadNext()
   }
 }
 </script>
 
-<style scoped>
-img {
-  width: 100%;
-  height: auto;
+<style lang="scss" scoped>
+.project-thumbnail {
+  max-width: 100%;
+  height: 100%;
+  width: auto;
+
+  img {
+    height: 100%;
+    width: auto;
+  }
+
+  &[data-type="iiif"] {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+
+    img {
+      margin: 25px;
+      position: relative;
+      height: calc(100% - 50px);
+    }
+  }
 }
 </style>

@@ -45,15 +45,6 @@ export default {
       return this.tasks.map(function (task) {
         let opts = task.info
         opts.id = task.id
-
-        // Attempt to use HTTPS image source if server protocol is HTTPS
-        const isHttps = window.location.protocol === 'https:'
-        if (isHttps && opts.imgInfoUri.startsWith('http:')) {
-          opts.imgInfoUri = opts.imgInfoUri.replace('http://', 'https://')
-        }
-        if (isHttps && opts.manifestUri.startsWith('http:')) {
-          opts.manifestUri = opts.manifestUri.replace('http://', 'https://')
-        }
         return opts
       })
     },
@@ -82,13 +73,18 @@ export default {
     }
   },
 
+  props: {
+    shortname: String,
+    required: true
+  },
+
   methods: {
     /**
-     * Fetch projects with the given short name.
+     * Fetch project with the given short name.
      */
     fetchProjects () {
-      const shortname = this.$store.state.route.params.shortname
-      return pybossaApi.get(`/api/project?short_name=${shortname}`)
+      console.log(`/api/project?short_name=${this.shortname}`)
+      return pybossaApi.get(`/api/project?short_name=${this.shortname}`)
     },
 
     /**
@@ -168,11 +164,16 @@ export default {
   },
 
   mounted () {
+    let limit = 100
+    if ('limit' in this.$store.state.route.query) {
+      limit = this.$store.state.route.query.limit
+    }
+
     this.fetchProjects().then(r => {
       this.project = r.data[0]
-      return this.fetchNewTasks()
+      return this.fetchNewTasks(limit)
     }).then(r => {
-      this.tasks = r.data
+      this.tasks = Array.isArray(r.data) ? r.data : [r.data]
       this.loading = false
     })
   }

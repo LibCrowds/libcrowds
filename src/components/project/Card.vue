@@ -1,10 +1,7 @@
 <template>
   <b-card class="project-card" no-block>
-    <div class="card-img-overlay-wrapper">
+    <div class="thumbnail-wrapper">
       <project-thumbnail :project="project"></project-thumbnail>
-      <div class="card-img-overlay">
-        <div :id="pbCircleId" class="h-100 w-100"></div>
-      </div>
     </div>
 
     <div class="card-block project-details p-0">
@@ -14,6 +11,8 @@
       <p class="card-text project-description mb-0 px-2 pb-2">
         {{ project.description }}
       </p>
+
+      <div class="progress-container" :id="progressId"></div>
 
       <div class="card-footer p-2">
         <span class="card-stat text-muted mb-2 mb-md-0">
@@ -46,9 +45,9 @@ import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
-  data () {
+  data: function () {
     return {
-      pbCircleId: `${this.project.short_name}-pb-circle`
+      progressId: `progress-${this.project.short_name}`
     }
   },
 
@@ -64,26 +63,17 @@ export default {
     ProjectThumbnail
   },
 
-  methods: {
-    setProgressCircle () {
-      let pb = new ProgressBar.Circle(`#${this.pbCircleId}`, {
-        strokeWidth: 5,
-        easing: 'easeInOut',
-        duration: 1400,
-        color: '#FFFFFF',
-        trailColor: '#BA0000',
-        trailWidth: 5,
-        svgStyle: null,
-        text: {
-          value: `${this.project.overall_progress}%`
-        }
-      })
-      pb.animate(this.project.overall_progress / 100)
-    }
-  },
-
   mounted () {
-    this.setProgressCircle()
+    const bar = new ProgressBar.Line(`#${this.progressId}`, {
+      strokeWidth: 4,
+      easing: 'easeInOut',
+      duration: 1400,
+      color: '#d0e5d0',
+      trailColor: 'rgba(0, 0, 0, 0.125)',
+      trailWidth: 0.5,
+      svgStyle: {width: '100%', height: '100%'}
+    })
+    bar.animate(this.project.overall_progress / 100)
   }
 }
 </script>
@@ -107,16 +97,11 @@ export default {
     flex-direction: row;
   }
 
-  @include hover-focus {
-    .card-img-overlay-wrapper {
-      .card-img-overlay {
-        transition: transform 450ms;
-        transform: translateY(0);
-      }
-    }
-  }
-
   .card-block {
+
+    .card-footer {
+      border-top: none;
+    }
 
     &:not(first-child) {
       border-top: $card-border-width solid $card-border-color;
@@ -144,23 +129,20 @@ export default {
   }
 
   .project-description {
+    flex: 1 1 auto;
     overflow-y: auto;
   }
 
-  .card-img-overlay-wrapper {
+  .thumbnail-wrapper {
     position: relative;
     overflow: hidden;
-    height: 100%;
-    width: 100%;
+    height: 300px;
+    line-height: 0;
+
 
     @include media-breakpoint-up(lg) {
       min-width: 300px;
       width: 300px;
-    }
-
-    .card-img-overlay {
-      background-color: $brand-primary;
-      transform: translateY(100%);
     }
   }
 
@@ -173,11 +155,11 @@ export default {
       margin-right: 0.5em;
     }
   }
-}
 
-.progressbar-text {
-  font-size: $font-size-lg;
-  font-family: $headings-font-family;
+  .progress-container {
+    height: 4px;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
 }
-
 </style>

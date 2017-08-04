@@ -36,7 +36,14 @@ const routes = [
     },
     // TODO: Add navigation guard for non-existant projects
     children: [
-      { path: 'presenter', name: 'presenter', component: Presenter }
+      {
+        path: 'presenter',
+        name: 'presenter',
+        component: Presenter,
+        props: (route) => ({
+          shortname: route.params.shortname
+        })
+      }
     ]
   },
 
