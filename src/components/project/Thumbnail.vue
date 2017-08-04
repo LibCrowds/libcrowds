@@ -45,7 +45,7 @@ export default {
         this.project.info.thumbnail_url !== null
       )
 
-      if (!hasCustom) {
+      if (!hasCustom || config.ignoreCustomThumbnail) {
         return null
       }
 
