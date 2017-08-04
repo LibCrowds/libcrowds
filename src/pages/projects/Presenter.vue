@@ -75,10 +75,9 @@ export default {
 
   methods: {
     /**
-     * Fetch projects with the given short name.
+     * Fetch project with the given short name.
      */
-    fetchProjects () {
-      const shortname = this.$store.state.route.params.shortname
+    fetchProjects (shortname) {
       return pybossaApi.get(`/api/project?short_name=${shortname}`)
     },
 
@@ -86,6 +85,7 @@ export default {
      * Fetch new tasks.
      */
     fetchNewTasks (limit = 100) {
+      console.log(this.project)
       const url = `/api/project/${this.project.id}/newtask?limit=${limit}`
       return pybossaApi.get(url)
     },
@@ -159,12 +159,13 @@ export default {
   },
 
   mounted () {
+    const shortname = this.$store.state.route.params.shortname
     let limit = 100
     if ('limit' in this.$store.state.route.query) {
       limit = this.$store.state.route.query.limit
     }
 
-    this.fetchProjects().then(r => {
+    this.fetchProjects(shortname).then(r => {
       this.project = r.data[0]
       return this.fetchNewTasks(limit)
     }).then(r => {
