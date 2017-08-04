@@ -64,6 +64,9 @@ export default {
         name: 'presenter',
         params: {
           shortname: this.project.short_name
+        },
+        query: {
+          limit: 1
         }
       })
       return route.href
