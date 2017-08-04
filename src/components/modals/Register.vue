@@ -22,40 +22,35 @@ export default {
           label: 'Username',
           type: 'input',
           inputType: 'text',
-          placeholder: 'Username',
-          required: true
+          placeholder: 'Username'
         },
         {
           model: 'fullname',
           label: 'Full name',
           type: 'input',
           inputType: 'text',
-          placeholder: 'Full name',
-          required: true
+          placeholder: 'Full name'
         },
         {
           model: 'email_addr',
           label: 'Email',
           type: 'input',
           inputType: 'email',
-          placeholder: 'Email address',
-          required: true
+          placeholder: 'Email address'
         },
         {
           model: 'password',
           label: 'Password',
           type: 'input',
           inputType: 'password',
-          placeholder: 'Password',
-          required: true
+          placeholder: 'Password'
         },
         {
           model: 'confirm',
           label: 'Password',
           type: 'input',
           inputType: 'password',
-          placeholder: 'Confirm password',
-          required: true
+          placeholder: 'Confirm password'
         }]
       }
     }
