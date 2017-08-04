@@ -1,6 +1,6 @@
 <template>
   <pybossa-modal-form
-    :name="name"
+    :modalId="modalId"
     :schema="schema"
     :endpoint="endpoint"
     :lead="lead">
@@ -14,6 +14,7 @@ export default {
   data: function () {
     return {
       config: config,
+      modalId: 'register-modal',
       endpoint: '/account/register',
       lead: `Create an account for ${config.brand}`,
       schema: {
@@ -53,13 +54,6 @@ export default {
           placeholder: 'Confirm password'
         }]
       }
-    }
-  },
-
-  props: {
-    name: {
-      type: String,
-      defaut: 'register-modal'
     }
   }
 }

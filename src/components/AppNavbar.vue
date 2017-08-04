@@ -121,9 +121,9 @@
       </div>
     </b-navbar>
 
-    <signin-modal name="signin-modal"></signin-modal>
-    <register-modal name="register-modal"></register-modal>
-    <open-project-modal name="open-project-modal"></open-project-modal>
+    <signin-modal></signin-modal>
+    <register-modal></register-modal>
+    <open-project-modal></open-project-modal>
 
   </div>
 </template>

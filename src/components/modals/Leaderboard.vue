@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="name" title="Leaderboard" @shown="fetchData">
+  <b-modal :id="modalId" title="Leaderboard" @shown="fetchData">
 
     <loading
       v-if="loading"
@@ -25,6 +25,7 @@ import Loading from '@/components/Loading'
 export default {
   data: function () {
     return {
+      modalId: 'leaderboard-modal',
       loading: true,
       topUsers: [],
       fields: {
@@ -40,10 +41,6 @@ export default {
   },
 
   props: {
-    name: {
-      type: String,
-      defaut: 'leaderboard-modal'
-    },
     win: {
       type: Number,
       default: 0
