@@ -129,6 +129,8 @@ export default {
 
     /**
      * Inject errors into the form generator.
+     * @param {Object} errors
+     *   The form errors.
      */
     injectErrors (errors) {
       this.$refs.form.errors = []
