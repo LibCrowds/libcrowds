@@ -8,7 +8,7 @@ describe('manageSession', () => {
   let diffSessionCookie = null
 
   beforeEach(() => {
-    let name = 'joebloggs'
+    name = 'joebloggs'
     store = {
       state: {
         currentUser: {
