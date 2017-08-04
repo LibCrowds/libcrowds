@@ -12,6 +12,7 @@ import store from '@/store'
 import 'pnotify/src/pnotify.buttons'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
+import 'pnotify/src/pnotify.nonblock'
 
 export default {
   computed: {
@@ -41,6 +42,9 @@ export default {
         addclass: 'p-sm-4',
         after_close: () => {
           store.commit('DELETE_ITEM', 'notification')
+        },
+        nonblock: {
+          nonblock: true
         }
       }
 
@@ -69,6 +73,7 @@ export default {
 @import '~pnotify/src/pnotify.mobile';
 @import '~pnotify/src/pnotify.buttons';
 @import '~pnotify/src/pnotify.brighttheme';
+@import '~pnotify/src/pnotify.nonblock';
 
 .ui-pnotify .ui-pnotify-text {
     word-wrap: break-word;
