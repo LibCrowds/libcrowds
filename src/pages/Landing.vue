@@ -91,7 +91,7 @@
             </ul>
             <b-button
               class="mt-2 btn-bg-white"
-              variant="outline-primary"
+              variant="outline-success"
               size="lg"
               :to="{ name: 'contribute' }">
               Browse all projects
@@ -115,10 +115,13 @@
               <p class="lead">
                 All datasets generated from the crowdsourcing projects hosted
                 on this platform are made available under a
-                <a :href="config.dataLicense.url" target="_blank">
-                  {{ config.dataLicense.name }}
-                </a> license. Datasets can be downloaded by anyone in JSON and
-                CSV formats, visit our data page to find out more.
+                <a
+                  :href="config.dataLicense.url"
+                  target="_blank">
+                  {{ config.dataLicense.name }} license
+                </a>
+                and can be downloaded by anyone in JSON or
+                CSV formats. Visit our data page to find out more.
               </p>
             </div>
           </div>
@@ -227,7 +230,7 @@
               reasearch at {{ config.company }}.
             </p>
             <b-button
-              variant="outline-primary"
+              variant="outline-success"
               size="lg"
               :to="{ name: 'contribute' }">
               Choose a project
