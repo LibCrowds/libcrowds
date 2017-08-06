@@ -1,8 +1,7 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-module.exports = {
-
-  // Basic configuration
+// Basic configuration
+const config = {
   brand: 'Convert-a-Card',
   tagline: 'A crowdsourcing platform from the British Library',
   description: 'Transform printed card catalogues into a searchable database.',
@@ -16,60 +15,61 @@ module.exports = {
   dataLicense: {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
-  },
-
-  // Order of preference for project thumbnail types.
-  thumbnailPreference: [
-    'custom',
-    'iiif',
-    'gravatar'
-  ],
-
-  // Order of preference for user avatar types.
-  avatarPreference: [
-    'custom',
-    'gravatar'
-  ]
-
-  // Upload method that matches your PyBossa settings
-  uploadMethod: 'local',
-
-  //
-  requiresAdmin: {
-    projectManagement: false
   }
-
-  // Google analytics tracking ID
-  // analytics: 'UA-XXX-X',
-
-  // Sentry public DSN
-  // sentryPublicDsn: 'https://******@sentry.io/<project>'
-
-  // Mapbox configuration for location stats
-  // mapboxPublicApiToken: 'token',
-  // mapboxId: 'mapbox.streets',
-
-  // Forum URL
-  // forumUrl: 'http://community.libcrowds.com',
-
-  // Main background image
-  // bgImg: require('@/custom/background.jpg'),
-
-  // Main about page text
-  // aboutMd: require('@/custom/about.md'),
-
-  // Text for the technology section of the about page
-  // technologyMd: require('@/custom/technology.md'),
-
-  // Main projects page text
-  // projectsMd: require('@/custom/projects.md'),
-
-  // Results Vue component
-  // resultsComponent: require('@/custom/Results.vue'),
-
-  // Footer lead text
-  // footer: {
-  //   text: 'Part of the LibCrowds crowdsourcing platform',
-  //   url: 'http://www.libcrowds.com'
-  // }
 }
+
+// Order of preference for project thumbnail types
+config.thumbnailPreference = [
+  'custom',
+  'iiif',
+  'gravatar'
+]
+
+// Order of preference for user avatar types
+config.avatarPreference = [
+  'custom',
+  'gravatar'
+]
+
+// Mapbox configuration for location stats
+// config.mapbox = {
+//   id: 'mapbox.streets',
+//   publicApiToken: 'token'
+// }
+
+// Specify additional parts of the site that require admin rights
+// config.requiresAdmin = {
+//   projectManagement: false
+// }
+
+// Sentry public DSN
+// config.sentryPublicDsn = 'https://******@sentry.io/<project>'
+
+// Google analytics tracking ID
+// config.analytics = 'UA-XXX-X'
+
+// Link to the site forum
+// config.forumUrl = 'http://community.libcrowds.com'
+
+// Main background image for the site
+// config.bgImg = require('@/custom/background.jpg')
+
+// Text for the intro section of the about page
+// config.aboutMd = require('@/custom/about.md')
+
+// Text for the technology section of the about page
+// config.technologyMd = require('@/custom/technology.md')
+
+// Text for the projects section of the about page
+// config.projectsMd = require('@/custom/projects.md')
+
+// Vue component for the results page
+// config.resultsComponent = require('@/custom/Results.vue')
+
+// Footer lead text
+// config.footer = {
+//   text: 'Part of the LibCrowds crowdsourcing platform',
+//   url: 'http://www.libcrowds.com'
+// }
+
+module.exports = config

@@ -22,7 +22,7 @@ npm install
 
 ## Configuring
 
-Settings can be found in [src/config.js.tmpl](src/config.js.tmpl), to use
+Settings can be found in [src/config.js.tmpl](src/config.js.tmpl). To use
 this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash
@@ -38,8 +38,7 @@ origins according to your environement):
 CORS_RESOURCES = {
   r"/*": {
     "origins": [
-      "http://127.0.0.1:8080",
-      "http://localhost:8080"
+      "http://127.0.0.1:8080"
     ],
     "allow_headers": [
       'Content-Type',
@@ -109,6 +108,9 @@ End-to-end tests are run using BrowserStack, a cross browser and real device web
 Start up a local PyBossa instance using the default settings, then:
 
 ``` bash
-# serve with hot reload at localhost:8080
+# serve with hot reload at 127.0.0.1:8080
 npm run dev
 ```
+
+Note that for cookies to be read properly you must access the website at
+127.0.0.1:8080, rather than localhost:8080.
