@@ -91,7 +91,7 @@
             </ul>
             <b-button
               class="mt-2 btn-bg-white"
-              variant="outline-primary"
+              variant="outline-success"
               size="lg"
               :to="{ name: 'contribute' }">
               Browse all projects
@@ -230,7 +230,7 @@
               reasearch at {{ config.company }}.
             </p>
             <b-button
-              variant="outline-primary"
+              variant="outline-success"
               size="lg"
               :to="{ name: 'contribute' }">
               Choose a project
