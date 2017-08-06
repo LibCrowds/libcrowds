@@ -26,6 +26,14 @@ $facebook:                         #3B5998;
 $googleplus:                       #D34836;
 $linkedin:                         #0E76A8;
 
+/* Links */
+$link-color:                       #03B5AA;
+$link-hover-color:                 darken($link-color, 5%);
+$link-hover-decoration:            underline;
+
+/* Components */
+$component-active-bg:              $brand-info;
+
 /* Buttons */
 $btn-secondary-color:              $brand-inverse;
 $btn-secondary-bg:                 $white;
@@ -34,18 +42,12 @@ $btn-border-radius:                0px;
 $btn-border-radius-lg:             0px;
 $btn-border-radius-sm:             0px;
 
-/* Links */
-$link-color:                       #03B5AA;
-$link-hover-color:                 darken($link-color, 5%);
-$link-hover-decoration:            underline;
-
 /* Navbar */
 $navbar-light-color:               rgba($black, .7);
 $navbar-inverse-color:             $white;
 $navbar-inverse-toggler-border:    none;
 
 /* Nav Pills*/
-$nav-pills-active-link-color:      $link-color;
 $nav-pills-active-link-bg:         transparent;
 
 /* Input */
@@ -88,16 +90,6 @@ $modal-backdrop-opacity:           0.8;
 $modal-inner-padding:              0;
 $modal-dialog-margin-y-sm-up:      50px;
 $modal-backdrop-bg:                #EFEFEF;
-
-/* Box Shadows */
-$box-shadow-spread:                -5px;
-$box-shadow-blur:                  7px;
-$box-shadows: (
-    t: '0 4px',
-    l: '4px 0',
-    r: '-4 0',
-    b: '0 -4px'
-);
 
 /* Hamburger */
 $hamburger-hover-opacity:          100%;
