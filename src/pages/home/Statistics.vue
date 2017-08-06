@@ -80,7 +80,7 @@ export default {
      * Return the map tile options.
      */
     getMapTileOpts () {
-      if ('mapboxPublicApiToken' in config) {
+      if ('mapbox' in config) {
         return {
           maxZoom: 18,
           attribution: `
@@ -90,8 +90,8 @@ export default {
             <strong><a href='https://www.mapbox.com/feedback/' target='_blank'>
             Improve this map</a></strong>
           `,
-          id: 'mapboxId' in config ? config.mapboxId : 'mapbox.streets',
-          accessToken: config.mapboxPublicApiToken
+          id: config.mapbox.id,
+          accessToken: config.mapbox.publicApiToken
         }
       }
       return {
@@ -103,10 +103,10 @@ export default {
      * Return the map provider URL.
      */
     getMapProviderUrl () {
-      if ('mapboxPublicApiToken' in config) {
+      if ('mapbox' in config) {
         return `https://api.tiles.mapbox.com/v4` +
                `/{id}/{z}/{x}/{y}.png` +
-               `?access_token=${config.mapboxPublicApiToken}`
+               `?access_token=${config.mapbox.publicApiToken}`
       }
       return 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
     }
