@@ -9,6 +9,14 @@ $headings-font-weight:             400;
 $line-height-base:                 1.6;
 
 /* Colors */
+$brand-primary:                    #D00000;
+$brand-success:                    #398439;
+$brand-info:                       #4190C2;
+$brand-warning:                    #E38D13;
+$brand-danger:                     #D00000;
+$brand-inverse:                    #111111;
+$body-color:                       #26333F;
+
 $white:                            #FFFFFF;
 $gray:                             #404446;
 $gray-light:                       #888888;
@@ -17,13 +25,6 @@ $twitter:                          #00ACEE;
 $facebook:                         #3B5998;
 $googleplus:                       #D34836;
 $linkedin:                         #0E76A8;
-$brand-primary:                    #D00000;
-$brand-success:                    #398439;
-$brand-info:                       #4190C2;
-$brand-warning:                    #E38D13;
-$brand-danger:                     #D00000;
-$brand-inverse:                    #111111;
-$body-color:                       #292A2B;
 
 /* Buttons */
 $btn-secondary-color:              $brand-inverse;
@@ -34,9 +35,8 @@ $btn-border-radius-lg:             0px;
 $btn-border-radius-sm:             0px;
 
 /* Links */
-$link-color:                       $brand-danger;
-$link-hover-color:                 darken($link-color, 5%);
-$link-hover-decoration:            none;
+$link-color:                       lighten($brand-info, 10%);
+$link-hover-decoration:            underline;
 
 /* Navbar */
 $navbar-light-color:               rgba($black, .7);
@@ -44,7 +44,7 @@ $navbar-inverse-color:             $white;
 $navbar-inverse-toggler-border:    none;
 
 /* Nav Pills*/
-$nav-pills-active-link-color:      $brand-primary;
+$nav-pills-active-link-color:      $link-color;
 $nav-pills-active-link-bg:         transparent;
 
 /* Input */
