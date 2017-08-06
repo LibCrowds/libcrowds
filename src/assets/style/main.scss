@@ -10,10 +10,10 @@ $line-height-base:                 1.6;
 
 /* Colors */
 $brand-primary:                    #D00000;
-$brand-success:                    #398439;
-$brand-info:                       #4190C2;
+$brand-success:                    #408E40;
+$brand-info:                       #2589BD;
 $brand-warning:                    #E38D13;
-$brand-danger:                     #D00000;
+$brand-danger:                     #E4572E;
 $brand-inverse:                    #111111;
 $body-color:                       #26333F;
 
@@ -35,7 +35,8 @@ $btn-border-radius-lg:             0px;
 $btn-border-radius-sm:             0px;
 
 /* Links */
-$link-color:                       lighten($brand-info, 10%);
+$link-color:                       #03B5AA;
+$link-hover-color:                 darken($link-color, 5%);
 $link-hover-decoration:            underline;
 
 /* Navbar */
