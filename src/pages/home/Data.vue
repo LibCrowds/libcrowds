@@ -1,8 +1,10 @@
 <template>
 
-  <floating-tabs-layout :nav-items="navItems">
+  <floating-tabs-layout
+    id="data-download-page"
+    :nav-items="navItems">
 
-    <section id="data">
+    <section>
       <h2 class="text-center">Data</h2>
       <hr>
       <p>
@@ -140,3 +142,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#data-download-page {
+  table {
+    overflow-y: initial;
+  }
+}
+</style>
