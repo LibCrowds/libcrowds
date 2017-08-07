@@ -2,11 +2,11 @@
   <div id="app">
     <notifications></notifications>
     <cookie-consent></cookie-consent>
-    <app-navbar></app-navbar>
+
     <main>
       <router-view></router-view>
     </main>
-    <app-footer></app-footer>
+
   </div>
 </template>
 
@@ -14,8 +14,6 @@
 import config from '@/config'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
-import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
 
 export default {
   name: 'app',
@@ -30,9 +28,7 @@ export default {
 
   components: {
     Notifications,
-    CookieConsent,
-    AppNavbar,
-    AppFooter
+    CookieConsent
   }
 }
 </script>

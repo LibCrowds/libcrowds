@@ -1,10 +1,9 @@
 <template>
   <div class="floating-tabs-layout">
+    <app-navbar></app-navbar>
     <main>
       <div class="container mb-5">
-
         <transition-group appear>
-
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
@@ -13,25 +12,30 @@
               {{ item.text }}
             </b-nav-item>
           </b-nav>
-
           <section id="content" key="fading-content">
             <slot></slot>
           </section>
-
         </transition-group>
-
       </div>
     </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import jump from 'jump.js'
+import AppNavbar from '@/components/AppNavbar'
+import AppFooter from '@/components/AppFooter'
 
 export default {
   props: [
     'nav-items'
   ],
+
+  components: {
+    AppNavbar,
+    AppFooter
+  },
 
   methods: {
     jump: jump
