@@ -310,16 +310,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   currentTask: function () {
-  //     this.viewer.close()
-  //     this.viewer.open({
-  //       tileSource: this.currentTask.imgInfoUri,
-  //       success: () => this.configureMode(this.currentTask)
-  //     })
-  //   }
-  // },
-
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
     window.addEventListener('resize', this.onWindowResize)
