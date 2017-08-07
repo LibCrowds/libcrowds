@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router'
 import config from '@/config'
 import manageSession from '@/utils/manageSession'
 
@@ -19,6 +20,10 @@ instance.interceptors.response.use((r) => {
     '/api'
   ]
 
+  if (r === undefined) {
+    return
+  }
+
   for (let endpoint of dontCheck) {
     if (r.request.responseURL.startsWith(`${config.pybossaHost}${endpoint}`)) {
       return r
@@ -31,12 +36,20 @@ instance.interceptors.response.use((r) => {
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
+  if (error.response.status === 404) {
+    router.push({ name: '404' })
+  }
   const notification = { msg: error.message, type: 'error' }
   store.dispatch('NOTIFY', notification)
+  return Promise.reject(error)
 })
 
 // Handle success flash messages
 instance.interceptors.response.use((r) => {
+  if (r === undefined) {
+    return
+  }
+
   if (r.data.status === 'success' && 'flash' in r.data) {
     store.dispatch('NOTIFY', {
       msg: r.data.flash,
