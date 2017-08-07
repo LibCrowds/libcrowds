@@ -9,7 +9,7 @@
     </div>
 
     <div id="user-details" class="card-block">
-      <div class="card-title text-center">
+      <div class="card-title">
         <h2>{{ user.name }}</h2>
       </div>
       <div class="card-text">
@@ -90,6 +90,8 @@ export default {
   }
 
   #user-details {
+    text-align: center;
+
     ul {
       list-style: none;
       padding: 0;
@@ -99,6 +101,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: center;
       margin-bottom: 0.5rem;
 
       svg {
