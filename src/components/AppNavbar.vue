@@ -3,7 +3,7 @@
     <b-navbar
       toggleable
       toggle-breakpoint="md"
-      type="inverse"
+      :type="type"
       sticky="top">
       <div class="container">
 
@@ -150,6 +150,13 @@ export default {
       signinModalId: 'signin-modal',
       registerModalId: 'register-modal',
       openProjectModalId: 'open-project-modal'
+    }
+  },
+
+  props: {
+    type: {
+      type: String,
+      default: 'inverse'
     }
   },
 
