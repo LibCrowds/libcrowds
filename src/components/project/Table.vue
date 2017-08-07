@@ -81,7 +81,7 @@ export default {
     }
   }
 
-  .btn {
+  .btn:not(:hover):not(:focus) {
     background-color: $white;
   }
 }
