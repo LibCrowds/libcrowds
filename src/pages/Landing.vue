@@ -350,16 +350,9 @@ export default {
     }
   },
 
-  destroyed () {
-    document.querySelector('.navbar').classList.add('sticky-top')
-    document.querySelector('.navbar').classList.remove('fixed-top')
-  },
-
   mounted () {
     this.fetchData()
     this.scrollReveal()
-    document.querySelector('.navbar').classList.add('fixed-top')
-    document.querySelector('.navbar').classList.remove('sticky-top')
   }
 }
 </script>

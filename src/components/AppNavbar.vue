@@ -4,7 +4,8 @@
       toggleable
       toggle-breakpoint="md"
       :type="type"
-      sticky="top">
+      :fixed="fixed"
+      :sticky="sticky">
       <div class="container">
 
         <button
@@ -157,6 +158,18 @@ export default {
     type: {
       type: String,
       default: 'inverse'
+    },
+    invertable: {
+      type: Boolean,
+      default: true
+    },
+    fixed: {
+      type: String,
+      default: 'top'
+    },
+    sticky: {
+      type: String,
+      default: null
     }
   },
 
@@ -193,6 +206,10 @@ export default {
      */
     styleNavbar: throttle(
       function () {
+        if (!this.invertable) {
+          return
+        }
+
         let ieScrollTop = document.documentElement.scrollTop
         let scrollTop = document.body.scrollTop === 0
                           ? ieScrollTop

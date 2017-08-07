@@ -1,6 +1,9 @@
 <template>
   <div class="floating-tabs-layout">
-    <app-navbar></app-navbar>
+    <app-navbar
+      :sticky="'top'"
+      :fixed="null">
+    </app-navbar>
     <main>
       <div class="container mb-5">
         <transition-group appear>
