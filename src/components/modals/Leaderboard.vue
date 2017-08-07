@@ -10,6 +10,7 @@
       responsive
       v-else
       striped
+      hover
       show-empty
       :items="topUsers"
       :fields="fields">
@@ -66,32 +67,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
-
-.modal {
-  display: block;
-
-  .modal-dialog{
-      overflow-y: initial !important
-  }
-
-  .modal-content {
-    max-height: 500px;
-    border-radius: 0;
-  }
-
-  .modal-body{
-      overflow-y: auto;
-  }
-
-  .modal-footer {
-    padding: 25px 15px;
-  }
-}
-
 .table {
-  margin-bottom: 0;
-
   tr *:first-child,
   tr *:last-child {
     text-align: center;

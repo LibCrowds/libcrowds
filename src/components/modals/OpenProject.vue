@@ -79,32 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
-
-.modal {
-  display: block;
-
-  .modal-dialog{
-      overflow-y: initial !important
-  }
-
-  .modal-content {
-    max-height: 500px;
-    border-radius: 0;
-  }
-
-  .modal-body{
-      overflow-y: auto;
-  }
-
-  .modal-footer {
-    padding: 25px 15px;
-  }
-}
-
 .table {
-  margin-bottom: 0;
-
   td:not(:first-child) {
     text-align: center;
   }
