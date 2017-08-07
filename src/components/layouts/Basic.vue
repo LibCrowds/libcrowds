@@ -5,7 +5,7 @@
       :type="navbarType"
       :invertable="navbarInvertable">
     </app-navbar>
-    <main class="mt-5 mb-3">
+    <main>
       <slot></slot>
     </main>
     <app-footer
@@ -29,7 +29,7 @@ export default {
       default: 'inverse'
     },
     navbarInvertable: {
-      type: String,
+      type: Boolean,
       default: true
     },
     showFooter: {

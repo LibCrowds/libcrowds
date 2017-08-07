@@ -86,7 +86,12 @@
                 @click.native="toggleCollapsibleSidebar">Profile
               </b-dropdown-item>
               <b-dropdown-item
-                to="#"
+                :to="{
+                  name: 'user-settings',
+                  params: {
+                    username: currentUser.name
+                  }
+                }"
                 @click.native="toggleCollapsibleSidebar">Settings
               </b-dropdown-item>
 

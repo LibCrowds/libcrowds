@@ -70,7 +70,6 @@ $pagination-active-border:         $brand-info;
 
 /* Cards */
 $card-border-radius:               0px;
-$card-spacer-y:                    3rem;
 $card-columns-count:               2;
 
 /* Alerts */
@@ -109,5 +108,6 @@ $spinkit-spinner-color:            $brand-info;
   '~bootstrap/scss/bootstrap',
   '~bootstrap-vue/dist/bootstrap-vue.css',
   'partials/modals',
-  'partials/tables'
+  'partials/tables',
+  'partials/cards'
 ;

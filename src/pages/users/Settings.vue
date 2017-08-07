@@ -10,24 +10,10 @@
           <div class="col-lg-4">
             <user-profile-card
               v-if="user"
-              class="mb-3"
               :user="user">
             </user-profile-card>
           </div>
           <div class="col-lg-8">
-
-            <user-favourites-card
-              class="mb-2"
-              v-if="isCurrentUser">
-            </user-favourites-card>
-
-            <b-card no-block :header="'Contributions'">
-              <project-table
-                :action="'contribute'"
-                :projects="projects">
-              </project-table>
-            </b-card>
-
           </div>
         </div>
       </div>
@@ -39,15 +25,14 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
-import UserFavouritesCard from '@/components/user/FavouritesCard'
 import BasicLayout from '@/components/layouts/Basic'
-import ProjectTable from '@/components/project/Table'
 
 export default {
   data: function () {
     return {
       user: null,
-      projects: []
+      favourites: null,
+      projectsContrib: null
     }
   },
 
@@ -60,23 +45,11 @@ export default {
 
   components: {
     BasicLayout,
-    ProjectTable,
-    UserProfileCard,
-    UserFavouritesCard
-  },
-
-  computed: {
-    isCurrentUser: function () {
-      return (
-        this.user &&
-        this.$store.state.currentUser &&
-        this.user.name === this.$store.state.currentUser.name
-      )
-    }
+    UserProfileCard
   },
 
   metaInfo: {
-    title: 'Profile'
+    title: 'User Settings'
   },
 
   methods: {
@@ -85,16 +58,22 @@ export default {
      */
     setUserData (data) {
       this.user = data.user
-      if (data.projects) {
-        this.projects = data.projects
-      } else if (data.projects_contrib) {
-        this.projects = data.projects_contrib
-      }
+      this.projectsContrib = data.projects_contrib
+    },
+
+    /**
+     * Load the user favourites data.
+     */
+    loadFavourites () {
+      pybossaApi.get(`/api/favorites`).then(r => {
+        this.favourites = r.data
+      })
     }
   },
 
   beforeRouteEnter (to, from, next) {
     const name = to.params.username
+    console.log(name)
     pybossaApi.get(`account/${name}/`).then(r => {
       next(vm => vm.setUserData(r.data))
     }).catch(err => {

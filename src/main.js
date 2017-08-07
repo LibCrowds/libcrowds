@@ -6,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueGravatar from 'vue-gravatar'
 import VueChartist from 'vue-chartist'
 import VueFormGenerator from 'vue-form-generator'
+import VueImages from 'vue-images'
 import VueAnalytics from 'vue-analytics'
 import LibcrowdsViewer from 'libcrowds-viewer'
 import ToggleButton from 'vue-js-toggle-button'
@@ -29,6 +30,7 @@ Vue.use(ToggleButton)
 Vue.use(LibcrowdsViewer)
 
 Vue.component('v-gravatar', VueGravatar)
+Vue.component('v-images', VueImages)
 Vue.component('pybossa-modal-form', PyBossaModalForm)
 
 // Google analytics
