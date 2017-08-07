@@ -24,18 +24,7 @@
       </div>
     </div>
     <div class="card-block">
-      <b-button
-        v-if="isCurrentUser"
-        block
-        variant="outline-success"
-        :to="{
-          name: 'user-settings',
-          params: {
-            username: user.name
-          }
-        }">
-        Edit
-      </b-button>
+      <slot></slot>
     </div>
   </div>
 
@@ -58,16 +47,6 @@ export default {
 
   components: {
     UserAvatar
-  },
-
-  computed: {
-    isCurrentUser: function () {
-      return (
-        this.user &&
-        this.$store.state.currentUser &&
-        this.user.name === this.$store.state.currentUser.name
-      )
-    }
   }
 }
 </script>

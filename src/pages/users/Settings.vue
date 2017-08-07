@@ -11,6 +11,17 @@
             <user-profile-card
               v-if="user"
               :user="user">
+              <b-button
+                block
+                variant="success"
+                :to="{
+                  name: 'profile',
+                  params: {
+                    username: user.name
+                  }
+                }">
+                Profile
+              </b-button>
             </user-profile-card>
           </div>
           <div class="col-lg-8">
@@ -54,27 +65,16 @@ export default {
 
   methods: {
     /**
-     * Set the user profile data.
+     * Set the form data.
      */
-    setUserData (data) {
+    setData (data) {
       this.user = data.user
-      this.projectsContrib = data.projects_contrib
-    },
-
-    /**
-     * Load the user favourites data.
-     */
-    loadFavourites () {
-      pybossaApi.get(`/api/favorites`).then(r => {
-        this.favourites = r.data
-      })
     }
   },
 
   beforeRouteEnter (to, from, next) {
     const name = to.params.username
-    console.log(name)
-    pybossaApi.get(`account/${name}/`).then(r => {
+    pybossaApi.get(`account/${name}/update`).then(r => {
       next(vm => vm.setUserData(r.data))
     }).catch(err => {
       console.log(err)
@@ -85,7 +85,7 @@ export default {
   beforeRouteUpdate (to, from, next) {
     const name = to.params.username
     this.user = null
-    pybossaApi.get(`account/${name}/`).then(r => {
+    pybossaApi.get(`account/${name}/update`).then(r => {
       this.setUserData(r.data)
       next()
     }).catch(err => {
