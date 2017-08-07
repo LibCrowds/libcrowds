@@ -1,6 +1,6 @@
 <template>
   <b-table
-    class="project-contribute-table"
+    class="project-table"
     hover
     striped
     show-empty
@@ -20,7 +20,7 @@
 
       <data-download-button
         :project="project.item"
-        else-if="action === 'download'"
+        v-else-if="action === 'download'"
         size="sm">
       </data-download-button>
 
@@ -74,11 +74,15 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/main';
 
-.project-contribute-table {
+.project-table {
   tr {
     *:not(:first-child) {
       text-align: center;
     }
+  }
+
+  .btn {
+    background-color: $white;
   }
 }
 </style>
