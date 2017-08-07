@@ -418,7 +418,7 @@ export default {
           &:focus,
           &:hover,
           &.active {
-            color: $white;
+            color: $brand-primary;
           }
         }
 
