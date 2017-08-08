@@ -28,7 +28,7 @@
               :key="`form-${form.id}`"
               v-if="activeFormId === form.id && activeFormId !== 'avatar'"
               :header="`${form.label} Settings`"
-              :submitText="`Update ${form.label}`"
+              :submitText="'Update'"
               :endpoint="endpoints[form.id]"
               :schema="form.schema"
               :model="form.model">
@@ -39,7 +39,7 @@
               :header="'Avatar Settings'"
               :submitText="'Update Avatar'"
               :type="'circle'"
-              :endpoint="endpoints[form.id]"
+              :endpoint="endpoints[forms.avatar.id]"
               :model="forms.avatar.model">
             </avatar-form>
 

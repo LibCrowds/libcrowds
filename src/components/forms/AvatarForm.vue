@@ -98,10 +98,19 @@ export default {
      */
     submit () {
       this.flash = ''
+
+      // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
+      delete this.model.id
+
+      // The Content-Type is removed so that the avatar is handled properly
       pybossaApi.post(this.endpoint, this.model, {
         headers: {
-          'X-CSRFToken': this.model.csrf
-        }
+          'X-CSRFToken': this.model.csrf,
+          'Content-Type': null
+        },
+        transformRequest: [function (data) {
+          return data
+        }]
       }).then(r => {
         if (r.data.status !== 'success') {
           this.flash = r.data.flash
@@ -126,7 +135,6 @@ export default {
 
   mounted () {
     const previewEl = this.$refs.preview
-    console.log(previewEl)
     this.croppie = new Croppie(previewEl, {
       viewport: {
         width: '100%',
