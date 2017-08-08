@@ -107,9 +107,6 @@ export default {
 
     /**
      * Submit the form.
-     *
-     * If successful the modal is hidden, otherwise the flash message and any
-     * errors are shown.
      */
     submit () {
       this.flash = ''

@@ -32,14 +32,14 @@
               :model="profileFormModel">
             </card-form>
 
-            <card-form
+            <avatar-form
               v-if="active === 'avatar'"
               :header="'Avatar Settings'"
               :submitText="'Update Avatar'"
+              :type="'circle'"
               :endpoint="endpoint"
-              :schema="avatarFormSchema"
               :model="avatarFormModel">
-            </card-form>
+            </avatar-form>
 
             <card-form
               v-if="active === 'security'"
@@ -61,6 +61,7 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
+import AvatarForm from '@/components/forms/AvatarForm'
 import BasicLayout from '@/components/layouts/Basic'
 
 export default {
@@ -91,35 +92,6 @@ export default {
           }
         ]
       },
-      avatarFormSchema: {
-        fields: [
-          {
-            model: 'avatar',
-            type: 'input',
-            inputType: 'file'
-          },
-          {
-            model: 'x1',
-            type: 'input',
-            inputType: 'hidden'
-          },
-          {
-            model: 'x2',
-            type: 'input',
-            inputType: 'hidden'
-          },
-          {
-            model: 'y1',
-            type: 'input',
-            inputType: 'hidden'
-          },
-          {
-            model: 'y2',
-            type: 'input',
-            inputType: 'hidden'
-          }
-        ]
-      },
       securityFormSchema: {
         fields: [
           {
@@ -147,6 +119,7 @@ export default {
 
   components: {
     BasicLayout,
+    AvatarForm,
     CardForm
   },
 
@@ -165,6 +138,7 @@ export default {
      * Set the form data.
      */
     setData (data) {
+      this.username = data.username
       this.profileFormModel = data.form
       this.avatarFormModel = data.upload_form
       this.securityFormModel = data.password_form
@@ -175,8 +149,9 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    const name = to.params.username
-    pybossaApi.get(`account/${name}/update`).then(r => {
+    const username = to.params.username
+    pybossaApi.get(`account/${username}/update`).then(r => {
+      r.data.username = username
       next(vm => vm.setData(r.data))
     }).catch(err => {
       console.log(err)
@@ -185,11 +160,12 @@ export default {
   },
 
   beforeRouteUpdate (to, from, next) {
-    const name = to.params.username
+    const username = to.params.username
     this.profileFormModel = {}
     this.avatarFormModel = {}
     this.securityFormModel = {}
-    pybossaApi.get(`account/${name}/update`).then(r => {
+    pybossaApi.get(`account/${username}/update`).then(r => {
+      r.data.username = username
       this.setData(r.data)
       next()
     }).catch(err => {
