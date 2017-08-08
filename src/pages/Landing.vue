@@ -37,7 +37,7 @@
           <hr class="my-2 w-75 sr">
           <div class="row">
             <div class="col-md-4 my-1 sr stat">
-              <icon name="projects" scale="4"></icon>
+              <icon name="television" scale="4"></icon>
               <p class="mb-0">
                 {{ stats.n_published_projects }}
               </p>
@@ -51,7 +51,7 @@
               <p>Volunteers</p>
             </div>
             <div class="col-md-4 my-1 sr stat">
-              <icon name="taskruns" scale="4"></icon>
+              <icon name="list" scale="4"></icon>
               <p class="mb-0">
                 {{ stats.n_task_runs }}
               </p>
@@ -264,8 +264,11 @@
 
 <script>
 import ScrollReveal from 'scrollreveal'
+import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
+import 'vue-awesome/icons/television'
+import 'vue-awesome/icons/list'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
