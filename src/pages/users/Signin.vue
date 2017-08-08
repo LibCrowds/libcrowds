@@ -6,6 +6,7 @@
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Signin'"
+            :lead="lead"
             :submitText="'Sign in'"
             :endpoint="form.endpoint"
             :schema="form.schema"
@@ -91,7 +92,8 @@ export default {
           ]
         }
       },
-      auth: {}
+      auth: {},
+      lead: `Enter your ${config.brand} account details`
     }
   },
 

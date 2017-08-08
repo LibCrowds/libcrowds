@@ -13,6 +13,8 @@
       {{ msg }}
     </b-alert>
 
+    <p class="lead text-center" v-if="lead">{{ lead }}</p>
+
     <slot name="top"></slot>
 
     <loading
@@ -74,6 +76,10 @@ export default {
     submitText: {
       type: String,
       default: 'Submit'
+    },
+    lead: {
+      type: String,
+      required: false
     }
   },
 
