@@ -236,9 +236,11 @@
                 reasearch at {{ config.company }}.
               </p>
               <b-button
-                variant="outline-success"
+                variant="outline"
                 size="lg"
-                :to="{ name: 'contribute' }">
+                :to="{
+                  name: 'contribute'
+                }">
                 Choose a project
               </b-button>
             </div>
