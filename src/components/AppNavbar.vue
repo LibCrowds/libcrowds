@@ -124,7 +124,9 @@
               </b-nav-item>
               <b-nav-item
                 class="nav-button"
-                @click="showModal(registerModalId)">
+                :to="{
+                  name: 'register'
+                }">
                 Sign up
               </b-nav-item>
             </b-nav>
@@ -134,7 +136,6 @@
       </div>
     </b-navbar>
 
-    <register-modal :modalId="registerModalId"></register-modal>
     <open-project-modal :modalId="openProjectModalId"></open-project-modal>
 
   </div>
@@ -145,7 +146,6 @@ import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
-import RegisterModal from '@/components/modals/Register'
 import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
@@ -153,7 +153,6 @@ export default {
     return {
       config: config,
       currentPath: this.$store.state.route.path,
-      registerModalId: 'register-modal',
       openProjectModalId: 'open-project-modal'
     }
   },
@@ -178,7 +177,6 @@ export default {
   },
 
   components: {
-    RegisterModal,
     OpenProjectModal
   },
 
