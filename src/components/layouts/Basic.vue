@@ -3,6 +3,8 @@
     <app-navbar
       v-if="showNavbar"
       :type="navbarType"
+      :fixed="navbarFixed"
+      :sticky="navbarSticky"
       :invertable="navbarInvertable">
     </app-navbar>
     <main>
@@ -31,6 +33,14 @@ export default {
     navbarInvertable: {
       type: Boolean,
       default: true
+    },
+    navbarFixed: {
+      type: String,
+      default: 'top'
+    },
+    navbarSticky: {
+      type: String,
+      default: null
     },
     showFooter: {
       type: Boolean,

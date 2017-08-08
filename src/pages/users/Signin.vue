@@ -1,8 +1,10 @@
 <template>
   <div id="signin">
     <basic-layout
+      :navbarSticky="'top'"
+      :navbarFixed="null"
       :navbarInvertable="false">
-      <div class="container mt-5">
+      <div class="container my-3">
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Signin'"
