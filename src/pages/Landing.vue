@@ -317,7 +317,7 @@ export default {
   },
 
   computed: {
-    topUsersTaskRuns () {
+    topUsersTaskRuns: function () {
       const scores = this.topUsers.map((user) => user.score)
       const sum = scores.reduce(function (acc, val) {
         return acc + val
@@ -327,25 +327,42 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get('stats/').then(r => {
-        this.stats = mapValues(r.data.stats, (n) => getNumberWithCommas(n))
-      })
-      pybossaApi.get('/').then(r => {
-        if ('featured' in r.data.categories_projects) {
-          this.featured = r.data.categories_projects.featured
-        }
-        this.topUsers = r.data.top_users
-      })
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      console.log(data)
+      if ('featured' in data.categories_projects) {
+        this.featured = data.categories_projects.featured
+      }
+      this.topUsers = data.top_users
+      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
     },
+
+    /**
+     * Init scroll reveal.
+     */
     scrollReveal () {
-      const sr = ScrollReveal()
-      sr.reveal('.sr', { duration: 600 }, 75)
+      ScrollReveal().reveal('.sr', {
+        duration: 600 },
+      75)
     }
   },
 
+  beforeRouteEnter (to, from, next) {
+    let data = {}
+    pybossaApi.get(`/`).then(r => {
+      data = r.data
+      return pybossaApi.get('stats/')
+    }).then(r => {
+      data.stats = r.data.stats
+      next(vm => vm.setData(data))
+    })
+  },
+
   mounted () {
-    this.fetchData()
     this.scrollReveal()
   }
 }
