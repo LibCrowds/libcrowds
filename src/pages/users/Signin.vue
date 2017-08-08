@@ -113,14 +113,20 @@ export default {
     redirect (endpoint) {
       const next = window.location.href
       window.location = `${config.pybossaHost}/${endpoint}?next=${next}`
+    },
+
+    /**
+     * Set the data.
+     */
+    setData (data) {
+      this.form.model = data.form
+      this.auth = data.auth
     }
   },
 
-  created () {
-    pybossaApi.get(this.form.endpoint).then(r => {
-      console.log(r)
-      this.form.model = r.data.form
-      this.auth = r.data.auth
+  beforeRouteEnter (to, from, next) {
+    pybossaApi.get('/account/signin').then(r => {
+      next(vm => vm.setData(r.data))
     })
   }
 }
