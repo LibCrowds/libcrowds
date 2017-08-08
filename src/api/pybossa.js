@@ -61,7 +61,7 @@ instance.interceptors.response.use((r) => {
 
 // Handle redirects
 instance.interceptors.response.use((r) => {
-  if (r !== undefined && 'next' in r.data) {
+  if (r !== undefined && 'next' in r.data && r.title !== 'Sign in') {
     router.push({ path: r.data.next })
   }
   return r
