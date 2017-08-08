@@ -18,7 +18,6 @@ import '@/icons'
 import App from '@/App'
 import store from '@/store'
 import router from '@/router'
-import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 import config from '@/config'
 
 // Global styles
@@ -33,7 +32,6 @@ Vue.use(VueProgressBar)
 
 Vue.component('v-gravatar', VueGravatar)
 Vue.component('v-images', VueImages)
-Vue.component('pybossa-modal-form', PyBossaModalForm)
 
 // Google analytics
 if ('analytics' in config && process.env.NODE_ENV === 'production') {
