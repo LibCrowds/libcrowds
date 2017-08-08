@@ -59,4 +59,12 @@ instance.interceptors.response.use((r) => {
   return r
 })
 
+// Handle redirects
+instance.interceptors.response.use((r) => {
+  if (r !== undefined && 'next' in r.data) {
+    router.push({ path: r.data.next })
+  }
+  return r
+})
+
 export default instance
