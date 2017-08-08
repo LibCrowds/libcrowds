@@ -28,7 +28,7 @@
                     variant="facebook"
                     @click="redirect('facebook')">
                     <icon name="facebook"></icon>
-                    <span class="ml-1 hidden-md-down">Facebook</span>
+                    <span class="ml-1 hidden-sm-down">Facebook</span>
                   </b-button>
                 </div>
 
@@ -38,7 +38,7 @@
                     variant="googleplus"
                     @click="redirect('google')">
                     <icon name="google-plus"></icon>
-                    <span class="ml-1 hidden-md-down">Google Plus</span>
+                    <span class="ml-1 hidden-sm-down">Google Plus</span>
                   </b-button>
                 </div>
 
@@ -48,11 +48,20 @@
                     variant="twitter"
                     @click="redirect('twitter')">
                     <icon name="twitter"></icon>
-                    <span class="ml-1 hidden-md-down">Twitter</span>
+                    <span class="ml-1 hidden-sm-down">Twitter</span>
                   </b-button>
                 </div>
 
               </div>
+            </div>
+
+            <div slot="footer-left">
+              <router-link
+                :to="{
+                  name: 'forgot-password'
+                }">
+                Forgot your password?
+              </router-link>
             </div>
 
           </card-form>
