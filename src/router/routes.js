@@ -15,10 +15,10 @@ import Api from '@/pages/help/Api'
 
 import Presenter from '@/pages/projects/Presenter'
 
-import Profile from '@/pages/users/Profile'
-import Settings from '@/pages/users/Settings'
-import Signin from '@/pages/users/Signin'
-import Register from '@/pages/users/Register'
+import Profile from '@/pages/account/Profile'
+import Settings from '@/pages/account/Settings'
+import Signin from '@/pages/account/Signin'
+import Register from '@/pages/account/Register'
 
 const routes = [
   { path: '/', name: 'landing', component: Landing },
@@ -56,7 +56,7 @@ const routes = [
   },
 
   {
-    path: '/users/:username',
+    path: '/account/:username',
     component: {
       render (c) {
         return c('router-view')
