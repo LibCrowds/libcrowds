@@ -3,6 +3,7 @@ import Settings from '@/pages/account/Settings'
 import Signin from '@/pages/account/Signin'
 import Register from '@/pages/account/Register'
 import ForgottenPassword from '@/pages/account/ForgottenPassword'
+import ResetPassword from '@/pages/account/ResetPassword'
 
 export default [
   {
@@ -19,6 +20,11 @@ export default [
     path: '/account/forgot-password',
     name: 'forgot-password',
     component: ForgottenPassword
+  },
+  {
+    path: '/account/reset-password',
+    name: 'reset-password',
+    component: ResetPassword
   },
   {
     path: '/account/:username',
