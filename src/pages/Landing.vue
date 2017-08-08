@@ -273,7 +273,6 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
-import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
 import codeImage from '@/assets/img/code.png'
@@ -287,7 +286,6 @@ export default {
       stats: {},
       featured: [],
       topUsers: [],
-      project: project,
       dataStyle: {
         backgroundImage: `url(${codeImage})`
       },
