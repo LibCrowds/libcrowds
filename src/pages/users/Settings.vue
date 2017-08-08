@@ -12,11 +12,11 @@
             <b-list-group class="mb-3">
               <b-list-group-item
                 action
-                v-for="category in settings"
-                :key="category.id"
-                :active="active === category.id"
-                @click.native="active = category.id">
-                {{ category.label }}
+                v-for="form in forms"
+                :key="`form-${form.id}-chooser`"
+                :active="activeFormId === form.id"
+                @click.native="activeFormId = form.id">
+                {{ form.label }}
               </b-list-group-item>
             </b-list-group>
 
@@ -24,31 +24,24 @@
           <div class="col-md-8">
 
             <card-form
-              v-if="active === 'profile'"
-              :header="'Profile Settings'"
-              :submitText="'Update Profile'"
-              :endpoint="endpoint"
-              :schema="profileFormSchema"
-              :model="profileFormModel">
+              v-for="form in forms"
+              :key="`form-${form.id}`"
+              v-if="activeFormId === form.id && activeFormId !== 'avatar'"
+              :header="`${form.label} Settings`"
+              :submitText="`Update ${form.label}`"
+              :endpoint="endpoints[form.id]"
+              :schema="form.schema"
+              :model="form.model">
             </card-form>
 
             <avatar-form
-              v-if="active === 'avatar'"
+              v-if="activeFormId === 'avatar'"
               :header="'Avatar Settings'"
               :submitText="'Update Avatar'"
               :type="'circle'"
-              :endpoint="endpoint"
-              :model="avatarFormModel">
+              :endpoint="endpoints[form.id]"
+              :model="forms.avatar.model">
             </avatar-form>
-
-            <card-form
-              v-if="active === 'security'"
-              :header="'Security Settings'"
-              :submitText="'Update Password'"
-              :endpoint="endpoint"
-              :schema="securityFormSchema"
-              :model="securityFormModel">
-            </card-form>
 
           </div>
         </div>
@@ -67,52 +60,68 @@ import BasicLayout from '@/components/layouts/Basic'
 export default {
   data: function () {
     return {
-      settings: [
-        { label: 'Profile', id: 'profile' },
-        { label: 'Avatar', id: 'avatar' },
-        { label: 'Security', id: 'security' }
-      ],
-      active: 'profile',
-      profileFormModel: {},
-      avatarFormModel: {},
-      securityFormModel: {},
-      profileFormSchema: {
-        fields: [
-          {
-            model: 'fullname',
-            label: 'Full name',
-            type: 'input',
-            inputType: 'text'
-          },
-          {
-            model: 'email_addr',
-            label: 'Email',
-            type: 'input',
-            inputType: 'email'
+      activeFormId: 'profile',
+      forms: {
+        profile: {
+          id: 'profile',
+          label: 'Profile',
+          model: {},
+          schema: {
+            fields: [
+              {
+                model: 'fullname',
+                label: 'Full name',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'name',
+                label: 'Username',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'email_addr',
+                label: 'Email',
+                type: 'input',
+                inputType: 'email'
+              }
+            ]
           }
-        ]
-      },
-      securityFormSchema: {
-        fields: [
-          {
-            model: 'current_password',
-            label: 'Current Password',
-            type: 'input',
-            inputType: 'password'
-          },
-          {
-            model: 'new_password',
-            label: 'New Password',
-            type: 'input',
-            inputType: 'password'
-          },
-          {
-            model: 'confirm',
-            label: 'Confirm New Password',
-            type: 'input',
-            inputType: 'password'
+        },
+        security: {
+          id: 'security',
+          label: 'Security',
+          model: {},
+          schema: {
+            fields: [
+              {
+                model: 'current_password',
+                label: 'Current Password',
+                type: 'input',
+                inputType: 'password'
+              },
+              {
+                model: 'new_password',
+                label: 'New Password',
+                type: 'input',
+                inputType: 'password'
+              },
+              {
+                model: 'confirm',
+                label: 'Confirm New Password',
+                type: 'input',
+                inputType: 'password'
+              }
+            ]
           }
-        ]
+        },
+        avatar: {
+          id: 'avatar',
+          label: 'Avatar',
+          model: {},
+          schema: {}
+        }
       }
     }
   },
@@ -123,14 +132,18 @@ export default {
     CardForm
   },
 
-  computed: {
-    endpoint: function () {
-      return `account/${this.profileFormModel.name}/update`
-    }
-  },
-
   metaInfo: {
     title: 'User Settings'
+  },
+
+  computed: {
+    endpoints: function () {
+      return {
+        profile: `account/${this.$store.state.currentUser.name}/update`,
+        avatar: `account/${this.$store.state.currentUser.name}/update`,
+        security: `account/${this.$store.state.currentUser.name}/update`
+      }
+    }
   },
 
   methods: {
@@ -138,20 +151,18 @@ export default {
      * Set the form data.
      */
     setData (data) {
-      this.username = data.username
-      this.profileFormModel = data.form
-      this.avatarFormModel = data.upload_form
-      this.securityFormModel = data.password_form
-      this.profileFormModel.btn = 'Profile'
-      this.avatarFormModel.btn = 'Upload'
-      this.securityFormModel.btn = 'Password'
+      this.forms.profile.model = data.form
+      this.forms.avatar.model = data.upload_form
+      this.forms.security.model = data.password_form
+      this.forms.profile.model.btn = 'Profile'
+      this.forms.avatar.model.btn = 'Upload'
+      this.forms.security.model.btn = 'Password'
     }
   },
 
   beforeRouteEnter (to, from, next) {
     const username = to.params.username
     pybossaApi.get(`account/${username}/update`).then(r => {
-      r.data.username = username
       next(vm => vm.setData(r.data))
     }).catch(err => {
       console.log(err)
@@ -161,11 +172,10 @@ export default {
 
   beforeRouteUpdate (to, from, next) {
     const username = to.params.username
-    this.profileFormModel = {}
-    this.avatarFormModel = {}
-    this.securityFormModel = {}
+    this.forms.profile.model = {}
+    this.forms.avatar.model = {}
+    this.forms.security.model = {}
     pybossaApi.get(`account/${username}/update`).then(r => {
-      r.data.username = username
       this.setData(r.data)
       next()
     }).catch(err => {
