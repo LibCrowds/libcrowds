@@ -3,8 +3,9 @@
     <b-navbar
       toggleable
       toggle-breakpoint="md"
-      type="inverse"
-      sticky="top">
+      :type="type"
+      :fixed="fixed"
+      :sticky="sticky">
       <div class="container">
 
         <button
@@ -76,11 +77,21 @@
 
               <!-- Profile/settings -->
               <b-dropdown-item
-                to="#"
+                :to="{
+                  name: 'profile',
+                  params: {
+                    username: currentUser.name
+                  }
+                }"
                 @click.native="toggleCollapsibleSidebar">Profile
               </b-dropdown-item>
               <b-dropdown-item
-                to="#"
+                :to="{
+                  name: 'account-update',
+                  params: {
+                    username: currentUser.name
+                  }
+                }"
                 @click.native="toggleCollapsibleSidebar">Settings
               </b-dropdown-item>
 
@@ -106,12 +117,16 @@
             <!-- Sign in/sign up -->
             <b-nav is-nav-bar v-else>
               <b-nav-item
-                @click="showModal(signinModalId)">
+                :to="{
+                  name: 'signin'
+                }">
                 Sign in
               </b-nav-item>
               <b-nav-item
                 class="nav-button"
-                @click="showModal(registerModalId)">
+                :to="{
+                  name: 'register'
+                }">
                 Sign up
               </b-nav-item>
             </b-nav>
@@ -121,8 +136,6 @@
       </div>
     </b-navbar>
 
-    <signin-modal :modalId="signinModalId"></signin-modal>
-    <register-modal :modalId="registerModalId"></register-modal>
     <open-project-modal :modalId="openProjectModalId"></open-project-modal>
 
   </div>
@@ -133,8 +146,6 @@ import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
-import SigninModal from '@/components/modals/Signin'
-import RegisterModal from '@/components/modals/Register'
 import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
@@ -142,15 +153,30 @@ export default {
     return {
       config: config,
       currentPath: this.$store.state.route.path,
-      signinModalId: 'signin-modal',
-      registerModalId: 'register-modal',
       openProjectModalId: 'open-project-modal'
     }
   },
 
+  props: {
+    type: {
+      type: String,
+      default: 'inverse'
+    },
+    invertable: {
+      type: Boolean,
+      default: true
+    },
+    fixed: {
+      type: String,
+      default: 'top'
+    },
+    sticky: {
+      type: String,
+      default: null
+    }
+  },
+
   components: {
-    SigninModal,
-    RegisterModal,
     OpenProjectModal
   },
 
@@ -181,6 +207,10 @@ export default {
      */
     styleNavbar: throttle(
       function () {
+        if (!this.invertable) {
+          return
+        }
+
         let ieScrollTop = document.documentElement.scrollTop
         let scrollTop = document.body.scrollTop === 0
                           ? ieScrollTop
@@ -305,16 +335,6 @@ export default {
     }
   },
 
-  // watch: {
-  //   currentTask: function () {
-  //     this.viewer.close()
-  //     this.viewer.open({
-  //       tileSource: this.currentTask.imgInfoUri,
-  //       success: () => this.configureMode(this.currentTask)
-  //     })
-  //   }
-  // },
-
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)
     window.addEventListener('resize', this.onWindowResize)
@@ -413,7 +433,7 @@ export default {
           &:focus,
           &:hover,
           &.active {
-            color: $white;
+            color: $brand-primary;
           }
         }
 

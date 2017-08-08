@@ -1,17 +1,20 @@
 <template>
   <div class="error">
-    <div class="error-message container">
-      <h1>{{ title }}</h1>
-      <p class="lead">{{ description }}</p>
-      <router-link :to="{ path: '/' }">
-        <icon name="home" scale="2"></icon>
-      </router-link>
-    </div>
+    <basic-layout :show-footer="false">
+      <div class="error-message container">
+        <h1>{{ title }}</h1>
+        <p class="lead">{{ description }}</p>
+        <router-link :to="{ path: '/' }">
+          <icon name="home" scale="2"></icon>
+        </router-link>
+      </div>
+    </basic-layout>
   </div>
 </template>
 
 <script>
 import 'vue-awesome/icons/home'
+import BasicLayout from '@/components/layouts/Basic'
 
 export default {
   props: {
@@ -23,6 +26,10 @@ export default {
       type: String,
       required: true
     }
+  },
+
+  components: {
+    BasicLayout
   },
 
   metaInfo: {

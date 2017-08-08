@@ -95,17 +95,6 @@ export default {
     flashMsg: function () {
       // To handle disappearing and multiple alerts
       return this.flash ? [this.flash] : []
-    },
-
-    schemaWithValidators: function () {
-      const schema = JSON.parse(JSON.stringify(this.schema))
-      schema.fields = this.schema.fields.map(field => {
-        field.validator = function (value) {
-          return this.form.errors[field]
-        }
-        return field
-      })
-      return schema
     }
   },
 

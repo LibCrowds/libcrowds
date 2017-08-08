@@ -70,7 +70,6 @@ $pagination-active-border:         $brand-info;
 
 /* Cards */
 $card-border-radius:               0px;
-$card-spacer-y:                    3rem;
 $card-columns-count:               2;
 
 /* Alerts */
@@ -81,6 +80,8 @@ $form-group-margin-bottom:         1rem;
 
 /* List Groups */
 $list-group-border-radius:         0px;
+$list-group-item-padding-y:        0.5rem;
+$list-group-item-padding-x:        1rem;
 
 /* Spacing */
 $spacer:                           2.5rem;
@@ -109,5 +110,6 @@ $spinkit-spinner-color:            $brand-info;
   '~bootstrap/scss/bootstrap',
   '~bootstrap-vue/dist/bootstrap-vue.css',
   'partials/modals',
-  'partials/tables'
+  'partials/tables',
+  'partials/cards'
 ;
