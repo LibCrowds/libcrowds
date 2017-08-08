@@ -32,12 +32,16 @@
     <slot name="bottom"></slot>
 
     <template slot="footer">
-      <b-button
-        variant="success"
-        class="float-right"
-        @click="submit">
-        {{ submitText }}
-      </b-button>
+      <span>
+        <slot name="footer-left"></slot>
+      </span>
+      <span>
+        <b-button
+          variant="success"
+          @click="submit">
+          {{ submitText }}
+        </b-button>
+      </span>
     </template>
 
   </b-card>
@@ -156,6 +160,13 @@ export default {
       margin-top: 0.25rem;
       display: block;
     }
+  }
+
+  .card-footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 </style>
