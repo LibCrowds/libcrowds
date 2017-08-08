@@ -8,7 +8,7 @@
       <p class="lead text-center">
         Choose a project from the list below to get started!
       </p>
-      <p class="text-center" v-if="config.projectsMd">
+      <p class="text-center mb-0">
         <small>
           For more information about how projects are organised,
           see the
@@ -19,11 +19,9 @@
 
     <section :id="navItems[0].id">
       <h3 class="text-center">{{ navItems[0].text }}</h3>
-      <hr class="w-50"></hr>
       <category-list-chooser
         @change="onCategoryChange">
       </category-list-chooser>
-      <hr class="w-50"></hr>
     </section>
 
     <section :id="navItems[1].id">
@@ -75,7 +73,6 @@
 
 <script>
 import { sortBy, forEach } from 'lodash'
-import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
@@ -87,7 +84,6 @@ import CategoryListChooser from '@/components/category/ListChooser'
 export default {
   data: function () {
     return {
-      config: config,
       views: ['list', 'table'],
       activeView: 'list',
       showCompleted: false,
@@ -97,8 +93,8 @@ export default {
         total: 0
       },
       navItems: [
-        { id: 'categories', text: 'Categories' },
-        { id: 'projects', text: 'Projects' }
+        { id: 'categories', text: 'Choose a Category' },
+        { id: 'projects', text: 'Choose a Project' }
       ],
       projects: [],
       category: null
@@ -143,6 +139,7 @@ export default {
      * Fetch the projects in a category.
      */
     fetchProjects () {
+      this.projects = []
       let url = `/project/category/${this.category.short_name}/`
       if (this.page > 1) {
         url += `page/${this.page}/`
