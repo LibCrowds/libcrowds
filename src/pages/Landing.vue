@@ -37,21 +37,21 @@
           <hr class="my-2 w-75 sr">
           <div class="row">
             <div class="col-md-4 my-1 sr stat">
-              <icon name="television" scale="4"></icon>
+              <icon name="television" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_published_projects }}
               </p>
               <p>Projects</p>
             </div>
             <div class="col-md-4 my-1 sr stat">
-              <icon name="users" scale="4"></icon>
+              <icon name="users" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_total_users }}
               </p>
               <p>Volunteers</p>
             </div>
             <div class="col-md-4 my-1 sr stat">
-              <icon name="list" scale="4"></icon>
+              <icon name="list" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_task_runs }}
               </p>
@@ -350,7 +350,7 @@ export default {
     scrollReveal () {
       ScrollReveal().reveal('.sr', {
         duration: 600 },
-      75)
+      50)
     }
   },
 
