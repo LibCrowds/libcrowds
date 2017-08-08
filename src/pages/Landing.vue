@@ -344,12 +344,6 @@ export default {
     }
   },
 
-  watch: {
-    '$route' () {
-      this.fetchData()
-    }
-  },
-
   mounted () {
     this.fetchData()
     this.scrollReveal()
