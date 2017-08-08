@@ -93,7 +93,7 @@
                 class="mt-2 btn-bg-white"
                 variant="outline-success"
                 size="lg"
-                :to="{ name: 'user-settings' }">
+                :to="{ name: 'contribute' }">
                 Browse all projects
               </b-button>
             </div>

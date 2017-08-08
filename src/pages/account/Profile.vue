@@ -17,7 +17,7 @@
                 block
                 variant="success"
                 :to="{
-                  name: 'user-settings',
+                  name: 'account-settings',
                   params: {
                     username: user.name
                   }

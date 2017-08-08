@@ -87,7 +87,7 @@
               </b-dropdown-item>
               <b-dropdown-item
                 :to="{
-                  name: 'user-settings',
+                  name: 'account-update',
                   params: {
                     username: currentUser.name
                   }
