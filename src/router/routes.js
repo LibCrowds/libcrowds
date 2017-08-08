@@ -17,6 +17,7 @@ import Presenter from '@/pages/projects/Presenter'
 
 import Profile from '@/pages/users/Profile'
 import Settings from '@/pages/users/Settings'
+import Signin from '@/pages/users/Signin'
 
 const routes = [
   { path: '/', name: 'landing', component: Landing },
@@ -29,6 +30,8 @@ const routes = [
   { path: '/help/privacy', name: 'privacy', component: Privacy },
   { path: '/help/cookies', name: 'cookies', component: Cookies },
   { path: '/help/api', name: 'api', component: Api },
+
+  { path: '/account/signin', name: 'signin', component: Signin },
 
   {
     path: '/projects/:shortname',

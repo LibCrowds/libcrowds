@@ -10,7 +10,7 @@
       {{ msg }}
     </b-alert>
 
-    <slot></slot>
+    <slot name="top"></slot>
 
     <loading
       v-if="loading"
@@ -23,6 +23,8 @@
       :schema="schema"
       :model="model">
     </vue-form-generator>
+
+    <slot name="bottom"></slot>
 
     <b-button
       variant="success"
