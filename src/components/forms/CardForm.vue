@@ -1,5 +1,8 @@
 <template>
-  <b-card class="card-form" :header="header">
+  <b-card
+    class="card-form"
+    :header="header"
+    show-footer>
 
     <b-alert
       show
@@ -26,12 +29,14 @@
 
     <slot name="bottom"></slot>
 
-    <b-button
-      variant="success"
-      class="mt-1 float-right"
-      @click="submit">
-      {{ submitText }}
-    </b-button>
+    <template slot="footer">
+      <b-button
+        variant="success"
+        class="float-right"
+        @click="submit">
+        {{ submitText }}
+      </b-button>
+    </template>
 
   </b-card>
 </template>
