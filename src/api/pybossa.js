@@ -36,6 +36,10 @@ instance.interceptors.response.use((r) => {
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
+  if (error === undefined) {
+    return error
+  }
+
   if (error.response.status === 404) {
     router.push({ name: '404' })
   }
@@ -46,8 +50,8 @@ instance.interceptors.response.use(undefined, (error) => {
 
 // Handle success flash messages
 instance.interceptors.response.use((r) => {
-  if (r === undefined) {
-    return
+  if (r === undefined || r.data === undefined) {
+    return r
   }
 
   if (r.data.status === 'success' && 'flash' in r.data) {
