@@ -119,8 +119,8 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get(`/api/project?short_name=${to.params.shortname}`).then(r => {
-      data.project = r.data[0]
+    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+      data.project = r.data.project
       return pybossaApi.get(`/api/project/${data.project.id}/newtask?limit=100`)
     }).then(r => {
       data.tasks = Array.isArray(r.data) ? r.data : [r.data]
@@ -131,8 +131,8 @@ export default {
   beforeRouteUpdate (to, from, next) {
     this.clearData()
     let data = {}
-    pybossaApi.get(`/api/project?short_name=${to.params.shortname}`).then(r => {
-      data.project = r.data[0]
+    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+      data.project = r.data.project
       return pybossaApi.get(`/api/project/${data.project.id}/newtask?limit=100`)
     }).then(r => {
       data.tasks = Array.isArray(r.data) ? r.data : [r.data]
