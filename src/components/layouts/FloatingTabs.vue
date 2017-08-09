@@ -31,9 +31,11 @@ import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
 
 export default {
-  props: [
-    'nav-items'
-  ],
+  props: {
+    navItems: {
+      type: Array
+    }
+  },
 
   components: {
     AppNavbar,

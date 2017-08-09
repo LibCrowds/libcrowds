@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout :nav-items="navItems">
+  <floating-tabs-layout>
 
     <section>
       <h2 class="text-center">Results</h2>
@@ -22,8 +22,7 @@ import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 export default {
   data: function () {
     return {
-      config: config,
-      navItems: []
+      config: config
     }
   },
 

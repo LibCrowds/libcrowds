@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout :nav-items="navItems">
+  <floating-tabs-layout>
 
     <section>
       <h2 class="text-center">Contribute</h2>
@@ -79,10 +79,6 @@ export default {
         per_page: 0,
         total: 0
       },
-      navItems: [
-        { id: 'categories', text: 'Choose a Category' },
-        { id: 'projects', text: 'Choose a Project' }
-      ],
       projects: [],
       categories: [],
       category: null
