@@ -1,55 +1,61 @@
-// https://github.com/browserstack/nightwatch-browserstack
+require('babel-register')
+var config = require('../../config')
 
-nightwatch_config = {
+module.exports = {
   src_folders: ['test/e2e/specs'],
+  output_folder: 'test/e2e/reports',
+  custom_assertions_path: ['test/e2e/custom-assertions'],
 
   selenium: {
-    start_process: false,
-    host: "hub-cloud.browserstack.com",
-    port: 80
-  },
-
-  common_capabilities: {
-    'build': 'nightwatch-browserstack',
-    'browserstack.user': process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
-    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
-    'browserstack.debug': true
+    start_process: true,
+    server_path: require('selenium-server').path,
+    host: '127.0.0.1',
+    port: 4444,
+    cli_args: {
+      'webdriver.chrome.driver': require('chromedriver').path
+    }
   },
 
   test_settings: {
-    default: {},
+    default: {
+      selenium_port: 4444,
+      selenium_host: 'localhost',
+      silent: true,
+      globals: {
+        devServerURL: 'http://localhost:' + (process.env.PORT || config.dev.port)
+      }
+    },
+
     chrome: {
       desiredCapabilities: {
-        browser: "chrome"
+        browserName: 'chrome',
+        javascriptEnabled: true,
+        acceptSslCerts: true
       }
     },
+
     firefox: {
       desiredCapabilities: {
-        browser: "firefox"
+        browserName: 'firefox',
+        javascriptEnabled: true,
+        acceptSslCerts: true
       }
     },
+
     safari: {
       desiredCapabilities: {
-        browser: "safari"
+        browserName: 'safari',
+        javascriptEnabled: true,
+        acceptSslCerts: true
       }
     },
+
     ie: {
       desiredCapabilities: {
-        browser: "internet explorer"
+        browserName: 'internet explorer',
+        javascriptEnabled: true,
+        acceptSslCerts: true
       }
     }
   }
-};
-
-// Code to support common capabilites
-for(var i in nightwatch_config.test_settings){
-  var config = nightwatch_config.test_settings[i];
-  config['selenium_host'] = nightwatch_config.selenium.host;
-  config['selenium_port'] = nightwatch_config.selenium.port;
-  config['desiredCapabilities'] = config['desiredCapabilities'] || {};
-  for(var j in nightwatch_config.common_capabilities){
-    config['desiredCapabilities'][j] = config['desiredCapabilities'][j] || nightwatch_config.common_capabilities[j];
-  }
 }
-
-module.exports = nightwatch_config;

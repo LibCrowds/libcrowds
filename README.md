@@ -94,12 +94,14 @@ sudo service nginx restart
 npm unit
 
 # run e2e tests
-export BROWSERSTACK_USERNAME=<browserstack-username>
-export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 npm run e2e
+
+# run all tests
+npm test
 ```
 
-End-to-end tests are run using BrowserStack, a cross browser and real device web-based testing platform.
+CI end-to-end tests are run using BrowserStack, a cross browser and
+real device web-based testing platform.
 
 [![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
 
