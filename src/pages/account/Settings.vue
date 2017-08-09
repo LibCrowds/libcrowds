@@ -1,5 +1,5 @@
 <template>
-  <div id="user-settings">
+  <div id="account-settings">
     <basic-layout
       :background="'faded'"
       navbarType="light"
@@ -152,7 +152,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'User Settings'
+    title: 'Account Settings'
   },
 
   computed: {

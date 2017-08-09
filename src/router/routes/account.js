@@ -41,7 +41,7 @@ export default [
       },
       {
         path: 'update',
-        name: 'account-update',
+        name: 'account-settings',
         component: Settings
       }
     ]
