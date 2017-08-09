@@ -120,6 +120,8 @@ export default {
   methods: {
     /**
      * Redirect to an external endpoint (for OAuth signin).
+     * @param {String} endpoint
+     *   The endpoint
      */
     redirect (endpoint) {
       const next = window.location.href
@@ -127,7 +129,9 @@ export default {
     },
 
     /**
-     * Set the data.
+     * Set core data.
+     * @param {Object} data
+     *   The data.
      */
     setData (data) {
       this.form.model = data.form

@@ -57,7 +57,9 @@ export default {
 
   methods: {
     /**
-     * Set the data.
+     * Set core data.
+     * @param {Object} data
+     *   The data.
      */
     setData (data) {
       this.form.model = data.form
