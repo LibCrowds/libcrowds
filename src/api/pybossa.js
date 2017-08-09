@@ -10,7 +10,7 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  timeout: 30000,
+  timeout: 10000,
   data: {}  // Must always be set otherwise Content-Type gets deleted
 })
 
