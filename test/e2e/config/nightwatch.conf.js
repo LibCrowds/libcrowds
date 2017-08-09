@@ -1,6 +1,7 @@
 require('babel-register')
-var config = require('../../config')
+var config = require('../../../config')
 
+// http://nightwatchjs.org/gettingstarted#settings-file
 module.exports = {
   src_folders: ['test/e2e/specs'],
   output_folder: 'test/e2e/reports',
@@ -29,30 +30,6 @@ module.exports = {
     chrome: {
       desiredCapabilities: {
         browserName: 'chrome',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    },
-
-    firefox: {
-      desiredCapabilities: {
-        browserName: 'firefox',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    },
-
-    safari: {
-      desiredCapabilities: {
-        browserName: 'safari',
-        javascriptEnabled: true,
-        acceptSslCerts: true
-      }
-    },
-
-    ie: {
-      desiredCapabilities: {
-        browserName: 'internet explorer',
         javascriptEnabled: true,
         acceptSslCerts: true
       }
