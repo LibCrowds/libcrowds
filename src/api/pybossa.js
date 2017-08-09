@@ -36,12 +36,11 @@ instance.interceptors.response.use((r) => {
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
-  if (error.response.status === 404) {
-    router.push({ name: '404' })
+  const errorCodes = [401, 402, 403, 404]
+  if (error.response !== undefined && error.response.status in errorCodes) {
+    router.push({ name: error.response.status })
   }
-  const notification = { msg: error.message, type: 'error' }
-  store.dispatch('NOTIFY', notification)
-  return Promise.reject(error)
+  router.push({ name: 500 })
 })
 
 // Handle success flash messages
