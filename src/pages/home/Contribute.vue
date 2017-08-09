@@ -15,56 +15,43 @@
           <router-link :to="{ name: 'about' }">about page</router-link>.
         </small>
       </p>
-    </section>
-
-    <section :id="navItems[0].id">
-      <h3 class="text-center">{{ navItems[0].text }}</h3>
-      <category-list-chooser
-        @change="onCategoryChange">
-      </category-list-chooser>
-    </section>
-
-    <section :id="navItems[1].id">
-      <h3 class="text-center">{{ navItems[1].text }}</h3>
       <hr>
+      <div class="row">
+        <div class="col-xl-3">
+          <category-list-chooser
+            :categories="categories"
+            @change="onCategoryChange">
+          </category-list-chooser>
+        </div>
+        <div class="col-xl-9">
+          <project-sorting-options
+            :views="views"
+            :showCompleted="showCompleted"
+            @sort="onSort"
+            @viewchange="onViewChange"
+            @togglecompleted="onToggleCompleted">
+          </project-sorting-options>
+          <hr>
 
-      <span v-if="projects.length">
-        <project-sorting-options
-          :views="views"
-          :showCompleted="showCompleted"
-          @sort="onSort"
-          @viewchange="onViewChange"
-          @togglecompleted="onToggleCompleted">
-        </project-sorting-options>
-        <hr>
+          <span v-if="projects.length">
+            <project-card-list
+              v-if="activeView === 'list'"
+              :projects="filteredProjects">
+            </project-card-list>
 
-        <project-card-list
-          v-if="activeView === 'list'"
-          :projects="filteredProjects">
-        </project-card-list>
+            <project-table
+              v-if="activeView === 'table'"
+              :action="'contribute'"
+              :projects="filteredProjects">
+            </project-table>
 
-        <project-table
-          v-if="activeView === 'table'"
-          :action="'contribute'"
-          :projects="filteredProjects">
-        </project-table>
-
-        <project-pagination
-          :pagination="pagination"
-          @change="onPageChange">
-        </project-pagination>
-      </span>
-      <span v-else-if="this.category">
-        <p class="lead text-center mb-0">
-          Sorry, no projects have been published for this category.
-        </p>
-      </span>
-      <span v-else>
-        <p class="lead text-center mb-0">
-          Please choose a category first.
-        </p>
-      </span>
-
+            <project-pagination
+              :pagination="pagination"
+              @change="onPageChange">
+            </project-pagination>
+          </span>
+        </div>
+      </div>
     </section>
 
   </floating-tabs-layout>
@@ -97,6 +84,7 @@ export default {
         { id: 'projects', text: 'Choose a Project' }
       ],
       projects: [],
+      categories: [],
       category: null
     }
   },
@@ -127,6 +115,15 @@ export default {
   },
 
   methods: {
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.categories = sortBy(data.categories, 'name')
+    },
+
     /**
      * Handle category change.
      */
@@ -181,6 +178,12 @@ export default {
       this.page = page
       this.fetchProjects()
     }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    pybossaApi.get('/').then(r => {
+      next(vm => vm.setData(r.data))
+    })
   }
 }
 </script>
