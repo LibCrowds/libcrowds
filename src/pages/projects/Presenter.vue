@@ -77,6 +77,14 @@ export default {
     },
 
     /**
+     * Clear core data.
+     */
+    clearData () {
+      this.project = {}
+      this.tasks = []
+    },
+
+    /**
      * Handle the task liked event.
      * @param {Object} task
      *   The task.
@@ -121,8 +129,7 @@ export default {
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.project = null
-    this.tasks = []
+    this.clearData()
     let data = {}
     pybossaApi.get(`/api/project?short_name=${to.params.shortname}`).then(r => {
       data.project = r.data[0]
