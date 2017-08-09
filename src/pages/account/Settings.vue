@@ -148,7 +148,9 @@ export default {
 
   methods: {
     /**
-     * Set the form data.
+     * Set core data.
+     * @param {Object} data
+     *   The data.
      */
     setData (data) {
       this.forms.profile.model = data.form
@@ -161,26 +163,18 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    const username = to.params.username
-    pybossaApi.get(`account/${username}/update`).then(r => {
+    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
       next(vm => vm.setData(r.data))
-    }).catch(err => {
-      console.log(err)
-      window.location.path = '/404'
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    const username = to.params.username
     this.forms.profile.model = {}
     this.forms.avatar.model = {}
     this.forms.security.model = {}
-    pybossaApi.get(`account/${username}/update`).then(r => {
+    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
       this.setData(r.data)
       next()
-    }).catch(err => {
-      console.log(err)
-      window.location.path = '/404'
     })
   }
 }

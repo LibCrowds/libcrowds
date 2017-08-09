@@ -5,7 +5,7 @@
     <section>
       <h2 class="text-center">About</h2>
       <hr>
-      <span v-if="aboutMd" v-html="aboutMd"></span>
+      <span v-if="config.aboutMd" v-html="config.aboutMd"></span>
       <p v-else>
         {{ config.brand }} is a platform for hosting experimental crowdsourcing
         projects from {{ config.company }}. By contributing to the projects
@@ -15,7 +15,7 @@
 
     <section :id="navItems[0].id">
       <h3 class="text-center">{{ navItems[0].text }}</h3>
-      <span v-if="technologyMd" v-html="technologyMd"></span>
+      <span v-if="config.technologyMd" v-html="config.technologyMd"></span>
       <p v-else>
         On the backend, {{ config.brand }} uses an instance of
         <a href="http://pybossa.com/" target="_blank">PyBossa</a>,
@@ -62,7 +62,6 @@
 
 <script>
 import config from '@/config'
-import marked from 'marked'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
@@ -85,21 +84,6 @@ export default {
 
   components: {
     FloatingTabsLayout
-  },
-
-  computed: {
-    aboutMd: function () {
-      if ('aboutMd' in this.config) {
-        return marked(this.config.aboutMd)
-      }
-      return ''
-    },
-    technologyMd: function () {
-      if ('technologyMd' in this.config) {
-        return marked(this.config.technologyMd)
-      }
-      return ''
-    }
   }
 }
 </script>

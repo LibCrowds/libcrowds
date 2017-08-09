@@ -93,9 +93,11 @@ export default {
 
   methods: {
     /**
-     * Set the user profile data.
+     * Set core data.
+     * @param {Object} data
+     *   The data.
      */
-    setUserData (data) {
+    setData (data) {
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects
@@ -106,33 +108,17 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    const name = to.params.username
-    pybossaApi.get(`account/${name}/`).then(r => {
-      next(vm => vm.setUserData(r.data))
-    }).catch(err => {
-      console.log(err)
-      window.location.path = '/404'
+    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+      next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    const name = to.params.username
     this.user = null
-    pybossaApi.get(`account/${name}/`).then(r => {
-      this.setUserData(r.data)
+    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+      this.setData(r.data)
       next()
-    }).catch(err => {
-      console.log(err)
-      window.location.path = '/404'
     })
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'src/assets/style/main';
-
-#profile {
-
-}
-</style>

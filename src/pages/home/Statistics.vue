@@ -12,13 +12,11 @@
       </p>
     </section>
 
-    <section  :id="navItems[0].id">
-      <h3 class="text-center">{{ navItems[0].text }}</h3>
+    <section>
       <div id="top-users-chart" class="ct-major-seventh"></div>
     </section>
 
-    <section :id="navItems[1].id">
-      <h3 class="text-center">{{ navItems[1].text }}</h3>
+    <section>
       <div class="container">
         <div id="locs-map"></div>
       </div>
@@ -40,96 +38,68 @@ import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 export default {
   data: function () {
     return {
-      config: config,
-      navItems: [
-        { id: 'top-users', text: 'Most Active Volunteers' },
-        { id: 'top-users', text: 'Locations of Anonymous Volunteers' }
-      ],
-      topUsers: [],
+      navItems: [],
       locs: [],
-      chartPlugins: [
-        Chartist.plugins.tooltip()
-      ],
-      stats: null
+      showLocs: false,
+      projects: {},
+      stats: {},
+      tasks: {},
+      top5Projects: [],
+      top5Users: [],
+      users: {},
+      topUsers: []
     }
   },
 
   methods: {
     /**
-     * Fetch global stats.
+     * Set core data.
+     * @param {Object} data
+     *   The data.
      */
-    fetchGlobalStats () {
-      pybossaApi.get('/stats/').then(r => {
-        this.stats = r.data.stats
-        if (r.data.show_locs) {
-          this.locs = r.data.locs
-        }
-      })
+    setData (data) {
+      this.locs = data.locs
+      this.show_locs = data.show_locs
+      this.projects = data.projects
+      this.stats = data.stats
+      this.tasks = data.tasks
+      this.top5Projects = data.top_5_projects_24_hours
+      this.top5Users = data.top_5_users_24_hours
+      this.users = data.users
+      this.topUsers = data.top_users.slice(0, 10)
     },
 
     /**
-     * Fetch the leaderboard.
+     * Render the locations map.
      */
-    fetchLeaderboard () {
-      pybossaApi.get(`leaderboard/window/0`).then(r => {
-        this.topUsers = r.data.top_users.slice(0, 10)
-      })
-    },
-
-    /**
-     * Return the map tile options.
-     */
-    getMapTileOpts () {
-      if ('mapbox' in config) {
-        return {
-          maxZoom: 18,
-          attribution: `
-            Map data:
-            &copy; <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
-            &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>
-            <strong><a href='https://www.mapbox.com/feedback/' target='_blank'>
-            Improve this map</a></strong>
-          `,
-          id: config.mapbox.id,
-          accessToken: config.mapbox.publicApiToken
-        }
-      }
-      return {
+    renderLocationsMap () {
+      let providerUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+      let tileOpts = {
         maxZoom: 18
       }
-    },
 
-    /**
-     * Return the map provider URL.
-     */
-    getMapProviderUrl () {
       if ('mapbox' in config) {
-        return `https://api.tiles.mapbox.com/v4` +
-               `/{id}/{z}/{x}/{y}.png` +
-               `?access_token=${config.mapbox.publicApiToken}`
+        tileOpts.id = config.mapbox.id
+        tileOpts.accessToken = config.mapbox.publicApiToken
+        tileOpts.attribution = `
+          Map data:
+          &copy; <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
+          &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>
+          <strong><a href='https://www.mapbox.com/feedback/' target='_blank'>
+          Improve this map</a></strong>
+        `
       }
-      return 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-    }
-  },
 
-  watch: {
-    topUsers: function () {
-      const data = {
-        labels: this.topUsers.map((u) => u.name),
-        series: [
-          this.topUsers.map(function (u) {
-            return { meta: u.name, value: u.score }
-          })
-        ]
+      if ('mapbox' in config) {
+        providerUrl = `https://api.tiles.mapbox.com/v4` +
+                      `/{id}/{z}/{x}/{y}.png` +
+                      `?access_token=${config.mapbox.publicApiToken}`
       }
-      Chartist.Bar('#top-users-chart', data, { plugins: this.chartPlugins })
-    },
 
-    locs: function () {
       let map = L.map('locs-map', { scrollWheelZoom: false, minZoom: 1 })
       map.fitWorld()
       map.setZoom(2)
-      L.tileLayer(this.getMapProviderUrl(), this.getMapTileOpts()).addTo(map)
+      L.tileLayer(providerUrl, tileOpts).addTo(map)
       let markers = new L.MarkerClusterGroup()
       for (let l of this.locs) {
         if (l.loc !== null) {
@@ -142,6 +112,19 @@ export default {
     }
   },
 
+  computed: {
+    topUsersData: function () {
+      return {
+        labels: this.topUsers.map((u) => u.name),
+        series: [
+          this.topUsers.map(function (u) {
+            return { meta: u.name, value: u.score }
+          })
+        ]
+      }
+    }
+  },
+
   metaInfo: {
     title: 'Statistics'
   },
@@ -150,9 +133,29 @@ export default {
     FloatingTabsLayout
   },
 
+  beforeRouteEnter (to, from, next) {
+    let data = {}
+    pybossaApi.get('stats/').then(r => {
+      data = r.data
+      return pybossaApi.get('leaderboard/window/0')
+    }).then(r => {
+      data.top_users = r.data.top_users
+      next(vm => vm.setData(data))
+    })
+  },
+
   mounted () {
-    this.fetchLeaderboard()
-    this.fetchGlobalStats()
+    const opts = {
+      plugins: [
+        Chartist.plugins.tooltip()
+      ]
+    }
+
+    Chartist.Bar('#top-users-chart', this.topUsersData, opts)
+
+    if (this.showLocs) {
+      this.renderLocationsMap()
+    }
   }
 }
 </script>

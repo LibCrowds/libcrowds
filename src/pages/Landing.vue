@@ -37,21 +37,21 @@
           <hr class="my-2 w-75 sr">
           <div class="row">
             <div class="col-md-4 my-1 sr stat">
-              <icon name="projects" scale="4"></icon>
+              <icon name="television" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_published_projects }}
               </p>
               <p>Projects</p>
             </div>
             <div class="col-md-4 my-1 sr stat">
-              <icon name="users" scale="4"></icon>
+              <icon name="users" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_total_users }}
               </p>
               <p>Volunteers</p>
             </div>
             <div class="col-md-4 my-1 sr stat">
-              <icon name="taskruns" scale="4"></icon>
+              <icon name="list" scale="3"></icon>
               <p class="mb-0">
                 {{ stats.n_task_runs }}
               </p>
@@ -236,9 +236,11 @@
                 reasearch at {{ config.company }}.
               </p>
               <b-button
-                variant="outline-success"
+                variant="outline"
                 size="lg"
-                :to="{ name: 'contribute' }">
+                :to="{
+                  name: 'contribute'
+                }">
                 Choose a project
               </b-button>
             </div>
@@ -262,8 +264,11 @@
 
 <script>
 import ScrollReveal from 'scrollreveal'
+import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
+import 'vue-awesome/icons/television'
+import 'vue-awesome/icons/list'
 import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
@@ -271,7 +276,6 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
-import project from '@/assets/img/project.svg'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
 import codeImage from '@/assets/img/code.png'
@@ -285,7 +289,6 @@ export default {
       stats: {},
       featured: [],
       topUsers: [],
-      project: project,
       dataStyle: {
         backgroundImage: `url(${codeImage})`
       },
@@ -317,7 +320,7 @@ export default {
   },
 
   computed: {
-    topUsersTaskRuns () {
+    topUsersTaskRuns: function () {
       const scores = this.topUsers.map((user) => user.score)
       const sum = scores.reduce(function (acc, val) {
         return acc + val
@@ -327,31 +330,42 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get('stats/').then(r => {
-        this.stats = mapValues(r.data.stats, (n) => getNumberWithCommas(n))
-      })
-      pybossaApi.get('/').then(r => {
-        if ('featured' in r.data.categories_projects) {
-          this.featured = r.data.categories_projects.featured
-        }
-        this.topUsers = r.data.top_users
-      })
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      console.log(data)
+      if ('featured' in data.categories_projects) {
+        this.featured = data.categories_projects.featured
+      }
+      this.topUsers = data.top_users
+      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
     },
+
+    /**
+     * Init scroll reveal.
+     */
     scrollReveal () {
-      const sr = ScrollReveal()
-      sr.reveal('.sr', { duration: 600 }, 75)
+      ScrollReveal().reveal('.sr', {
+        duration: 600 },
+      50)
     }
   },
 
-  watch: {
-    '$route' () {
-      this.fetchData()
-    }
+  beforeRouteEnter (to, from, next) {
+    let data = {}
+    pybossaApi.get(`/`).then(r => {
+      data = r.data
+      return pybossaApi.get('stats/')
+    }).then(r => {
+      data.stats = r.data.stats
+      next(vm => vm.setData(data))
+    })
   },
 
   mounted () {
-    this.fetchData()
     this.scrollReveal()
   }
 }

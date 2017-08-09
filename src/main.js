@@ -8,16 +8,16 @@ import VueChartist from 'vue-chartist'
 import VueFormGenerator from 'vue-form-generator'
 import VueImages from 'vue-images'
 import VueAnalytics from 'vue-analytics'
+import VueProgressBar from 'vue-progressbar'
+import Icon from 'vue-awesome/components/Icon'
 import LibcrowdsViewer from 'libcrowds-viewer'
 import ToggleButton from 'vue-js-toggle-button'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-import '@/icons'
 import App from '@/App'
 import store from '@/store'
 import router from '@/router'
-import PyBossaModalForm from '@/components/global/PyBossaModalForm'
 import config from '@/config'
 
 // Global styles
@@ -28,10 +28,11 @@ Vue.use(VueChartist)
 Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
 Vue.use(LibcrowdsViewer)
+Vue.use(VueProgressBar)
 
 Vue.component('v-gravatar', VueGravatar)
 Vue.component('v-images', VueImages)
-Vue.component('pybossa-modal-form', PyBossaModalForm)
+Vue.component('icon', Icon)
 
 // Google analytics
 if ('analytics' in config && process.env.NODE_ENV === 'production') {
