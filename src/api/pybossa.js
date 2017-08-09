@@ -41,6 +41,7 @@ instance.interceptors.response.use(undefined, (error) => {
     router.push({ name: error.response.status })
   }
   router.push({ name: 500 })
+  return Promise.reject(error)
 })
 
 // Handle success flash messages
