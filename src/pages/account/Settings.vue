@@ -23,17 +23,6 @@
           </div>
           <div class="col-md-8">
 
-            <card-form
-              v-for="form in forms"
-              :key="`form-${form.id}`"
-              v-if="activeFormId === form.id && activeFormId !== 'avatar'"
-              :header="`${form.label} Settings`"
-              :submitText="'Update'"
-              :endpoint="endpoints[form.id]"
-              :schema="form.schema"
-              :model="form.model">
-            </card-form>
-
             <avatar-form
               v-if="activeFormId === 'avatar'"
               :header="'Avatar Settings'"
@@ -42,6 +31,17 @@
               :endpoint="endpoints[forms.avatar.id]"
               :model="forms.avatar.model">
             </avatar-form>
+
+            <card-form
+              v-for="form in forms"
+              :key="`form-${form.id}`"
+              v-if="activeFormId === form.id && activeFormId !== 'avatar'"
+              :header="`${form.label} Settings`"
+              :submitText="form.submitText"
+              :endpoint="endpoints[form.id]"
+              :schema="form.schema"
+              :model="form.model">
+            </card-form>
 
           </div>
         </div>
@@ -65,6 +65,7 @@ export default {
         profile: {
           id: 'profile',
           label: 'Profile',
+          submitText: 'Update Profile',
           model: {},
           schema: {
             fields: [
@@ -92,6 +93,7 @@ export default {
         security: {
           id: 'security',
           label: 'Security',
+          submitText: 'Update Password',
           model: {},
           schema: {
             fields: [
@@ -112,6 +114,23 @@ export default {
                 label: 'Confirm New Password',
                 type: 'input',
                 inputType: 'password'
+              }
+            ]
+          }
+        },
+        api: {
+          id: 'api',
+          label: 'API',
+          submitText: 'Reset API Key',
+          model: {},
+          schema: {
+            fields: [
+              {
+                model: 'api_key',
+                label: 'API Key',
+                type: 'input',
+                inputType: 'text',
+                readonly: true
               }
             ]
           }
@@ -141,7 +160,8 @@ export default {
       return {
         profile: `account/${this.$store.state.currentUser.name}/update`,
         avatar: `account/${this.$store.state.currentUser.name}/update`,
-        security: `account/${this.$store.state.currentUser.name}/update`
+        security: `account/${this.$store.state.currentUser.name}/update`,
+        api: `account/${this.$store.state.currentUser.name}/resetapikey`
       }
     }
   },
@@ -156,24 +176,50 @@ export default {
       this.forms.profile.model = data.form
       this.forms.avatar.model = data.upload_form
       this.forms.security.model = data.password_form
+      this.forms.api.model = data.api_form
+      this.forms.api.model.api_key = data.user.api_key
       this.forms.profile.model.btn = 'Profile'
       this.forms.avatar.model.btn = 'Upload'
       this.forms.security.model.btn = 'Password'
+    },
+
+    /**
+     * Clear core data.
+     */
+    clearData () {
+      this.forms.profile.model = {}
+      this.forms.avatar.model = {}
+      this.forms.security.model = {}
+      this.forms.api.model = {}
     }
   },
 
   beforeRouteEnter (to, from, next) {
+    let data = {}
     pybossaApi.get(`account/${to.params.username}/update`).then(r => {
-      next(vm => vm.setData(r.data))
+      data = r.data
+      return pybossaApi.get(`account/${to.params.username}/`)
+    }).then(r => {
+      data.user = r.data.user
+      return pybossaApi.get(`account/${to.params.username}/resetapikey`)
+    }).then(r => {
+      data.api_form = r.data.form
+      next(vm => vm.setData(data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.forms.profile.model = {}
-    this.forms.avatar.model = {}
-    this.forms.security.model = {}
+    this.clearData()
+    let data = {}
     pybossaApi.get(`account/${to.params.username}/update`).then(r => {
-      this.setData(r.data)
+      data = r.data
+      return pybossaApi.get(`account/${to.params.username}/`)
+    }).then(r => {
+      data.user = r.data.user
+      return pybossaApi.get(`account/${to.params.username}/resetapikey`)
+    }).then(r => {
+      data.api_form = r.data.form
+      this.setData(data)
       next()
     })
   }

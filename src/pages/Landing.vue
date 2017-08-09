@@ -336,7 +336,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      console.log(data)
       if ('featured' in data.categories_projects) {
         this.featured = data.categories_projects.featured
       }
