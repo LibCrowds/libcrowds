@@ -236,7 +236,7 @@
                 reasearch at {{ config.company }}.
               </p>
               <b-button
-                variant="outline"
+                variant="success"
                 size="lg"
                 :to="{
                   name: 'contribute'
