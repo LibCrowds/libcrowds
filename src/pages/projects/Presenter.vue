@@ -4,7 +4,7 @@
     <libcrowds-viewer
       :confirm-before-unload="true"
       :disable-complete="true"
-      :show-like="currentUser !== null && currentUser !== undefined"
+      :show-like="showLike"
       :taskOpts="taskOpts"
       :creator="creator"
       :generator="generator"
@@ -23,7 +23,6 @@ export default {
   data: function () {
     return {
       project: null,
-      currentUser: this.$store.state.currentUser,
       tasks: []
     }
   },
@@ -34,20 +33,25 @@ export default {
 
   computed: {
     taskOpts: function () {
-      return this.tasks.map(function (task) {
+      const currentUser = this.$store.state.currentUser
+      return this.tasks.map((task) => {
         let opts = task.info
         opts.id = task.id
+        if (currentUser && task.fav_user_ids) {
+          opts.liked = task.fav_user_ids.indexOf(currentUser.id) > -1
+        }
         return opts
       })
     },
     creator: function () {
       const baseApiUrl = config.pybossaHost
-      if (this.currentUser) {
+      const currentUser = this.$store.state.currentUser
+      if (currentUser) {
         return {
-          id: `${baseApiUrl}/api/user/${this.currentUser.id}`,
+          id: `${baseApiUrl}/api/user/${currentUser.id}`,
           type: 'Person',
-          name: this.currentUser.fullname,
-          nickname: this.currentUser.name
+          name: currentUser.fullname,
+          nickname: currentUser.name
         }
       }
       return null
@@ -62,6 +66,9 @@ export default {
           homepage: `${window.location.protocol}//${window.location.hostname}`
         }
       }
+    },
+    showLike: function () {
+      return this.$store.state.currentUser !== null
     }
   },
 
