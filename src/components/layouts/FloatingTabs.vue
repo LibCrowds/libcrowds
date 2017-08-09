@@ -6,7 +6,7 @@
     </app-navbar>
     <main>
       <div class="container mb-5">
-        <transition-group appear>
+        <transition-group name="fade" appear>
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
@@ -14,9 +14,12 @@
               :key="item.id">
               {{ item.text }}
             </b-nav-item>
+            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
           </b-nav>
           <section id="content" key="fading-content">
+
             <slot></slot>
+
           </section>
         </transition-group>
       </div>
@@ -92,17 +95,18 @@ export default {
     background-color: rgba($gray-lighter, 0.85);
 
     .nav-link {
-      opacity: 1;
-      transition: opacity 600ms;
       color: $navbar-light-color;
     }
+  }
 
-    &.v-enter,
-    &.v-leave-to {
-      .nav-link {
-        opacity: 0;
-      }
-    }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 500ms ease;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
   }
 }
 </style>
