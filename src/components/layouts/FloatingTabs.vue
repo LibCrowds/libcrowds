@@ -62,21 +62,13 @@ export default {
   section#content {
     background-color: $white;
 
-    &.v-enter,
-    &.v-leave-to {
-      & > * {
-        opacity: 0;
-      }
-    }
-
     /* Internal sections */
-    & > * {
-      opacity: 1;
+    & > section {
       transition: opacity 600ms;
       padding: 2rem 2.5rem;
 
       @include media-breakpoint-up(md) {
-        padding: 3rem 4.5rem;
+        padding: 3rem 4rem;
       }
 
       &:nth-child(even) {
@@ -95,6 +87,7 @@ export default {
     background-color: rgba($gray-lighter, 0.85);
 
     .nav-link {
+      transition: opacity 500ms ease;
       color: $navbar-light-color;
     }
   }
@@ -104,8 +97,10 @@ export default {
     transition: opacity 500ms ease;
   }
 
-  .fade-enter,
-  .fade-leave-to {
+  .fade-enter .nav-link,
+  .fade-enter section,
+  .fade-leave-to .nav-link,
+  .fade-leave-to section {
     opacity: 0;
   }
 }
