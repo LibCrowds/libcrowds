@@ -76,7 +76,7 @@ export default {
         return
       }
 
-      if (custom.startsWith('/uploads')) {
+      if (custom.indexOf('/uploads') > -1) {
         this.thumbnail = config.pybossaHost + custom
         return
       }
