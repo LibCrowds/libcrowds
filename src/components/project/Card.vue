@@ -92,7 +92,7 @@ export default {
 
   @include media-breakpoint-up(lg) {
     max-width: 100%;
-    max-height: 200px;
+    max-height: 250px;
     text-align: left;
     flex-direction: row;
   }
@@ -141,8 +141,8 @@ export default {
 
 
     @include media-breakpoint-up(lg) {
-      min-width: 200px;
-      width: 200px;
+      min-width: 250px;
+      width: 250px;
     }
   }
 
