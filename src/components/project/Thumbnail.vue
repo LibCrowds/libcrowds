@@ -6,12 +6,14 @@
       :email="project.short_name"
       :size="200"
       default-img="identicon"
+      :class="imgClass"
       :alt="altTag">
     </v-gravatar>
 
     <img
       v-else
       :src="thumbnail"
+      :class="imgClass"
       :alt="altTag">
 
   </div>
@@ -28,7 +30,8 @@ export default {
       altTag: `Thumbnail for ${this.project.name}`,
       preference: JSON.parse(JSON.stringify(config.thumbnailPreference)),
       thumbnail: null,
-      chosenType: null
+      chosenType: null,
+      imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
     }
   },
 
@@ -105,16 +108,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import 'src/assets/style/main';
+
 .project-thumbnail {
-  max-width: 100%;
   height: 100%;
   width: auto;
-
-  img {
-    height: 100%;
-    width: auto;
-  }
 
   &[data-type="iiif"] {
     background-color: black;
@@ -126,6 +125,11 @@ export default {
       position: relative;
       height: calc(100% - 50px);
     }
+  }
+
+  img {
+    width: 100%;
+    height: auto;
   }
 }
 </style>

@@ -87,8 +87,15 @@ export default {
     background-color: rgba($gray-lighter, 0.85);
 
     .nav-link {
+      font-size: $font-size-sm;
+
       transition: opacity 500ms ease;
-      color: $navbar-light-color;
+      color: lighten($gray, 15%);
+      display: none;
+
+      @include media-breakpoint-up(sm) {
+        display: block;
+      }
     }
   }
 

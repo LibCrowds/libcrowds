@@ -1,7 +1,9 @@
 <template>
   <b-card class="project-card" no-block>
     <div class="thumbnail-wrapper">
-      <project-thumbnail :project="project"></project-thumbnail>
+      <project-thumbnail
+        :project="project">
+      </project-thumbnail>
     </div>
 
     <div class="card-block project-details p-0">
@@ -26,7 +28,6 @@
         </span>
         <div class="">
           <project-contrib-button
-            class="mt-2 mt-lg-0"
             :shortname="project.short_name"
             variant="success">
           </project-contrib-button>
@@ -81,7 +82,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'src/assets/style/main';
 
 .card.project-card {
@@ -95,7 +96,6 @@ export default {
 
   @include media-breakpoint-up(lg) {
     max-width: 100%;
-    max-height: 250px;
     text-align: left;
     flex-direction: row;
   }
@@ -139,13 +139,14 @@ export default {
   .thumbnail-wrapper {
     position: relative;
     overflow: hidden;
-    height: 300px;
     line-height: 0;
-
+    flex-shrink: 2;
 
     @include media-breakpoint-up(lg) {
-      min-width: 250px;
-      width: 250px;
+      img {
+        width: auto;
+        height: 100%;
+      }
     }
   }
 
