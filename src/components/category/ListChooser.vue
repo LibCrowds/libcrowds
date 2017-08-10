@@ -57,7 +57,6 @@ export default {
   },
 
   mounted () {
-    console.log(123)
     this.changeCategory(this.categories[0])
   }
 }
@@ -82,6 +81,7 @@ export default {
   }
 
   .list-group-item {
+    cursor: default;
     border-left: none;
     border-right: none;
 

@@ -19,6 +19,7 @@
       <div class="row">
         <div class="col-xl-3">
           <category-list-chooser
+            v-if="categories.length"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
@@ -81,7 +82,7 @@ export default {
       },
       projects: [],
       categories: [],
-      category: null
+      activeCategory: null
     }
   },
 
@@ -122,9 +123,11 @@ export default {
 
     /**
      * Handle category change.
+     * @param {String} category
+     *   The category.
      */
     onCategoryChange (category) {
-      this.category = category
+      this.activeCategory = category
       this.fetchProjects(category)
     },
 
@@ -133,7 +136,7 @@ export default {
      */
     fetchProjects () {
       this.projects = []
-      let url = `/project/category/${this.category.short_name}/`
+      let url = `/project/category/${this.activeCategory.short_name}/`
       if (this.page > 1) {
         url += `page/${this.page}/`
       }
@@ -145,6 +148,8 @@ export default {
 
     /**
      * Handle sort.
+     * @param {String} key
+     *   The sort key.
      */
     onSort (key) {
       const sortedProjects = sortBy(this.projects, key)
@@ -155,6 +160,8 @@ export default {
 
     /**
      * Handle view change.
+     * @param {String} view
+     *   The view.
      */
     onViewChange (view) {
       this.activeView = view
@@ -169,6 +176,8 @@ export default {
 
     /**
      * Handle page change.
+     * @param {Number} page
+     *   The page number.
      */
     onPageChange (page) {
       this.page = page
