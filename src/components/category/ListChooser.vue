@@ -57,7 +57,9 @@ export default {
   computed: {
     processedCategories: function () {
       let categories = this.categories.map((category) => {
-        category.description = marked(category.description)
+        category.description = category.description !== null
+          ? marked(category.description)
+          : category.description
         return category
       })
       return sortBy(categories, 'name')
