@@ -1,7 +1,7 @@
 <template>
   <div class="project-card-list">
 
-    <transition-group
+    <transition-group appear
       ref="shuffle-grid"
       tag="ul"
       class="list-unstyled">
@@ -32,8 +32,17 @@ export default {
 }
 </script>
 
-<style>
-.shuffle-grid-item {
-  transition: all 400ms;
+<style lang="scss">
+.project-card-list {
+  .shuffle-grid-item {
+    transition: all 500ms ease;
+  }
+
+  .v-enter,
+  .v-leave-to {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    opacity: 0;
+  }
 }
 </style>

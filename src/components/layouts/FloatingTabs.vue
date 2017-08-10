@@ -6,7 +6,7 @@
     </app-navbar>
     <main>
       <div class="container mb-5">
-        <transition-group name="fade" appear>
+        <transition-group name="fade" mode="out-in" appear>
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
