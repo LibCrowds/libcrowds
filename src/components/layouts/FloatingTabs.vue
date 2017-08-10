@@ -6,7 +6,7 @@
     </app-navbar>
     <main>
       <div class="container mb-5">
-        <transition-group appear>
+        <transition-group name="fade" mode="out-in" appear>
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
@@ -14,9 +14,12 @@
               :key="item.id">
               {{ item.text }}
             </b-nav-item>
+            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
           </b-nav>
           <section id="content" key="fading-content">
+
             <slot></slot>
+
           </section>
         </transition-group>
       </div>
@@ -31,9 +34,11 @@ import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
 
 export default {
-  props: [
-    'nav-items'
-  ],
+  props: {
+    navItems: {
+      type: Array
+    }
+  },
 
   components: {
     AppNavbar,
@@ -57,21 +62,13 @@ export default {
   section#content {
     background-color: $white;
 
-    &.v-enter,
-    &.v-leave-to {
-      & > * {
-        opacity: 0;
-      }
-    }
-
     /* Internal sections */
-    & > * {
-      opacity: 1;
+    & > section {
       transition: opacity 600ms;
       padding: 2rem 2.5rem;
 
       @include media-breakpoint-up(md) {
-        padding: 3rem 4.5rem;
+        padding: 3rem 4rem;
       }
 
       &:nth-child(even) {
@@ -90,17 +87,21 @@ export default {
     background-color: rgba($gray-lighter, 0.85);
 
     .nav-link {
-      opacity: 1;
-      transition: opacity 600ms;
+      transition: opacity 500ms ease;
       color: $navbar-light-color;
     }
+  }
 
-    &.v-enter,
-    &.v-leave-to {
-      .nav-link {
-        opacity: 0;
-      }
-    }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 500ms ease;
+  }
+
+  .fade-enter .nav-link,
+  .fade-enter section,
+  .fade-leave-to .nav-link,
+  .fade-leave-to section {
+    opacity: 0;
   }
 }
 </style>

@@ -1,96 +1,53 @@
 <template>
-  <div id="category-list-chooser" class="row">
-
-    <div class="col-lg-8 push-lg-4 my-1">
-      <b-card>
-
-        <loading
-          v-if="loading"
-          text="Loading descriptions">
-        </loading>
-
-        <span v-else>
-          <p
-            v-if="activeCategory === c"
-            v-for="c in categories"
-            :key="c.short_name">
-            <span v-if="c.description" v-html="marked(c.description)"></span>
-            <span v-else-if="c.short_name === 'featured'">
-              A selection of featured projects.
-            </span>
-            <span v-else>
-              No description.
-            </span>
-          </p>
-        </span>
-
-      </b-card>
-    </div>
-
-    <div class="col-lg-4 pull-lg-8 my-1">
-      <b-card id="categories-card">
-
-        <loading
-          v-if="loading"
-          text="Loading categories">
-        </loading>
-
-        <b-list-group v-else>
-          <b-list-group-item
-            action
-            v-for="c in categories"
-            :key="c.id"
-            :active="activeCategory === c"
-            @click.native="changeCategory(c)">
-            {{ c.name }}
-          </b-list-group-item>
-        </b-list-group>
-
-      </b-card>
-    </div>
-
-  </div>
+  <b-card
+    no-block
+    id="category-list-chooser"
+    :header="'Categories'">
+    <b-popover
+      v-for="category in categories"
+      :key="category.id"
+      :triggers="popoverTrigger"
+      :placement="popoverPlacement"
+      :content="marked(category.description)">
+      <b-list-group>
+        <b-list-group-item
+          action
+          :active="activeCategory === category"
+          @click.native="changeCategory(category)">
+          {{ category.name }}
+        </b-list-group-item>
+      </b-list-group>
+    </b-popover>
+  </b-card>
 </template>
 
 <script>
-import { sortBy } from 'lodash'
 import marked from 'marked'
-import pybossaApi from '@/api/pybossa'
-import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
-      loading: true,
-      categories: [],
-      activeCategory: null
+      activeCategory: null,
+      popoverTrigger: this.showTooltips ? 'hover' : null,
+      popoverPlacement: 'right'
     }
   },
 
-  components: {
-    Loading
-  },
-
-  computed: {
-    cardClass: function (category) {
-      console.log(category)
-      return {
-        display: category === this.activeCategory ? 'block' : 'none'
+  props: {
+    categories: {
+      type: Array,
+      required: true,
+      validator: value => {
+        return value.length > 0
       }
+    },
+    showTooltips: {
+      type: Boolean,
+      default: true
     }
   },
 
   methods: {
-    /**
-     * Load the categories.
-     */
-    loadCategories () {
-      pybossaApi.get('/').then(r => {
-        this.categories = sortBy(r.data.categories, 'name')
-        this.changeCategory(this.categories[0])
-        this.loading = false
-      })
-    },
 
     marked: marked,
 
@@ -103,37 +60,43 @@ export default {
     }
   },
 
-  created () {
-    this.loadCategories()
+  mounted () {
+    this.changeCategory(this.categories[0])
   }
 }
 </script>
 
 <style lang="scss">
-#category-list-chooser{
-  .card {
-    height: 200px;
+@import 'src/assets/style/main';
 
-    .card-block {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+#category-list-chooser {
+  font-size: $font-size-sm;
+  max-height: 200px;
+  overflow-y: auto;
+
+  @include media-breakpoint-up(xl) {
+    max-height: 100%;
+  }
+
+  .card-header {
+    @extend .bg-faded;
+    text-align: center;
+    padding: $list-group-item-padding-y $list-group-item-padding-x;
+  }
+
+  .list-group-item {
+    cursor: default;
+    border-left: none;
+    border-right: none;
+
+    &:first-child {
+      border-top: none;
     }
   }
 
-  #categories-card {
-    .card-block {
-      padding: 0;
-
-      .list-group-item {
-        border-left: none;
-        border-right: none;
-
-        &:first-child {
-          border-top: none;
-        }
-      }
-    }
+  .card-block {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

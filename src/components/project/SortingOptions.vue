@@ -20,7 +20,7 @@
       </toggle-button>
     </div>
 
-    <b-button-group class="bg-white">
+    <b-button-group class="view-buttons">
       <b-button
         v-for="view in views"
         :key="view"
@@ -106,13 +106,18 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  font-size: $font-size-sm;
 
   @include media-breakpoint-up(lg) {
     flex-direction: row;
   }
 
-  .bg-white {
+  .view-buttons {
     background-color: $white;
+
+    button {
+      display: flex;
+    }
   }
 
   .form-group {

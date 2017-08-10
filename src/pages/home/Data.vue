@@ -45,27 +45,27 @@
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
       </p>
-    </section>
-
-    <section :id="navItems[0].id">
-      <h3 class="text-center">{{ navItems[0].text }}</h3>
-      <hr class="w-50"></hr>
-      <category-list-chooser
-        @change="onCategoryChange">
-      </category-list-chooser>
-    </section>
-
-    <section :id="navItems[1].id">
-      <h3 class="text-center">{{ navItems[1].text }}</h3>
-      <project-table
-        :action="'download'"
-        :projects="projects">
-      </project-table>
-
-      <project-pagination
-        :pagination="pagination"
-        @change="onPageChange">
-      </project-pagination>
+      <hr>
+      <div id="navItems[0].id" class="row">
+        <div class="col-xl-3 mb-3">
+          <category-list-chooser
+            v-if="categories.length"
+            :categories="categories"
+            :showTooltips="false"
+            @change="onCategoryChange">
+          </category-list-chooser>
+        </div>
+        <div class="col-xl-9">
+          <project-table
+            :action="'download'"
+            :projects="projects">
+          </project-table>
+          <project-pagination
+            :pagination="pagination"
+            @change="onPageChange">
+          </project-pagination>
+        </div>
+      </div>
     </section>
 
   </floating-tabs-layout>
@@ -85,7 +85,6 @@ export default {
     return {
       config: config,
       navItems: [
-        { id: 'categories', text: 'Choose a Category' },
         { id: 'download', text: 'Download' }
       ],
       page: 1,
@@ -94,7 +93,8 @@ export default {
         total: 0
       },
       projects: [],
-      category: null
+      categories: [],
+      activeCategory: null
     }
   },
 
@@ -111,10 +111,21 @@ export default {
 
   methods: {
     /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.categories = data.categories
+    },
+
+    /**
      * Handle category change.
+     * @param {String} category
+     *   The category.
      */
     onCategoryChange (category) {
-      this.category = category
+      this.activeCategory = category
       this.fetchProjects(category)
     },
 
@@ -122,7 +133,7 @@ export default {
      * Fetch the projects in a category.
      */
     fetchProjects () {
-      let url = `/project/category/${this.category.short_name}/`
+      let url = `/project/category/${this.activeCategory.short_name}/`
       if (this.page > 1) {
         url += `page/${this.page}/`
       }
@@ -134,11 +145,19 @@ export default {
 
     /**
      * Handle page change.
+     * @param {Number} page
+     *   The page number.
      */
     onPageChange (page) {
       this.page = page
       this.fetchProjects()
     }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    pybossaApi.get('/').then(r => {
+      next(vm => vm.setData(r.data))
+    })
   }
 }
 </script>
