@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout :nav-items="navItems">
+  <floating-tabs-layout>
 
     <section>
       <h2 class="text-center">Contribute</h2>
@@ -15,56 +15,44 @@
           <router-link :to="{ name: 'about' }">about page</router-link>.
         </small>
       </p>
-    </section>
-
-    <section :id="navItems[0].id">
-      <h3 class="text-center">{{ navItems[0].text }}</h3>
-      <category-list-chooser
-        @change="onCategoryChange">
-      </category-list-chooser>
-    </section>
-
-    <section :id="navItems[1].id">
-      <h3 class="text-center">{{ navItems[1].text }}</h3>
       <hr>
+      <div class="row">
+        <div class="col-xl-3 mb-3">
+          <category-list-chooser
+            v-if="categories.length"
+            :categories="categories"
+            @change="onCategoryChange">
+          </category-list-chooser>
+        </div>
+        <div class="col-xl-9">
+          <project-sorting-options
+            :views="views"
+            :showCompleted="showCompleted"
+            @sort="onSort"
+            @viewchange="onViewChange"
+            @togglecompleted="onToggleCompleted">
+          </project-sorting-options>
+          <hr>
 
-      <span v-if="projects.length">
-        <project-sorting-options
-          :views="views"
-          :showCompleted="showCompleted"
-          @sort="onSort"
-          @viewchange="onViewChange"
-          @togglecompleted="onToggleCompleted">
-        </project-sorting-options>
-        <hr>
+          <span v-if="projects.length">
+            <project-card-list
+              v-if="activeView === 'list'"
+              :projects="filteredProjects">
+            </project-card-list>
 
-        <project-card-list
-          v-if="activeView === 'list'"
-          :projects="filteredProjects">
-        </project-card-list>
+            <project-table
+              v-if="activeView === 'table'"
+              :action="'contribute'"
+              :projects="filteredProjects">
+            </project-table>
 
-        <project-table
-          v-if="activeView === 'table'"
-          :action="'contribute'"
-          :projects="filteredProjects">
-        </project-table>
-
-        <project-pagination
-          :pagination="pagination"
-          @change="onPageChange">
-        </project-pagination>
-      </span>
-      <span v-else-if="this.category">
-        <p class="lead text-center mb-0">
-          Sorry, no projects have been published for this category.
-        </p>
-      </span>
-      <span v-else>
-        <p class="lead text-center mb-0">
-          Please choose a category first.
-        </p>
-      </span>
-
+            <project-pagination
+              :pagination="pagination"
+              @change="onPageChange">
+            </project-pagination>
+          </span>
+        </div>
+      </div>
     </section>
 
   </floating-tabs-layout>
@@ -92,12 +80,9 @@ export default {
         per_page: 0,
         total: 0
       },
-      navItems: [
-        { id: 'categories', text: 'Choose a Category' },
-        { id: 'projects', text: 'Choose a Project' }
-      ],
       projects: [],
-      category: null
+      categories: [],
+      activeCategory: null
     }
   },
 
@@ -128,10 +113,21 @@ export default {
 
   methods: {
     /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.categories = sortBy(data.categories, 'name')
+    },
+
+    /**
      * Handle category change.
+     * @param {String} category
+     *   The category.
      */
     onCategoryChange (category) {
-      this.category = category
+      this.activeCategory = category
       this.fetchProjects(category)
     },
 
@@ -140,7 +136,7 @@ export default {
      */
     fetchProjects () {
       this.projects = []
-      let url = `/project/category/${this.category.short_name}/`
+      let url = `/project/category/${this.activeCategory.short_name}/`
       if (this.page > 1) {
         url += `page/${this.page}/`
       }
@@ -152,6 +148,8 @@ export default {
 
     /**
      * Handle sort.
+     * @param {String} key
+     *   The sort key.
      */
     onSort (key) {
       const sortedProjects = sortBy(this.projects, key)
@@ -162,6 +160,8 @@ export default {
 
     /**
      * Handle view change.
+     * @param {String} view
+     *   The view.
      */
     onViewChange (view) {
       this.activeView = view
@@ -176,11 +176,19 @@ export default {
 
     /**
      * Handle page change.
+     * @param {Number} page
+     *   The page number.
      */
     onPageChange (page) {
       this.page = page
       this.fetchProjects()
     }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    pybossaApi.get('/').then(r => {
+      next(vm => vm.setData(r.data))
+    })
   }
 }
 </script>
