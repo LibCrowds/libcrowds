@@ -218,10 +218,10 @@ export default {
 
         let bounds = []
         let nodes = document.getElementsByClassName('invert-navbar')
-        for (let node of nodes) {
+        for (let i = 0; i < nodes.length; i++) {
           bounds.push({
-            top: node.offsetTop,
-            bottom: node.offsetTop + node.offsetHeight
+            top: nodes[i].offsetTop,
+            bottom: nodes[i].offsetTop + nodes[i].offsetHeight
           })
         }
 
