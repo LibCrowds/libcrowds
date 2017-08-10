@@ -371,14 +371,18 @@ export default {
 
   .navbar-brand {
     font-family: $headings-font-family;
-    font-size: $font-size-h3;
     font-weight: 300;
     transition: color 200ms;
     margin-right: 1rem;
+
+    @include media-breakpoint-up(sm) {
+      font-size: $font-size-h3;
+    }
   }
 
   .hamburger {
     display: none;
+    right: 0;  // Otherwise it floats left
   }
 
   .navbar-toggler {
