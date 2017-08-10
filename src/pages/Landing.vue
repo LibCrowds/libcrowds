@@ -353,14 +353,14 @@ export default {
     }
   },
 
-  beforeRouteEnter (to, from, next) {
+  created () {
     let data = {}
     pybossaApi.get(`/`).then(r => {
       data = r.data
       return pybossaApi.get('stats/')
     }).then(r => {
       data.stats = r.data.stats
-      next(vm => vm.setData(data))
+      this.setData(data)
     })
   },
 
