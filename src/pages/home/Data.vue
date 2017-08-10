@@ -51,6 +51,7 @@
           <category-list-chooser
             v-if="categories.length"
             :categories="categories"
+            :showTooltips="false"
             @change="onCategoryChange">
           </category-list-chooser>
         </div>

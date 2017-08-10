@@ -28,7 +28,7 @@ export default {
   data: function () {
     return {
       activeCategory: null,
-      popoverTrigger: 'hover',
+      popoverTrigger: this.showTooltips ? 'hover' : null,
       popoverPlacement: 'right'
     }
   },
@@ -40,6 +40,10 @@ export default {
       validator: value => {
         return value.length > 0
       }
+    },
+    showTooltips: {
+      type: Boolean,
+      default: true
     }
   },
 
