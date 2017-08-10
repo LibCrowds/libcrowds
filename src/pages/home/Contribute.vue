@@ -118,7 +118,7 @@ export default {
      *   The data.
      */
     setData (data) {
-      this.categories = sortBy(data.categories, 'name')
+      this.categories = data.categories
     },
 
     /**

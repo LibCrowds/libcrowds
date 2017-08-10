@@ -29,6 +29,7 @@
     "leaflet.markercluster": "^1.0.6",
     "libcrowds-viewer": "^2.2.2",
     "lodash": "^4.17.4",
+    "marked": "^0.3.6",
     "pnotify": "^3.2.1",
     "progressbar.js": "^1.0.1",
     "raven-js": "^3.17.0",

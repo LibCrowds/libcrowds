@@ -3,60 +3,85 @@
     no-block
     id="category-list-chooser"
     :header="'Categories'">
-    <b-popover
-      v-for="category in categories"
-      :key="category.id"
-      :triggers="popoverTrigger"
-      :placement="popoverPlacement"
-      :content="marked(category.description)">
-      <b-list-group>
+    <b-list-group>
+      <b-popover
+        class="hidden-lg-down"
+        v-for="category in categories"
+        :key="category.id"
+        :triggers="popoverTriggers"
+        :placement="popoverPlacement(category)"
+        :content="category.description">
         <b-list-group-item
           action
           :active="activeCategory === category"
           @click.native="changeCategory(category)">
           {{ category.name }}
         </b-list-group-item>
-      </b-list-group>
-    </b-popover>
+      </b-popover>
+      <b-list-group-item
+        class="hidden-xl-up"
+        v-for="category in categories"
+        :key="category.id"
+        action
+        :active="activeCategory === category"
+        @click.native="changeCategory(category)">
+        {{ category.name }}
+      </b-list-group-item>
+    </b-list-group>
   </b-card>
 </template>
 
 <script>
+import { sortBy } from 'lodash'
 import marked from 'marked'
 
 export default {
   data: function () {
     return {
       activeCategory: null,
-      popoverTrigger: this.showTooltips ? 'hover' : null,
-      popoverPlacement: 'right'
+      popoverTriggers: [ 'hover' ]
     }
   },
 
   props: {
     categories: {
       type: Array,
-      required: true,
-      validator: value => {
-        return value.length > 0
-      }
+      required: true
     },
-    showTooltips: {
+    showPopovers: {
       type: Boolean,
       default: true
     }
   },
 
+  computed: {
+    processedCategories: function () {
+      let categories = this.categories.map((category) => {
+        category.description = marked(category.description)
+        return category
+      })
+      return sortBy(categories, 'name')
+    }
+  },
+
   methods: {
-
-    marked: marked,
-
     /**
      * Change the category.
+     * @param {Object} category
+     *   The category.
      */
     changeCategory (category) {
       this.$emit('change', category)
       this.activeCategory = category
+    },
+
+    /**
+     * Used to hide popovers when empty or showPopovers is false.
+     * @param {Object} category
+     *   The category.
+     */
+    popoverPlacement (category) {
+      return category.description && this.showPopovers ? 'right' : null
     }
   },
 
