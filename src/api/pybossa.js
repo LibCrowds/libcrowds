@@ -2,7 +2,6 @@ import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
 import config from '@/config'
-import manageSession from '@/utils/manageSession'
 
 const instance = axios.create({
   baseURL: config.pybossaHost,
@@ -10,37 +9,17 @@ const instance = axios.create({
   headers: {
     'Content-Type': 'application/json'
   },
-  timeout: 30000,
+  timeout: 10000,
   data: {}  // Must always be set otherwise Content-Type gets deleted
-})
-
-// Handle user session
-instance.interceptors.response.use((r) => {
-  let dontCheck = [
-    '/api'
-  ]
-
-  if (r === undefined) {
-    return
-  }
-
-  for (let endpoint of dontCheck) {
-    if (r.request.responseURL.startsWith(`${config.pybossaHost}${endpoint}`)) {
-      return r
-    }
-  }
-
-  manageSession(store, document.cookie)
-  return r
 })
 
 // Handle errors
 instance.interceptors.response.use(undefined, (error) => {
-  if (error.response.status === 404) {
-    router.push({ name: '404' })
+  const errorCodes = [401, 402, 403, 404]
+  if (error.response !== undefined && error.response.status in errorCodes) {
+    router.push({ name: error.response.status })
   }
-  const notification = { msg: error.message, type: 'error' }
-  store.dispatch('NOTIFY', notification)
+  router.push({ name: 500 })
   return Promise.reject(error)
 })
 

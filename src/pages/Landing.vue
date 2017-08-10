@@ -4,23 +4,25 @@
 
       <transition appear>
         <div class="container full-height text-center">
-          <h1 id="tagline">{{ config.tagline }}</h1>
-          <div id="intro-buttons" class="mt-2">
-            <b-button variant="secondary" :to="{ name: 'about' }">
-              Learn More
-            </b-button>
-            <b-button variant="success" :to="{ name: 'contribute' }">
-              Get Started
-            </b-button>
+          <div class="header-content">
+            <h1 id="tagline">{{ config.tagline }}</h1>
+            <div id="intro-buttons" class="mt-2">
+              <b-button variant="secondary" :to="{ name: 'about' }">
+                Learn More
+              </b-button>
+              <b-button variant="success" :to="{ name: 'contribute' }">
+                Get Started
+              </b-button>
+            </div>
           </div>
         </div>
       </transition>
 
       <section id="intro" class="bg-white invert-navbar">
-        <div class="container py-3 py-md-5 text-center">
+        <div class="container py-3 py-md-4 text-center">
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
-              <p class="font-family-serif display-4 mb-0">
+              <p id="site-lead" class="mb-0">
                 Have a direct impact on enabling future research at
                 {{ config.company }}.
               </p>
@@ -353,14 +355,14 @@ export default {
     }
   },
 
-  beforeRouteEnter (to, from, next) {
+  created () {
     let data = {}
     pybossaApi.get(`/`).then(r => {
       data = r.data
       return pybossaApi.get('stats/')
     }).then(r => {
       data.stats = r.data.stats
-      next(vm => vm.setData(data))
+      this.setData(data)
     })
   },
 
@@ -375,14 +377,18 @@ export default {
 
 #landing {
   .container.full-height {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     color: $white;
     opacity: 1;
     transition: opacity 800ms;
+
+    // IE fix for overflowing text in flex container.
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
 
     &.v-enter,
     &.v-leave-to {
@@ -390,9 +396,30 @@ export default {
     }
   }
 
-  @include media-breakpoint-up(md) {
-    h2 { font-size: 4rem; }
-    h3 { font-size: 3.5rem; }
+  #site-lead {
+    font-family: $font-family-serif;
+    font-size: 3rem;
+    line-height: 1.1;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 4rem;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    h2 {
+      font-size: 4rem;
+    }
+    h3 {
+      font-size: 3.5rem;
+    }
+  }
+
+  @include media-breakpoint-down(xs) {
+    #tagline {
+      font-size: $font-size-lg;
+      line-height: 1.6;
+    }
   }
 
   .bg-white {
@@ -403,10 +430,6 @@ export default {
     &:not(:hover):not(:focus):not(.active) {
         background-color: $white;
     }
-  }
-
-  .font-family-serif {
-    font-family: $font-family-serif;
   }
 
   hr.wide {

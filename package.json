@@ -11,6 +11,7 @@
     "build": "npm install && node build/build.js",
     "unit": "cross-env BABEL_ENV=test jest --coverage",
     "e2e": "node test/e2e/runner.js",
+    "e2e:browserstack": "node test/e2e/runner.js --browserstack",
     "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
@@ -28,6 +29,7 @@
     "leaflet.markercluster": "^1.0.6",
     "libcrowds-viewer": "^2.2.2",
     "lodash": "^4.17.4",
+    "marked": "^0.3.6",
     "pnotify": "^3.2.1",
     "progressbar.js": "^1.0.1",
     "raven-js": "^3.17.0",
@@ -88,6 +90,7 @@
     "html-loader": "^0.4.5",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.3",
+    "iedriver": "^3.4.0",
     "img-loader": "^2.0.0",
     "inject-loader": "^3.0.1",
     "jest": "^20.0.4",

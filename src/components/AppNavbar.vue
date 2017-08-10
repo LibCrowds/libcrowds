@@ -218,10 +218,10 @@ export default {
 
         let bounds = []
         let nodes = document.getElementsByClassName('invert-navbar')
-        for (let node of nodes) {
+        for (let i = 0; i < nodes.length; i++) {
           bounds.push({
-            top: node.offsetTop,
-            bottom: node.offsetTop + node.offsetHeight
+            top: nodes[i].offsetTop,
+            bottom: nodes[i].offsetTop + nodes[i].offsetHeight
           })
         }
 
@@ -361,8 +361,7 @@ export default {
   transition: background-color 200ms;
 
   .container {
-    display: flex;
-    align-items: center;
+    flex: 1 1 auto;
 
     @include media-breakpoint-down(xs) {
       margin: 0;
@@ -372,15 +371,18 @@ export default {
 
   .navbar-brand {
     font-family: $headings-font-family;
-    font-size: $font-size-h3;
     font-weight: 300;
     transition: color 200ms;
     margin-right: 1rem;
+
+    @include media-breakpoint-up(sm) {
+      font-size: $font-size-h3;
+    }
   }
 
   .hamburger {
     display: none;
-    padding: 0;
+    right: 0;  // Otherwise it floats left
   }
 
   .navbar-toggler {
@@ -544,7 +546,13 @@ export default {
         padding-right: $spacer-x;
 
         .hamburger {
+          padding: 0;
           display: flex;
+          flex-direction:column;
+          justify-content: center;
+          align-items: center;
+          flex: 1 1 auto;
+          height: 100%;
         }
 
         .navbar-collapse {

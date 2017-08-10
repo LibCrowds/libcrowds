@@ -60,7 +60,7 @@ export default {
         return
       }
 
-      if (custom.startsWith('/uploads')) {
+      if (custom.indexOf('/uploads') > -1) {
         this.avatar = config.pybossaHost + custom
         return
       }

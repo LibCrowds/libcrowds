@@ -48,16 +48,20 @@ export default {
 
 .error {
   .error-message {
-    margin-top: 1rem;
+    margin-top: 0;
+    height: 100vh;
     color: $white;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     a {
       color: $white;
     }
 
     @include media-breakpoint-up(md) {
-      margin-top: 5rem;
       margin-left: 5%;
       width: 40%;
     }
