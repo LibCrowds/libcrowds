@@ -17,7 +17,7 @@
       </p>
       <hr>
       <div class="row">
-        <div class="col-xl-3">
+        <div class="col-xl-3 mb-3">
           <category-list-chooser
             v-if="categories.length"
             :categories="categories"
