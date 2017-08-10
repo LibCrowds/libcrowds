@@ -361,8 +361,7 @@ export default {
   transition: background-color 200ms;
 
   .container {
-    display: flex;
-    align-items: center;
+    flex: 1 1 auto;
 
     @include media-breakpoint-down(xs) {
       margin: 0;
@@ -380,7 +379,6 @@ export default {
 
   .hamburger {
     display: none;
-    padding: 0;
   }
 
   .navbar-toggler {
@@ -544,7 +542,13 @@ export default {
         padding-right: $spacer-x;
 
         .hamburger {
+          padding: 0;
           display: flex;
+          flex-direction:column;
+          justify-content: center;
+          align-items: center;
+          flex: 1 1 auto;
+          height: 100%;
         }
 
         .navbar-collapse {

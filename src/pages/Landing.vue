@@ -4,14 +4,16 @@
 
       <transition appear>
         <div class="container full-height text-center">
-          <h1 id="tagline">{{ config.tagline }}</h1>
-          <div id="intro-buttons" class="mt-2">
-            <b-button variant="secondary" :to="{ name: 'about' }">
-              Learn More
-            </b-button>
-            <b-button variant="success" :to="{ name: 'contribute' }">
-              Get Started
-            </b-button>
+          <div class="header-content">
+            <h1 id="tagline">{{ config.tagline }}</h1>
+            <div id="intro-buttons" class="mt-2">
+              <b-button variant="secondary" :to="{ name: 'about' }">
+                Learn More
+              </b-button>
+              <b-button variant="success" :to="{ name: 'contribute' }">
+                Get Started
+              </b-button>
+            </div>
           </div>
         </div>
       </transition>
@@ -375,14 +377,18 @@ export default {
 
 #landing {
   .container.full-height {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     color: $white;
     opacity: 1;
     transition: opacity 800ms;
+
+    // IE fix for overflowing text in flex container.
+    .header-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+    }
 
     &.v-enter,
     &.v-leave-to {
