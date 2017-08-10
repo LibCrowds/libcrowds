@@ -9,10 +9,33 @@
           <card-form
             :header="'Regsiter'"
             :lead="lead"
-            :submitText="'Sign up'"
+            :submitText="form.submitText"
             :endpoint="form.endpoint"
             :schema="form.schema"
             :model="form.model">
+
+            <div slot="footer-left">
+              <p class="mb-0 mr-3">
+                <small>
+                  By clicking on "{{ form.submitText }}" you are agreeing to
+                  the
+                  <router-link
+                    :to="{
+                      name: 'tos'
+                    }">
+                    Terms of Service
+                  </router-link>
+                  and the
+                  <router-link
+                    :to="{
+                      name: 'privacy'
+                    }">
+                    Privacy Policy.
+                  </router-link>
+                </small>
+              </p>
+            </div>
+
           </card-form>
         </div>
       </div>
@@ -31,6 +54,7 @@ export default {
     return {
       form: {
         endpoint: '/account/register',
+        submitText: 'Sign up',
         model: {},
         schema: {
           fields: [
