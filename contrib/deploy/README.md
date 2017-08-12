@@ -1,59 +1,58 @@
 # LibCrowds vue-pybossa-frontend deployment
 
-As we're running a continuous deployment process to push vue-pybossa-frontend
-updates out to all relevant LibCrowds servers, our build process is a bit
+We're running a continuous deployment process to push vue-pybossa-frontend
+updates out to all LibCrowds servers that use it, so our build process is a bit
 different.
 
 ## Configuring the server
 
-Login to the server, then:
+To configure a new server:
 
 ``` bash
-# clone and change directory
-cd /var/www
-git clone https://github.com/LibCrowds/vue-pybossa-frontend
-cd vue-pybossa-frontend
+# install node and npm
+sudo apt-get install python-software-properties
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install nodejs
 
-# install
-npm install
-
-# build
-npm run install
+# clone
+mkdir /var/www
+git clone https://github.com/LibCrowds/vue-pybossa-frontend /var/www/vue-pybossa-frontend
 
 # copy default config
-cp ./src/config.js.tmpl ./src/config.js
+cp /var/www/vue-pybossa-frontend/src/config.js.tmpl /var/www/vue-pybossa-frontend/src/config.js
+
+# build
+npm run build
 
 # create a user with restricted access
 adduser deploy
+
+# give that user ownership of the repo
 chown -R deploy:deploy /var/www/vue-pybossa-frontend
 
 # switch to that user
 su - deploy
 
 # store the public key
-mkdir .ssh
+mkdir -p .ssh/authorized_keys
 chmod 700 .ssh
-cp contrib/deploy/deploy-key.pub .ssh/authorized_keys
+cp /var/www/vue-pybossa-frontend/contrib/deploy/deploy-key.pub .ssh/authorized_keys
 
 # restrict permissions to authorized_keys
 chmod 600 .ssh/authorized_keys
 
 # create a post-receive hook
-cp contrib/deploy/post-receive .git/hooks
-chmod +x .git/hooks/post-receive
+cp /var/www/vue-pybossa-frontend/contrib/deploy/post-receive /var/www/vue-pybossa-frontend/.git/hooks
+chmod +x /var/www/vue-pybossa-frontend/.git/hooks/post-receive
 ```
 
-You can now exit the server.
-
-
-## Modifying travis.yml
-
-In the `after_success` section of [.travis.yml](.travis.yml) add the following line:
+You can now exit the server and add the following to the `after_success`
+section of [.travis.yml](.travis.yml) add the following line:
 
 ``` yaml
 - git remote add deploy "deploy@{frontend-server-ip}:/var/www/vue-pybossa-frontend"
 ```
 
-Once master has been updated with this change, all future changes to
-master that successfully pass tests will be deployed to the remote
-vue-pybossa-frontend instance configured above.
+Once the master branch has been updated with this change, all future changes to
+master that pass tests will be deployed to the remote vue-pybossa-frontend
+instance configured above.
