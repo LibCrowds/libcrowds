@@ -1,4 +1,4 @@
 #!/bin/sh
 git --work-tree=/var/www/vue-pybossa-frontend/ --git-dir=/var/www/vue-pybossa-frontend/.git checkout -f
-npm install
+cd /var/www/vue-pybossa-frontend/
 npm run build
