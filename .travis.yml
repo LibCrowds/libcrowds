@@ -29,5 +29,5 @@ after_success:
   - chmod 600 deploy_key
   - git config user.name "Alex Mendes"
   - git config user.email "alexanderhmendes@gmail.com"
-  - git remote add deploy "deploy@playbills:/var/www/vue-pybossa-frontend"
+  - git remote add deploy "deploy@playbills.libcrowds.com:/var/www/vue-pybossa-frontend"
   - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; echo "Deploying"; echo git push deploy
