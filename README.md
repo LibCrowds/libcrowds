@@ -147,7 +147,7 @@ su - deploy
 
 # create the public key (copy /contrib/deploy-key.pub)
 mkdir ~/.ssh
-vim .ssh/authorized_keys
+vim ~/.ssh/authorized_keys
 
 # restrict permissions
 chmod 700 .ssh
