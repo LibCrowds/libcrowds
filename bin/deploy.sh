@@ -24,7 +24,7 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
     npm run build
 
     # Remove everything but the dist folder
-    rm -- !(dist)
+    rm -r -- !(dist)
 
     # Set up package for sending
     git init
