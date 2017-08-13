@@ -5,16 +5,14 @@ SITES=(
   "playbills.libcrowds.com:https://github.com/LibCrowds/site-settings-playbills"
 )
 
-if [ $TRAVIS_BRANCH == 'master' || $1 == 'true' ] ; then
+if [ $TRAVIS_BRANCH == 'master' ] ; then
   for site in "${SITES[@]}"; do
 
     DOMAIN="${site%%:*}"
     SETTINGS="${site/$DOMAIN:/}"
 
     # Clear git info
-    if [ $1 != 'true' ] ; then
-      rm -rf .git
-    fi
+    rm -rf .git
 
     # Configure site
     git clone $SETTINGS src/custom/settings
@@ -24,10 +22,8 @@ if [ $TRAVIS_BRANCH == 'master' || $1 == 'true' ] ; then
     npm run build
 
     # Remove everything but the dist folder
-    if [ $1 != 'true' ] ; then
-      shopt -s extglob
-      sudo rm -- !(dist)
-    fi
+    shopt -s extglob
+    sudo rm -- !(dist)
 
     # Set up package for sending
     git init
