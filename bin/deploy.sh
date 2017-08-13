@@ -20,7 +20,7 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
     # Configure site
     rm -r src/custom/settings
     git clone $SETTINGS src/custom/settings
-    echo "module.exports = require('@/custom/settings/settings/config.js')" >> src/custom/config.js
+    echo "module.exports = require('@/custom/settings/settings/config.js')" >> src/config.js
 
     # Build
     npm run build
