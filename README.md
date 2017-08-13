@@ -74,7 +74,7 @@ it like this:
 # install nginx
 sudo apt-get install nginx
 
-# copy nginx config (editting paths according to your environment)
+# copy nginx config (edit paths and server_name according to your environment)
 cp contrib/vue-pybossa-frontend /etc/nginx/sites-available/.
 
 # remove default nginx config
@@ -86,6 +86,8 @@ sudo ln -s /etc/nginx/sites-available/vue-pybossa-frontend /etc/nginx/sites-enab
 # restart
 sudo service nginx restart
 ```
+
+To setup Continuous Deployment see [contrib/deployment](contrib/deployment).
 
 ## Testing
 

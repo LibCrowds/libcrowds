@@ -2,9 +2,9 @@ server {
   listen 80 default_server;
   listen [::]:80 default_server;
 
-  server_name your.server.name;
+  server_name _;
 
-  root /var/www/vue-pybossa-frontend/dist;
+  root /var/www/frontend/dist;
 
   index index.html;
 
