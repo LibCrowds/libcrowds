@@ -20,10 +20,10 @@ if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
 
   echo "Set up permissions"
   echo -e "Host playbills.libcrowds.com\n\tStrictHostKeyChecking no" >> ~/.ssh/config
-  openssl aes-256-cbc -K $encrypted_a9d53792e855_key -iv $encrypted_a9d53792e855_iv -in deploy_key.pem.enc -out deploy_key.pem -d
+  openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv -in deploy-key.enc -out deploy-key -d
   eval "$(ssh-agent -s)"
-  chmod 600 deploy_key.pem
-  ssh-add deploy_key.pem
+  chmod 600 deploy_key
+  ssh-add deploy_key
 
   echo "Deploy"
   git push -f deploy
