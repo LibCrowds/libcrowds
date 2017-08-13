@@ -62,13 +62,8 @@ vim .ssh/authorized_keys/deploy-key.pub  # copy /contrib/deployment/deploy-key.p
 chmod 600 .ssh/authorized_keys
 ```
 
-You can now exit the server and add the following to the `after_success`
-section of [/.travis.yml](.travis.yml) add the following line:
+You can now exit the server and add the site to the `SITES` variable at the
+top of [/bin/deploy.sh](/bin/deploy.sh).
 
-``` yaml
-- git remote add deploy "deploy@{frontend-server-ip}:/var/www/vue-pybossa-frontend"
-```
-
-Once the master branch has been updated with this change, all future changes to
-master that pass tests will be deployed to the remote vue-pybossa-frontend
-instance configured above.
+Once the master branch has been updated with this change it will be deployed to
+the new site for the first time.
