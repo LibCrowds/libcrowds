@@ -87,7 +87,7 @@ sudo ln -s /etc/nginx/sites-available/vue-pybossa-frontend /etc/nginx/sites-enab
 sudo service nginx restart
 ```
 
-To setup Continuous Deployment see [contrib/deploy](contrib/deploy).
+To setup Continuous Deployment see [contrib/deployment](contrib/deployment).
 
 ## Testing
 
