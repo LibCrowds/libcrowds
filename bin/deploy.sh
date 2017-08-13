@@ -7,7 +7,7 @@ SITES=(
   "playbills.libcrowds.com:https://github.com/LibCrowds/site-settings-playbills"
 )
 
-if [ $TRAVIS_BRANCH == 'master' ] ; then
+if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
   for site in "${SITES[@]}"; do
 
     DOMAIN="${site%%:*}"
@@ -38,11 +38,11 @@ if [ $TRAVIS_BRANCH == 'master' ] ; then
     echo -e "Host $DOMAIN\n\tStrictHostKeyChecking no" >> ~/.ssh/config
     openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv -in deploy-key.enc -out deploy-key -d
     eval "$(ssh-agent -s)"
-    chmod 600 deploy_key
-    ssh-add deploy_key
+    chmod 600 deploy-key
+    ssh-add deploy-key
 
     # Deploy
-    git push -f deploy
+    git push -f deploy master
   done
 else
   echo "Not deploying as this is not the master branch"
