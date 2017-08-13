@@ -4,8 +4,8 @@ if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
   rm -rf .git
 
   echo "Configuring playbills site"
-  git clone https://github.com/LibCrowds/site-settings-playbills src/custom
-  echo "module.exports = require('@/custom/site-settings-playbills/settings/config.js')" >> src/custom/config.js
+  git clone https://github.com/LibCrowds/site-settings-playbills src/custom/settings
+  echo "module.exports = require('@/custom/settings/settings/config.js')" >> src/custom/config.js
 
   echo "Building"
   npm run build
