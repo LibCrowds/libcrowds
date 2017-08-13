@@ -1,0 +1,4 @@
+#!/bin/sh
+git --work-tree=/var/www/frontend --git-dir=/var/www/deployment/.git checkout -f
+cp /var/www/frontend/src/public/config.js.tmpl /var/www/frontend/public/src/config.js
+npm run build --prefix /var/www/frontend

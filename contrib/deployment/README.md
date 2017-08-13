@@ -14,40 +14,56 @@ sudo apt-get install python-software-properties
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 sudo apt-get install nodejs
 
-# clone
-mkdir /var/www
-git clone https://github.com/LibCrowds/vue-pybossa-frontend /var/www/vue-pybossa-frontend
+# install nginx
+sudo apt-get install nginx
 
-# copy default config
-cp /var/www/vue-pybossa-frontend/src/config.js.tmpl /var/www/vue-pybossa-frontend/src/config.js
+# remove default nginx config
+sudo rm /etc/nginx/sites-enabled/default
 
-# build
-npm run build
+# create nginx config
+vim /etc/nginx/sites-enabled/frontend  # copy /contrib/deployment/frontend
+
+# enable nginx config
+sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/frontend
+
+# restart nginx
+sudo service nginx restart
+
+# create an empty repo
+mkdir -p /var/www/deployment/.git
+cd /var/www/deployment/.git
+git init --bare
+
+# create an empty directory for deployments
+mkdir /var/www/frontend
+
+# create a post-receive hook
+cd hooks
+vim post-receive  # copy /contrib/deployment/post-receive
+
+# make the script executable
+chmod +x /var/www/deployment/.git/hooks/post-receive
 
 # create a user with restricted access
 adduser deploy
 
 # give that user ownership of the repo
-chown -R deploy:deploy /var/www/vue-pybossa-frontend
+chown -R deploy:deploy /var/www/deployment/.git
 
 # switch to that user
 su - deploy
 
-# store the public key
+# create the public key
 mkdir -p .ssh/authorized_keys
 chmod 700 .ssh
-cp /var/www/vue-pybossa-frontend/contrib/deploy/deploy-key.pub .ssh/authorized_keys
+vim .ssh/authorized_keys/deploy-key.pub  # copy /contrib/deployment/deploy-key.pub
 
 # restrict permissions to authorized_keys
 chmod 600 .ssh/authorized_keys
-
-# create a post-receive hook
-cp /var/www/vue-pybossa-frontend/contrib/deploy/post-receive /var/www/vue-pybossa-frontend/.git/hooks
-chmod +x /var/www/vue-pybossa-frontend/.git/hooks/post-receive
 ```
 
 You can now exit the server and add the following to the `after_success`
-section of [.travis.yml](.travis.yml) add the following line:
+section of [/.travis.yml](.travis.yml) add the following line:
 
 ``` yaml
 - git remote add deploy "deploy@{frontend-server-ip}:/var/www/vue-pybossa-frontend"
