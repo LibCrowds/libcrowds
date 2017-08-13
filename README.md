@@ -109,10 +109,10 @@ sudo apt-get install nodejs
 sudo apt-get install nginx
 
 # remove default nginx config
-sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-available/default
 
 # create nginx config (copy /contrib/frontend)
-vim /etc/nginx/sites-enabled/frontend
+vim /etc/nginx/sites-available/frontend
 
 # enable nginx config
 sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/frontend
