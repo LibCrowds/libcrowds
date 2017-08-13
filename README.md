@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
 [![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
-[![devDependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/dev-status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend?type=dev)
-
 > A Vue.js frontend for PyBossa (>=2.5.0).
 
 When no task presenter is present for a project 100 new tasks will be retrieved
@@ -147,9 +145,9 @@ chown -R deploy:deploy /var/www/frontend
 su - deploy
 
 # create the public key (copy /contrib/deploy-key.pub)
-mkdir -p ~/.ssh/authorized_keys
+mkdir -p ~/.ssh
 chmod 700 .ssh
-vim .ssh/authorized_keys/deploy-key.pub
+vim .ssh/authorized_keys
 
 # restrict permissions to authorized_keys
 chmod 600 .ssh/authorized_keys
