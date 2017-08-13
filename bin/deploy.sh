@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+shopt -s extglob
+
 # List of sites in the form "domain:settings"
 SITES=(
   "playbills.libcrowds.com:https://github.com/LibCrowds/site-settings-playbills"
@@ -22,8 +24,7 @@ if [ $TRAVIS_BRANCH == 'master' ] ; then
     npm run build
 
     # Remove everything but the dist folder
-    shopt -s extglob
-    sudo rm -- !(dist)
+    rm -- !(dist)
 
     # Set up package for sending
     git init
