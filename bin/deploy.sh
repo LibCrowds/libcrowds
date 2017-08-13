@@ -32,7 +32,7 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
     git config user.name "Alex Mendes"
     git config user.email "alexanderhmendes@gmail.com"
     git add --all .
-    git commit -m "Deploy from Travis - build {$TRAVIS_BUILD_NUMBER}"
+    git commit -m "Deployment"
 
     # Set up permissions
     echo -e "Host $DOMAIN\n\tStrictHostKeyChecking no" >> ~/.ssh/config

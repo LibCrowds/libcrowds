@@ -10,3 +10,4 @@ selenium-debug.log
 src/config.js
 src/custom/*
 .ssh
+deploy-key

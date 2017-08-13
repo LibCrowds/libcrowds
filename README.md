@@ -146,7 +146,7 @@ chown -R deploy:deploy /var/www/deployment/.git
 su - deploy
 
 # create the public key (copy /contrib/deploy-key.pub)
-mkdir -p .ssh/authorized_keys
+mkdir -p ~/.ssh/authorized_keys
 chmod 700 .ssh
 vim .ssh/authorized_keys/deploy-key.pub
 
