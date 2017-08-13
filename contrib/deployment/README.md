@@ -20,8 +20,8 @@ sudo apt-get install nginx
 # remove default nginx config
 sudo rm /etc/nginx/sites-enabled/default
 
-# create nginx config
-vim /etc/nginx/sites-enabled/frontend  # copy /contrib/deployment/frontend
+# create nginx config (copy /contrib/deployment/frontend)
+vim /etc/nginx/sites-enabled/frontend
 
 # enable nginx config
 sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/frontend
@@ -37,9 +37,9 @@ git init --bare
 # create an empty directory for deployments
 mkdir /var/www/frontend
 
-# create a post-receive hook
+# create a post-receive hook (copy /contrib/deployment/post-receive)
 cd hooks
-vim post-receive  # copy /contrib/deployment/post-receive
+vim post-receive
 
 # make the script executable
 chmod +x /var/www/deployment/.git/hooks/post-receive
@@ -53,10 +53,10 @@ chown -R deploy:deploy /var/www/deployment/.git
 # switch to that user
 su - deploy
 
-# create the public key
+# create the public key (copy /contrib/deployment/deploy-key.pub)
 mkdir -p .ssh/authorized_keys
 chmod 700 .ssh
-vim .ssh/authorized_keys/deploy-key.pub  # copy /contrib/deployment/deploy-key.pub
+vim .ssh/authorized_keys/deploy-key.pub
 
 # restrict permissions to authorized_keys
 chmod 600 .ssh/authorized_keys
