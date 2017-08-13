@@ -1,28 +1,21 @@
 sudo: required
-
 language: node_js
-
 node_js:
-  - '7'
-
+- '7'
 addons:
   browserstack:
     username: alexmendes1
     access_key:
       secure: TdQw0mOpk3iEF/ECo5BiKiMzwvUkqUlbj8p1Tlud3KFLbBaKjEpvE5LGRcF/RNpPLpyslv3+XjXx2uJHd/v1aBNPSCTRuuuEtKxfXyzRgP0BGSF3qjxYQ1dn52CaTcbvwodrUdCf9gtykkuN0ZpfVsMY/W0VBKmqfrnnZaj3qS1/ZFt3KbqyJo8Z7dnD5qWh2IJym0jfjWkaIeRuWeqdPMqVl+bpKuN8b/m9QI/zvJEqPo6ivnpreixL/jB1oZL4P1qTK0bY2gHp2533yoeuLKSEvtqFfKw+ji4hlMzU1+AHjDYf4EEZ8KrmmB43EaPwcSxg1Un+gJFP8RXPkgRSxjAiJjTJqRsK9mu0TmT7B+c+XLqoh7Moq1pmQ2NyaUFr8JxVvhUoHHcjipKcSDVZkODJeUUMYtZ5hwMYnIeE0r4Im0yWjSVSNbyu+eojkEQ+nBjY2DudsE1NAkfOjzlCPsrRj6N4TGH8vOqneBvX8hHkfFCYsgENvQ+N+jXMRzlyLB9BcP6t+Ay/853PbMLFjVaL3uz/l0xRjRrdLWBFiqb8nt1Fuab11bQsMC1UmJXi2AXLo4Rczq9ngzk/p9x0nB3gHvpo8c7F2K5ajtq77l52MeiGmH8sY20rN4zzi0XBUdEUl4fClqmwY8EWta9aT9ndYi5QjL9zNsYdfkgQn5g=
-
 before_install:
-- openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv -in deploy-key.enc -out deploy-key -d
-
+- openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv
+  -in deploy-key.enc -out deploy-key -d
 install:
-  - npm install
-
+- npm install
 before_script:
-  - cp ./src/config.js.tmpl ./src/config.js
-
+- cp ./src/config.js.tmpl ./src/config.js
 script:
-  - npm run lint
-  - npm run unit
-
+- npm run lint
+- npm run unit
 after_success:
-  - bash bin/deploy.sh
+- bash bin/deploy.sh
