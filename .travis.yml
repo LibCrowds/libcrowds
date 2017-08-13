@@ -27,10 +27,10 @@ after_success:
   - openssl aes-256-cbc -K $encrypted_1d262b48bc9b_key -iv $encrypted_1d262b48bc9b_iv -in deploy-key.enc -out deploy-key -d
   - eval "$(ssh-agent -s)"
   - chmod 600 deploy_key
+  - rm -rf .git
   - git config user.name "Alex Mendes"
   - git config user.email "alexanderhmendes@gmail.com"
   - git remote add deploy "deploy@playbills.libcrowds.com:/var/www/vue-pybossa-frontend"
   - git add .
   - git commit -m "Deployment"
-  - git push --force deploy master
-  - echo "Deploying"; echo git push deploy
+  - git push --force deploy
