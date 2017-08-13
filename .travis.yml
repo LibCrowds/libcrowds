@@ -30,4 +30,7 @@ after_success:
   - git config user.name "Alex Mendes"
   - git config user.email "alexanderhmendes@gmail.com"
   - git remote add deploy "deploy@playbills.libcrowds.com:/var/www/vue-pybossa-frontend"
+  - git add .
+  - git commit -m "Deployment"
+  - git push --force deploy master
   - echo "Deploying"; echo git push deploy
