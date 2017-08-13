@@ -139,8 +139,9 @@ chmod +x /var/www/deployment/.git/hooks/post-receive
 # create a user with restricted access
 adduser deploy
 
-# give that user ownership of the repo
+# give that user ownerships
 chown -R deploy:deploy /var/www/deployment/.git
+chown -R deploy:deploy /var/www/frontend
 
 # switch to that user
 su - deploy

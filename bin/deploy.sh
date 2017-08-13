@@ -15,23 +15,22 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
 
     # Clear git info
     rm -rf .git
+    rm -rf .gitignore
 
     # Configure site
+    rm -r src/custom/settings
     git clone $SETTINGS src/custom/settings
     echo "module.exports = require('@/custom/settings/settings/config.js')" >> src/custom/config.js
 
     # Build
     npm run build
 
-    # Remove everything but the dist folder
-    rm -r -- !(dist)
-
     # Set up package for sending
     git init
     git remote add deploy "deploy@$DOMAIN:/var/www/deployment"
     git config user.name "Alex Mendes"
     git config user.email "alexanderhmendes@gmail.com"
-    git add --all .
+    git add dist/*
     git commit -m "Deployment"
 
     # Set up permissions
