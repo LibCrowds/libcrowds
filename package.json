@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.16.1",
+    "bootstrap": "4.0.0-alpha.6",
     "bootstrap-vue": "^0.21.0",
     "chartist": "^0.11.0",
     "chartist-plugin-tooltips": "0.0.17",
