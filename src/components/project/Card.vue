@@ -89,7 +89,7 @@ export default {
   text-align: center;
   flex-direction: column;
   overflow-y: hidden;
-  margin-bottom: $spacer-y;
+  margin-bottom: $card-spacer-y;
   margin-left: auto;
   margin-right: auto;
   max-width: 300px;

@@ -72,7 +72,7 @@ export default {
   }
 
   &[data-bg="faded"] {
-    @extend .bg-faded;
+    @extend .bg-gray-400;
   }
 }
 </style>
