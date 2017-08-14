@@ -56,13 +56,13 @@ export default {
 
 .card.user-card {
   .avatar-background {
-    padding-top: $card-spacer-y* 2;
-    padding-left: $card-spacer-x * 2;
-    padding-right: $card-spacer-x * 2;
+    padding-top: $spacer-y* 2;
+    padding-left: $spacer-x * 2;
+    padding-right: $spacer-x * 2;
     background:
       linear-gradient(to bottom, rgba($brand-info, 0) 0%,
-      rgba($brand-info, 0) calc(50% + (#{$card-spacer-y} * 1)),
-      $white calc(50% + (#{$card-spacer-y} * 1)), $white 100% ),
+      rgba($brand-info, 0) calc(50% + (#{$spacer-y} * 1)),
+      $white calc(50% + (#{$spacer-y} * 1)), $white 100% ),
       url('../../assets/img/background.jpg');
     background-size: cover;
     background-position: center center;

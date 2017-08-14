@@ -138,9 +138,9 @@ export default {
 @import 'src/assets/style/main';
 
 #app-footer.footer {
-  background-color: darken($gray-900, 5%);
+  background-color: darken($gray-dark, 5%);
   letter-spacing: 0.8px;
-  color: $gray-900;
+  color: $gray-light;
   font-size: $font-size-sm;
   line-height: 2;
 
@@ -163,7 +163,7 @@ export default {
   }
 
   a {
-    color: $gray-400;
+    color: $gray-lighter;
   }
 
   .brand-link {

@@ -106,7 +106,7 @@ export default {
   }
 
   .card-header {
-    @extend .bg-gray-400;
+    @extend .bg-faded;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
   }

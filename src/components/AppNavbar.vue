@@ -376,7 +376,7 @@ export default {
     margin-right: 1rem;
 
     @include media-breakpoint-up(sm) {
-      font-size: $h3-font-size;
+      font-size: $font-size-h3;
     }
   }
 
@@ -514,11 +514,11 @@ export default {
 
   &.navbar-light {
     background: $white;
-    border-bottom: 1px solid $gray-400;
+    border-bottom: 1px solid $gray-lighter;
 
     .nav-item.nav-button {
       transition: border-color 400ms;
-      border-color: $gray-500;
+      border-color: $gray-light;
     }
   }
 
