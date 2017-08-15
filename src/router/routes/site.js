@@ -1,10 +1,10 @@
 import config from '@/config'
 import Landing from '@/pages/Landing'
-import About from '@/pages/home/About'
-import Data from '@/pages/home/Data'
-import Results from '@/pages/home/Results'
-import Contribute from '@/pages/home/Contribute'
-import Statistics from '@/pages/home/Statistics'
+import About from '@/pages/site/About'
+import Data from '@/pages/site/Data'
+import Results from '@/pages/site/Results'
+import Contribute from '@/pages/site/Contribute'
+import Statistics from '@/pages/site/Statistics'
 
 // Guard to check for site configuration
 const siteGuard = function (to, from, next) {
