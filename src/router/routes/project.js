@@ -1,8 +1,8 @@
-import Presenter from '@/pages/projects/Presenter'
+import Presenter from '@/pages/taskset/Presenter'
 
 export default [
   {
-    path: '/projects/:shortname',
+    path: '/taskset/:shortname',
     component: {
       render (c) {
         return c('router-view')
