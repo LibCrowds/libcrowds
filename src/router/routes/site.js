@@ -1,5 +1,5 @@
 import config from '@/config'
-import Landing from '@/pages/Landing'
+import Home from '@/pages/site/Home'
 import About from '@/pages/site/About'
 import Data from '@/pages/site/Data'
 import Results from '@/pages/site/Results'
@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/site/:sitename',
     name: 'landing',
-    component: Landing,
+    component: Home,
     beforeEnter: siteGuard
   },
   {
