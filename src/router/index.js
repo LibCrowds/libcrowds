@@ -4,6 +4,7 @@ import VueMeta from 'vue-meta'
 import store from '@/store'
 import manageSession from '@/utils/manageSession'
 
+import coreRoutes from '@/router/routes/core'
 import accountRoutes from '@/router/routes/account'
 import errorRoutes from '@/router/routes/error'
 import helpRoutes from '@/router/routes/help'
@@ -13,6 +14,7 @@ Vue.use(VueRouter)
 Vue.use(VueMeta)
 
 const routes = [].concat(
+  coreRoutes,
   accountRoutes,
   errorRoutes,
   helpRoutes,

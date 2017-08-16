@@ -22,7 +22,7 @@ const routes = [
     children: [
       {
         path: 'home',
-        name: 'landing',
+        name: 'project-home',
         component: Home
       },
       {

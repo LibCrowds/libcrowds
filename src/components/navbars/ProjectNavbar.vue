@@ -28,7 +28,12 @@
         </button>
 
         <b-link class="navbar-brand"
-          :to="{ name: 'landing' }"
+          :to="{
+            name: 'project-home',
+            params: {
+              projectName: projectConfig.name
+            }
+          }"
           @click.native="scrollToTop">
           <span>{{ projectConfig.brand }}</span>
         </b-link>

@@ -1,11 +1,11 @@
 <template>
-  <div id="project-home">
+  <div id="landing">
     <basic-layout>
 
       <transition appear>
         <div class="container full-height text-center">
           <div class="header-content">
-            <h1 id="tagline">{{ projectConfig.tagline }}</h1>
+            <h1 id="tagline">{{ siteConfig.tagline }}</h1>
             <div id="intro-buttons" class="mt-2">
               <b-button variant="secondary" :to="{ name: 'about' }">
                 Learn More
@@ -32,34 +32,11 @@
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
               <p class="lead my-1">
-                {{ projectConfig.description }}
+                {{ siteConfig.description }}
               </p>
             </div>
           </div>
           <hr class="my-2 w-75 sr">
-          <div class="row">
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="television" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_published_projects }}
-              </p>
-              <p>Projects</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="users" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_total_users }}
-              </p>
-              <p>Volunteers</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="list" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_task_runs }}
-              </p>
-              <p>Contributions</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -300,13 +277,6 @@ export default {
     }
   },
 
-  props: {
-    projectConfig: {
-      type: Object,
-      required: true
-    }
-  },
-
   // metaInfo: {
   //   title: this.projectConfig.tagline,
   //   meta: [
@@ -381,7 +351,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#project-home {
+#landing {
   .container.full-height {
     height: 100vh;
     color: $white;
