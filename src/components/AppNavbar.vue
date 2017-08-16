@@ -96,7 +96,7 @@
               </b-dropdown-item>
 
               <!-- Project management/admin -->
-              <span v-if="showProjectManagement">
+              <span>
                 <div role="separator" class="dropdown-divider"></div>
                 <b-dropdown-item
                   @click="showModal(openProjectModalId)">
@@ -183,13 +183,6 @@ export default {
   computed: {
     currentUser: function () {
       return this.$store.state.currentUser
-    },
-
-    showProjectManagement: function () {
-      return (
-        !this.config.requiresAdmin.projectManagement ||
-        this.currentUser.admin
-      )
     }
   },
 
