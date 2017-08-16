@@ -145,7 +145,7 @@ export default {
     @include media-breakpoint-up(lg) {
       img {
         width: auto;
-        height: 100%;
+        max-height: 250px;
       }
     }
   }
