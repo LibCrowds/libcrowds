@@ -2,6 +2,7 @@
   <div class="presenter">
 
     <libcrowds-viewer
+      v-if="taskOpts.length"
       :show-related-tasks="true"
       :confirm-before-unload="true"
       :disable-complete="true"
