@@ -4,7 +4,7 @@
       <h2 class="text-center">Cookies</h2>
       <hr>
       <p>
-        {{ config.brand }} uses cookies to make our website easier for you to use
+        {{ siteConfig.brand }} uses cookies to make our website easier for you to use
         and improve your overall experience, distinguish you from other users and
         provide increased functionality.
       </p>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {

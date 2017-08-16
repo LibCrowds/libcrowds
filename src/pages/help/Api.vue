@@ -4,13 +4,13 @@
       <h2 class="text-center">API</h2>
       <hr>
       <p>
-        {{ config.brand }} provides a RESTful API that can be used for retreiving
-        information about tasks, task runs, results, etc. The API expects and
-        returns JSON and is available at:
+        {{ siteConfig.brand }} provides a RESTful API that can be used for
+        retreiving information about tasks, task runs, results, etc. The API
+        expects and returns JSON and is available at:
       </p>
       <pre class="my-2">
         <code>
-          {{ config.pybossaHost }}/api
+          {{ siteConfig.pybossaHost }}/api
         </code>
       </pre>
       <p>
@@ -30,13 +30,13 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
-      config: config
+      siteConfig: siteConfig
     }
   },
 

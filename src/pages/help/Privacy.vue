@@ -7,8 +7,8 @@
         Please read this Privacy Policy (“Privacy Policy”) carefully.
       </p>
       <p>
-        When you access {{ config.brand }} this policy binds you. When you create
-        an identity on {{ config.brand }} you are a Contributor and as a
+        When you access {{ siteConfig.brand }} this policy binds you. When you create
+        an identity on {{ siteConfig.brand }} you are a Contributor and as a
         Contributor you accept and consent to the practices described in this
         Privacy Policy.
       </p>
@@ -17,7 +17,7 @@
       </p>
       <h3>Amendments and updates to this policy</h3>
       <p>
-        {{ config.brand }} may amend this Privacy Policy from time to time to
+        {{ siteConfig.brand }} may amend this Privacy Policy from time to time to
         reflect regulatory requirements or changes in our information collection,
         use or disclosure practices. If this Privacy Policy is changed, the new
         Effective Date will be noted here. You should therefore view this Page
@@ -26,20 +26,20 @@
       <h3>Third-party websites</h3>
       <p>
         This Privacy Policy does not apply to any third-party sites accessed via
-        links from {{ config.brand }}. {{ config.brand }} has no control over what
+        links from {{ siteConfig.brand }}. {{ siteConfig.brand }} has no control over what
         those sites do with information which they collect so it would be absurd
-        to claim that {{ config.brand }} has any responsibility for what those
+        to claim that {{ siteConfig.brand }} has any responsibility for what those
         sites do. If you want to protect yourself then carefully read through any
         third-party privacy policies before agreeing to their terms or using such
         third party websites.
       </p>
       <h3>Submission of personal information</h3>
       <p>
-        {{ config.brand }} is an open platform and is designed to allow you and
+        {{ siteConfig.brand }} is an open platform and is designed to allow you and
         other Users and Contributors to share information in an open and
         transparent manner. With the exception of the information collected
         automatically, detailed below and which may include personal information,
-        {{ config.brand }} does not generally expect from or intend for you to
+        {{ siteConfig.brand }} does not generally expect from or intend for you to
         submit personal or private information. Notwithstanding the above, should
         you submit personal information for any legitimate reason; such
         information will be treated in compliance with legal requirements
@@ -57,47 +57,47 @@
       </p>
       <h4 class="mt-4">Automatic collection of information</h4>
       <p>
-        {{ config.brand }} automatically collects technical information which is
+        {{ siteConfig.brand }} automatically collects technical information which is
         required to create your login. This includes information which you supply
         such as a social network login if you make use of a social network login,
         the email address you supply, the names you supply. This includes
         automatically collected technical information such as your preferred
-        language. {{ config.brand }} does not require you to use your legal names
+        language. {{ siteConfig.brand }} does not require you to use your legal names
         but you must use a valid email address.
       </p>
       <p>
-        {{ config.brand }} receives non-personal information via Google Analytics,
+        {{ siteConfig.brand }} receives non-personal information via Google Analytics,
         Google Analytics Demographics and Interest Reporting, such as aggregated
         data of browser type, language preference, referring sites, age, gender,
         or interests, and the time of each visit.
       </p>
       <h3>Use of information</h3>
       <p>
-        {{ config.brand }} uses the information collected to enable you and others
-        to work together and share information using {{ config.brand }}, as well
-        as to better understand how visitors use {{ config.brand }} and, where
+        {{ siteConfig.brand }} uses the information collected to enable you and others
+        to work together and share information using {{ siteConfig.brand }}, as well
+        as to better understand how visitors use {{ siteConfig.brand }} and, where
         possible, to improve their experience.
       </p>
       <h3>Access to information by third parties</h3>
       <p>
       Personal information that you choose to make available on the public
-      sections of {{ config.brand }} can be viewed by third party individuals with
+      sections of {{ siteConfig.brand }} can be viewed by third party individuals with
       internet access. The manner in which information available on public pages
       is used by third party individuals falls outside the control of the
-      {{ config.brand }}. You should carefully consider what personal information
-      you elect to make available online through {{ config.brand }}.
+      {{ siteConfig.brand }}. You should carefully consider what personal information
+      you elect to make available online through {{ siteConfig.brand }}.
       </p>
       <p>
-        {{ config.brand }} will never sell your personal information to third
-        parties, without your prior consent. {{ config.brand }} may disclose your
-        personal information as required by law when {{ config.brand }} believes
+        {{ siteConfig.brand }} will never sell your personal information to third
+        parties, without your prior consent. {{ siteConfig.brand }} may disclose your
+        personal information as required by law when {{ siteConfig.brand }} believes
         that disclosure is necessary to protect our rights, and/or to comply with
         a judicial proceeding, court order or legal process.
       </p>
       <h4 class="mt-4">Google Analytics and opting out</h4>
       <p>
-        {{ config.brand }} uses Google Analytics to better understand how visitors
-        use {{ config.brand }} and, where possible, to improve their experience.
+        {{ sitesiteConfig.brand }} uses Google Analytics to better understand how visitors
+        use {{ sitesiteConfig.brand }} and, where possible, to improve their experience.
         If you want to opt-out, there is a browser add-on that you can
         <a href="https://tools.google.com/dlpage/gaoptout/" target="_blank">
           download and install
@@ -108,13 +108,13 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
-      config: config
+      siteConfig: siteConfig
     }
   },
 

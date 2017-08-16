@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/config'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import BasicLayout from '@/components/layouts/Basic'
@@ -97,7 +97,7 @@ export default {
         }
       },
       auth: {},
-      lead: `Create an account for ${config.brand}`
+      lead: `Create an account for ${siteConfig.brand}`
     }
   },
 

@@ -4,7 +4,7 @@
 
       <section>
         <a href="#">
-          Part of the {{ config.brand }} crowdsourcing platform
+          Part of the {{ siteConfig.brand }} crowdsourcing platform
         </a>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
@@ -19,7 +19,7 @@
            </a>
           </li>
           <li class="list-inline-item m-0">
-            <a :href="config.githubUrl" class="text-muted">
+            <a :href="siteConfig.githubUrl" class="text-muted">
               <icon name="github"></icon>
            </a>
           </li>
@@ -107,7 +107,7 @@
 
 <script>
 import jump from 'jump.js'
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
@@ -115,10 +115,10 @@ import 'vue-awesome/icons/envelope'
 export default {
   data: function () {
     return {
-      config: config,
-      twitterUrl: `https://twitter.com/${config.contact.twitter}`,
-      mailto: `mailto:${config.contact.email}`,
-      copyright: `&copy; ${config.company}, ${new Date().getFullYear()}`
+      siteConfig: siteConfig,
+      twitterUrl: `https://twitter.com/${siteConfig.contact.twitter}`,
+      mailto: `mailto:${siteConfig.contact.email}`,
+      copyright: `&copy; ${siteConfig.company}, ${new Date().getFullYear()}`
     }
   },
 

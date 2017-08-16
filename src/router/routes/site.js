@@ -1,4 +1,3 @@
-import config from '@/config'
 import Home from '@/pages/project/Home'
 import About from '@/pages/project/About'
 import Data from '@/pages/project/Data'
@@ -50,12 +49,12 @@ const routes = [
 ]
 
 // Conditional routes (TODO: Update)
-if (config.resultsComponent) {
-  routes.push({
-    path: '/project/:projectname/statistics',
-    name: 'results',
-    component: Results
-  })
-}
+// if (config.resultsComponent) {
+//   routes.push({
+//     path: '/project/:projectname/statistics',
+//     name: 'results',
+//     component: Results
+//   })
+// }
 
 export default routes

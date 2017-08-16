@@ -1,10 +1,10 @@
 import axios from 'axios'
 import store from '@/store'
 import router from '@/router'
-import config from '@/config'
+import siteConfig from '@/settings/config'
 
 const instance = axios.create({
-  baseURL: config.pybossaHost,
+  baseURL: siteConfig.pybossaHost,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json'

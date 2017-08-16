@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/config'
 import pybossaApi from '@/api/pybossa'
 
 export default {
@@ -44,7 +44,7 @@ export default {
       })
     },
     creator: function () {
-      const baseApiUrl = config.pybossaHost
+      const baseApiUrl = siteConfig.pybossaHost
       const currentUser = this.$store.state.currentUser
       if (currentUser) {
         return {
@@ -57,12 +57,12 @@ export default {
       return null
     },
     generator: function () {
-      const baseApiUrl = config.pybossaHost
+      const baseApiUrl = siteConfig.pybossaHost
       if (this.project) {
         return {
           id: `${baseApiUrl}/api/project/${this.project.id}`,
           type: 'Software',
-          name: `${config.brand} - ${this.project.name}`,
+          name: `${siteConfig.brand} - ${this.project.name}`,
           homepage: `${window.location.protocol}//${window.location.hostname}`
         }
       }

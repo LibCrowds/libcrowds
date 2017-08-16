@@ -18,7 +18,7 @@ import RavenVue from 'raven-js/plugins/vue'
 import App from '@/App'
 import store from '@/store'
 import router from '@/router'
-import config from '@/config'
+import siteConfig from '@/settings/config'
 
 // Global styles
 import '@/assets/style/main.scss'
@@ -37,7 +37,7 @@ Vue.component('icon', Icon)
 // Google analytics
 if ('analytics' in config && process.env.NODE_ENV === 'production') {
   Vue.use(VueAnalytics, {
-    id: config.analytics,
+    id: siteConfig.analytics,
     router
   })
 }

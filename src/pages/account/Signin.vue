@@ -75,7 +75,7 @@
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/facebook'
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import BasicLayout from '@/components/layouts/Basic'
@@ -104,7 +104,7 @@ export default {
         }
       },
       auth: {},
-      lead: `Enter your ${config.brand} account details`
+      lead: `Enter your ${siteConfig.brand} account details`
     }
   },
 
@@ -125,7 +125,7 @@ export default {
      */
     redirect (endpoint) {
       const next = window.location.href
-      window.location = `${config.pybossaHost}/${endpoint}?next=${next}`
+      window.location = `${siteConfig.pybossaHost}/${endpoint}?next=${next}`
     },
 
     /**

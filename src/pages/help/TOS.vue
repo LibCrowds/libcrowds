@@ -16,9 +16,9 @@
         This agreement is made under the laws of England and Wales.
       </p>
       <p>
-        At {{ config.brand }} we supply a lot of different services. Some of them
+        At {{ siteConfig.brand }} we supply a lot of different services. Some of them
         will have specific terms tailored for them. If that is the case,
-        {{ config.brand }}’s contract with you for that service will be on these
+        {{ siteConfig.brand }}’s contract with you for that service will be on these
         terms, supplemented by any terms specific to the service. In the case of
         any conflict, service specific terms will take precedence.
       </p>
@@ -121,7 +121,7 @@
       <h3>Membership</h3>
       <p>
         Our most important class of account is one you may create in order to
-        become a {{ config.brand }} member. By registering as a member, you are
+        become a {{ siteConfig.brand }} member. By registering as a member, you are
         acknowledging your connection to us. You are subject to any rules for
         community members we may publish and we may send you email messages we
         think appropriate for members, for example in order to poll you on some
@@ -216,13 +216,13 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
-      config: config
+      siteConfig: siteConfig
     }
   },
 
