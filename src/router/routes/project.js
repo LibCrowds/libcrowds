@@ -21,31 +21,36 @@ const routes = [
     path: '/project/:projectname',
     name: 'landing',
     component: Home,
-    beforeEnter: projectConfigGuard
+    beforeEnter: projectConfigGuard,
+    props: true  // Sets params as component props
   },
   {
     path: '/project/:projectname/about',
     name: 'about',
     component: About,
-    beforeEnter: projectConfigGuard
+    beforeEnter: projectConfigGuard,
+    props: true
   },
   {
     path: '/project/:projectname/data',
     name: 'data',
     component: Data,
-    beforeEnter: projectConfigGuard
+    beforeEnter: projectConfigGuard,
+    props: true
   },
   {
     path: '/project/:projectname/contribute',
     name: 'contribute',
     component: Contribute,
-    beforeEnter: projectConfigGuard
+    beforeEnter: projectConfigGuard,
+    props: true
   },
   {
     path: '/project/:projectname/statistics',
     name: 'statistics',
     component: Statistics,
-    beforeEnter: projectConfigGuard
+    beforeEnter: projectConfigGuard,
+    props: true
   },
   {
     path: '/project/:projectname/presenter/:shortname',

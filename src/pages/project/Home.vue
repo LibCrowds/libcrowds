@@ -271,7 +271,6 @@ import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
-import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -284,10 +283,9 @@ import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
 
 export default {
-
   data: function () {
     return {
-      config: config,
+      config: require(`@/settings/projects/${this.projectname}/config`),
       stats: {},
       featured: [],
       topUsers: [],
@@ -298,6 +296,13 @@ export default {
         backgroundImage: `url(${newtonImage})`
       },
       leaderboardModalId: 'leaderboard-modal'
+    }
+  },
+
+  props: {
+    projectName: {
+      type: String,
+      required: true
     }
   },
 

@@ -26,6 +26,13 @@ export default {
     }
   },
 
+  props: {
+    projectName: {
+      type: String,
+      required: true
+    }
+  },
+
   metaInfo: {
     title: 'Results'
   },

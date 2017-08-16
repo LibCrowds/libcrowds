@@ -86,6 +86,13 @@ export default {
     }
   },
 
+  props: {
+    projectName: {
+      type: String,
+      required: true
+    }
+  },
+
   computed: {
     filteredProjects: function () {
       return this.projects.filter((project) => {

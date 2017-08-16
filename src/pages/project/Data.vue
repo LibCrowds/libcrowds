@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 import ProjectTable from '@/components/project/Table'
@@ -83,7 +82,7 @@ import ProjectPagination from '@/components/project/Pagination'
 export default {
   data: function () {
     return {
-      config: config,
+      config: require(`@/settings/projects/${this.projectname}/config`),
       navItems: [
         { id: 'download', text: 'Download' }
       ],
@@ -95,6 +94,13 @@ export default {
       projects: [],
       categories: [],
       activeCategory: null
+    }
+  },
+
+  props: {
+    projectName: {
+      type: String,
+      required: true
     }
   },
 

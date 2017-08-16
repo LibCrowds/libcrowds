@@ -26,13 +26,19 @@
 </template>
 
 <script>
-import config from '@/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
     return {
-      config: config
+      config: require(`@/settings/projects/${this.projectname}/config`)
+    }
+  },
+
+  props: {
+    projectName: {
+      type: String,
+      required: true
     }
   },
 
