@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import siteConfig from '@/settings/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
