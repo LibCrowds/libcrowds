@@ -1,5 +1,5 @@
 <template>
-  <footer id="app-footer" class="footer">
+  <footer id="project-footer" class="footer">
     <div class="container pt-3 pb-2">
 
       <section>
@@ -43,7 +43,7 @@
         <h5 class="list-title">Analysis</h5>
         <ul class="list-unstyled">
           <li class="list-item"
-            v-if="config.resultsComponent">
+            v-if="projectConfig.resultsComponent">
             <router-link
               :to="{ name: 'results' }"
               @click.native="scrollIfCurrent">
@@ -122,6 +122,13 @@ export default {
     }
   },
 
+  props: {
+    projectConfig: {
+      type: Object,
+      required: true
+    }
+  },
+
   methods: {
     scrollIfCurrent: function (evt) {
       if (evt.target.href === window.location.href) {
@@ -135,7 +142,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#app-footer.footer {
+#project-footer.footer {
   background-color: darken($gray-dark, 5%);
   letter-spacing: 0.8px;
   color: $gray-light;

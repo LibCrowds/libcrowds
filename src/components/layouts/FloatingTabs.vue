@@ -20,23 +20,17 @@
         </transition-group>
       </div>
     </main>
-    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import jump from 'jump.js'
-import AppFooter from '@/components/AppFooter'
 
 export default {
   props: {
     navItems: {
       type: Array
     }
-  },
-
-  components: {
-    AppFooter
   },
 
   methods: {

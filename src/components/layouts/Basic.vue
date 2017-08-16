@@ -3,15 +3,10 @@
     <main>
       <slot></slot>
     </main>
-    <app-footer
-      v-if="showFooter">
-    </app-footer>
   </div>
 </template>
 
 <script>
-import AppFooter from '@/components/AppFooter'
-
 export default {
   props: {
     showNavbar: {
@@ -34,18 +29,10 @@ export default {
       type: String,
       default: null
     },
-    showFooter: {
-      type: Boolean,
-      default: true
-    },
     background: {
       type: String,
       default: null
     }
-  },
-
-  components: {
-    AppFooter
   }
 }
 </script>

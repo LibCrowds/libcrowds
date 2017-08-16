@@ -6,13 +6,19 @@
       :fixed="null">
     </project-navbar>
     <main>
-      <router-view :projectConfig="projectConfig"></router-view>
+      <router-view
+        :projectConfig="projectConfig">
+      </router-view>
     </main>
+    <project-footer
+      :projectConfig="projectConfig">
+    </project-footer>
   </div>
 </template>
 
 <script>
 import ProjectNavbar from '@/components/navbars/ProjectNavbar'
+import ProjectFooter from '@/components/footers/ProjectFooter'
 
 export default {
   data: function () {
@@ -22,7 +28,8 @@ export default {
   },
 
   components: {
-    ProjectNavbar
+    ProjectNavbar,
+    ProjectFooter
   },
 
   // metaInfo: {
