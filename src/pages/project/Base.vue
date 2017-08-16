@@ -17,7 +17,7 @@ import ProjectNavbar from '@/components/navbars/ProjectNavbar'
 export default {
   data: function () {
     return {
-      projectConfig: require(`@/settings/projects/${this.$route.params.projectname}/config`)
+      projectConfig: require(`../../settings/projects/${this.$route.params.projectname}/config`)
     }
   },
 

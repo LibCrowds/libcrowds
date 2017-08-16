@@ -13,10 +13,9 @@ const routes = [
     component: Base,
     beforeEnter: function (to, from, next) {
       try {
-        console.log(`@/settings/projects/${to.params.projectname}/config`)
-        require(`@/settings/projects/${to.params.projectname}/config`)
+        require(`../../settings/projects/${to.params.projectname}/config.js`)
       } catch (err) {
-        next(false)
+        next({ name: '404' })
       }
       next()
     },
