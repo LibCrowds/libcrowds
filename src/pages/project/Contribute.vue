@@ -10,9 +10,15 @@
       </p>
       <p class="text-center mb-0">
         <small>
-          For more information about how projects are organised,
-          see the
-          <router-link :to="{ name: 'about' }">about page</router-link>.
+          For more information see the
+          <router-link
+            :to="{
+              name: 'project-about',
+              params: {
+                projectName: projectConfig.name
+              }
+            }">about page.
+          </router-link>
         </small>
       </p>
       <hr>

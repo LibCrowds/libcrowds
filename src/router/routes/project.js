@@ -27,17 +27,17 @@ const routes = [
       },
       {
         path: 'about',
-        name: 'about',
+        name: 'project-about',
         component: About
       },
       {
         path: 'data',
-        name: 'data',
+        name: 'project-data',
         component: Data
       },
       {
         path: 'contribute',
-        name: 'contribute',
+        name: 'project-contribute',
         component: Contribute
       },
       {

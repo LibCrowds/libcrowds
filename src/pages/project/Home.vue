@@ -7,10 +7,24 @@
           <div class="header-content">
             <h1 id="tagline">{{ projectConfig.tagline }}</h1>
             <div id="intro-buttons" class="mt-2">
-              <b-button variant="secondary" :to="{ name: 'about' }">
+              <b-button
+                variant="secondary"
+                :to="{
+                  name: 'project-about',
+                  params: {
+                    projectName: projectConfig.name
+                  }
+                }">
                 Learn More
               </b-button>
-              <b-button variant="success" :to="{ name: 'contribute' }">
+              <b-button
+                variant="success"
+                :to="{
+                  name: 'project-contribute',
+                  params: {
+                    projectName: projectConfig.name
+                  }
+                }">
                 Get Started
               </b-button>
             </div>
@@ -95,7 +109,12 @@
                 class="mt-2 btn-bg-white"
                 variant="outline-success"
                 size="lg"
-                :to="{ name: 'contribute' }">
+                :to="{
+                  name: 'contribute',
+                  params: {
+                    projectName: projectConfig.name
+                  }
+                }">
                 Browse all projects
               </b-button>
             </div>
@@ -129,7 +148,14 @@
             </div>
             <div class="row pt-2 text-center">
               <div class="col-sm-12">
-                <b-button variant="outline-white" :to="{ name: 'data' }">
+                <b-button
+                  variant="outline-white"
+                  :to="{
+                    name: 'data',
+                    params: {
+                      projectName: projectConfig.name
+                    }
+                  }">
                   Get the data
                 </b-button>
               </div>
@@ -153,7 +179,14 @@
                 To date, our top {{ topUsers.length }} volunteers have made
                 {{ topUsersTaskRuns }} contributions!
               </p>
-              <b-button variant="secondary" :to="{ name: 'contribute' }">
+              <b-button
+                variant="secondary"
+                :to="{
+                  name: 'contribute',
+                  params: {
+                    projectName: projectConfig.name
+                  }
+                }">
                 Get Involved
               </b-button>
             </div>

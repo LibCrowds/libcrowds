@@ -35,7 +35,7 @@
             }
           }"
           @click.native="scrollToTop">
-          <span>{{ projectConfig.brand }}</span>
+          <span>{{ projectConfig.name }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
@@ -43,12 +43,22 @@
           <!-- Main menu -->
           <b-nav is-nav-bar>
             <b-nav-item
-              :to="{ name: 'about' }"
+              :to="{
+                name: 'project-about',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="toggleCollapsibleSidebar">
               About
             </b-nav-item>
             <b-nav-item
-              :to="{ name: 'contribute' }"
+              :to="{
+                name: 'project-contribute',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="toggleCollapsibleSidebar">
               Contribute
             </b-nav-item>
@@ -58,18 +68,33 @@
               Discuss
             </b-nav-item>
             <b-nav-item
-              :to="{ name: 'statistics' }"
+              :to="{
+                name: 'project-statistics',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="toggleCollapsibleSidebar">
               Statistics
             </b-nav-item>
             <b-nav-item
               v-if="projectConfig.resultsComponent"
-              :to="{ name: 'results' }"
+              :to="{
+                name: 'project-results',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="toggleCollapsibleSidebar">
               Results
             </b-nav-item>
             <b-nav-item
-              :to="{ name: 'data' }"
+              :to="{
+                name: 'project-data',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="toggleCollapsibleSidebar">
               Data
             </b-nav-item>

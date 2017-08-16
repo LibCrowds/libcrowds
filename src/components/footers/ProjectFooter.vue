@@ -31,7 +31,12 @@
         <ul class="list-unstyled">
           <li class="list-item">
             <router-link
-              :to="{ name: 'contribute' }"
+              :to="{
+                name: 'project-contribute',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="scrollIfCurrent">
               Contribute
             </router-link>
@@ -45,21 +50,36 @@
           <li class="list-item"
             v-if="projectConfig.resultsComponent">
             <router-link
-              :to="{ name: 'results' }"
+              :to="{
+                name: 'project-results',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="scrollIfCurrent">
               Results
             </router-link>
           </li>
           <li class="list-item">
             <router-link
-              :to="{ name: 'statistics' }"
+              :to="{
+                name: 'project-statistics',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="scrollIfCurrent">
               Statistics
             </router-link>
           </li>
           <li class="list-item">
             <router-link
-              :to="{ name: 'data' }"
+              :to="{
+                name: 'project-data',
+                params: {
+                  projectName: projectConfig.name
+                }
+              }"
               @click.native="scrollIfCurrent">
               Data
             </router-link>
