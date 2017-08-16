@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 import ProjectTable from '@/components/project/Table'
@@ -82,6 +83,7 @@ import ProjectPagination from '@/components/project/Pagination'
 export default {
   data: function () {
     return {
+      siteConfig,
       navItems: [
         { id: 'download', text: 'Download' }
       ],
