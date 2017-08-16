@@ -10,9 +10,10 @@
         v-html="projectConfig.about.intro">
       </span>
       <p v-else>
-        {{ config.name }} is a platform for hosting experimental crowdsourcing
-        projects from {{ siteConfig.company }}. By contributing to the projects
-        on this platform you will be directly helping to enable future research.
+        {{ siteConfig.brand }} is a platform for hosting experimental
+        crowdsourcing projects from {{ siteConfig.company }}. By contributing to
+        the projects on this platform you will be directly helping to enable
+        future research.
       </p>
     </section>
 
@@ -33,8 +34,13 @@ import siteConfig from '@/settings/siteConfig'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
+  data: function () {
+    return {
+      siteConfig: siteConfig
+    }
+  },
+
   props: {
-    siteConfig: siteConfig,
     projectConfig: {
       type: Object,
       required: true
@@ -51,7 +57,7 @@ export default {
 
   computed: {
     navItems: function () {
-      return this.config.about.subsections.map((section) => {
+      return this.projectConfig.about.subsections.map((section) => {
         return { id: section.id, text: section.title }
       })
     }
