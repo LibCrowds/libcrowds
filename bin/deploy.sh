@@ -21,7 +21,9 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
     rm -r src/custom/settings
     rm src/config.js
     git clone $SETTINGS src/custom/settings
+    cd src/custom/settings
     git checkout a8ae502d4e8faad91c105f53b0af1cea44008e45
+    cd ../../..
     echo "module.exports = require('@/custom/settings/config.js')" >> src/config.js
 
     # Build
