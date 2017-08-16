@@ -19,7 +19,6 @@ const routes = [
       }
       next()
     },
-    props: true,  // Sets params as component props
     children: [
       {
         path: '/home',

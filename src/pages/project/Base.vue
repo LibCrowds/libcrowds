@@ -16,14 +16,7 @@ import ProjectNavbar from '@/components/navbars/ProjectNavbar'
 export default {
   data: function () {
     return {
-      projectConfig: require(`@/settings/projects/${this.projectname}/config`)
-    }
-  },
-
-  props: {
-    projectName: {
-      type: String,
-      required: true
+      projectConfig: require(`@/settings/projects/${this.$route.params.projectname}/config`)
     }
   },
 
@@ -37,6 +30,10 @@ export default {
       style: `background: url('${this.projectConfig.name}')
              no-repeat center center / cover fixed;`
     }
+  },
+
+  mounted () {
+    console.log(this.projectConfig)
   }
 }
 </script>
