@@ -307,17 +307,17 @@ export default {
     }
   },
 
-  metaInfo: {
-    title: this.projectConfig.tagline,
-    meta: [
-      { name: 'description', content: this.projectConfig.description },
+  // metaInfo: {
+  //   title: this.projectConfig.tagline,
+  //   meta: [
+  //     { name: 'description', content: this.projectConfig.description },
 
-      // Facebook Open Graph Markup
-      { property: 'og:url', content: window.location.href },
-      { property: 'og:title', content: this.projectConfig.tagline },
-      { property: 'og:description', content: this.projectConfig.description }
-    ]
-  },
+  //     // Facebook Open Graph Markup
+  //     { property: 'og:url', content: window.location.href },
+  //     { property: 'og:title', content: this.projectConfig.tagline },
+  //     { property: 'og:description', content: this.projectConfig.description }
+  //   ]
+  // },
 
   components: {
     BasicLayout,

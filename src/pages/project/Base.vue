@@ -24,13 +24,13 @@ export default {
     ProjectNavbar
   },
 
-  metaInfo: {
-    titleTemplate: `%s - ${this.projectConfig.name}`,
-    bodyAttrs: {
-      style: `background: url('${this.projectConfig.name}')
-             no-repeat center center / cover fixed;`
-    }
-  },
+  // metaInfo: {
+  //   titleTemplate: `%s - ${this.projectConfig.name}`,
+  //   bodyAttrs: {
+  //     style: `background: url('${this.projectConfig.name}')
+  //            no-repeat center center / cover fixed;`
+  //   }
+  // },
 
   mounted () {
     console.log(this.projectConfig)
