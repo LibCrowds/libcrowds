@@ -13,6 +13,7 @@ const routes = [
     component: Base,
     beforeEnter: function (to, from, next) {
       try {
+        console.log(`@/settings/projects/${to.params.projectname}/config`)
         require(`@/settings/projects/${to.params.projectname}/config`)
       } catch (err) {
         next(false)
@@ -21,32 +22,32 @@ const routes = [
     },
     children: [
       {
-        path: '/home',
+        path: 'home',
         name: 'landing',
         component: Home
       },
       {
-        path: '/about',
+        path: 'about',
         name: 'about',
         component: About
       },
       {
-        path: '/data',
+        path: 'data',
         name: 'data',
         component: Data
       },
       {
-        path: '/contribute',
+        path: 'contribute',
         name: 'contribute',
         component: Contribute
       },
       {
-        path: '/statistics',
+        path: 'statistics',
         name: 'statistics',
         component: Statistics
       },
       {
-        path: '/project/:projectname/presenter/:shortname',
+        path: 'presenter/:shortname',
         name: 'presenter',
         component: Presenter
       }
