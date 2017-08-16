@@ -4,6 +4,7 @@ import Data from '@/pages/project/Data'
 import Results from '@/pages/project/Results'
 import Contribute from '@/pages/project/Contribute'
 import Statistics from '@/pages/project/Statistics'
+import Presenter from '@/pages/project/Presenter'
 
 // Guard to check for site configuration
 const siteGuard = function (to, from, next) {
@@ -45,6 +46,11 @@ const routes = [
     name: 'statistics',
     component: Statistics,
     beforeEnter: siteGuard
+  },
+  {
+    path: '/project/presenter/:shortname',
+    name: 'presenter',
+    component: Presenter
   }
 ]
 
