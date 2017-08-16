@@ -21,19 +21,23 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/siteConfig'
 
 export default {
   data () {
     return {
       altTag: `Thumbnail for ${this.user.name}`,
-      preference: JSON.parse(JSON.stringify(config.avatarPreference)),
+      avatarPreferences: JSON.parse(JSON.stringify(this.preferences)),
       avatar: null,
       chosenType: null
     }
   },
 
   props: {
+    preferences: {
+      type: Array,
+      required: true
+    },
     user: {
       type: Object,
       required: true
@@ -61,7 +65,7 @@ export default {
       }
 
       if (custom.indexOf('/uploads') > -1) {
-        this.avatar = config.pybossaHost + custom
+        this.avatar = siteConfig.pybossaHost + custom
         return
       }
       this.avatar = custom
@@ -71,7 +75,7 @@ export default {
      * Attempt to load the avatar of the next type.
      */
     loadNext () {
-      const type = this.preference.shift()
+      const type = this.avatarPreferences.shift()
       this.chosenType = type
       if (type === 'custom') {
         this.setCustomAvatar()

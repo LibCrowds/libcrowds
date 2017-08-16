@@ -35,7 +35,7 @@ Vue.component('v-images', VueImages)
 Vue.component('icon', Icon)
 
 // Google analytics
-if ('analytics' in config && process.env.NODE_ENV === 'production') {
+if ('analytics' in siteConfig && process.env.NODE_ENV === 'production') {
   Vue.use(VueAnalytics, {
     id: siteConfig.analytics,
     router
@@ -43,7 +43,7 @@ if ('analytics' in config && process.env.NODE_ENV === 'production') {
 }
 
 // Sentry error logging
-if ('sentryPublicDsn' in config && process.env.NODE_ENV === 'production') {
+if ('sentryPublicDsn' in siteConfig && process.env.NODE_ENV === 'production') {
   Raven
     .config(siteConfig.sentryPublicDsn, {
       environment: process.env.NODE_ENV

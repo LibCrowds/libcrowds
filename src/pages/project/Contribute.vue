@@ -87,8 +87,8 @@ export default {
   },
 
   props: {
-    projectName: {
-      type: String,
+    projectConfig: {
+      type: Object,
       required: true
     }
   },

@@ -21,14 +21,14 @@
 
 <script>
 import axios from 'axios'
-import config from '@/config'
+import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {
     return {
       altTag: `Thumbnail for ${this.project.name}`,
-      preference: JSON.parse(JSON.stringify(config.thumbnailPreference)),
+      preference: JSON.parse(JSON.stringify(this.preferences)),
       thumbnail: null,
       chosenType: null,
       imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
@@ -36,6 +36,10 @@ export default {
   },
 
   props: {
+    preferences: {
+      type: Array,
+      required: true
+    },
     project: {
       type: Object,
       required: true
@@ -80,7 +84,7 @@ export default {
       }
 
       if (custom.indexOf('/uploads') > -1) {
-        this.thumbnail = config.pybossaHost + custom
+        this.thumbnail = siteConfig.pybossaHost + custom
         return
       }
       this.thumbnail = custom

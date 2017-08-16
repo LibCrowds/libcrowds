@@ -31,7 +31,7 @@ import L from 'leaflet'
 import 'leaflet.markercluster'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
-import config from '@/config'
+import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
@@ -77,9 +77,9 @@ export default {
         maxZoom: 18
       }
 
-      if ('mapbox' in config) {
-        tileOpts.id = config.mapbox.id
-        tileOpts.accessToken = config.mapbox.publicApiToken
+      if ('mapbox' in siteConfig) {
+        tileOpts.id = siteConfig.mapbox.id
+        tileOpts.accessToken = siteConfig.mapbox.publicApiToken
         tileOpts.attribution = `
           Map data:
           &copy; <a href='https://www.mapbox.com/about/maps/'>Mapbox</a>
@@ -89,10 +89,10 @@ export default {
         `
       }
 
-      if ('mapbox' in config) {
+      if ('mapbox' in siteConfig) {
         providerUrl = `https://api.tiles.mapbox.com/v4` +
                       `/{id}/{z}/{x}/{y}.png` +
-                      `?access_token=${config.mapbox.publicApiToken}`
+                      `?access_token=${siteConfig.mapbox.publicApiToken}`
       }
 
       let map = L.map('locs-map', { scrollWheelZoom: false, minZoom: 1 })

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/settings/siteConfig'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
 
@@ -18,9 +18,9 @@ export default {
   name: 'app',
 
   metaInfo: {
-    titleTemplate: `%s - ${config.brand}`,
+    titleTemplate: `%s - ${siteConfig.brand}`,
     bodyAttrs: {
-      style: `background: url('${config.bgImg}')
+      style: `background: url('${siteConfig.bgImg}')
              no-repeat center center / cover fixed;`
     }
   },

@@ -5,7 +5,7 @@
       <transition appear>
         <div class="container full-height text-center">
           <div class="header-content">
-            <h1 id="tagline">{{ config.tagline }}</h1>
+            <h1 id="tagline">{{ projectConfig.tagline }}</h1>
             <div id="intro-buttons" class="mt-2">
               <b-button variant="secondary" :to="{ name: 'about' }">
                 Learn More
@@ -24,7 +24,7 @@
             <div class="col-sm-10 offset-sm-1">
               <p id="site-lead" class="mb-0">
                 Have a direct impact on enabling future research at
-                {{ config.company }}.
+                {{ siteConfig.company }}.
               </p>
             </div>
           </div>
@@ -32,7 +32,7 @@
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
               <p class="lead my-1">
-                {{ config.description }}
+                {{ projectConfig.description }}
               </p>
             </div>
           </div>
@@ -118,9 +118,9 @@
                   All datasets generated from the crowdsourcing projects hosted
                   on this platform are made available under a
                   <a
-                    :href="config.dataLicense.url"
+                    :href="siteConfig.dataLicense.url"
                     target="_blank">
-                    {{ config.dataLicense.name }} license
+                    {{ siteConfig.dataLicense.name }} license
                   </a>
                   and can be downloaded by anyone in JSON or
                   CSV formats. Visit our data page to find out more.
@@ -200,7 +200,7 @@
         </div>
       </section>
 
-      <section id="results" v-if="config.resultsComponent">
+      <section id="results" v-if="projectConfig.resultsComponent">
         <b-jumbotron :style="resultsStyle">
           <div class="container py-4">
             <div class="row text-center">
@@ -235,7 +235,7 @@
               <h3 class="text-uppercase mb-0">Get Involved</h3>
               <p class="lead my-3">
                 Your contributions will have a direct impact on enabling future
-                reasearch at {{ config.company }}.
+                reasearch at {{ siteConfig.company }}.
               </p>
               <b-button
                 variant="success"
@@ -271,6 +271,7 @@ import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
+import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -285,7 +286,7 @@ import newtonImage from '@/assets/img/newton.jpg'
 export default {
   data: function () {
     return {
-      config: require(`@/settings/projects/${this.projectname}/config`),
+      siteConfig: siteConfig,
       stats: {},
       featured: [],
       topUsers: [],
@@ -300,21 +301,21 @@ export default {
   },
 
   props: {
-    projectName: {
-      type: String,
+    projectConfig: {
+      type: Object,
       required: true
     }
   },
 
   metaInfo: {
-    title: this.config.tagline,
+    title: this.projectConfig.tagline,
     meta: [
-      { name: 'description', content: this.config.description },
+      { name: 'description', content: this.projectConfig.description },
 
       // Facebook Open Graph Markup
       { property: 'og:url', content: window.location.href },
-      { property: 'og:title', content: this.config.tagline },
-      { property: 'og:description', content: this.config.description }
+      { property: 'og:title', content: this.projectConfig.tagline },
+      { property: 'og:description', content: this.projectConfig.description }
     ]
   },
 

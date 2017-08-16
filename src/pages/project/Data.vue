@@ -10,8 +10,8 @@
       <p>
         All datasets generated from the experimental crowdsourcing projects
         hosted on this platform are made available under a
-        <a :href="config.dataLicense.url" target="_blank">
-          {{ config.dataLicense.name }}
+        <a :href="projectConfig.dataLicense.url" target="_blank">
+          {{ projectConfig.dataLicense.name }}
         </a> license.
       </p>
       <p>
@@ -37,10 +37,10 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="config.forumUrl">
+      <p v-if="projectConfig.forumUrl">
         Head over to the
-        <a :href="config.forumUrl">
-          {{ config.brand }} Forum
+        <a :href="projectConfig.forumUrl">
+          {{ projectConfig.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
@@ -82,7 +82,6 @@ import ProjectPagination from '@/components/project/Pagination'
 export default {
   data: function () {
     return {
-      config: require(`@/settings/projects/${this.projectname}/config`),
       navItems: [
         { id: 'download', text: 'Download' }
       ],
@@ -98,8 +97,8 @@ export default {
   },
 
   props: {
-    projectName: {
-      type: String,
+    projectConfig: {
+      type: Object,
       required: true
     }
   },

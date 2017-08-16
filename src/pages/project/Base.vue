@@ -32,12 +32,11 @@ export default {
   },
 
   metaInfo: {
-    titleTemplate: `%s - ${projectConfig.name}`,
+    titleTemplate: `%s - ${this.projectConfig.name}`,
     bodyAttrs: {
-      style: `background: url('${projectConfig.name}')
+      style: `background: url('${this.projectConfig.name}')
              no-repeat center center / cover fixed;`
     }
   }
 }
 </script>
-

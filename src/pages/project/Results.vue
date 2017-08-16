@@ -6,8 +6,8 @@
       <h2 class="text-center">Results</h2>
       <hr>
       <component
-        :is="config.resultsComponent"
-        v-if="config.resultsComponent">
+        :is="projectConfig.resultsComponent"
+        v-if="projectConfig.resultsComponent">
       </component>
     </section>
 
@@ -16,19 +16,12 @@
 </template>
 
 <script>
-import config from '@/config'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
-  data: function () {
-    return {
-      config: config
-    }
-  },
-
   props: {
-    projectName: {
-      type: String,
+    projectConfig: {
+      type: Object,
       required: true
     }
   },
