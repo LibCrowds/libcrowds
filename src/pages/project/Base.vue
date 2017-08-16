@@ -1,5 +1,9 @@
 <template>
   <div id="project-base">
+    <app-navbar
+      :sticky="'top'"
+      :fixed="null">
+    </app-navbar>
     <main>
       <router-view :projectConfig="projectConfig"></router-view>
     </main>
@@ -7,6 +11,7 @@
 </template>
 
 <script>
+import ProjectNavbar from '@/components/navbars/ProjectNavbar'
 
 export default {
   data: function () {
@@ -20,6 +25,10 @@ export default {
       type: String,
       required: true
     }
+  },
+
+  components: {
+    ProjectNavbar
   },
 
   metaInfo: {

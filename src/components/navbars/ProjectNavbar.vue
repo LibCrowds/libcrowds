@@ -30,7 +30,7 @@
         <b-link class="navbar-brand"
           :to="{ name: 'landing' }"
           @click.native="scrollToTop">
-          <span>{{ config.brand }}</span>
+          <span>{{ projectConfig.brand }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
@@ -47,7 +47,9 @@
               @click.native="toggleCollapsibleSidebar">
               Contribute
             </b-nav-item>
-            <b-nav-item :href="config.forumUrl" v-if="config.forumUrl.length">
+            <b-nav-item
+              :href="projectConfig.forumUrl"
+              v-if="projectConfig.forumUrl.length">
               Discuss
             </b-nav-item>
             <b-nav-item
@@ -56,7 +58,7 @@
               Statistics
             </b-nav-item>
             <b-nav-item
-              v-if="config.resultsComponent"
+              v-if="projectConfig.resultsComponent"
               :to="{ name: 'results' }"
               @click.native="toggleCollapsibleSidebar">
               Results
@@ -144,20 +146,22 @@
 <script>
 import jump from 'jump.js'
 import throttle from 'lodash/throttle'
-import config from '@/config'
 import pybossaApi from '@/api/pybossa'
 import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
   data: function () {
     return {
-      config: config,
       currentPath: this.$store.state.route.path,
       openProjectModalId: 'open-project-modal'
     }
   },
 
   props: {
+    projectConfig: {
+      type: Object,
+      required: true
+    },
     type: {
       type: String,
       default: 'inverse'

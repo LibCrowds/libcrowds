@@ -1,9 +1,5 @@
 <template>
   <div class="floating-tabs-layout">
-    <app-navbar
-      :sticky="'top'"
-      :fixed="null">
-    </app-navbar>
     <main>
       <div class="container mb-5">
         <transition-group name="fade" mode="out-in" appear>
@@ -30,7 +26,6 @@
 
 <script>
 import jump from 'jump.js'
-import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
 
 export default {
@@ -41,7 +36,6 @@ export default {
   },
 
   components: {
-    AppNavbar,
     AppFooter
   },
 

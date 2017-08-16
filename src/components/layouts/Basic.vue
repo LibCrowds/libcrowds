@@ -1,12 +1,5 @@
 <template>
   <div class="basic-layout" :data-bg="background">
-    <app-navbar
-      v-if="showNavbar"
-      :type="navbarType"
-      :fixed="navbarFixed"
-      :sticky="navbarSticky"
-      :invertable="navbarInvertable">
-    </app-navbar>
     <main>
       <slot></slot>
     </main>
@@ -17,7 +10,6 @@
 </template>
 
 <script>
-import AppNavbar from '@/components/AppNavbar'
 import AppFooter from '@/components/AppFooter'
 
 export default {
@@ -53,7 +45,6 @@ export default {
   },
 
   components: {
-    AppNavbar,
     AppFooter
   }
 }
