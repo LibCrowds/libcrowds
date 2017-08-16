@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV === 'development'
+
 const config = {
   company: 'The British Library',
   brand: 'LibCrowds',
@@ -20,3 +22,5 @@ const config = {
 
 // Google analytics tracking ID
 // config.analytics = 'UA-XXX-X'
+
+module.exports = config
