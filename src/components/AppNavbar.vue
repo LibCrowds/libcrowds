@@ -171,8 +171,8 @@ export default {
       default: 'top'
     },
     sticky: {
-      type: String,
-      default: null
+      type: Boolean,
+      default: false
     }
   },
 

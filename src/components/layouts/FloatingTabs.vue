@@ -1,7 +1,7 @@
 <template>
   <div class="floating-tabs-layout">
     <app-navbar
-      :sticky="'top'"
+      :sticky="true"
       :fixed="null">
     </app-navbar>
     <main>

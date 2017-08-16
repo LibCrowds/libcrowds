@@ -1,7 +1,7 @@
 <template>
   <div id="reset-password">
     <basic-layout
-      :navbarSticky="'top'"
+      :navbarSticky="true"
       :navbarFixed="null"
       :navbarInvertable="false">
       <div class="container my-3">
