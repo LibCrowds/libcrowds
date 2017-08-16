@@ -49,8 +49,7 @@ const routes = [
       {
         path: '/project/:projectname/presenter/:shortname',
         name: 'presenter',
-        component: Presenter,
-        beforeEnter: projectConfigGuard
+        component: Presenter
       }
     ]
   }
