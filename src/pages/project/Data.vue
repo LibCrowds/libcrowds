@@ -10,8 +10,8 @@
       <p>
         All datasets generated from the experimental crowdsourcing projects
         hosted on this platform are made available under a
-        <a :href="projectConfig.dataLicense.url" target="_blank">
-          {{ projectConfig.dataLicense.name }}
+        <a :href="siteConfig.dataLicense.url" target="_blank">
+          {{ siteConfig.dataLicense.name }}
         </a> license.
       </p>
       <p>
