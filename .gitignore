@@ -7,9 +7,8 @@ yarn-error.log*
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
-src/settings/config.js
+src/settings/siteConfig.js
 !src/settings/projects/README.md
 src/settings/projects/*
-src/custom/*
 .ssh
 deploy-key
