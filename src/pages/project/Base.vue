@@ -1,9 +1,10 @@
 <template>
   <div id="project-base">
-    <app-navbar
-      :sticky="'top'"
+    <project-navbar
+      :projectConfig="projectConfig"
+      :sticky="true"
       :fixed="null">
-    </app-navbar>
+    </project-navbar>
     <main>
       <router-view :projectConfig="projectConfig"></router-view>
     </main>

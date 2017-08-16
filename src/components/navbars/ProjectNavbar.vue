@@ -1,5 +1,5 @@
 <template>
-  <div id="app-navbar">
+  <div id="project-navbar">
     <b-navbar
       toggleable
       toggle-breakpoint="md"
@@ -49,7 +49,7 @@
             </b-nav-item>
             <b-nav-item
               :href="projectConfig.forumUrl"
-              v-if="projectConfig.forumUrl.length">
+              v-if="projectConfig.forumUrl">
               Discuss
             </b-nav-item>
             <b-nav-item
@@ -175,7 +175,7 @@ export default {
       default: 'top'
     },
     sticky: {
-      type: String,
+      type: Boolean,
       default: null
     }
   },
