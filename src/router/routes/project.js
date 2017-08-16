@@ -7,7 +7,7 @@ import Statistics from '@/pages/project/Statistics'
 import Presenter from '@/pages/project/Presenter'
 
 // Guard to check for site configuration
-const siteGuard = function (to, from, next) {
+const projectConfigGuard = function (to, from, next) {
   try {
     require(`@/settings/projects/${to.params.projectname}/config`)
   } catch (err) {
@@ -21,36 +21,37 @@ const routes = [
     path: '/project/:projectname',
     name: 'landing',
     component: Home,
-    beforeEnter: siteGuard
+    beforeEnter: projectConfigGuard
   },
   {
     path: '/project/:projectname/about',
     name: 'about',
     component: About,
-    beforeEnter: siteGuard
+    beforeEnter: projectConfigGuard
   },
   {
     path: '/project/:projectname/data',
     name: 'data',
     component: Data,
-    beforeEnter: siteGuard
+    beforeEnter: projectConfigGuard
   },
   {
     path: '/project/:projectname/contribute',
     name: 'contribute',
     component: Contribute,
-    beforeEnter: siteGuard
+    beforeEnter: projectConfigGuard
   },
   {
     path: '/project/:projectname/statistics',
     name: 'statistics',
     component: Statistics,
-    beforeEnter: siteGuard
+    beforeEnter: projectConfigGuard
   },
   {
     path: '/project/presenter/:shortname',
     name: 'presenter',
-    component: Presenter
+    component: Presenter,
+    beforeEnter: projectConfigGuard
   }
 ]
 
