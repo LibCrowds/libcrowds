@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-shopt -s extglob
-
-# List of project configurations in the form "name:settings"
-PROJECTSETTINGS=(
-  "playbills:https://github.com/LibCrowds/site-settings-playbills"
-)
-
 DOMAIN='playbills.libcrowds.com'
 
 if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
@@ -14,15 +7,6 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
   # Clear git info
   rm -rf .git
   rm -rf .gitignore
-
-  # Configure site
-  rm -r src/settings/projects
-  mkdir src/settings/projects
-  for project in "${PROJECTSETTINGS[@]}"; do
-    NAME="${project%%:*}"
-    SETTINGS="${project/$NAME:/}"
-    git clone $SETTINGS src/settings/projects/$NAME
-  done
 
   # Build
   npm run build
