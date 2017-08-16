@@ -13,7 +13,7 @@ before_install:
 install:
 - npm install
 before_script:
-- cp ./src/config.js.tmpl ./src/config.js
+- cp ./src/settings/config.js.tmpl ./src/settings/config.js
 script:
 - npm run lint
 - npm run unit
