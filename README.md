@@ -5,11 +5,15 @@
 
 > A Vue.js frontend for PyBossa (>=2.5.0).
 
-When no task presenter is present for a project 100 new tasks will be retrieved
-for the user and the info fields of those tasks passed directly to an instance of
-[LibCrowds Viewer](https://github.com/LibCrowds/libcrowds-viewer). The
-annotations returned are saved as the task run.
+This frontend to PyBossa is a little different in that meta-categories can be
+defined to more easily group together large groups of similar projects. For
+example, on the [LibCrowds](www.libcrowds.com) site we define a meta-category for
+two of our major projects, *Convert-a-Card* and *In the Spotlight*.
 
+Each meta-category is presented as if it were a separate site (with it's own
+landing, about and data pages etc.) yet only requires a single PyBossa backend.
+A core page provides routes into each meta-category site, along with the
+statistics, admin and project configuration pages.
 
 ## Installing
 
