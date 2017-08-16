@@ -21,7 +21,7 @@ const routes = [
     },
     children: [
       {
-        path: 'home',
+        path: '/',
         name: 'project-home',
         component: Home
       },
