@@ -6,7 +6,8 @@
 > A Vue.js frontend for PyBossa (>=2.5.0).
 
 When no task presenter is present for a project 100 new tasks will be retrieved
-for the user and the info fields of those tasks passed directly to an instance of [LibCrowds Viewer](https://github.com/LibCrowds/libcrowds-viewer). The
+for the user and the info fields of those tasks passed directly to an instance of
+[LibCrowds Viewer](https://github.com/LibCrowds/libcrowds-viewer). The
 annotations returned are saved as the task run.
 
 
@@ -21,12 +22,12 @@ npm install
 
 ## Configuring
 
-Settings can be found in [src/config.js.tmpl](src/config.js.tmpl). To use
-this theme you will need to make a copy of the settings file and edit locally.
+Site settings can be found in [src/settings/config.js.tmpl](src/settings/config.js.tmpl).
+To use this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash
 # create local configuration file
-cp src/config.js.tmpl src/config.js
+cp src/settings/config.js.tmpl src/settings/config.js
 ```
 
 On your PyBossa server, you will need to update the `CORS_RESOURCES` settings
@@ -52,7 +53,6 @@ CORS_RESOURCES = {
 For a full list of options see the
 [Flask-CORS documentation](https://flask-cors.readthedocs.io/en/latest/).
 
-See the
 
 ## Building
 
