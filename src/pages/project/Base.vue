@@ -1,5 +1,6 @@
 <template>
   <div id="project-base">
+    <div id="project-background" :style="projectBgStyle"></div>
     <project-navbar
       :projectConfig="projectConfig"
       :sticky="true"
@@ -23,7 +24,9 @@ import ProjectFooter from '@/components/footers/ProjectFooter'
 export default {
   data: function () {
     return {
-      projectConfig: require(`../../settings/projects/${this.$route.params.projectname}/config`)
+      projectConfig: require(
+        `../../settings/projects/${this.$route.params.projectname}/config`
+      )
     }
   },
 
@@ -32,16 +35,39 @@ export default {
     ProjectFooter
   },
 
+  computed: {
+    projectBgStyle: function () {
+      const url = this.projectConfig.bgImg
+      return {
+        background: `url(${url}) no-repeat center left /cover fixed`
+      }
+    }
+  }
+
   // metaInfo: {
   //   titleTemplate: `%s - ${this.projectConfig.name}`,
   //   bodyAttrs: {
   //     style: `background: url('${this.projectConfig.name}')
   //            no-repeat center center / cover fixed;`
   //   }
-  // },
-
-  mounted () {
-    console.log(this.projectConfig)
-  }
+  // }
 }
 </script>
+
+<style lang="scss" scoped>
+#project-base {
+  #project-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    min-width: 1024px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
+</style>
