@@ -12,10 +12,10 @@ before_install:
   -in deploy-key.enc -out deploy-key -d
 install:
 - npm install
-before_script:
-- cp ./src/settings/config.js.tmpl ./src/settings/config.js
 script:
+- bin/configure.sh
 - npm run lint
 - npm run unit
+- npm run build
 after_success:
 - bash bin/deploy.sh
