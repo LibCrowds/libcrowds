@@ -3,10 +3,8 @@
     <div class="container pt-3 pb-2">
 
       <section>
-        <a
-          :href="config.footer.url"
-          v-if="config.footer">
-          {{ config.footer.text }}
+        <a href="#">
+          Part of the {{ config.brand }} crowdsourcing platform
         </a>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
