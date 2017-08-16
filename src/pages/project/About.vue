@@ -52,7 +52,7 @@ export default {
 
   computed: {
     navItems: function () {
-      return config.about.subsections.map((section) => {
+      return this.config.about.subsections.map((section) => {
         return { id: section.id, text: section.title }
       })
     }

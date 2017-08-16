@@ -18,7 +18,7 @@ import RavenVue from 'raven-js/plugins/vue'
 import App from '@/App'
 import store from '@/store'
 import router from '@/router'
-import siteConfig from '@/settings/config'
+import siteConfig from '@/settings/siteConfig'
 
 // Global styles
 import '@/assets/style/main.scss'

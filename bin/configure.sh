@@ -6,8 +6,8 @@ PROJECTSETTINGS=(
 )
 
 # Configure site
-rm src/settings/config.js
-cp src/settings/config.js.tmpl src/settings/config.js
+rm src/settings/siteConfig.js
+cp src/settings/siteConfig.js.tmpl src/settings/siteConfig.js
 
 # Configure projects
 rm -rf src/settings/projects/*/

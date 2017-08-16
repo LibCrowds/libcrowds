@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/config'
+import siteConfig from '@/settings/siteConfig'
 import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
@@ -62,7 +62,7 @@ export default {
     },
     tweet: {
       type: String,
-      default: `Crowdsourcing from ${config.company}`
+      default: `Crowdsourcing from ${siteConfig.company}`
     }
   },
 
