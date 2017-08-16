@@ -158,7 +158,7 @@
               </b-button>
             </div>
             <div class="col-lg-5 offset-lg-1 hidden-md-down">
-              <img src="../assets/img/wreath.png" alt="Wreath" class="img-fluid">
+              <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
               <span id="wreath"></span>
             </div>
           </div>
@@ -462,7 +462,7 @@ export default {
 
   #featured-projects {
     color: $gray-dark;
-    background-image: url('../assets/img/white-wall.png');
+    background-image: url('../../assets/img/white-wall.png');
     box-shadow: 0 0 3px rgba($black, 0.2);
     -webkit-box-shadow: 0 0 3px rgba($black, 0.2);
     border: 1px solid $white;
@@ -514,7 +514,7 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background: url('../assets/img/newton.jpg');
+      background: url('../../assets/img/newton.jpg');
       background-attachment: fixed;
       background-position: center;
       background-size: cover;
