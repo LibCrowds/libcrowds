@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div id="app-background" :style="appBgStyle"></div>
     <notifications></notifications>
     <cookie-consent></cookie-consent>
     <main>
@@ -11,23 +12,38 @@
 
 <script>
 import siteConfig from '@/settings/siteConfig'
+import appBackground from '@/assets/img/app-background.jpg'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
+
+console.log(appBackground)
 
 export default {
   name: 'app',
 
   metaInfo: {
     titleTemplate: `%s - ${siteConfig.brand}`,
-    bodyAttrs: {
-      style: `background: url('${siteConfig.bgImg}')
-             no-repeat center center / cover fixed;`
-    }
+    meta: [
+      { name: 'description', content: siteConfig.description },
+
+      // Facebook Open Graph Markup
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:title', content: siteConfig.tagline },
+      { property: 'og:description', content: siteConfig.description }
+    ]
   },
 
   components: {
     Notifications,
     CookieConsent
+  },
+
+  computed: {
+    appBgStyle: function () {
+      return {
+        background: `url(${appBackground}) no-repeat center center /cover fixed`
+      }
+    }
   },
 
   created () {
@@ -65,6 +81,20 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
+  }
+
+  #app-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    min-width: 1024px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
   }
 }
 </style>
