@@ -8,9 +8,6 @@ if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
   rm -rf .git
   rm -rf .gitignore
 
-  # Build
-  npm run build
-
   # Set up package for sending
   git init
   git remote add deploy "deploy@$DOMAIN:/var/www/deployment"
