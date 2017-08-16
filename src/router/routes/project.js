@@ -4,7 +4,6 @@ import About from '@/pages/project/About'
 import Data from '@/pages/project/Data'
 // import Results from '@/pages/project/Results'
 import Contribute from '@/pages/project/Contribute'
-import Statistics from '@/pages/project/Statistics'
 import Presenter from '@/pages/project/Presenter'
 
 const routes = [
@@ -39,11 +38,6 @@ const routes = [
         path: 'contribute',
         name: 'project-contribute',
         component: Contribute
-      },
-      {
-        path: 'statistics',
-        name: 'statistics',
-        component: Statistics
       },
       {
         path: 'presenter/:shortname',
