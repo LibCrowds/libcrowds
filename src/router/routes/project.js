@@ -1,15 +1,15 @@
-import Base from '@/pages/project/Base'
-import Home from '@/pages/project/Home'
-import About from '@/pages/project/About'
-import Data from '@/pages/project/Data'
+import ProjectBase from '@/pages/project/Base'
+import ProjectHome from '@/pages/project/Home'
+import ProjectAbout from '@/pages/project/About'
+import ProjectData from '@/pages/project/Data'
 // import Results from '@/pages/project/Results'
-import Contribute from '@/pages/project/Contribute'
-import Presenter from '@/pages/project/Presenter'
+import ProjectContribute from '@/pages/project/Contribute'
+import ProjectPresenter from '@/pages/project/Presenter'
 
 const routes = [
   {
     path: '/project/:projectname',
-    component: Base,
+    component: ProjectBase,
     beforeEnter: function (to, from, next) {
       try {
         require(`../../settings/projects/${to.params.projectname}/config.js`)
@@ -22,27 +22,27 @@ const routes = [
       {
         path: '/',
         name: 'project-home',
-        component: Home
+        component: ProjectHome
       },
       {
         path: 'about',
         name: 'project-about',
-        component: About
+        component: ProjectAbout
       },
       {
         path: 'data',
         name: 'project-data',
-        component: Data
+        component: ProjectData
       },
       {
         path: 'contribute',
         name: 'project-contribute',
-        component: Contribute
+        component: ProjectContribute
       },
       {
         path: 'presenter/:shortname',
         name: 'presenter',
-        component: Presenter
+        component: ProjectPresenter
       }
     ]
   }

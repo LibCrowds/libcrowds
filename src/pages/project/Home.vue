@@ -110,7 +110,7 @@
                 variant="outline-success"
                 size="lg"
                 :to="{
-                  name: 'contribute',
+                  name: 'project-contribute',
                   params: {
                     projectName: projectConfig.name
                   }
@@ -151,7 +151,7 @@
                 <b-button
                   variant="outline-white"
                   :to="{
-                    name: 'data',
+                    name: 'project-data',
                     params: {
                       projectName: projectConfig.name
                     }
@@ -182,7 +182,7 @@
               <b-button
                 variant="secondary"
                 :to="{
-                  name: 'contribute',
+                  name: 'project-contribute',
                   params: {
                     projectName: projectConfig.name
                   }
@@ -274,7 +274,7 @@
                 variant="success"
                 size="lg"
                 :to="{
-                  name: 'contribute'
+                  name: 'project-contribute'
                 }">
                 Choose a project
               </b-button>
