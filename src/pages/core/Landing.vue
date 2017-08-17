@@ -16,8 +16,7 @@
         </div>
         <div id="hero">
           <div
-            id="hero-layer-1"
-            class="layer parallex vignette"
+            class="layer parallex app-background"
             data-depth="0.80">
           </div>
           <div
@@ -28,10 +27,11 @@
         </div>
       </section>
 
-      <section id="projects">
-
+      <section :id="sidenavItems[0].id">
         <div class="bg-dark-brown py-4">
-
+          <div class="section-header">
+            <h2>{{ sidenavItems[0].label }}</h2>
+          </div>
           <section
             v-for="(config, key) in projectConfigs"
             :key="key"
@@ -65,25 +65,120 @@
             </div>
           </section>
         </div>
-        <div id="projects-bottom">
+        <div class="paint-wrapper">
           <div id="paint-bottom"></div>
         </div>
       </section>
 
+      <section :id="sidenavItems[1].id" class="bg-white move-down">
+        <div class="section-header pt-5">
+          <h2>{{ sidenavItems[1].label }}</h2>
+        </div>
+        <div class="container text-center py-3">
+          <div class="row sr">
+            <div class="col-sm-10 offset-sm-1">
+              <p id="site-lead" class="mb-0">
+                Have a direct impact on enabling research at
+                {{ siteConfig.company }}.
+              </p>
+            </div>
+          </div>
+          <hr class="my-2 my-lg-3 w-75 sr">
+          <div class="row sr">
+            <div class="col-sm-10 offset-sm-1">
+              <p class="lead my-1">
+                Our volunteer's contributions help to enhance the
+                discoverability of our collections
+
+                {{ siteConfig.description }}
+              </p>
+            </div>
+          </div>
+          <hr class="my-2 w-75 sr">
+          <div class="row">
+            <div class="col-md-4 my-1 sr stat">
+              <icon name="television" scale="3"></icon>
+              <p class="mb-0">
+                {{ stats.n_published_projects }}
+              </p>
+              <p>Projects</p>
+            </div>
+            <div class="col-md-4 my-1 sr stat">
+              <icon name="users" scale="3"></icon>
+              <p class="mb-0">
+                {{ stats.n_total_users }}
+              </p>
+              <p>Volunteers</p>
+            </div>
+            <div class="col-md-4 my-1 sr stat">
+              <icon name="list" scale="3"></icon>
+              <p class="mb-0">
+                {{ stats.n_task_runs }}
+              </p>
+              <p>Contributions</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section :id="sidenavItems[2].id">
+        <div id="paint-top-wrapper">
+          <div id="paint-top"></div>
+        </div>
+        <div class="bg-dark-brown py-4">
+          <div class="section-header">
+            <h2>{{ sidenavItems[2].label }}</h2>
+          </div>
+          <section
+            v-for="(config, key) in projectConfigs"
+            :key="key"
+            :style="{ backgroundImage: `url('${config.bgImg}')` }"
+            class="project-section bg-dark-brown py-4 my-5 container">
+
+            <div class="container py-3 py-md-4 text-center">
+              <div class="row sr">
+                <div class="col-sm-10 offset-sm-1">
+                  <h4>{{ config.name }}</h4>
+                  <p class="mb-0">
+                    {{ config.tagline }}
+                  </p>
+                </div>
+              </div>
+              <hr class="my-2 w-75 sr">
+              <div class="row sr">
+                <div class="col-sm-10 offset-sm-1">
+                  <b-button
+                    variant="outline-white"
+                    :to="{
+                      name: 'project-home',
+                      params: {
+                        projectname: key
+                      }
+                    }">
+                    Contribute
+                  </b-button>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="paint-wrapper">
+          <div id="paint-bottom"></div>
+        </div>
+      </section>
 
       <section
-        id="top-users"
-        class="bg-white invert-navbar"
-        v-if="topUsers.length > 1">
+        :id="sidenavItems[3].id"
+        class="bg-white mt-5"
+        v-if="topUsers.length">
         <div class="container py-4">
+          <div class="section-header">
+          <h2>{{ sidenavItems[3].label }}</h2>
+        </div>
           <div class="row">
             <div class="col-lg-5 offset-lg-1 pt-2 text-center">
-              <h3 class="text-uppercase font-weight-bold">
-                Most Active Volunteers
-              </h3>
-              <hr class="wide w-50 my-2">
               <p class="text-uppercase lead pb-2">
-                To date, our top {{ topUsers.length }} volunteers have made
+                Together, our top {{ topUsers.length }} volunteers have made
                 {{ topUsersTaskRuns }} contributions!
               </p>
             </div>
@@ -132,7 +227,7 @@
 
       <section id="social-media" class="bg-white invert-navbar">
         <div class="container pb-5 text-center">
-          <hr class="mt-0 mb-4">
+          <hr class="mt-0 mb-4 mt-5">
           <social-media-buttons>
           </social-media-buttons>
         </div>
@@ -168,7 +263,10 @@ export default {
       siteConfig: siteConfig,
       spyId: 'landing-spy',
       sidenavItems: [
-        { id: 'projects', label: 'Contribute' }
+        { id: 'contribute', label: 'Contribute' },
+        { id: 'research', label: 'Research' },
+        { id: 'discuss', label: 'Discuss' },
+        { id: 'collaborate', label: 'Collaborate' }
       ],
       stats: {},
       topUsers: [],
@@ -272,7 +370,7 @@ export default {
     color: white;
     text-align: center;
     width: 100%;
-    top: 75px;
+    top: 175px;
     display: flex;
     flex-direction: row;
     align-content: center;
@@ -341,7 +439,7 @@ export default {
 
   .layer {
     background-position: bottom center;
-    background-size: auto;
+    background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
     min-height: 500px;
@@ -350,8 +448,39 @@ export default {
     z-index: -1;
   }
 
-  #hero-layer-1 {
+  .move-down {
+    position: relative;
+    top: -200px;
+    z-index: -1;
+  }
+
+  .layer-top {
+    background-position: top center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    width: 100%;
+  }
+
+  .app-background {
     background-image: url('../../assets/img/app-background.jpg');
+  }
+
+  .paint-top {
+    background-image: url('../../assets/img/paint-top.png');
+  }
+
+  .paint-bottom {
+    background-image: url('../../assets/img/paint-bottom.png');
+  }
+
+  .paint-wrapper {
+    height: 200px;
+    width: 100%;
+
+    .paint-top,
+    .paint-bottom {
+      height: 100%;
+    }
   }
 
   #hero-layer-2 {
@@ -366,11 +495,13 @@ export default {
     background-image: url('../../assets/img/paint-bottom.png');
   }
 
-  #projects-bottom {
-    height: 300px;
-    background-color: $white;
+  #paint-bottom {
+    height: 100%;
+    background-position: top center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/img/paint-bottom.png');
   }
-
 
   .project-section {
     display: flex;
@@ -434,6 +565,41 @@ export default {
 
     @include hover-focus {
       border-bottom: 3px solid rgba($black, 1);
+    }
+  }
+
+  .section-header {
+    position: relative;
+    text-align: center;
+    color: lighten($dark-brown, 75%);
+
+    h2 {
+      margin: 0;
+      line-height: 0.5;
+      font-size: $font-size-lg;
+      font-family: $font-family-base;
+      text-transform: uppercase;
+    }
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      height: 3px;
+      border-bottom: 1px solid lighten($dark-brown, 75%);
+      border-top: 1px solid lighten($dark-brown, 75%);
+      top: 0;
+      width: 100px;
+    }
+
+    &:before {
+      right: 100%;
+      margin-right: 15px;
+    }
+
+    &:after {
+      left: 100%;
+      margin-left: 15px;
     }
   }
 

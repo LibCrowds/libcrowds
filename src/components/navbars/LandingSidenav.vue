@@ -20,7 +20,10 @@ export default {
       type: String,
       required: true
     },
-    navItems: []
+    navItems: {
+      type: Array,
+      required: true
+    }
   }
 }
 </script>
