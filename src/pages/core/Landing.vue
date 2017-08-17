@@ -1,23 +1,32 @@
 <template>
-  <div id="landing">
+  <div id="landing" data-spy="scroll" :data-target="`#${spyId}`">
     <basic-layout>
 
-    <landing-sidenav></landing-sidenav>
+      <landing-sidenav
+        :spyId="spyId"
+        :navItems="sidenavItems">
+      </landing-sidenav>
 
-    <section>
-      <div class="header-container">
-        <div class="header-shadow">
-          <h1 id="brand">{{ siteConfig.brand }}</h1>
-          <p id="tagline">{{ siteConfig.tagline }}</p>
+      <section>
+        <div class="header-container">
+          <div class="header-shadow">
+            <h1 id="brand">{{ siteConfig.brand }}</h1>
+            <p id="tagline">{{ siteConfig.tagline }}</p>
+          </div>
         </div>
-      </div>
-      <div id="hero">
-        <div class="container text-center layer parallex" data-depth="0.60">
+        <div id="hero">
+          <div
+            id="hero-layer-1"
+            class="layer parallex vignette"
+            data-depth="0.80">
+          </div>
+          <div
+            id="hero-layer-2"
+            class="layer parallex"
+            data-depth="1.00">
+          </div>
         </div>
-        <div id="hero-layer-1" class="layer parallex" data-depth="0.80"></div>
-        <div id="hero-layer-2" class="layer parallex" data-depth="1.00"></div>
-      </div>
-    </section>
+      </section>
 
       <section id="projects">
 
@@ -157,6 +166,10 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
+      spyId: 'landing-spy',
+      sidenavItems: [
+        { id: 'projects', label: 'Contribute' }
+      ],
       stats: {},
       topUsers: [],
       leaderboardModalId: 'leaderboard-modal'
@@ -268,8 +281,8 @@ export default {
 
     .header-shadow {
       padding: 1.25rem 1.75rem;
-      background-color: rgba($dark-brown, 0.5);
-      box-shadow: $dark-brown 0px 0px 75px;
+      background-color: rgba($dark-brown, 0.35);
+      box-shadow: $dark-brown 0px 0px 125px;
     }
 
     h1#brand {

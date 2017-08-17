@@ -1,26 +1,12 @@
 <template>
   <nav id="landing-sidenav">
-    <ol>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span class="nav-number">01</span> - Contribute
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span class="nav-number">02</span> - Discuss
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-          href="#">
-          <span class="nav-number">03</span> - Research
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-          href="#">
-          <span class="nav-number">04</span> - Discover
+    <ol :id="spyId">
+      <li
+        v-for="(item, index) in navItems"
+        :key="`sidenav-${index}`"
+        class="nav-item">
+        <a class="nav-link" :href="`#${item.id}`">
+          <span class="nav-number">{{ index + 1 }}</span> - {{ item.label }}
         </a>
       </li>
     </ol>
@@ -28,7 +14,15 @@
 </template>
 
 <script>
-
+export default {
+  props: {
+    spyId: {
+      type: String,
+      required: true
+    },
+    navItems: []
+  }
+}
 </script>
 
 <style lang="scss">
