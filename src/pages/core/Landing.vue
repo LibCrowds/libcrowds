@@ -4,8 +4,10 @@
 
     <section>
       <div class="header-container">
-        <h1>{{ siteConfig.brand }}</h1>
-        <div id="intro-buttons" class="mt-2"></div>
+        <div class="header-shadow">
+          <h1 id="brand">{{ siteConfig.brand }}</h1>
+          <p id="tagline">{{ siteConfig.tagline }}</p>
+        </div>
       </div>
       <div id="hero">
         <div class="container text-center layer parallex" data-depth="0.60">
@@ -253,20 +255,27 @@ export default {
     color: white;
     text-align: center;
     width: 100%;
-    top: 100px;
+    top: 75px;
     display: flex;
     flex-direction: row;
     align-content: center;
     justify-content: center;
+    text-shadow: 0px 2px 2px $dark-brown;
 
-    h1 {
+    .header-shadow {
+      padding: 1.25rem 1.75rem;
+      background-color: rgba($dark-brown, 0.5);
+      box-shadow: $dark-brown 0px 0px 75px;
+    }
+
+    h1#brand {
       position: relative;
       margin: 0;
       padding: 1.5rem 2.75rem;
-      letter-spacing: 1px;
-      font-size: 2.2rem;
+      letter-spacing: 1.15px;
+      font-size: 2rem;
       font-family: $font-family-base;
-      font-weight: 900;
+      font-weight: 400;
       text-transform: uppercase;
 
       &:before,
@@ -296,6 +305,13 @@ export default {
         bottom: 0;
         right: 0;
       }
+    }
+
+    #tagline {
+      margin-top: 10px;
+      font-size: $font-size-sm;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
   }
 
