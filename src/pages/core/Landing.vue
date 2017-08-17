@@ -2,6 +2,8 @@
   <div id="landing">
     <basic-layout>
 
+    <landing-sidenav></landing-sidenav>
+
     <section>
       <div class="header-container">
         <div class="header-shadow">
@@ -147,6 +149,7 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
+import LandingSidenav from '@/components/navbars/LandingSidenav'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
 
@@ -161,6 +164,7 @@ export default {
   },
 
   components: {
+    LandingSidenav,
     BasicLayout,
     SocialMediaButtons,
     LeaderboardModal,
