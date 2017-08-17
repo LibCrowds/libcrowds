@@ -3,9 +3,9 @@
     <div class="container pt-3 pb-2">
 
       <section>
-        <a href="#">
+        <router-link :to="{ name: 'landing' }">
           Part of the {{ siteConfig.brand }} crowdsourcing platform
-        </a>
+        </router-link>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
           <li class="list-inline-item m-0">
