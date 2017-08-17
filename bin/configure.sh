@@ -6,6 +6,7 @@ SITESETTINGS="https://github.com/LibCrowds/site-settings-core"
 # List of project configurations in the form "name:settings"
 PROJECTSETTINGS=(
   "playbills:https://github.com/LibCrowds/site-settings-playbills"
+  "convertacard:https://github.com/LibCrowds/site-settings-convertacard"
 )
 
 # Configure site
