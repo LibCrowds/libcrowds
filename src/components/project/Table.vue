@@ -80,9 +80,5 @@ export default {
       text-align: center;
     }
   }
-
-  .btn:not(:hover):not(:focus) {
-    background-color: $white;
-  }
 }
 </style>

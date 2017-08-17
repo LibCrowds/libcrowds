@@ -167,11 +167,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-#data-download-page {
-  table {
-    overflow-y: initial;
-  }
-}
-</style>

@@ -25,7 +25,7 @@ export default {
     },
     variant: {
       type: String,
-      default: 'outline-success'
+      default: 'success'
     }
   }
 }

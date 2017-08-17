@@ -107,7 +107,7 @@
               </ul>
               <b-button
                 class="mt-2 btn-bg-white"
-                variant="outline-success"
+                variant="success"
                 size="lg"
                 :to="{
                   name: 'project-contribute',
