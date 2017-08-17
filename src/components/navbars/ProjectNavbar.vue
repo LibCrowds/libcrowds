@@ -68,16 +68,6 @@
               Discuss
             </b-nav-item>
             <b-nav-item
-              :to="{
-                name: 'project-statistics',
-                params: {
-                  projectName: projectConfig.name
-                }
-              }"
-              @click.native="toggleCollapsibleSidebar">
-              Statistics
-            </b-nav-item>
-            <b-nav-item
               v-if="projectConfig.resultsComponent"
               :to="{
                 name: 'project-results',

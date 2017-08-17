@@ -63,18 +63,6 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'project-statistics',
-                params: {
-                  projectName: projectConfig.name
-                }
-              }"
-              @click.native="scrollIfCurrent">
-              Statistics
-            </router-link>
-          </li>
-          <li class="list-item">
-            <router-link
-              :to="{
                 name: 'project-data',
                 params: {
                   projectName: projectConfig.name
