@@ -57,6 +57,7 @@ export default {
 <style lang="scss" scoped>
 #project-base {
   #project-background {
+    z-index: -1;
     position: fixed;
     top: 0;
     left: 0;

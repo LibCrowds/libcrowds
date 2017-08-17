@@ -2,118 +2,59 @@
   <div id="landing">
     <basic-layout>
 
-      <transition appear>
-        <div class="container full-height text-center">
+      <div id="hero">
+        <div class="container text-center layer parallex" data-depth="0.60">
           <div class="header-content">
             <h1 id="tagline">{{ siteConfig.tagline }}</h1>
-            <div id="intro-buttons" class="mt-2">
-              <b-button variant="secondary" :to="{ name: 'about' }">
-                Learn More
-              </b-button>
-              <b-button variant="success" :to="{ name: 'contribute' }">
-                Get Started
-              </b-button>
-            </div>
+            <div id="intro-buttons" class="mt-2"></div>
           </div>
         </div>
-      </transition>
+        <div id="hero-layer-1" class="layer parallex" data-depth="0.80"></div>
+        <div id="hero-layer-2" class="layer parallex" data-depth="1.00"></div>
+      </div>
 
-      <section id="intro" class="bg-white invert-navbar">
-        <div class="container py-3 py-md-4 text-center">
-          <div class="row sr">
-            <div class="col-sm-10 offset-sm-1">
-              <p id="site-lead" class="mb-0">
-                Have a direct impact on enabling future research at
-                {{ siteConfig.company }}.
-              </p>
+      <section id="projects">
+
+        <div class="bg-dark-brown py-4">
+
+          <section
+            v-for="(config, key) in projectConfigs"
+            :key="key"
+            :style="{ backgroundImage: `url('${config.bgImg}')` }"
+            class="project-section bg-dark-brown py-4 my-5 container">
+
+            <div class="container py-3 py-md-4 text-center">
+              <div class="row sr">
+                <div class="col-sm-10 offset-sm-1">
+                  <h4>{{ config.name }}</h4>
+                  <p class="mb-0">
+                    {{ config.tagline }}
+                  </p>
+                </div>
+              </div>
+              <hr class="my-2 w-75 sr">
+              <div class="row sr">
+                <div class="col-sm-10 offset-sm-1">
+                  <b-button
+                    variant="outline-white"
+                    :to="{
+                      name: 'project-home',
+                      params: {
+                        projectname: key
+                      }
+                    }">
+                    Contribute
+                  </b-button>
+                </div>
+              </div>
             </div>
-          </div>
-          <hr class="my-2 w-75 sr">
-          <div class="row sr">
-            <div class="col-sm-10 offset-sm-1">
-              <p class="lead my-1">
-                {{ siteConfig.description }}
-              </p>
-            </div>
-          </div>
-          <hr class="my-2 w-75 sr">
+          </section>
         </div>
-      </section>
-
-      <section
-        id="featured-projects"
-        class="invert-navbar"
-        v-if="featured.length">
-        <div class="container text-center text-lg-left pb-4">
-          <div class="row">
-            <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
-              <h2 class="font-weight-bold pt-1">
-                Featured Projects
-              </h2>
-              <hr class="wide mr-lg-5">
-              <p class="mr-lg-6">
-                Choose from some of our current favourites.
-              </p>
-            </div>
-            <div class="col-lg-3 offset-lg-3 hidden-md-down">
-              <span id="ribbon">
-                <icon name="star" scale="7"></icon>
-              </span>
-            </div>
-          </div>
-          <div class="row text-center">
-            <div class="col-lg-10 offset-lg-1">
-              <ul class="list-unstyled">
-                <li v-for="project in featured" :key="project.id">
-                  <project-card :project="project"></project-card>
-                </li>
-              </ul>
-              <b-button
-                class="mt-2 btn-bg-white"
-                variant="outline-success"
-                size="lg"
-                :to="{ name: 'contribute' }">
-                Browse all projects
-              </b-button>
-            </div>
-          </div>
+        <div id="projects-bottom">
+          <div id="paint-bottom"></div>
         </div>
       </section>
 
-      <section id="data">
-        <span :style="dataStyle"></span>
-        <b-jumbotron :style="dataStyle">
-          <div class="container py-4">
-            <div class="row text-center">
-              <div class="col-sm-12">
-                <h3>Open Data</h3>
-              </div>
-            </div>
-            <div class="row py-md-3">
-              <div class="col-md-8 offset-md-2">
-                <p class="lead">
-                  All datasets generated from the crowdsourcing projects hosted
-                  on this platform are made available under a
-                  <a
-                    :href="siteConfig.dataLicense.url"
-                    target="_blank">
-                    {{ siteConfig.dataLicense.name }} license
-                  </a>
-                  and can be downloaded by anyone in JSON or
-                  CSV formats. Visit our data page to find out more.
-                </p>
-              </div>
-            </div>
-            <div class="row pt-2 text-center">
-              <div class="col-sm-12">
-                <b-button variant="outline-white" :to="{ name: 'data' }">
-                  Get the data
-                </b-button>
-              </div>
-            </div>
-          </div>
-        </b-jumbotron>
-      </section>
 
       <section
         id="top-users"
@@ -130,9 +71,6 @@
                 To date, our top {{ topUsers.length }} volunteers have made
                 {{ topUsersTaskRuns }} contributions!
               </p>
-              <b-button variant="secondary" :to="{ name: 'contribute' }">
-                Get Involved
-              </b-button>
             </div>
             <div class="col-lg-5 offset-lg-1 hidden-md-down">
               <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
@@ -177,56 +115,6 @@
         </div>
       </section>
 
-      <section id="results" v-if="projectConfig.resultsComponent">
-        <b-jumbotron :style="resultsStyle">
-          <div class="container py-4">
-            <div class="row text-center">
-              <div class="col-sm-12">
-                <h3>Results</h3>
-              </div>
-            </div>
-            <div class="row py-2">
-              <div class="col-md-8 offset-md-2">
-                <p class="lead">
-                  As each task is completed, contributions are analysed and
-                  the outcome provided via our results page, making the
-                  efforts of our volunteers immediately apparent.
-                </p>
-              </div>
-            </div>
-            <div class="row pt-2 text-center">
-              <div class="col-sm-12">
-                <b-button variant="outline-white" :to="{ name: 'results' }">
-                  See the results
-                </b-button>
-              </div>
-            </div>
-          </div>
-        </b-jumbotron>
-      </section>
-
-      <section id="final-cta" class="bg-white invert-navbar">
-        <div class="container pt-5 pb-4">
-          <div class="row">
-            <div class="col-sm-10 offset-sm-1 text-center">
-              <h3 class="text-uppercase mb-0">Get Involved</h3>
-              <p class="lead my-3">
-                Your contributions will have a direct impact on enabling future
-                reasearch at {{ siteConfig.company }}.
-              </p>
-              <b-button
-                variant="success"
-                size="lg"
-                :to="{
-                  name: 'contribute'
-                }">
-                Choose a project
-              </b-button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="social-media" class="bg-white invert-navbar">
         <div class="container pb-5 text-center">
           <hr class="mt-0 mb-4">
@@ -257,37 +145,16 @@ import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
-import codeImage from '@/assets/img/code.png'
-import newtonImage from '@/assets/img/newton.jpg'
 
 export default {
   data: function () {
     return {
       siteConfig: siteConfig,
       stats: {},
-      featured: [],
       topUsers: [],
-      dataStyle: {
-        backgroundImage: `url(${codeImage})`
-      },
-      resultsStyle: {
-        backgroundImage: `url(${newtonImage})`
-      },
       leaderboardModalId: 'leaderboard-modal'
     }
   },
-
-  // metaInfo: {
-  //   title: this.projectConfig.tagline,
-  //   meta: [
-  //     { name: 'description', content: this.projectConfig.description },
-
-  //     // Facebook Open Graph Markup
-  //     { property: 'og:url', content: window.location.href },
-  //     { property: 'og:title', content: this.projectConfig.tagline },
-  //     { property: 'og:description', content: this.projectConfig.description }
-  //   ]
-  // },
 
   components: {
     BasicLayout,
@@ -304,6 +171,13 @@ export default {
         return acc + val
       }, 0)
       return getNumberWithCommas(sum)
+    },
+    projectConfigs: function () {
+      const configs = {}
+      for (const key of this.siteConfig.projects) {
+        configs[key] = require(`../../settings/projects/${key}/config`)
+      }
+      return configs
     }
   },
 
@@ -314,9 +188,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      if ('featured' in data.categories_projects) {
-        this.featured = data.categories_projects.featured
-      }
       this.topUsers = data.top_users
       this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
     },
@@ -328,6 +199,24 @@ export default {
       ScrollReveal().reveal('.sr', {
         duration: 600 },
       50)
+    },
+
+    /**
+     * Handle parallex animations.
+     */
+    translateParallex (evt) {
+      let topDistance = window.pageYOffset
+      let layers = document.querySelectorAll('.parallex')
+      for (let i = 0; i < layers.length; i++) {
+        let depth = layers[i].getAttribute('data-depth')
+        let movement = -(topDistance * depth)
+        let translate3d = 'translate3d(0, ' + movement + 'px, 0)'
+        layers[i].style['-webkit-transform'] = translate3d
+        layers[i].style['-moz-transform'] = translate3d
+        layers[i].style['-ms-transform'] = translate3d
+        layers[i].style['-o-transform'] = translate3d
+        layers[i].style.transform = translate3d
+      }
     }
   },
 
@@ -344,6 +233,11 @@ export default {
 
   mounted () {
     this.scrollReveal()
+    window.addEventListener('scroll', this.translateParallex)
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.translateParallex)
   }
 }
 </script>
@@ -370,6 +264,58 @@ export default {
     &.v-leave-to {
       opacity: 0;
     }
+  }
+
+  #hero {
+    min-height: 500px;
+    height: 90vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .layer {
+    background-position: bottom center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 500px;
+    height: 90vh;
+    position: fixed;
+    z-index: -1;
+  }
+
+  #hero-layer-1 {
+    background-image: url('../../assets/img/app-background.jpg');
+  }
+
+  #hero-layer-2 {
+    background-image: url('../../assets/img/paint-top.png');
+  }
+
+  #paint-bottom {
+    height: 100%;
+    background-position: top center;
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/img/paint-bottom.png');
+  }
+
+  #projects-bottom {
+    height: 300px;
+    background-color: $white;
+  }
+
+
+  .project-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: $white;
+    min-height: 400px;
+    box-shadow: rgba($white, 0.25) 0px 0px 15px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   #site-lead {
@@ -416,6 +362,10 @@ export default {
     @include button-outline-variant($white, $black);
   }
 
+  .bg-dark-brown {
+    background-color: $dark-brown;
+  }
+
   .btn-black-underline  {
     color: $black;
     background: none;
@@ -428,74 +378,8 @@ export default {
     }
   }
 
-  #intro {
-    .stat {
-      font-weight: 400;
-      font-family: $headings-font-family;
-      font-size: $font-size-lg;
-    }
-  }
-
-  #featured-projects {
-    color: $gray-dark;
-    background-image: url('../../assets/img/white-wall.png');
-    box-shadow: 0 0 3px rgba($black, 0.2);
-    -webkit-box-shadow: 0 0 3px rgba($black, 0.2);
-    border: 1px solid $white;
-  }
-
-  #ribbon {
-    text-align: center;
-    display:block;
-    width: 12rem;
-    height: 12rem;
-    background: $gray-lighter;
-    position: absolute;
-    top: -1px;
-
-    svg {
-      margin-top: 4rem;
-      color: darken($body-bg, 3%);
-    }
-
-    &:after {
-      content: "";
-      display: block;
-      position: relative;
-      width: 0;
-      height: 0;
-      border-width: 2rem 6rem 4rem 6rem;
-      border-style: solid;
-      border-color: $gray-lighter $gray-lighter transparent $gray-lighter;
-    }
-  }
-
-  #data {
-    .jumbotron {
-      color: $white;
-      font-weight: 300;
-      margin-bottom: 0;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-position: left;
-    }
-  }
-
   #top-users {
     color: $gray-dark;
-  }
-
-  #results {
-    .jumbotron {
-      color: $white;
-      font-weight: 300;
-      background-repeat: no-repeat;
-      background: url('../../assets/img/newton.jpg');
-      background-attachment: fixed;
-      background-position: center;
-      background-size: cover;
-      margin-bottom: 0;
-    }
   }
 }
 </style>
