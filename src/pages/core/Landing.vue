@@ -2,16 +2,18 @@
   <div id="landing">
     <basic-layout>
 
+    <section>
+      <div class="header-container">
+        <h1>{{ siteConfig.brand }}</h1>
+        <div id="intro-buttons" class="mt-2"></div>
+      </div>
       <div id="hero">
         <div class="container text-center layer parallex" data-depth="0.60">
-          <div class="header-content">
-            <h1 id="tagline">{{ siteConfig.tagline }}</h1>
-            <div id="intro-buttons" class="mt-2"></div>
-          </div>
         </div>
         <div id="hero-layer-1" class="layer parallex" data-depth="0.80"></div>
         <div id="hero-layer-2" class="layer parallex" data-depth="1.00"></div>
       </div>
+    </section>
 
       <section id="projects">
 
@@ -246,23 +248,54 @@ export default {
 @import 'src/assets/style/main';
 
 #landing {
-  .container.full-height {
-    height: 100vh;
-    color: $white;
-    opacity: 1;
-    transition: opacity 800ms;
+  .header-container {
+    position: absolute;
+    color: white;
+    text-align: center;
+    width: 100%;
+    top: 100px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
 
-    // IE fix for overflowing text in flex container.
-    .header-content {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-    }
+    h1 {
+      position: relative;
+      margin: 0;
+      padding: 1.5rem 2.75rem;
+      letter-spacing: 1px;
+      font-size: 2.2rem;
+      font-family: $font-family-base;
+      font-weight: 900;
+      text-transform: uppercase;
 
-    &.v-enter,
-    &.v-leave-to {
-      opacity: 0;
+      &:before,
+      &:after {
+        -moz-transition: width 0.85s ease;
+        -webkit-transition: width 0.85s ease;
+        -ms-transition: width 0.85s ease;
+        transition: width 0.85s ease;
+        -moz-transition-delay: 0.25s;
+        -webkit-transition-delay: 0.25s;
+        -ms-transition-delay: 0.25s;
+        transition-delay: 0.25s;
+        background: #fff;
+        content: '';
+        display: block;
+        height: 2px;
+        position: absolute;
+        width: 100%;
+      }
+
+      &:before {
+        top: 0;
+        left: 0;
+      }
+
+      &:after {
+        bottom: 0;
+        right: 0;
+      }
     }
   }
 
@@ -334,13 +367,6 @@ export default {
     }
     h3 {
       font-size: 3.5rem;
-    }
-  }
-
-  @include media-breakpoint-down(xs) {
-    #tagline {
-      font-size: $font-size-lg;
-      line-height: 1.6;
     }
   }
 
