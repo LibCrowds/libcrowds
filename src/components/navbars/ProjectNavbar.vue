@@ -117,7 +117,7 @@
                 @click.native="toggleCollapsibleSidebar">Settings
               </b-dropdown-item>
 
-              <!-- Project management/admin -->
+              <!-- Admin -->
               <span>
                 <div role="separator" class="dropdown-divider"></div>
                 <b-dropdown-item

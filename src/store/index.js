@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    updatingCurrentUser: false,
     currentUser: null,
     csrfToken: null,
     notification: {}
@@ -23,23 +22,13 @@ const store = new Vuex.Store({
 
   actions: {
     UPDATE_CURRENT_USER: ({ commit }) => {
-      if (this.updatingCurrentUser) {
-        return
-      }
-      this.updatingCurrentUser = true
-      let currentUser = null
-
       pybossaApi.get('/account/profile').then(r => {
+        console.log(r)
         if ('user' in r.data) {
-          currentUser = r.data.user
+          commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
+        } else {
+          commit('SET_ITEM', { key: 'currentUser', value: null })
         }
-        return pybossaApi.get('/api/user')
-      }).then(r => {
-        if (currentUser) {
-          currentUser.admin = 'id' in r.data[0]
-        }
-        commit('SET_ITEM', { key: 'currentUser', value: currentUser })
-        this.updatingCurrentUser = false
       })
     },
 

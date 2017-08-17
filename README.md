@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
 [![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
 
-> A Vue.js frontend for PyBossa (>=2.5.0).
+> A Vue.js frontend for PyBossa (>=2.6.1).
 
 This frontend to PyBossa is a little different in that meta-categories can be
 defined to more easily group together large groups of similar projects. For
