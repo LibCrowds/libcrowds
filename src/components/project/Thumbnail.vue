@@ -28,7 +28,7 @@ export default {
   data: function () {
     return {
       altTag: `Thumbnail for ${this.project.name}`,
-      preference: JSON.parse(JSON.stringify(this.preferences)),
+      preferences: JSON.parse(JSON.stringify(siteConfig.thumbnailPreferences)),
       thumbnail: null,
       chosenType: null,
       imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
@@ -36,10 +36,6 @@ export default {
   },
 
   props: {
-    preferences: {
-      type: Array,
-      required: true
-    },
     project: {
       type: Object,
       required: true
@@ -94,7 +90,7 @@ export default {
      * Attempt to load the thumbnail of the next type.
      */
     loadNext () {
-      const type = this.preference.shift()
+      const type = this.preferences.shift()
       this.chosenType = type
       if (type === 'custom') {
         this.setCustomThumbnail()

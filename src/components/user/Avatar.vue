@@ -27,17 +27,13 @@ export default {
   data () {
     return {
       altTag: `Thumbnail for ${this.user.name}`,
-      avatarPreferences: JSON.parse(JSON.stringify(this.preferences)),
+      preferences: JSON.parse(JSON.stringify(siteConfig.avatarPreferences)),
       avatar: null,
       chosenType: null
     }
   },
 
   props: {
-    preferences: {
-      type: Array,
-      required: true
-    },
     user: {
       type: Object,
       required: true
@@ -75,7 +71,7 @@ export default {
      * Attempt to load the avatar of the next type.
      */
     loadNext () {
-      const type = this.avatarPreferences.shift()
+      const type = this.preferences.shift()
       this.chosenType = type
       if (type === 'custom') {
         this.setCustomAvatar()
