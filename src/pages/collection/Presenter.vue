@@ -2,6 +2,7 @@
   <div class="presenter">
 
     <libcrowds-viewer
+      :show-related-tasks="true"
       :confirm-before-unload="true"
       :disable-complete="true"
       :show-like="showLike"
@@ -9,6 +10,7 @@
       :creator="creator"
       :generator="generator"
       @submit="onSubmit"
+      :navigation="[]"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
 

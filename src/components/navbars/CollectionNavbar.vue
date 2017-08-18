@@ -196,7 +196,7 @@ export default {
     },
     sticky: {
       type: Boolean,
-      default: null
+      default: false
     }
   },
 
