@@ -11,7 +11,7 @@ const routes = [
     path: '/collection/:collectionname',
     component: CollectionBase,
     beforeEnter: function (to, from, next) {
-      const urlBase = '../../settings/collection/'
+      const urlBase = '../../settings/collections/'
       try {
         require(`${urlBase}/${to.params.collectionname}/config.js`)
       } catch (err) {
