@@ -100,9 +100,10 @@ export default {
   border-bottom: 1px solid $gray-lighter;
 
   .navbar-brand {
-    position: relative;
+    display: flex;
+    align-items: center;
     margin: 0;
-    padding: 0.5rem;
+    padding: 0 1rem;
     letter-spacing: 1.15px;
     font-family: $font-family-base;
     font-weight: 600;
@@ -118,6 +119,8 @@ export default {
   #sign-in-up {
     display: flex;
     flex-direction: row;
+    font-size: $font-size-sm;
+    font-weight: 600;
   }
 
   #btn-register {
@@ -125,7 +128,12 @@ export default {
     align-self: center;
     flex-direction: row;
     background-color: $brand-success;
-    padding: 0.5rem 0.75rem;
+    padding: 0rem 0.75rem;
+    font-weight: 400;
+
+    a {
+      color: $white;
+    }
   }
 }
 </style>
