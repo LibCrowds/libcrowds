@@ -46,7 +46,7 @@
               :to="{
                 name: 'collection-about',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -56,7 +56,7 @@
               :to="{
                 name: 'collection-contribute',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -72,7 +72,7 @@
               :to="{
                 name: 'collection-results',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -82,7 +82,7 @@
               :to="{
                 name: 'collection-data',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">

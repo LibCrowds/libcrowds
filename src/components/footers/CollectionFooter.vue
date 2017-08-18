@@ -34,7 +34,7 @@
               :to="{
                 name: 'collection-contribute',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
@@ -53,7 +53,7 @@
               :to="{
                 name: 'collection-results',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
@@ -65,7 +65,7 @@
               :to="{
                 name: 'collection-data',
                 params: {
-                  projectName: collectionConfig.name
+                  collectionname: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
