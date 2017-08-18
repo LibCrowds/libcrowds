@@ -4,55 +4,22 @@
 
       <transition appear>
         <div id="app-hero">
-          <div class="container text-center">
-            <p id="tagline">{{ siteConfig.tagline }}</p>
+          <div class="header-container text-center">
+            <p id="site-tagline">{{ siteConfig.tagline }}</p>
           </div>
         </div>
       </transition>
 
-
-
-
-
-
-
-      <section id="contribute" class="bg-white">
-        <div class="py-4">
-          <div class="section-header">
-            <h2>Contribute</h2>
+      <section id="contribute" class="bg-faded">
+        <div class="container py-4">
+          <div class="card-deck">
+            <collection-card
+              v-for="(config, key) in collectionConfigs"
+              :key="key"
+              :collection-config="config"
+              :collection-name="key">
+            </collection-card>
           </div>
-          <section
-            v-for="(config, key) in collectionConfig"
-            :key="key"
-            :style="{ backgroundImage: `url('${config.bgImg}')` }"
-            class="collection-section py-4 my-5 container">
-
-            <div class="container py-3 py-md-4 text-center">
-              <div class="row sr">
-                <div class="col-sm-10 offset-sm-1">
-                  <h4>{{ config.name }}</h4>
-                  <p class="mb-0">
-                    {{ config.tagline }}
-                  </p>
-                </div>
-              </div>
-              <hr class="my-2 w-75 sr">
-              <div class="row sr">
-                <div class="col-sm-10 offset-sm-1">
-                  <b-button
-                    variant="outline-white"
-                    :to="{
-                      name: 'collection-home',
-                      params: {
-                        collectionname: key
-                      }
-                    }">
-                    Contribute
-                  </b-button>
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
       </section>
 
@@ -72,6 +39,7 @@ import 'vue-awesome/icons/list'
 import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
+import CollectionCard from '@/components/collection/Card'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
@@ -92,7 +60,8 @@ export default {
     BasicLayout,
     SocialMediaButtons,
     LeaderboardModal,
-    UserAvatar
+    UserAvatar,
+    CollectionCard
   },
 
   computed: {
@@ -103,7 +72,7 @@ export default {
       }, 0)
       return getNumberWithCommas(sum)
     },
-    collectionConfig: function () {
+    collectionConfigs: function () {
       const configs = {}
       for (const key of this.siteConfig.collections) {
         configs[key] = require(`../../settings/collections/${key}/config`)
@@ -130,24 +99,6 @@ export default {
       ScrollReveal().reveal('.sr', {
         duration: 600 },
       50)
-    },
-
-    /**
-     * Handle parallex animations.
-     */
-    translateParallex (evt) {
-      let topDistance = window.pageYOffset
-      let layers = document.querySelectorAll('.parallex')
-      for (let i = 0; i < layers.length; i++) {
-        let depth = layers[i].getAttribute('data-depth')
-        let movement = -(topDistance * depth)
-        let translate3d = 'translate3d(0, ' + movement + 'px, 0)'
-        layers[i].style['-webkit-transform'] = translate3d
-        layers[i].style['-moz-transform'] = translate3d
-        layers[i].style['-ms-transform'] = translate3d
-        layers[i].style['-o-transform'] = translate3d
-        layers[i].style.transform = translate3d
-      }
     }
   },
 
@@ -160,15 +111,6 @@ export default {
       data.stats = r.data.stats
       this.setData(data)
     })
-  },
-
-  mounted () {
-    this.scrollReveal()
-    window.addEventListener('scroll', this.translateParallex)
-  },
-
-  beforeDestroy () {
-    window.removeEventListener('scroll', this.translateParallex)
   }
 }
 </script>
@@ -187,10 +129,6 @@ export default {
     flex-direction: row;
     align-content: center;
     justify-content: center;
-
-    .header-shadow {
-      padding: 1.25rem 1.75rem;
-    }
 
     h1#brand {
       position: relative;
@@ -231,7 +169,7 @@ export default {
       }
     }
 
-    #tagline {
+    #site-tagline {
       margin-top: 10px;
       font-size: $font-size-sm;
       letter-spacing: 0.5px;
@@ -251,41 +189,12 @@ export default {
     background-image: url('../../assets/img/app-background.jpg');
   }
 
-  #site-lead {
-    font-family: $font-family-serif;
-    font-size: 3rem;
-    line-height: 1.1;
-
-    @include media-breakpoint-up(sm) {
-      font-size: 4rem;
-    }
-  }
-
-  @include media-breakpoint-up(sm) {
-    h2 {
-      font-size: 4rem;
-    }
-    h3 {
-      font-size: 3.5rem;
-    }
+  project-cards {
+    display: inline-block;
   }
 
   .bg-white {
     background-color: $white;
-  }
-
-  .btn-bg-white {
-    &:not(:hover):not(:focus):not(.active) {
-        background-color: $white;
-    }
-  }
-
-  hr.wide {
-    border-width: 3px;
-  }
-
-  .btn-outline-white {
-    @include button-outline-variant($white, $black);
   }
 
   .btn-black-underline  {
