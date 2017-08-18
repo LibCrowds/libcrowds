@@ -1,42 +1,31 @@
 <template>
-  <div id="landing" data-spy="scroll" :data-target="`#${spyId}`">
+  <div id="landing">
     <basic-layout>
 
-      <landing-sidenav
-        :spyId="spyId"
-        :navItems="sidenavItems">
-      </landing-sidenav>
-
-      <section>
-        <div class="header-container">
-          <div class="header-shadow">
-            <h1 id="brand">{{ siteConfig.brand }}</h1>
+      <transition appear>
+        <div id="app-hero">
+          <div class="container text-center">
             <p id="tagline">{{ siteConfig.tagline }}</p>
           </div>
         </div>
-        <div id="hero">
-          <div
-            class="layer parallex app-background"
-            data-depth="0.80">
-          </div>
-          <div
-            id="hero-layer-2"
-            class="layer parallex"
-            data-depth="1.00">
-          </div>
-        </div>
-      </section>
+      </transition>
 
-      <section :id="sidenavItems[0].id">
-        <div class="bg-dark-brown py-4">
+
+
+
+
+
+
+      <section id="contribute" class="bg-white">
+        <div class="py-4">
           <div class="section-header">
-            <h2>{{ sidenavItems[0].label }}</h2>
+            <h2>Contribute</h2>
           </div>
           <section
             v-for="(config, key) in projectConfigs"
             :key="key"
             :style="{ backgroundImage: `url('${config.bgImg}')` }"
-            class="project-section bg-dark-brown py-4 my-5 container">
+            class="project-section py-4 my-5 container">
 
             <div class="container py-3 py-md-4 text-center">
               <div class="row sr">
@@ -64,172 +53,6 @@
               </div>
             </div>
           </section>
-        </div>
-        <div class="paint-wrapper">
-          <div id="paint-bottom"></div>
-        </div>
-      </section>
-
-      <section :id="sidenavItems[1].id" class="bg-white move-down">
-        <div class="section-header pt-5">
-          <h2>{{ sidenavItems[1].label }}</h2>
-        </div>
-        <div class="container text-center py-3">
-          <div class="row sr">
-            <div class="col-sm-10 offset-sm-1">
-              <p id="site-lead" class="mb-0">
-                Have a direct impact on enabling research at
-                {{ siteConfig.company }}.
-              </p>
-            </div>
-          </div>
-          <hr class="my-2 my-lg-3 w-75 sr">
-          <div class="row sr">
-            <div class="col-sm-10 offset-sm-1">
-              <p class="lead my-1">
-                Our volunteer's contributions help to enhance the
-                discoverability of our collections
-
-                {{ siteConfig.description }}
-              </p>
-            </div>
-          </div>
-          <hr class="my-2 w-75 sr">
-          <div class="row">
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="television" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_published_projects }}
-              </p>
-              <p>Projects</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="users" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_total_users }}
-              </p>
-              <p>Volunteers</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="list" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_task_runs }}
-              </p>
-              <p>Contributions</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section :id="sidenavItems[2].id">
-        <div id="paint-top-wrapper">
-          <div id="paint-top"></div>
-        </div>
-        <div class="bg-dark-brown py-4">
-          <div class="section-header">
-            <h2>{{ sidenavItems[2].label }}</h2>
-          </div>
-          <section
-            v-for="(config, key) in projectConfigs"
-            :key="key"
-            :style="{ backgroundImage: `url('${config.bgImg}')` }"
-            class="project-section bg-dark-brown py-4 my-5 container">
-
-            <div class="container py-3 py-md-4 text-center">
-              <div class="row sr">
-                <div class="col-sm-10 offset-sm-1">
-                  <h4>{{ config.name }}</h4>
-                  <p class="mb-0">
-                    {{ config.tagline }}
-                  </p>
-                </div>
-              </div>
-              <hr class="my-2 w-75 sr">
-              <div class="row sr">
-                <div class="col-sm-10 offset-sm-1">
-                  <b-button
-                    variant="outline-white"
-                    :to="{
-                      name: 'project-home',
-                      params: {
-                        projectname: key
-                      }
-                    }">
-                    Contribute
-                  </b-button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-        <div class="paint-wrapper">
-          <div id="paint-bottom"></div>
-        </div>
-      </section>
-
-      <section
-        :id="sidenavItems[3].id"
-        class="bg-white mt-5"
-        v-if="topUsers.length">
-        <div class="container py-4">
-          <div class="section-header">
-          <h2>{{ sidenavItems[3].label }}</h2>
-        </div>
-          <div class="row">
-            <div class="col-lg-5 offset-lg-1 pt-2 text-center">
-              <p class="text-uppercase lead pb-2">
-                Together, our top {{ topUsers.length }} volunteers have made
-                {{ topUsersTaskRuns }} contributions!
-              </p>
-            </div>
-            <div class="col-lg-5 offset-lg-1 hidden-md-down">
-              <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
-              <span id="wreath"></span>
-            </div>
-          </div>
-          <div class="row text-center mt-4">
-            <div class="col-lg-12 pt-1">
-              <ul class="list-unstyled">
-                <li
-                  :key="user.id"
-                  class="text-center d-inline-block mx-1"
-                  v-for="user in topUsers">
-                  <router-link :to="{
-                      name: 'profile',
-                      params: {
-                        username: user.name
-                      }
-                    }"
-                    class="my-1">
-                    <div class="my-1">
-                      <user-avatar
-                        :user="user"
-                        tooltipTriggers="hover">
-                      </user-avatar>
-                    </div>
-                  </router-link>
-                  <p class="badge badge-info">{{ user.score }}</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="row text-center mt-1">
-            <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
-              <b-btn
-                variant="black-underline"
-                v-b-modal="leaderboardModalId">
-                <icon name="eye"></icon> View the leaderboard
-              </b-btn>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="social-media" class="bg-white invert-navbar">
-        <div class="container pb-5 text-center">
-          <hr class="mt-0 mb-4 mt-5">
-          <social-media-buttons>
-          </social-media-buttons>
         </div>
       </section>
 
@@ -253,7 +76,6 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
-import LandingSidenav from '@/components/navbars/LandingSidenav'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
 
@@ -261,13 +83,6 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
-      spyId: 'landing-spy',
-      sidenavItems: [
-        { id: 'contribute', label: 'Contribute' },
-        { id: 'research', label: 'Research' },
-        { id: 'discuss', label: 'Discuss' },
-        { id: 'collaborate', label: 'Collaborate' }
-      ],
       stats: {},
       topUsers: [],
       leaderboardModalId: 'leaderboard-modal'
@@ -275,7 +90,6 @@ export default {
   },
 
   components: {
-    LandingSidenav,
     BasicLayout,
     SocialMediaButtons,
     LeaderboardModal,
@@ -375,12 +189,9 @@ export default {
     flex-direction: row;
     align-content: center;
     justify-content: center;
-    text-shadow: 0px 2px 2px $dark-brown;
 
     .header-shadow {
       padding: 1.25rem 1.75rem;
-      background-color: rgba($dark-brown, 0.35);
-      box-shadow: $dark-brown 0px 0px 125px;
     }
 
     h1#brand {
@@ -430,89 +241,16 @@ export default {
     }
   }
 
-  #hero {
-    min-height: 500px;
-    height: 90vh;
+  #app-hero {
+    height: 500px;
+    top: 50px;
+    width: auto;
     overflow: hidden;
     position: relative;
-  }
-
-  .layer {
-    background-position: bottom center;
+    background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 100%;
-    min-height: 500px;
-    height: 90vh;
-    position: fixed;
-    z-index: -1;
-  }
-
-  .move-down {
-    position: relative;
-    top: -200px;
-    z-index: -1;
-  }
-
-  .layer-top {
-    background-position: top center;
-    background-size: auto;
-    background-repeat: no-repeat;
-    width: 100%;
-  }
-
-  .app-background {
     background-image: url('../../assets/img/app-background.jpg');
-  }
-
-  .paint-top {
-    background-image: url('../../assets/img/paint-top.png');
-  }
-
-  .paint-bottom {
-    background-image: url('../../assets/img/paint-bottom.png');
-  }
-
-  .paint-wrapper {
-    height: 200px;
-    width: 100%;
-
-    .paint-top,
-    .paint-bottom {
-      height: 100%;
-    }
-  }
-
-  #hero-layer-2 {
-    background-image: url('../../assets/img/paint-top.png');
-  }
-
-  #paint-bottom {
-    height: 100%;
-    background-position: top center;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-image: url('../../assets/img/paint-bottom.png');
-  }
-
-  #paint-bottom {
-    height: 100%;
-    background-position: top center;
-    background-size: auto;
-    background-repeat: no-repeat;
-    background-image: url('../../assets/img/paint-bottom.png');
-  }
-
-  .project-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: $white;
-    min-height: 400px;
-    box-shadow: rgba($white, 0.25) 0px 0px 15px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
   }
 
   #site-lead {
@@ -552,10 +290,6 @@ export default {
     @include button-outline-variant($white, $black);
   }
 
-  .bg-dark-brown {
-    background-color: $dark-brown;
-  }
-
   .btn-black-underline  {
     color: $black;
     background: none;
@@ -571,7 +305,6 @@ export default {
   .section-header {
     position: relative;
     text-align: center;
-    color: lighten($dark-brown, 75%);
 
     h2 {
       margin: 0;
@@ -586,8 +319,6 @@ export default {
       content: "";
       position: absolute;
       height: 3px;
-      border-bottom: 1px solid lighten($dark-brown, 75%);
-      border-top: 1px solid lighten($dark-brown, 75%);
       top: 0;
       width: 100px;
     }
