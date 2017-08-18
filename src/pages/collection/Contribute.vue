@@ -13,9 +13,9 @@
           For more information see the
           <router-link
             :to="{
-              name: 'project-about',
+              name: 'collection-about',
               params: {
-                projectName: projectConfig.name
+                collectionName: collectionConfig.name
               }
             }">about page.
           </router-link>
@@ -93,7 +93,7 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }

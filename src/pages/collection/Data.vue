@@ -37,10 +37,10 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="projectConfig.forumUrl">
+      <p v-if="collectionConfig.forumUrl">
         Head over to the
-        <a :href="projectConfig.forumUrl">
-          {{ projectConfig.brand }} Forum
+        <a :href="collectionConfig.forumUrl">
+          {{ collectionConfig.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
@@ -98,7 +98,7 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }

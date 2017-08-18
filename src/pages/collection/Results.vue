@@ -6,8 +6,8 @@
       <h2 class="text-center">Results</h2>
       <hr>
       <component
-        :is="projectConfig.resultsComponent"
-        v-if="projectConfig.resultsComponent">
+        :is="collectiononfig.resultsComponent"
+        v-if="collectionConfig.resultsComponent">
       </component>
     </section>
 
@@ -20,7 +20,7 @@ import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }

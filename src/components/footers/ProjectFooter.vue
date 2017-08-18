@@ -1,5 +1,5 @@
 <template>
-  <footer id="project-footer" class="footer">
+  <footer id="collection-footer" class="footer">
     <div class="container pt-3 pb-2">
 
       <section>
@@ -32,9 +32,9 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'project-contribute',
+                name: 'collection-contribute',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
@@ -48,12 +48,12 @@
         <h5 class="list-title">Analysis</h5>
         <ul class="list-unstyled">
           <li class="list-item"
-            v-if="projectConfig.resultsComponent">
+            v-if="collectionConfig.resultsComponent">
             <router-link
               :to="{
-                name: 'project-results',
+                name: 'collection-results',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
@@ -63,9 +63,9 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'project-data',
+                name: 'collection-data',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="scrollIfCurrent">
@@ -131,7 +131,7 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -150,7 +150,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#project-footer.footer {
+#collection-footer.footer {
   background-color: darken($gray-dark, 5%);
   letter-spacing: 0.8px;
   color: $gray-light;

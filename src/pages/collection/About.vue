@@ -6,8 +6,8 @@
       <h2 class="text-center">About</h2>
       <hr>
       <span
-        v-if="projectConfig.about.intro"
-        v-html="projectConfig.about.intro">
+        v-if="collectionConfig.about.intro"
+        v-html="collectionConfig.about.intro">
       </span>
       <p v-else>
         {{ siteConfig.brand }} is a platform for hosting experimental
@@ -18,7 +18,7 @@
     </section>
 
     <section
-      v-for="(item, index) in projectConfig.about.subsections"
+      v-for="(item, index) in collectionConfig.about.subsections"
       :key="item.id"
       :id="item.id">
       <h3 class="text-center">{{ item.title }}</h3>
@@ -41,7 +41,7 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -57,7 +57,7 @@ export default {
 
   computed: {
     navItems: function () {
-      return this.projectConfig.about.subsections.map((section) => {
+      return this.collectionConfig.about.subsections.map((section) => {
         return { id: section.id, text: section.title }
       })
     }

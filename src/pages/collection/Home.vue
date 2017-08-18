@@ -1,18 +1,18 @@
 <template>
-  <div id="project-home">
+  <div id="collection-home">
     <basic-layout>
 
       <transition appear>
         <div class="container full-height text-center">
           <div class="header-content">
-            <h1 id="tagline">{{ projectConfig.tagline }}</h1>
+            <h1 id="tagline">{{ collectionConfig.tagline }}</h1>
             <div id="intro-buttons" class="mt-2">
               <b-button
                 variant="secondary"
                 :to="{
-                  name: 'project-about',
+                  name: 'collection-about',
                   params: {
-                    projectName: projectConfig.name
+                    collectionName: collectionConfig.name
                   }
                 }">
                 Learn More
@@ -20,9 +20,9 @@
               <b-button
                 variant="success"
                 :to="{
-                  name: 'project-contribute',
+                  name: 'collection-contribute',
                   params: {
-                    projectName: projectConfig.name
+                    collectionName: collectionConfig.name
                   }
                 }">
                 Get Started
@@ -46,7 +46,7 @@
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
               <p class="lead my-1">
-                {{ projectConfig.description }}
+                {{ collectionConfig.description }}
               </p>
             </div>
           </div>
@@ -110,9 +110,9 @@
                 variant="success"
                 size="lg"
                 :to="{
-                  name: 'project-contribute',
+                  name: 'collection-contribute',
                   params: {
-                    projectName: projectConfig.name
+                    collectionName: collectionConfig.name
                   }
                 }">
                 Browse all projects
@@ -151,9 +151,9 @@
                 <b-button
                   variant="outline-white"
                   :to="{
-                    name: 'project-data',
+                    name: 'collection-data',
                     params: {
-                      projectName: projectConfig.name
+                      collectionName: collectionConfig.name
                     }
                   }">
                   Get the data
@@ -182,9 +182,9 @@
               <b-button
                 variant="secondary"
                 :to="{
-                  name: 'project-contribute',
+                  name: 'collection-contribute',
                   params: {
-                    projectName: projectConfig.name
+                    collectionName: collectionConfig.name
                   }
                 }">
                 Get Involved
@@ -233,7 +233,7 @@
         </div>
       </section>
 
-      <section id="results" v-if="projectConfig.resultsComponent">
+      <section id="results" v-if="collectionConfig.resultsComponent">
         <b-jumbotron :style="resultsStyle">
           <div class="container py-4">
             <div class="row text-center">
@@ -274,7 +274,10 @@
                 variant="success"
                 size="lg"
                 :to="{
-                  name: 'project-contribute'
+                  name: 'collection-contribute',
+                  params: {
+                    collectionName: collectionConfig.name
+                  }
                 }">
                 Choose a project
               </b-button>
@@ -334,21 +337,21 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     }
   },
 
   // metaInfo: {
-  //   title: this.projectConfig.tagline,
+  //   title: this.collectionConfig.tagline,
   //   meta: [
-  //     { name: 'description', content: this.projectConfig.description },
+  //     { name: 'description', content: this.collectionConfig.description },
 
   //     // Facebook Open Graph Markup
   //     { property: 'og:url', content: window.location.href },
-  //     { property: 'og:title', content: this.projectConfig.tagline },
-  //     { property: 'og:description', content: this.projectConfig.description }
+  //     { property: 'og:title', content: this.collectionConfig.tagline },
+  //     { property: 'og:description', content: this.collectionConfig.description }
   //   ]
   // },
 
@@ -414,7 +417,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#project-home {
+#collection-home {
   .container.full-height {
     height: 100vh;
     color: $white;

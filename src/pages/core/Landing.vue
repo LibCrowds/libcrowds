@@ -22,10 +22,10 @@
             <h2>Contribute</h2>
           </div>
           <section
-            v-for="(config, key) in projectConfigs"
+            v-for="(config, key) in collectionConfig"
             :key="key"
             :style="{ backgroundImage: `url('${config.bgImg}')` }"
-            class="project-section py-4 my-5 container">
+            class="collection-section py-4 my-5 container">
 
             <div class="container py-3 py-md-4 text-center">
               <div class="row sr">
@@ -42,9 +42,9 @@
                   <b-button
                     variant="outline-white"
                     :to="{
-                      name: 'project-home',
+                      name: 'collection-home',
                       params: {
-                        projectname: key
+                        collectionname: key
                       }
                     }">
                     Contribute
@@ -74,7 +74,6 @@ import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
-import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
@@ -93,8 +92,7 @@ export default {
     BasicLayout,
     SocialMediaButtons,
     LeaderboardModal,
-    UserAvatar,
-    ProjectCard
+    UserAvatar
   },
 
   computed: {
@@ -105,10 +103,10 @@ export default {
       }, 0)
       return getNumberWithCommas(sum)
     },
-    projectConfigs: function () {
+    collectionConfig: function () {
       const configs = {}
-      for (const key of this.siteConfig.projects) {
-        configs[key] = require(`../../settings/projects/${key}/config`)
+      for (const key of this.siteConfig.collections) {
+        configs[key] = require(`../../settings/collections/${key}/config`)
       }
       return configs
     }

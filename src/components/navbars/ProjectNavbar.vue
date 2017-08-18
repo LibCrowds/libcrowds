@@ -1,5 +1,5 @@
 <template>
-  <div id="project-navbar">
+  <div id="collection-navbar">
     <b-navbar
       toggleable
       toggle-breakpoint="md"
@@ -29,13 +29,13 @@
 
         <b-link class="navbar-brand"
           :to="{
-            name: 'project-home',
+            name: 'collection-home',
             params: {
-              projectName: projectConfig.name
+              collectionName: collectionConfig.name
             }
           }"
           @click.native="scrollToTop">
-          <span>{{ projectConfig.name }}</span>
+          <span>{{ collectionConfig.name }}</span>
         </b-link>
 
         <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
@@ -44,9 +44,9 @@
           <b-nav is-nav-bar>
             <b-nav-item
               :to="{
-                name: 'project-about',
+                name: 'collection-about',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -54,25 +54,25 @@
             </b-nav-item>
             <b-nav-item
               :to="{
-                name: 'project-contribute',
+                name: 'collection-contribute',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
               Contribute
             </b-nav-item>
             <b-nav-item
-              :href="projectConfig.forumUrl"
-              v-if="projectConfig.forumUrl">
+              :href="collectionConfig.forumUrl"
+              v-if="collectionConfig.forumUrl">
               Discuss
             </b-nav-item>
             <b-nav-item
-              v-if="projectConfig.resultsComponent"
+              v-if="collectionConfig.resultsComponent"
               :to="{
-                name: 'project-results',
+                name: 'collection-results',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -80,9 +80,9 @@
             </b-nav-item>
             <b-nav-item
               :to="{
-                name: 'project-data',
+                name: 'collection-data',
                 params: {
-                  projectName: projectConfig.name
+                  projectName: collectionConfig.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">
@@ -178,7 +178,7 @@ export default {
   },
 
   props: {
-    projectConfig: {
+    collectionConfig: {
       type: Object,
       required: true
     },
