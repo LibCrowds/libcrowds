@@ -3,16 +3,75 @@
     id="app-navbar"
     type="light"
     fixed="top">
-    <div class="container">
 
-      <b-link class="navbar-brand"
+    <b-link class="navbar-brand"
+      :to="{
+        name: 'landing'
+      }">
+      <span>{{ siteConfig.brand }}</span>
+    </b-link>
+
+    <b-nav is-nav-bar v-if="currentUser" right>
+      <b-nav-item-dropdown
+        right
+        :text="currentUser.name">
+
+        <!-- Profile/settings -->
+        <b-dropdown-item
+          :to="{
+            name: 'profile',
+            params: {
+              username: currentUser.name
+            }
+          }"
+          @click.native="toggleCollapsibleSidebar">Profile
+        </b-dropdown-item>
+        <b-dropdown-item
+          :to="{
+            name: 'account-settings',
+            params: {
+              username: currentUser.name
+            }
+          }"
+          @click.native="toggleCollapsibleSidebar">Settings
+        </b-dropdown-item>
+
+        <!-- Admin -->
+        <span>
+          <div role="separator" class="dropdown-divider"></div>
+          <b-dropdown-item
+            @click="showModal(openProjectModalId)">
+            Open Project
+          </b-dropdown-item>
+          <b-dropdown-item
+            to="#"
+            v-if="currentUser.admin"
+            @click.native="toggleCollapsibleSidebar">
+            Admin
+          </b-dropdown-item>
+        </span>
+
+        <div role="separator" class="dropdown-divider"></div>
+        <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-nav>
+
+    <!-- Sign in/sign up -->
+    <b-nav id="sign-in-up" is-nav-bar v-else right>
+      <b-nav-item
         :to="{
-          name: 'landing'
+          name: 'signin'
         }">
-        <span>{{ siteConfig.brand }}</span>
-      </b-link>
-
-    </div>
+        Sign in
+      </b-nav-item>
+      <b-nav-item
+        id="btn-register"
+        :to="{
+          name: 'register'
+        }">
+        Sign up
+      </b-nav-item>
+    </b-nav>
   </b-navbar>
 </template>
 
@@ -33,15 +92,40 @@ export default {
 
 #app-navbar {
   background-color: $white;
-  padding: 0.75rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $gray-lighter;
 
   .navbar-brand {
     position: relative;
     margin: 0;
+    padding: 0.5rem;
     letter-spacing: 1.15px;
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+  }
+
+  #sign-in-up {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #btn-register {
+    display: flex;
+    align-self: center;
+    flex-direction: row;
+    background-color: $brand-success;
+    padding: 0.5rem 0.75rem;
   }
 }
 </style>
