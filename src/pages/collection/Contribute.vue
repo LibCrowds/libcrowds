@@ -15,7 +15,7 @@
             :to="{
               name: 'collection-about',
               params: {
-                collectionName: collectionConfig.name
+                collectionname: collectionConfig.name
               }
             }">about page.
           </router-link>

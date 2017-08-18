@@ -12,7 +12,7 @@
                 :to="{
                   name: 'collection-about',
                   params: {
-                    collectionName: collectionConfig.name
+                    collectionname: collectionConfig.name
                   }
                 }">
                 Learn More
@@ -22,7 +22,7 @@
                 :to="{
                   name: 'collection-contribute',
                   params: {
-                    collectionName: collectionConfig.name
+                    collectionname: collectionConfig.name
                   }
                 }">
                 Get Started
@@ -112,7 +112,7 @@
                 :to="{
                   name: 'collection-contribute',
                   params: {
-                    collectionName: collectionConfig.name
+                    collectionname: collectionConfig.name
                   }
                 }">
                 Browse all projects
@@ -153,7 +153,7 @@
                   :to="{
                     name: 'collection-data',
                     params: {
-                      collectionName: collectionConfig.name
+                      collectionname: collectionConfig.name
                     }
                   }">
                   Get the data
@@ -184,7 +184,7 @@
                 :to="{
                   name: 'collection-contribute',
                   params: {
-                    collectionName: collectionConfig.name
+                    collectionname: collectionConfig.name
                   }
                 }">
                 Get Involved
@@ -276,7 +276,7 @@
                 :to="{
                   name: 'collection-contribute',
                   params: {
-                    collectionName: collectionConfig.name
+                    collectionname: collectionConfig.name
                   }
                 }">
                 Choose a project
