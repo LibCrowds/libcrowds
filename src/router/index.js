@@ -8,7 +8,7 @@ import coreRoutes from '@/router/routes/core'
 import accountRoutes from '@/router/routes/account'
 import errorRoutes from '@/router/routes/error'
 import helpRoutes from '@/router/routes/help'
-import projectRoutes from '@/router/routes/project'
+import collectionRoutes from '@/router/routes/collection'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -18,7 +18,7 @@ const routes = [].concat(
   accountRoutes,
   errorRoutes,
   helpRoutes,
-  projectRoutes
+  collectionRoutes
 )
 
 const router = new VueRouter({
