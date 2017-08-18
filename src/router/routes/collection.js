@@ -11,8 +11,9 @@ const routes = [
     path: '/collection/:collectionname',
     component: CollectionBase,
     beforeEnter: function (to, from, next) {
+      const name = to.params.collectionname
       try {
-        require(`../../settings/collections/${collectionname}/config.js`)
+        require(`../../settings/collections/${name}/config.js`)
       } catch (err) {
         next({ name: '404' })
       }
