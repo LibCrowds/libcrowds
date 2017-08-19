@@ -40,10 +40,6 @@
         <span>
           <div role="separator" class="dropdown-divider"></div>
           <b-dropdown-item
-            @click="showModal(openProjectModalId)">
-            Open Project
-          </b-dropdown-item>
-          <b-dropdown-item
             to="#"
             v-if="currentUser.admin"
             @click.native="toggleCollapsibleSidebar">

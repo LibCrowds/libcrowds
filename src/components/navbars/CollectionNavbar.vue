@@ -1,179 +1,169 @@
 <template>
-  <div id="collection-navbar">
-    <b-navbar
-      toggleable
-      toggle-breakpoint="md"
-      :type="type"
-      :fixed="fixed"
-      :sticky="sticky">
-      <div class="container">
+  <b-navbar
+    id="collection-navbar"
+    toggleable
+    toggle-breakpoint="md"
+    :type="type"
+    :fixed="fixed"
+    :sticky="sticky">
+    <div class="container">
 
-        <button
-          @click="toggleCollapsibleSidebar"
-          ref="hamburger"
-          class="
-            hamburger
-            hamburger--collapse
-            navbar-toggler
-            navbar-toggler-right"
-          type="button"
-          data-toggle="collapse"
-          data-target="#main-nav-collapse"
-          aria-controls="main-nav-collapse"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </button>
+      <button
+        @click="toggleCollapsibleSidebar"
+        ref="hamburger"
+        class="
+          hamburger
+          hamburger--collapse
+          navbar-toggler
+          navbar-toggler-right"
+        type="button"
+        data-toggle="collapse"
+        data-target="#main-nav-collapse"
+        aria-controls="main-nav-collapse"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
 
-        <b-link class="navbar-brand"
-          :to="{
-            name: 'collection-home',
-            params: {
-              collectionName: collectionConfig.name
-            }
-          }"
-          @click.native="scrollToTop">
-          <span>{{ collectionConfig.name }}</span>
-        </b-link>
+      <b-link class="navbar-brand"
+        :to="{
+          name: 'collection-home',
+          params: {
+            collectionName: collectionConfig.name
+          }
+        }"
+        @click.native="scrollToTop">
+        <span>{{ collectionConfig.name }}</span>
+      </b-link>
 
-        <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
+      <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
-          <!-- Main menu -->
-          <b-nav is-nav-bar>
-            <b-nav-item
+        <!-- Main menu -->
+        <b-nav is-nav-bar>
+          <b-nav-item
+            :to="{
+              name: 'collection-about',
+              params: {
+                collectionname: collectionConfig.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">
+            About
+          </b-nav-item>
+          <b-nav-item
+            :to="{
+              name: 'collection-contribute',
+              params: {
+                collectionname: collectionConfig.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">
+            Contribute
+          </b-nav-item>
+          <b-nav-item
+            :href="collectionConfig.forumUrl"
+            v-if="collectionConfig.forumUrl">
+            Discuss
+          </b-nav-item>
+          <b-nav-item
+            v-if="collectionConfig.resultsComponent"
+            :to="{
+              name: 'collection-results',
+              params: {
+                collectionname: collectionConfig.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">
+            Results
+          </b-nav-item>
+          <b-nav-item
+            :to="{
+              name: 'collection-data',
+              params: {
+                collectionname: collectionConfig.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">
+            Data
+          </b-nav-item>
+        </b-nav>
+
+        <b-nav is-nav-bar>
+
+          <b-nav-item-dropdown
+            right
+            v-if="currentUser"
+            :text="currentUser.name">
+
+            <!-- Profile/settings -->
+            <b-dropdown-item
               :to="{
-                name: 'collection-about',
+                name: 'profile',
                 params: {
-                  collectionname: collectionConfig.name
+                  username: currentUser.name
                 }
               }"
-              @click.native="toggleCollapsibleSidebar">
-              About
-            </b-nav-item>
-            <b-nav-item
+              @click.native="toggleCollapsibleSidebar">Profile
+            </b-dropdown-item>
+            <b-dropdown-item
               :to="{
-                name: 'collection-contribute',
+                name: 'account-settings',
                 params: {
-                  collectionname: collectionConfig.name
+                  username: currentUser.name
                 }
               }"
-              @click.native="toggleCollapsibleSidebar">
-              Contribute
-            </b-nav-item>
-            <b-nav-item
-              :href="collectionConfig.forumUrl"
-              v-if="collectionConfig.forumUrl">
-              Discuss
-            </b-nav-item>
-            <b-nav-item
-              v-if="collectionConfig.resultsComponent"
-              :to="{
-                name: 'collection-results',
-                params: {
-                  collectionname: collectionConfig.name
-                }
-              }"
-              @click.native="toggleCollapsibleSidebar">
-              Results
-            </b-nav-item>
-            <b-nav-item
-              :to="{
-                name: 'collection-data',
-                params: {
-                  collectionname: collectionConfig.name
-                }
-              }"
-              @click.native="toggleCollapsibleSidebar">
-              Data
-            </b-nav-item>
-          </b-nav>
+              @click.native="toggleCollapsibleSidebar">Settings
+            </b-dropdown-item>
 
-          <b-nav is-nav-bar>
-
-            <b-nav-item-dropdown
-              right
-              v-if="currentUser"
-              :text="currentUser.name">
-
-              <!-- Profile/settings -->
-              <b-dropdown-item
-                :to="{
-                  name: 'profile',
-                  params: {
-                    username: currentUser.name
-                  }
-                }"
-                @click.native="toggleCollapsibleSidebar">Profile
-              </b-dropdown-item>
-              <b-dropdown-item
-                :to="{
-                  name: 'account-settings',
-                  params: {
-                    username: currentUser.name
-                  }
-                }"
-                @click.native="toggleCollapsibleSidebar">Settings
-              </b-dropdown-item>
-
-              <!-- Admin -->
-              <span>
-                <div role="separator" class="dropdown-divider"></div>
-                <b-dropdown-item
-                  @click="showModal(openProjectModalId)">
-                  Open Project
-                </b-dropdown-item>
-                <b-dropdown-item
-                  to="#"
-                  v-if="currentUser.admin"
-                  @click.native="toggleCollapsibleSidebar">
-                  Admin
-                </b-dropdown-item>
-              </span>
-
+            <!-- Admin -->
+            <span>
               <div role="separator" class="dropdown-divider"></div>
-              <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
-            </b-nav-item-dropdown>
+              <b-dropdown-item
+                to="#"
+                v-if="currentUser.admin"
+                @click.native="toggleCollapsibleSidebar">
+                Admin
+              </b-dropdown-item>
+            </span>
 
-            <!-- Sign in/sign up -->
-            <b-nav is-nav-bar v-else>
-              <b-nav-item
-                :to="{
-                  name: 'signin'
-                }">
-                Sign in
-              </b-nav-item>
-              <b-nav-item
-                class="nav-button"
-                :to="{
-                  name: 'register'
-                }">
-                Sign up
-              </b-nav-item>
-            </b-nav>
+            <div role="separator" class="dropdown-divider"></div>
+            <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
 
+          <!-- Sign in/sign up -->
+          <b-nav is-nav-bar v-else>
+            <b-nav-item
+              :to="{
+                name: 'signin'
+              }">
+              Sign in
+            </b-nav-item>
+            <b-nav-item
+              class="nav-button"
+              :to="{
+                name: 'register'
+              }">
+              Sign up
+            </b-nav-item>
           </b-nav>
-        </b-collapse>
-      </div>
-    </b-navbar>
 
-    <open-project-modal :modalId="openProjectModalId"></open-project-modal>
-
-  </div>
+        </b-nav>
+      </b-collapse>
+    </div>
+  </b-navbar>
 </template>
 
 <script>
 import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 import pybossaApi from '@/api/pybossa'
-import OpenProjectModal from '@/components/modals/OpenProject'
 
 export default {
   data: function () {
     return {
-      currentPath: this.$store.state.route.path,
-      openProjectModalId: 'open-project-modal'
+      currentPath: this.$store.state.route.path
     }
   },
 
@@ -198,10 +188,6 @@ export default {
       type: Boolean,
       default: false
     }
-  },
-
-  components: {
-    OpenProjectModal
   },
 
   computed: {
