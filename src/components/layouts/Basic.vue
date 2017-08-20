@@ -52,5 +52,9 @@ export default {
   &[data-bg="faded"] {
     @extend .bg-faded;
   }
+
+  &[data-bg="geometry"] {
+    background-image: url('../../assets/img/geometry.png');
+  }
 }
 </style>

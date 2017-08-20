@@ -1,7 +1,7 @@
 <template>
   <div id="profile">
     <basic-layout
-      :background="'faded'"
+      :background="'geometry'"
       navbarType="light"
       :navbarInvertable="false">
 

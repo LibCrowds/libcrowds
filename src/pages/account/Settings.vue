@@ -1,7 +1,7 @@
 <template>
   <div id="account-settings">
     <basic-layout
-      :background="'faded'"
+      :background="'geometry'"
       navbarType="light"
       :navbarInvertable="false">
 
@@ -236,7 +236,6 @@ export default {
 
 #settings-menu {
   .card-header {
-    @extend .bg-faded;
     text-align: center;
   }
 
@@ -247,6 +246,10 @@ export default {
 
     &:first-child {
       border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
     }
   }
 
