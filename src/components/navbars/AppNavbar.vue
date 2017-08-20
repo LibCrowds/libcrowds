@@ -4,80 +4,100 @@
     type="light"
     fixed="top">
 
-    <b-link class="navbar-brand"
-      :to="{
-        name: 'landing'
-      }">
-      <span>{{ siteConfig.brand }}</span>
-    </b-link>
+    <span id="app-navbar-left">
+      <b-link class="navbar-brand"
+        :to="{
+          name: 'landing'
+        }">
+        <span>{{ siteConfig.brand }}</span>
+      </b-link>
+    </span>
 
-    <b-nav is-nav-bar v-if="currentUser" right>
-      <b-nav-item-dropdown
-        right
-        :text="currentUser.name">
+    <span id="app-navbar-right">
+      <b-nav is-nav-bar v-if="currentUser" right>
+        <b-nav-item-dropdown
+          right
+          :text="currentUser.name">
 
-        <!-- Profile/settings -->
-        <b-dropdown-item
-          :to="{
-            name: 'profile',
-            params: {
-              username: currentUser.name
-            }
-          }"
-          @click.native="toggleCollapsibleSidebar">Profile
-        </b-dropdown-item>
-        <b-dropdown-item
-          :to="{
-            name: 'account-settings',
-            params: {
-              username: currentUser.name
-            }
-          }"
-          @click.native="toggleCollapsibleSidebar">Settings
-        </b-dropdown-item>
-
-        <!-- Admin -->
-        <span>
-          <div role="separator" class="dropdown-divider"></div>
+          <!-- Profile/settings -->
           <b-dropdown-item
-            to="#"
-            v-if="currentUser.admin"
-            @click.native="toggleCollapsibleSidebar">
-            Admin
+            :to="{
+              name: 'profile',
+              params: {
+                username: currentUser.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">Profile
           </b-dropdown-item>
-        </span>
+          <b-dropdown-item
+            :to="{
+              name: 'account-settings',
+              params: {
+                username: currentUser.name
+              }
+            }"
+            @click.native="toggleCollapsibleSidebar">Settings
+          </b-dropdown-item>
 
-        <div role="separator" class="dropdown-divider"></div>
-        <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-nav>
+          <!-- Admin -->
+          <span>
+            <div role="separator" class="dropdown-divider"></div>
+            <b-dropdown-item
+              to="#"
+              v-if="currentUser.admin"
+              @click.native="toggleCollapsibleSidebar">
+              Admin
+            </b-dropdown-item>
+          </span>
 
-    <!-- Sign in/sign up -->
-    <b-nav id="sign-in-up" is-nav-bar v-else right>
-      <b-nav-item
-        :to="{
-          name: 'signin'
-        }">
-        Sign in
-      </b-nav-item>
-      <b-nav-item
-        id="btn-register"
-        :to="{
-          name: 'register'
-        }">
-        Sign up
-      </b-nav-item>
-    </b-nav>
+          <div role="separator" class="dropdown-divider"></div>
+          <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-nav>
+
+      <!-- Sign in/sign up -->
+      <b-nav id="sign-in-up" is-nav-bar v-else right>
+        <b-nav-item
+          :to="{
+            name: 'signin'
+          }">
+          Sign in
+        </b-nav-item>
+        <b-nav-item
+          id="btn-register"
+          :to="{
+            name: 'register'
+          }">
+          Sign up
+        </b-nav-item>
+      </b-nav>
+    </span>
   </b-navbar>
 </template>
 
 <script>
+import pybossaApi from '@/api/pybossa'
 import siteConfig from '@/settings/siteConfig'
 
 export default {
   data: function () {
     return {
       siteConfig: siteConfig
+    }
+  },
+
+  methods: {
+     /**
+     * Sign the user out.
+     */
+    signout () {
+      pybossaApi.get('/account/signout')
+    }
+  },
+
+  computed: {
+    currentUser: function () {
+      return this.$store.state.currentUser
     }
   }
 }
@@ -93,13 +113,21 @@ export default {
   flex-direction: row;
   align-self: center;
   justify-content: space-between;
-  border-bottom: 1px solid $gray-lighter;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  height: 50px;
 
-  .navbar-brand {
+  #app-navbar-left {
+    flex: 1 1 auto;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid $gray-lighter;
+  }
+
+  .navbar-brand {
     margin: 0;
-    padding: 0 1rem;
+    padding: 0 1.75rem;
     letter-spacing: 1.15px;
     font-family: $font-family-base;
     font-weight: 600;
@@ -109,7 +137,17 @@ export default {
   .nav {
     display: flex;
     flex-direction: row;
-    align-self: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .nav-item {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0rem 1.25rem;
+    border-bottom: 1px solid $gray-lighter;
+    height: 100%;
   }
 
   #sign-in-up {
@@ -120,16 +158,27 @@ export default {
   }
 
   #btn-register {
-    display: flex;
-    align-self: center;
-    flex-direction: row;
     background-color: $brand-success;
-    padding: 0rem 0.75rem;
     font-weight: 400;
+    border-bottom: 1px solid $brand-success;
 
     a {
       color: $white;
     }
+  }
+
+  .dropdown {
+    padding: 0 1.75rem;
+  }
+
+  .dropdown-menu {
+    border-radius: 0;
+    right: 1rem;
+    text-transform: none;
+  }
+
+  .dropdown-divider {
+    margin: 0.5rem 0;
   }
 }
 </style>

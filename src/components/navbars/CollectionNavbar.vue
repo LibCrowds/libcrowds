@@ -354,7 +354,7 @@ export default {
 @import 'src/assets/style/main';
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
-.navbar {
+#collection-navbar.navbar {
   color: $white;
   font-family: $font-family-base;
   font-weight: 500;
@@ -536,7 +536,7 @@ export default {
   }
 }
 
-.navbar-toggleable {
+#collection-navbar.navbar-toggleable {
   @each $breakpoint in map-keys($grid-breakpoints) {
     $next: breakpoint-next($breakpoint, $grid-breakpoints);
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
