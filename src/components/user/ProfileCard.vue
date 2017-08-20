@@ -56,6 +56,7 @@ export default {
 
 .card.user-card {
   .avatar-background {
+    text-align: center;
     padding-top: $spacer-y* 2;
     padding-left: $spacer-x * 2;
     padding-right: $spacer-x * 2;
