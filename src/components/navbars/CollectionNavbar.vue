@@ -362,6 +362,7 @@ export default {
   justify-content: center;
   align-items: baseline;
   transition: background-color 200ms;
+  padding: .75rem 1.5rem;
 
   .container {
     flex: 1 1 auto;
