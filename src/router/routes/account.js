@@ -11,7 +11,9 @@ export default [
     path: '/account',
     component: AppBase,
     beforeEnter: function (to, from, next) {
-      console.log(to)
+      if (to.fullPath === '/account') {
+        next({ name: '404' })
+      }
       next()
     },
     children: [
