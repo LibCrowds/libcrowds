@@ -96,8 +96,8 @@
       </p>
       <h4 class="mt-4">Google Analytics and opting out</h4>
       <p>
-        {{ sitesiteConfig.brand }} uses Google Analytics to better understand how visitors
-        use {{ sitesiteConfig.brand }} and, where possible, to improve their experience.
+        {{ siteConfig.brand }} uses Google Analytics to better understand how visitors
+        use {{ siteConfig.brand }} and, where possible, to improve their experience.
         If you want to opt-out, there is a browser add-on that you can
         <a href="https://tools.google.com/dlpage/gaoptout/" target="_blank">
           download and install
