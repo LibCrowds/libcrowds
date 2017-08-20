@@ -136,7 +136,6 @@ import siteConfig from '@/settings/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import BasicLayout from '@/components/layouts/Basic'
 import CollectionCard from '@/components/collection/Card'
-import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
@@ -154,7 +153,6 @@ export default {
 
   components: {
     BasicLayout,
-    SocialMediaButtons,
     LeaderboardModal,
     UserAvatar,
     CollectionCard

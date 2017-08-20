@@ -11,15 +11,13 @@
         :collectionConfig="collectionConfig">
       </router-view>
     </main>
-    <collection-footer
-      :collectionConfig="collectionConfig">
-    </collection-footer>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import CollectionNavbar from '@/components/navbars/CollectionNavbar'
-import CollectionFooter from '@/components/footers/CollectionFooter'
+import AppFooter from '@/components/footers/AppFooter'
 
 export default {
   data: function () {
@@ -32,7 +30,7 @@ export default {
 
   components: {
     CollectionNavbar,
-    CollectionFooter
+    AppFooter
   },
 
   computed: {

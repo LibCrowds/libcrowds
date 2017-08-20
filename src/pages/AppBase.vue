@@ -5,16 +5,19 @@
     <main>
       <router-view></router-view>
     </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
+import AppFooter from '@/components/footers/AppFooter'
 import AppNavbar from '@/components/navbars/AppNavbar'
 import appBackground from '@/assets/img/app-background.jpg'
 
 export default {
   components: {
-    AppNavbar
+    AppNavbar,
+    AppFooter
   },
 
   computed: {

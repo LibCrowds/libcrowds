@@ -3,7 +3,9 @@
     <div class="container pt-3 pb-2">
 
       <section>
-        <router-link :to="{ name: 'landing' }">
+        <router-link
+          :to="{ name: 'landing' }"
+          @click.native="scrollIfCurrent">
           Part of the {{ siteConfig.brand }} crowdsourcing platform
         </router-link>
         <p v-html="copyright" class="my-2"></p>
@@ -29,47 +31,19 @@
       <section class="hidden-md-down">
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
-          <li class="list-item">
+          <li
+            v-for="(config, key) in collectionConfigs"
+            :key="key"
+            class="list-item">
             <router-link
               :to="{
-                name: 'collection-contribute',
+                name: 'collection-home',
                 params: {
-                  collectionname: collectionConfig.name
+                  collectionname: key
                 }
               }"
               @click.native="scrollIfCurrent">
-              Contribute
-            </router-link>
-          </li>
-        </ul>
-      </section>
-
-      <section class="hidden-md-down">
-        <h5 class="list-title">Analysis</h5>
-        <ul class="list-unstyled">
-          <li class="list-item"
-            v-if="collectionConfig.resultsComponent">
-            <router-link
-              :to="{
-                name: 'collection-results',
-                params: {
-                  collectionname: collectionConfig.name
-                }
-              }"
-              @click.native="scrollIfCurrent">
-              Results
-            </router-link>
-          </li>
-          <li class="list-item">
-            <router-link
-              :to="{
-                name: 'collection-data',
-                params: {
-                  collectionname: collectionConfig.name
-                }
-              }"
-              @click.native="scrollIfCurrent">
-              Data
+              {{ config.name }}
             </router-link>
           </li>
         </ul>
@@ -130,10 +104,13 @@ export default {
     }
   },
 
-  props: {
-    collectionConfig: {
-      type: Object,
-      required: true
+  computed: {
+    collectionConfigs: function () {
+      const configs = {}
+      for (const key of this.siteConfig.collections) {
+        configs[key] = require(`../../settings/collections/${key}/config`)
+      }
+      return configs
     }
   },
 
