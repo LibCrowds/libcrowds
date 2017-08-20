@@ -3,34 +3,34 @@
     no-block
     show-footer
     class="collection-card my-3">
-    <div
-      class="collection-card-img"
-      :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
-    </div>
-    <div class="card-block">
-      <h4 class="card-title">
-        {{ collectionConfig.name }}
-      </h4>
-      <hr class="my-1">
-      <p class="card-text">
-        {{ collectionConfig.tagline }}
-      </p>
-    </div>
-    <div class="card-footer">
-      <router-link
-        class="float-right"
-        :to="{
-          name: 'collection-home',
-          params: {
-            collectionname: collectionName
-          }
-        }">
+    <router-link
+      class="float-right"
+      :to="{
+        name: 'collection-home',
+        params: {
+          collectionname: collectionName
+        }
+      }">
+      <div
+        class="collection-card-img"
+        :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">
+          {{ collectionConfig.name }}
+        </h4>
+        <hr class="my-1">
+        <p class="card-text">
+          {{ collectionConfig.tagline }}
+        </p>
+      </div>
+      <div class="card-footer">
         <icon label="Enter Website">
           <icon name="arrow-right"></icon>
           <icon name="circle-thin" scale="2"></icon>
         </icon>
-      </router-link>
-    </div>
+      </div>
+    </router-link>
   </b-card>
 </template>
 
@@ -57,7 +57,14 @@ export default {
 
 .collection-card {
   border: none;
-  cursor: pointer;
+
+  a {
+    color: $gray;
+
+    @include hover-focus {
+      text-decoration: none;
+    }
+  }
 
   @include hover-focus {
     .collection-card-img:after {
@@ -98,15 +105,16 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
+    color: $gray-dark;
   }
 
   .card-footer {
     background-color: $white;
     border: none;
-
-    a {
-      color: $gray-light;
-    }
+    color: $gray-light;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }
 </style>
