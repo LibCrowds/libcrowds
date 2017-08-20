@@ -2,7 +2,7 @@
   <b-card
     no-block
     show-footer
-    class="collection-card my-5">
+    class="collection-card my-3">
     <div
       class="collection-card-img"
       :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
@@ -11,27 +11,33 @@
       <h4 class="card-title">
         {{ collectionConfig.name }}
       </h4>
+      <hr class="my-1">
       <p class="card-text">
         {{ collectionConfig.tagline }}
       </p>
     </div>
     <div class="card-footer">
-      <b-button
+      <router-link
         class="float-right"
-        variant="success"
         :to="{
           name: 'collection-home',
           params: {
             collectionname: collectionName
           }
         }">
-        Enter
-      </b-button>
+        <icon label="Enter Website">
+          <icon name="arrow-right"></icon>
+          <icon name="circle-thin" scale="2"></icon>
+        </icon>
+      </router-link>
     </div>
   </b-card>
 </template>
 
 <script>
+import 'vue-awesome/icons/arrow-right'
+import 'vue-awesome/icons/circle-thin'
+
 export default {
   props: {
     collectionName: {
@@ -51,6 +57,13 @@ export default {
 
 .collection-card {
   border: none;
+  cursor: pointer;
+
+  @include hover-focus {
+    .collection-card-img:after {
+      opacity: 1;
+    }
+  }
 
   .collection-card-img {
     height: 250px;
@@ -60,6 +73,24 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
+
+    &:after {
+      content: 'Enter';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: $gray-lighter;
+      background-color: rgba($gray-lighter, 0.4);
+      opacity: 0;
+      font-size: $font-size-lg;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 250ms ease-in;
+    }
   }
 
   .card-title {
@@ -72,6 +103,10 @@ export default {
   .card-footer {
     background-color: $white;
     border: none;
+
+    a {
+      color: $gray-light;
+    }
   }
 }
 </style>

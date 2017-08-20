@@ -4,14 +4,41 @@
 
       <transition appear>
         <div id="app-hero">
-          <div class="header-container text-center">
+          <div class="container">
+            <span></span>
             <p id="site-tagline">{{ siteConfig.tagline }}</p>
+            <div class="stat-row hidden-sm-down">
+              <div class="stat-circle stat-success">
+                <span class="stat">{{ stats.n_published_projects }}</span>
+                <icon name="television"></icon>
+                <p>Projects</p>
+              </div>
+              <div class="stat-circle">
+                <span class="stat">{{ stats.n_total_users }}</span>
+                <icon name="users"></icon>
+                <p>Volunteers</p>
+              </div>
+              <div class="stat-circle">
+                <span class="stat">{{ stats.n_task_runs }}</span>
+                <icon name="list"></icon>
+                <p>Contributions</p>
+              </div>
+            </div>
           </div>
         </div>
       </transition>
 
+      <!-- <section id="description" class="bg-white text-center">
+        <p class="lead">{{ siteConfig.description }}</p>
+        <hr class="m-0">
+      </section> -->
+
       <section id="contribute" class="bg-faded">
         <div class="container py-4">
+          <h2 class="mt-4">Contribute</h2>
+          <p class="lead">
+            {{ siteConfig.description }}
+          </p>
           <div class="card-deck">
             <collection-card
               v-for="(config, key) in collectionConfigs"
@@ -19,6 +46,75 @@
               :collection-config="config"
               :collection-name="key">
             </collection-card>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="top-users"
+        class="bg-white">
+        <div class="container py-4">
+          <div class="row">
+            <div class="col-lg-5 offset-lg-1 pt-2 text-center">
+              <h3 class="text-uppercase font-weight-bold">
+                Most Active Volunteers
+              </h3>
+              <hr class="my-2">
+              <p class="text-uppercase lead pb-2">
+                To date, our top {{ topUsers.length }} volunteers have made
+                {{ topUsersTaskRuns }} contributions!
+              </p>
+            </div>
+            <div class="col-lg-5 offset-lg-1 hidden-md-down">
+              <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
+              <span id="wreath"></span>
+            </div>
+          </div>
+          <div class="row text-center mt-4">
+            <div class="col-lg-12 pt-1">
+              <ul class="list-unstyled">
+                <li
+                  :key="user.id"
+                  class="text-center d-inline-block mx-1"
+                  v-for="user in topUsers">
+                  <router-link :to="{
+                      name: 'profile',
+                      params: {
+                        username: user.name
+                      }
+                    }"
+                    class="my-1">
+                    <div class="my-1">
+                      <user-avatar
+                        :user="user"
+                        tooltipTriggers="hover">
+                      </user-avatar>
+                    </div>
+                  </router-link>
+                  <p class="badge badge-info">{{ user.score }}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row text-center mt-1">
+            <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
+              <b-btn
+                variant="black-underline"
+                v-b-modal="leaderboardModalId">
+                <icon name="eye"></icon> View the leaderboard
+              </b-btn>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="announcements" class="bg-faded">
+        <div class="container py-4">
+          <h4 class="text-uppercase font-weight-bold">
+            News
+          </h4>
+          <div class="row">
+
           </div>
         </div>
       </section>
@@ -115,66 +211,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'src/assets/style/main';
 
 #landing {
-  .header-container {
-    position: absolute;
-    color: white;
-    text-align: center;
-    width: 100%;
-    top: 175px;
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
 
-    h1#brand {
-      position: relative;
-      margin: 0;
-      padding: 1.5rem 2.75rem;
-      letter-spacing: 1.15px;
-      font-size: 2rem;
-      font-family: $font-family-base;
-      font-weight: 400;
-      text-transform: uppercase;
-
-      &:before,
-      &:after {
-        -moz-transition: width 0.85s ease;
-        -webkit-transition: width 0.85s ease;
-        -ms-transition: width 0.85s ease;
-        transition: width 0.85s ease;
-        -moz-transition-delay: 0.25s;
-        -webkit-transition-delay: 0.25s;
-        -ms-transition-delay: 0.25s;
-        transition-delay: 0.25s;
-        background: #fff;
-        content: '';
-        display: block;
-        height: 2px;
-        position: absolute;
-        width: 100%;
-      }
-
-      &:before {
-        top: 0;
-        left: 0;
-      }
-
-      &:after {
-        bottom: 0;
-        right: 0;
-      }
-    }
-
-    #site-tagline {
-      margin-top: 10px;
-      font-size: $font-size-sm;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-    }
+  #site-tagline {
+    font-weight: 600px;
+    font-size: 1.75rem;
+    letter-spacing: 0.5px;
+    margin: 0;
   }
 
   #app-hero {
@@ -187,10 +233,16 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url('../../assets/img/app-background.jpg');
-  }
 
-  project-cards {
-    display: inline-block;
+    .container {
+      color: $white;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
   }
 
   .bg-white {
@@ -209,40 +261,63 @@ export default {
     }
   }
 
-  .section-header {
-    position: relative;
-    text-align: center;
-
-    h2 {
-      margin: 0;
-      line-height: 0.5;
-      font-size: $font-size-lg;
-      font-family: $font-family-base;
-      text-transform: uppercase;
-    }
-
-    &:before,
-    &:after {
-      content: "";
-      position: absolute;
-      height: 3px;
-      top: 0;
-      width: 100px;
-    }
-
-    &:before {
-      right: 100%;
-      margin-right: 15px;
-    }
-
-    &:after {
-      left: 100%;
-      margin-left: 15px;
-    }
-  }
-
   #top-users {
     color: $gray-dark;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .stat-circle {
+    position: relative;
+    margin: 2em 4em;
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    border: 4px solid rgba($white, 0.8);
+    border-bottom-color: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &:nth-child(1) {
+      border-color: rgba($brand-success, 0.8);
+      border-bottom-color: transparent;
+    }
+
+    &:nth-child(2) {
+      border-color: rgba($brand-info, 0.8);
+      border-bottom-color: transparent;
+    }
+
+    &:nth-child(3) {
+      border-color: rgba($brand-warning, 0.8);
+      border-bottom-color: transparent;
+    }
+
+    .stat {
+      position: absolute;
+      font-size: $font-size-lg;
+      font-weight: 600;
+    }
+
+    svg {
+      position: absolute;
+      bottom: 0;
+    }
+
+    p {
+      position: absolute;
+      letter-spacing: 0.5px;
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      margin: 0;
+      bottom: -1.75rem;
+    }
   }
 }
 </style>

@@ -177,6 +177,11 @@ export default {
     text-transform: none;
   }
 
+  .dropdown-item.active {
+    color: initial;
+    background-color: $white;
+  }
+
   .dropdown-divider {
     margin: 0.5rem 0;
   }

@@ -1,4 +1,4 @@
-import AppBase from '@/pages/core/Base'
+import AppBase from '@/pages/AppBase'
 import Landing from '@/pages/core/Landing'
 import Statistics from '@/pages/core/Statistics'
 
