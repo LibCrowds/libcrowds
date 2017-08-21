@@ -132,11 +132,12 @@ export default {
           'X-CSRFToken': this.model.csrf
         }
       }).then(r => {
-        if (r.data.status !== 'success') {
+        if (r.data.status === 'success') {
+          this.$emit('success', r.data)
+        } else {
           this.flash = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
-          this.$emit('success', r.data)
         }
       })
     }

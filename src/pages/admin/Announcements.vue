@@ -138,7 +138,6 @@ export default {
      */
     refreshCurrentAnnouncements () {
       pybossaApi.get('/admin/announcement').then(r => {
-        console.log('hmm')
         this.announcements = r.data.announcements
       })
     }
