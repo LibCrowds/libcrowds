@@ -75,8 +75,8 @@ export default {
             {
               model: 'body',
               label: 'Body',
-              type: 'input',
-              inputType: 'textarea',
+              type: 'textArea',
+              rows: 3,
               placeholder: 'Write an announcement (use Markdown)'
             }
           ]
