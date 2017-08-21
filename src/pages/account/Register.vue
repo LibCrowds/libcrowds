@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import BasicLayout from '@/components/layouts/Basic'

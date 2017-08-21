@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'

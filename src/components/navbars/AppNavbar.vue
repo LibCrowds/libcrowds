@@ -77,7 +77,7 @@
 
 <script>
 import pybossaApi from '@/api/pybossa'
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 
 export default {
   data: function () {

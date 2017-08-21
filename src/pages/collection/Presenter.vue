@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 
 export default {

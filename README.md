@@ -26,12 +26,12 @@ npm install
 
 ## Configuring
 
-Site settings can be found in [src/settings/siteConfig.js.tmpl](src/settings/siteConfig.js.tmpl).
+Site settings can be found in [src/siteConfig.js.tmpl](src/siteConfig.js.tmpl).
 To use this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash
 # create local configuration file
-cp src/settings/siteConfig.js.tmpl src/settings/siteConfig.js
+cp src/siteConfig.js.tmpl src/siteConfig.js
 ```
 
 On your PyBossa server, you will need to update the `CORS_RESOURCES` settings

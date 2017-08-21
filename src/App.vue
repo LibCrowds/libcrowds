@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
 

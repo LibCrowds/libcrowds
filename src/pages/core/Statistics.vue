@@ -31,7 +31,7 @@ import L from 'leaflet'
 import 'leaflet.markercluster'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 

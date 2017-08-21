@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 
 export default {
   data: function () {

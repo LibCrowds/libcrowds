@@ -21,7 +21,7 @@
 
 <script>
 import axios from 'axios'
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 
 export default {

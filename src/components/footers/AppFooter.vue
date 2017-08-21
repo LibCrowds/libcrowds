@@ -109,7 +109,7 @@
 
 <script>
 import jump from 'jump.js'
-import siteConfig from '@/settings/siteConfig'
+import siteConfig from '@/siteConfig'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
