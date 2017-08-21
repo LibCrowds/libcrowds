@@ -134,7 +134,7 @@ export default {
 
     @include media-breakpoint-up(lg) {
       z-index: 2;
-      max-height: 100vh;
+      height: 100vh;
       float: right;
       width: calc(100% - 260px);
     }
