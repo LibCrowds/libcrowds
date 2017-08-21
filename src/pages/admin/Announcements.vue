@@ -1,7 +1,7 @@
 <template>
   <div id="admin-announcements">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 col-lg-6">
         <card-form
           :header="'New Announcement'"
           :submitText="'Submit'"
@@ -9,6 +9,16 @@
           :schema="form.schema"
           :model="form.model">
         </card-form>
+      </div>
+      <div class="hidden-md-down col-lg-6">
+        <b-card
+          class="bg-faded"
+          :header="'Preview'">
+          <announcement-card
+            show-placeholders
+            :announcement="form.model">
+          </announcement-card>
+        </b-card>
       </div>
     </div>
     <div class="row">
@@ -43,6 +53,7 @@
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
+import AnnouncementCard from '@/components/announcements/AnnouncementCard'
 
 export default {
   data: function () {
@@ -66,7 +77,7 @@ export default {
               label: 'Body',
               type: 'input',
               inputType: 'textarea',
-              placeholder: 'Make your announcement'
+              placeholder: 'Write an announcement (use Markdown)'
             }
           ]
         }
@@ -86,7 +97,8 @@ export default {
   },
 
   components: {
-    CardForm
+    CardForm,
+    AnnouncementCard
   },
 
   methods: {
