@@ -26,14 +26,14 @@
             <router-view></router-view>
           </div>
       </main>
-      <app-footer></app-footer>
+      <app-footer-slim></app-footer-slim>
     </div>
   </div>
 </template>
 
 <script>
 import siteConfig from '@/siteConfig'
-import AppFooter from '@/components/footers/AppFooter'
+import AppFooterSlim from '@/components/footers/AppFooterSlim'
 import AppNavbar from '@/components/navbars/AppNavbar'
 
 export default {
@@ -59,7 +59,7 @@ export default {
 
   components: {
     AppNavbar,
-    AppFooter
+    AppFooterSlim
   }
 }
 </script>
