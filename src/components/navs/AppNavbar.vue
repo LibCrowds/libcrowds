@@ -7,8 +7,7 @@
 
     <span id="app-navbar-left">
       <b-link
-        v-if="showBrand"
-        class="navbar-brand"
+        :class="`navbar-brand hidden-${hideBrandBreakpoint}-up`"
         :to="{
           name: 'landing'
         }">
@@ -101,9 +100,9 @@ export default {
       type: Boolean,
       default: false
     },
-    showBrand: {
+    hideBrandBreakpoint: {
       type: Boolean,
-      default: true
+      required: true
     }
   },
 

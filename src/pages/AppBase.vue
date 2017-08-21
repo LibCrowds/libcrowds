@@ -11,7 +11,7 @@
 
 <script>
 import AppFooter from '@/components/footers/AppFooter'
-import AppNavbar from '@/components/navbars/AppNavbar'
+import AppNavbar from '@/components/navs/AppNavbar'
 import appBackground from '@/assets/img/app-background.jpg'
 
 export default {

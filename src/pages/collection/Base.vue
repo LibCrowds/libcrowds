@@ -17,7 +17,7 @@
 
 <script>
 import siteConfig from '@/siteConfig'
-import CollectionNavbar from '@/components/navbars/CollectionNavbar'
+import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
