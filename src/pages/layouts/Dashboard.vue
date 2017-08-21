@@ -14,7 +14,7 @@
         :position="'top'"
         :navItems="adminNavItems">
       </dashboard-sidenav>
-      <main class="bg-faded">
+      <main>
         <div class="container p-4">
           <router-view></router-view>
         </div>
@@ -123,6 +123,7 @@ export default {
 
   main {
     flex: 1 1 auto;
+    background-image: url('../../assets/img/geometry.png');
   }
 
   .dashboard {
