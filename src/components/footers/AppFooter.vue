@@ -54,28 +54,48 @@
         <ul class="list-unstyled">
           <li class="list-item">
             <router-link
-              :to="{ name: 'tos' }"
+              :to="{
+                name: 'help',
+                query: {
+                  section: 'tos'
+                }
+              }"
               @click.native="scrollIfCurrent">
               Terms
             </router-link>
           </li>
           <li class="list-item">
             <router-link
-              :to="{ name: 'privacy' }"
+              :to="{
+                name: 'help',
+                query: {
+                  section: 'privacy'
+                }
+              }"
               @click.native="scrollIfCurrent">
               Privacy
             </router-link>
           </li>
           <li class="list-item">
             <router-link
-              :to="{ name: 'cookies' }"
+              :to="{
+                name: 'help',
+                query: {
+                  section: 'cookies'
+                }
+              }"
               @click.native="scrollIfCurrent">
               Cookies
             </router-link>
           </li>
           <li class="list-item">
             <router-link
-              :to="{ name: 'api' }"
+              :to="{
+                name: 'help',
+                query: {
+                  section: 'api'
+                }
+              }"
               @click.native="scrollIfCurrent">
               API
             </router-link>
