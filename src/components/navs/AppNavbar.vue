@@ -131,6 +131,7 @@ export default {
   font-weight: 600;
   font-size: 0.85rem;
   text-transform: uppercase;
+  min-height: $app-navbar-height;
   height: $app-navbar-height;
   width: 100%;
 
