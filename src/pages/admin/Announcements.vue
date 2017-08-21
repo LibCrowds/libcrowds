@@ -34,6 +34,10 @@
             :fields="table.fields"
             empty-text="No announcements have been made yet">
 
+            <template slot="created" scope="announcement">
+              {{ announcement.item.created | formatDate }}
+            </template>
+
             <template slot="action" scope="announcement">
               <b-button
                 variant="danger"

@@ -10,10 +10,10 @@
     </div>
     <div class="card-text announcement-created">
       <span v-if="announcement.created">
-        {{ announcement.created }}
+        {{ announcement.created | formatDate }}
       </span>
       <span v-else-if="showPlaceholders">
-        {{ placeholders.created }}
+        {{ placeholders.created | formatDate }}
       </span>
     </div>
     <hr class="my-1">
