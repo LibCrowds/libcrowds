@@ -32,7 +32,7 @@
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li
-            v-for="(config, key) in siteSettings.collections"
+            v-for="(config, key) in siteConfig.collections"
             :key="key"
             class="list-item">
             <router-link
@@ -113,6 +113,8 @@ import siteConfig from '@/siteConfig'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
+
+console.log(siteConfig)
 
 export default {
   data: function () {
