@@ -168,6 +168,7 @@ export default {
       background: transparent;
       align-items: center;
       justify-content: center;
+      border-bottom: 1px solid rgba($gray-lighter, 0.5);
 
       .brand {
         @extend .navbar-brand;
