@@ -7,7 +7,7 @@ yarn-error.log*
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
-src/settings/siteConfig.js
+siteConfig.js
 !src/settings/projects/README.md
 src/settings/projects/*
 .ssh
