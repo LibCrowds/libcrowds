@@ -8,7 +8,4 @@ test/unit/coverage
 test/e2e/reports
 selenium-debug.log
 siteConfig.js
-!src/settings/projects/README.md
-src/settings/projects/*
-.ssh
 deploy-key
