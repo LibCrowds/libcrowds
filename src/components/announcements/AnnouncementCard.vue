@@ -69,7 +69,6 @@ export default {
 @import 'src/assets/style/main';
 
 .announcement-card {
-  border: none;
 
   .card-title {
     font-size: $font-size-base;

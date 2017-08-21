@@ -28,11 +28,6 @@
         </div>
       </transition>
 
-      <!-- <section id="description" class="bg-white text-center">
-        <p class="lead">{{ siteConfig.description }}</p>
-        <hr class="m-0">
-      </section> -->
-
       <section id="contribute" class="bg-faded">
         <div class="container py-4">
           <h2 class="mt-4">Contribute</h2>
@@ -126,6 +121,23 @@
         </div>
       </section>
 
+      <section
+        id="announcements"
+        v-if="announcements.length"
+        class="bg-faded">
+        <div class="container pt-4 pb-5">
+          <h2 class="my-1">Announcements</h2>
+          <p class="lead mb-2">The latest news from {{ siteConfig.brand }}.</p>
+          <b-card-group columns>
+            <announcement-card
+              v-for="announcement in announcements"
+              :key="announcement.id"
+              :announcement="announcement">
+            </announcement-card>
+          </b-card-group>
+        </div>
+      </section>
+
       <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
 
     </basic-layout>
@@ -147,6 +159,7 @@ import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
+import AnnouncementCard from '@/components/announcements/AnnouncementCard'
 
 export default {
   data: function () {
@@ -154,6 +167,7 @@ export default {
       siteConfig: siteConfig,
       stats: {},
       topUsers: [],
+      announcements: [],
       leaderboardModalId: 'leaderboard-modal'
     }
   },
@@ -162,7 +176,8 @@ export default {
     BasicLayout,
     LeaderboardModal,
     UserAvatar,
-    CollectionCard
+    CollectionCard,
+    AnnouncementCard
   },
 
   computed: {
@@ -187,6 +202,7 @@ export default {
     setData (data) {
       this.topUsers = data.top_users
       this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
+      this.announcements = data.announcements
     },
 
     /**
@@ -206,6 +222,9 @@ export default {
       return pybossaApi.get('stats/')
     }).then(r => {
       data.stats = r.data.stats
+      return pybossaApi.get('/announcements/')
+    }).then(r => {
+      data.announcements = r.data.announcements
       this.setData(data)
     })
   }
