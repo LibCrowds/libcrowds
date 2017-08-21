@@ -31,7 +31,7 @@
         :to="{
           name: 'collection-home',
           params: {
-            collectionName: collectionConfig.name
+            collectionName: collectionConfig.key
           }
         }"
         @click.native="scrollToTop">
@@ -46,7 +46,7 @@
             :to="{
               name: 'collection-about',
               params: {
-                collectionname: collectionConfig.name
+                collectionname: collectionConfig.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -56,7 +56,7 @@
             :to="{
               name: 'collection-contribute',
               params: {
-                collectionname: collectionConfig.name
+                collectionname: collectionConfig.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -72,7 +72,7 @@
             :to="{
               name: 'collection-results',
               params: {
-                collectionname: collectionConfig.name
+                collectionname: collectionConfig.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -82,7 +82,7 @@
             :to="{
               name: 'collection-data',
               params: {
-                collectionname: collectionConfig.name
+                collectionname: collectionConfig.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
