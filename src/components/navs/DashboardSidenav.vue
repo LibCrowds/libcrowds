@@ -11,14 +11,17 @@
         </router-link>
       </div>
         <ul class="nav list-group">
-          <li
+          <router-link
+            tag="li"
             class="list-group-item"
+            :active-class="'active'"
+            :to="item.link"
             v-for="item in navItems"
             :key="item.id">
-            <router-link :to="item.link">
+            <a>
               {{ item.label }}
-            </router-link>
-          </li>
+            </a>
+          </router-link>
         </ul>
     </nav>
   </div>
@@ -148,7 +151,9 @@ export default {
         color: $white;
       }
 
-      @include hover-focus {
+      &:hover,
+      &:focus,
+      &.active {
         background-color: rgba($white, 0.23);
 
         a {
