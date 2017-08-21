@@ -1,14 +1,23 @@
 sudo: required
+
 language: node_js
+
 node_js:
 - '7'
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv
   -in deploy-key.enc -out deploy-key -d
+
 install:
 - npm install
+
+before_script:
+- cp src/siteConfig.js.tmpl src/siteConfig.js
+
 script:
 - npm run lint
 - npm run unit
+
 after_success:
 - bash bin/deploy.sh
