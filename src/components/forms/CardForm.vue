@@ -136,7 +136,7 @@ export default {
           this.flash = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
-          this.emit('success', r.data)
+          this.$emit('success', r.data)
         }
       })
     }
