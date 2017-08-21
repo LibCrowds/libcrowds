@@ -81,11 +81,6 @@ npm run e2e
 npm test
 ```
 
-CI end-to-end tests are run using BrowserStack, a cross browser and
-real device web-based testing platform.
-
-[![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
-
 ## Developing
 
 Start up a local PyBossa instance using the default settings, then:

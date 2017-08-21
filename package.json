@@ -11,7 +11,6 @@
     "build": "npm install && node build/build.js",
     "unit": "cross-env BABEL_ENV=test jest --coverage",
     "e2e": "node test/e2e/runner.js",
-    "e2e:browserstack": "node test/e2e/runner.js --browserstack",
     "test": "npm run lint && npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
