@@ -108,17 +108,6 @@
         </div>
       </section>
 
-      <section id="announcements" class="bg-faded">
-        <div class="container py-4">
-          <h4 class="text-uppercase font-weight-bold">
-            News
-          </h4>
-          <div class="row">
-
-          </div>
-        </div>
-      </section>
-
       <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
 
     </basic-layout>
