@@ -2,7 +2,7 @@
 
 DOMAIN='playbills.libcrowds.com'
 
-if [ -z $TRAVIS_BRANCH ] || [ $TRAVIS_BRANCH == 'master' ] ; then
+if [ $TRAVIS_BRANCH == 'master' ] ; then
 
   # Clear git info
   rm -rf .git
