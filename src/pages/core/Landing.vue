@@ -64,13 +64,31 @@
                 To date, our top {{ topUsers.length }} volunteers have made
                 {{ topUsersTaskRuns }} contributions!
               </p>
+              <span v-if="!currentUser">
+                <b-button
+                  class="mt-1"
+                  variant="secondary"
+                  :to="{
+                    name: 'signin'
+                  }">
+                  Sign in
+                </b-button>
+                <b-button
+                  class="mt-1"
+                  variant="success"
+                  :to="{
+                    name: 'register'
+                  }">
+                  Sign up
+                </b-button>
+              </span>
             </div>
             <div class="col-lg-5 offset-lg-1 hidden-md-down">
               <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
               <span id="wreath"></span>
             </div>
           </div>
-          <div class="row text-center mt-4">
+          <div class="row text-center mt-2">
             <div class="col-lg-12 pt-1">
               <ul class="list-unstyled">
                 <li
@@ -96,8 +114,8 @@
               </ul>
             </div>
           </div>
-          <div class="row text-center mt-1">
-            <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6 mt-3">
+          <div class="row text-center mt-2">
+            <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6">
               <b-btn
                 variant="black-underline"
                 v-b-modal="leaderboardModalId">
@@ -154,6 +172,9 @@ export default {
         return acc + val
       }, 0)
       return getNumberWithCommas(sum)
+    },
+    currentUser: function () {
+      return this.$store.state.currentUser
     }
   },
 
