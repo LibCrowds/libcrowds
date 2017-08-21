@@ -32,7 +32,7 @@
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li
-            v-for="(config, key) in collectionConfigs"
+            v-for="(config, key) in siteSettings.collections"
             :key="key"
             class="list-item">
             <router-link
@@ -121,16 +121,6 @@ export default {
       twitterUrl: `https://twitter.com/${siteConfig.contact.twitter}`,
       mailto: `mailto:${siteConfig.contact.email}`,
       copyright: `&copy; ${siteConfig.company}, ${new Date().getFullYear()}`
-    }
-  },
-
-  computed: {
-    collectionConfigs: function () {
-      const configs = {}
-      for (const key of this.siteConfig.collections) {
-        configs[key] = require(`../../settings/collections/${key}/config`)
-      }
-      return configs
     }
   },
 

@@ -41,7 +41,7 @@
           </p>
           <div class="card-deck">
             <collection-card
-              v-for="(config, key) in collectionConfigs"
+              v-for="(config, key) in siteConfig.collections"
               :key="key"
               :collection-config="config"
               :collection-name="key">
@@ -165,13 +165,6 @@ export default {
         return acc + val
       }, 0)
       return getNumberWithCommas(sum)
-    },
-    collectionConfigs: function () {
-      const configs = {}
-      for (const key of this.siteConfig.collections) {
-        configs[key] = require(`../../settings/collections/${key}/config`)
-      }
-      return configs
     }
   },
 

@@ -1,3 +1,4 @@
+import siteConfig from '@/siteConfig'
 import CollectionBase from '@/pages/collection/Base'
 import CollectionHome from '@/pages/collection/Home'
 import CollectionAbout from '@/pages/collection/About'
@@ -11,13 +12,9 @@ const routes = [
     path: '/collection/:collectionname',
     component: CollectionBase,
     beforeEnter: function (to, from, next) {
-      const name = to.params.collectionname
-      try {
-        require(`../../settings/collections/${name}/config.js`)
-      } catch (err) {
-        next({ name: '404' })
+      if (to.params.collectionname in siteConfig.collections) {
+        next()
       }
-      next()
     },
     children: [
       {

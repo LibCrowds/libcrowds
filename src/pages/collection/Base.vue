@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import siteConfig from '@/siteConfig'
 import CollectionNavbar from '@/components/navbars/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
@@ -33,9 +34,7 @@ export default {
       }
     },
     collectionConfig: function () {
-      return require(
-        `../../settings/collections/${this.$route.params.collectionname}/config`
-      )
+      return siteConfig.collections[this.$route.params.collectionname]
     }
   }
 }
