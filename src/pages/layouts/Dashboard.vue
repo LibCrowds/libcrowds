@@ -15,9 +15,9 @@
         :navItems="adminNavItems">
       </dashboard-sidenav>
       <main class="bg-faded">
-          <div class="container p-4">
-            <router-view></router-view>
-          </div>
+        <div class="container p-4">
+          <router-view></router-view>
+        </div>
       </main>
       <app-footer-slim></app-footer-slim>
     </div>
@@ -36,6 +36,46 @@ export default {
         {
           id: 'dashboard',
           label: 'Dashboard',
+          link: {
+            name: 'admin-dashboard'
+          }
+        },
+        {
+          id: 'featured',
+          label: 'Featured Projects',
+          link: {
+            name: 'admin-featured'
+          }
+        },
+        {
+          id: 'categories',
+          label: 'Categories',
+          link: {
+            name: 'admin-categories'
+          }
+        },
+        {
+          id: 'administrators',
+          label: 'Administrators',
+          link: {
+            name: 'admin-administrators'
+          }
+        },
+        {
+          id: 'announcements',
+          label: 'Announcements',
+          link: {
+            name: 'admin-announcements'
+          }
+        },
+        {
+          id: 'export-users',
+          label: 'Export Users',
+          link: '#'
+        },
+        {
+          id: 'background-jobs',
+          label: 'Background Jobs',
           link: '#'
         }
       ]
@@ -60,6 +100,16 @@ export default {
     AppNavbar,
     AppFooterSlim,
     DashboardSidenav
+  },
+
+  computed: {
+    navItems: function () {
+      if (this.dashboard === 'admin') {
+        return this.adminNavItems
+      } else if (this.dashboard === 'project') {
+        return this.projectNavItems
+      }
+    }
   }
 }
 </script>
