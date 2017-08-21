@@ -8,4 +8,5 @@ test/unit/coverage
 test/e2e/reports
 selenium-debug.log
 src/siteConfig.js
+src/custom/*
 deploy-key
