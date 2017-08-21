@@ -4,6 +4,12 @@ DOMAIN='playbills.libcrowds.com'
 
 if [ "${TRAVIS_BRANCH}" == "master" ] ; then
 
+  # Configure
+  bin/configure.sh
+
+  # Build
+  npm run build
+
   # Clear git info
   rm -rf .git
   rm -rf .gitignore
