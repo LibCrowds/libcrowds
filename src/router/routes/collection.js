@@ -15,6 +15,7 @@ const routes = [
       if (to.params.collectionname in siteConfig.collections) {
         next()
       }
+      next({ name: '404' })
     },
     children: [
       {
