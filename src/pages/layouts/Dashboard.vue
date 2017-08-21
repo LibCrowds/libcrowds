@@ -118,12 +118,13 @@ export default {
 @import 'src/assets/style/main';
 
 #dashboard-layout {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 
   main {
     flex: 1 1 auto;
     background-image: url('../../assets/img/geometry.png');
+    overflow-y: auto;
   }
 
   .dashboard {
@@ -133,7 +134,7 @@ export default {
 
     @include media-breakpoint-up(lg) {
       z-index: 2;
-      max-height: 100%;
+      max-height: 100vh;
       float: right;
       width: calc(100% - 260px);
     }
