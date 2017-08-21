@@ -19,22 +19,22 @@ export default [
         component: AdminDashboard
       },
       {
-        path: '/administrators',
+        path: 'administrators',
         name: 'admin-administrators',
         component: Administrators
       },
       {
-        path: '/announcements',
+        path: 'announcement',
         name: 'admin-announcements',
         component: Announcements
       },
       {
-        path: '/categories',
+        path: 'categories',
         name: 'admin-categories',
         component: Categories
       },
       {
-        path: '/featured',
+        path: 'featured',
         name: 'admin-featured',
         component: Featured
       }
