@@ -58,10 +58,6 @@ export default {
         return validPositions.indexOf(value) > -1
       }
     }
-  },
-
-  created () {
-    this.activeItem = this.routes[0].id
   }
 }
 </script>
