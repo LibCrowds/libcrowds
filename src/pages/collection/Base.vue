@@ -20,14 +20,6 @@ import CollectionNavbar from '@/components/navbars/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
-  data: function () {
-    return {
-      collectionConfig: require(
-        `../../settings/collections/${this.$route.params.collectionname}/config`
-      )
-    }
-  },
-
   components: {
     CollectionNavbar,
     AppFooter
@@ -39,6 +31,11 @@ export default {
       return {
         background: `url(${url}) no-repeat center left /cover fixed`
       }
+    },
+    collectionConfig: function () {
+      return require(
+        `../../settings/collections/${this.$route.params.collectionname}/config`
+      )
     }
   }
 }
