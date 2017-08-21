@@ -14,8 +14,9 @@ const routes = [
     beforeEnter: function (to, from, next) {
       if (to.params.collectionname in siteConfig.collections) {
         next()
+      } else {
+        next({ name: '404' })
       }
-      next({ name: '404' })
     },
     children: [
       {
