@@ -7,7 +7,8 @@
           :submitText="'Submit'"
           :endpoint="form.endpoint"
           :schema="form.schema"
-          :model="form.model">
+          :model="form.model"
+          @success="refreshCurrentAnnouncements">
         </card-form>
       </div>
       <div class="hidden-md-down col-lg-6">
@@ -125,8 +126,20 @@ export default {
         }
       }).then(r => {
         if (r.data.status === 'success') {
-
+          this.announcements = this.announcements.filter(announcement => {
+            return announcement.id !== id
+          })
         }
+      })
+    },
+
+    /**
+     * Refresh current announcement data.
+     */
+    refreshCurrentAnnouncements () {
+      pybossaApi.get('/admin/announcement').then(r => {
+        console.log('hmm')
+        this.announcements = r.data.announcements
       })
     }
   },
