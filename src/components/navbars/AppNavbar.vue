@@ -2,10 +2,13 @@
   <b-navbar
     id="app-navbar"
     type="light"
-    fixed="top">
+    :sticky="sticky"
+    :fixed="fixed">
 
     <span id="app-navbar-left">
-      <b-link class="navbar-brand"
+      <b-link
+        v-if="showBrand"
+        class="navbar-brand"
         :to="{
           name: 'landing'
         }">
@@ -43,7 +46,9 @@
           <span>
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
-              to="#"
+              :to="{
+                name: 'admin-dashboard'
+              }"
               v-if="currentUser.admin"
               @click.native="toggleCollapsibleSidebar">
               Admin
@@ -87,6 +92,21 @@ export default {
     }
   },
 
+  props: {
+    fixed: {
+      type: String,
+      default: 'top'
+    },
+    sticky: {
+      type: Boolean,
+      default: false
+    },
+    showBrand: {
+      type: Boolean,
+      default: true
+    }
+  },
+
   methods: {
      /**
      * Sign the user out.
@@ -112,7 +132,8 @@ export default {
   font-weight: 600;
   font-size: 0.85rem;
   text-transform: uppercase;
-  height: 50px;
+  height: $app-navbar-height;
+  width: 100%;
 
   #app-navbar-left {
     flex: 1 1 auto;

@@ -9,6 +9,7 @@ import accountRoutes from '@/router/routes/account'
 import errorRoutes from '@/router/routes/error'
 import helpRoutes from '@/router/routes/help'
 import collectionRoutes from '@/router/routes/collection'
+import adminRoutes from '@/router/routes/admin'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -18,7 +19,8 @@ const routes = [].concat(
   accountRoutes,
   errorRoutes,
   helpRoutes,
-  collectionRoutes
+  collectionRoutes,
+  adminRoutes
 )
 
 const router = new VueRouter({
