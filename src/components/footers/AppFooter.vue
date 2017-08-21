@@ -114,8 +114,6 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
 
-console.log(siteConfig)
-
 export default {
   data: function () {
     return {
