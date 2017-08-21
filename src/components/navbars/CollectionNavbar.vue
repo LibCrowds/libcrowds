@@ -163,7 +163,8 @@ import pybossaApi from '@/api/pybossa'
 export default {
   data: function () {
     return {
-      currentPath: this.$store.state.route.path
+      currentPath: this.$store.state.route.path,
+      currentUser: this.$store.state.currentUser
     }
   },
 
@@ -190,12 +191,6 @@ export default {
     }
   },
 
-  computed: {
-    currentUser: function () {
-      return this.$store.state.currentUser
-    }
-  },
-
   methods: {
 
     /**
@@ -203,6 +198,7 @@ export default {
      */
     signout () {
       pybossaApi.get('/account/signout')
+      this.currentUser = this.$store.state.currentUser
     },
 
     /**

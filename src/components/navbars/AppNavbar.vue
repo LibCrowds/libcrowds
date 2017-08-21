@@ -82,7 +82,8 @@ import siteConfig from '@/siteConfig'
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig
+      siteConfig: siteConfig,
+      currentUser: this.$store.state.currentUser
     }
   },
 
@@ -92,12 +93,7 @@ export default {
      */
     signout () {
       pybossaApi.get('/account/signout')
-    }
-  },
-
-  computed: {
-    currentUser: function () {
-      return this.$store.state.currentUser
+      this.currentUser = this.$store.state.currentUser
     }
   }
 }
