@@ -2,9 +2,7 @@
   <div id="collection-base">
     <div id="collection-background" :style="bgStyle"></div>
     <collection-navbar
-      :collectionConfig="collectionConfig"
-      :sticky="true"
-      :fixed="null">
+      :collectionConfig="collectionConfig">
     </collection-navbar>
     <main>
       <router-view

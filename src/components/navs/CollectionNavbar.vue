@@ -4,8 +4,8 @@
     toggleable
     toggle-breakpoint="md"
     :type="type"
-    :fixed="fixed"
-    :sticky="sticky">
+    :fixed="navType.fixed"
+    :sticky="navType.sticky">
     <div class="container">
 
       <button
@@ -164,7 +164,10 @@ export default {
   data: function () {
     return {
       currentPath: this.$store.state.route.path,
-      currentUser: this.$store.state.currentUser
+      currentUser: this.$store.state.currentUser,
+      stickyNavbarRoutes: [
+        'collection-home'
+      ]
     }
   },
 
@@ -180,14 +183,21 @@ export default {
     invertable: {
       type: Boolean,
       default: true
-    },
-    fixed: {
-      type: String,
-      default: 'top'
-    },
-    sticky: {
-      type: Boolean,
-      default: false
+    }
+  },
+
+  computed: {
+    navType: function () {
+      if (this.stickyNavbarRoutes.indexOf(this.$route.name) > -1) {
+        return {
+          fixed: 'top',
+          sticky: true
+        }
+      }
+      return {
+        fixed: null,
+        sticky: false
+      }
     }
   },
 
