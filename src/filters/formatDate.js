@@ -8,7 +8,6 @@ import moment from 'moment'
  *   The format.
  */
 export default function (date, format = 'DD MMM YYYY') {
-  console.log(date, format)
   if (date) {
     return moment(String(date)).format(format)
   }
