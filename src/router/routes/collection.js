@@ -40,7 +40,7 @@ const routes = [
         component: CollectionContribute
       },
       {
-        path: '/project/:shortname/presenter',
+        path: 'project/:shortname/presenter',
         name: 'presenter',
         component: CollectionPresenter
       }
