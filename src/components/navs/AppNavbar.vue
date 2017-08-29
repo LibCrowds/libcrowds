@@ -102,7 +102,7 @@ export default {
     },
     hideBrandBreakpoint: {
       type: String,
-      required: true
+      defualt: null
     }
   },
 
