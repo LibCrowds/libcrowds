@@ -5,7 +5,7 @@
       <transition appear>
         <div id="app-hero">
           <div class="container">
-            <span></span>
+            <span class="hidden-sm-down"></span>
             <p id="site-tagline">{{ siteConfig.tagline }}</p>
             <div class="stat-row hidden-sm-down">
               <div class="stat-circle stat-success">
