@@ -136,19 +136,30 @@ export default {
      *   The category ID.
      */
     deleteCategory (id) {
-      console.log(sweetalert)
+      const endpoint = `/admin/categories/del/${id}`
       sweetalert({
-        title: 'Ajax request example',
-        text: 'Submit to run ajax request',
-        type: 'info',
+        title: 'Delete Category',
+        text: 'Are you sure you want to delete this category?',
+        type: 'warning',
         showCancelButton: true,
         closeOnConfirm: false,
         showLoaderOnConfirm: true
       },
-      function () {
-        setTimeout(function () {
-          sweetalert('Ajax request finished!')
-        }, 2000)
+      () => {
+        pybossaApi.get(endpoint).then(r => {
+          return pybossaApi.post(endpoint, null, {
+            headers: {
+              'X-CSRFToken': r.data.form.csrf
+            }
+          })
+        }).then(r => {
+          this.refreshCurrentCategories()
+          sweetalert(
+            r.data.status.charAt(0).toUpperCase() + r.data.status.slice(1),
+            r.data.flash,
+            r.data.status
+          )
+        })
       })
     },
 
