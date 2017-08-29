@@ -118,8 +118,8 @@ export default {
 @import 'src/assets/style/main';
 
 #dashboard-layout {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: auto;
 
   main {
     flex: 1 1 auto;

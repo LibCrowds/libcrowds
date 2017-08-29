@@ -14,7 +14,6 @@
           <router-link
             tag="li"
             class="list-group-item"
-            :active-class="'active'"
             :to="item.link"
             v-for="item in navItems"
             :key="item.id">
@@ -149,7 +148,7 @@ export default {
 
       &:hover,
       &:focus,
-      &.active {
+      &.router-link-exact-active {
         background-color: rgba($white, 0.23);
 
         a {
@@ -157,7 +156,7 @@ export default {
         }
       }
 
-      &.active {
+      &.router-link-exact-active {
         background-color: rgba($white, 0.33);
       }
     }
