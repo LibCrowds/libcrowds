@@ -8,13 +8,17 @@
         v-for="category in categories"
         :key="category.id"
         action
+        v-b-toggle="`catlistitem-${category.id}`"
         :active="activeCategory === category"
         @click.native="changeCategory(category)">
-        <span v-b-toggle="`catlistitem-${category.id}`">
-          {{ category.name }}
-        </span>
-        <b-collapse :id="`catlistitem-${category.id}`">
-          <small v-html="marked(category.description)"></small>
+        {{ category.name }}
+        <b-collapse
+          accordion="catlist-accordian"
+          :id="`catlistitem-${category.id}`">
+          <small
+            class="category-description"
+            v-html="getDescription(category)">
+          </small>
         </b-collapse>
       </b-list-group-item>
     </b-list-group>
@@ -52,9 +56,14 @@ export default {
     },
 
     /**
-     * Markdown processor.
+     * Return the markdown processed category description.
+     * @param {Object} category
+     *   The category.
      */
-    marked
+    getDescription (category) {
+      const desc = category.description ? category.description : ''
+      return marked(desc)
+    }
   },
 
   mounted () {
@@ -83,11 +92,22 @@ export default {
 
   .list-group-item {
     cursor: default;
+    display: block;
     border-left: none;
     border-right: none;
 
     &:first-child {
       border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .category-description {
+    p {
+      margin-bottom: 0;
     }
   }
 
