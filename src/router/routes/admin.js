@@ -1,7 +1,7 @@
 import DashboardLayout from '@/pages/layouts/Dashboard'
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Administrators from '@/pages/admin/Administrators'
-import Announcements from '@/pages/admin/Announcements'
+import Publications from '@/pages/admin/Publications'
 import Categories from '@/pages/admin/Categories'
 import Featured from '@/pages/admin/Featured'
 
@@ -25,8 +25,8 @@ export default [
       },
       {
         path: 'announcement',
-        name: 'admin-announcements',
-        component: Announcements
+        name: 'admin-publications',
+        component: Publications
       },
       {
         path: 'categories',

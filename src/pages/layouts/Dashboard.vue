@@ -62,10 +62,10 @@ export default {
           }
         },
         {
-          id: 'announcements',
-          label: 'Announcements',
+          id: 'publications',
+          label: 'Publications',
           link: {
-            name: 'admin-announcements'
+            name: 'admin-publications'
           }
         },
         {

@@ -1,26 +1,26 @@
 <template>
-  <b-card class="announcement-card">
+  <b-card class="publication-card">
     <div class="card-title">
-      <span v-if="announcement.title">
-        {{ announcement.title }}
+      <span v-if="publication.title">
+        {{ publication.title }}
       </span>
       <span v-else-if="showPlaceholders">
         {{ placeholders.title }}
       </span>
     </div>
-    <div class="card-text announcement-created">
-      <span v-if="announcement.created">
-        {{ announcement.created | formatDate }}
+    <div class="card-text publication-created">
+      <span v-if="publication.created">
+        {{ publication.created | formatDate }}
       </span>
       <span v-else-if="showPlaceholders">
         {{ placeholders.created | formatDate }}
       </span>
     </div>
     <hr class="my-1">
-    <div class="card-text announcement-body">
+    <div class="card-text publication-body">
       <span
-        v-if="announcement.body"
-        v-html="marked(announcement.body)">
+        v-if="publication.body"
+        v-html="marked(publication.body)">
       </span>
       <span
         v-else-if="showPlaceholders"
@@ -46,7 +46,7 @@ export default {
   },
 
   props: {
-    announcement: {
+    publication: {
       type: Object,
       required: true
     },
@@ -68,7 +68,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/main';
 
-.announcement-card {
+.publication-card {
 
   .card-title {
     font-size: $font-size-base;
@@ -78,13 +78,13 @@ export default {
     color: $gray-dark;
   }
 
-  .announcement-created {
+  .publication-created {
     font-size: $font-size-sm;
     font-style: italic;
     color: $gray-light;
   }
 
-  .announcement-body {
+  .publication-body {
     p:last-child {
       margin-bottom: 0;
     }

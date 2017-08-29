@@ -122,18 +122,20 @@
       </section>
 
       <section
-        id="announcements"
-        v-if="announcements.length"
+        id="publications"
+        v-if="publications.length"
         class="bg-faded">
         <div class="container pt-4 pb-5">
-          <h2 class="my-1">Announcements</h2>
-          <p class="lead mb-2">The latest news from {{ siteConfig.brand }}.</p>
+          <h2 class="my-1">Publications</h2>
+          <p class="lead mb-2">
+            Articles, papers and blog posts about {{ siteConfig.brand }}.
+          </p>
           <b-card-group columns>
-            <announcement-card
-              v-for="announcement in announcements"
-              :key="announcement.id"
-              :announcement="announcement">
-            </announcement-card>
+            <publication-card
+              v-for="publication in publications"
+              :key="publication.id"
+              :publication="publication">
+            </publication-card>
           </b-card-group>
         </div>
       </section>
@@ -159,7 +161,7 @@ import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import getNumberWithCommas from '@/utils/get-number-with-commas'
 import mapValues from 'lodash/mapValues'
-import AnnouncementCard from '@/components/announcements/AnnouncementCard'
+import PublicationCard from '@/components/publications/PublicationCard'
 
 export default {
   data: function () {
@@ -167,7 +169,7 @@ export default {
       siteConfig: siteConfig,
       stats: {},
       topUsers: [],
-      announcements: [],
+      publications: [],
       leaderboardModalId: 'leaderboard-modal'
     }
   },
@@ -177,7 +179,7 @@ export default {
     LeaderboardModal,
     UserAvatar,
     CollectionCard,
-    AnnouncementCard
+    PublicationCard
   },
 
   computed: {
@@ -202,7 +204,7 @@ export default {
     setData (data) {
       this.topUsers = data.top_users
       this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
-      this.announcements = data.announcements
+      this.publications = data.publications
     },
 
     /**
@@ -224,7 +226,7 @@ export default {
       data.stats = r.data.stats
       return pybossaApi.get('/announcements/')
     }).then(r => {
-      data.announcements = r.data.announcements
+      data.publications = r.data.announcements
       this.setData(data)
     })
   }

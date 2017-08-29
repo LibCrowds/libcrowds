@@ -1,24 +1,24 @@
 <template>
-  <div id="admin-announcements">
+  <div id="admin-publications">
     <div class="row">
       <div class="col-sm-12 col-lg-6">
         <card-form
-          :header="'New Announcement'"
+          :header="'New Publication'"
           :submitText="'Submit'"
           :endpoint="form.endpoint"
           :schema="form.schema"
           :model="form.model"
-          @success="refreshCurrentAnnouncements">
+          @success="refreshCurrentPublications">
         </card-form>
       </div>
       <div class="hidden-md-down col-lg-6">
         <b-card
           class="bg-faded"
           :header="'Preview'">
-          <announcement-card
+          <publication-card
             show-placeholders
-            :announcement="form.model">
-          </announcement-card>
+            :publication="form.model">
+          </publication-card>
         </b-card>
       </div>
     </div>
@@ -26,23 +26,23 @@
       <div class="col-sm-12 mt-3">
         <b-card
           no-block
-          :header="'Current Announcements'">
+          :header="'Current Publications'">
           <b-table
             hover
             show-empty
-            :items="announcements"
+            :items="publications"
             :fields="table.fields"
-            empty-text="No announcements have been made yet">
+            empty-text="No publications have been linked to yet">
 
-            <template slot="created" scope="announcement">
-              {{ announcement.item.created | formatDate }}
+            <template slot="created" scope="publication">
+              {{ publication.item.created | formatDate }}
             </template>
 
-            <template slot="action" scope="announcement">
+            <template slot="action" scope="publication">
               <b-button
                 variant="danger"
                 size="sm"
-                @click="deleteAnnouncement(announcement.item.id)">
+                @click="deletePublication(publication.item.id)">
                 Delete
               </b-button>
             </template>
@@ -58,13 +58,13 @@
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import AnnouncementCard from '@/components/announcements/AnnouncementCard'
+import PublicationCard from '@/components/publications/PublicationCard'
 
 export default {
   data: function () {
     return {
       siteConfig: siteConfig,
-      announcements: [],
+      publications: [],
       form: {
         endpoint: '/admin/announcement/new',
         model: {},
@@ -82,7 +82,7 @@ export default {
               label: 'Body',
               type: 'textArea',
               rows: 3,
-              placeholder: 'Write an announcement (use Markdown)'
+              placeholder: 'Write an introduction (use Markdown)'
             }
           ]
         }
@@ -103,7 +103,7 @@ export default {
 
   components: {
     CardForm,
-    AnnouncementCard
+    PublicationCard
   },
 
   methods: {
@@ -114,35 +114,35 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
-      this.announcements = data.announcements
+      this.publications = data.publications
       this.editCSRF = data.editCSRF
     },
 
     /**
-     * Delete an announcement.
+     * Delete a publication.
      * @param {Number} id
-     *   The announcement ID.
+     *   The publication ID.
      */
-    deleteAnnouncement (id) {
+    deletePublication (id) {
       pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
         headers: {
           'X-CSRFToken': this.editCSRF
         }
       }).then(r => {
         if (r.data.status === 'success') {
-          this.announcements = this.announcements.filter(announcement => {
-            return announcement.id !== id
+          this.publications = this.publications.filter(pub => {
+            return pub.id !== id
           })
         }
       })
     },
 
     /**
-     * Refresh current announcement data.
+     * Refresh current publications data.
      */
-    refreshCurrentAnnouncements () {
+    refreshCurrentPublications () {
       pybossaApi.get('/admin/announcement').then(r => {
-        this.announcements = r.data.announcements
+        this.publications = r.data.announcements
       })
     }
   },
@@ -153,7 +153,7 @@ export default {
       data = r.data
       return pybossaApi.get('/admin/announcement')
     }).then(r => {
-      data.announcements = r.data.announcements
+      data.publications = r.data.announcements
       data.editCSRF = r.data.csrf
       next(vm => vm.setData(data))
     })
