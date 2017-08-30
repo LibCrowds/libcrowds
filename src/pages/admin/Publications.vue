@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
@@ -124,16 +125,29 @@ export default {
      *   The publication ID.
      */
     deletePublication (id) {
-      pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
-        headers: {
-          'X-CSRFToken': this.editCSRF
-        }
-      }).then(r => {
-        if (r.data.status === 'success') {
-          this.publications = this.publications.filter(pub => {
-            return pub.id !== id
+      sweetalert({
+        title: 'Delete Publication',
+        text: 'Are you sure you want to delete this publication?',
+        type: 'warning',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true
+      },
+      () => {
+        pybossaApi.get('/admin/announcement').then(r => {
+          return pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
+            headers: {
+              'X-CSRFToken': r.data.csrf
+            }
           })
-        }
+        }).then(r => {
+          this.refreshCurrentPublications()
+          sweetalert(
+            r.data.status.charAt(0).toUpperCase() + r.data.status.slice(1),
+            r.data.flash,
+            r.data.status
+          )
+        })
       })
     },
 
