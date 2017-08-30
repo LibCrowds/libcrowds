@@ -1,60 +1,49 @@
 <template>
   <div id="admin-categories">
-    <div class="row">
-      <div class="col-sm-12 col-lg-6">
-        <card-form
-          :header="'New Category'"
-          :submitText="'Submit'"
-          :endpoint="form.endpoint"
-          :schema="form.schema"
-          :model="form.model"
-          @success="onNewCategorySuccess">
-        </card-form>
-      </div>
-      <div class="hidden-md-down col-lg-6">
-        <preview-card
-          :fields="previewFields">
-        </preview-card>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 mt-3">
-        <b-card
-          no-block
-          :header="'Current Categories'">
-          <b-table
-            hover
-            show-empty
-            :items="categories"
-            :fields="table.fields">
+    <card-form
+      :header="'New Category'"
+      :submitText="'Submit'"
+      :endpoint="form.endpoint"
+      :schema="form.schema"
+      :model="form.model"
+      class="mb-3"
+      @success="onNewCategorySuccess">
+    </card-form>
 
-            <template slot="n_projects" scope="category">
-              {{ n_projects[category.item.short_name] }}
-            </template>
+    <b-card
+      no-block
+      :header="'Current Categories'">
+      <b-table
+        hover
+        show-empty
+        :items="categories"
+        :fields="table.fields">
 
-            <template slot="collection" scope="category">
-              {{ category.item.info.collection }}
-            </template>
+        <template slot="n_projects" scope="category">
+          {{ n_projects[category.item.short_name] }}
+        </template>
 
-            <template slot="created" scope="category">
-              {{ category.item.created | formatDate }}
-            </template>
+        <template slot="collection" scope="category">
+          {{ category.item.info.collection }}
+        </template>
 
-            <template slot="action" scope="category">
-              <b-button
-                :id="`del-${category.id}`"
-                variant="danger"
-                size="sm"
-                :disabled="n_projects[category.item.short_name] > 0"
-                @click="deleteCategory(category.item.id)">
-                Delete
-              </b-button>
-            </template>
+        <template slot="created" scope="category">
+          {{ category.item.created | formatDate }}
+        </template>
 
-          </b-table>
-        </b-card>
-      </div>
-    </div>
+        <template slot="action" scope="category">
+          <b-button
+            :id="`del-${category.id}`"
+            variant="danger"
+            size="sm"
+            :disabled="n_projects[category.item.short_name] > 0"
+            @click="deleteCategory(category.item.id)">
+            Delete
+          </b-button>
+        </template>
+
+      </b-table>
+    </b-card>
   </div>
 </template>
 
@@ -63,7 +52,6 @@ import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import PreviewCard from '@/components/PreviewCard'
 
 export default {
   data: function () {
@@ -71,8 +59,19 @@ export default {
       siteConfig: siteConfig,
       categories: [],
       form: {
-        endpoint: '/admin/categories',
-        model: {},
+        endpoint: '/api/category',
+        model: {
+          name: null,
+          short_name: null,
+          description: null,
+          info: {
+            collection: null,
+            location: {
+              latitude: 0,
+              longitude: 0
+            }
+          }
+        },
         schema: {
           fields: [
             {
@@ -80,14 +79,40 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Choose a name'
+              placeholder: 'Choose a name',
+              required: true,
+              validator: 'string'
             },
             {
               model: 'description',
               label: 'Description',
               type: 'textArea',
               rows: 3,
-              placeholder: 'Write a description (use Markdown)'
+              placeholder: 'Write a description (use Markdown)',
+              required: true,
+              validator: 'string'
+            },
+            {
+              model: 'info.collection',
+              label: 'Collection',
+              type: 'select',
+              values: siteConfig.collections
+            },
+            {
+              model: 'info.location.latitude',
+              label: 'Latitude',
+              type: 'input',
+              inputType: 'number',
+              min: -90,
+              max: 90
+            },
+            {
+              model: 'info.location.longitude',
+              label: 'Longitude',
+              type: 'input',
+              inputType: 'number',
+              min: -180,
+              max: 180
             }
           ]
         }
@@ -108,25 +133,7 @@ export default {
   },
 
   components: {
-    CardForm,
-    PreviewCard
-  },
-
-  computed: {
-    previewFields: function () {
-      return [
-        {
-          value: this.form.model.name,
-          placeholder: 'short',
-          class: 'title'
-        },
-        {
-          value: this.form.model.description,
-          placeholder: 'long',
-          format: 'markdown'
-        }
-      ]
-    }
+    CardForm
   },
 
   methods: {
@@ -136,10 +143,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
-      delete data.form.id
-
-      this.form.model = data.form
       this.categories = data.categories
       this.n_projects = data.n_projects_per_category
     },
