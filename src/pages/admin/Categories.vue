@@ -28,6 +28,10 @@
             :items="categories"
             :fields="table.fields">
 
+            <template slot="n_projects" scope="category">
+              {{ n_projects_per_category[category.item.short_name] }}
+            </template>
+
             <template slot="collection" scope="category">
               {{ category.item.info.collection }}
             </template>
@@ -89,13 +93,15 @@ export default {
       table: {
         fields: {
           id: { label: 'ID' },
-          collection: { label: 'Collection' },
           name: { label: 'Name' },
+          collection: { label: 'Collection' },
+          n_projects: { label: 'Projects' },
           description: { label: 'Description' },
           created: { label: 'Created' },
           action: { label: 'Action' }
         }
-      }
+      },
+      n_projects_per_category: {}
     }
   },
 
@@ -133,6 +139,7 @@ export default {
 
       this.form.model = data.form
       this.categories = data.categories
+      this.n_projects_per_category = data.n_projects_per_category
     },
 
     /**
@@ -187,7 +194,6 @@ export default {
      */
     setCollection (category) {
       const endpoint = `/api/category/${category.id}`
-      const user = this.$store.state.currentUser
       sweetalert({
         title: 'Set Collection',
         text: `Available collections: ${Object.keys(siteConfig.collections)}`,
@@ -199,17 +205,8 @@ export default {
       },
       (inputValue) => {
         category.info.collection = inputValue
-        pybossaApi.put(
-          endpoint,
-          {
-            info: category.info
-          },
-          {
-            params: {
-              api_key: user.api_key
-            }
-          }
-        ).then(r => {
+        // The user will already be logged in so we shouldn't need the API key
+        pybossaApi.put(endpoint, { info: category.info }).then(r => {
           this.refreshCurrentCategories()
           sweetalert(
             r.status === 200 ? 'Success' : 'Error',
