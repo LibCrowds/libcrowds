@@ -1,9 +1,6 @@
 <template>
   <div id="signin">
-    <basic-layout
-      :navbarSticky="true"
-      :navbarFixed="null"
-      :navbarInvertable="false">
+    <basic-layout>
       <div class="container my-5">
         <div class="col-lg-8 offset-lg-2">
           <card-form
