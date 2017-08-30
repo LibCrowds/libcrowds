@@ -161,7 +161,17 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/').then(r => {
+    // Get categories for this collection only
+    let key = to.params.collectionname
+    let q = `info=collection::${key}&fulltextsearch=1&limit=100`
+    let url = `/api/category?${q}`
+    pybossaApi.get(url).then(r => {
+      // Make sure as the search is not exact
+      r.data = {
+        categories: r.data.filter(category => {
+          return category.info.collection === key
+        })
+      }
       next(vm => vm.setData(r.data))
     })
   }
