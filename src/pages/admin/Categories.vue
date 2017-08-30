@@ -29,26 +29,28 @@
         </template>
 
         <template slot="action" scope="category">
-          <b-button
-            :id="`edit-${category.id}`"
-            variant="secondary"
-            size="sm"
-            :to="{
-              name: 'admin-edit-category',
-              params: {
-                categoryid: category.item.id
-              }
-            }">
-            Edit
-          </b-button>
-          <b-button
-            :id="`del-${category.id}`"
-            variant="danger"
-            size="sm"
-            :disabled="n_projects[category.item.short_name] > 0"
-            @click="deleteCategory(category.item.id)">
-            Delete
-          </b-button>
+          <b-button-group>
+            <b-button
+              :id="`edit-${category.id}`"
+              variant="secondary"
+              size="sm"
+              :to="{
+                name: 'admin-edit-category',
+                params: {
+                  categoryid: category.item.id
+                }
+              }">
+              Edit
+            </b-button>
+            <b-button
+              :id="`del-${category.id}`"
+              variant="danger"
+              size="sm"
+              :disabled="n_projects[category.item.short_name] > 0"
+              @click="deleteCategory(category.item.id)">
+              Delete
+            </b-button>
+          </b-button-group>
         </template>
 
       </b-table>
