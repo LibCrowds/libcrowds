@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '@/router'
 import pybossaApi from '@/api/pybossa'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    currentUser: null,
-    csrfToken: null,
+    currentUser: {},
+    loginPending: false,
     notification: {}
   },
 
@@ -17,17 +18,38 @@ const store = new Vuex.Store({
     },
     DELETE_ITEM: (state, key) => {
       state[key] = null
+    },
+    LOGIN_PENDING: (state) => {
+      state.loginPending = true
+    },
+    LOGIN: (state, user) => {
+      state.loginPending = false
+      state.currentUser = user
+    },
+    LOGOUT: (state) => {
+      state.loginPending = false
+      state.currentUser = {}
     }
   },
 
   actions: {
     UPDATE_CURRENT_USER: ({ commit }) => {
+      commit('LOGIN_PENDING')
       pybossaApi.get('/account/profile').then(r => {
         if ('user' in r.data) {
-          commit('SET_ITEM', { key: 'currentUser', value: r.data.user })
+          commit('LOGIN', r.data.user)
         } else {
-          commit('SET_ITEM', { key: 'currentUser', value: null })
+          commit('LOGOUT')
         }
+      })
+    },
+
+    LOGOUT: ({ commit }) => {
+      pybossaApi.get('/account/signout').then(r => {
+        if (r.data.next === '/') {
+          router.push({ name: 'landing' })
+        }
+        commit('LOGOUT')
       })
     },
 

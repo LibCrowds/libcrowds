@@ -7,7 +7,8 @@
             :header="'Signin'"
             :lead="lead"
             :submitText="'Sign in'"
-            :form="form">
+            :form="form"
+            @success="onSuccess">
 
             <div
               slot="bottom"
@@ -130,8 +131,20 @@ export default {
      *   The data.
      */
     setData (data) {
+      if (data.next === '/') {
+        this.$router.push({ name: 'landing' })
+      }
       this.form.model = data.form
       this.auth = data.auth
+    },
+
+    /**
+     * Handle signin success.
+     * @param {Object} data
+     *   The response data
+     */
+    onSuccess (data) {
+      this.$router.push({ path: data.next })
     }
   },
 

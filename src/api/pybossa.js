@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '@/store'
-import router from '@/router'
 import siteConfig from '@/siteConfig'
 
 const instance = axios.create({
@@ -40,11 +39,11 @@ instance.interceptors.response.use((r) => {
 })
 
 // Handle redirects
-instance.interceptors.response.use((r) => {
-  if (r !== undefined && 'next' in r.data && r.title !== 'Sign in') {
-    router.push({ path: r.data.next })
-  }
-  return r
-})
+// instance.interceptors.response.use((r) => {
+//   if (r !== undefined && 'next' in r.data && r.title !== 'Sign in') {
+//     router.push({ path: r.data.next })
+//   }
+//   return r
+// })
 
 export default instance

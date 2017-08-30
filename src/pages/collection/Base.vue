@@ -2,11 +2,13 @@
   <div id="collection-base">
     <div id="collection-background" :style="bgStyle"></div>
     <collection-navbar
-      :collectionConfig="collectionConfig">
+      :collectionConfig="collectionConfig"
+      :currentUser="currentUser">
     </collection-navbar>
     <main>
       <router-view
-        :collectionConfig="collectionConfig">
+        :collectionConfig="collectionConfig"
+        :currentUser="currentUser">
       </router-view>
     </main>
     <app-footer></app-footer>
@@ -22,6 +24,13 @@ export default {
   components: {
     CollectionNavbar,
     AppFooter
+  },
+
+  props: {
+    currentUser: {
+      type: Object,
+      required: true
+    }
   },
 
   computed: {

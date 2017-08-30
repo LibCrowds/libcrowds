@@ -3,7 +3,9 @@
     <notifications></notifications>
     <cookie-consent></cookie-consent>
     <main>
-      <router-view></router-view>
+      <router-view
+        :currentUser="currentUser">
+      </router-view>
     </main>
     <vue-progress-bar></vue-progress-bar>
   </div>
@@ -16,6 +18,13 @@ import CookieConsent from '@/components/CookieConsent'
 
 export default {
   name: 'app',
+
+  data: function () {
+    return {
+      currentUser: this.$store.state.currentUser
+    }
+  },
+
   metaInfo: {
     titleTemplate: `%s - ${siteConfig.brand}`,
     meta: [
@@ -31,6 +40,17 @@ export default {
   components: {
     Notifications,
     CookieConsent
+  },
+
+  watch: {
+    // Probably a better way to keep this in sync but this seems to work;
+    // pass it down to any views that need it.
+    '$store.state.currentUser': {
+      handler: function (oldVal, newVal) {
+        this.currentUser = this.$store.state.currentUser
+      },
+      deep: true
+    }
   },
 
   created () {

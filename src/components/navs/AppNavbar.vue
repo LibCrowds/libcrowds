@@ -16,7 +16,7 @@
     </span>
 
     <span id="app-navbar-right">
-      <b-nav is-nav-bar v-if="currentUser" right>
+      <b-nav is-nav-bar v-if="loggedIn" right>
         <b-nav-item-dropdown
           right
           :text="currentUser.name">
@@ -28,8 +28,7 @@
               params: {
                 username: currentUser.name
               }
-            }"
-            @click.native="toggleCollapsibleSidebar">Profile
+            }">Profile
           </b-dropdown-item>
           <b-dropdown-item
             :to="{
@@ -37,8 +36,7 @@
               params: {
                 username: currentUser.name
               }
-            }"
-            @click.native="toggleCollapsibleSidebar">Settings
+            }">Settings
           </b-dropdown-item>
 
           <!-- Admin -->
@@ -48,8 +46,7 @@
               :to="{
                 name: 'admin-dashboard'
               }"
-              v-if="currentUser.admin"
-              @click.native="toggleCollapsibleSidebar">
+              v-if="currentUser.admin">
               Admin
             </b-dropdown-item>
           </span>
@@ -80,18 +77,21 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
+import isEmpty from 'lodash/isEmpty'
 import siteConfig from '@/siteConfig'
 
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
-      currentUser: this.$store.state.currentUser
+      siteConfig: siteConfig
     }
   },
 
   props: {
+    currentUser: {
+      type: Object,
+      required: true
+    },
     fixed: {
       type: String,
       default: 'top'
@@ -106,13 +106,18 @@ export default {
     }
   },
 
+  computed: {
+    loggedIn: function () {
+      return !isEmpty(this.currentUser)
+    }
+  },
+
   methods: {
      /**
      * Sign the user out.
      */
     signout () {
-      pybossaApi.get('/account/signout')
-      this.currentUser = this.$store.state.currentUser
+      this.$store.dispatch('LOGOUT')
     }
   }
 }

@@ -7,6 +7,7 @@
 
     <div class="dashboard">
       <app-navbar
+        :currentUser="currentUser"
         :hideBrandBreakpoint="'lg'"
         :fixed="null">
       </app-navbar>
@@ -16,7 +17,7 @@
       </dashboard-sidenav>
       <main>
         <div class="container p-4">
-          <router-view></router-view>
+          <router-view :currentUser="currentUser"></router-view>
         </div>
       </main>
       <app-footer-slim></app-footer-slim>
@@ -83,6 +84,10 @@ export default {
   },
 
   props: {
+    currentUser: {
+      type: Object,
+      required: true
+    },
     dashboard: {
       type: String,
       required: true,
