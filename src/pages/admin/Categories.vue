@@ -29,7 +29,7 @@
             :fields="table.fields">
 
             <template slot="n_projects" scope="category">
-              {{ n_projects_per_category[category.item.short_name] }}
+              {{ n_projects[category.item.short_name] }}
             </template>
 
             <template slot="collection" scope="category">
@@ -42,8 +42,10 @@
 
             <template slot="action" scope="category">
               <b-button
+                :id="`del-${category.id}`"
                 variant="danger"
                 size="sm"
+                :disabled="n_projects[category.item.short_name] > 0"
                 @click="deleteCategory(category.item.id)">
                 Delete
               </b-button>
@@ -101,7 +103,7 @@ export default {
           action: { label: 'Action' }
         }
       },
-      n_projects_per_category: {}
+      n_projects: {}
     }
   },
 
@@ -139,7 +141,7 @@ export default {
 
       this.form.model = data.form
       this.categories = data.categories
-      this.n_projects_per_category = data.n_projects_per_category
+      this.n_projects = data.n_projects_per_category
     },
 
     /**
