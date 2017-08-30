@@ -97,8 +97,7 @@ export default {
           user_id: { label: 'User ID' },
           action: { label: 'Action' }
         }
-      },
-      editCSRF: null
+      }
     }
   },
 
@@ -116,7 +115,6 @@ export default {
     setData (data) {
       this.form.model = data.form
       this.publications = data.publications
-      this.editCSRF = data.editCSRF
     },
 
     /**
@@ -168,7 +166,6 @@ export default {
       return pybossaApi.get('/admin/announcement')
     }).then(r => {
       data.publications = r.data.announcements
-      data.editCSRF = r.data.csrf
       next(vm => vm.setData(data))
     })
   }
