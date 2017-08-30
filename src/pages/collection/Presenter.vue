@@ -22,7 +22,7 @@ import DefaultPresenter from '@/components/presenters/Default'
 export default {
   data: function () {
     return {
-      project: null,
+      project: {},
       presenter: this.collectionConfig.presenter
     }
   },
@@ -50,6 +50,7 @@ export default {
      *   The data.
      */
     setData (data) {
+      console.log(data)
       this.project = data.project
     },
 

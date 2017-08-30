@@ -1,37 +1,32 @@
 <template>
   <div class="default-presenter">
     <span
-      v-if="project"
-      v-html="project.taskpresenter">
-      YAH
+      v-if="project.info !== undefined"
+      v-html="project.info.task_presenter">
     </span>
-    NAH
   </div>
 </template>
 
 <script>
 export default {
-  data: function () {
-    return {
-      project: null
+  props: {
+    project: {
+      type: Object,
+      required: true
     }
   }
 }
 </script>
 
 <style>
-.libcrowds-viewer-presenter {
-  position: fixed;
+.default-presenter {
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 9999999;
-  background-color: #000;
+  z-index: 999;
+  background-color: #fff;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 </style>
