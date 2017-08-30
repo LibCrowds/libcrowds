@@ -1,18 +1,13 @@
 <template>
   <div id="signin">
-    <basic-layout
-      :navbarSticky="true"
-      :navbarFixed="null"
-      :navbarInvertable="false">
+    <basic-layout>
       <div class="container my-5">
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Signin'"
             :lead="lead"
             :submitText="'Sign in'"
-            :endpoint="form.endpoint"
-            :schema="form.schema"
-            :model="form.model">
+            :form="form">
 
             <div
               slot="bottom"
@@ -85,6 +80,7 @@ export default {
     return {
       form: {
         endpoint: '/account/signin',
+        method: 'post',
         model: {},
         schema: {
           fields: [

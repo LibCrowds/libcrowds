@@ -14,14 +14,15 @@ const instance = axios.create({
 })
 
 // Handle errors
-instance.interceptors.response.use(undefined, (error) => {
-  const errorCodes = [401, 402, 403, 404]
-  if (error.response !== undefined && error.response.status in errorCodes) {
-    router.push({ name: error.response.status })
-  }
-  router.push({ name: 500 })
-  return Promise.reject(error)
-})
+// instance.interceptors.response.use(undefined, (error) => {
+//   console.log(error)
+//   const errorCodes = [401, 402, 403, 404]
+//   if (error.response !== undefined && error.response.status in errorCodes) {
+//     router.push({ name: error.response.status })
+//   }
+//   router.push({ name: 500 })
+//   return Promise.reject(error)
+// })
 
 // Handle success flash messages
 instance.interceptors.response.use((r) => {

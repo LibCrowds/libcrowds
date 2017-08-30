@@ -1,18 +1,13 @@
 <template>
   <div id="reset-password">
-    <basic-layout
-      :navbarSticky="true"
-      :navbarFixed="null"
-      :navbarInvertable="false">
+    <basic-layout>
       <div class="container my-5">
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Reset Password'"
             :lead="lead"
             :submitText="'Reset'"
-            :endpoint="form.endpoint"
-            :schema="form.schema"
-            :model="form.model">
+            :form="form">
           </card-form>
         </div>
       </div>
@@ -30,6 +25,7 @@ export default {
     return {
       form: {
         endpoint: '/account/reset-password',
+        method: 'post',
         model: {},
         schema: {
           fields: [

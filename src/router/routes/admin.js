@@ -3,6 +3,7 @@ import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Administrators from '@/pages/admin/Administrators'
 import Publications from '@/pages/admin/Publications'
 import Categories from '@/pages/admin/Categories'
+import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
 
 export default [
@@ -32,6 +33,11 @@ export default [
         path: 'categories',
         name: 'admin-categories',
         component: Categories
+      },
+      {
+        path: 'categories/update/:categoryid',
+        name: 'admin-edit-category',
+        component: EditCategory
       },
       {
         path: 'featured',

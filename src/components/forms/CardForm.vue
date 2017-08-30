@@ -25,8 +25,8 @@
     <vue-form-generator
       v-else
       ref="form"
-      :schema="schema"
-      :model="model">
+      :schema="form.schema"
+      :model="form.model">
     </vue-form-generator>
 
     <slot name="bottom"></slot>
@@ -36,6 +36,12 @@
         <slot name="footer-left"></slot>
       </span>
       <span>
+        <b-button
+          v-if="showCancel"
+          variant="secondary"
+          @click="cancel">
+          Cancel
+        </b-button>
         <b-button
           variant="success"
           @click="submit">
@@ -61,20 +67,21 @@ export default {
   },
 
   props: {
-    endpoint: {
-      type: String,
-      required: true
+    form: {
+      type: Object,
+      required: true,
+      validator: value => {
+        console.log(value)
+        return (
+          'endpoint' in value &&
+          'method' in value &&
+          'model' in value &&
+          'schema' in value
+        )
+      }
     },
     header: {
       type: String,
-      required: true
-    },
-    schema: {
-      type: Object,
-      required: true
-    },
-    model: {
-      type: Object,
       required: true
     },
     submitText: {
@@ -84,6 +91,10 @@ export default {
     lead: {
       type: String,
       required: false
+    },
+    showCancel: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -93,7 +104,7 @@ export default {
 
   computed: {
     loading: function () {
-      return isEmpty(this.model)
+      return isEmpty(this.form.model)
     },
 
     flashMsg: function () {
@@ -110,7 +121,7 @@ export default {
      */
     injectErrors (errors) {
       this.$refs.form.errors = []
-      for (let field of this.schema.fields) {
+      for (let field of this.form.schema.fields) {
         if (field.model in errors) {
           for (let error of errors[field.model]) {
             this.$refs.form.errors.push({
@@ -127,19 +138,32 @@ export default {
      */
     submit () {
       this.flash = ''
-      pybossaApi.post(this.endpoint, this.model, {
+      pybossaApi({
+        method: this.form.method,
+        url: this.form.endpoint,
+        data: this.form.model,
         headers: {
-          'X-CSRFToken': this.model.csrf
+          'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
-        if (r.data.status === 'success') {
-          this.$emit('success', r.data)
-        } else {
+        if (r.data.status === 'error') {
           this.flash = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
+        } else {
+          this.$emit('success', r.data)
         }
+      }).catch(err => {
+        this.flash = err.response.data.exception_msg
+        this.status = 'error'
       })
+    },
+
+    /**
+     * Cancel the form submission.
+     */
+    cancel () {
+      this.$emit('cancel')
     }
   }
 }

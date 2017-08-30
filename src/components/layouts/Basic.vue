@@ -13,22 +13,6 @@ export default {
       type: Boolean,
       default: true
     },
-    navbarType: {
-      type: String,
-      default: 'inverse'
-    },
-    navbarInvertable: {
-      type: Boolean,
-      default: true
-    },
-    navbarFixed: {
-      type: String,
-      default: 'top'
-    },
-    navbarSticky: {
-      type: String,
-      default: null
-    },
     background: {
       type: String,
       default: null

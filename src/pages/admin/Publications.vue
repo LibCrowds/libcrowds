@@ -5,9 +5,7 @@
         <card-form
           :header="'New Publication'"
           :submitText="'Submit'"
-          :endpoint="form.endpoint"
-          :schema="form.schema"
-          :model="form.model"
+          :form="form"
           @success="refreshCurrentPublications">
         </card-form>
       </div>
@@ -68,6 +66,7 @@ export default {
       publications: [],
       form: {
         endpoint: '/admin/announcement/new',
+        method: 'post',
         model: {},
         schema: {
           fields: [

@@ -1,60 +1,60 @@
 <template>
   <div id="admin-categories">
-    <div class="row">
-      <div class="col-sm-12 col-lg-6">
-        <card-form
-          :header="'New Category'"
-          :submitText="'Submit'"
-          :endpoint="form.endpoint"
-          :schema="form.schema"
-          :model="form.model"
-          @success="onNewCategorySuccess">
-        </card-form>
-      </div>
-      <div class="hidden-md-down col-lg-6">
-        <preview-card
-          :fields="previewFields">
-        </preview-card>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 mt-3">
-        <b-card
-          no-block
-          :header="'Current Categories'">
-          <b-table
-            hover
-            show-empty
-            :items="categories"
-            :fields="table.fields">
+    <card-form
+      :header="'New Category'"
+      :form="form"
+      class="mb-4"
+      @success="onNewCategorySuccess">
+    </card-form>
 
-            <template slot="n_projects" scope="category">
-              {{ n_projects[category.item.short_name] }}
-            </template>
+    <b-card
+      no-block
+      :header="'Current Categories'">
+      <b-table
+        hover
+        show-empty
+        :items="categories"
+        :fields="table.fields">
 
-            <template slot="collection" scope="category">
-              {{ category.item.info.collection }}
-            </template>
+        <template slot="n_projects" scope="category">
+          {{ n_projects[category.item.short_name] }}
+        </template>
 
-            <template slot="created" scope="category">
-              {{ category.item.created | formatDate }}
-            </template>
+        <template slot="collection" scope="category">
+          {{ category.item.info.collection }}
+        </template>
 
-            <template slot="action" scope="category">
-              <b-button
-                :id="`del-${category.id}`"
-                variant="danger"
-                size="sm"
-                :disabled="n_projects[category.item.short_name] > 0"
-                @click="deleteCategory(category.item.id)">
-                Delete
-              </b-button>
-            </template>
+        <template slot="created" scope="category">
+          {{ category.item.created | formatDate }}
+        </template>
 
-          </b-table>
-        </b-card>
-      </div>
-    </div>
+        <template slot="action" scope="category">
+          <b-button-group>
+            <b-button
+              :id="`edit-${category.id}`"
+              variant="secondary"
+              size="sm"
+              :to="{
+                name: 'admin-edit-category',
+                params: {
+                  categoryid: category.item.id
+                }
+              }">
+              Edit
+            </b-button>
+            <b-button
+              :id="`del-${category.id}`"
+              variant="danger"
+              size="sm"
+              :disabled="n_projects[category.item.short_name] > 0"
+              @click="deleteCategory(category.item.id)">
+              Delete
+            </b-button>
+          </b-button-group>
+        </template>
+
+      </b-table>
+    </b-card>
   </div>
 </template>
 
@@ -63,7 +63,6 @@ import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import PreviewCard from '@/components/PreviewCard'
 
 export default {
   data: function () {
@@ -72,6 +71,7 @@ export default {
       categories: [],
       form: {
         endpoint: '/admin/categories',
+        method: 'post',
         model: {},
         schema: {
           fields: [
@@ -108,25 +108,7 @@ export default {
   },
 
   components: {
-    CardForm,
-    PreviewCard
-  },
-
-  computed: {
-    previewFields: function () {
-      return [
-        {
-          value: this.form.model.name,
-          placeholder: 'short',
-          class: 'title'
-        },
-        {
-          value: this.form.model.description,
-          placeholder: 'long',
-          format: 'markdown'
-        }
-      ]
-    }
+    CardForm
   },
 
   methods: {
@@ -183,38 +165,20 @@ export default {
      *   The response data.
      */
     onNewCategorySuccess (data) {
-      const newCategory = data.categories.filter(category => {
+      const category = data.categories.filter(category => {
         return category.name === data.form.name
       })[0]
-      this.setCollection(newCategory)
-    },
-
-    /**
-     * Set the collection for a category.
-     * @param {Object} category
-     *   The category.
-     */
-    setCollection (category) {
-      const endpoint = `/api/category/${category.id}`
       sweetalert({
-        title: 'Set Collection',
-        text: `Available collections: ${Object.keys(siteConfig.collections)}`,
-        type: 'input',
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        inputPlaceholder: 'Choose a collection'
+        title: 'Category added',
+        text: 'Click OK to set additional data',
+        type: 'success'
       },
-      (inputValue) => {
-        category.info.collection = inputValue
-        // The user will already be logged in so we shouldn't need the API key
-        pybossaApi.put(endpoint, { info: category.info }).then(r => {
-          this.refreshCurrentCategories()
-          sweetalert(
-            r.status === 200 ? 'Success' : 'Error',
-            r.status === 200 ? 'Item updated' : r.data.exception_msg,
-            r.status === 200 ? 'success' : 'error'
-          )
+      () => {
+        this.$router.push({
+          name: 'admin-edit-category',
+          params: {
+            categoryid: category.id
+          }
         })
       })
     },
