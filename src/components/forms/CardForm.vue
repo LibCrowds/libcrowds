@@ -150,12 +150,12 @@ export default {
           this.flash = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
-        } else if (r.status === 'failed') {  // /api errors
-          this.flash = r.exception_cls
-          this.status = 'error'
         } else {
           this.$emit('success', r.data)
         }
+      }).catch(err => {
+        this.flash = err.response.data.exception_msg
+        this.status = 'error'
       })
     },
 

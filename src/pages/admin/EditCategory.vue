@@ -74,7 +74,7 @@ export default {
               model: 'info.collection',
               label: 'Collection',
               type: 'select',
-              values: siteConfig.collections
+              values: Object.keys(siteConfig.collections)
             },
             {
               model: 'info.location.latitude',
@@ -105,9 +105,15 @@ export default {
      *   The data.
      */
     setData (data) {
+      if (!data.category.info) {
+        data.category.info = {}
+      }
       this.category = data.category
     },
 
+    /**
+     * Handle form success.
+     */
     onSuccess () {
       sweetalert({
         title: 'Category updated',
@@ -116,6 +122,9 @@ export default {
       this.$router.push({ name: 'admin-categories' }))
     },
 
+    /**
+     * Handle form cancel.
+     */
     onCancel () {
       this.$router.push({ name: 'admin-categories' })
     }
