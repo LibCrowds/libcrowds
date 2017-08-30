@@ -2,7 +2,10 @@
   <div id="presenter">
     <component
       :is="presenter"
-      :project="project">
+      v-if="project"
+      :project="project"
+      :currentUser="currentUser"
+      :collectionConfig="collectionConfig">
     </component>
   </div>
 </template>
@@ -15,12 +18,16 @@ import DefaultPresenter from '@/components/presenters/Default'
 export default {
   data: function () {
     return {
-      project: {}
+      project: null
     }
   },
 
   props: {
     collectionConfig: {
+      type: Object,
+      required: true
+    },
+    currentUser: {
       type: Object,
       required: true
     }
