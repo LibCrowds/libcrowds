@@ -17,7 +17,7 @@
                   :key="`form-${form.id}-chooser`"
                   :active="activeFormId === form.id"
                   @click.native="activeFormId = form.id">
-                  {{ form.label }}
+                  {{ form.header }}
                 </b-list-group-item>
               </b-list-group>
             </b-card>
@@ -27,10 +27,10 @@
 
             <avatar-form
               v-if="activeFormId === 'avatar'"
-              :header="'Avatar'"
+              :header="forms.avatar.header"
               :submitText="'Update Avatar'"
               :type="'circle'"
-              :endpoint="endpoints[forms.avatar.id]"
+              :endpoint="forms.avatar.endpoint"
               :model="forms.avatar.model">
             </avatar-form>
 
@@ -38,11 +38,9 @@
               v-for="form in forms"
               :key="`form-${form.id}`"
               v-if="activeFormId === form.id && activeFormId !== 'avatar'"
-              :header="form.label"
+              :header="form.header"
               :submitText="form.submitText"
-              :endpoint="endpoints[form.id]"
-              :schema="form.schema"
-              :model="form.model">
+              :form="form.form">
             </card-form>
 
           </div>
@@ -63,86 +61,11 @@ export default {
   data: function () {
     return {
       activeFormId: 'profile',
-      forms: {
-        profile: {
-          id: 'profile',
-          label: 'Profile',
-          submitText: 'Update Profile',
-          model: {},
-          schema: {
-            fields: [
-              {
-                model: 'fullname',
-                label: 'Full name',
-                type: 'input',
-                inputType: 'text'
-              },
-              {
-                model: 'name',
-                label: 'Username',
-                type: 'input',
-                inputType: 'text'
-              },
-              {
-                model: 'email_addr',
-                label: 'Email',
-                type: 'input',
-                inputType: 'email'
-              }
-            ]
-          }
-        },
-        security: {
-          id: 'security',
-          label: 'Security',
-          submitText: 'Update Password',
-          model: {},
-          schema: {
-            fields: [
-              {
-                model: 'current_password',
-                label: 'Current Password',
-                type: 'input',
-                inputType: 'password'
-              },
-              {
-                model: 'new_password',
-                label: 'New Password',
-                type: 'input',
-                inputType: 'password'
-              },
-              {
-                model: 'confirm',
-                label: 'Confirm New Password',
-                type: 'input',
-                inputType: 'password'
-              }
-            ]
-          }
-        },
-        api: {
-          id: 'api',
-          label: 'API',
-          submitText: 'Reset API Key',
-          model: {},
-          schema: {
-            fields: [
-              {
-                model: 'api_key',
-                label: 'API Key',
-                type: 'input',
-                inputType: 'text',
-                readonly: true
-              }
-            ]
-          }
-        },
-        avatar: {
-          id: 'avatar',
-          label: 'Avatar',
-          model: {},
-          schema: {}
-        }
+      models: {
+        profile: {},
+        security: {},
+        api: {},
+        avatar: {}
       }
     }
   },
@@ -158,12 +81,100 @@ export default {
   },
 
   computed: {
-    endpoints: function () {
+    forms: function () {
       return {
-        profile: `account/${this.$store.state.currentUser.name}/update`,
-        avatar: `account/${this.$store.state.currentUser.name}/update`,
-        security: `account/${this.$store.state.currentUser.name}/update`,
-        api: `account/${this.$store.state.currentUser.name}/resetapikey`
+        profile: {
+          id: 'profile',
+          header: 'Profile',
+          submitText: 'Update Profile',
+          form: {
+            endpoint: `account/${this.$store.state.currentUser.name}/update`,
+            method: 'post',
+            model: this.models.profile,
+            schema: {
+              fields: [
+                {
+                  model: 'fullname',
+                  label: 'Full name',
+                  type: 'input',
+                  inputType: 'text'
+                },
+                {
+                  model: 'name',
+                  label: 'Username',
+                  type: 'input',
+                  inputType: 'text'
+                },
+                {
+                  model: 'email_addr',
+                  label: 'Email',
+                  type: 'input',
+                  inputType: 'email'
+                }
+              ]
+            }
+          }
+        },
+        security: {
+          id: 'security',
+          header: 'Security',
+          submitText: 'Update Password',
+          form: {
+            endpoint: `account/${this.$store.state.currentUser.name}/update`,
+            method: 'post',
+            model: this.models.security,
+            schema: {
+              fields: [
+                {
+                  model: 'current_password',
+                  label: 'Current Password',
+                  type: 'input',
+                  inputType: 'password'
+                },
+                {
+                  model: 'new_password',
+                  label: 'New Password',
+                  type: 'input',
+                  inputType: 'password'
+                },
+                {
+                  model: 'confirm',
+                  label: 'Confirm New Password',
+                  type: 'input',
+                  inputType: 'password'
+                }
+              ]
+            }
+          }
+        },
+        api: {
+          id: 'api',
+          header: 'API',
+          submitText: 'Reset API Key',
+          form: {
+            endpoint: `account/${this.$store.state.currentUser.name}/resetapikey`,
+            method: 'post',
+            model: this.models.api,
+            schema: {
+              fields: [
+                {
+                  model: 'api_key',
+                  label: 'API Key',
+                  type: 'input',
+                  inputType: 'text',
+                  readonly: true
+                }
+              ]
+            }
+          }
+        },
+        avatar: {
+          id: 'avatar',
+          header: 'Avatar',
+          endpoint: `account/${this.$store.state.currentUser.name}/update`,
+          model: this.models.avatar,
+          schema: {}
+        }
       }
     }
   },
@@ -175,24 +186,28 @@ export default {
      *   The data.
      */
     setData (data) {
-      this.forms.profile.model = data.form
-      this.forms.avatar.model = data.upload_form
-      this.forms.security.model = data.password_form
-      this.forms.api.model = data.api_form
-      this.forms.api.model.api_key = data.user.api_key
-      this.forms.profile.model.btn = 'Profile'
-      this.forms.avatar.model.btn = 'Upload'
-      this.forms.security.model.btn = 'Password'
+      this.models = {
+        profile: data.form,
+        security: data.password_form,
+        api: data.api_form,
+        avatar: data.upload_form
+      }
+      this.models.profile.btn = 'Profile'
+      this.models.avatar.btn = 'Upload'
+      this.models.security.btn = 'Password'
+      this.models.api.api_key = data.user.api_key
     },
 
     /**
      * Clear core data.
      */
     clearData () {
-      this.forms.profile.model = {}
-      this.forms.avatar.model = {}
-      this.forms.security.model = {}
-      this.forms.api.model = {}
+      this.models = {
+        profile: {},
+        security: {},
+        api: {},
+        avatar: {}
+      }
     }
   },
 

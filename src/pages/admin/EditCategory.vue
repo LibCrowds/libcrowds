@@ -4,10 +4,7 @@
       show-cancel
       :header="'Edit Category'"
       :submitText="'Update'"
-      :endpoint="form.endpoint"
-      :method="form.method"
-      :schema="form.schema"
-      :model="form.model"
+      :form="form"
       class="mb-4"
       @success="onSuccess"
       @cancel="onCancel">

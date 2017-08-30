@@ -2,10 +2,7 @@
   <div id="admin-categories">
     <card-form
       :header="'New Category'"
-      :submitText="'Submit'"
-      :endpoint="form.endpoint"
-      :schema="form.schema"
-      :model="form.model"
+      :form="form"
       class="mb-4"
       @success="onNewCategorySuccess">
     </card-form>
@@ -72,6 +69,7 @@ export default {
       categories: [],
       form: {
         endpoint: '/admin/categories',
+        method: 'post',
         model: {},
         schema: {
           fields: [

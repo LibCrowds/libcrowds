@@ -5,7 +5,6 @@
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Forgotten Password'"
-            :lead="lead"
             :submitText="'Reset'"
             :form="form">
           </card-form>

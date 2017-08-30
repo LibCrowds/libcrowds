@@ -7,9 +7,7 @@
             :header="'Signin'"
             :lead="lead"
             :submitText="'Sign in'"
-            :endpoint="form.endpoint"
-            :schema="form.schema"
-            :model="form.model">
+            :form="form">
 
             <div
               slot="bottom"
@@ -82,6 +80,7 @@ export default {
     return {
       form: {
         endpoint: '/account/signin',
+        method: 'post',
         model: {},
         schema: {
           fields: [

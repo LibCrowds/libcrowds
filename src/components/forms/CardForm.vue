@@ -25,8 +25,8 @@
     <vue-form-generator
       v-else
       ref="form"
-      :schema="schema"
-      :model="model">
+      :schema="form.schema"
+      :model="form.model">
     </vue-form-generator>
 
     <slot name="bottom"></slot>
@@ -67,24 +67,21 @@ export default {
   },
 
   props: {
-    endpoint: {
-      type: String,
-      required: true
-    },
-    method: {
-      type: String,
-      default: 'post'
+    form: {
+      type: Object,
+      required: true,
+      validator: value => {
+        console.log(value)
+        return (
+          'endpoint' in value &&
+          'method' in value &&
+          'model' in value &&
+          'schema' in value
+        )
+      }
     },
     header: {
       type: String,
-      required: true
-    },
-    schema: {
-      type: Object,
-      required: true
-    },
-    model: {
-      type: Object,
       required: true
     },
     submitText: {
@@ -107,7 +104,7 @@ export default {
 
   computed: {
     loading: function () {
-      return isEmpty(this.model)
+      return isEmpty(this.form.model)
     },
 
     flashMsg: function () {
@@ -124,7 +121,7 @@ export default {
      */
     injectErrors (errors) {
       this.$refs.form.errors = []
-      for (let field of this.schema.fields) {
+      for (let field of this.form.schema.fields) {
         if (field.model in errors) {
           for (let error of errors[field.model]) {
             this.$refs.form.errors.push({
@@ -142,11 +139,11 @@ export default {
     submit () {
       this.flash = ''
       pybossaApi({
-        method: this.method,
-        url: this.endpoint,
-        data: this.model,
+        method: this.form.method,
+        url: this.form.endpoint,
+        data: this.form.model,
         headers: {
-          'X-CSRFToken': this.model.csrf
+          'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
         if (r.data.status === 'error') {
