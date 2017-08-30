@@ -65,6 +65,10 @@ export default {
       type: String,
       required: true
     },
+    method: {
+      type: String,
+      default: 'post'
+    },
     header: {
       type: String,
       required: true
@@ -127,7 +131,10 @@ export default {
      */
     submit () {
       this.flash = ''
-      pybossaApi.post(this.endpoint, this.model, {
+      pybossaApi({
+        method: this.method,
+        url: this.endpoint,
+        data: this.model,
         headers: {
           'X-CSRFToken': this.model.csrf
         }
