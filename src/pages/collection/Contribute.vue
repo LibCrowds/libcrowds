@@ -57,6 +57,9 @@
               @change="onPageChange">
             </project-pagination>
           </span>
+          <p v-else class="text-center mb-0">
+            No projects have been published for this category
+          </p>
         </div>
       </div>
     </section>
