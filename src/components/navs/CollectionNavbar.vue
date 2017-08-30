@@ -121,7 +121,9 @@
             <span>
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item
-                to="#"
+                :to="{
+                  name: 'admin-dashboard'
+                }"
                 v-if="currentUser.admin"
                 @click.native="toggleCollapsibleSidebar">
                 Admin

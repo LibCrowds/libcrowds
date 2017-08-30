@@ -8,7 +8,7 @@
           :endpoint="form.endpoint"
           :schema="form.schema"
           :model="form.model"
-          @success="refreshCurrentCategories">
+          @success="onNewCategorySuccess">
         </card-form>
       </div>
       <div class="hidden-md-down col-lg-6">
@@ -27,6 +27,10 @@
             show-empty
             :items="categories"
             :fields="table.fields">
+
+            <template slot="collection" scope="category">
+              {{ category.item.info.collection }}
+            </template>
 
             <template slot="created" scope="category">
               {{ category.item.created | formatDate }}
@@ -85,6 +89,7 @@ export default {
       table: {
         fields: {
           id: { label: 'ID' },
+          collection: { label: 'Collection' },
           name: { label: 'Name' },
           description: { label: 'Description' },
           created: { label: 'Created' },
@@ -158,6 +163,58 @@ export default {
             r.data.status.charAt(0).toUpperCase() + r.data.status.slice(1),
             r.data.flash,
             r.data.status
+          )
+        })
+      })
+    },
+
+    /**
+     * Handle new category success.
+     * @param {Object} data
+     *   The response data.
+     */
+    onNewCategorySuccess (data) {
+      const newCategory = data.categories.filter(category => {
+        return category.name === data.form.name
+      })[0]
+      this.setCollection(newCategory)
+    },
+
+    /**
+     * Set the collection for a category.
+     * @param {Object} category
+     *   The category.
+     */
+    setCollection (category) {
+      const endpoint = `/api/category/${category.id}`
+      const user = this.$store.state.currentUser
+      sweetalert({
+        title: 'Set Collection',
+        text: `Available collections: ${Object.keys(siteConfig.collections)}`,
+        type: 'input',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        showLoaderOnConfirm: true,
+        inputPlaceholder: 'Choose a collection'
+      },
+      (inputValue) => {
+        category.info.collection = inputValue
+        pybossaApi.put(
+          endpoint,
+          {
+            info: category.info
+          },
+          {
+            params: {
+              api_key: user.api_key
+            }
+          }
+        ).then(r => {
+          this.refreshCurrentCategories()
+          sweetalert(
+            r.status === 200 ? 'Success' : 'Error',
+            r.status === 200 ? 'Item updated' : r.data.exception_msg,
+            r.status === 200 ? 'success' : 'error'
           )
         })
       })
