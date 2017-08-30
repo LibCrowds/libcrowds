@@ -33,47 +33,24 @@
       </transition>
 
       <section id="intro" class="bg-white invert-navbar">
-        <div class="container py-3 py-md-4 text-center">
+        <div class="container py-3 py-mt-4 pb-md-5 text-center">
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
               <p id="site-lead" class="mb-0">
-                Have a direct impact on enabling future research at
-                {{ siteConfig.company }}.
-              </p>
-            </div>
-          </div>
-          <hr class="my-2 w-75 sr">
-          <div class="row sr">
-            <div class="col-sm-10 offset-sm-1">
-              <p class="lead my-1">
                 {{ collectionConfig.description }}
               </p>
             </div>
           </div>
-          <hr class="my-2 w-75 sr">
-          <div class="row">
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="television" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_published_projects }}
+          <hr class="my-3 w-75 sr">
+          <div class="row sr">
+            <div class="col-sm-10 offset-sm-1">
+              <p class="lead mb-0">
+                Your contributions will have a direct impact on enabling future
+                research at {{ siteConfig.company }}.
               </p>
-              <p>Projects</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="users" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_total_users }}
-              </p>
-              <p>Volunteers</p>
-            </div>
-            <div class="col-md-4 my-1 sr stat">
-              <icon name="list" scale="3"></icon>
-              <p class="mb-0">
-                {{ stats.n_task_runs }}
-              </p>
-              <p>Contributions</p>
             </div>
           </div>
+          <hr class="my-3 w-75 sr">
         </div>
       </section>
 
