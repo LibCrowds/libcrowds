@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '@/router'
 import pybossaApi from '@/api/pybossa'
 
 Vue.use(Vuex)
@@ -46,7 +47,7 @@ const store = new Vuex.Store({
     LOGOUT: ({ commit }) => {
       pybossaApi.get('/account/signout').then(r => {
         if (r.data.next === '/') {
-          this.$router.push({ name: 'landing' })
+          router.push({ name: 'landing' })
         }
         commit('LOGOUT')
       })
