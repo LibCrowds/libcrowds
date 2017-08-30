@@ -37,6 +37,12 @@
       </span>
       <span>
         <b-button
+          v-if="showCancel"
+          variant="secondary"
+          @click="cancel">
+          Cancel
+        </b-button>
+        <b-button
           variant="success"
           @click="submit">
           {{ submitText }}
@@ -88,6 +94,10 @@ export default {
     lead: {
       type: String,
       required: false
+    },
+    showCancel: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -139,14 +149,24 @@ export default {
           'X-CSRFToken': this.model.csrf
         }
       }).then(r => {
-        if (r.data.status === 'success') {
-          this.$emit('success', r.data)
-        } else {
+        if (r.data.status === 'error') {
           this.flash = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
+        } else if (r.status === 'failed') {  // /api errors
+          this.flash = r.exception_cls
+          this.status = 'error'
+        } else {
+          this.$emit('success', r.data)
         }
       })
+    },
+
+    /**
+     * Cancel the form submission.
+     */
+    cancel () {
+      this.$emit('cancel')
     }
   }
 }
