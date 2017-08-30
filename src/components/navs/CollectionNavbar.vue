@@ -94,7 +94,7 @@
 
           <b-nav-item-dropdown
             right
-            v-if="currentUser"
+            v-if="loggedIn"
             :text="currentUser.name">
 
             <!-- Profile/settings -->
@@ -158,15 +158,14 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import jump from 'jump.js'
 import throttle from 'lodash/throttle'
-import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {
     return {
       currentPath: this.$store.state.route.path,
-      currentUser: this.$store.state.currentUser,
       stickyNavbarRoutes: [
         'collection-home'
       ]
@@ -174,6 +173,10 @@ export default {
   },
 
   props: {
+    currentUser: {
+      type: Object,
+      required: true
+    },
     collectionConfig: {
       type: Object,
       required: true
@@ -200,6 +203,9 @@ export default {
         fixed: null,
         sticky: false
       }
+    },
+    loggedIn: function () {
+      return !isEmpty(this.currentUser)
     }
   },
 
@@ -209,8 +215,7 @@ export default {
      * Sign the user out.
      */
     signout () {
-      pybossaApi.get('/account/signout')
-      this.currentUser = this.$store.state.currentUser
+      this.$store.dispatch('LOGOUT')
     },
 
     /**

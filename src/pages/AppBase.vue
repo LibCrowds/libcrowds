@@ -1,9 +1,13 @@
 <template>
   <div id="app-base">
     <div id="app-background" :style="appBgStyle"></div>
-    <app-navbar></app-navbar>
+    <app-navbar
+      :currentUser="currentUser">
+    </app-navbar>
     <main>
-      <router-view></router-view>
+      <router-view
+        :currentUser="currentUser">
+      </router-view>
     </main>
     <app-footer></app-footer>
   </div>
@@ -18,6 +22,13 @@ export default {
   components: {
     AppNavbar,
     AppFooter
+  },
+
+  props: {
+    currentUser: {
+      type: Object,
+      required: true
+    }
   },
 
   computed: {
