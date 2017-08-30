@@ -7,7 +7,6 @@ yarn-error.log*
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
-src/config.js
+src/siteConfig.js
 src/custom/*
-.ssh
 deploy-key

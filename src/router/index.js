@@ -4,26 +4,31 @@ import VueMeta from 'vue-meta'
 import store from '@/store'
 import manageSession from '@/utils/manageSession'
 
+import coreRoutes from '@/router/routes/core'
 import accountRoutes from '@/router/routes/account'
 import errorRoutes from '@/router/routes/error'
 import helpRoutes from '@/router/routes/help'
-import homeRoutes from '@/router/routes/home'
-import projectRoutes from '@/router/routes/project'
+import collectionRoutes from '@/router/routes/collection'
+import adminRoutes from '@/router/routes/admin'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
 
 const routes = [].concat(
+  coreRoutes,
   accountRoutes,
   errorRoutes,
   helpRoutes,
-  homeRoutes,
-  projectRoutes
+  collectionRoutes,
+  adminRoutes
 )
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routes
+  routes: routes,
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 router.beforeEach((to, from, next) => {

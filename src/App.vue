@@ -10,19 +10,22 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import Notifications from '@/components/Notifications'
 import CookieConsent from '@/components/CookieConsent'
 
 export default {
   name: 'app',
-
   metaInfo: {
-    titleTemplate: `%s - ${config.brand}`,
-    bodyAttrs: {
-      style: `background: url('${config.bgImg}')
-             no-repeat center center / cover fixed;`
-    }
+    titleTemplate: `%s - ${siteConfig.brand}`,
+    meta: [
+      { name: 'description', content: siteConfig.description },
+
+      // Facebook Open Graph Markup
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:title', content: siteConfig.tagline },
+      { property: 'og:description', content: siteConfig.description }
+    ]
   },
 
   components: {

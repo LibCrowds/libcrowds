@@ -1,31 +1,33 @@
 <template>
   <div id="account-settings">
-    <basic-layout
-      :background="'faded'"
-      navbarType="light"
-      :navbarInvertable="false">
+    <basic-layout :background="'geometry'">
 
       <div class="container mt-5 mb-3">
         <div class="row">
           <div class="col-md-4">
-
-            <b-list-group class="mb-3">
-              <b-list-group-item
-                action
-                v-for="form in forms"
-                :key="`form-${form.id}-chooser`"
-                :active="activeFormId === form.id"
-                @click.native="activeFormId = form.id">
-                {{ form.label }}
-              </b-list-group-item>
-            </b-list-group>
+            <b-card
+            no-block
+            id="settings-menu"
+            class="mb-3"
+            :header="'Personal Settings'">
+              <b-list-group>
+                <b-list-group-item
+                  action
+                  v-for="form in forms"
+                  :key="`form-${form.id}-chooser`"
+                  :active="activeFormId === form.id"
+                  @click.native="activeFormId = form.id">
+                  {{ form.label }}
+                </b-list-group-item>
+              </b-list-group>
+            </b-card>
 
           </div>
           <div class="col-md-8">
 
             <avatar-form
               v-if="activeFormId === 'avatar'"
-              :header="'Avatar Settings'"
+              :header="'Avatar'"
               :submitText="'Update Avatar'"
               :type="'circle'"
               :endpoint="endpoints[forms.avatar.id]"
@@ -36,7 +38,7 @@
               v-for="form in forms"
               :key="`form-${form.id}`"
               v-if="activeFormId === form.id && activeFormId !== 'avatar'"
-              :header="`${form.label} Settings`"
+              :header="form.label"
               :submitText="form.submitText"
               :endpoint="endpoints[form.id]"
               :schema="form.schema"
@@ -225,3 +227,32 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@import 'src/assets/style/main';
+
+#settings-menu {
+  .card-header {
+    text-align: center;
+  }
+
+  .list-group-item {
+    cursor: default;
+    border-left: none;
+    border-right: none;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .card-block {
+    display: flex;
+    flex-direction: column;
+  }
+}
+</style>

@@ -1,9 +1,6 @@
 <template>
   <div id="profile">
-    <basic-layout
-      :background="'faded'"
-      navbarType="light"
-      :navbarInvertable="false">
+    <basic-layout :background="'geometry'">
 
       <div class="container mt-5 mb-3">
         <div class="row">

@@ -56,6 +56,7 @@ export default {
 
 .card.user-card {
   .avatar-background {
+    text-align: center;
     padding-top: $spacer-y* 2;
     padding-left: $spacer-x * 2;
     padding-right: $spacer-x * 2;
@@ -63,7 +64,7 @@ export default {
       linear-gradient(to bottom, rgba($brand-info, 0) 0%,
       rgba($brand-info, 0) calc(50% + (#{$spacer-y} * 1)),
       $white calc(50% + (#{$spacer-y} * 1)), $white 100% ),
-      url('../../assets/img/background.jpg');
+      url('../../assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
   }

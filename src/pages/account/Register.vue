@@ -4,7 +4,7 @@
       :navbarSticky="true"
       :navbarFixed="null"
       :navbarInvertable="false">
-      <div class="container my-3">
+      <div class="container my-5">
         <div class="col-lg-8 offset-lg-2">
           <card-form
             :header="'Regsiter'"
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import BasicLayout from '@/components/layouts/Basic'
@@ -97,7 +97,7 @@ export default {
         }
       },
       auth: {},
-      lead: `Create an account for ${config.brand}`
+      lead: `Create an account for ${siteConfig.brand}`
     }
   },
 

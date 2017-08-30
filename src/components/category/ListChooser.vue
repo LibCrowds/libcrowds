@@ -4,42 +4,34 @@
     id="category-list-chooser"
     :header="'Categories'">
     <b-list-group>
-      <b-popover
-        class="hidden-lg-down"
-        v-for="category in categories"
-        :key="category.id"
-        :triggers="popoverTriggers"
-        :placement="popoverPlacement(category)"
-        :content="category.description">
-        <b-list-group-item
-          action
-          :active="activeCategory === category"
-          @click.native="changeCategory(category)">
-          {{ category.name }}
-        </b-list-group-item>
-      </b-popover>
       <b-list-group-item
-        class="hidden-xl-up"
         v-for="category in categories"
         :key="category.id"
         action
+        v-b-toggle="`catlistitem-${category.id}`"
         :active="activeCategory === category"
         @click.native="changeCategory(category)">
         {{ category.name }}
+        <b-collapse
+          accordion="catlist-accordian"
+          :id="`catlistitem-${category.id}`">
+          <small
+            class="category-description"
+            v-html="getDescription(category)">
+          </small>
+        </b-collapse>
       </b-list-group-item>
     </b-list-group>
   </b-card>
 </template>
 
 <script>
-import { sortBy } from 'lodash'
 import marked from 'marked'
 
 export default {
   data: function () {
     return {
-      activeCategory: null,
-      popoverTriggers: [ 'hover' ]
+      activeCategory: null
     }
   },
 
@@ -47,22 +39,6 @@ export default {
     categories: {
       type: Array,
       required: true
-    },
-    showPopovers: {
-      type: Boolean,
-      default: true
-    }
-  },
-
-  computed: {
-    processedCategories: function () {
-      let categories = this.categories.map((category) => {
-        category.description = category.description !== null
-          ? marked(category.description)
-          : category.description
-        return category
-      })
-      return sortBy(categories, 'name')
     }
   },
 
@@ -73,17 +49,20 @@ export default {
      *   The category.
      */
     changeCategory (category) {
-      this.$emit('change', category)
-      this.activeCategory = category
+      if (this.activeCategory !== category) {
+        this.$emit('change', category)
+        this.activeCategory = category
+      }
     },
 
     /**
-     * Used to hide popovers when empty or showPopovers is false.
+     * Return the markdown processed category description.
      * @param {Object} category
      *   The category.
      */
-    popoverPlacement (category) {
-      return category.description && this.showPopovers ? 'right' : null
+    getDescription (category) {
+      const desc = category.description ? category.description : ''
+      return marked(desc)
     }
   },
 
@@ -113,11 +92,22 @@ export default {
 
   .list-group-item {
     cursor: default;
+    display: block;
     border-left: none;
     border-right: none;
 
     &:first-child {
       border-top: none;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .category-description {
+    p {
+      margin-bottom: 0;
     }
   }
 

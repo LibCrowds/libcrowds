@@ -3,7 +3,7 @@
     <div id="wrapper">
 
       <v-gravatar
-        v-if="chosenType === 'gravatar'"
+        v-if="avatar === 'gravatar'"
         :email="user.name"
         :size="size"
         default-img="identicon"
@@ -11,25 +11,20 @@
         class="img-thumbnail rounded-circle">
       </v-gravatar>
 
-      <img
-        v-else
-        :src="avatar"
-        :alt="altTag">
+      <img v-else :src="avatar" :alt="altTag">
 
     </div>
   </b-tooltip>
 </template>
 
 <script>
-import config from '@/config'
+import siteConfig from '@/siteConfig'
 
 export default {
   data () {
     return {
       altTag: `Thumbnail for ${this.user.name}`,
-      preference: JSON.parse(JSON.stringify(config.avatarPreference)),
-      avatar: null,
-      chosenType: null
+      avatar: null
     }
   },
 
@@ -50,37 +45,27 @@ export default {
 
   methods: {
     /**
-     * Set a custom avatar.
+     * Load an avatar.
      */
-    setCustomAvatar () {
+    loadAvatar () {
       const custom = this.user.info.avatar_url
 
+      // Use Gravatar if no custom avatar is available
       if (custom === undefined || custom === null) {
-        this.loadNext()
+        this.avatar = 'gravatar'
         return
       }
 
       if (custom.indexOf('/uploads') > -1) {
-        this.avatar = config.pybossaHost + custom
+        this.avatar = siteConfig.pybossaHost + custom
         return
       }
       this.avatar = custom
-    },
-
-    /**
-     * Attempt to load the avatar of the next type.
-     */
-    loadNext () {
-      const type = this.preference.shift()
-      this.chosenType = type
-      if (type === 'custom') {
-        this.setCustomAvatar()
-      }
     }
   },
 
   created () {
-    this.loadNext()
+    this.loadAvatar()
   }
 }
 </script>

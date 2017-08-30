@@ -46,6 +46,7 @@ $btn-border-radius-sm:             0px;
 $navbar-light-color:               rgba($black, .7);
 $navbar-inverse-color:             $white;
 $navbar-inverse-toggler-border:    none;
+$app-navbar-height:                50px;
 
 /* Nav Pills*/
 $nav-pills-active-link-bg:         transparent;
@@ -109,6 +110,7 @@ $spinkit-spinner-color:            $brand-info;
 @import
   '~bootstrap/scss/bootstrap',
   '~bootstrap-vue/dist/bootstrap-vue.css',
+  '~sweetalert/dist/sweetalert.css',
   'partials/modals',
   'partials/tables',
   'partials/cards'

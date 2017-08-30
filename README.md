@@ -3,12 +3,17 @@
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
 [![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
 
-> A Vue.js frontend for PyBossa (>=2.5.0).
+> A Vue.js frontend for PyBossa (>=2.6.1).
 
-When no task presenter is present for a project 100 new tasks will be retrieved
-for the user and the info fields of those tasks passed directly to an instance of [LibCrowds Viewer](https://github.com/LibCrowds/libcrowds-viewer). The
-annotations returned are saved as the task run.
+This frontend to PyBossa is a little different in that meta-categories can be
+defined to more easily group together large groups of similar projects. For
+example, on the [LibCrowds](www.libcrowds.com) site we define a meta-category for
+two of our major projects, *Convert-a-Card* and *In the Spotlight*.
 
+Each meta-category is presented as if it were a separate site (with it's own
+landing, about and data pages etc.) yet only requires a single PyBossa backend.
+A core page provides routes into each meta-category site, along with the
+statistics, admin and project configuration pages.
 
 ## Installing
 
@@ -21,12 +26,12 @@ npm install
 
 ## Configuring
 
-Settings can be found in [src/config.js.tmpl](src/config.js.tmpl). To use
-this theme you will need to make a copy of the settings file and edit locally.
+Site settings can be found in [src/siteConfig.js.tmpl](src/siteConfig.js.tmpl).
+To use this theme you will need to make a copy of the settings file and edit locally.
 
 ``` bash
 # create local configuration file
-cp src/config.js.tmpl src/config.js
+cp src/siteConfig.js.tmpl src/siteConfig.js
 ```
 
 On your PyBossa server, you will need to update the `CORS_RESOURCES` settings
@@ -52,7 +57,6 @@ CORS_RESOURCES = {
 For a full list of options see the
 [Flask-CORS documentation](https://flask-cors.readthedocs.io/en/latest/).
 
-See the
 
 ## Building
 
@@ -76,11 +80,6 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-CI end-to-end tests are run using BrowserStack, a cross browser and
-real device web-based testing platform.
-
-[![BrowserStack Logo](browserstack-logo.png)](https://www.browserstack.com)
 
 ## Developing
 

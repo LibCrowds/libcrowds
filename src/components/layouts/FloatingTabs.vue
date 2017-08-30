@@ -1,9 +1,5 @@
 <template>
   <div class="floating-tabs-layout">
-    <app-navbar
-      :sticky="true"
-      :fixed="null">
-    </app-navbar>
     <main>
       <div class="container mb-5">
         <transition-group name="fade" mode="out-in" appear>
@@ -24,25 +20,17 @@
         </transition-group>
       </div>
     </main>
-    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
 import jump from 'jump.js'
-import AppNavbar from '@/components/AppNavbar'
-import AppFooter from '@/components/AppFooter'
 
 export default {
   props: {
     navItems: {
       type: Array
     }
-  },
-
-  components: {
-    AppNavbar,
-    AppFooter
   },
 
   methods: {
