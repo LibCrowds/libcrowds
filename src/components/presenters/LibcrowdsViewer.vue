@@ -6,7 +6,7 @@
       :confirm-on-submit="false"
       :buttons="buttons"
       :taskOpts="taskOpts"
-      :navigation="[]"
+      :navigation="navigation"
       :message-bus="messageBus"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
@@ -56,22 +56,29 @@ export default {
     },
     buttons: function () {
       return {
-        like: isEmpty(this.currentUser)
+        like: !isEmpty(this.currentUser)
       }
     },
     navigation: function () {
-      return [
-        {
-          label: this.collectionConfig.name,
+      const names = ['home', 'about', 'contribute', 'discuss', 'data']
+      const nav = names.map(name => {
+        return {
+          label: name.charAt(0).toUpperCase() + name.slice(1),
           url: this.$router.resolve({
-            name: 'collection-home',
+            name: `collection-${name}`,
             params: {
-              collectionName: this.collectionConfig.key
+              collectionname: this.collectionConfig.key
             }
-          }).route,
-          brand: true
+          }).href
         }
-      ]
+      })
+      nav[0].label = this.collectionConfig.name
+      if (this.collectionConfig.forumUrl) {
+        nav[3].url = this.collectionConfig.forumUrl
+      } else {
+        nav.splice(3, 1)
+      }
+      return nav
     }
   },
 
@@ -93,7 +100,9 @@ export default {
      */
     onTaskLiked (task) {
       if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id })
+        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
+          this.messageBus.$emit('success', 'Answer saved, thanks!')
+        })
       } else {
         pybossaApi.delete(`/api/favorites/${task.id}`)
       }
