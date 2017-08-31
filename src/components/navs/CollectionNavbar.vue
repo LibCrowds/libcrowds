@@ -369,6 +369,7 @@ export default {
 
 #collection-navbar.navbar {
   color: $white;
+  z-index: 200;
   font-family: $font-family-base;
   font-weight: 500;
   letter-spacing: 0.8px;
