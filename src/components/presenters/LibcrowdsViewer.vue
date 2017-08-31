@@ -60,7 +60,7 @@ export default {
       }
     },
     navigation: function () {
-      const names = ['home', 'about', 'contribute', 'discuss', 'data']
+      const names = ['home', 'about', 'contribute', 'data']
       const nav = names.map(name => {
         return {
           label: name.charAt(0).toUpperCase() + name.slice(1),
@@ -73,10 +73,12 @@ export default {
         }
       })
       nav[0].label = this.collectionConfig.name
+      nav[0].brand = true
       if (this.collectionConfig.forumUrl) {
-        nav[3].url = this.collectionConfig.forumUrl
-      } else {
-        nav.splice(3, 1)
+        nav.splice(3, 0, {
+          label: 'Discuss',
+          url: this.collectionConfig.forumUrl
+        })
       }
       return nav
     }
@@ -99,12 +101,15 @@ export default {
      *   The task.
      */
     onTaskLiked (task) {
+      console.log(task)
       if (task.liked) {
         pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
-          this.messageBus.$emit('success', 'Answer saved, thanks!')
+          this.messageBus.$emit('success', 'Task liked')
         })
       } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`)
+        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
+          this.messageBus.$emit('success', 'Task unliked!')
+        })
       }
     },
 
