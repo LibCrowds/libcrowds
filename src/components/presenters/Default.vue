@@ -8,12 +8,18 @@
 </template>
 
 <script>
+import stripAndExecuteScripts from '@/utils/stripAndExecuteScripts'
+
 export default {
   props: {
     project: {
       type: Object,
       required: true
     }
+  },
+
+  mounted () {
+    stripAndExecuteScripts(this.project.info.task_presenter)
   }
 }
 </script>
