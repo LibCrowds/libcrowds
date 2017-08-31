@@ -10,7 +10,7 @@
         v-html="collectionConfig.about.intro">
       </span>
       <p v-else>
-        {{ siteConfig.brand }} is a platform for hosting experimental
+        *{{ siteConfig.brand }}* is a platform for hosting experimental
         crowdsourcing projects from {{ siteConfig.company }}. By contributing to
         the projects on this platform you will be directly helping to enable
         future research.
