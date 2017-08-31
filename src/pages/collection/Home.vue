@@ -33,7 +33,7 @@
       </transition>
 
       <section id="intro" class="bg-white invert-navbar">
-        <div class="container py-3 py-mt-4 pb-md-5 text-center">
+        <div class="container py-3 py-mt-4 text-center">
           <div class="row sr">
             <div class="col-sm-10 offset-sm-1">
               <p id="site-lead" class="mb-0">

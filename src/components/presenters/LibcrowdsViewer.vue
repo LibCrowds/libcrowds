@@ -3,14 +3,12 @@
 
     <libcrowds-viewer
       :show-related-tasks="true"
-      :confirm-before-unload="true"
-      :disable-complete="true"
-      :show-like="showLike"
+      :confirm-on-submit="false"
+      :buttons="buttons"
       :taskOpts="taskOpts"
-      :creator="creator"
-      :generator="generator"
+      :navigation="navigation"
+      :message-bus="messageBus"
       @submit="onSubmit"
-      :navigation="[]"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
 
@@ -18,79 +16,83 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import Vue from 'vue'
+import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {
     return {
-      project: null,
-      tasks: []
+      tasks: [],
+      messageBus: new Vue()
     }
   },
 
-  metaInfo: {
-    title: 'Task Presenter'
+  props: {
+    project: {
+      type: Object,
+      required: true
+    },
+    currentUser: {
+      type: Object,
+      required: true
+    },
+    collectionConfig: {
+      type: Object,
+      required: true
+    }
   },
 
   computed: {
     taskOpts: function () {
-      const currentUser = this.$store.state.currentUser
       return this.tasks.map((task) => {
         let opts = task.info
         opts.id = task.id
-        if (currentUser && task.fav_user_ids) {
-          opts.liked = task.fav_user_ids.indexOf(currentUser.id) > -1
+        if (!isEmpty(this.currentUser) && task.fav_user_ids) {
+          opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
         return opts
       })
     },
-    creator: function () {
-      const baseApiUrl = siteConfig.pybossaHost
-      const currentUser = this.$store.state.currentUser
-      if (currentUser) {
-        return {
-          id: `${baseApiUrl}/api/user/${currentUser.id}`,
-          type: 'Person',
-          name: currentUser.fullname,
-          nickname: currentUser.name
-        }
-      }
-      return null
-    },
-    generator: function () {
-      const baseApiUrl = siteConfig.pybossaHost
-      if (this.project) {
-        return {
-          id: `${baseApiUrl}/api/project/${this.project.id}`,
-          type: 'Software',
-          name: `${siteConfig.brand} - ${this.project.name}`,
-          homepage: `${window.location.protocol}//${window.location.hostname}`
-        }
+    buttons: function () {
+      return {
+        like: !isEmpty(this.currentUser)
       }
     },
-    showLike: function () {
-      return this.$store.state.currentUser !== null
+    navigation: function () {
+      const names = ['home', 'about', 'contribute', 'data']
+      const nav = names.map(name => {
+        return {
+          label: name.charAt(0).toUpperCase() + name.slice(1),
+          url: this.$router.resolve({
+            name: `collection-${name}`,
+            params: {
+              collectionname: this.collectionConfig.key
+            }
+          }).href
+        }
+      })
+      nav[0].label = this.collectionConfig.name
+      nav[0].brand = true
+      if (this.collectionConfig.forumUrl) {
+        nav.splice(3, 0, {
+          label: 'Discuss',
+          url: this.collectionConfig.forumUrl
+        })
+      }
+      return nav
     }
   },
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
+     * Load the next 100 tasks.
      */
-    setData (data) {
-      this.project = data.project
-      this.tasks = data.tasks
-    },
-
-    /**
-     * Clear core data.
-     */
-    clearData () {
-      this.project = {}
-      this.tasks = []
+    loadTasks () {
+      const url = `/api/project/${this.project.id}/newtask?limit=100`
+      pybossaApi.get(url).then(r => {
+        this.tasks = Array.isArray(r.data) ? r.data : [r.data]
+      })
     },
 
     /**
@@ -99,10 +101,15 @@ export default {
      *   The task.
      */
     onTaskLiked (task) {
+      console.log(task)
       if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id })
+        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
+          this.messageBus.$emit('success', 'Task liked')
+        })
       } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`)
+        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
+          this.messageBus.$emit('success', 'Task unliked!')
+        })
       }
     },
 
@@ -118,36 +125,13 @@ export default {
         'info': task.annotations
       })
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
-        this.$store.dispatch('NOTIFY', {
-          msg: 'Answer saved!',
-          type: 'success'
-        })
+        this.messageBus.$emit('success', 'Answer saved, thanks!')
       })
     }
   },
 
-  beforeRouteEnter (to, from, next) {
-    let data = {}
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
-      data.project = r.data.project
-      return pybossaApi.get(`/api/project/${data.project.id}/newtask?limit=100`)
-    }).then(r => {
-      data.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      next(vm => vm.setData(data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    this.clearData()
-    let data = {}
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
-      data.project = r.data.project
-      return pybossaApi.get(`/api/project/${data.project.id}/newtask?limit=100`)
-    }).then(r => {
-      data.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      this.setData(data)
-      next()
-    })
+  created () {
+    this.loadTasks()
   }
 }
 </script>

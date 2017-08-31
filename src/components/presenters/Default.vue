@@ -1,37 +1,40 @@
 <template>
-  <div class="default-presenter">
+  <div class="default-presenter invert-navbar">
     <span
-      v-if="project"
-      v-html="project.taskpresenter">
-      YAH
+      v-if="project.info !== undefined"
+      v-html="project.info.task_presenter">
     </span>
-    NAH
   </div>
 </template>
 
 <script>
+import stripAndExecuteScripts from '@/utils/stripAndExecuteScripts'
+
 export default {
-  data: function () {
-    return {
-      project: null
+  props: {
+    project: {
+      type: Object,
+      required: true
     }
+  },
+
+  mounted () {
+    stripAndExecuteScripts(this.project.info.task_presenter)
   }
 }
 </script>
 
 <style>
-.libcrowds-viewer-presenter {
+.default-presenter {
+  padding-top: 120px;
+  overflow: auto;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 9999999;
-  background-color: #000;
+  z-index: 100;
+  background-color: #fff;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 </style>

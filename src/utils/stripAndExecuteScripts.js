@@ -11,14 +11,9 @@ export default function (text) {
     scripts += arguments[1] + '\n'
     return ''
   })
-
-  if (window.execScript) {
-    window.execScript(scripts)
-  } else {
-    let body = document.getElementsByTagName('head')[0]
-    let scriptNode = document.createElement('script')
-    scriptNode.setAttribute('type', 'text/javascript')
-    scriptNode.innerHTML = scripts
-    body.appendChild(scriptNode)
-  }
+  let body = document.getElementsByTagName('head')[0]
+  let scriptNode = document.createElement('script')
+  scriptNode.setAttribute('type', 'text/javascript')
+  scriptNode.innerHTML = scripts
+  body.appendChild(scriptNode)
 }

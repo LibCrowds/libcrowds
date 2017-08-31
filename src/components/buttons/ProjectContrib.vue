@@ -1,7 +1,7 @@
 <template>
   <b-btn
     :to="{
-      name: 'presenter',
+      name: 'collection-presenter',
       params: {
         shortname: shortname
       }

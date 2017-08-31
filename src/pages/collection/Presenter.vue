@@ -1,16 +1,12 @@
 <template>
   <div id="presenter">
-
-    <libcrowds-viewer-presenter
-      v-if="presenter === 'libcrowds-viewer'"
-      :project="project">
-    </libcrowds-viewer-presenter>
-
-    <default-presenter
-      v-else
-      :project="project">
-    </default-presenter>
-
+    <component
+      :is="presenter"
+      v-if="project"
+      :project="project"
+      :currentUser="currentUser"
+      :collectionConfig="collectionConfig">
+    </component>
   </div>
 </template>
 
@@ -22,8 +18,7 @@ import DefaultPresenter from '@/components/presenters/Default'
 export default {
   data: function () {
     return {
-      project: null,
-      presenter: this.collectionConfig.presenter
+      project: null
     }
   },
 
@@ -31,12 +26,23 @@ export default {
     collectionConfig: {
       type: Object,
       required: true
+    },
+    currentUser: {
+      type: Object,
+      required: true
     }
   },
 
-  components: {
-    LibcrowdsViewerPresenter,
-    DefaultPresenter
+  computed: {
+    presenter: function () {
+      const presenters = {
+        'libcrowds-viewer': LibcrowdsViewerPresenter,
+        default: DefaultPresenter
+      }
+      return this.collectionConfig.presenter
+        ? presenters[this.collectionConfig.presenter]
+        : presenters.default
+    }
   },
 
   metaInfo: {
@@ -51,13 +57,6 @@ export default {
      */
     setData (data) {
       this.project = data.project
-    },
-
-    /**
-     * Clear core data.
-     */
-    clearData () {
-      this.project = {}
     }
   },
 
@@ -68,7 +67,6 @@ export default {
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.clearData()
     pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
       this.setData(r.data)
       next()

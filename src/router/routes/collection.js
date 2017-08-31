@@ -41,7 +41,7 @@ const routes = [
       },
       {
         path: 'project/:shortname/presenter',
-        name: 'presenter',
+        name: 'collection-presenter',
         component: CollectionPresenter
       }
     ]
