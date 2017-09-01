@@ -20,13 +20,13 @@
           <router-view :currentUser="currentUser"></router-view>
         </div>
       </main>
-      <app-footer-slim></app-footer-slim>
+      <dashboard-footer></dashboard-footer>
     </div>
   </div>
 </template>
 
 <script>
-import AppFooterSlim from '@/components/footers/AppFooterSlim'
+import DashboardFooter from '@/components/footers/DashboardFooter'
 import AppNavbar from '@/components/navs/AppNavbar'
 import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
@@ -44,7 +44,7 @@ export default {
 
   components: {
     AppNavbar,
-    AppFooterSlim,
+    DashboardFooter,
     DashboardSidenav
   }
 }
