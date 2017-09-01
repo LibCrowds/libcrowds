@@ -1,148 +1,144 @@
 <template>
   <div id="landing">
-    <basic-layout>
-
-      <transition appear>
-        <div id="app-hero">
-          <div class="container">
-            <span class="hidden-sm-down"></span>
-            <p id="site-tagline">{{ siteConfig.tagline }}</p>
-            <div class="stat-row hidden-sm-down">
-              <div class="stat-circle stat-success">
-                <span class="stat">{{ stats.n_published_projects }}</span>
-                <icon name="television"></icon>
-                <p>Projects</p>
-              </div>
-              <div class="stat-circle">
-                <span class="stat">{{ stats.n_total_users }}</span>
-                <icon name="users"></icon>
-                <p>Volunteers</p>
-              </div>
-              <div class="stat-circle">
-                <span class="stat">{{ stats.n_task_runs }}</span>
-                <icon name="list"></icon>
-                <p>Contributions</p>
-              </div>
+    <transition appear>
+      <div id="app-hero">
+        <div class="container">
+          <span class="hidden-sm-down"></span>
+          <p id="site-tagline">{{ siteConfig.tagline }}</p>
+          <div class="stat-row hidden-sm-down">
+            <div class="stat-circle stat-success">
+              <span class="stat">{{ stats.n_published_projects }}</span>
+              <icon name="television"></icon>
+              <p>Projects</p>
+            </div>
+            <div class="stat-circle">
+              <span class="stat">{{ stats.n_total_users }}</span>
+              <icon name="users"></icon>
+              <p>Volunteers</p>
+            </div>
+            <div class="stat-circle">
+              <span class="stat">{{ stats.n_task_runs }}</span>
+              <icon name="list"></icon>
+              <p>Contributions</p>
             </div>
           </div>
         </div>
-      </transition>
+      </div>
+    </transition>
 
-      <section id="contribute" class="bg-faded">
-        <div class="container py-4">
-          <h2 class="mt-4">Contribute</h2>
-          <p class="lead">
-            {{ siteConfig.description }}
-          </p>
-          <div class="card-deck">
-            <collection-card
-              v-for="(config, key) in siteConfig.collections"
-              :key="key"
-              :collection-config="config"
-              :collection-name="key">
-            </collection-card>
+    <section id="contribute" class="bg-faded">
+      <div class="container py-4">
+        <h2 class="mt-4">Contribute</h2>
+        <p class="lead">
+          {{ siteConfig.description }}
+        </p>
+        <div class="card-deck">
+          <collection-card
+            v-for="(config, key) in siteConfig.collections"
+            :key="key"
+            :collection-config="config"
+            :collection-name="key">
+          </collection-card>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="top-users"
+      class="bg-white">
+      <div class="container py-4">
+        <div class="row">
+          <div class="col-lg-5 offset-lg-1 pt-2 text-center">
+            <h3 class="text-uppercase font-weight-bold">
+              Most Active Volunteers
+            </h3>
+            <hr class="my-2">
+            <p class="text-uppercase lead pb-2">
+              To date, our top {{ topUsers.length }} volunteers have made
+              {{ topUsersTaskRuns }} contributions!
+            </p>
+            <span v-if="!currentUser">
+              <b-button
+                class="mt-1"
+                variant="secondary"
+                :to="{
+                  name: 'signin'
+                }">
+                Sign in
+              </b-button>
+              <b-button
+                class="mt-1"
+                variant="success"
+                :to="{
+                  name: 'register'
+                }">
+                Sign up
+              </b-button>
+            </span>
+          </div>
+          <div class="col-lg-5 offset-lg-1 hidden-md-down">
+            <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
+            <span id="wreath"></span>
           </div>
         </div>
-      </section>
-
-      <section
-        id="top-users"
-        class="bg-white">
-        <div class="container py-4">
-          <div class="row">
-            <div class="col-lg-5 offset-lg-1 pt-2 text-center">
-              <h3 class="text-uppercase font-weight-bold">
-                Most Active Volunteers
-              </h3>
-              <hr class="my-2">
-              <p class="text-uppercase lead pb-2">
-                To date, our top {{ topUsers.length }} volunteers have made
-                {{ topUsersTaskRuns }} contributions!
-              </p>
-              <span v-if="!currentUser">
-                <b-button
-                  class="mt-1"
-                  variant="secondary"
-                  :to="{
-                    name: 'signin'
-                  }">
-                  Sign in
-                </b-button>
-                <b-button
-                  class="mt-1"
-                  variant="success"
-                  :to="{
-                    name: 'register'
-                  }">
-                  Sign up
-                </b-button>
-              </span>
-            </div>
-            <div class="col-lg-5 offset-lg-1 hidden-md-down">
-              <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
-              <span id="wreath"></span>
-            </div>
-          </div>
-          <div class="row text-center mt-2">
-            <div class="col-lg-12 pt-1">
-              <ul class="list-unstyled">
-                <li
-                  :key="user.id"
-                  class="text-center d-inline-block mx-1"
-                  v-for="user in topUsers">
-                  <router-link :to="{
-                      name: 'profile',
-                      params: {
-                        username: user.name
-                      }
-                    }"
-                    class="my-1">
-                    <div class="my-1">
-                      <user-avatar
-                        :user="user"
-                        tooltipTriggers="hover">
-                      </user-avatar>
-                    </div>
-                  </router-link>
-                  <p class="badge badge-info">{{ user.score }}</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="row text-center mt-2">
-            <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6">
-              <b-btn
-                variant="black-underline"
-                v-b-modal="leaderboardModalId">
-                <icon name="eye"></icon> View the leaderboard
-              </b-btn>
-            </div>
+        <div class="row text-center mt-2">
+          <div class="col-lg-12 pt-1">
+            <ul class="list-unstyled">
+              <li
+                :key="user.id"
+                class="text-center d-inline-block mx-1"
+                v-for="user in topUsers">
+                <router-link :to="{
+                    name: 'profile',
+                    params: {
+                      username: user.name
+                    }
+                  }"
+                  class="my-1">
+                  <div class="my-1">
+                    <user-avatar
+                      :user="user"
+                      tooltipTriggers="hover">
+                    </user-avatar>
+                  </div>
+                </router-link>
+                <p class="badge badge-info">{{ user.score }}</p>
+              </li>
+            </ul>
           </div>
         </div>
-      </section>
-
-      <section
-        id="publications"
-        v-if="publications.length"
-        class="bg-faded">
-        <div class="container pt-4 pb-5">
-          <h2 class="my-1">Publications</h2>
-          <p class="lead mb-2">
-            Articles, papers and blog posts about {{ siteConfig.brand }}.
-          </p>
-          <b-card-group columns>
-            <publication-card
-              v-for="publication in publications"
-              :key="publication.id"
-              :publication="publication">
-            </publication-card>
-          </b-card-group>
+        <div class="row text-center mt-2">
+          <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6">
+            <b-btn
+              variant="black-underline"
+              v-b-modal="leaderboardModalId">
+              <icon name="eye"></icon> View the leaderboard
+            </b-btn>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
+    <section
+      id="publications"
+      v-if="publications.length"
+      class="bg-faded">
+      <div class="container pt-4 pb-5">
+        <h2 class="my-1">Publications</h2>
+        <p class="lead mb-2">
+          Articles, papers and blog posts about {{ siteConfig.brand }}.
+        </p>
+        <b-card-group columns>
+          <publication-card
+            v-for="publication in publications"
+            :key="publication.id"
+            :publication="publication">
+          </publication-card>
+        </b-card-group>
+      </div>
+    </section>
 
-    </basic-layout>
+    <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
   </div>
 </template>
 
@@ -155,7 +151,6 @@ import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
-import BasicLayout from '@/components/layouts/Basic'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
@@ -175,7 +170,6 @@ export default {
   },
 
   components: {
-    BasicLayout,
     LeaderboardModal,
     UserAvatar,
     CollectionCard,

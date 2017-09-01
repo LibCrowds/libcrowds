@@ -1,4 +1,5 @@
-import DashboardLayout from '@/pages/layouts/Dashboard'
+import DashboardLayout from '@/layouts/Dashboard'
+
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Administrators from '@/pages/admin/Administrators'
 import Publications from '@/pages/admin/Publications'

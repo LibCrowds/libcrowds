@@ -1,40 +1,38 @@
 <template>
   <div id="register">
-    <basic-layout>
-      <div class="container my-5">
-        <div class="col-lg-8 offset-lg-2">
-          <card-form
-            :header="'Regsiter'"
-            :lead="lead"
-            :submitText="submitText"
-            :form="form">
+    <div class="container my-5">
+      <div class="col-lg-8 offset-lg-2">
+        <card-form
+          :header="'Regsiter'"
+          :lead="lead"
+          :submitText="submitText"
+          :form="form">
 
-            <div slot="footer-left">
-              <p class="mb-0 mr-3">
-                <small>
-                  By clicking on "{{ submitText }}" you are agreeing to
-                  the
-                  <router-link
-                    :to="{
-                      name: 'tos'
-                    }">
-                    Terms of Service
-                  </router-link>
-                  and the
-                  <router-link
-                    :to="{
-                      name: 'privacy'
-                    }">
-                    Privacy Policy.
-                  </router-link>
-                </small>
-              </p>
-            </div>
+          <div slot="footer-left">
+            <p class="mb-0 mr-3">
+              <small>
+                By clicking on "{{ submitText }}" you are agreeing to
+                the
+                <router-link
+                  :to="{
+                    name: 'tos'
+                  }">
+                  Terms of Service
+                </router-link>
+                and the
+                <router-link
+                  :to="{
+                    name: 'privacy'
+                  }">
+                  Privacy Policy.
+                </router-link>
+              </small>
+            </p>
+          </div>
 
-          </card-form>
-        </div>
+        </card-form>
       </div>
-    </basic-layout>
+    </div>
   </div>
 </template>
 
@@ -42,7 +40,6 @@
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import BasicLayout from '@/components/layouts/Basic'
 
 export default {
   data: function () {
@@ -98,7 +95,6 @@ export default {
   },
 
   components: {
-    BasicLayout,
     CardForm
   },
 

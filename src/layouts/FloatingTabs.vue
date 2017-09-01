@@ -3,6 +3,7 @@
     <main>
       <div class="container mb-5">
         <transition-group name="fade" mode="out-in" appear>
+
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
@@ -12,9 +13,14 @@
             </b-nav-item>
             <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
           </b-nav>
+
           <section id="content" key="fading-content">
 
-            <slot></slot>
+            <router-view
+              :currentUser="currentUser"
+              :collectionConfig="collectionConfig"
+              @navupdated="onNavUpdated">
+            </router-view>
 
           </section>
         </transition-group>
@@ -27,13 +33,36 @@
 import jump from 'jump.js'
 
 export default {
+  data: function () {
+    return {
+      navItems: []
+    }
+  },
+
   props: {
-    navItems: {
-      type: Array
+    currentUser: {
+      type: Object,
+      required: true
+    },
+    collectionConfig: {
+      type: Object,
+      required: true
     }
   },
 
   methods: {
+    /**
+     * Handle nav item update.
+     * @param {Array} navItems
+     *   The nav items.
+     */
+    onNavUpdated (navItems) {
+      this.navItems = navItems
+    },
+
+    /**
+     * Smooth scrolling singleton.
+     */
     jump: jump
   }
 }
@@ -47,11 +76,11 @@ export default {
   background-size: cover;
   background-attachment: fixed;
 
-  section#content {
+  #content {
     background-color: $white;
 
     /* Internal sections */
-    & > section {
+    & > * > section {
       transition: opacity 600ms;
       padding: 2rem 2.5rem;
 

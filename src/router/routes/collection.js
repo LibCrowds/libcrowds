@@ -1,9 +1,11 @@
 import siteConfig from '@/siteConfig'
-import CollectionBase from '@/pages/collection/Base'
+
+import CollectionBase from '@/layouts/CollectionBase'
+import FloatingTabsLayout from '@/layouts/FloatingTabs'
+
 import CollectionHome from '@/pages/collection/Home'
 import CollectionAbout from '@/pages/collection/About'
 import CollectionData from '@/pages/collection/Data'
-// import CollectionResults from '@/pages/collection/Results'
 import CollectionContribute from '@/pages/collection/Contribute'
 import CollectionPresenter from '@/pages/collection/Presenter'
 
@@ -26,23 +28,47 @@ const routes = [
       },
       {
         path: 'about',
-        name: 'collection-about',
-        component: CollectionAbout
+        component: FloatingTabsLayout,
+        children: [
+          {
+            path: '/',
+            name: 'collection-about',
+            component: CollectionAbout
+          }
+        ]
       },
       {
         path: 'data',
-        name: 'collection-data',
-        component: CollectionData
+        component: FloatingTabsLayout,
+        children: [
+          {
+            path: '/',
+            name: 'collection-data',
+            component: CollectionData
+          }
+        ]
       },
       {
         path: 'contribute',
-        name: 'collection-contribute',
-        component: CollectionContribute
+        component: FloatingTabsLayout,
+        children: [
+          {
+            path: '/',
+            name: 'collection-contribute',
+            component: CollectionContribute
+          }
+        ]
       },
       {
         path: 'project/:shortname/presenter',
-        name: 'collection-presenter',
-        component: CollectionPresenter
+        component: FloatingTabsLayout,
+        children: [
+          {
+            path: '/',
+            name: 'collection-presenter',
+            component: CollectionPresenter
+          }
+        ]
       }
     ]
   }

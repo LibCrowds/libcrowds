@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout>
+  <div id="collection-results">
 
     <section>
       <h2 class="text-center">Results</h2>
@@ -11,13 +11,11 @@
       </component>
     </section>
 
-  </floating-tabs-layout>
+  </div>
 
 </template>
 
 <script>
-import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
-
 export default {
   props: {
     collectionConfig: {
@@ -28,10 +26,6 @@ export default {
 
   metaInfo: {
     title: 'Results'
-  },
-
-  components: {
-    FloatingTabsLayout
   }
 }
 </script>

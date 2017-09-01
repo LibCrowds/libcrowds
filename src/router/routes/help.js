@@ -1,10 +1,11 @@
-import AppBase from '@/pages/AppBase'
+import Core from '@/layouts/Core'
+
 import Help from '@/pages/help/Help'
 
 export default [
   {
     path: '/help',
-    component: AppBase,
+    component: Core,
     children: [
       {
         path: '/',

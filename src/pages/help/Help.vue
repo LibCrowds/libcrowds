@@ -1,45 +1,40 @@
 <template>
   <div id="help">
-    <basic-layout :background="'geometry'">
+    <div class="container my-5">
+      <div class="row">
+        <div class="col-md-4">
+          <b-card
+          no-block
+          id="help-menu"
+          class="mb-3"
+          :header="'Help'">
+            <b-list-group>
+              <b-list-group-item
+                action
+                v-for="page in pages"
+                :key="page.id"
+                :active="activePage === page.id"
+                @click.native="activePage = page.id">
+                {{ page.label }}
+              </b-list-group-item>
+            </b-list-group>
+          </b-card>
 
-      <div class="container my-5">
-        <div class="row">
-          <div class="col-md-4">
-            <b-card
-            no-block
-            id="help-menu"
-            class="mb-3"
-            :header="'Help'">
-              <b-list-group>
-                <b-list-group-item
-                  action
-                  v-for="page in pages"
-                  :key="page.id"
-                  :active="activePage === page.id"
-                  @click.native="activePage = page.id">
-                  {{ page.label }}
-                </b-list-group-item>
-              </b-list-group>
-            </b-card>
-
-          </div>
-          <div class="col-md-8">
-            <component
-              v-for="page in pages"
-              :key="page.id"
-              v-if="activePage === page.id"
-              :is="page.component">
-            </component>
-          </div>
+        </div>
+        <div class="col-md-8">
+          <component
+            v-for="page in pages"
+            :key="page.id"
+            v-if="activePage === page.id"
+            :is="page.component">
+          </component>
         </div>
       </div>
-
-    </basic-layout>
+    </div>
   </div>
 </template>
 
 <script>
-import BasicLayout from '@/components/layouts/Basic'
 import API from '@/pages/help/sections/API'
 import Cookies from '@/pages/help/sections/Cookies'
 import Privacy from '@/pages/help/sections/Privacy'
@@ -56,10 +51,6 @@ export default {
         { id: 'tos', label: 'Terms of Service', component: TOS }
       ]
     }
-  },
-
-  components: {
-    BasicLayout
   },
 
   metaInfo: {
