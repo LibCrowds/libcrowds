@@ -1,11 +1,11 @@
-import Core from '@/layouts/Core'
+import CoreLayout from '@/layouts/Core'
 
 import Help from '@/pages/help/Help'
 
 export default [
   {
     path: '/help',
-    component: Core,
+    component: CoreLayout,
     children: [
       {
         path: '/',

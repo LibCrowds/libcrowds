@@ -1,6 +1,6 @@
 import siteConfig from '@/siteConfig'
 
-import CollectionBase from '@/layouts/CollectionBase'
+import CollectionBaseLayout from '@/layouts/CollectionBase'
 import FloatingTabsLayout from '@/layouts/FloatingTabs'
 
 import CollectionHome from '@/pages/collection/Home'
@@ -12,7 +12,7 @@ import CollectionPresenter from '@/pages/collection/Presenter'
 const routes = [
   {
     path: '/collection/:collectionname',
-    component: CollectionBase,
+    component: CollectionBaseLayout,
     beforeEnter: function (to, from, next) {
       if (to.params.collectionname in siteConfig.collections) {
         next()

@@ -1,4 +1,4 @@
-import Core from '@/layouts/Core'
+import CoreLayout from '@/layouts/Core'
 
 import Profile from '@/pages/account/Profile'
 import Settings from '@/pages/account/Settings'
@@ -10,7 +10,7 @@ import ResetPassword from '@/pages/account/ResetPassword'
 export default [
   {
     path: '/account',
-    component: Core,
+    component: CoreLayout,
     beforeEnter: function (to, from, next) {
       if (to.fullPath === '/account') {
         next({ name: '404' })
