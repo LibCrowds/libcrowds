@@ -46,71 +46,71 @@ export default [
         path: ':username',
         name: 'profile',
         component: Profile
+      }
+    ]
+  },
+  {
+    path: '/account/:username/update',
+    component: DashboardLayout,
+    props: {
+      dashboardNavItems: [
+        {
+          id: 'account-api-settings',
+          label: 'API',
+          link: {
+            name: 'account-api-settings'
+          }
+        },
+        {
+          id: 'account-avatar-settings',
+          label: 'Avatar',
+          link: {
+            name: 'account-avatar-settings'
+          }
+        },
+        {
+          id: 'account-profile-settings',
+          label: 'Profile',
+          link: {
+            name: 'account-profile-settings'
+          }
+        },
+        {
+          id: 'account-security-settings',
+          label: 'Security',
+          link: {
+            name: 'account-security-settings'
+          }
+        }
+      ]
+    },
+    children: [
+      {
+        path: '/',
+        name: 'account-settings',
+        redirect: {
+          name: 'account-api-settings'
+        }
       },
       {
-        path: ':username/update',
-        component: DashboardLayout,
-        props: {
-          dashboardNavItems: [
-            {
-              id: 'account-api-settings',
-              label: 'API',
-              link: {
-                name: 'account-api-settings'
-              }
-            },
-            {
-              id: 'account-avatar-settings',
-              label: 'Avatar',
-              link: {
-                name: 'account-avatar-settings'
-              }
-            },
-            {
-              id: 'account-profile-settings',
-              label: 'Profile',
-              link: {
-                name: 'account-profile-settings'
-              }
-            },
-            {
-              id: 'account-security-settings',
-              label: 'Security',
-              link: {
-                name: 'account-security-settings'
-              }
-            }
-          ]
-        },
-        children: [
-          {
-            path: '/',
-            name: 'account-settings',
-            redirect: {
-              name: 'account-api-settings'
-            }
-          },
-          {
-            path: 'api',
-            name: 'account-api-settings',
-            component: ApiSettings
-          },
-          {
-            path: 'avatar',
-            name: 'account-avatar-settings',
-            component: AvatarSettings
-          },
-          {
-            path: 'profile',
-            name: 'account-profile-settings',
-            component: ProfileSettings
-          },
-          {
-            path: 'security',
-            name: 'account-security-settings',
-            component: SecuritySettings
-          }
-        ]
+        path: 'api',
+        name: 'account-api-settings',
+        component: ApiSettings
+      },
+      {
+        path: 'avatar',
+        name: 'account-avatar-settings',
+        component: AvatarSettings
+      },
+      {
+        path: 'profile',
+        name: 'account-profile-settings',
+        component: ProfileSettings
+      },
+      {
+        path: 'security',
+        name: 'account-security-settings',
+        component: SecuritySettings
       }
     ]
   }
