@@ -142,11 +142,9 @@ export default {
     line-height: 0;
     flex-shrink: 2;
 
-    @include media-breakpoint-up(lg) {
-      img {
-        width: auto;
-        max-height: 250px;
-      }
+    @include media-breakpoint-up(md) {
+      width: 250px;
+      max-height: 250px;
     }
   }
 
