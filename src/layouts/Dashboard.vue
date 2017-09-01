@@ -2,7 +2,7 @@
   <div id="dashboard-layout">
     <dashboard-sidenav
       :position="'side'"
-      :navItems="adminNavItems">
+      :navItems="dashboardNavItems">
     </dashboard-sidenav>
 
     <div class="dashboard">
@@ -13,7 +13,7 @@
       </app-navbar>
       <dashboard-sidenav
         :position="'top'"
-        :navItems="adminNavItems">
+        :navItems="dashboardNavItems">
       </dashboard-sidenav>
       <main>
         <div class="container p-4">
@@ -31,73 +31,14 @@ import AppNavbar from '@/components/navs/AppNavbar'
 import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
 export default {
-  data: function () {
-    return {
-      adminNavItems: [
-        {
-          id: 'dashboard',
-          label: 'Dashboard',
-          link: {
-            name: 'admin-dashboard'
-          }
-        },
-        {
-          id: 'featured',
-          label: 'Featured Projects',
-          link: {
-            name: 'admin-featured'
-          }
-        },
-        {
-          id: 'categories',
-          label: 'Categories',
-          link: {
-            name: 'admin-categories'
-          }
-        },
-        {
-          id: 'administrators',
-          label: 'Administrators',
-          link: {
-            name: 'admin-administrators'
-          }
-        },
-        {
-          id: 'publications',
-          label: 'Publications',
-          link: {
-            name: 'admin-publications'
-          }
-        },
-        {
-          id: 'export-users',
-          label: 'Export Users',
-          link: '#'
-        },
-        {
-          id: 'background-jobs',
-          label: 'Background Jobs',
-          link: '#'
-        }
-      ]
-    }
-  },
-
   props: {
     currentUser: {
       type: Object,
       required: true
     },
-    dashboard: {
-      type: String,
-      required: true,
-      validator: value => {
-        const validDashboards = [
-          'admin',
-          'project'
-        ]
-        return validDashboards.indexOf(value) > -1
-      }
+    dashboardNavItems: {
+      type: Array,
+      required: true
     }
   },
 
@@ -105,16 +46,6 @@ export default {
     AppNavbar,
     AppFooterSlim,
     DashboardSidenav
-  },
-
-  computed: {
-    navItems: function () {
-      if (this.dashboard === 'admin') {
-        return this.adminNavItems
-      } else if (this.dashboard === 'project') {
-        return this.projectNavItems
-      }
-    }
   }
 }
 </script>
