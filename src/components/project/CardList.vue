@@ -1,6 +1,5 @@
 <template>
   <div class="project-card-list">
-
     <transition-group appear
       ref="shuffle-grid"
       tag="ul"
@@ -11,7 +10,6 @@
         <project-card :project="p"></project-card>
       </li>
     </transition-group>
-
   </div>
 </template>
 

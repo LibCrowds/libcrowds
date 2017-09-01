@@ -44,21 +44,35 @@
         <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
 
-            <project-card-list
-              v-if="activeView === 'list'"
-              :projects="filteredProjects">
-            </project-card-list>
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <project-card-list
+                key="project-list"
+                v-if="activeView === 'list'"
+                :projects="filteredProjects">
+              </project-card-list>
+            </transition>
 
-            <project-table
-              v-if="activeView === 'table'"
-              :action="'contribute'"
-              :projects="filteredProjects">
-            </project-table>
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <project-table
+                key="project-table"
+                v-if="activeView === 'table'"
+                :action="'contribute'"
+                :projects="filteredProjects">
+              </project-table>
+            </transition>
 
             <project-pagination
+              key="project-pagination"
               :pagination="pagination"
               @change="onPageChange">
             </project-pagination>
+
           </span>
           <p v-else class="text-center mb-0">
             No projects have been published for this category
@@ -229,3 +243,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#collection-contribute {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 300ms ease;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
+</style>
