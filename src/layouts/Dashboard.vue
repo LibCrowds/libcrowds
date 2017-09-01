@@ -16,7 +16,7 @@
         :navItems="dashboardNavItems">
       </dashboard-sidenav>
       <main>
-        <div class="container p-4">
+        <div class="container py-4">
           <router-view :currentUser="currentUser"></router-view>
         </div>
       </main>
