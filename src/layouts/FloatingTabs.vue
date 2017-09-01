@@ -2,28 +2,29 @@
   <div class="floating-tabs-layout">
     <main>
       <div class="container mb-5">
-        <transition-group name="fade" mode="out-in" appear>
 
-          <b-nav class="nav-unstyled" key="fading-nav">
+        <b-nav class="nav-unstyled" key="fading-nav">
+          <transition name="fade" mode="out-in" appear>
             <b-nav-item
               v-for="item in navItems"
               @click="navigate(item)"
               :key="item.id">
               {{ item.text }}
             </b-nav-item>
-            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
-          </b-nav>
+          </transition>
+          <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+        </b-nav>
 
-          <section id="content" key="fading-content">
-
+        <section id="content" key="fading-content">
+          <transition name="fade" mode="out-in" appear>
             <router-view
               :currentUser="currentUser"
               :collectionConfig="collectionConfig"
               @navupdated="onNavUpdated">
             </router-view>
+          </transition>
+        </section>
 
-          </section>
-        </transition-group>
       </div>
     </main>
   </div>
@@ -72,6 +73,12 @@ export default {
         jump('#' + navItem.id)
       }
     }
+  },
+
+  beforeRouteLeave (to, from, next) {
+    // Just to make the transition look a bit nicer
+    this.navItems = []
+    next()
   }
 }
 </script>
@@ -114,7 +121,7 @@ export default {
     .nav-link {
       font-size: $font-size-sm;
 
-      transition: opacity 500ms ease;
+      transition: opacity 350ms ease;
       color: lighten($gray, 15%);
       display: none;
 
@@ -126,7 +133,7 @@ export default {
 
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity 500ms ease;
+    transition: opacity 300ms ease;
   }
 
   .fade-enter .nav-link,
