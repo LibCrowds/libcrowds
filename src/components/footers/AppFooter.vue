@@ -73,7 +73,7 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'help'
+                name: 'help-cookies'
               }"
               @click.native="scrollIfCurrent">
               Cookies
