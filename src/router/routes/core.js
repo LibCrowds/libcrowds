@@ -1,11 +1,12 @@
-import AppBase from '@/pages/AppBase'
+import CoreLayout from '@/layouts/Core'
+
 import Landing from '@/pages/core/Landing'
 import Statistics from '@/pages/core/Statistics'
 
 export default [
   {
     path: '/',
-    component: AppBase,
+    component: CoreLayout,
     children: [
       {
         path: '/',

@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout :nav-items="navItems">
+  <div id="collection-about">
 
     <section>
       <h2 class="text-center">About</h2>
@@ -25,13 +25,12 @@
       <span v-html="item.markdown"></span>
     </section>
 
-  </floating-tabs-layout>
+  </div>
 
 </template>
 
 <script>
 import siteConfig from '@/siteConfig'
-import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
@@ -51,16 +50,16 @@ export default {
     title: 'About'
   },
 
-  components: {
-    FloatingTabsLayout
-  },
-
   computed: {
     navItems: function () {
       return this.collectionConfig.about.subsections.map((section) => {
         return { id: section.id, text: section.title }
       })
     }
+  },
+
+  mounted () {
+    this.$emit('navupdated', this.navItems)
   }
 }
 </script>

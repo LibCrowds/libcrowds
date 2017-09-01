@@ -71,7 +71,6 @@ export default {
       type: Object,
       required: true,
       validator: value => {
-        console.log(value)
         return (
           'endpoint' in value &&
           'method' in value &&

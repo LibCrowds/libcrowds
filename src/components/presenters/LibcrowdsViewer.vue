@@ -101,7 +101,6 @@ export default {
      *   The task.
      */
     onTaskLiked (task) {
-      console.log(task)
       if (task.liked) {
         pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
           this.messageBus.$emit('success', 'Task liked')

@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout>
+  <div id="global-statistics">
 
     <section>
       <h2 class="text-center">Statistics</h2>
@@ -22,7 +22,7 @@
       </div>
     </section>
 
-  </floating-tabs-layout>
+  </div>
 
 </template>
 
@@ -33,7 +33,6 @@ import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
-import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 
 export default {
   data: function () {
@@ -126,10 +125,6 @@ export default {
 
   metaInfo: {
     title: 'Statistics'
-  },
-
-  components: {
-    FloatingTabsLayout
   },
 
   beforeRouteEnter (to, from, next) {

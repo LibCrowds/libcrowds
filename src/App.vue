@@ -21,7 +21,7 @@ export default {
 
   data: function () {
     return {
-      currentUser: this.$store.state.currentUser
+      currentUser: {}
     }
   },
 
@@ -42,17 +42,6 @@ export default {
     CookieConsent
   },
 
-  watch: {
-    // Probably a better way to keep this in sync but this seems to work;
-    // pass it down to any views that need it.
-    '$store.state.currentUser': {
-      handler: function (oldVal, newVal) {
-        this.currentUser = this.$store.state.currentUser
-      },
-      deep: true
-    }
-  },
-
   created () {
     // Start the progress bar when the app is first loaded
     this.$Progress.start()
@@ -67,6 +56,20 @@ export default {
     this.$router.afterEach((to, from) => {
       this.$Progress.finish()
     })
+
+    // Deep watch currentUser state
+    this.$store.watch(
+      (state) => {
+        this.currentUser = state.currentUser
+        return state.currentUser
+      },
+      function (currentUser) {
+        this.currentUser = currentUser
+      },
+      {
+        deep: true
+      }
+    )
   },
 
   mounted () {

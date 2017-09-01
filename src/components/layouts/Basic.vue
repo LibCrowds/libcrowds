@@ -7,18 +7,7 @@
 </template>
 
 <script>
-export default {
-  props: {
-    showNavbar: {
-      type: Boolean,
-      default: true
-    },
-    background: {
-      type: String,
-      default: null
-    }
-  }
-}
+export default {}
 </script>
 
 <style lang="scss" scoped>
@@ -31,10 +20,6 @@ export default {
 
   main {
     flex: 1 1 auto;
-  }
-
-  &[data-bg="faded"] {
-    @extend .bg-faded;
   }
 
   &[data-bg="geometry"] {

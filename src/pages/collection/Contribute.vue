@@ -1,6 +1,6 @@
 <template>
 
-  <floating-tabs-layout>
+  <div id="collection-contribute">
 
     <section>
       <h2 class="text-center">Contribute</h2>
@@ -30,7 +30,7 @@
             @change="onCategoryChange">
           </category-list-chooser>
         </div>
-        <div class="col-xl-9">
+        <div id="choose-a-project" class="col-xl-9">
           <project-sorting-options
             :views="views"
             :showCompleted="showCompleted"
@@ -64,7 +64,7 @@
       </div>
     </section>
 
-  </floating-tabs-layout>
+  </div>
 
 </template>
 
@@ -75,12 +75,14 @@ import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
 import ProjectTable from '@/components/project/Table'
 import ProjectCardList from '@/components/project/CardList'
-import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 import CategoryListChooser from '@/components/category/ListChooser'
 
 export default {
   data: function () {
     return {
+      navItems: [
+        { id: 'choose-a-project', text: 'Choose a Project' }
+      ],
       views: ['list', 'table'],
       activeView: 'list',
       showCompleted: false,
@@ -115,7 +117,6 @@ export default {
   },
 
   components: {
-    FloatingTabsLayout,
     ProjectSortingOptions,
     ProjectPagination,
     ProjectTable,
@@ -215,6 +216,10 @@ export default {
       }
       next(vm => vm.setData(r.data))
     })
+  },
+
+  mounted () {
+    this.$emit('navupdated', this.navItems)
   }
 }
 </script>
