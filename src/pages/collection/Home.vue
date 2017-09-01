@@ -31,7 +31,7 @@
     </transition>
 
     <section id="intro" class="bg-white invert-navbar">
-      <div class="container py-3 py-mt-4 text-center">
+      <div class="container pt-3 pb-2 pt-md-4 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p id="site-lead" class="mb-0">
@@ -336,12 +336,13 @@ export default {
   }
 
   #site-lead {
-    font-family: $font-family-serif;
-    font-size: 3rem;
+    font-family: $font-family-base;
+    font-size: 2.2rem;
+    font-weight: 300;
     line-height: 1.1;
 
     @include media-breakpoint-up(sm) {
-      font-size: 4rem;
+      font-size: 3rem;
     }
   }
 
