@@ -15,14 +15,14 @@
                 the
                 <router-link
                   :to="{
-                    name: 'tos'
+                    name: 'help-tos'
                   }">
                   Terms of Service
                 </router-link>
                 and the
                 <router-link
                   :to="{
-                    name: 'privacy'
+                    name: 'help-privacy'
                   }">
                   Privacy Policy.
                 </router-link>
