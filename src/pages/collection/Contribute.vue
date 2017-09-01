@@ -24,23 +24,26 @@
       <hr>
       <div class="row">
         <div class="col-xl-3 mb-3">
+
           <category-list-chooser
             v-if="categories.length"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
-        </div>
-        <div id="choose-a-project" class="col-xl-9">
+
           <project-sorting-options
-            :views="views"
+            class="mt-3"
+            :viewOpts="viewOpts"
             :showCompleted="showCompleted"
             @sort="onSort"
             @viewchange="onViewChange"
             @togglecompleted="onToggleCompleted">
           </project-sorting-options>
-          <hr>
 
+        </div>
+        <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
+
             <project-card-list
               v-if="activeView === 'list'"
               :projects="filteredProjects">
@@ -83,7 +86,10 @@ export default {
       navItems: [
         { id: 'choose-a-project', text: 'Choose a Project' }
       ],
-      views: ['list', 'table'],
+      viewOpts: [
+        { text: 'List', value: 'list' },
+        { text: 'Table', value: 'table' }
+      ],
       activeView: 'list',
       showCompleted: false,
       page: 1,

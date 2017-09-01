@@ -1,63 +1,59 @@
 <template>
-  <div class="project-sorting-options">
+  <b-card
+    id="project-sorting-options"
+    :header="'Sorting Options'">
 
     <div class="form-group">
-      <label>Sort:</label>
+      <label>Sort by:</label>
       <b-form-select
         :options="sortingOpts"
         v-model="sortKey"
-        @change="onSortKeyChange">
+        @change.native="onSortKeyChange">
       </b-form-select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" v-if="viewOpts.length">
+      <label>View:</label>
+      <b-form-select
+        ref="view"
+        :options="viewOpts"
+        v-model="viewKey"
+        @change.native="onViewChange">
+      </b-form-select>
+    </div>
+
+    <div id="show-completed" class="form-group mb-0 mt-2">
       <label>Show completed:</label>
       <toggle-button
         :value="showCompleted"
         :sync="true"
         :labels="true"
-        @change="onToggleCompleted">
+        @change.native="onToggleCompleted">
       </toggle-button>
     </div>
-
-    <b-button-group class="view-buttons">
-      <b-button
-        v-for="view in views"
-        :key="view"
-        :variant="getViewBtnVariant(view)"
-        @click="onViewChange(view)">
-        <icon :name="view"></icon>
-      </b-button>
-    </b-button-group>
-
-  </div>
+  </b-card>
 </template>
 
 <script>
-import 'vue-awesome/icons/table'
-import 'vue-awesome/icons/list'
-
 export default {
   data: function () {
     return {
-      activeView: this.views[0],
-      sortKey: 'overall_progress',
+      sortKey: 'default',
+      viewKey: this.viewOpts.length ? this.viewOpts[0].value : null,
       sortingOpts: [
-        { text: 'Closest to Completion', value: 'overall_progress' },
-        { text: 'Most Tasks Remaining', value: 'n_tasks' },
-        { text: 'Most Popular', value: 'n_volunteers' },
-        { text: 'Most Recently Added', value: 'created' }
+        { text: 'Default', value: 'default' },
+        { text: 'Progress', value: 'overall_progress' },
+        { text: 'Tasks', value: 'n_tasks' },
+        { text: 'Volunteers', value: 'n_volunteers' },
+        { text: 'Creation Date', value: 'created' }
       ]
     }
   },
 
   props: {
-    views: {
+    viewOpts: {
       type: Array,
-      required: true,
-      validator: function (arr) {
-        return arr.length > 0
-      }
+      default: []
     },
     showCompleted: {
       type: Boolean,
@@ -69,16 +65,15 @@ export default {
     /**
      * Emit the sort event on key change.
      */
-    onSortKeyChange () {
-      this.$emit('sort', this.sortKey)
+    onSortKeyChange (evt) {
+      this.$emit('sort', evt.target.value)
     },
 
     /**
      * Emit the viewchange event on key change.
      */
-    onViewChange (view) {
-      this.activeView = view
-      this.$emit('viewchange', view)
+    onViewChange (evt) {
+      this.$emit('viewchange', evt.target.value)
     },
 
     /**
@@ -86,53 +81,32 @@ export default {
      */
     onToggleCompleted () {
       this.$emit('togglecompleted')
-    },
-
-    /**
-     * Handle view button styles.
-     */
-    getViewBtnVariant (view) {
-      return view === this.activeView ? 'info' : 'outline-info'
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'src/assets/style/main';
 
-.project-sorting-options {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+#project-sorting-options {
   font-size: $font-size-sm;
 
-  @include media-breakpoint-up(lg) {
-    flex-direction: row;
+  .card-header {
+    @extend .bg-faded;
+    text-align: center;
+    padding: $list-group-item-padding-y $list-group-item-padding-x;
   }
 
-  .view-buttons {
-    background-color: $white;
-
-    button {
-      display: flex;
+  #show-completed {
+    label {
+      margin: 0 5px 0 0;
     }
-  }
 
-  .form-group {
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-
-    @include media-breakpoint-up(lg) {
-      margin-bottom: 0;
-    }
-  }
-
-  label {
-    margin-right: 1rem;
-    margin-bottom: 0;
   }
 }
 </style>
