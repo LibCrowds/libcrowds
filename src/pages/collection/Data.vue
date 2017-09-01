@@ -1,8 +1,6 @@
 <template>
 
-  <floating-tabs-layout
-    id="data-download-page"
-    :nav-items="navItems">
+  <div id="collection-data">
 
     <section>
       <h2 class="text-center">Data</h2>
@@ -46,7 +44,7 @@
         have any further enquiries.
       </p>
       <hr>
-      <div id="navItems[0].id" class="row">
+      <div :id="navItems[0].id" class="row">
         <div class="col-xl-3 mb-3">
           <category-list-chooser
             v-if="categories.length"
@@ -67,14 +65,13 @@
       </div>
     </section>
 
-  </floating-tabs-layout>
+  </div>
 
 </template>
 
 <script>
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
-import FloatingTabsLayout from '@/components/layouts/FloatingTabs'
 import ProjectTable from '@/components/project/Table'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
@@ -109,7 +106,6 @@ export default {
   },
 
   components: {
-    FloatingTabsLayout,
     ProjectTable,
     CategoryListChooser,
     ProjectPagination
@@ -174,6 +170,10 @@ export default {
       }
       next(vm => vm.setData(r.data))
     })
+  },
+
+  mounted () {
+    this.$emit('navupdated', this.navItems)
   }
 }
 </script>

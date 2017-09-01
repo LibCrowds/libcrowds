@@ -1,69 +1,67 @@
 <template>
   <div id="signin">
-    <basic-layout>
-      <div class="container my-5">
-        <div class="col-lg-8 offset-lg-2">
-          <card-form
-            :header="'Signin'"
-            :lead="lead"
-            :submitText="'Sign in'"
-            :form="form"
-            @success="onSuccess">
+    <div class="container my-5">
+      <div class="col-lg-8 offset-lg-2">
+        <card-form
+          :header="'Signin'"
+          :lead="lead"
+          :submitText="'Sign in'"
+          :form="form"
+          @success="onSuccess">
 
-            <div
-              slot="bottom"
-              v-if="auth.facebook || auth.twitter || auth.google">
-              <p class="lead text-center">
-                or sign in with
-              </p>
-              <div class="row-btn-social">
+          <div
+            slot="bottom"
+            v-if="auth.facebook || auth.twitter || auth.google">
+            <p class="lead text-center">
+              or sign in with
+            </p>
+            <div class="row-btn-social">
 
-                <div v-if="auth.facebook">
-                  <b-button
-                    class="mx-1"
-                    variant="facebook"
-                    @click="redirect('facebook')">
-                    <icon name="facebook"></icon>
-                    <span class="ml-1 hidden-sm-down">Facebook</span>
-                  </b-button>
-                </div>
-
-                <div v-if="auth.google">
-                  <b-button
-                    class="mx-1"
-                    variant="googleplus"
-                    @click="redirect('google')">
-                    <icon name="google-plus"></icon>
-                    <span class="ml-1 hidden-sm-down">Google Plus</span>
-                  </b-button>
-                </div>
-
-                <div v-if="auth.twitter">
-                  <b-button
-                    class="mx-1"
-                    variant="twitter"
-                    @click="redirect('twitter')">
-                    <icon name="twitter"></icon>
-                    <span class="ml-1 hidden-sm-down">Twitter</span>
-                  </b-button>
-                </div>
-
+              <div v-if="auth.facebook">
+                <b-button
+                  class="mx-1"
+                  variant="facebook"
+                  @click="redirect('facebook')">
+                  <icon name="facebook"></icon>
+                  <span class="ml-1 hidden-sm-down">Facebook</span>
+                </b-button>
               </div>
-            </div>
 
-            <div slot="footer-left">
-              <router-link
-                :to="{
-                  name: 'forgot-password'
-                }">
-                Forgot your password?
-              </router-link>
-            </div>
+              <div v-if="auth.google">
+                <b-button
+                  class="mx-1"
+                  variant="googleplus"
+                  @click="redirect('google')">
+                  <icon name="google-plus"></icon>
+                  <span class="ml-1 hidden-sm-down">Google Plus</span>
+                </b-button>
+              </div>
 
-          </card-form>
-        </div>
+              <div v-if="auth.twitter">
+                <b-button
+                  class="mx-1"
+                  variant="twitter"
+                  @click="redirect('twitter')">
+                  <icon name="twitter"></icon>
+                  <span class="ml-1 hidden-sm-down">Twitter</span>
+                </b-button>
+              </div>
+
+            </div>
+          </div>
+
+          <div slot="footer-left">
+            <router-link
+              :to="{
+                name: 'forgot-password'
+              }">
+              Forgot your password?
+            </router-link>
+          </div>
+
+        </card-form>
       </div>
-    </basic-layout>
+    </div>
   </div>
 </template>
 
@@ -74,7 +72,6 @@ import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import BasicLayout from '@/components/layouts/Basic'
 
 export default {
   data: function () {
@@ -106,7 +103,6 @@ export default {
   },
 
   components: {
-    BasicLayout,
     CardForm
   },
 

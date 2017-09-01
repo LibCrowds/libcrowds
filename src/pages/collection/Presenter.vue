@@ -18,7 +18,19 @@ import DefaultPresenter from '@/components/presenters/Default'
 export default {
   data: function () {
     return {
-      project: null
+      project: null,
+      navItems: [
+        {
+          id: 'back-to-contribute',
+          text: 'Back',
+          route: {
+            name: 'collection-contribute',
+            params: {
+              collectionname: this.collectionConfig.key
+            }
+          }
+        }
+      ]
     }
   },
 
@@ -71,6 +83,10 @@ export default {
       this.setData(r.data)
       next()
     })
+  },
+
+  mounted () {
+    this.$emit('navupdated', this.navItems)
   }
 }
 </script>

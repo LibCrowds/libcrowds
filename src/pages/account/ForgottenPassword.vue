@@ -1,23 +1,20 @@
 <template>
   <div id="forgotten-password">
-    <basic-layout>
-      <div class="container my-5">
-        <div class="col-lg-8 offset-lg-2">
-          <card-form
-            :header="'Forgotten Password'"
-            :submitText="'Reset'"
-            :form="form">
-          </card-form>
-        </div>
+    <div class="container my-5">
+      <div class="col-lg-8 offset-lg-2">
+        <card-form
+          :header="'Forgotten Password'"
+          :submitText="'Reset'"
+          :form="form">
+        </card-form>
       </div>
-    </basic-layout>
+    </div>
   </div>
 </template>
 
 <script>
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
-import BasicLayout from '@/components/layouts/Basic'
 
 export default {
   data: function () {
@@ -42,7 +39,6 @@ export default {
   },
 
   components: {
-    BasicLayout,
     CardForm
   },
 

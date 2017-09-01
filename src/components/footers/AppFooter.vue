@@ -55,10 +55,7 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'help',
-                query: {
-                  section: 'tos'
-                }
+                name: 'help-tos'
               }"
               @click.native="scrollIfCurrent">
               Terms
@@ -67,10 +64,7 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'help',
-                query: {
-                  section: 'privacy'
-                }
+                name: 'help-privacy'
               }"
               @click.native="scrollIfCurrent">
               Privacy
@@ -79,10 +73,7 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'help',
-                query: {
-                  section: 'cookies'
-                }
+                name: 'help-cookies'
               }"
               @click.native="scrollIfCurrent">
               Cookies
@@ -91,10 +82,7 @@
           <li class="list-item">
             <router-link
               :to="{
-                name: 'help',
-                query: {
-                  section: 'api'
-                }
+                name: 'help-api'
               }"
               @click.native="scrollIfCurrent">
               API

@@ -1,13 +1,11 @@
 <template>
-  <div id="collection-base">
-    <div id="collection-background" :style="bgStyle"></div>
-    <collection-navbar
-      :collectionConfig="collectionConfig"
+  <div id="core-layout">
+    <div id="app-background" :style="appBgStyle"></div>
+    <app-navbar
       :currentUser="currentUser">
-    </collection-navbar>
+    </app-navbar>
     <main>
       <router-view
-        :collectionConfig="collectionConfig"
         :currentUser="currentUser">
       </router-view>
     </main>
@@ -16,13 +14,13 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
-import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
+import AppNavbar from '@/components/navs/AppNavbar'
+import appBackground from '@/assets/img/app-background.jpg'
 
 export default {
   components: {
-    CollectionNavbar,
+    AppNavbar,
     AppFooter
   },
 
@@ -34,22 +32,22 @@ export default {
   },
 
   computed: {
-    bgStyle: function () {
-      const url = this.collectionConfig.bgImg
+    appBgStyle: function () {
       return {
-        background: `url(${url}) no-repeat center left /cover fixed`
+        background: `url(${appBackground}) no-repeat center left /cover fixed`
       }
-    },
-    collectionConfig: function () {
-      return siteConfig.collections[this.$route.params.collectionname]
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#collection-base {
-  #collection-background {
+#core-layout {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+
+  #app-background {
     z-index: -1;
     position: fixed;
     top: 0;
@@ -62,6 +60,10 @@ export default {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+  }
+
+  main {
+    flex: 1 1 auto;
   }
 }
 </style>

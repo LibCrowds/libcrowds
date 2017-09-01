@@ -1,4 +1,5 @@
-import DashboardLayout from '@/pages/layouts/Dashboard'
+import DashboardLayout from '@/layouts/Dashboard'
+
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Administrators from '@/pages/admin/Administrators'
 import Publications from '@/pages/admin/Publications'
@@ -11,7 +12,53 @@ export default [
     path: '/admin',
     component: DashboardLayout,
     props: {
-      dashboard: 'admin'
+      dashboardNavItems: [
+        {
+          id: 'dashboard',
+          label: 'Dashboard',
+          link: {
+            name: 'admin-dashboard'
+          }
+        },
+        {
+          id: 'featured',
+          label: 'Featured Projects',
+          link: {
+            name: 'admin-featured'
+          }
+        },
+        {
+          id: 'categories',
+          label: 'Categories',
+          link: {
+            name: 'admin-categories'
+          }
+        },
+        {
+          id: 'administrators',
+          label: 'Administrators',
+          link: {
+            name: 'admin-administrators'
+          }
+        },
+        {
+          id: 'publications',
+          label: 'Publications',
+          link: {
+            name: 'admin-publications'
+          }
+        },
+        {
+          id: 'export-users',
+          label: 'Export Users',
+          link: '#'
+        },
+        {
+          id: 'background-jobs',
+          label: 'Background Jobs',
+          link: '#'
+        }
+      ]
     },
     children: [
       {

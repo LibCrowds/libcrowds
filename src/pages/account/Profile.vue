@@ -1,47 +1,43 @@
 <template>
   <div id="profile">
-    <basic-layout :background="'geometry'">
+    <div class="container pt-5 pb-3">
+      <div class="row">
+        <div class="col-lg-4">
+          <user-profile-card
+            v-if="user"
+            class="mb-3"
+            :user="user">
+            <b-button
+              v-if="isCurrentUser"
+              block
+              variant="success"
+              :to="{
+                name: 'account-settings',
+                params: {
+                  username: user.name
+                }
+              }">
+              Settings
+            </b-button>
+          </user-profile-card>
+        </div>
+        <div class="col-lg-8">
 
-      <div class="container mt-5 mb-3">
-        <div class="row">
-          <div class="col-lg-4">
-            <user-profile-card
-              v-if="user"
-              class="mb-3"
-              :user="user">
-              <b-button
-                v-if="isCurrentUser"
-                block
-                variant="success"
-                :to="{
-                  name: 'account-settings',
-                  params: {
-                    username: user.name
-                  }
-                }">
-                Settings
-              </b-button>
-            </user-profile-card>
-          </div>
-          <div class="col-lg-8">
+          <user-favourites-card
+            class="mb-2"
+            v-if="isCurrentUser">
+          </user-favourites-card>
 
-            <user-favourites-card
-              class="mb-2"
-              v-if="isCurrentUser">
-            </user-favourites-card>
+          <b-card no-block :header="'Contributions'">
+            <project-table
+              :action="'contribute'"
+              :projects="projects">
+            </project-table>
+          </b-card>
 
-            <b-card no-block :header="'Contributions'">
-              <project-table
-                :action="'contribute'"
-                :projects="projects">
-              </project-table>
-            </b-card>
-
-          </div>
         </div>
       </div>
-
-    </basic-layout>
+    </div>
   </div>
 </template>
 
@@ -49,7 +45,6 @@
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import UserFavouritesCard from '@/components/user/FavouritesCard'
-import BasicLayout from '@/components/layouts/Basic'
 import ProjectTable from '@/components/project/Table'
 
 export default {
@@ -61,7 +56,6 @@ export default {
   },
 
   components: {
-    BasicLayout,
     ProjectTable,
     UserProfileCard,
     UserFavouritesCard
@@ -112,3 +106,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#profile {
+  background-image: url('../../assets/img/geometry.png');
+}
+</style>

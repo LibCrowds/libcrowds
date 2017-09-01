@@ -7,10 +7,7 @@ import 'cookieconsent'
 export default {
   mounted () {
     const route = {
-      name: 'help',
-      query: {
-        section: 'cookies'
-      }
+      name: 'help-cookies'
     }
     const cookiesRoute = this.$router.resolve(route).route
     const cookiesUrl = window.location.origin + cookiesRoute.path

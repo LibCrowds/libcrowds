@@ -2,22 +2,29 @@
   <div class="floating-tabs-layout">
     <main>
       <div class="container mb-5">
-        <transition-group name="fade" mode="out-in" appear>
-          <b-nav class="nav-unstyled" key="fading-nav">
+
+        <b-nav class="nav-unstyled" key="fading-nav">
+          <transition name="fade" mode="out-in" appear>
             <b-nav-item
               v-for="item in navItems"
-              v-on:click="jump('#' + item.id)"
+              @click="navigate(item)"
               :key="item.id">
               {{ item.text }}
             </b-nav-item>
-            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
-          </b-nav>
-          <section id="content" key="fading-content">
+          </transition>
+          <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+        </b-nav>
 
-            <slot></slot>
+        <section id="content" key="fading-content">
+          <transition name="fade" mode="out-in" appear>
+            <router-view
+              :currentUser="currentUser"
+              :collectionConfig="collectionConfig"
+              @navupdated="onNavUpdated">
+            </router-view>
+          </transition>
+        </section>
 
-          </section>
-        </transition-group>
       </div>
     </main>
   </div>
@@ -27,14 +34,51 @@
 import jump from 'jump.js'
 
 export default {
+  data: function () {
+    return {
+      navItems: []
+    }
+  },
+
   props: {
-    navItems: {
-      type: Array
+    currentUser: {
+      type: Object,
+      required: true
+    },
+    collectionConfig: {
+      type: Object,
+      required: true
     }
   },
 
   methods: {
-    jump: jump
+    /**
+     * Handle nav item update.
+     * @param {Array} navItems
+     *   The nav items.
+     */
+    onNavUpdated (navItems) {
+      this.navItems = navItems
+    },
+
+    /**
+     * Navigate.
+     * @param {Object} navItem
+     *   The nav item.
+     */
+    navigate (navItem) {
+      if (navItem.route) {
+        this.$router.push(navItem.route)
+      } else {
+        jump('#' + navItem.id)
+      }
+    }
+  },
+
+  beforeRouteLeave (to, from, next) {
+    // Just to make the transition look a bit nicer
+    this.navItems = []
+    next()
   }
 }
 </script>
@@ -47,11 +91,11 @@ export default {
   background-size: cover;
   background-attachment: fixed;
 
-  section#content {
+  #content {
     background-color: $white;
 
     /* Internal sections */
-    & > section {
+    & > * > section {
       transition: opacity 600ms;
       padding: 2rem 2.5rem;
 
@@ -77,7 +121,7 @@ export default {
     .nav-link {
       font-size: $font-size-sm;
 
-      transition: opacity 500ms ease;
+      transition: opacity 350ms ease;
       color: lighten($gray, 15%);
       display: none;
 
@@ -89,7 +133,7 @@ export default {
 
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity 500ms ease;
+    transition: opacity 300ms ease;
   }
 
   .fade-enter .nav-link,
