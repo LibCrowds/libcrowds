@@ -3,7 +3,7 @@
   <div id="collection-about">
 
     <section>
-      <h2 class="text-center">About</h2>
+      <h2 class="text-center">About {{ collectionConfig.name }}</h2>
       <hr>
       <span
         v-if="collectionConfig.about.intro"
