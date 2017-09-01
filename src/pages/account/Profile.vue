@@ -1,6 +1,6 @@
 <template>
   <div id="profile">
-    <div class="container mt-5 mb-3">
+    <div class="container pt-5 pb-3">
       <div class="row">
         <div class="col-lg-4">
           <user-profile-card
@@ -106,3 +106,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#profile {
+  background-image: url('../../assets/img/geometry.png');
+}
+</style>
