@@ -23,6 +23,7 @@ export default {
 
 #dashboard-footer {
   color: $gray-light;
+  background: $white;
   font-size: $font-size-sm;
   border-top: 1px solid $gray-lighter;
 }

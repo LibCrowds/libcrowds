@@ -1,7 +1,11 @@
 import CoreLayout from '@/layouts/Core'
+import DashboardLayout from '@/layouts/Dashboard'
 
 import Profile from '@/pages/account/Profile'
-import Settings from '@/pages/account/Settings'
+import ApiSettings from '@/pages/account/settings/ApiSettings'
+import AvatarSettings from '@/pages/account/settings/AvatarSettings'
+import ProfileSettings from '@/pages/account/settings/ProfileSettings'
+import SecuritySettings from '@/pages/account/settings/SecuritySettings'
 import Signin from '@/pages/account/Signin'
 import Register from '@/pages/account/Register'
 import ForgottenPassword from '@/pages/account/ForgottenPassword'
@@ -40,21 +44,71 @@ export default [
       },
       {
         path: ':username',
-        component: {
-          render (c) {
-            return c('router-view')
-          }
+        name: 'profile',
+        component: Profile
+      },
+      {
+        path: ':username/update',
+        component: DashboardLayout,
+        props: {
+          dashboardNavItems: [
+            {
+              id: 'account-api-settings',
+              label: 'API',
+              link: {
+                name: 'account-api-settings'
+              }
+            },
+            {
+              id: 'account-avatar-settings',
+              label: 'Avatar',
+              link: {
+                name: 'account-avatar-settings'
+              }
+            },
+            {
+              id: 'account-profile-settings',
+              label: 'Profile',
+              link: {
+                name: 'account-profile-settings'
+              }
+            },
+            {
+              id: 'account-security-settings',
+              label: 'Security',
+              link: {
+                name: 'account-security-settings'
+              }
+            }
+          ]
         },
         children: [
           {
             path: '/',
-            name: 'profile',
-            component: Profile
+            name: 'account-settings',
+            redirect: {
+              name: 'account-api-settings'
+            }
           },
           {
-            path: 'update',
-            name: 'account-settings',
-            component: Settings
+            path: 'api',
+            name: 'account-api-settings',
+            component: ApiSettings
+          },
+          {
+            path: 'avatar',
+            name: 'account-avatar-settings',
+            component: AvatarSettings
+          },
+          {
+            path: 'profile',
+            name: 'account-profile-settings',
+            component: ProfileSettings
+          },
+          {
+            path: 'security',
+            name: 'account-security-settings',
+            component: SecuritySettings
           }
         ]
       }

@@ -22,7 +22,6 @@ const store = new Vuex.Store({
       state.currentUser = user
     },
     LOGOUT: (state) => {
-      state.loginPending = false
       state.currentUser = {}
     }
   },

@@ -25,7 +25,7 @@
         <b-form-file
           ref="file"
           accept="image/*"
-          v-model="model.avatar"
+          v-model="form.model.avatar"
           @input="onInput">
         </b-form-file>
       </div>
@@ -55,21 +55,17 @@ export default {
     return {
       status: null,
       flash: '',
-      croppie: null,
-      file: null
+      file: null,
+      croppie: null
     }
   },
 
   props: {
-    endpoint: {
-      type: String,
-      required: true
-    },
     header: {
       type: String,
       default: 'Avatar'
     },
-    model: {
+    form: {
       type: Object,
       required: true
     },
@@ -77,7 +73,7 @@ export default {
       type: String,
       default: 'Submit'
     },
-    type: {
+    cropType: {
       type: String,
       default: 'circle'
     }
@@ -89,7 +85,7 @@ export default {
 
   computed: {
     loading: function () {
-      return isEmpty(this.model)
+      return isEmpty(this.form.model)
     },
 
     flashMsg: function () {
@@ -106,12 +102,12 @@ export default {
       this.flash = ''
 
       // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
-      delete this.model.id
+      delete this.form.model.id
 
       // The Content-Type is removed so that the avatar is handled properly
-      pybossaApi.post(this.endpoint, this.model, {
+      pybossaApi.post(this.form.endpoint, this.form.model, {
         headers: {
-          'X-CSRFToken': this.model.csrf,
+          'X-CSRFToken': this.form.model.csrf,
           'Content-Type': null
         },
         transformRequest: [function (data) {
@@ -135,7 +131,7 @@ export default {
           url: evt.target.result
         })
       }
-      reader.readAsDataURL(this.model.avatar)
+      reader.readAsDataURL(this.form.model.avatar)
     }
   },
 
@@ -145,7 +141,7 @@ export default {
       viewport: {
         width: '100%',
         height: 300,
-        type: this.type
+        type: this.cropType
       },
       boundary: {
         width: 300,
@@ -153,10 +149,10 @@ export default {
       },
       enableOrientation: true,
       update: (data) => {
-        this.model.x1 = Math.floor(data.points[0])
-        this.model.y1 = Math.floor(data.points[1])
-        this.model.x2 = Math.floor(data.points[2])
-        this.model.y2 = Math.floor(data.points[3])
+        this.form.model.x1 = Math.floor(data.points[0])
+        this.form.model.y1 = Math.floor(data.points[1])
+        this.form.model.x2 = Math.floor(data.points[2])
+        this.form.model.y2 = Math.floor(data.points[3])
       }
     })
   }
