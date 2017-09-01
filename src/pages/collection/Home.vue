@@ -81,7 +81,7 @@
               </li>
             </ul>
             <b-button
-              class="mt-2 btn-bg-white"
+              class="mt-2"
               variant="success"
               size="lg"
               :to="{
@@ -364,12 +364,6 @@ export default {
 
   .bg-white {
     background-color: $white;
-  }
-
-  .btn-bg-white {
-    &:not(:hover):not(:focus):not(.active) {
-        background-color: $white;
-    }
   }
 
   hr.wide {
