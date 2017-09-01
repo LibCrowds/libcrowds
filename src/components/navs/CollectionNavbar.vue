@@ -367,7 +367,7 @@ export default {
 @import 'src/assets/style/main';
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
-#collection-navbar.navbar {
+#collection-navbar {
   color: $white;
   z-index: 200;
   font-family: $font-family-base;
@@ -377,12 +377,13 @@ export default {
   align-items: baseline;
   transition: background-color 200ms;
   padding: .75rem 1.5rem;
+  display: flex;
+  flex-direction: row;
 
   .container {
-    flex: 1 1 auto;
-
     @include media-breakpoint-down(xs) {
       margin: 0;
+      flex: 1 1 auto;
       width: 100%;
     }
   }
@@ -516,9 +517,19 @@ export default {
 
   .hamburger {
     z-index: 20;
+    padding: 0;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 100%;
+
+    @include media-breakpoint-up(lg) {
+      display: none;
+    }
   }
 
-  &.navbar-transparent,
   &.navbar-inverse {
     @extend .navbar-inverse;
     background-color: transparent;
@@ -540,98 +551,65 @@ export default {
     }
   }
 
-  &.navbar-dashboard {
-    @extend .navbar-light;
-    .navbar-brand {
+  // Collapsible sidebar
+  @include media-breakpoint-down(md) {
+    .navbar-collapse {
+      display: flex !important;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      background-color: $brand-inverse;
+      overflow-x: hidden;
+      overflow-y: auto;
+      text-align: center;
+      transition: all 450ms !important;
+      transform: translateX(-100%);
 
-      @include media-breakpoint-up(lg) {
-        visibility: hidden;
+      &.show {
+        transform: translateX(0);
       }
-    }
-  }
-}
 
-#collection-navbar.navbar-toggleable {
-  @each $breakpoint in map-keys($grid-breakpoints) {
-    $next: breakpoint-next($breakpoint, $grid-breakpoints);
-    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+      .navbar-nav {
+        margin-right: 0;
+        display: block;
 
-    &#{$infix} {
-      @include media-breakpoint-down($breakpoint) {
-        display: flex;
-        flex-direction: row;
-        padding-left: $spacer-x;
-        padding-right: $spacer-x;
+        .nav-item {
+          margin-left: 0;
 
-        .hamburger {
-          padding: 0;
-          display: flex;
-          flex-direction:column;
-          justify-content: center;
-          align-items: center;
-          flex: 1 1 auto;
-          height: 100%;
+          .nav-link.active:after,
+          .nav-link:hover:after,
+          .nav-link:focus:after {
+            opacity: 0;
+            transform: none;
+          }
         }
 
-        .navbar-collapse {
-          display: flex !important;
-          flex-direction: column;
-          justify-content: center;
-          height: 100%;
-          width: 100%;
-          position: fixed;
-          z-index: 10;
-          top: 0;
-          left: 0;
-          background-color: $brand-inverse;
-          overflow-x: hidden;
-          overflow-y: auto;
+        .nav-link,
+        .dropdown-item {
+          padding: $list-group-item-padding-y;
+          color: $white;
+
+          @include hover-focus {
+            color: $brand-primary;
+          }
+        }
+
+        .dropdown-toggle,
+        .dropdown-divider {
+          display: none;
+        }
+
+        .dropdown-menu {
+          display: block;
+          background: transparent;
           text-align: center;
-          transition: all 450ms !important;
-          transform: translateX(-100%);
-
-          &.show {
-            transform: translateX(0);
-          }
-
-          .navbar-nav {
-            margin-right: 0;
-            display: block;
-
-            .nav-item {
-              margin-left: 0;
-
-              .nav-link.active:after,
-              .nav-link:hover:after,
-              .nav-link:focus:after {
-                opacity: 0;
-                transform: none;
-              }
-            }
-
-            .nav-link,
-            .dropdown-item {
-              padding: $list-group-item-padding-y;
-              color: $white;
-
-              @include hover-focus {
-                color: $brand-primary;
-              }
-            }
-
-            .dropdown-toggle,
-            .dropdown-divider {
-              display: none;
-            }
-
-            .dropdown-menu {
-              display: block;
-              background: transparent;
-              text-align: center;
-              padding: 0;
-              margin: 0;
-            }
-          }
+          padding: 0;
+          margin: 0;
         }
       }
     }
