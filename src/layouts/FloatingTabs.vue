@@ -7,7 +7,7 @@
           <b-nav class="nav-unstyled" key="fading-nav">
             <b-nav-item
               v-for="item in navItems"
-              v-on:click="jump('#' + item.id)"
+              @click="navigate(item)"
               :key="item.id">
               {{ item.text }}
             </b-nav-item>
@@ -61,9 +61,17 @@ export default {
     },
 
     /**
-     * Smooth scrolling singleton.
+     * Navigate.
+     * @param {Object} navItem
+     *   The nav item.
      */
-    jump: jump
+    navigate (navItem) {
+      if (navItem.route) {
+        this.$router.push(navItem.route)
+      } else {
+        jump('#' + navItem.id)
+      }
+    }
   }
 }
 </script>
