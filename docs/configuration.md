@@ -109,7 +109,7 @@ siteConfig.dataLicense: {
 The `description` will appear on the site homepage and form its meta description.
 
 ```js
-siteConfig.description: 'My SEO optimised meta description.'
+siteConfig.description: 'My SEO optimised meta description'
 ```
 
 ### githubUrl
@@ -117,7 +117,7 @@ siteConfig.description: 'My SEO optimised meta description.'
 The `githubUrl` will appear in the site footer.
 
 ```js
-siteConfig.githubUrl = 'https://github.com/MyOrganisation'
+siteConfig.githubUrl = 'https://github.com/github'
 ```
 
 ### mapbox
@@ -192,7 +192,7 @@ collectionConfig.bgImg: require(`./background.jpg`)
 The `description` will appear on the collection homepage and form its meta description.
 
 ```js
-collectionConfig.description: 'My SEO optimised meta description.'
+collectionConfig.description: 'My SEO optimised meta description'
 ```
 
 ### forumUrl
