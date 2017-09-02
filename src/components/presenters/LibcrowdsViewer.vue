@@ -19,6 +19,7 @@
 import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
+import capitalize from '@/utils/capitalize'
 
 export default {
   data: function () {
@@ -63,7 +64,7 @@ export default {
       const names = ['home', 'about', 'contribute', 'data']
       const nav = names.map(name => {
         return {
-          label: name.charAt(0).toUpperCase() + name.slice(1),
+          label: capitalize(name),
           url: this.$router.resolve({
             name: `collection-${name}`,
             params: {

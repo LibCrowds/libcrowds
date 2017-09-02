@@ -2,7 +2,7 @@
   <b-card
     no-block
     id="category-list-chooser"
-    :header="collectionConfig.terminology.category | pluralize">
+    :header="collectionConfig.terminology.category | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
         v-for="category in categories"
