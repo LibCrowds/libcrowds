@@ -1,7 +1,8 @@
 # vue-pybossa-frontend
 
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
-[![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
+[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/built-with-science.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](http://forthebadge.com)
 
 > A Vue.js frontend for PyBossa (>=2.6.1).
 
@@ -14,6 +15,9 @@ Each meta-category is presented as if it were a separate site (with it's own
 landing, about and data pages etc.) yet only requires a single PyBossa backend.
 A core page provides routes into each meta-category site, along with the
 statistics, admin and project configuration pages.
+
+[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
+[![dependencies Status](https://david-dm.org/LibCrowds/vue-pybossa-frontend/status.svg)](https://david-dm.org/LibCrowds/vue-pybossa-frontend)
 
 ## Installing
 
