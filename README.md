@@ -2,7 +2,6 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 [![forthebadge](http://forthebadge.com/images/badges/built-with-science.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)](http://forthebadge.com)
 
 > A Vue.js frontend for PyBossa (>=2.6.1).
 
