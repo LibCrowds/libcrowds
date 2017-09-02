@@ -41,10 +41,8 @@
           {{ project.overall_progress }}% complete
         </span>
         <span class="card-stat text-muted mb-1 mb-lg-0">
-          <icon name="users"></icon> {{ project.n_volunteers }} volunteers
-        </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0">
-          <icon name="tasks"></icon> {{ project.n_tasks }} tasks
+          <icon name="users"></icon> {{ project.n_volunteers }}
+          {{ volunteers | pluralize(project.n_volunteers) }}
         </span>
         <div>
           <project-contrib-button
@@ -61,7 +59,6 @@
 <script>
 import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
-import 'vue-awesome/icons/tasks'
 import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 

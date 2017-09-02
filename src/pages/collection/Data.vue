@@ -18,14 +18,16 @@
       </p>
       <ul>
         <li>
-          <strong>Tasks: </strong>The original input data for the tasks.
+          <strong>Tasks: </strong>
+          The {{ collectionConfig.terminology.task }} data.
         </li>
         <li>
-          <strong>Task Runs: </strong>The contribution data for all tasks.
+          <strong>Task Runs: </strong>
+          The {{ collectionConfig.terminology.taskRun }} data.
         </li>
         <li>
-          <strong>Results: </strong>The final results, following any analysis
-          of the contribution data.
+          <strong>Results: </strong>
+          The final results data.
         </li>
       </ul>
       <p>
@@ -48,6 +50,7 @@
         <div class="col-xl-3 mb-3">
           <category-list-chooser
             v-if="categories.length"
+            :collectionConfig="collectionConfig"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>

@@ -109,15 +109,15 @@
           <div class="row py-md-3">
             <div class="col-md-8 offset-md-2">
               <p class="lead">
-                All datasets generated from the crowdsourcing projects hosted
-                on this platform are made available under a
+                All datasets generated from the experimental crowdsourcing
+                projects hosted on this platform are made available under a
                 <a
                   :href="siteConfig.dataLicense.url"
                   target="_blank">
                   {{ siteConfig.dataLicense.name }} license
                 </a>
                 and can be downloaded by anyone in JSON or
-                CSV formats. Visit our data page to find out more.
+                CSV formats. Visit the data page to find out more.
               </p>
             </div>
           </div>
@@ -150,9 +150,10 @@
           <div class="row py-2">
             <div class="col-md-8 offset-md-2">
               <p class="lead">
-                As each task is completed, contributions are analysed and
-                the outcome provided via our results page, making the
-                efforts of our volunteers immediately apparent.
+                As each {{ collectionConfig.terminology.task }} is completed,
+                {{ collectionConfig.terminology.taskRun | pluralize }} are
+                analysed and the outcome provided via our results page, making
+                the efforts of our volunteers immediately apparent.
               </p>
             </div>
           </div>

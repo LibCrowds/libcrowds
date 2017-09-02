@@ -5,8 +5,7 @@
     striped
     show-empty
     :items="projects"
-    :fields="fields"
-    empty-text="No projects are available for this category">
+    :fields="fields">
     <template slot="overall_progress" scope="project">
       {{ project.item.overall_progress }}%
     </template>
@@ -37,7 +36,6 @@ export default {
     return {
       fields: {
         name: { label: 'Name' },
-        n_tasks: { label: 'Tasks' },
         n_volunteers: { label: 'Volunteers' },
         overall_progress: { label: 'Progress' },
         action: { label: 'Action' }

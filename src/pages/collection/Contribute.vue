@@ -6,7 +6,8 @@
       <h2 class="text-center">Contribute</h2>
       <hr>
       <p class="lead text-center">
-        Choose a project from the list below to get started!
+        Choose a {{ collectionConfig.terminology.project }} from the list below
+        to get started!
       </p>
       <p class="text-center mb-0">
         <small>
@@ -27,6 +28,7 @@
 
           <category-list-chooser
             v-if="categories.length"
+            :collectionConfig="collectionConfig"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
@@ -75,7 +77,8 @@
 
           </span>
           <p v-else class="text-center mb-0">
-            No projects have been published for this category
+            No {{ collectionConfig.terminology.project | pluralize }}  have
+            been published for this category
           </p>
         </div>
       </div>
@@ -98,7 +101,9 @@ export default {
   data: function () {
     return {
       navItems: [
-        { id: 'choose-a-project', text: 'Choose a Project' }
+        {
+          id: 'choose-a-project',
+          text: `Choose a ${this.collectionConfig.terminology.project}` }
       ],
       viewOpts: [
         { text: 'List', value: 'list' },
@@ -145,7 +150,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'Projects'
+    title: 'Contribute'
   },
 
   methods: {
