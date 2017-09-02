@@ -19,7 +19,10 @@ import App from '@/App'
 import store from '@/store'
 import router from '@/router'
 import siteConfig from '@/siteConfig'
+
 import formatDate from '@/filters/formatDate'
+import pluralize from '@/filters/pluralize'
+import capitalize from '@/filters/capitalize'
 
 // Global styles
 import '@/assets/style/main.scss'
@@ -36,6 +39,8 @@ Vue.component('v-images', VueImages)
 Vue.component('icon', Icon)
 
 Vue.filter('formatDate', formatDate)
+Vue.filter('pluralize', pluralize)
+Vue.filter('capitalize', capitalize)
 
 // Google analytics
 if ('analytics' in siteConfig && process.env.NODE_ENV === 'production') {

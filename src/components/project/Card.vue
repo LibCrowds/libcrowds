@@ -1,32 +1,50 @@
 <template>
-  <b-card class="project-card" no-block>
-    <div class="thumbnail-wrapper">
-      <project-thumbnail
-        :project="project">
-      </project-thumbnail>
-    </div>
+  <b-card
+    no-block
+    class="project-card">
+    <router-link
+      :to="{
+        name: 'collection-presenter',
+        params: {
+          shortname: project.shortname
+        }
+      }">
+      <div class="thumbnail-wrapper">
+        <project-thumbnail
+          :project="project">
+        </project-thumbnail>
+      </div>
+    </router-link>
 
     <div class="card-block project-details p-0">
-      <h4 class="card-title mb-2 px-2 pt-2">
-        {{ project.name }}
-      </h4>
+      <div class="card-title mb-0">
+        <router-link
+          :to="{
+            name: 'collection-presenter',
+            params: {
+              shortname: project.shortname
+            }
+          }">
+          <h4 class="card-title mb-2 px-2 pt-2">
+            {{ project.name }}
+          </h4>
+        </router-link>
+      </div>
       <p class="card-text project-description mb-0 px-2 pb-2">
         {{ project.description }}
       </p>
 
       <div class="progress-container" :id="progressId"></div>
 
-      <div class="card-footer p-2">
-        <span class="card-stat text-muted mb-2 mb-md-0">
+      <div class="card-footer mt-1 p-2">
+        <span class="card-stat text-muted mb-2 mb-lg-0">
           {{ project.overall_progress }}% complete
         </span>
-        <span class="card-stat text-muted mb-1 mb-md-0">
-          <icon name="users"></icon> {{ project.n_volunteers }} volunteers
+        <span class="card-stat text-muted mb-1 mb-lg-0">
+          <icon name="users"></icon> {{ project.n_volunteers }}
+          {{ volunteers | pluralize(project.n_volunteers) }}
         </span>
-        <span class="card-stat text-muted mb-2 mb-md-0">
-          <icon name="tasks"></icon> {{ project.n_tasks }} tasks
-        </span>
-        <div class="">
+        <div>
           <project-contrib-button
             :shortname="project.short_name"
             variant="success">
@@ -41,7 +59,6 @@
 <script>
 import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
-import 'vue-awesome/icons/tasks'
 import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
@@ -102,6 +119,16 @@ export default {
 
   .card-block {
 
+    .card-title {
+      a {
+        color: inherit;
+
+        @include hover-focus {
+          text-decoration: none;
+        }
+      }
+    }
+
     .card-footer {
       border-top: none;
     }
@@ -141,12 +168,11 @@ export default {
     overflow: hidden;
     line-height: 0;
     flex-shrink: 2;
+    width: auto;
+    height: 250px;
 
     @include media-breakpoint-up(lg) {
-      img {
-        width: auto;
-        max-height: 250px;
-      }
+      width: 250px;
     }
   }
 

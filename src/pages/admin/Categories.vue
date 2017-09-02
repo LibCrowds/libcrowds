@@ -62,6 +62,7 @@
 import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
+import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
@@ -151,7 +152,7 @@ export default {
         }).then(r => {
           this.refreshCurrentCategories()
           sweetalert(
-            r.data.status.charAt(0).toUpperCase() + r.data.status.slice(1),
+            capitalize(r.data.status),
             r.data.flash,
             r.data.status
           )

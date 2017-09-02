@@ -10,6 +10,7 @@
 <script>
 import PNotify from 'pnotify'
 import store from '@/store'
+import capitalize from '@/utils/capitalize'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
 import 'pnotify/src/pnotify.nonblock'
@@ -21,9 +22,7 @@ export default {
 
   methods: {
     notify (n) {
-      const title = n.type
-                      ? n.type.charAt(0).toUpperCase() + n.type.slice(1)
-                      : 'Info'
+      const title = n.type ? capitalize(n.type) : 'Info'
       const opts = {
         title: title,
         text: n.msg,

@@ -2,7 +2,7 @@
   <b-card
     no-block
     id="category-list-chooser"
-    :header="'Categories'">
+    :header="collectionConfig.terminology.category | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
         v-for="category in categories"
@@ -38,6 +38,10 @@ export default {
   props: {
     categories: {
       type: Array,
+      required: true
+    },
+    collectionConfig: {
+      type: Object,
       required: true
     }
   },

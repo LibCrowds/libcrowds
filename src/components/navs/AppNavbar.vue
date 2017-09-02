@@ -170,6 +170,7 @@ export default {
     padding: 0rem 1.25rem;
     border-bottom: 1px solid $gray-lighter;
     height: 100%;
+    white-space: nowrap;
   }
 
   #sign-in-up {

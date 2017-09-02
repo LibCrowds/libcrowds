@@ -56,6 +56,7 @@
 import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
+import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
 import PublicationCard from '@/components/publications/PublicationCard'
 
@@ -140,7 +141,7 @@ export default {
         }).then(r => {
           this.refreshCurrentPublications()
           sweetalert(
-            r.data.status.charAt(0).toUpperCase() + r.data.status.slice(1),
+            capitalize(r.data.status),
             r.data.flash,
             r.data.status
           )

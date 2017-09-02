@@ -31,7 +31,7 @@
     </transition>
 
     <section id="intro" class="bg-white invert-navbar">
-      <div class="container py-3 py-mt-4 text-center">
+      <div class="container pt-3 pb-2 pt-md-4 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p id="site-lead" class="mb-0">
@@ -81,7 +81,7 @@
               </li>
             </ul>
             <b-button
-              class="mt-2 btn-bg-white"
+              class="mt-2"
               variant="success"
               size="lg"
               :to="{
@@ -109,15 +109,15 @@
           <div class="row py-md-3">
             <div class="col-md-8 offset-md-2">
               <p class="lead">
-                All datasets generated from the crowdsourcing projects hosted
-                on this platform are made available under a
+                All datasets generated from the experimental crowdsourcing
+                projects hosted on this platform are made available under a
                 <a
                   :href="siteConfig.dataLicense.url"
                   target="_blank">
                   {{ siteConfig.dataLicense.name }} license
                 </a>
                 and can be downloaded by anyone in JSON or
-                CSV formats. Visit our data page to find out more.
+                CSV formats. Visit the data page to find out more.
               </p>
             </div>
           </div>
@@ -150,9 +150,10 @@
           <div class="row py-2">
             <div class="col-md-8 offset-md-2">
               <p class="lead">
-                As each task is completed, contributions are analysed and
-                the outcome provided via our results page, making the
-                efforts of our volunteers immediately apparent.
+                As each {{ collectionConfig.terminology.task }} is completed,
+                {{ collectionConfig.terminology.taskRun | pluralize }} are
+                analysed and the outcome provided via our results page, making
+                the efforts of our volunteers immediately apparent.
               </p>
             </div>
           </div>
@@ -336,12 +337,13 @@ export default {
   }
 
   #site-lead {
-    font-family: $font-family-serif;
-    font-size: 3rem;
+    font-family: $font-family-base;
+    font-size: 2.2rem;
+    font-weight: 300;
     line-height: 1.1;
 
     @include media-breakpoint-up(sm) {
-      font-size: 4rem;
+      font-size: 3rem;
     }
   }
 
@@ -363,12 +365,6 @@ export default {
 
   .bg-white {
     background-color: $white;
-  }
-
-  .btn-bg-white {
-    &:not(:hover):not(:focus):not(.active) {
-        background-color: $white;
-    }
   }
 
   hr.wide {

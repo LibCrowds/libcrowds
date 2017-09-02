@@ -6,7 +6,8 @@
       <h2 class="text-center">Contribute</h2>
       <hr>
       <p class="lead text-center">
-        Choose a project from the list below to get started!
+        Choose a {{ collectionConfig.terminology.project }} from the list below
+        to get started!
       </p>
       <p class="text-center mb-0">
         <small>
@@ -24,41 +25,60 @@
       <hr>
       <div class="row">
         <div class="col-xl-3 mb-3">
+
           <category-list-chooser
             v-if="categories.length"
+            :collectionConfig="collectionConfig"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
-        </div>
-        <div id="choose-a-project" class="col-xl-9">
+
           <project-sorting-options
-            :views="views"
+            class="mt-3"
+            :viewOpts="viewOpts"
             :showCompleted="showCompleted"
             @sort="onSort"
             @viewchange="onViewChange"
             @togglecompleted="onToggleCompleted">
           </project-sorting-options>
-          <hr>
 
+        </div>
+        <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
-            <project-card-list
-              v-if="activeView === 'list'"
-              :projects="filteredProjects">
-            </project-card-list>
 
-            <project-table
-              v-if="activeView === 'table'"
-              :action="'contribute'"
-              :projects="filteredProjects">
-            </project-table>
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <project-card-list
+                key="project-list"
+                v-if="activeView === 'list'"
+                :projects="filteredProjects">
+              </project-card-list>
+            </transition>
+
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <project-table
+                key="project-table"
+                v-if="activeView === 'table'"
+                :action="'contribute'"
+                :projects="filteredProjects">
+              </project-table>
+            </transition>
 
             <project-pagination
+              key="project-pagination"
               :pagination="pagination"
               @change="onPageChange">
             </project-pagination>
+
           </span>
           <p v-else class="text-center mb-0">
-            No projects have been published for this category
+            No {{ collectionConfig.terminology.project | pluralize }}  have
+            been published for this category
           </p>
         </div>
       </div>
@@ -81,9 +101,14 @@ export default {
   data: function () {
     return {
       navItems: [
-        { id: 'choose-a-project', text: 'Choose a Project' }
+        {
+          id: 'choose-a-project',
+          text: `Choose a ${this.collectionConfig.terminology.project}` }
       ],
-      views: ['list', 'table'],
+      viewOpts: [
+        { text: 'List', value: 'list' },
+        { text: 'Table', value: 'table' }
+      ],
       activeView: 'list',
       showCompleted: false,
       page: 1,
@@ -125,7 +150,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'Projects'
+    title: 'Contribute'
   },
 
   methods: {
@@ -223,3 +248,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#collection-contribute {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 300ms ease;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
+</style>

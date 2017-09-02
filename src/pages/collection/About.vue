@@ -3,7 +3,7 @@
   <div id="collection-about">
 
     <section>
-      <h2 class="text-center">About</h2>
+      <h2 class="text-center">About {{ collectionConfig.name }}</h2>
       <hr>
       <span
         v-if="collectionConfig.about.intro"
@@ -15,6 +15,19 @@
         the projects on this platform you will be directly helping to enable
         future research.
       </p>
+      <div class="text-center mt-3">
+        <b-button
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Choose a project
+        </b-button>
+      </div>
     </section>
 
     <section
@@ -23,6 +36,25 @@
       :id="item.id">
       <h3 class="text-center">{{ item.title }}</h3>
       <span v-html="item.markdown"></span>
+
+      <div
+        v-if="index === collectionConfig.about.subsections.length - 1"
+        class="text-center">
+        <hr>
+        <b-button
+          class="mt-1"
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Choose a project
+        </b-button>
+      </div>
+
     </section>
 
   </div>
