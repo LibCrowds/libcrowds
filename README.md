@@ -15,8 +15,6 @@ landing, about and data pages etc.) yet only requires a single PyBossa backend.
 A core page provides routes into each meta-category site, along with the
 statistics, admin and project configuration pages.
 
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
-
 ## Installing
 
 Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
@@ -160,3 +158,5 @@ top of [/bin/deploy.sh](/bin/deploy.sh).
 
 Once the master branch has been updated with this change it will be deployed to
 the new site for the first time.
+
+[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
