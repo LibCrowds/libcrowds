@@ -106,7 +106,7 @@ siteConfig.dataLicense: {
 
 ### description
 
-The `description` will appear on the site homepage and its meta description.
+The `description` will appear on the site homepage and form its meta description.
 
 ```js
 siteConfig.description: 'My SEO optimised meta description.'
@@ -162,6 +162,47 @@ siteConfig.tagline: 'My inspiring tagline'
 The collection configuration is used to define the appearance and behaviour of
 each set of collection pages.
 
+### about
+
+The `about` property can be used to provide a series of Markdown files used
+to configure the about page.
+
+```js
+config.about = {
+  intro: require(`./about/intro.md`),
+  subsections: [
+    {
+      id: 'contact',
+      title: 'Contact',
+      markdown: require(`./about/contact.md`)
+    }
+}
+```
+
+### bgImg
+
+The `bgImg` will be used to provide a consistent theme for the collection pages.
+
+```js
+collectionConfig.bgImg: require(`./background.jpg`)
+```
+
+### description
+
+The `description` will appear on the collection homepage and form its meta description.
+
+```js
+collectionConfig.description: 'My SEO optimised meta description.'
+```
+
+### forumUrl
+
+The `forumUrl` will be linked to from the collection navbar.
+
+```js
+collectionConfig.forumUrl: 'http://community.example.com/t/my_collection'
+```
+
 ### key
 
 The `key` is used to establish the two-way binding between the site and collection
@@ -170,30 +211,31 @@ configuration files. This key must also appear in the site configuration's
 to this collection configuration file.
 
 ```js
-config.key = 'my_collection'
+collectionConfig.key = 'my_collection'
 ```
 
+### name
 
+A `name` for the project collection.
 
 ```js
-// Basic configuration
-const config = {
-  name: 'The name',
-  tagline: 'A tagline for the collection.',
-  description: 'A description of the collection.'
-}
+collectionConfig.name = 'My Amazing Name'
 ```
 
+### tagline
 
-
-### Terminology
-
-Different collections may require different terminology for categories, projects
-tasks and task runs. These can all be configured using the `terminology`
-property.
+The `tagline` will appear on the collection homepage.
 
 ```js
-config.terminology = {
+collectionConfig.tagline = 'My inspiring tagline'
+```
+
+### terminology
+
+The collection's `terminology` for categories, projects, tasks and task runs.
+
+```js
+collectionConfig.terminology = {
   category: 'category',
   project: 'project',
   task: 'task',
