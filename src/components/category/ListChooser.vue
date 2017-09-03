@@ -5,7 +5,7 @@
     :header="collectionConfig.terminology.category | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
-        v-for="category in categories"
+        v-for="(category, index) in categories"
         :key="category.id"
         action
         v-b-toggle="`catlistitem-${category.id}`"
@@ -13,6 +13,7 @@
         @click.native="changeCategory(category)">
         {{ category.name }}
         <b-collapse
+          :visible="index == 0"
           accordion="catlist-accordian"
           :id="`catlistitem-${category.id}`">
           <small
