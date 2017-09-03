@@ -117,7 +117,7 @@ export default {
      *   The endpoint
      */
     redirect (endpoint) {
-      const next = window.location.href
+      const next = window.location.origin
       window.location = `${siteConfig.pybossaHost}/${endpoint}?next=${next}`
     },
 
