@@ -40,13 +40,12 @@
           </b-dropdown-item>
 
           <!-- Admin -->
-          <span>
+          <span v-if="currentUser.admin">
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
                 name: 'admin-dashboard'
-              }"
-              v-if="currentUser.admin">
+              }">
               Admin
             </b-dropdown-item>
           </span>
