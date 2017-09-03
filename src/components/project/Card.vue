@@ -6,7 +6,7 @@
       :to="{
         name: 'collection-presenter',
         params: {
-          shortname: project.shortname
+          shortname: project.short_name
         }
       }">
       <div class="thumbnail-wrapper">
@@ -22,7 +22,7 @@
           :to="{
             name: 'collection-presenter',
             params: {
-              shortname: project.shortname
+              shortname: project.short_name
             }
           }">
           <h4 class="card-title mb-2 px-2 pt-2">
