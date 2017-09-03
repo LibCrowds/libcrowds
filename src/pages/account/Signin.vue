@@ -117,7 +117,7 @@ export default {
      *   The endpoint
      */
     redirect (endpoint) {
-      const next = window.location.origin
+      const next = this.$route.query.next || window.location.origin
       window.location = `${siteConfig.pybossaHost}/${endpoint}?next=${next}`
     },
 
@@ -127,9 +127,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      if (data.next === '/') {
-        this.$router.push({ name: 'landing' })
-      }
       this.form.model = data.form
       this.auth = data.auth
     },
@@ -146,7 +143,11 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     pybossaApi.get('/account/signin').then(r => {
-      next(vm => vm.setData(r.data))
+      if (r.data.next === '/') {
+        next({ name: 'landing' })
+      } else {
+        next(vm => vm.setData(r.data))
+      }
     })
   }
 }

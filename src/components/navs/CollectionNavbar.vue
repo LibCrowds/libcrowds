@@ -138,7 +138,10 @@
           <b-nav is-nav-bar v-else>
             <b-nav-item
               :to="{
-                name: 'signin'
+                name: 'signin',
+                query: {
+                  next: next
+                }
               }">
               Sign in
             </b-nav-item>
@@ -206,6 +209,9 @@ export default {
     },
     loggedIn: function () {
       return !isEmpty(this.currentUser)
+    },
+    next: function () {
+      return document.location.href
     }
   },
 
