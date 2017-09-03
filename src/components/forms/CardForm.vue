@@ -8,8 +8,8 @@
       show
       :variant="status === 'error' ? 'danger' : status"
       v-for="msg in flashMsg"
-      :key="msg"
-      key="flash">
+      class="mb-1"
+      :key="msg">
       {{ msg }}
     </b-alert>
 
