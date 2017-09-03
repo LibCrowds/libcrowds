@@ -29,10 +29,10 @@ instance.interceptors.response.use((r) => {
     return
   }
 
-  if (r.data.status === 'success' && 'flash' in r.data) {
+  if (r.data.status !== 'error' && 'flash' in r.data) {
     store.dispatch('NOTIFY', {
       msg: r.data.flash,
-      type: 'success'
+      type: r.data.status
     })
   }
   return r
