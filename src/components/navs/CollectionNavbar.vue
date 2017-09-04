@@ -210,7 +210,7 @@ export default {
       return !isEmpty(this.currentUser)
     },
     next: function () {
-      return document.location.href
+      return this.$route.path
     }
   },
 

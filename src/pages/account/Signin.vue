@@ -110,6 +110,12 @@ export default {
     title: 'Sign in'
   },
 
+  computed: {
+    next: function () {
+      return this.$route.query.next || '/'
+    }
+  },
+
   methods: {
     /**
      * Redirect to an external endpoint (for OAuth signin).
@@ -117,8 +123,9 @@ export default {
      *   The endpoint
      */
     redirect (endpoint) {
-      const next = this.$route.query.next || window.location.origin
-      window.location = `${siteConfig.pybossaHost}/${endpoint}?next=${next}`
+      const nextExternal = `${document.location.origin}/${this.next}`
+      const query = `next=${nextExternal}`
+      window.location = `${siteConfig.pybossaHost}/${endpoint}?${query}`
     },
 
     /**
@@ -137,7 +144,7 @@ export default {
      *   The response data
      */
     onSuccess (data) {
-      this.$router.push({ path: data.next })
+      this.$router.push({ path: this.next })
     }
   },
 
