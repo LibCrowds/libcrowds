@@ -32,8 +32,8 @@
                   class="mx-1"
                   variant="googleplus"
                   @click="redirect('google')">
-                  <icon name="google-plus"></icon>
-                  <span class="ml-1 hidden-sm-down">Google Plus</span>
+                  <icon name="google"></icon>
+                  <span class="ml-1 hidden-sm-down">Google</span>
                 </b-button>
               </div>
 
@@ -67,7 +67,7 @@
 
 <script>
 import 'vue-awesome/icons/twitter'
-import 'vue-awesome/icons/google-plus'
+import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
