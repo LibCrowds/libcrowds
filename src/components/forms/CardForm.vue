@@ -94,6 +94,10 @@ export default {
     showCancel: {
       type: Boolean,
       default: false
+    },
+    noSubmit: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -136,6 +140,11 @@ export default {
      * Submit the form.
      */
     submit () {
+      this.$emit('submit', this.form)
+      if (this.noSubmit) {
+        return
+      }
+
       this.flash = ''
       pybossaApi({
         method: this.form.method,

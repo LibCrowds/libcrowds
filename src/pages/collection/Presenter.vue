@@ -13,6 +13,7 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
+import Z3950Presenter from '@/components/presenters/Z3950'
 import DefaultPresenter from '@/components/presenters/Default'
 
 export default {
@@ -49,6 +50,7 @@ export default {
     presenter: function () {
       const presenters = {
         'libcrowds-viewer': LibcrowdsViewerPresenter,
+        'z3950': Z3950Presenter,
         default: DefaultPresenter
       }
       return this.collectionConfig.presenter
