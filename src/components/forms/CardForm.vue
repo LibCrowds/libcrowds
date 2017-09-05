@@ -45,7 +45,12 @@
         <b-button
           variant="success"
           @click="submit">
-          {{ submitText }}
+          <span v-if="!processing">{{ submitText }}</span>
+          <div v-else class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+          </div>
         </b-button>
       </span>
     </template>
@@ -62,7 +67,8 @@ export default {
   data: function () {
     return {
       status: null,
-      flash: ''
+      flash: '',
+      processing: false
     }
   },
 
@@ -140,6 +146,7 @@ export default {
      * Submit the form.
      */
     submit () {
+      this.processing = true
       this.$emit('submit', this.form)
       if (this.noSubmit) {
         return
@@ -154,6 +161,7 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
+        this.processing = false
         if (r.data.status === 'error') {
           this.flash = r.data.flash
           this.status = r.data.status
@@ -162,6 +170,7 @@ export default {
           this.$emit('success', r.data)
         }
       }).catch(err => {
+        this.processing = false
         this.flash = err.response.data.exception_msg
         this.status = 'error'
       })
@@ -179,6 +188,7 @@ export default {
 
 <style lang="scss">
 @import 'src/assets/style/main';
+@import '~spinkit/scss/spinners/7-three-bounce';
 
 .card-form {
   label {
@@ -201,6 +211,20 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .btn {
+    transition: all 2s;
+  }
+
+  .sk-three-bounce {
+    margin: 0;
+
+    .sk-child {
+      background-color: $white;
+      width: 0.8rem;
+      height: 0.8rem;
+    }
   }
 }
 </style>

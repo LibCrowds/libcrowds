@@ -117,25 +117,29 @@ export default {
               model: 'title',
               label: 'Title',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              placeholder: 'Search by title'
             },
             {
               model: 'author',
               label: 'Author',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              placeholder: 'Search by author'
             },
             {
               model: 'year',
               label: 'Year',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              placeholder: 'Search by year'
             },
             {
               model: 'isbn',
               label: 'ISBN',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              placeholder: 'Search by ISBN'
             }
           ]
         }
