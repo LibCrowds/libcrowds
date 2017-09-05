@@ -15,7 +15,7 @@
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
 
         <card-form
-          v-if="!searchResults.length"
+          v-if="!searchResults.length || selectedRecord"
           no-submit
           :header="header"
           :submitText="form.submitText"
@@ -23,7 +23,8 @@
           @submit="form.onSubmit">
 
           <div slot="top" v-if="selectedRecord">
-            {{ selectedRecord }}
+            <h5 class="mb-1">{{ selectedRecord.title }}</h5>
+            <p class="mb-1">{{ selectedRecord.author }}</p>
           </div>
 
         </card-form>
@@ -204,7 +205,6 @@ export default {
      *   The record.
      */
     viewFullRecord (record) {
-      console.log(JSON.stringify(record.full, null, 2))
       this.$refs.modalcontent.innerHTML = JSON.stringify(record.full, null, 2)
       this.$refs.modal.show()
     },
@@ -262,7 +262,6 @@ export default {
       const searchQuery = this.buildQuery()
       const fullQuery = `query=${searchQuery}&position=${position}`
       const url = `${this.searchForm.endpoint}?${fullQuery}`
-      console.log(url)
       pybossaApi.get(url).then(r => {
         this.searchResults = this.processResults(r.data.data)
       })
@@ -306,6 +305,7 @@ export default {
     processResults (results) {
       return results.map(r => {
         return {
+          controlNumber: this.getField(r, '001').replace(/^\D+/g, ''),
           title: this.getField(r, 245, ['a', 'b']),
           author: this.getField(r, 110),
           full: r
@@ -328,17 +328,40 @@ export default {
      *   The task.
      */
     onSubmit () {
-      this.search()
+      const taskrun = JSON.stringify({
+        'project_id': this.project.id,
+        'task_id': this.currentTask.id,
+        'info': {
+          oclc: this.selectedRecord.controlNumber,
+          shelfmark: this.shelfmarkForm.model.shelfmark
+        }
+      })
+      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
+        this.$store.dispatch('NOTIFY', {
+          msg: 'Answer saved, thanks!',
+          type: 'success'
+        })
+        this.nextTask()
+      })
+    },
+
+    /**
+     * Load the next task.
+     */
+    nextTask () {
+      if (this.tasks.length) {
+        this.currentTask = this.tasks.shift()
+      } else {
+        this.loadTasks().then(tasks => {
+          this.tasks = tasks
+          this.nextTask()
+        })
+      }
     }
   },
 
   created () {
-    this.loadTasks().then(tasks => {
-      this.tasks = tasks
-      if (this.tasks.length) {
-        this.currentTask = this.tasks[0]
-      }
-    })
+    this.nextTask()
   }
 }
 </script>
