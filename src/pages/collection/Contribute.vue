@@ -122,6 +122,13 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: 'Contribute',
+      description: 'Choose a project to contribute towards'
+    }
+  },
+
   props: {
     collectionConfig: {
       type: Object,
@@ -147,10 +154,6 @@ export default {
     ProjectTable,
     ProjectCardList,
     CategoryListChooser
-  },
-
-  metaInfo: {
-    title: 'Contribute'
   },
 
   methods: {

@@ -34,6 +34,13 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.project.name}: Task Presenter`,
+      description: this.project.description
+    }
+  },
+
   props: {
     collectionConfig: {
       type: Object,
@@ -55,10 +62,6 @@ export default {
         ? presenters[this.collectionConfig.presenter]
         : presenters.default
     }
-  },
-
-  metaInfo: {
-    title: 'Task Presenter'
   },
 
   methods: {

@@ -3,7 +3,7 @@
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
         <card-form
-          :header="'Regsiter'"
+          :header="'Register'"
           :lead="lead"
           :submitText="submitText"
           :form="form">
@@ -94,12 +94,15 @@ export default {
     }
   },
 
-  components: {
-    CardForm
+  metaInfo () {
+    return {
+      title: 'Register',
+      description: `Sign up for a new ${siteConfig.brand} account`
+    }
   },
 
-  metaInfo: {
-    title: 'Register'
+  components: {
+    CardForm
   },
 
   methods: {

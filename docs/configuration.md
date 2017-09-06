@@ -106,7 +106,8 @@ siteConfig.dataLicense: {
 
 ### description
 
-The `description` will appear on the site homepage and form its meta description.
+The `description` will appear on the site homepage and form its meta
+description.
 
 ```js
 siteConfig.description: 'My SEO optimised meta description'
@@ -118,6 +119,15 @@ The `githubUrl` will appear in the site footer.
 
 ```js
 siteConfig.githubUrl = 'https://github.com/github'
+```
+
+### logo
+
+The logo, which should be an SVG file, will be displayed on each collection
+page.
+
+```js
+siteConfig.logo = require(`./company-logo.svg`)
 ```
 
 ### mapbox

@@ -3,20 +3,21 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <h1 id="tagline">{{ collectionConfig.tagline }}</h1>
-          <div id="intro-buttons" class="mt-2">
-            <b-button
-              variant="secondary"
-              :to="{
-                name: 'collection-about',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Learn More
-            </b-button>
+          <div class="d-flex align-items-baseline justify-content-center">
+            <div
+              id="company-logo"
+              class="mr-2"
+              v-html="siteConfig.logo"
+              v-if="siteConfig.logo">
+            </div>
+            <h1 class="display-3">{{ collectionConfig.name }}</h1>
+            <span class="mr-4" v-if="siteConfig.logo"></span>
+          </div>
+          <h2 id="tagline">{{ collectionConfig.tagline }}</h2>
+          <div>
             <b-button
               variant="success"
+              size="lg"
               :to="{
                 name: 'collection-contribute',
                 params: {
@@ -31,7 +32,7 @@
     </transition>
 
     <section id="intro" class="bg-white invert-navbar">
-      <div class="container pt-3 pb-2 pt-md-4 text-center">
+      <div class="container py-3 py-md-4 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p id="site-lead" class="mb-0">
@@ -48,7 +49,18 @@
             </p>
           </div>
         </div>
-        <hr class="my-3 w-75 sr">
+        <hr class="mt-3 w-75 sr">
+        <b-button
+          variant="secondary"
+          class="mt-1"
+          :to="{
+            name: 'collection-about',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Learn More
+        </b-button>
       </div>
     </section>
 
@@ -59,7 +71,7 @@
       <div class="container text-center text-lg-left pb-4">
         <div class="row">
           <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
-            <h2 class="font-weight-bold pt-1">
+            <h2 class="display-5 font-weight-bold pt-1">
               Featured Projects
             </h2>
             <hr class="wide mr-lg-5">
@@ -103,7 +115,7 @@
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
-              <h3>Open Data</h3>
+              <h3 class="display-5">Open Data</h3>
             </div>
           </div>
           <div class="row py-md-3">
@@ -144,7 +156,7 @@
         <div class="container py-4">
           <div class="row text-center">
             <div class="col-sm-12">
-              <h3>Results</h3>
+              <h3 class="display-5">Results</h3>
             </div>
           </div>
           <div class="row py-2">
@@ -172,7 +184,7 @@
       <div class="container pt-5 pb-4">
         <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
-            <h3 class="text-uppercase mb-0">Get Involved</h3>
+            <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
             <p class="lead my-3">
               Your contributions will have a direct impact on enabling future
               reasearch at {{ siteConfig.company }}.
@@ -186,7 +198,7 @@
                   collectionname: collectionConfig.key
                 }
               }">
-              Choose a project
+              Get Started
             </b-button>
           </div>
         </div>
@@ -224,6 +236,7 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
+      logo: siteConfig.logo,
       stats: {},
       featured: [],
       topUsers: [],
@@ -243,17 +256,12 @@ export default {
     }
   },
 
-  // metaInfo: {
-  //   title: this.collectionConfig.tagline,
-  //   meta: [
-  //     { name: 'description', content: this.collectionConfig.description },
-
-  //     // Facebook Open Graph Markup
-  //     { property: 'og:url', content: window.location.href },
-  //     { property: 'og:title', content: this.collectionConfig.tagline },
-  //     { property: 'og:description', content: this.collectionConfig.description }
-  //   ]
-  // },
+  metaInfo () {
+    return {
+      title: this.collectionConfig.tagline,
+      description: this.collectionConfig.description
+    }
+  },
 
   components: {
     SocialMediaButtons,
@@ -334,6 +342,12 @@ export default {
     &.v-leave-to {
       opacity: 0;
     }
+
+    #company-logo {
+      svg {
+        display: block;
+      }
+    }
   }
 
   #site-lead {
@@ -347,19 +361,17 @@ export default {
     }
   }
 
-  @include media-breakpoint-up(sm) {
-    h2 {
-      font-size: 4rem;
-    }
-    h3 {
+  @include media-breakpoint-up(md) {
+    .display-5 {
       font-size: 3.5rem;
     }
   }
 
-  @include media-breakpoint-down(xs) {
-    #tagline {
-      font-size: $font-size-lg;
-      line-height: 1.6;
+  #tagline {
+    font-size: $font-size-lg;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 2rem;
     }
   }
 

@@ -169,6 +169,20 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: this.siteConfig.tagline,
+      meta: [
+        { name: 'description', content: this.siteConfig.description },
+
+        // Facebook Open Graph Markup
+        { property: 'og:url', content: window.location.href },
+        { property: 'og:title', content: this.siteConfig.brand },
+        { property: 'og:description', content: this.siteConfig.tagline }
+      ]
+    }
+  },
+
   components: {
     LeaderboardModal,
     UserAvatar,

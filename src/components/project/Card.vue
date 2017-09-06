@@ -42,7 +42,7 @@
         </span>
         <span class="card-stat text-muted mb-1 mb-lg-0">
           <icon name="users"></icon> {{ project.n_volunteers }}
-          {{ String(project.n_volunteers) | pluralize(project.n_volunteers) }}
+          {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
         <div>
           <project-contrib-button

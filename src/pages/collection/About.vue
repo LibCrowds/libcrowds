@@ -25,7 +25,7 @@
               collectionname: collectionConfig.key
             }
           }">
-          Choose a project
+          Get Started
         </b-button>
       </div>
     </section>
@@ -51,7 +51,7 @@
               collectionname: collectionConfig.key
             }
           }">
-          Choose a project
+          Get Started
         </b-button>
       </div>
 
@@ -71,15 +71,18 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: 'About',
+      description: `Learn more about the ${siteConfig.brand} platform`
+    }
+  },
+
   props: {
     collectionConfig: {
       type: Object,
       required: true
     }
-  },
-
-  metaInfo: {
-    title: 'About'
   },
 
   computed: {

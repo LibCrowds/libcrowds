@@ -32,8 +32,8 @@
                   class="mx-1"
                   variant="googleplus"
                   @click="redirect('google')">
-                  <icon name="google-plus"></icon>
-                  <span class="ml-1 hidden-sm-down">Google Plus</span>
+                  <icon name="google"></icon>
+                  <span class="ml-1 hidden-sm-down">Google</span>
                 </b-button>
               </div>
 
@@ -67,7 +67,7 @@
 
 <script>
 import 'vue-awesome/icons/twitter'
-import 'vue-awesome/icons/google-plus'
+import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
@@ -102,12 +102,21 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: 'Sign in',
+      description: `Sign in to ${siteConfig.brand}`
+    }
+  },
+
   components: {
     CardForm
   },
 
-  metaInfo: {
-    title: 'Sign in'
+  computed: {
+    next: function () {
+      return this.$route.query.next || '/'
+    }
   },
 
   methods: {
@@ -117,8 +126,9 @@ export default {
      *   The endpoint
      */
     redirect (endpoint) {
-      const next = this.$route.query.next || window.location.origin
-      window.location = `${siteConfig.pybossaHost}/${endpoint}?next=${next}`
+      const nextExternal = `${document.location.origin}/${this.next}`
+      const query = `next=${nextExternal}`
+      window.location = `${siteConfig.pybossaHost}/${endpoint}?${query}`
     },
 
     /**
@@ -137,7 +147,7 @@ export default {
      *   The response data
      */
     onSuccess (data) {
-      this.$router.push({ path: data.next })
+      this.$router.push({ path: this.next })
     }
   },
 

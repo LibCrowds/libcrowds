@@ -25,16 +25,18 @@ export default {
     }
   },
 
-  metaInfo: {
-    titleTemplate: `%s - ${siteConfig.brand}`,
-    meta: [
-      { name: 'description', content: siteConfig.description },
+  metaInfo () {
+    return {
+      titleTemplate: `%s - ${siteConfig.brand}`,
+      meta: [
+        { name: 'description', content: siteConfig.description },
 
-      // Facebook Open Graph Markup
-      { property: 'og:url', content: window.location.href },
-      { property: 'og:title', content: siteConfig.tagline },
-      { property: 'og:description', content: siteConfig.description }
-    ]
+        // Facebook Open Graph Markup
+        { property: 'og:url', content: window.location.href },
+        { property: 'og:title', content: siteConfig.tagline },
+        { property: 'og:description', content: siteConfig.description }
+      ]
+    }
   },
 
   components: {
