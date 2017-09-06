@@ -37,6 +37,7 @@ import pybossaApi from '@/api/pybossa'
 export default {
   data: function () {
     return {
+      siteConfig: siteConfig,
       locs: [],
       showLocs: false,
       projects: {},
@@ -46,6 +47,13 @@ export default {
       top5Users: [],
       users: {},
       topUsers: []
+    }
+  },
+
+  metaInfo () {
+    return {
+      title: 'Statistics',
+      description: `Global statistics for ${siteConfig.brand}`
     }
   },
 
@@ -121,10 +129,6 @@ export default {
         ]
       }
     }
-  },
-
-  metaInfo: {
-    title: 'Statistics'
   },
 
   beforeRouteEnter (to, from, next) {
