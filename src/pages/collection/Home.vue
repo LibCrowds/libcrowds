@@ -198,7 +198,7 @@
                   collectionname: collectionConfig.key
                 }
               }">
-              Choose a project
+              Get Started
             </b-button>
           </div>
         </div>
