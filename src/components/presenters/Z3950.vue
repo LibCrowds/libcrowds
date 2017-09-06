@@ -4,9 +4,7 @@
 
       <div class="col-sm-12 col-lg-6">
         <b-card no-block>
-          <img
-            v-if="currentTask" :src="currentTask.info.url"
-            class="img-fluid">
+          <img v-if="currentTask" :src="currentTask.info.url" class="img-fluid">
           <loading v-else text="Loading image"></loading>
         </b-card>
       </div>
@@ -15,12 +13,7 @@
         <b-card no-block>
 
           <div class="card-block pb-0" v-if="alerts.length">
-            <b-alert
-              show
-              v-for="alert in alerts"
-              :variant="alert.type"
-              :key="alert.msg"
-              class="mb-1">
+            <b-alert show v-for="alert in alerts" :variant="alert.type" :key="alert.msg" class="mb-1">
               {{ alert.msg }}
             </b-alert>
           </div>
@@ -28,41 +21,24 @@
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
-              <b-button
-                v-if="searchResults.length || selectedRecord"
-                variant="info"
-                size="sm"
-                class="float-right"
-                @click="reset">
+              <b-button v-if="searchResults.length || selectedRecord" variant="info" size="sm" class="float-right" @click="reset">
                 Search Again
               </b-button>
             </div>
           </template>
 
-          <transition-group name="fade" mode="out-in" appear>
-            <div
-              key="search"
-              v-if="stage == 'search'"
-              class="card-block">
-              <vue-form-generator
-                :schema="form.schema"
-                :model="form.model">
+          <transition name="fade" mode="out-in" appear>
+            <div key="search" v-if="stage == 'search'" class="card-block">
+              <vue-form-generator :schema="form.schema" :model="form.model">
               </vue-form-generator>
             </div>
 
             <div
               key="results"
-              v-if="stage == 'results'"
+              v-if="stage == 'results' && !processing"
               class="list-group">
-              <b-list-group-item
-                v-for="(record, index) in searchResults"
-                :key="`result-${index}`"
-                class="pb-2 pt-1">
-                <b-button
-                  class="remove mb-1"
-                  variant="secondary"
-                  size="sm"
-                  @click="removeResult(record)">
+              <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="pb-2 pt-1">
+                <b-button class="remove mb-1" variant="secondary" size="sm" @click="removeResult(record)">
                   <icon name="times"></icon>
                 </b-button>
                 <h5 class="mb-1">{{ record.title }}</h5>
@@ -76,55 +52,40 @@
                   </small>
                 </p>
                 <div class="result-buttons">
-                  <b-button
-                    variant="secondary"
-                    size="sm"
-                    @click="viewFullRecord(record)">
+                  <b-button variant="secondary" size="sm" @click="viewFullRecord(record)">
                     Full Record
                   </b-button>
-                  <b-button
-                    variant="success"
-                    size="sm"
-                    @click="selectedRecord = record">
+                  <b-button variant="success" size="sm" @click="selectedRecord = record">
                     Select
                   </b-button>
                 </div>
               </b-list-group-item>
             </div>
 
-            <div
-              key="shelfmark"
-              v-if="selectedRecord"
-              class="card-block">
+            <div key="submit" v-if="selectedRecord" class="card-block">
               <div v-if="selectedRecord">
                 <h5 class="mb-1">{{ selectedRecord.title }}</h5>
                 <p class="mb-0">{{ selectedRecord.author }}</p>
                 <p class="mb-0">
-                  <small>{{ selectedRecord.physdesc }}</small
-                ></p>
+                  <small>{{ selectedRecord.physdesc }}</small>
+                </p>
                 <p class="mb-2">
                   <small>
                     {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
                   </small>
                 </p>
               </div>
-              <vue-form-generator
-                :schema="shelfmarkForm.schema"
-                :model="shelfmarkForm.model">
+              <vue-form-generator :schema="shelfmarkForm.schema" :model="shelfmarkForm.model">
               </vue-form-generator>
             </div>
-          </transition-group>
+          </transition>
 
-          <template slot="footer" v-if="stage !== 'results'">
+          <template slot="footer">
             <div class="float-right">
-              <b-button
-                variant="secondary"
-                @click="onSkip">
+              <b-button variant="secondary" @click="onSkip">
                 Skip / Not Found
               </b-button>
-              <b-button
-                variant="success"
-                @click="onSubmit">
+              <b-button v-if="stage !== 'results'" variant="success" @click="onSubmit">
                 <span v-if="!processing">{{ stage | capitalize }}</span>
                 <div v-else class="sk-three-bounce">
                   <div class="sk-child sk-bounce1"></div>
@@ -135,26 +96,23 @@
             </div>
           </template>
         </b-card>
-        <b-pagination
-          v-if="stage == 'results'"
-          variant="info"
-          class="d-flex justify-content-center mt-2 mb-0"
-          :total-rows="pagination.total"
-          :per-page="pagination.perPage"
-          v-model="pagination.page"
-          @change="onPageChange">
+
+        <b-pagination v-if="stage == 'results'" variant="info" class="d-flex justify-content-center mt-2 mb-0" :total-rows="pagination.total" :per-page="pagination.perPage" v-model="pagination.page" @change="onPageChange">
         </b-pagination>
+
+        <b-card header="Comments" class="mt-3">
+          <textarea class="form-control" ref="comments" rows="3" placeholder="Add a comment...">
+          </textarea>
+        </b-card>
+
       </div>
     </div>
 
-    <b-modal
-      ref="modal"
-      title="Full record"
-      size="lg">
+    <b-modal ref="modal" title="Full record" size="lg">
       <pre>
-        <code ref="modalcontent">
-        </code>
-      </pre>
+          <code ref="modalcontent">
+          </code>
+        </pre>
     </b-modal>
 
   </div>
@@ -269,11 +227,15 @@ export default {
       } else if (this.searchResults.length && !this.selectedRecord) {
         return 'results'
       } else if (this.selectedRecord) {
-        return 'shelfmark'
+        return 'submit'
       }
     },
     form: function () {
-      return !this.selectedRecord ? this.searchForm : this.shelfmarkForm
+      if (!this.searchResults.length && !this.selectedRecord) {
+        return this.searchForm
+      } else {
+        return this.shelfmarkForm
+      }
     }
   },
 
@@ -328,10 +290,10 @@ export default {
         'OCLCQ', 'OCLCF', 'OCLCO', 'BLSTP'
       ].join(' or ')
       return `(1,1183)="eng"and(1,6119)="(${trusted})"` +
-             `and(1,4)="${model.title}"` +
-             `and(1,1003)="${model.author}"` +
-             `and(1,31)="${model.year}"` +
-             `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
+        `and(1,4)="${model.title}"` +
+        `and(1,1003)="${model.author}"` +
+        `and(1,31)="${model.year}"` +
+        `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
     },
 
     /**
@@ -342,7 +304,6 @@ export default {
       const searchQuery = this.buildQuery()
       const fullQuery = `query=${searchQuery}&position=${position}`
       const url = `/z3950/search/oclc/json?${fullQuery}`
-      this.reset()
       pybossaApi.get(url).then(r => {
         if (r.data.n_records === 0) {
           this.alerts.push({ msg: 'No results', type: 'info' })
@@ -446,12 +407,14 @@ export default {
         showCancelButton: true,
         closeOnConfirm: false
       },
-      () => {
-        this.submit({
-          oclc: '',
-          shelfmark: ''
+        () => {
+          this.submit({
+            oclc: '',
+            shelfmark: '',
+            comments: this.$refs.comments.value
+          })
+          sweetalert.close()
         })
-      })
     },
 
     /**
@@ -460,10 +423,11 @@ export default {
     onSubmit () {
       if (this.stage === 'search') {
         this.search()
-      } else if (this.stage === 'shelfmark') {
+      } else if (this.stage === 'submit') {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
-          shelfmark: this.shelfmarkForm.model.shelfmark
+          shelfmark: this.shelfmarkForm.model.shelfmark,
+          comments: this.$refs.comments.value
         })
       }
     },
@@ -513,6 +477,10 @@ export default {
       this.selectedRecord = null
       this.alerts = []
       this.pagination = {}
+      for (let elem of document.querySelectorAll('input')) {
+        elem.value = ''
+      }
+      this.$refs.comments.value = ''
     },
 
     /**
@@ -548,8 +516,8 @@ export default {
     transition: opacity 400ms ease;
   }
 
-  .fade-enter > *,
-  .fade-leave-to > * {
+  .fade-enter>*,
+  .fade-leave-to>* {
     opacity: 0;
   }
 
