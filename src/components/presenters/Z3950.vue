@@ -1,75 +1,110 @@
 <template>
-  <div class="z3950-presenter">
+  <div id="z3950-presenter">
     <div class="row p-4">
-      <div class="col-sm-12 col-lg-6">
 
+      <div class="col-sm-12 col-lg-6">
         <b-card no-block>
           <img v-if="currentTask" :src="currentTask.info.url">
-          <loading
-            v-else
-            text="Loading image">
-          </loading>
+          <loading v-else text="Loading image"></loading>
         </b-card>
-
       </div>
+
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
+        <b-card no-block>
 
-        <card-form
-          v-if="!searchResults.length || selectedRecord"
-          no-submit
-          :header="header"
-          :submitText="form.submitText"
-          :form="form"
-          @submit="form.onSubmit">
-
-          <div slot="top" v-if="selectedRecord">
-            <h5 class="mb-1">{{ selectedRecord.title }}</h5>
-            <p class="mb-1">{{ selectedRecord.author }}</p>
-          </div>
-
-        </card-form>
-
-        <b-card
-          v-else
-          no-block>
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
               <b-button
+                v-if="searchResults.length || selectedRecord"
                 variant="info"
                 size="sm"
                 class="float-right"
-                @click="searchResults = []">
+                @click="reset">
                 Search Again
               </b-button>
             </div>
           </template>
-          <transition-group appear
-            tag="div"
-            class="list-group">
-            <b-list-group-item
-              v-for="(record, index) in searchResults"
-              :key="`result-${index}`">
-              <h5 class="mb-1">{{ record.title }}</h5>
-              <p class="mb-1">{{ record.author }}</p>
-              <footer>
+
+          <transition-group name="fade" mode="out-in" appear>
+            <div
+              key="search"
+              v-if="stage == 'search'"
+              class="card-block">
+              <vue-form-generator
+                :schema="form.schema"
+                :model="form.model">
+              </vue-form-generator>
+            </div>
+
+            <div
+              key="results"
+              v-if="stage == 'results'"
+              class="list-group">
+              <b-list-group-item
+                v-for="(record, index) in searchResults"
+                :key="`result-${index}`"
+                class="pb-2 pt-1">
                 <b-button
+                  class="remove mb-1"
                   variant="secondary"
                   size="sm"
-                  @click="viewFullRecord(record)">
-                  View Full Record
+                  @click="removeResult(record)">
+                  <icon name="times"></icon>
                 </b-button>
-                <b-button
-                  variant="success"
-                  size="sm"
-                  @click="selectedRecord = record">
-                  Select Record
-                </b-button>
-              </footer>
-            </b-list-group-item>
-          </transition-group>
-        </b-card>
+                <h5 class="mb-1">{{ record.title }}</h5>
+                <p class="mb-0">{{ record.author }}</p>
+                <small class="mb-0">{{ record.physdesc }}</small>
+                <small class="mb-2">
+                  {{ record.publisher }}{{ record.pubyear }}
+                </small>
+                <div class="result-buttons">
+                  <b-button
+                    variant="secondary"
+                    size="sm"
+                    @click="viewFullRecord(record)">
+                    Full Record
+                  </b-button>
+                  <b-button
+                    variant="success"
+                    size="sm"
+                    @click="selectedRecord = record">
+                    Select
+                  </b-button>
+                </div>
+              </b-list-group-item>
+            </div>
 
+            <div
+              key="shelfmark"
+              v-if="selectedRecord"
+              class="card-block">
+              <div slot="top" v-if="selectedRecord">
+                <h5 class="mb-1">{{ selectedRecord.title }}</h5>
+                <p class="mb-1">{{ selectedRecord.author }}</p>
+              </div>
+              <vue-form-generator
+                :schema="shelfmarkForm.schema"
+                :model="shelfmarkForm.model">
+              </vue-form-generator>
+            </div>
+          </transition-group>
+
+          <template slot="footer" v-if="stage !== 'results'">
+            <b-button
+              class="float-right"
+              variant="success"
+              @click="onSearch">
+              <span v-if="!processing">{{ stage | capitalize }}</span>
+              <div v-else class="sk-three-bounce">
+                <div class="sk-child sk-bounce1"></div>
+                <div class="sk-child sk-bounce2"></div>
+                <div class="sk-child sk-bounce3"></div>
+              </div>
+            </b-button>
+          </template>
+
+        </b-card>
       </div>
     </div>
 
@@ -87,15 +122,16 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/times'
 import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
 import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
-import CardForm from '@/components/forms/CardForm'
 
 export default {
   data: function () {
     return {
+      processing: false,
       header: 'What is this item?',
       tasks: [],
       searchResults: [],
@@ -183,14 +219,22 @@ export default {
   },
 
   components: {
-    Loading,
-    CardForm
+    Loading
   },
 
   computed: {
     buttons: function () {
       return {
         like: !isEmpty(this.currentUser)
+      }
+    },
+    stage: function () {
+      if (!this.searchResults.length && !this.selectedRecord) {
+        return 'search'
+      } else if (this.searchResults.length && !this.selectedRecord) {
+        return 'results'
+      } else if (this.selectedRecord) {
+        return 'shelfmark'
       }
     },
     form: function () {
@@ -259,11 +303,13 @@ export default {
      * Perform a search.
      */
     search (position = 1) {
+      this.processing = true
       const searchQuery = this.buildQuery()
       const fullQuery = `query=${searchQuery}&position=${position}`
       const url = `${this.searchForm.endpoint}?${fullQuery}`
       pybossaApi.get(url).then(r => {
         this.searchResults = this.processResults(r.data.data)
+        this.processing = false
       })
     },
 
@@ -281,15 +327,22 @@ export default {
         return f.hasOwnProperty(tag)
       })
 
-      if (fields.length && !codes && typeof fields[0][tag] !== 'object') {
-        // Return header field
+      if (!fields.length) {
+        return ''
+      }
+
+      // Header field
+      if (String(tag).match(/00\d/i)) {
         return fields[0][tag]
       }
 
       return fields.map(f => {
         return f[tag]['subfields'].map(sf => {
+          if (!codes) {
+            return Object.values(sf)
+          }
           let arr = intersection(Object.keys(sf), codes)
-          if (arr.length || !codes) {
+          if (arr.length) {
             return sf[arr[0]]
           }
           return ''
@@ -307,7 +360,20 @@ export default {
         return {
           controlNumber: this.getField(r, '001').replace(/^\D+/g, ''),
           title: this.getField(r, 245, ['a', 'b']),
-          author: this.getField(r, 110),
+          author: (
+            this.getField(r, 100) ||
+            this.getField(r, 110) ||
+            this.getField(r, 111)
+          ),
+          physdesc: this.getField(r, 300),
+          publisher: (
+            this.getField(r, 260, ['b']) +
+            this.getField(r, 264, ['b'])
+          ),
+          pubyear: (
+            this.getField(r, 260, ['c']) +
+            this.getField(r, 264, ['c'])
+          ),
           full: r
         }
       })
@@ -350,12 +416,33 @@ export default {
      */
     nextTask () {
       if (this.tasks.length) {
+        this.reset()
         this.currentTask = this.tasks.shift()
       } else {
         this.loadTasks().then(tasks => {
           this.tasks = tasks
           this.nextTask()
         })
+      }
+    },
+
+    /**
+     * Reset the task.
+     */
+    reset () {
+      this.searchResults = []
+      this.selectedRecord = null
+    },
+
+    /**
+     * Remove a record from the search results.
+     * @param {Object} record
+     *   This.
+     */
+    removeResult (record) {
+      const idx = this.searchResults.indexOf(record)
+      if (idx > -1) {
+        this.searchResults.splice(idx, 1)
       }
     }
   },
@@ -367,16 +454,66 @@ export default {
 </script>
 
 <style lang="scss">
-.z3950-presenter {
-  .list-group-item {
-    transition: all 500ms ease;
+@import 'src/assets/style/main';
+@import '~spinkit/scss/spinners/7-three-bounce';
+
+#z3950-presenter {
+  div {
+    transition: opacity 400ms ease;
   }
 
-  .v-enter,
-  .v-leave-to {
-    -webkit-transform: translateY(20px);
-    transform: translateY(20px);
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 400ms ease;
+  }
+
+  .fade-enter > *,
+  .fade-leave-to > * {
     opacity: 0;
+  }
+
+  .card {
+    h5 {
+      font-size: 1.1rem;
+    }
+  }
+
+  .sk-three-bounce {
+    margin: 0;
+
+    .sk-child {
+      background-color: $white;
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+  }
+
+  code {
+    font-size: $font-size-sm;
+  }
+
+  .list-group-item {
+    border-right: none;
+    border-left: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .remove {
+      align-self: flex-end;
+      background: transparent;
+      border: none;
+      color: lighten($gray-light, 15%);
+      padding: 0;
+    }
+
+    .result-buttons {
+      align-self: flex-end;
+    }
   }
 }
 </style>
