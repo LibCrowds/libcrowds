@@ -5,7 +5,8 @@
         <card-form
           :header="'Forgotten Password'"
           :submitText="'Reset'"
-          :form="form">
+          :form="form"
+          @success="onSuccess">
         </card-form>
       </div>
     </div>
@@ -58,6 +59,13 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
+    },
+
+    /**
+     * Redirect the user on form submit success.
+     */
+    onSuccess () {
+      this.$router.push({ name: 'landing' })
     }
   },
 
