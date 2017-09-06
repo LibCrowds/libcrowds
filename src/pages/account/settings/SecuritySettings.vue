@@ -43,6 +43,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.currentUser.fullname}: Security Settings`
+    }
+  },
+
   props: {
     currentUser: {
       type: Object,
@@ -52,10 +58,6 @@ export default {
 
   components: {
     CardForm
-  },
-
-  metaInfo: {
-    title: 'Account Settings: Security'
   },
 
   methods: {

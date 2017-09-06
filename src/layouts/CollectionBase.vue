@@ -21,6 +21,23 @@ import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
+  metaInfo () {
+    return {
+      titleTemplate: `%s - ${this.collectionConfig.name} | ${siteConfig.brand}`,
+      meta: [
+        { name: 'description', content: this.collectionConfig.description },
+
+        // Facebook Open Graph Markup
+        { property: 'og:url', content: window.location.href },
+        { property: 'og:title', content: this.collectionConfig.tagline },
+        {
+          property: 'og:description',
+          content: this.collectionConfig.description
+        }
+      ]
+    }
+  },
+
   components: {
     CollectionNavbar,
     AppFooter

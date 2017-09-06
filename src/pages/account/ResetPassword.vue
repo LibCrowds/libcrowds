@@ -15,6 +15,7 @@
 
 <script>
 import pybossaApi from '@/api/pybossa'
+import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
@@ -46,12 +47,15 @@ export default {
     }
   },
 
-  components: {
-    CardForm
+  metaInfo () {
+    return {
+      title: 'Reset Password',
+      description: `Reset your ${siteConfig.brand} password`
+    }
   },
 
-  metaInfo: {
-    title: 'Reset Password'
+  components: {
+    CardForm
   },
 
   methods: {

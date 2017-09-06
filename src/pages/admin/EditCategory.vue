@@ -26,6 +26,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `Edit Category`
+    }
+  },
+
   components: {
     CardForm
   },

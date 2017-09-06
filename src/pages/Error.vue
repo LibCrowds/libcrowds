@@ -14,6 +14,18 @@
 import 'vue-awesome/icons/home'
 
 export default {
+  metaInfo () {
+    return {
+      title: this.title,
+      description: this.description,
+      bodyAttrs: {
+        style: `background: #7CC4F3
+              url('${require('../assets/img/bl-graphic.png')}')
+              no-repeat center bottom / cover fixed;`
+      }
+    }
+  },
+
   props: {
     title: {
       type: String,
@@ -22,15 +34,6 @@ export default {
     description: {
       type: String,
       required: true
-    }
-  },
-
-  metaInfo: {
-    title: 'Error',
-    bodyAttrs: {
-      style: `background: #7CC4F3
-             url('${require('../assets/img/bl-graphic.png')}')
-             no-repeat center bottom / cover fixed;`
     }
   }
 }

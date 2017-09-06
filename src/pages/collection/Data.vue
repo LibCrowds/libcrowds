@@ -82,7 +82,7 @@ import ProjectPagination from '@/components/project/Pagination'
 export default {
   data: function () {
     return {
-      siteConfig,
+      siteConfig: siteConfig,
       navItems: [
         { id: 'download', text: 'Download' }
       ],
@@ -97,15 +97,20 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: 'Data',
+      description: `All datasets generated from the experimental crowdsourcing
+                   projects hosted on this platform are made available under a
+                   ${siteConfig.dataLicense.name} license.`
+    }
+  },
+
   props: {
     collectionConfig: {
       type: Object,
       required: true
     }
-  },
-
-  metaInfo: {
-    title: 'Data'
   },
 
   components: {

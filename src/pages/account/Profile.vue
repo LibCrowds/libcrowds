@@ -55,6 +55,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.user.fullname}: User Profile`
+    }
+  },
+
   components: {
     ProjectTable,
     UserProfileCard,
@@ -69,10 +75,6 @@ export default {
         this.user.name === this.$store.state.currentUser.name
       )
     }
-  },
-
-  metaInfo: {
-    title: 'Profile'
   },
 
   methods: {

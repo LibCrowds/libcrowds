@@ -94,12 +94,15 @@ export default {
     }
   },
 
-  components: {
-    CardForm
+  metaInfo () {
+    return {
+      title: 'Register',
+      description: `Sign up for a new ${siteConfig.brand} account`
+    }
   },
 
-  metaInfo: {
-    title: 'Register'
+  components: {
+    CardForm
   },
 
   methods: {

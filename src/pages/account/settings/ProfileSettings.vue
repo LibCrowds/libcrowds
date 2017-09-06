@@ -44,6 +44,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.currentUser.fullname}: Profile Settings`
+    }
+  },
+
   props: {
     currentUser: {
       type: Object,
@@ -53,10 +59,6 @@ export default {
 
   components: {
     CardForm
-  },
-
-  metaInfo: {
-    title: 'Account Settings: Profile'
   },
 
   methods: {

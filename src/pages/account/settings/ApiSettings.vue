@@ -18,6 +18,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.currentUser.fullname}: API Settings`
+    }
+  },
+
   props: {
     currentUser: {
       type: Object,
@@ -51,10 +57,6 @@ export default {
         }
       }
     }
-  },
-
-  metaInfo: {
-    title: 'Account Settings: API'
   },
 
   methods: {

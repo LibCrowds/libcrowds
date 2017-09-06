@@ -101,6 +101,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `Manage Publications`
+    }
+  },
+
   components: {
     CardForm,
     PublicationCard

@@ -22,10 +22,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-
-  metaInfo: {
-    title: 'Results'
   }
 }
 </script>

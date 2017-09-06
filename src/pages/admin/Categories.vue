@@ -108,6 +108,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `Manage Categories`
+    }
+  },
+
   components: {
     CardForm
   },

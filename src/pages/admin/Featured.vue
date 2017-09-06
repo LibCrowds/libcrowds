@@ -12,6 +12,12 @@ export default {
     return {
       siteConfig: siteConfig
     }
+  },
+
+  metaInfo () {
+    return {
+      title: `Featured Projects`
+    }
   }
 }
 </script>
