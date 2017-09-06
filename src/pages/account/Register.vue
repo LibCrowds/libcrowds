@@ -6,7 +6,8 @@
           :header="'Register'"
           :lead="lead"
           :submitText="submitText"
-          :form="form">
+          :form="form"
+          @success="onSuccess">
 
           <div slot="footer-left">
             <p class="mb-0 mr-3">
@@ -113,6 +114,10 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
+    },
+
+    onSuccess () {
+      this.$router({ name: 'landing' })
     }
   },
 
