@@ -22,6 +22,12 @@ export default {
     }
   },
 
+  metaInfo () {
+    return {
+      title: `${this.currentUser.fullname}: Avatar Settings`
+    }
+  },
+
   props: {
     currentUser: {
       type: Object,
@@ -31,10 +37,6 @@ export default {
 
   components: {
     AvatarForm
-  },
-
-  metaInfo: {
-    title: 'Account Settings: Avatar'
   },
 
   methods: {

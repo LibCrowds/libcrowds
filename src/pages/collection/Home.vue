@@ -256,17 +256,12 @@ export default {
     }
   },
 
-  // metaInfo: {
-  //   title: this.collectionConfig.tagline,
-  //   meta: [
-  //     { name: 'description', content: this.collectionConfig.description },
-
-  //     // Facebook Open Graph Markup
-  //     { property: 'og:url', content: window.location.href },
-  //     { property: 'og:title', content: this.collectionConfig.tagline },
-  //     { property: 'og:description', content: this.collectionConfig.description }
-  //   ]
-  // },
+  metaInfo () {
+    return {
+      title: this.collectionConfig.tagline,
+      description: this.collectionConfig.description
+    }
+  },
 
   components: {
     SocialMediaButtons,
