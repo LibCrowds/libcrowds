@@ -1,6 +1,6 @@
 {
   "name": "vue-pybossa-frontend",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "A Vue.js frontend for PyBossa.",
   "author": "Alex Mendes <alex.mendes@bl.uk>",
   "license": "MIT",
