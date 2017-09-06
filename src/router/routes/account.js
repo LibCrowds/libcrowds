@@ -56,7 +56,7 @@ export default [
           pybossaApi.get('/account/register/confirmation', {
             params: to.query
           }).then(r => {
-            next({ path: r.next })
+            next({ path: r.data.next })
           }).catch(err => {
             next({ name: String(err.response.status) })
           })
