@@ -102,12 +102,15 @@ export default {
     }
   },
 
-  components: {
-    CardForm
+  metaInfo () {
+    return {
+      title: 'Sign in',
+      description: `Sign in to ${siteConfig.brand}`
+    }
   },
 
-  metaInfo: {
-    title: 'Sign in'
+  components: {
+    CardForm
   },
 
   computed: {
