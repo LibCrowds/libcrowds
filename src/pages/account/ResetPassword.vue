@@ -2,11 +2,7 @@
   <div id="reset-password">
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
-        <card-form
-          :header="'Reset Password'"
-          :lead="lead"
-          :submitText="'Reset'"
-          :form="form">
+        <card-form :header="'Reset Password'" :submitText="'Reset'" :form="form" @success="onSuccess">
         </card-form>
       </div>
     </div>
@@ -25,6 +21,9 @@ export default {
         endpoint: '/account/reset-password',
         method: 'post',
         model: {},
+        params: {
+          key: null // The POST endpoint still required key as query param
+        },
         schema: {
           fields: [
             {
@@ -66,18 +65,24 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
+      this.form.params = data.params
+    },
+
+    /**
+     * Redirect to home page on success.
+     */
+    onSuccess () {
+      this.$router.push({ name: 'landing' })
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    console.log(to.query)
     pybossaApi.get('/account/reset-password', {
       params: to.query
     }).then(r => {
-      console.log(r)
+      r.data.params = to.query
       next(vm => vm.setData(r.data))
     }).catch(err => {
-      console.log(err)
       next({ name: String(err.response.status) })
     })
   }
