@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import sweetalert from 'sweetalert'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
@@ -122,7 +123,17 @@ export default {
      *   The response.
      */
     onSuccess (data) {
-      this.$router({ path: data.next })
+      if (data.status === 'sent') {
+        sweetalert(
+          'Confirm your email',
+          'To complete your registration please click the confirmation link in' +
+          'the email that we just sent you',
+          'success'
+        )
+        this.$router.push({ name: 'landing' })
+      } else {
+        this.$router.push({ path: data.next })
+      }
     }
   },
 
