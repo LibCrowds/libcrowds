@@ -3,20 +3,11 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <h1 id="tagline">{{ collectionConfig.tagline }}</h1>
-          <div id="intro-buttons" class="mt-2">
-            <b-button
-              variant="secondary"
-              :to="{
-                name: 'collection-about',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Learn More
-            </b-button>
+          <h1 id="tagline mb-2">{{ collectionConfig.tagline }}</h1>
+          <div>
             <b-button
               variant="success"
+              size="lg"
               :to="{
                 name: 'collection-contribute',
                 params: {
@@ -31,7 +22,7 @@
     </transition>
 
     <section id="intro" class="bg-white invert-navbar">
-      <div class="container pt-3 pb-2 pt-md-4 text-center">
+      <div class="container py-3 py-md-4 text-center">
         <div class="row sr">
           <div class="col-sm-10 offset-sm-1">
             <p id="site-lead" class="mb-0">
@@ -48,7 +39,18 @@
             </p>
           </div>
         </div>
-        <hr class="my-3 w-75 sr">
+        <hr class="mt-3 w-75 sr">
+        <b-button
+          variant="secondary"
+          class="mt-1"
+          :to="{
+            name: 'collection-about',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Learn More
+        </b-button>
       </div>
     </section>
 
