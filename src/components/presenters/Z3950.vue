@@ -4,13 +4,26 @@
 
       <div class="col-sm-12 col-lg-6">
         <b-card no-block>
-          <img v-if="currentTask" :src="currentTask.info.url">
+          <img
+            v-if="currentTask" :src="currentTask.info.url"
+            class="img-fluid">
           <loading v-else text="Loading image"></loading>
         </b-card>
       </div>
 
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
         <b-card no-block>
+
+          <div class="card-block pb-0" v-if="alerts.length">
+            <b-alert
+              show
+              v-for="alert in alerts"
+              :variant="alert.type"
+              :key="alert.msg"
+              class="mb-1">
+              {{ alert.msg }}
+            </b-alert>
+          </div>
 
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
@@ -54,10 +67,14 @@
                 </b-button>
                 <h5 class="mb-1">{{ record.title }}</h5>
                 <p class="mb-0">{{ record.author }}</p>
-                <small class="mb-0">{{ record.physdesc }}</small>
-                <small class="mb-2">
-                  {{ record.publisher }}{{ record.pubyear }}
-                </small>
+                <p class="mb-0">
+                  <small>{{ record.physdesc }}</small>
+                </p>
+                <p class="mb-2">
+                  <small>
+                    {{ record.publisher }}{{ record.pubyear }}
+                  </small>
+                </p>
                 <div class="result-buttons">
                   <b-button
                     variant="secondary"
@@ -79,9 +96,17 @@
               key="shelfmark"
               v-if="selectedRecord"
               class="card-block">
-              <div slot="top" v-if="selectedRecord">
+              <div v-if="selectedRecord">
                 <h5 class="mb-1">{{ selectedRecord.title }}</h5>
-                <p class="mb-1">{{ selectedRecord.author }}</p>
+                <p class="mb-0">{{ selectedRecord.author }}</p>
+                <p class="mb-0">
+                  <small>{{ selectedRecord.physdesc }}</small
+                ></p>
+                <p class="mb-2">
+                  <small>
+                    {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
+                  </small>
+                </p>
               </div>
               <vue-form-generator
                 :schema="shelfmarkForm.schema"
@@ -91,20 +116,34 @@
           </transition-group>
 
           <template slot="footer" v-if="stage !== 'results'">
-            <b-button
-              class="float-right"
-              variant="success"
-              @click="onSearch">
-              <span v-if="!processing">{{ stage | capitalize }}</span>
-              <div v-else class="sk-three-bounce">
-                <div class="sk-child sk-bounce1"></div>
-                <div class="sk-child sk-bounce2"></div>
-                <div class="sk-child sk-bounce3"></div>
-              </div>
-            </b-button>
+            <div class="float-right">
+              <b-button
+                variant="secondary"
+                @click="onSkip">
+                Skip / Not Found
+              </b-button>
+              <b-button
+                variant="success"
+                @click="onSubmit">
+                <span v-if="!processing">{{ stage | capitalize }}</span>
+                <div v-else class="sk-three-bounce">
+                  <div class="sk-child sk-bounce1"></div>
+                  <div class="sk-child sk-bounce2"></div>
+                  <div class="sk-child sk-bounce3"></div>
+                </div>
+              </b-button>
+            </div>
           </template>
-
         </b-card>
+        <b-pagination
+          v-if="stage == 'results'"
+          variant="info"
+          class="d-flex justify-content-center mt-2 mb-0"
+          :total-rows="pagination.total"
+          :per-page="pagination.perPage"
+          v-model="pagination.page"
+          @change="onPageChange">
+        </b-pagination>
       </div>
     </div>
 
@@ -122,6 +161,7 @@
 </template>
 
 <script>
+import sweetalert from 'sweetalert'
 import 'vue-awesome/icons/times'
 import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
@@ -137,11 +177,9 @@ export default {
       searchResults: [],
       currentTask: null,
       selectedRecord: null,
+      alerts: [],
+      pagination: {},
       searchForm: {
-        submitText: 'Search',
-        onSubmit: this.onSearch,
-        endpoint: '/z3950/search/oclc/json',
-        method: 'get',
         model: {
           'title': '',
           'author': '',
@@ -182,10 +220,6 @@ export default {
         }
       },
       shelfmarkForm: {
-        submitText: 'Submit',
-        onSubmit: this.onSubmit,
-        endpoint: '/api/taskrun',
-        method: 'post',
         model: {
           'shelfmark': null
         },
@@ -195,7 +229,8 @@ export default {
               model: 'shelfmark',
               label: 'Shelfmark',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              placeholder: 'Enter the shelfmark'
             }
           ]
         }
@@ -306,9 +341,21 @@ export default {
       this.processing = true
       const searchQuery = this.buildQuery()
       const fullQuery = `query=${searchQuery}&position=${position}`
-      const url = `${this.searchForm.endpoint}?${fullQuery}`
+      const url = `/z3950/search/oclc/json?${fullQuery}`
+      this.reset()
       pybossaApi.get(url).then(r => {
-        this.searchResults = this.processResults(r.data.data)
+        if (r.data.n_records === 0) {
+          this.alerts.push({ msg: 'No results', type: 'info' })
+        } else if (r.data.status !== 'success') {
+          this.alerts.push({ msg: r.data.message, type: r.data.status })
+        } else {
+          this.searchResults = this.processResults(r.data.data)
+          this.pagination = {
+            page: r.data.position,
+            perPage: r.data.size,
+            total: r.data.total
+          }
+        }
         this.processing = false
       })
     },
@@ -380,33 +427,65 @@ export default {
     },
 
     /**
-     * Handle the search event.
-     * @param {Object} task
-     *   The task.
+     * Handle the page change event.
+     * @param {Number} n
+     *   The page number.
      */
-    onSearch () {
-      this.search()
+    onPageChange (n) {
+      this.search(n)
     },
 
     /**
-     * Handle the submit event.
-     * @param {Object} task
-     *   The task.
+     * Handle the skip button click.
+     */
+    onSkip () {
+      sweetalert({
+        title: 'Skip Task',
+        text: 'Are you sure you want to skip this task?',
+        type: 'warning',
+        showCancelButton: true,
+        closeOnConfirm: false
+      },
+      () => {
+        this.submit({
+          oclc: '',
+          shelfmark: ''
+        })
+      })
+    },
+
+    /**
+     * Handle the submit button click.
      */
     onSubmit () {
+      if (this.stage === 'search') {
+        this.search()
+      } else if (this.stage === 'shelfmark') {
+        this.submit({
+          oclc: this.selectedRecord.controlNumber,
+          shelfmark: this.shelfmarkForm.model.shelfmark
+        })
+      }
+    },
+
+    /**
+     * Submit a task run.
+     * @param {Object} answer
+     *   The answer.
+     */
+    submit (answer) {
       const taskrun = JSON.stringify({
         'project_id': this.project.id,
         'task_id': this.currentTask.id,
-        'info': {
-          oclc: this.selectedRecord.controlNumber,
-          shelfmark: this.shelfmarkForm.model.shelfmark
-        }
+        'info': answer
       })
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
+        console.log(r)
         this.$store.dispatch('NOTIFY', {
           msg: 'Answer saved, thanks!',
           type: 'success'
         })
+        this.reset()
         this.nextTask()
       })
     },
@@ -432,6 +511,8 @@ export default {
     reset () {
       this.searchResults = []
       this.selectedRecord = null
+      this.alerts = []
+      this.pagination = {}
     },
 
     /**
