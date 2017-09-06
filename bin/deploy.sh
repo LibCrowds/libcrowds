@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-DOMAIN='www.libcrowds.com'
+MASTER='www.libcrowds.com'
+STAGING='dev.libcrowds.com'
 
-if [ "${TRAVIS_BRANCH}" == "master" ] ; then
+if [ "${TRAVIS_BRANCH}" == "master" ] || [ "${TRAVIS_BRANCH}" == "dev" ] ; then
 
   # Configure
   bin/configure.sh
@@ -16,14 +17,25 @@ if [ "${TRAVIS_BRANCH}" == "master" ] ; then
 
   # Set up package for sending
   git init
-  git remote add deploy "deploy@$DOMAIN:/var/www/deployment"
+
+  if [ "${TRAVIS_BRANCH}" == "master" ] ; then
+    git remote add deploy "deploy@$MASTER:/var/www/deployment"
+  else
+    git remote add deploy "deploy@$STAGING:/var/www/deployment"
+  fi
+
   git config user.name "Alex Mendes"
   git config user.email "alexanderhmendes@gmail.com"
   git add dist/*
   git commit -m "Deployment"
 
   # Set up permissions
-  echo -e "Host $DOMAIN\n\tStrictHostKeyChecking no" >> ~/.ssh/config
+  if [ "${TRAVIS_BRANCH}" == "master" ] ; then
+    echo -e "Host $MASTER\n\tStrictHostKeyChecking no" >> ~/.ssh/config
+  else
+    echo -e "Host $STAGING\n\tStrictHostKeyChecking no" >> ~/.ssh/config
+  fi
+
   openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv -in deploy-key.enc -out deploy-key -d
   eval "$(ssh-agent -s)"
   chmod 600 deploy-key
@@ -32,5 +44,5 @@ if [ "${TRAVIS_BRANCH}" == "master" ] ; then
   # Deploy
   git push -f deploy master
 else
-  echo "Not deploying as this is not the master branch"
+  echo "Not deploying as this is not the master or the development branch"
 fi
