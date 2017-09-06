@@ -12,6 +12,7 @@ import Signin from '@/pages/account/Signin'
 import Register from '@/pages/account/Register'
 import ForgottenPassword from '@/pages/account/ForgottenPassword'
 import ResetPassword from '@/pages/account/ResetPassword'
+import Newsletter from '@/pages/account/Newsletter'
 
 export default [
   {
@@ -43,6 +44,11 @@ export default [
         path: 'reset-password',
         name: 'reset-password',
         component: ResetPassword
+      },
+      {
+        path: 'newsletter',
+        name: 'newsletter',
+        component: Newsletter
       },
       {
         path: ':username',

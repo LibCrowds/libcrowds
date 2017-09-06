@@ -116,8 +116,13 @@ export default {
       this.form.model = data.form
     },
 
-    onSuccess () {
-      this.$router({ name: 'landing' })
+    /**
+     * Redirect after sucessful signup.
+     * @param {Object} data
+     *   The response.
+     */
+    onSuccess (data) {
+      this.$router({ path: data.next })
     }
   },
 
