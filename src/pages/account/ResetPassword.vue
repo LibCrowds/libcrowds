@@ -70,8 +70,15 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/account/reset-password').then(r => {
+    console.log(to.query)
+    pybossaApi.get('/account/reset-password', {
+      params: to.query
+    }).then(r => {
+      console.log(r)
       next(vm => vm.setData(r.data))
+    }).catch(err => {
+      console.log(err)
+      next({ name: String(err.response.status) })
     })
   }
 }
