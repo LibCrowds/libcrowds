@@ -141,6 +141,7 @@ export default {
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
+        params: this.form.params || {},
         headers: {
           'X-CSRFToken': this.form.model.csrf
         }
