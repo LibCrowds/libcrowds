@@ -3,6 +3,7 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
+          <div id="company-logo" v-html="siteConfig.logo"></div>
           <h1 id="tagline mb-2">{{ collectionConfig.tagline }}</h1>
           <div>
             <b-button
@@ -226,6 +227,7 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
+      logo: siteConfig.logo,
       stats: {},
       featured: [],
       topUsers: [],
@@ -335,6 +337,12 @@ export default {
     &.v-enter,
     &.v-leave-to {
       opacity: 0;
+    }
+
+    #company-logo {
+      svg {
+        display: block;
+      }
     }
   }
 
