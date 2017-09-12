@@ -40,7 +40,11 @@
               <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="p-2">
                 <div class="d-flex flex-row w-100">
                   <div class="w-75">
-                    <h5 class="mb-0">{{ record.title }}</h5>
+                    <h5 class="mb-0">
+                      <a :href="`https://www.worldcat.org/title/apis/oclc/${record.controlNumber}`" target="_blank">
+                        {{ record.title }}
+                      </a>
+                    </h5>
                     <p class="mb-0">{{ record.author }}</p>
                     <p class="mb-0">
                       <small>{{ record.physdesc }}</small>
