@@ -89,7 +89,10 @@
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
               <li v-for="project in featured" :key="project.id">
-                <project-card :project="project"></project-card>
+                <project-card
+                  :collection-config="collectionConfig"
+                  :project="project">
+                </project-card>
               </li>
             </ul>
             <b-button
@@ -227,7 +230,7 @@ import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
-import getNumberWithCommas from '@/utils/get-number-with-commas'
+import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
@@ -280,7 +283,7 @@ export default {
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return getNumberWithCommas(sum)
+      return intComma(sum)
     }
   },
 
@@ -295,7 +298,7 @@ export default {
         this.featured = data.categories_projects.featured
       }
       this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
+      this.stats = mapValues(data.stats, (n) => intComma(n))
     },
 
     /**

@@ -47,6 +47,7 @@
           <span v-if="projects.length">
             <span v-if="filteredProjects.length">
 
+<<<<<<< HEAD
               <transition
                 name="fade"
                 mode="out-in"
@@ -57,6 +58,19 @@
                   :projects="filteredProjects">
                 </project-card-list>
               </transition>
+=======
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <project-card-list
+                key="project-list"
+                v-if="activeView === 'list'"
+                :collection-config="collectionConfig"
+                :projects="filteredProjects">
+              </project-card-list>
+            </transition>
+>>>>>>> fix-256
 
               <transition
                 name="fade"
