@@ -99,7 +99,12 @@ export default {
   metaInfo () {
     return {
       title: 'Register',
-      description: `Sign up for a new ${siteConfig.brand} account`
+      meta: [
+        {
+          name: 'description',
+          content: `Sign up for a new ${siteConfig.brand} account`
+        }
+      ]
     }
   },
 

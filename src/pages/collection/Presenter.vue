@@ -38,7 +38,12 @@ export default {
   metaInfo () {
     return {
       title: `${this.project.name}: Task Presenter`,
-      description: this.project.description
+      meta: [
+        {
+          name: 'description',
+          content: this.project.description
+        }
+      ]
     }
   },
 
