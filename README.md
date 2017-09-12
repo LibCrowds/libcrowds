@@ -1,7 +1,7 @@
 # vue-pybossa-frontend
 
-[![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
-[![forthebadge](http://forthebadge.com/images/badges/built-with-science.svg)](http://forthebadge.com)
+[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.888397.svg)](https://doi.org/10.5281/zenodo.888396)
 
 > A Vue.js frontend for PyBossa (>=2.6.1).
 
@@ -158,5 +158,3 @@ top of [/bin/deploy.sh](/bin/deploy.sh).
 
 Once the master branch has been updated with this change it will be deployed to
 the new site for the first time.
-
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
