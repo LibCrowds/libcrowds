@@ -42,7 +42,7 @@
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="tasks"></icon> {{ project.n_tasks }}
-          {{ 'task' | pluralize(project.n_tasks) }}
+          {{ collectionConfig.terminology.task | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-1 mb-lg-0">
           <icon name="users"></icon> {{ project.n_volunteers }}
