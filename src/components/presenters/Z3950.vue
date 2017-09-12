@@ -403,17 +403,34 @@ export default {
         return fields[0][tag]
       }
 
-      return fields.map(f => {
+      // Get linked fields
+      const linkedFields = result.fields.filter(f => {
+        return f.hasOwnProperty('880')
+      })
+
+      // link the fields
+      const linkedSubfields = fields.map(f => {
         return f[tag]['subfields'].map(sf => {
-          if (!codes) {
-            return Object.values(sf)
+          for (let code in sf) {
+            if (code === '6' && sf[code].startsWith('880')) {
+              let linkIndex = parseInt(sf[code].split('-')[1])
+              let linkedSf = linkedFields[linkIndex]['subfields']
+              console.log(linkedSf)
+            }
           }
-          let arr = intersection(Object.keys(sf), codes)
-          if (arr.length) {
-            return sf[arr[0]]
-          }
-          return ''
-        }).join(' ')
+          return sf
+        })
+      })
+
+      return linkedSubfields.map(sf => {
+        if (!codes) {
+          return Object.values(sf)
+        }
+        let arr = intersection(Object.keys(sf), codes)
+        if (arr.length) {
+          return sf[arr[0]]
+        }
+        return ''
       }).join(' ')
     },
 
