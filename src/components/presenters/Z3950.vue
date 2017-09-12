@@ -103,22 +103,38 @@
           </transition>
 
           <template slot="footer">
-            <div class="float-right">
-              <b-button variant="secondary" @click="onSkip">
-                Skip / Not Found
-              </b-button>
+            <div class="d-flex justify-content-between">
               <b-button
-                v-if="stage !== 'results'"
-                variant="success"
-                @click="onSubmit">
-                <span v-if="!processing">{{ stage | capitalize }}</span>
-                <div v-else class="sk-three-bounce">
-                  <div class="sk-child sk-bounce1"></div>
-                  <div class="sk-child sk-bounce2"></div>
-                  <div class="sk-child sk-bounce3"></div>
-                </div>
+                v-b-toggle.collapsecomment
+                class="p-0"
+                variant="link">
+                Add a comment
               </b-button>
+              <div>
+                <b-button variant="secondary" @click="onSkip">
+                  Skip / Not Found
+                </b-button>
+                <b-button
+                  v-if="stage !== 'results'"
+                  variant="success"
+                  @click="onSubmit">
+                  <span v-if="!processing">{{ stage | capitalize }}</span>
+                  <div v-else class="sk-three-bounce">
+                    <div class="sk-child sk-bounce1"></div>
+                    <div class="sk-child sk-bounce2"></div>
+                    <div class="sk-child sk-bounce3"></div>
+                  </div>
+                </b-button>
+              </div>
             </div>
+            <b-collapse id="collapsecomment" class="mt-1">
+              <textarea
+                class="form-control"
+                ref="comments"
+                rows="3"
+                placeholder="Enter your comment...">
+              </textarea>
+            </b-collapse>
           </template>
         </b-card>
 
@@ -131,15 +147,6 @@
           v-model="pagination.page"
           @change="onPageChange">
         </b-pagination>
-
-        <b-card header="Comments" class="mt-3">
-          <textarea
-            class="form-control"
-            ref="comments"
-            rows="3"
-            placeholder="Add a comment...">
-          </textarea>
-        </b-card>
 
       </div>
     </div>
@@ -157,6 +164,7 @@
 <script>
 import sweetalert from 'sweetalert'
 import 'vue-awesome/icons/times'
+import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
 import Loading from '@/components/Loading'
