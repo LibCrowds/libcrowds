@@ -83,8 +83,9 @@
               </p>
               <p>
                 <small>
-                  The sorting options on the left of the screen can be used to
-                  display any completed projects.
+                  Use the list on the left of the screen to choose another
+                  {{ collectionConfig.terminology.category }}, or the sorting
+                  options to display any completed projects for this one.
                 </small>
               </p>
             </span>
