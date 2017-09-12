@@ -57,24 +57,12 @@
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
-            <span v-if="!currentUser">
-              <b-button
-                class="mt-1"
-                variant="secondary"
-                :to="{
-                  name: 'signin'
-                }">
-                Sign in
-              </b-button>
-              <b-button
-                class="mt-1"
-                variant="success"
-                :to="{
-                  name: 'register'
-                }">
-                Sign up
-              </b-button>
-            </span>
+            <b-button
+              variant="success"
+              size="lg"
+              @click="scrollToCollections">
+              Get Started
+            </b-button>
           </div>
           <div class="col-lg-5 offset-lg-1 hidden-md-down">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
@@ -143,6 +131,7 @@
 </template>
 
 <script>
+import jump from 'jump.js'
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
@@ -222,6 +211,13 @@ export default {
       ScrollReveal().reveal('.sr', {
         duration: 600 },
       50)
+    },
+
+    /**
+     * Scroll to the contribute section.
+     */
+    scrollToCollections () {
+      jump('#contribute')
     }
   },
 
