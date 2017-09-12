@@ -367,6 +367,7 @@ export default {
         } else if (r.data.status !== 'success') {
           this.alerts.push({ msg: r.data.message, type: r.data.status })
         } else {
+          this.alerts = []
           this.searchResults = this.processResults(r.data.data)
           this.pagination = {
             page: r.data.position,
