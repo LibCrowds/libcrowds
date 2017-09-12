@@ -110,7 +110,7 @@ export default [
         path: '/',
         name: 'account-settings',
         redirect: {
-          name: 'account-api-settings'
+          name: 'account-profile-settings'
         }
       },
       {
