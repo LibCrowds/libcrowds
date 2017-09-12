@@ -178,6 +178,7 @@ import sweetalert from 'sweetalert'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
+import mapValues from 'lodash/mapValues'
 import intersection from 'lodash/intersection'
 import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
@@ -537,9 +538,7 @@ export default {
       this.selectedRecord = null
       this.alerts = []
       this.pagination = {}
-      for (let elem of document.querySelectorAll('input')) {
-        elem.value = ''
-      }
+      this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
     }
   },
