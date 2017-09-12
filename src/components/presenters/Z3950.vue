@@ -103,15 +103,19 @@
           </transition>
 
           <template slot="footer">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between flex-column flex-xl-row">
               <b-button
                 v-b-toggle.collapsecomment
                 class="p-0"
                 variant="link">
                 Add a comment
               </b-button>
-              <div>
-                <b-button variant="secondary" @click="onSkip">
+              <div
+                class="d-flex d-xl-block flex-column justify-content-center">
+                <b-button
+                  variant="secondary"
+                  class="my-1"
+                  @click="onSkip">
                   Skip / Not Found
                 </b-button>
                 <b-button
