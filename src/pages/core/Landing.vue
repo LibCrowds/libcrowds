@@ -154,7 +154,7 @@ import pybossaApi from '@/api/pybossa'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
-import getNumberWithCommas from '@/utils/get-number-with-commas'
+import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 import PublicationCard from '@/components/publications/PublicationCard'
 
@@ -196,7 +196,7 @@ export default {
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return getNumberWithCommas(sum)
+      return intComma(sum)
     },
     currentUser: function () {
       return this.$store.state.currentUser
@@ -211,7 +211,7 @@ export default {
      */
     setData (data) {
       this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
+      this.stats = mapValues(data.stats, (n) => intComma(n))
       this.publications = data.publications
     },
 
