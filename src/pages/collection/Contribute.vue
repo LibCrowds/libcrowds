@@ -45,35 +45,54 @@
         </div>
         <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
+            <span v-if="filteredProjects.length">
 
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <project-card-list
-                key="project-list"
-                v-if="activeView === 'list'"
-                :projects="filteredProjects">
-              </project-card-list>
-            </transition>
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <project-card-list
+                  key="project-list"
+                  v-if="activeView === 'list'"
+                  :projects="filteredProjects">
+                </project-card-list>
+              </transition>
 
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <project-table
-                key="project-table"
-                v-if="activeView === 'table'"
-                :action="'contribute'"
-                :projects="filteredProjects">
-              </project-table>
-            </transition>
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <project-table
+                  key="project-table"
+                  v-if="activeView === 'table'"
+                  :action="'contribute'"
+                  :projects="filteredProjects">
+                </project-table>
+              </transition>
 
-            <project-pagination
-              key="project-pagination"
-              :pagination="pagination"
-              @change="onPageChange">
-            </project-pagination>
+              <project-pagination
+                key="project-pagination"
+                :pagination="pagination"
+                @change="onPageChange">
+              </project-pagination>
+
+            </span>
+            <span v-else class="text-center">
+              <p class="lead">
+                There are no projects to display.
+              </p>
+              <p>
+                <small class="hidden-lg-down">
+                  Use the list on the left of the screen to choose another
+                  {{ collectionConfig.terminology.category }}, or the sorting
+                  options to display any completed projects for this one.
+                </small>
+                <small class="hidden-xl-up">
+                  Use the list above to choose another
+                  {{ collectionConfig.terminology.category }}.
+                </small>
+              </p>
+            </span>
 
           </span>
           <p v-else class="text-center mb-0">
