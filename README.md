@@ -1,7 +1,7 @@
 # vue-pybossa-frontend
 
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.888397.svg)](https://doi.org/10.5281/zenodo.888396)
+[![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
 > A Vue.js frontend for PyBossa (>=2.6.1).
 
