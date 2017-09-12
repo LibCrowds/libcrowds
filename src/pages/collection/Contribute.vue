@@ -34,7 +34,7 @@
           </category-list-chooser>
 
           <project-sorting-options
-            class="mt-3"
+            class="mt-3 hidden-lg-down"
             :viewOpts="viewOpts"
             :showCompleted="showCompleted"
             @sort="onSort"
