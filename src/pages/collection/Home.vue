@@ -89,7 +89,10 @@
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
               <li v-for="project in featured" :key="project.id">
-                <project-card :project="project"></project-card>
+                <project-card
+                  :collection-config="collectionConfig"
+                  :project="project">
+                </project-card>
               </li>
             </ul>
             <b-button

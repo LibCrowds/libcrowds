@@ -78,6 +78,10 @@ export default {
     project: {
       type: Object,
       required: true
+    },
+    collectionConfig: {
+      type: Object,
+      required: true
     }
   },
 

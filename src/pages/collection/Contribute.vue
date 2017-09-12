@@ -53,6 +53,7 @@
               <project-card-list
                 key="project-list"
                 v-if="activeView === 'list'"
+                :collection-config="collectionConfig"
                 :projects="filteredProjects">
               </project-card-list>
             </transition>
