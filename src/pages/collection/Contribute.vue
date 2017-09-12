@@ -125,7 +125,12 @@ export default {
   metaInfo () {
     return {
       title: 'Contribute',
-      description: 'Choose a project to contribute towards'
+      meta: [
+        {
+          name: 'description',
+          content: 'Choose a project to contribute towards'
+        }
+      ]
     }
   },
 

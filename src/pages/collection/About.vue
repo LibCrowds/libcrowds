@@ -74,7 +74,12 @@ export default {
   metaInfo () {
     return {
       title: 'About',
-      description: `Learn more about the ${siteConfig.brand} platform`
+      meta: [
+        {
+          name: 'description',
+          content: `Learn more about the ${siteConfig.brand} platform`
+        }
+      ]
     }
   },
 

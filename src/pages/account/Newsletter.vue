@@ -43,7 +43,12 @@ export default {
   metaInfo () {
     return {
       title: this.title,
-      description: this.lead
+      meta: [
+        {
+          name: 'description',
+          content: this.lead
+        }
+      ]
     }
   },
 

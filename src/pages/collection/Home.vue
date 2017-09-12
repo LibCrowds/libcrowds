@@ -259,7 +259,12 @@ export default {
   metaInfo () {
     return {
       title: this.collectionConfig.tagline,
-      description: this.collectionConfig.description
+      meta: [
+        {
+          name: 'description',
+          content: this.collectionConfig.description
+        }
+      ]
     }
   },
 

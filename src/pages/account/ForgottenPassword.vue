@@ -43,7 +43,12 @@ export default {
   metaInfo () {
     return {
       title: 'Reset Password',
-      description: `Reset your ${siteConfig.brand} password`
+      meta: [
+        {
+          name: 'description',
+          content: `Reset your ${siteConfig.brand} password`
+        }
+      ]
     }
   },
 
