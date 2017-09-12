@@ -37,27 +37,27 @@
               key="results"
               v-if="stage == 'results' && !processing"
               class="list-group">
-              <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="pb-2 pt-1">
-                <b-button class="remove mb-1" variant="secondary" size="sm" @click="removeResult(record)">
-                  <icon name="times"></icon>
-                </b-button>
-                <h5 class="mb-1">{{ record.title }}</h5>
-                <p class="mb-0">{{ record.author }}</p>
-                <p class="mb-0">
-                  <small>{{ record.physdesc }}</small>
-                </p>
-                <p class="mb-2">
-                  <small>
-                    {{ record.publisher }}{{ record.pubyear }}
-                  </small>
-                </p>
-                <div class="result-buttons">
-                  <b-button variant="secondary" size="sm" @click="viewFullRecord(record)">
-                    Full Record
-                  </b-button>
-                  <b-button variant="success" size="sm" @click="selectedRecord = record">
-                    Select
-                  </b-button>
+              <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="p-2">
+                <div class="d-flex flex-row w-100">
+                  <div class="w-75">
+                    <h5 class="mb-0">{{ record.title }}</h5>
+                    <p class="mb-0">{{ record.author }}</p>
+                    <p class="mb-0">
+                      <small>{{ record.physdesc }}</small>
+                    </p>
+                    <p class="mb-0">
+                      <small>
+                        {{ record.publisher }}{{ record.pubyear }}
+                      </small>
+                    </p>
+                  </div>
+                  <div class="w-25 d-flex">
+                    <div class="result-buttons">
+                      <b-button variant="success" size="sm" @click="selectedRecord = record">
+                        Select
+                      </b-button>
+                    </div>
+                  </div>
                 </div>
               </b-list-group-item>
             </div>
@@ -481,18 +481,6 @@ export default {
         elem.value = ''
       }
       this.$refs.comments.value = ''
-    },
-
-    /**
-     * Remove a record from the search results.
-     * @param {Object} record
-     *   This.
-     */
-    removeResult (record) {
-      const idx = this.searchResults.indexOf(record)
-      if (idx > -1) {
-        this.searchResults.splice(idx, 1)
-      }
     }
   },
 
@@ -523,7 +511,7 @@ export default {
 
   .card {
     h5 {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 
@@ -562,6 +550,7 @@ export default {
 
     .result-buttons {
       align-self: flex-end;
+      margin-left: auto;
     }
   }
 }
