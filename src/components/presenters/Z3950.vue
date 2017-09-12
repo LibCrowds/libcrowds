@@ -138,16 +138,28 @@
           </template>
         </b-card>
 
-        <b-pagination
+        <div
           v-if="stage == 'results'"
-          variant="info"
-          class="d-flex justify-content-center mt-2 mb-0"
-          :total-rows="pagination.total"
-          :per-page="pagination.perPage"
-          v-model="pagination.page"
-          @change="onPageChange">
-        </b-pagination>
-
+          class="d-flex align-items-center mt-2 mb-0 d-flex flex-column">
+          <b-pagination
+            variant="info"
+            size="sm"
+            :total-rows="pagination.total"
+            :per-page="pagination.perPage"
+            v-model="pagination.page"
+            @change="onPageChange">
+          </b-pagination>
+          <p>
+            <small>
+              Showing
+              {{ (pagination.page - 1) * pagination.perPage + 1 }}
+              to
+              {{ pagination.page * pagination.perPage + 1 }}
+              of
+              {{ pagination.total }}
+            </small>
+          </p>
+        </div>
       </div>
     </div>
 
@@ -358,7 +370,8 @@ export default {
           this.pagination = {
             page: r.data.position,
             perPage: r.data.size,
-            total: r.data.total
+            total: r.data.total,
+            summary: ''
           }
         }
         this.processing = false
