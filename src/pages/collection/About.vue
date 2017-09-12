@@ -103,3 +103,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#collection-about {
+  img {
+    display: block;
+    margin: 2rem auto;
+    max-height: 400px;
+    max-width: 100%;
+  }
+}
+</style>
