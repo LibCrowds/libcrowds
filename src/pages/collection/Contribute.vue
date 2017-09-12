@@ -45,35 +45,49 @@
         </div>
         <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
+            <span v-if="filteredProjects.length">
 
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <project-card-list
-                key="project-list"
-                v-if="activeView === 'list'"
-                :projects="filteredProjects">
-              </project-card-list>
-            </transition>
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <project-card-list
+                  key="project-list"
+                  v-if="activeView === 'list'"
+                  :projects="filteredProjects">
+                </project-card-list>
+              </transition>
 
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <project-table
-                key="project-table"
-                v-if="activeView === 'table'"
-                :action="'contribute'"
-                :projects="filteredProjects">
-              </project-table>
-            </transition>
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <project-table
+                  key="project-table"
+                  v-if="activeView === 'table'"
+                  :action="'contribute'"
+                  :projects="filteredProjects">
+                </project-table>
+              </transition>
 
-            <project-pagination
-              key="project-pagination"
-              :pagination="pagination"
-              @change="onPageChange">
-            </project-pagination>
+              <project-pagination
+                key="project-pagination"
+                :pagination="pagination"
+                @change="onPageChange">
+              </project-pagination>
+
+            </span>
+            <span v-else class="text-center">
+              <p class="lead">
+                There are no projects to display.
+              </p>
+              <p>
+                <small>
+                  The sorting options on the left of the screen can be used to
+                  display any completed projects.
+                </small>
+              </p>
+            </span>
 
           </span>
           <p v-else class="text-center mb-0">
