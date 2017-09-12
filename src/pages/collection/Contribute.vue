@@ -85,7 +85,7 @@
                 <small class="hidden-lg-down">
                   Use the list on the left of the screen to choose another
                   {{ collectionConfig.terminology.category }}, or the sorting
-                  options to display any completed projects for this one.
+                  options to display any completed projects.
                 </small>
                 <small class="hidden-xl-up">
                   Use the list above to choose another
