@@ -13,7 +13,12 @@
         <b-card no-block>
 
           <div class="card-block pb-0" v-if="alerts.length">
-            <b-alert show v-for="alert in alerts" :variant="alert.type" :key="alert.msg" class="mb-1">
+            <b-alert
+              show
+              v-for="alert in alerts"
+              :variant="alert.type"
+              :key="alert.msg"
+              class="mb-1">
               {{ alert.msg }}
             </b-alert>
           </div>
@@ -21,7 +26,12 @@
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
-              <b-button v-if="searchResults.length || selectedRecord" variant="info" size="sm" class="float-right" @click="reset">
+              <b-button
+                v-if="searchResults.length || selectedRecord"
+                variant="info"
+                size="sm"
+                class="float-right"
+                @click="reset">
                 Search Again
               </b-button>
             </div>
@@ -37,11 +47,14 @@
               key="results"
               v-if="stage == 'results' && !processing"
               class="list-group">
-              <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="p-2">
+              <b-list-group-item
+                v-for="(record, index) in searchResults"
+                :key="`result-${index}`"
+                class="p-2">
                 <div class="d-flex flex-row w-100">
                   <div class="w-75">
                     <h5 class="mb-0">
-                      <a :href="`https://www.worldcat.org/title/apis/oclc/${record.controlNumber}`" target="_blank">
+                      <a :href="record.externalLink" target="_blank">
                         {{ record.title }}
                       </a>
                     </h5>
@@ -57,7 +70,10 @@
                   </div>
                   <div class="w-25 d-flex">
                     <div class="result-buttons">
-                      <b-button variant="success" size="sm" @click="selectedRecord = record">
+                      <b-button
+                        variant="success"
+                        size="sm"
+                        @click="selectedRecord = record">
                         Select
                       </b-button>
                     </div>
@@ -79,7 +95,9 @@
                   </small>
                 </p>
               </div>
-              <vue-form-generator :schema="shelfmarkForm.schema" :model="shelfmarkForm.model">
+              <vue-form-generator
+                :schema="shelfmarkForm.schema"
+                :model="shelfmarkForm.model">
               </vue-form-generator>
             </div>
           </transition>
@@ -89,7 +107,10 @@
               <b-button variant="secondary" @click="onSkip">
                 Skip / Not Found
               </b-button>
-              <b-button v-if="stage !== 'results'" variant="success" @click="onSubmit">
+              <b-button
+                v-if="stage !== 'results'"
+                variant="success"
+                @click="onSubmit">
                 <span v-if="!processing">{{ stage | capitalize }}</span>
                 <div v-else class="sk-three-bounce">
                   <div class="sk-child sk-bounce1"></div>
@@ -101,11 +122,22 @@
           </template>
         </b-card>
 
-        <b-pagination v-if="stage == 'results'" variant="info" class="d-flex justify-content-center mt-2 mb-0" :total-rows="pagination.total" :per-page="pagination.perPage" v-model="pagination.page" @change="onPageChange">
+        <b-pagination
+          v-if="stage == 'results'"
+          variant="info"
+          class="d-flex justify-content-center mt-2 mb-0"
+          :total-rows="pagination.total"
+          :per-page="pagination.perPage"
+          v-model="pagination.page"
+          @change="onPageChange">
         </b-pagination>
 
         <b-card header="Comments" class="mt-3">
-          <textarea class="form-control" ref="comments" rows="3" placeholder="Add a comment...">
+          <textarea
+            class="form-control"
+            ref="comments"
+            rows="3"
+            placeholder="Add a comment...">
           </textarea>
         </b-card>
 
@@ -114,8 +146,8 @@
 
     <b-modal ref="modal" title="Full record" size="lg">
       <pre>
-          <code ref="modalcontent">
-          </code>
+        <code ref="modalcontent">
+        </code>
         </pre>
     </b-modal>
 
@@ -369,8 +401,11 @@ export default {
      */
     processResults (results) {
       return results.map(r => {
+        let worldcatBase = 'https://www.worldcat.org/title/apis/oclc/'
+        let controlNumber = this.getField(r, '001').replace(/^\D+/g, '')
         return {
-          controlNumber: this.getField(r, '001').replace(/^\D+/g, ''),
+          controlNumber: controlNumber,
+          externalLink: `${worldcatBase}${controlNumber}`,
           title: this.getField(r, 245, ['a', 'b']),
           author: (
             this.getField(r, 100) ||
