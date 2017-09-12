@@ -51,7 +51,6 @@
         <div>
           <project-contrib-button
             :shortname="project.short_name"
-            size="sm"
             variant="success">
           </project-contrib-button>
         </div>
