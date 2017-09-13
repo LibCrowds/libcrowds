@@ -358,11 +358,16 @@ export default {
 
     /**
      * Perform a search.
+     * @param {Number} page
+     *   The page number.
      */
-    search (position = 1) {
+    search (page = 1) {
       this.processing = true
       const searchQuery = this.buildQuery()
-      const fullQuery = `query=${searchQuery}&position=${position}`
+      let fullQuery = `query=${searchQuery}`
+      if (page > 1 && this.pagination.perPage) {
+        fullQuery += `&position=${(page - 1) * this.pagination.perPage + 1}`
+      }
       const url = `/z3950/search/oclc/json?${fullQuery}`
       pybossaApi.get(url).then(r => {
         if (r.data.n_records === 0) {
@@ -373,9 +378,8 @@ export default {
           this.alerts = []
           let t = performance.now()
           this.searchResults = this.processResults(r.data.data)
-          console.log(t - performance.now())
           this.pagination = {
-            page: r.data.position,
+            page: Math.ceil(r.data.position / r.data.size),
             perPage: r.data.size,
             total: r.data.total,
             summary: ''
