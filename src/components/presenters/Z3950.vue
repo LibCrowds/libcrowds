@@ -148,6 +148,7 @@
           <b-pagination
             variant="info"
             size="sm"
+            :disabled="processing"
             :total-rows="pagination.total"
             :per-page="pagination.perPage"
             v-model="pagination.page"
