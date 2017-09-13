@@ -161,7 +161,12 @@
               Showing
               {{ (pagination.page - 1) * pagination.perPage + 1 }}
               to
-              {{ pagination.page * pagination.perPage + 1 }}
+              {{
+                Math.min(
+                  pagination.page * pagination.perPage + 1,
+                  pagination.total
+                )
+              }}
               of
               {{ pagination.total }}
             </small>
