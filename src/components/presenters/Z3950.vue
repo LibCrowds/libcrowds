@@ -123,7 +123,9 @@
                   variant="success"
                   @click="onSubmit">
                   <span v-if="!processing">{{ stage | capitalize }}</span>
-                  <div v-else class="sk-three-bounce">
+                  <div
+                    v-else
+                    class="sk-three-bounce w-100">
                     <div class="sk-child sk-bounce1"></div>
                     <div class="sk-child sk-bounce2"></div>
                     <div class="sk-child sk-bounce3"></div>
