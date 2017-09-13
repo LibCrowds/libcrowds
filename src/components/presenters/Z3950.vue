@@ -513,6 +513,7 @@ export default {
           this.submit({
             oclc: '',
             shelfmark: '',
+            form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
           sweetalert.close()
@@ -529,6 +530,7 @@ export default {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
           shelfmark: this.shelfmarkForm.model.shelfmark,
+          form: this.searchForm.model,
           comments: this.$refs.comments.value
         })
       }
