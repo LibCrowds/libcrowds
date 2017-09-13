@@ -183,7 +183,6 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
-import intersection from 'lodash/intersection'
 import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
 
@@ -372,7 +371,9 @@ export default {
           this.alerts.push({ msg: r.data.message, type: r.data.status })
         } else {
           this.alerts = []
+          let t = performance.now()
           this.searchResults = this.processResults(r.data.data)
+          console.log(t - performance.now())
           this.pagination = {
             page: r.data.position,
             perPage: r.data.size,
@@ -385,6 +386,34 @@ export default {
     },
 
     /**
+     * Parse a subfield.
+     * @param {Object} subfield
+     *  The subfield.
+     * @param {Array} linkedFields
+     *  Any linked fields.
+     * @param {Array} codes
+     *  The subfield codes.
+     */
+    parseSubfield (subfield, linkedFields, codes) {
+      let res = ''
+      for (let code in subfield) {
+        if (code === '6' && subfield[code].startsWith('880')) {
+          let linkIndex = parseInt(subfield[code].split('-')[1]) - 1
+          res += linkedFields[linkIndex]['880']['subfields'].map((sf) => {
+            return this.parseSubfield(sf)
+          }).join(' ') + ' '
+        } else if (code !== '6') {
+          if (!codes) {
+            res = subfield[code] + ' '
+          } else if (codes.indexOf(code) > 0) {
+            res += subfield[code] + ' '
+          }
+        }
+      }
+      return res
+    },
+
+    /**
      * Return a field or concatenated subfields.
      * @param {Object} result
      *  The result.
@@ -394,48 +423,27 @@ export default {
      *  The subfield codes.
      */
     getField (result, tag, codes = null) {
-      let fields = result.fields.filter(f => {
-        return f.hasOwnProperty(tag)
-      })
+      let res = ''
 
-      if (!fields.length) {
-        return ''
-      }
+      // Store linked subfields for future reference
+      let linkedFields = result.fields.filter((f) => f.hasOwnProperty('880'))
 
-      // Header field
-      if (String(tag).match(/00\d/i)) {
-        return fields[0][tag]
-      }
-
-      // Get linked fields
-      const linkedFields = result.fields.filter(f => {
-        return f.hasOwnProperty('880')
-      })
-
-      // link the fields
-      const linkedSubfields = fields.map(f => {
-        return f[tag]['subfields'].map(sf => {
-          for (let code in sf) {
-            if (code === '6' && sf[code].startsWith('880')) {
-              let linkIndex = parseInt(sf[code].split('-')[1])
-              let linkedSf = linkedFields[linkIndex]['subfields']
-              console.log(linkedSf)
-            }
-          }
-          return sf
-        })
-      })
-
-      return linkedSubfields.map(sf => {
-        if (!codes) {
-          return Object.values(sf)
+      for (let field of result.fields) {
+        if (!field.hasOwnProperty(tag)) {
+          continue
         }
-        let arr = intersection(Object.keys(sf), codes)
-        if (arr.length) {
-          return sf[arr[0]]
+
+        // Header field
+        if (String(tag).match(/00\d/i)) {
+          return field[tag]
         }
-        return ''
-      }).join(' ')
+
+        // Concatenate chosen subfields
+        for (let subfield of field[tag]['subfields']) {
+          res += this.parseSubfield(subfield, linkedFields, codes)
+        }
+      }
+      return res
     },
 
     /**
