@@ -376,7 +376,6 @@ export default {
           this.alerts.push({ msg: r.data.message, type: r.data.status })
         } else {
           this.alerts = []
-          let t = performance.now()
           this.searchResults = this.processResults(r.data.data)
           this.pagination = {
             page: Math.ceil(r.data.position / r.data.size),
