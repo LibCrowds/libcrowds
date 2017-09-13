@@ -414,10 +414,8 @@ export default {
             return this.parseSubfield(sf)
           }).join(' ') + ' '
         } else if (code !== '6') {
-          if (!codes) {
+          if (!codes || codes.indexOf(code)) {
             res = subfield[code] + ' '
-          } else if (codes.indexOf(code) > 0) {
-            res += subfield[code] + ' '
           }
         }
       }
@@ -469,7 +467,7 @@ export default {
         return {
           controlNumber: controlNumber,
           externalLink: `${worldcatBase}${controlNumber}`,
-          title: this.getField(r, 245, ['a', 'b']),
+          title: this.getField(r, 245, ['a', 'b', 'c']),
           author: (
             this.getField(r, 100) ||
             this.getField(r, 110) ||
