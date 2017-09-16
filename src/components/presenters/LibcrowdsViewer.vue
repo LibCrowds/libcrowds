@@ -2,7 +2,6 @@
   <div class="libcrowds-viewer-presenter">
 
     <libcrowds-viewer
-      :show-related-tasks="true"
       :confirm-on-submit="false"
       :buttons="buttons"
       :taskOpts="taskOpts"
