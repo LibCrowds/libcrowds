@@ -56,19 +56,12 @@ export default {
       })
     },
     buttons: function () {
-<<<<<<< HEAD
-      return {
-        like: !isEmpty(this.currentUser),
-        note: 'Seen something interesting?<br>Add a note',
-        submit: 'Save'
-=======
       let buttons = {
         note: 'Seen something interesting?<br>Add a note',
         submit: 'Save'
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
->>>>>>> fix-255
       }
       return buttons
     },
