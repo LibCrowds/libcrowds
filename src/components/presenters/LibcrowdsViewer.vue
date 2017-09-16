@@ -56,8 +56,10 @@ export default {
       })
     },
     buttons: function () {
-      return {
-        like: !isEmpty(this.currentUser)
+      if (isEmpty(this.currentUser)) {
+        return {
+          like: false
+        }
       }
     },
     navigation: function () {
