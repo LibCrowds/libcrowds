@@ -56,11 +56,14 @@ export default {
       })
     },
     buttons: function () {
-      if (isEmpty(this.currentUser)) {
-        return {
-          like: false
-        }
+      let buttons = {
+        note: 'Seen something interesting?<br>Add a note',
+        submit: 'Save'
       }
+      if (isEmpty(this.currentUser)) {
+        buttons.like = false
+      }
+      return buttons
     },
     navigation: function () {
       const names = ['home', 'about', 'contribute', 'data']
