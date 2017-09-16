@@ -57,7 +57,9 @@ export default {
     },
     buttons: function () {
       return {
-        like: !isEmpty(this.currentUser)
+        like: !isEmpty(this.currentUser),
+        note: 'Seen something interesting?<br>Add a note',
+        submit: 'Save'
       }
     },
     navigation: function () {
