@@ -13,7 +13,12 @@
         <b-card no-block>
 
           <div class="card-block pb-0" v-if="alerts.length">
-            <b-alert show v-for="alert in alerts" :variant="alert.type" :key="alert.msg" class="mb-1">
+            <b-alert
+              show
+              v-for="alert in alerts"
+              :variant="alert.type"
+              :key="alert.msg"
+              class="mb-1">
               {{ alert.msg }}
             </b-alert>
           </div>
@@ -21,7 +26,12 @@
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
-              <b-button v-if="searchResults.length || selectedRecord" variant="info" size="sm" class="float-right" @click="reset">
+              <b-button
+                v-if="searchResults.length || selectedRecord"
+                variant="info"
+                size="sm"
+                class="float-right"
+                @click="reset">
                 Search Again
               </b-button>
             </div>
@@ -37,27 +47,37 @@
               key="results"
               v-if="stage == 'results' && !processing"
               class="list-group">
-              <b-list-group-item v-for="(record, index) in searchResults" :key="`result-${index}`" class="pb-2 pt-1">
-                <b-button class="remove mb-1" variant="secondary" size="sm" @click="removeResult(record)">
-                  <icon name="times"></icon>
-                </b-button>
-                <h5 class="mb-1">{{ record.title }}</h5>
-                <p class="mb-0">{{ record.author }}</p>
-                <p class="mb-0">
-                  <small>{{ record.physdesc }}</small>
-                </p>
-                <p class="mb-2">
-                  <small>
-                    {{ record.publisher }}{{ record.pubyear }}
-                  </small>
-                </p>
-                <div class="result-buttons">
-                  <b-button variant="secondary" size="sm" @click="viewFullRecord(record)">
-                    Full Record
-                  </b-button>
-                  <b-button variant="success" size="sm" @click="selectedRecord = record">
-                    Select
-                  </b-button>
+              <b-list-group-item
+                v-for="(record, index) in searchResults"
+                :key="`result-${index}`"
+                class="p-2">
+                <div class="d-flex flex-row w-100">
+                  <div class="w-75">
+                    <h5 class="mb-0">
+                      <a :href="record.externalLink" target="_blank">
+                        {{ record.title }}
+                      </a>
+                    </h5>
+                    <p class="mb-0">{{ record.author }}</p>
+                    <p class="mb-0">
+                      <small>{{ record.physdesc }}</small>
+                    </p>
+                    <p class="mb-0">
+                      <small>
+                        {{ record.publisher }}{{ record.pubyear }}
+                      </small>
+                    </p>
+                  </div>
+                  <div class="w-25 d-flex">
+                    <div class="result-buttons">
+                      <b-button
+                        variant="success"
+                        size="sm"
+                        @click="selectedRecord = record">
+                        Select
+                      </b-button>
+                    </div>
+                  </div>
                 </div>
               </b-list-group-item>
             </div>
@@ -75,43 +95,90 @@
                   </small>
                 </p>
               </div>
-              <vue-form-generator :schema="shelfmarkForm.schema" :model="shelfmarkForm.model">
+              <vue-form-generator
+                :schema="shelfmarkForm.schema"
+                :model="shelfmarkForm.model">
               </vue-form-generator>
             </div>
           </transition>
 
           <template slot="footer">
-            <div class="float-right">
-              <b-button variant="secondary" @click="onSkip">
-                Skip / Not Found
+            <div class="d-flex justify-content-between flex-column flex-xl-row">
+              <b-button
+                v-b-toggle.collapsecomment
+                class="p-0"
+                variant="link">
+                Add a comment
               </b-button>
-              <b-button v-if="stage !== 'results'" variant="success" @click="onSubmit">
-                <span v-if="!processing">{{ stage | capitalize }}</span>
-                <div v-else class="sk-three-bounce">
-                  <div class="sk-child sk-bounce1"></div>
-                  <div class="sk-child sk-bounce2"></div>
-                  <div class="sk-child sk-bounce3"></div>
-                </div>
-              </b-button>
+              <div
+                class="d-flex d-xl-block flex-column justify-content-center">
+                <b-button
+                  variant="secondary"
+                  class="my-1"
+                  @click="onSkip">
+                  Skip / Not Found
+                </b-button>
+                <b-button
+                  v-if="stage !== 'results'"
+                  variant="success"
+                  @click="onSubmit">
+                  <span v-if="!processing">{{ stage | capitalize }}</span>
+                  <div
+                    v-else
+                    class="sk-three-bounce w-100">
+                    <div class="sk-child sk-bounce1"></div>
+                    <div class="sk-child sk-bounce2"></div>
+                    <div class="sk-child sk-bounce3"></div>
+                  </div>
+                </b-button>
+              </div>
             </div>
+            <b-collapse id="collapsecomment" class="mt-1">
+              <textarea
+                class="form-control"
+                ref="comments"
+                rows="3"
+                placeholder="Enter your comment...">
+              </textarea>
+            </b-collapse>
           </template>
         </b-card>
 
-        <b-pagination v-if="stage == 'results'" variant="info" class="d-flex justify-content-center mt-2 mb-0" :total-rows="pagination.total" :per-page="pagination.perPage" v-model="pagination.page" @change="onPageChange">
-        </b-pagination>
-
-        <b-card header="Comments" class="mt-3">
-          <textarea class="form-control" ref="comments" rows="3" placeholder="Add a comment...">
-          </textarea>
-        </b-card>
-
+        <div
+          v-if="stage == 'results'"
+          class="d-flex align-items-center mt-2 mb-0 d-flex flex-column">
+          <b-pagination
+            variant="info"
+            size="sm"
+            :disabled="processing"
+            :total-rows="pagination.total"
+            :per-page="pagination.perPage"
+            v-model="pagination.page"
+            @change="onPageChange">
+          </b-pagination>
+          <p>
+            <small>
+              Showing
+              {{ (pagination.page - 1) * pagination.perPage + 1 }}
+              to
+              {{
+                Math.min(
+                  pagination.page * pagination.perPage + 1,
+                  pagination.total
+                )
+              }}
+              of
+              {{ pagination.total }}
+            </small>
+          </p>
+        </div>
       </div>
     </div>
 
     <b-modal ref="modal" title="Full record" size="lg">
       <pre>
-          <code ref="modalcontent">
-          </code>
+        <code ref="modalcontent">
+        </code>
         </pre>
     </b-modal>
 
@@ -121,8 +188,9 @@
 <script>
 import sweetalert from 'sweetalert'
 import 'vue-awesome/icons/times'
+import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
-import intersection from 'lodash/intersection'
+import mapValues from 'lodash/mapValues'
 import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
 
@@ -298,11 +366,16 @@ export default {
 
     /**
      * Perform a search.
+     * @param {Number} page
+     *   The page number.
      */
-    search (position = 1) {
+    search (page = 1) {
       this.processing = true
       const searchQuery = this.buildQuery()
-      const fullQuery = `query=${searchQuery}&position=${position}`
+      let fullQuery = `query=${searchQuery}`
+      if (page > 1 && this.pagination.perPage) {
+        fullQuery += `&position=${(page - 1) * this.pagination.perPage + 1}`
+      }
       const url = `/z3950/search/oclc/json?${fullQuery}`
       pybossaApi.get(url).then(r => {
         if (r.data.n_records === 0) {
@@ -310,15 +383,43 @@ export default {
         } else if (r.data.status !== 'success') {
           this.alerts.push({ msg: r.data.message, type: r.data.status })
         } else {
+          this.alerts = []
           this.searchResults = this.processResults(r.data.data)
           this.pagination = {
-            page: r.data.position,
+            page: Math.ceil(r.data.position / r.data.size),
             perPage: r.data.size,
-            total: r.data.total
+            total: r.data.total,
+            summary: ''
           }
         }
         this.processing = false
       })
+    },
+
+    /**
+     * Parse a subfield.
+     * @param {Object} subfield
+     *  The subfield.
+     * @param {Array} linkedFields
+     *  Any linked fields.
+     * @param {Array} codes
+     *  The subfield codes.
+     */
+    parseSubfield (subfield, linkedFields, codes) {
+      let res = ''
+      for (let code in subfield) {
+        if (code === '6' && subfield[code].startsWith('880')) {
+          let linkIndex = parseInt(subfield[code].split('-')[1]) - 1
+          res += linkedFields[linkIndex]['880']['subfields'].map((sf) => {
+            return this.parseSubfield(sf)
+          }).join(' ') + ' '
+        } else if (code !== '6') {
+          if (!codes || codes.indexOf(code)) {
+            res = subfield[code] + ' '
+          }
+        }
+      }
+      return res
     },
 
     /**
@@ -331,31 +432,27 @@ export default {
      *  The subfield codes.
      */
     getField (result, tag, codes = null) {
-      let fields = result.fields.filter(f => {
-        return f.hasOwnProperty(tag)
-      })
+      let res = ''
 
-      if (!fields.length) {
-        return ''
+      // Store linked subfields for future reference
+      let linkedFields = result.fields.filter((f) => f.hasOwnProperty('880'))
+
+      for (let field of result.fields) {
+        if (!field.hasOwnProperty(tag)) {
+          continue
+        }
+
+        // Header field
+        if (String(tag).match(/00\d/i)) {
+          return field[tag]
+        }
+
+        // Concatenate chosen subfields
+        for (let subfield of field[tag]['subfields']) {
+          res += this.parseSubfield(subfield, linkedFields, codes)
+        }
       }
-
-      // Header field
-      if (String(tag).match(/00\d/i)) {
-        return fields[0][tag]
-      }
-
-      return fields.map(f => {
-        return f[tag]['subfields'].map(sf => {
-          if (!codes) {
-            return Object.values(sf)
-          }
-          let arr = intersection(Object.keys(sf), codes)
-          if (arr.length) {
-            return sf[arr[0]]
-          }
-          return ''
-        }).join(' ')
-      }).join(' ')
+      return res
     },
 
     /**
@@ -365,9 +462,12 @@ export default {
      */
     processResults (results) {
       return results.map(r => {
+        let worldcatBase = 'https://www.worldcat.org/title/apis/oclc/'
+        let controlNumber = this.getField(r, '001').replace(/^\D+/g, '')
         return {
-          controlNumber: this.getField(r, '001').replace(/^\D+/g, ''),
-          title: this.getField(r, 245, ['a', 'b']),
+          controlNumber: controlNumber,
+          externalLink: `${worldcatBase}${controlNumber}`,
+          title: this.getField(r, 245, ['a', 'b', 'c']),
           author: (
             this.getField(r, 100) ||
             this.getField(r, 110) ||
@@ -411,6 +511,7 @@ export default {
           this.submit({
             oclc: '',
             shelfmark: '',
+            form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
           sweetalert.close()
@@ -427,6 +528,7 @@ export default {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
           shelfmark: this.shelfmarkForm.model.shelfmark,
+          form: this.searchForm.model,
           comments: this.$refs.comments.value
         })
       }
@@ -477,22 +579,8 @@ export default {
       this.selectedRecord = null
       this.alerts = []
       this.pagination = {}
-      for (let elem of document.querySelectorAll('input')) {
-        elem.value = ''
-      }
+      this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
-    },
-
-    /**
-     * Remove a record from the search results.
-     * @param {Object} record
-     *   This.
-     */
-    removeResult (record) {
-      const idx = this.searchResults.indexOf(record)
-      if (idx > -1) {
-        this.searchResults.splice(idx, 1)
-      }
     }
   },
 
@@ -523,7 +611,7 @@ export default {
 
   .card {
     h5 {
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
   }
 
@@ -562,6 +650,7 @@ export default {
 
     .result-buttons {
       align-self: flex-end;
+      margin-left: auto;
     }
   }
 }

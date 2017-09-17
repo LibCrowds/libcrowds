@@ -23,6 +23,7 @@ import siteConfig from '@/siteConfig'
 import formatDate from '@/filters/formatDate'
 import pluralize from '@/filters/pluralize'
 import capitalize from '@/filters/capitalize'
+import intComma from '@/filters/intComma'
 
 // Global styles
 import '@/assets/style/main.scss'
@@ -41,6 +42,7 @@ Vue.component('icon', Icon)
 Vue.filter('formatDate', formatDate)
 Vue.filter('pluralize', pluralize)
 Vue.filter('capitalize', capitalize)
+Vue.filter('intComma', intComma)
 
 // Google analytics
 if ('analytics' in siteConfig && process.env.NODE_ENV === 'production') {

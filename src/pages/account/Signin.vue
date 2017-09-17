@@ -105,7 +105,12 @@ export default {
   metaInfo () {
     return {
       title: 'Sign in',
-      description: `Sign in to ${siteConfig.brand}`
+      meta: [
+        {
+          name: 'description',
+          content: `Sign in to ${siteConfig.brand}`
+        }
+      ]
     }
   },
 

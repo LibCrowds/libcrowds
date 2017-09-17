@@ -2,12 +2,13 @@
   <div class="libcrowds-viewer-presenter">
 
     <libcrowds-viewer
-      :show-related-tasks="true"
       :confirm-on-submit="false"
       :buttons="buttons"
       :taskOpts="taskOpts"
       :navigation="navigation"
       :message-bus="messageBus"
+      :browsable="false"
+      :selections-editable="false"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
@@ -56,9 +57,14 @@ export default {
       })
     },
     buttons: function () {
-      return {
-        like: !isEmpty(this.currentUser)
+      let buttons = {
+        note: 'Seen something interesting?<br>Add a note',
+        submit: 'Save'
       }
+      if (isEmpty(this.currentUser)) {
+        buttons.like = false
+      }
+      return buttons
     },
     navigation: function () {
       const names = ['home', 'about', 'contribute', 'data']

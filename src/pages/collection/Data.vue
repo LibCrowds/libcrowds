@@ -100,9 +100,14 @@ export default {
   metaInfo () {
     return {
       title: 'Data',
-      description: `All datasets generated from the experimental crowdsourcing
+      meta: [
+        {
+          name: 'description',
+          content: `All datasets generated from the experimental crowdsourcing
                    projects hosted on this platform are made available under a
                    ${siteConfig.dataLicense.name} license.`
+        }
+      ]
     }
   },
 

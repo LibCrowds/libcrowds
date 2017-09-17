@@ -74,7 +74,12 @@ export default {
   metaInfo () {
     return {
       title: 'About',
-      description: `Learn more about the ${siteConfig.brand} platform`
+      meta: [
+        {
+          name: 'description',
+          content: `Learn more about the ${siteConfig.brand} platform`
+        }
+      ]
     }
   },
 
@@ -98,3 +103,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#collection-about {
+  img {
+    display: block;
+    margin: 2rem auto;
+    max-height: 400px;
+    max-width: 100%;
+  }
+}
+</style>

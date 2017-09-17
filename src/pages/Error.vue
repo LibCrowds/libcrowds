@@ -17,7 +17,12 @@ export default {
   metaInfo () {
     return {
       title: this.title,
-      description: this.description,
+      meta: [
+        {
+          name: 'description',
+          content: this.description
+        }
+      ],
       bodyAttrs: {
         style: `background: #7CC4F3
               url('${require('../assets/img/bl-graphic.png')}')

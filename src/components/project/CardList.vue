@@ -5,9 +5,12 @@
       tag="ul"
       class="list-unstyled">
       <li class="shuffle-grid-item"
-        v-for="p in projects"
-        :key="p.short_name">
-        <project-card :project="p"></project-card>
+        v-for="project in projects"
+        :key="project.short_name">
+        <project-card
+          :collection-config="collectionConfig"
+          :project="project">
+        </project-card>
       </li>
     </transition-group>
   </div>
@@ -20,6 +23,10 @@ export default {
   props: {
     projects: {
       type: Array,
+      required: true
+    },
+    collectionConfig: {
+      type: Object,
       required: true
     }
   },
