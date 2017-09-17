@@ -7,7 +7,11 @@
       :taskOpts="taskOpts"
       :navigation="navigation"
       :message-bus="messageBus"
+<<<<<<< HEAD
       :browsable="false"
+=======
+      :selections-editable="false"
+>>>>>>> fix-184
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
