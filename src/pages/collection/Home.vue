@@ -3,17 +3,22 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <div class="d-flex align-items-baseline justify-content-center">
+          <div
+            class="d-flex align-items-baseline justify-content-center">
             <div
               id="company-logo"
-              class="mr-2"
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <h1 class="display-3">{{ collectionConfig.name }}</h1>
-            <span class="mr-4" v-if="siteConfig.logo"></span>
+            <span class="mr-2 hidden-md-down" v-if="siteConfig.logo"></span>
+            <h1 class="display-3 hidden-md-down mb-0">
+              {{ collectionConfig.name }}
+            </h1>
+            <span class="mr-4 hidden-md-down" v-if="siteConfig.logo"></span>
           </div>
-          <h2 id="tagline">{{ collectionConfig.tagline }}</h2>
+          <h2 id="tagline" class="mt-2 mb-3">
+            {{ collectionConfig.tagline }}
+          </h2>
           <div>
             <b-button
               variant="success"
@@ -376,11 +381,7 @@ export default {
   }
 
   #tagline {
-    font-size: $font-size-lg;
-
-    @include media-breakpoint-up(sm) {
-      font-size: 2rem;
-    }
+    font-size: 2rem;
   }
 
   .bg-white {
