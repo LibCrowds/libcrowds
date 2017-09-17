@@ -57,7 +57,7 @@
         <hr class="mt-3 w-75 sr">
         <b-button
           variant="secondary"
-          class="mt-1"
+          class="mt-md-1 sr"
           :to="{
             name: 'collection-about',
             params: {
