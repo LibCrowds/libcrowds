@@ -158,6 +158,10 @@ export default {
     collectionConfig: {
       type: Object,
       required: true
+    },
+    currentUser: {
+      type: Object,
+      required: true
     }
   },
 
@@ -189,6 +193,14 @@ export default {
      */
     setData (data) {
       this.categories = data.categories
+
+      if (this.currentUser.admin) {
+        this.categories.push({
+          short_name: 'draft',
+          name: 'Draft',
+          description: "Work's in progress"
+        })
+      }
     },
 
     /**
