@@ -8,6 +8,7 @@
       :taskOpts="taskOpts"
       :navigation="navigation"
       :message-bus="messageBus"
+      :selections-editable="false"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
