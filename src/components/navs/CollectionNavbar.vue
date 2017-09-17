@@ -4,8 +4,7 @@
     toggleable
     toggle-breakpoint="md"
     :type="type"
-    :fixed="navType.fixed"
-    :sticky="navType.sticky">
+    :fixed="navType.fixed">
     <div class="container">
 
       <button
@@ -168,7 +167,7 @@ export default {
   data: function () {
     return {
       currentPath: this.$store.state.route.path,
-      stickyNavbarRoutes: [
+      fixedNavbarRoutes: [
         'collection-home'
       ]
     }
@@ -195,15 +194,13 @@ export default {
 
   computed: {
     navType: function () {
-      if (this.stickyNavbarRoutes.indexOf(this.$route.name) > -1) {
+      if (this.fixedNavbarRoutes.indexOf(this.$route.name) > -1) {
         return {
-          fixed: 'top',
-          sticky: true
+          fixed: 'top'
         }
       }
       return {
-        fixed: null,
-        sticky: false
+        fixed: null
       }
     },
     loggedIn: function () {
