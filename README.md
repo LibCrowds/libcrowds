@@ -5,10 +5,8 @@
 
 > A Vue.js frontend for PyBossa (>=2.6.1).
 
-[Documentation](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
+Configurable PyBossa frontend with a microsite-based structure; as used by LibCrowds:
 
-#### Example:
-
-![Example of vue-pybossa-frontend](./docs/assets/site-homepage.png?raw=true "Example of vue-pybossa-frontend")
+[![Example of vue-pybossa-frontend](./docs/assets/site-homepage.png?raw=true "Example of vue-pybossa-frontend")](https://www.libcrowds.com)
 
 [Documentation](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
