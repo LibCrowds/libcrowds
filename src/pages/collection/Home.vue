@@ -184,7 +184,7 @@
     </section>
 
     <section id="final-cta" class="bg-white invert-navbar">
-      <div class="container pt-5 pb-4">
+      <div class="container pt-4 pb-3">
         <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
             <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
@@ -209,8 +209,8 @@
     </section>
 
     <section id="social-media" class="bg-white invert-navbar">
-      <div class="container pb-5 text-center">
-        <hr class="mt-0 mb-4">
+      <div class="container pb-4 text-center">
+        <hr class="mt-0 mb-3">
         <social-media-buttons>
         </social-media-buttons>
       </div>
