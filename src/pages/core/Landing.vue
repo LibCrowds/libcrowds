@@ -215,9 +215,9 @@ export default {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
     pybossaApi.get('/announcements/').then(r => {
-      this.publications = r.data.announcement
+      this.publications = r.data.announcements
     })
-    pybossaApi.get(`/`).then(r => {
+    pybossaApi.get('/').then(r => {
       this.topUsers = r.data.top_users
     })
   }
