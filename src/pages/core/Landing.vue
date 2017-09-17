@@ -194,17 +194,6 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => intComma(n))
-      this.publications = data.publications
-    },
-
-    /**
      * Init scroll reveal.
      */
     scrollReveal () {
@@ -222,16 +211,14 @@ export default {
   },
 
   created () {
-    let data = {}
+    pybossaApi.get('stats/').then(r => {
+      this.stats = mapValues(r.data.stats, (n) => getNumberWithCommas(n))
+    })
+    pybossaApi.get('/announcements/').then(r => {
+      this.publications = r.data.announcement
+    })
     pybossaApi.get(`/`).then(r => {
-      data = r.data
-      return pybossaApi.get('stats/')
-    }).then(r => {
-      data.stats = r.data.stats
-      return pybossaApi.get('/announcements/')
-    }).then(r => {
-      data.publications = r.data.announcements
-      this.setData(data)
+      this.topUsers = r.data.top_users
     })
   }
 }
