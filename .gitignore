@@ -10,3 +10,4 @@ selenium-debug.log
 src/siteConfig.js
 src/custom/*
 deploy-key
+_book/*
