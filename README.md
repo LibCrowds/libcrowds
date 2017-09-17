@@ -9,4 +9,4 @@ Configurable PyBossa frontend with a microsite-based structure; as used by LibCr
 
 [![Example of vue-pybossa-frontend](./docs/assets/site-homepage.png?raw=true "Example of vue-pybossa-frontend")](https://www.libcrowds.com)
 
-[Documentation](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
+[**Read the documentation**](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
