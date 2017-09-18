@@ -142,7 +142,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .libcrowds-viewer-presenter {
   position: fixed;
   top: 0;
@@ -156,5 +156,12 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  img {
+    display: block;
+    margin: 2rem auto;
+    max-height: 200px;
+    max-width: 100%;
+  }
 }
 </style>
