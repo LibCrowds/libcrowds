@@ -93,13 +93,36 @@ export default {
 
   methods: {
     /**
-     * Load the next 100 tasks.
+     * Load the next set of tasks.
+     *
+     * Always keep between 10 and 20 in the queue.
      */
     loadTasks () {
-      const url = `/api/project/${this.project.id}/newtask?limit=100`
+      if (this.tasks.length > 10) {
+        return
+      }
+      const endpoint = `/api/project/${this.project.id}/newtask`
+      let q = 'limit=20'
+      if (this.tasks.length) {
+        const lastTask = this.tasks[this.tasks.length - 1]
+        q += `&last_id=${lastTask.id}`
+      }
+      const url = `${endpoint}?${q}`
       pybossaApi.get(url).then(r => {
         this.tasks = Array.isArray(r.data) ? r.data : [r.data]
       })
+    },
+
+    /**
+     * Remove a task from the queue by ID.
+     * @param {String|Number} id
+     *   The task ID.
+     */
+    removeTask (id) {
+      const idx = this.tasks.map((task) => { return task.id }).indexOf(id)
+      if (idx > -1) {
+        this.tasks.splice(idx, 1)
+      }
     },
 
     /**
@@ -121,16 +144,18 @@ export default {
 
     /**
      * Handle the submit event.
-     * @param {Object} task
-     *   The task.
+     * @param {Object} taskData
+     *   The task data returned from LibCrowds Viewer.
      */
-    onSubmit (task) {
+    onSubmit (taskData) {
       const taskrun = JSON.stringify({
         'project_id': this.project.id,
-        'task_id': task.id,
-        'info': task.annotations
+        'task_id': taskData.id,
+        'info': taskData.annotations
       })
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
+        this.removeTask(taskData.id)
+        this.loadTasks()
         this.messageBus.$emit('success', 'Answer saved, thanks!')
       })
     }
