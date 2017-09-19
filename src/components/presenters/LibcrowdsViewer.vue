@@ -95,7 +95,7 @@ export default {
     /**
      * Load the next set of tasks.
      *
-     * Always keep between 10 and 20 in the queue.
+     * Always keep between 10 and 30 in the queue.
      */
     loadTasks () {
       if (this.tasks.length > 10) {
@@ -109,7 +109,8 @@ export default {
       }
       const url = `${endpoint}?${q}`
       pybossaApi.get(url).then(r => {
-        this.tasks = Array.isArray(r.data) ? r.data : [r.data]
+        const loadedTasks = Array.isArray(r.data) ? r.data : [r.data]
+        this.tasks = this.tasks.concat(loadedTasks)
       })
     },
 
