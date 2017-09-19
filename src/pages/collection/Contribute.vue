@@ -198,7 +198,7 @@ export default {
         this.categories.push({
           short_name: 'draft',
           name: 'Draft',
-          description: "Work's in progress"
+          description: "Works in progress"
         })
       }
     },
