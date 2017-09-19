@@ -19,13 +19,11 @@
 <script>
 import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 
 export default {
   data: function () {
     return {
-      tasks: [],
       messageBus: new Vue()
     }
   },
@@ -33,6 +31,10 @@ export default {
   props: {
     project: {
       type: Object,
+      required: true
+    },
+    tasks: {
+      type: Array,
       required: true
     },
     currentUser: {
@@ -93,77 +95,22 @@ export default {
 
   methods: {
     /**
-     * Load the next set of tasks.
-     *
-     * Always keep between 10 and 30 in the queue.
-     */
-    loadTasks () {
-      if (this.tasks.length > 10) {
-        return
-      }
-      const endpoint = `/api/project/${this.project.id}/newtask`
-      let q = 'limit=20'
-      if (this.tasks.length) {
-        const lastTask = this.tasks[this.tasks.length - 1]
-        q += `&last_id=${lastTask.id}`
-      }
-      const url = `${endpoint}?${q}`
-      pybossaApi.get(url).then(r => {
-        const loadedTasks = Array.isArray(r.data) ? r.data : [r.data]
-        this.tasks = this.tasks.concat(loadedTasks)
-      })
-    },
-
-    /**
-     * Remove a task from the queue by ID.
-     * @param {String|Number} id
-     *   The task ID.
-     */
-    removeTask (id) {
-      const idx = this.tasks.map((task) => { return task.id }).indexOf(id)
-      if (idx > -1) {
-        this.tasks.splice(idx, 1)
-      }
-    },
-
-    /**
      * Handle the task liked event.
-     * @param {Object} task
-     *   The task.
+     * @param {Object} taskData
+     *   The task data.
      */
-    onTaskLiked (task) {
-      if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
-          this.messageBus.$emit('success', 'Task liked')
-        })
-      } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
-          this.messageBus.$emit('success', 'Task unliked!')
-        })
-      }
+    onTaskLiked (taskData) {
+      this.$emit('liked', taskData.id, taskData.liked)
     },
 
     /**
-     * Handle the submit event.
+     * Submit an answer.
      * @param {Object} taskData
-     *   The task data returned from LibCrowds Viewer.
+     *   The task data.
      */
     onSubmit (taskData) {
-      const taskrun = JSON.stringify({
-        'project_id': this.project.id,
-        'task_id': taskData.id,
-        'info': taskData.annotations
-      })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
-        this.removeTask(taskData.id)
-        this.loadTasks()
-        this.messageBus.$emit('success', 'Answer saved, thanks!')
-      })
+      this.$emit('submit', this.project.id, taskData.id, taskData.annotations)
     }
-  },
-
-  created () {
-    this.loadTasks()
   }
 }
 </script>

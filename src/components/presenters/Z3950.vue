@@ -269,6 +269,10 @@ export default {
       type: Object,
       required: true
     },
+    tasks: {
+      type: Array,
+      required: true
+    },
     currentUser: {
       type: Object,
       required: true
