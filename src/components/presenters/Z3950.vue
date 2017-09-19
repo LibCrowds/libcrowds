@@ -3,9 +3,10 @@
     <div class="row p-4">
 
       <div class="col-sm-12 col-lg-6">
-        <b-card no-block>
-          <img v-if="currentTask" :src="currentTask.info.url" class="img-fluid">
-          <loading v-else text="Loading image"></loading>
+        <b-card
+          no-block
+          v-if="currentTask" >
+          <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
       </div>
 
@@ -191,7 +192,6 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
-import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
 
 export default {
@@ -199,9 +199,7 @@ export default {
     return {
       processing: false,
       header: 'What is this item?',
-      tasks: [],
       searchResults: [],
-      currentTask: null,
       selectedRecord: null,
       alerts: [],
       pagination: {},
@@ -269,6 +267,10 @@ export default {
       type: Object,
       required: true
     },
+    tasks: {
+      type: Array,
+      required: true
+    },
     currentUser: {
       type: Object,
       required: true
@@ -279,11 +281,10 @@ export default {
     }
   },
 
-  components: {
-    Loading
-  },
-
   computed: {
+    currentTask: function () {
+      return this.tasks[0]
+    },
     buttons: function () {
       return {
         like: !isEmpty(this.currentUser)
@@ -316,35 +317,6 @@ export default {
     viewFullRecord (record) {
       this.$refs.modalcontent.innerHTML = JSON.stringify(record.full, null, 2)
       this.$refs.modal.show()
-    },
-
-    /**
-     * Load the next 100 tasks.
-     */
-    loadTasks () {
-      const url = `/api/project/${this.project.id}/newtask?limit=100`
-      return new Promise((resolve, reject) => {
-        pybossaApi.get(url).then(r => {
-          resolve(Array.isArray(r.data) ? r.data : [r.data])
-        })
-      })
-    },
-
-    /**
-     * Handle the task liked event.
-     * @param {Object} task
-     *   The task.
-     */
-    onTaskLiked (task) {
-      if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
-          this.messageBus.$emit('success', 'Task liked')
-        })
-      } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
-          this.messageBus.$emit('success', 'Task unliked!')
-        })
-      }
     },
 
     /**
@@ -535,40 +507,21 @@ export default {
     },
 
     /**
+     * Handle the task liked event.
+     * @param {Object} task
+     *   The task.
+     */
+    onTaskLiked (task) {
+      this.$emit('liked', task.id, task.liked)
+    },
+
+    /**
      * Submit a task run.
      * @param {Object} answer
      *   The answer.
      */
     submit (answer) {
-      const taskrun = JSON.stringify({
-        'project_id': this.project.id,
-        'task_id': this.currentTask.id,
-        'info': answer
-      })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
-        console.log(r)
-        this.$store.dispatch('NOTIFY', {
-          msg: 'Answer saved, thanks!',
-          type: 'success'
-        })
-        this.reset()
-        this.nextTask()
-      })
-    },
-
-    /**
-     * Load the next task.
-     */
-    nextTask () {
-      if (this.tasks.length) {
-        this.reset()
-        this.currentTask = this.tasks.shift()
-      } else {
-        this.loadTasks().then(tasks => {
-          this.tasks = tasks
-          this.nextTask()
-        })
-      }
+      this.$emit('submit', this.project.id, this.currentTask.id, answer)
     },
 
     /**
@@ -582,10 +535,6 @@ export default {
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
     }
-  },
-
-  created () {
-    this.nextTask()
   }
 }
 </script>

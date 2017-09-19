@@ -19,13 +19,11 @@
 <script>
 import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 
 export default {
   data: function () {
     return {
-      tasks: [],
       messageBus: new Vue()
     }
   },
@@ -33,6 +31,10 @@ export default {
   props: {
     project: {
       type: Object,
+      required: true
+    },
+    tasks: {
+      type: Array,
       required: true
     },
     currentUser: {
@@ -93,51 +95,22 @@ export default {
 
   methods: {
     /**
-     * Load the next 100 tasks.
-     */
-    loadTasks () {
-      const url = `/api/project/${this.project.id}/newtask?limit=100`
-      pybossaApi.get(url).then(r => {
-        this.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      })
-    },
-
-    /**
      * Handle the task liked event.
-     * @param {Object} task
-     *   The task.
+     * @param {Object} taskData
+     *   The task data.
      */
-    onTaskLiked (task) {
-      if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
-          this.messageBus.$emit('success', 'Task liked')
-        })
-      } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
-          this.messageBus.$emit('success', 'Task unliked!')
-        })
-      }
+    onTaskLiked (taskData) {
+      this.$emit('liked', taskData.id, taskData.liked)
     },
 
     /**
-     * Handle the submit event.
-     * @param {Object} task
-     *   The task.
+     * Submit an answer.
+     * @param {Object} taskData
+     *   The task data.
      */
-    onSubmit (task) {
-      const taskrun = JSON.stringify({
-        'project_id': this.project.id,
-        'task_id': task.id,
-        'info': task.annotations
-      })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
-        this.messageBus.$emit('success', 'Answer saved, thanks!')
-      })
+    onSubmit (taskData) {
+      this.$emit('submit', this.project.id, taskData.id, taskData.annotations)
     }
-  },
-
-  created () {
-    this.loadTasks()
   }
 }
 </script>
