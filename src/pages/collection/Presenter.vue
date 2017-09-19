@@ -20,6 +20,8 @@ export default {
   data: function () {
     return {
       project: null,
+      title: '',
+      description: '',
       navItems: [
         {
           id: 'back-to-contribute',
@@ -37,11 +39,11 @@ export default {
 
   metaInfo () {
     return {
-      title: `${this.project.name}: Task Presenter`,
+      title: this.title,
       meta: [
         {
           name: 'description',
-          content: this.project.description
+          content: this.description
         }
       ]
     }
@@ -79,6 +81,8 @@ export default {
      */
     setData (data) {
       this.project = data.project
+      this.title = this.project.name
+      this.description = this.project.description
     }
   },
 
