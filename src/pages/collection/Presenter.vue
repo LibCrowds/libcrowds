@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
@@ -126,12 +126,11 @@ export default {
     handleCompletion () {
       const projectComplete = this.project.overall_progress === 100
       let html = `You have contributed to all available tasks for ` +
-                 `${this.project.name}`
+                 `<em>${this.project.name}</em>`
       if (projectComplete) {
-        html = `${this.project.name} is now complete`
+        html = `<em>${this.project.name}</em> is now complete`
       }
-      console.log(this.project)
-      sweetalert({
+      swal({
         title: 'Thank you!',
         html: html,
         type: 'success'

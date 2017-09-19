@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
@@ -472,21 +472,20 @@ export default {
      * Handle the skip button click.
      */
     onSkip () {
-      sweetalert({
+      swal({
         title: 'Skip Task',
         text: 'Are you sure you want to skip this task?',
         type: 'warning',
-        showCancelButton: true,
-        closeOnConfirm: false
-      },
-      () => {
+        showCancelButton: true
+      }).then(() => {
         this.submit({
           oclc: '',
           shelfmark: '',
           form: this.searchForm.model,
           comments: this.$refs.comments.value
         })
-        sweetalert.close()
+      }, (dismiss) => {
+        swal.close()
       })
     },
 
