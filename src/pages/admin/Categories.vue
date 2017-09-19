@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
@@ -139,30 +139,34 @@ export default {
      *   The category ID.
      */
     deleteCategory (id) {
-      const endpoint = `/admin/categories/del/${id}`
-      sweetalert({
+      swal({
         title: 'Delete Category',
         text: 'Are you sure you want to delete this category?',
         type: 'warning',
         showCancelButton: true,
         closeOnConfirm: false,
-        showLoaderOnConfirm: true
-      },
-      () => {
-        pybossaApi.get(endpoint).then(r => {
-          return pybossaApi.post(endpoint, null, {
-            headers: {
-              'X-CSRFToken': r.data.form.csrf
-            }
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return new Promise(function (resolve, reject) {
+            const endpoint = `/admin/categories/del/${id}`
+            pybossaApi.get(endpoint).then(r => {
+              return pybossaApi.post(endpoint, null, {
+                headers: {
+                  'X-CSRFToken': r.data.form.csrf
+                }
+              })
+            }).then(r => {
+              resolve()
+            })
           })
-        }).then(r => {
-          this.refreshCurrentCategories()
-          sweetalert(
-            capitalize(r.data.status),
-            r.data.flash,
-            r.data.status
-          )
-        })
+        }
+      }).then(r => {
+        this.refreshCurrentCategories()
+        swal(
+          capitalize(r.data.status),
+          r.data.flash,
+          r.data.status
+        )
       })
     },
 
@@ -175,7 +179,7 @@ export default {
       const category = data.categories.filter(category => {
         return category.name === data.form.name
       })[0]
-      sweetalert({
+      swal({
         title: 'Category added',
         text: 'Click OK to set additional data',
         type: 'success'

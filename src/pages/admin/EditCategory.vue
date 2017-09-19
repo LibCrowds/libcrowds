@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import pick from 'lodash/pick'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
@@ -121,7 +121,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      sweetalert({
+      swal({
         title: 'Category updated',
         type: 'success'
       },
