@@ -3,9 +3,10 @@
     <div class="row p-4">
 
       <div class="col-sm-12 col-lg-6">
-        <b-card no-block>
-          <img v-if="currentTask" :src="currentTask.info.url" class="img-fluid">
-          <loading v-else text="Loading image"></loading>
+        <b-card
+          no-block
+          v-if="currentTask" >
+          <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
       </div>
 
@@ -191,7 +192,6 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
-import Loading from '@/components/Loading'
 import pybossaApi from '@/api/pybossa'
 
 export default {
@@ -279,10 +279,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-
-  components: {
-    Loading
   },
 
   computed: {
