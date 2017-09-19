@@ -2,7 +2,7 @@
   <div id="presenter">
     <component
       :is="presenter"
-      v-if="project && tasks"
+      v-if="project && tasks.length"
       :project="project"
       :tasks="tasks"
       :currentUser="currentUser"
@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import sweetalert from 'sweetalert'
+import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -23,7 +25,7 @@ export default {
   data: function () {
     return {
       project: null,
-      tasks: null,
+      tasks: [],
       title: '',
       description: '',
       navItems: [
@@ -85,30 +87,60 @@ export default {
      */
     setData (data) {
       this.project = data.project
-      this.tasks = data.tasks
       this.title = this.project.name
       this.description = this.project.description
+      this.loadTasks()
     },
 
     /**
-     * Load the next set of tasks.
-     *
-     * Always keep between 10 and 30 in the queue.
+     * Return the URL to load the next set of tasks
      */
-    loadTasks () {
-      if (this.tasks.length > 10) {
-        return
-      }
+    getLoadTasksUrl () {
       const endpoint = `/api/project/${this.project.id}/newtask`
-      let q = 'limit=20'
+      let q = 'limit=10'
       if (this.tasks.length) {
         const lastTask = this.tasks[this.tasks.length - 1]
         q += `&last_id=${lastTask.id}`
       }
-      const url = `${endpoint}?${q}`
+      return `${endpoint}?${q}`
+    },
+
+    /**
+     * Load the next set of tasks.
+     */
+    loadTasks () {
+      const url = this.getLoadTasksUrl()
       pybossaApi.get(url).then(r => {
-        const loadedTasks = Array.isArray(r.data) ? r.data : [r.data]
-        this.tasks = this.tasks.concat(loadedTasks)
+        if (isEmpty(r.data)) {
+          this.handleCompletion()
+        } else {
+          const loadedTasks = Array.isArray(r.data) ? r.data : [r.data]
+          this.tasks = this.tasks.concat(loadedTasks)
+        }
+      })
+    },
+
+    /**
+     * Handle no tasks remaining.
+     */
+    handleCompletion () {
+      const projectComplete = this.project.overall_progress === 100
+      let html = `You have contributed to all available tasks for ` +
+                 `${this.project.name}`
+      if (projectComplete) {
+        html = `${this.project.name} is now complete`
+      }
+      console.log(this.project)
+      sweetalert({
+        title: 'Thank you!',
+        html: html,
+        type: 'success'
+      })
+      this.$router.push({
+        name: 'collection-contribute',
+        params: {
+          collectionname: this.collectionConfig.key
+        }
       })
     },
 
@@ -161,30 +193,19 @@ export default {
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
-        // TODO: feedback
       })
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    let data = {}
     pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
-      data = r.data
-      return pybossaApi.get(`/api/project/${data.project.id}/newtask`)
-    }).then(r => {
-      data.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      next(vm => vm.setData(data))
+      next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    let data = {}
     pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
-      data = r.data
-      return pybossaApi.get(`/api/project/${data.project.id}/newtask`)
-    }).then(r => {
-      data.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      this.setData(data)
+      this.setData(r.data)
       next()
     })
   },

@@ -479,15 +479,15 @@ export default {
         showCancelButton: true,
         closeOnConfirm: false
       },
-        () => {
-          this.submit({
-            oclc: '',
-            shelfmark: '',
-            form: this.searchForm.model,
-            comments: this.$refs.comments.value
-          })
-          sweetalert.close()
+      () => {
+        this.submit({
+          oclc: '',
+          shelfmark: '',
+          form: this.searchForm.model,
+          comments: this.$refs.comments.value
         })
+        sweetalert.close()
+      })
     },
 
     /**
