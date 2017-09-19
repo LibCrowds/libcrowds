@@ -53,7 +53,12 @@ export default {
   metaInfo () {
     return {
       title: 'Statistics',
-      description: `Global statistics for ${siteConfig.brand}`
+      meta: [
+        {
+          name: 'description',
+          content: `Global statistics for ${siteConfig.brand}`
+        }
+      ]
     }
   },
 

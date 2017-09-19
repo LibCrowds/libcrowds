@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
@@ -129,29 +129,34 @@ export default {
      *   The publication ID.
      */
     deletePublication (id) {
-      sweetalert({
+      swal({
         title: 'Delete Publication',
         text: 'Are you sure you want to delete this publication?',
         type: 'warning',
         showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true
-      },
-      () => {
-        pybossaApi.get('/admin/announcement').then(r => {
-          return pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
-            headers: {
-              'X-CSRFToken': r.data.csrf
-            }
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return new Promise(function (resolve, reject) {
+            pybossaApi.get('/admin/announcement').then(r => {
+              return pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
+                headers: {
+                  'X-CSRFToken': r.data.csrf
+                }
+              })
+            }).then(() => {
+              resolve()
+            })
           })
-        }).then(r => {
-          this.refreshCurrentPublications()
-          sweetalert(
-            capitalize(r.data.status),
-            r.data.flash,
-            r.data.status
-          )
-        })
+        }
+      }).then(r => {
+        this.refreshCurrentPublications()
+        swal(
+          capitalize(r.data.status),
+          r.data.flash,
+          r.data.status
+        )
+      }, (dismiss) => {
+        swal.close()
       })
     },
 

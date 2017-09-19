@@ -1,21 +1,12 @@
 # Configuration
 
-This section describes how to configure an instance of vue-pybossa-frontend.
-There are two main parts to the configuration; the
-[Site Configuration](configuration.md#site-configuration), which
-contains general options applied to whole of the frontend,
-and the [Collection Configuration](configuration.md#collection-configuration),
-which contains more specific options for each project collection.
+There are two main parts to the vue-pybossa-frontend configuration; the [Site Configuration](configuration.md#core-configuration), which contains general options applied to whole of the frontend, and the [Microsite Configuration](configuration.md#microsite-configuration), which contains more specific options for each microsite.
 
-Note that individual projects and categories are configured via the
-[Admin Interface](admin.md).
+Note that the configuration settings found here relate to the overall structure and appearance of the site. Anything to do with modifying individual projects or categories is probably handled via the [Admin Interface](admin.md).
 
-## Directory structure
+## Directory Structure
 
-Apart from the location of the `siteConfig.js` file, vue-pybossa-frontend
-does not enforce a particular directory structure. Rather, all additional
-configuration files can be placed in the `custom` directory and linked to via
-`siteConfig.js`.
+Apart from the location of the `siteConfig.js` file, vue-pybossa-frontend does not enforce a particular directory structure. Rather, any additional configuration files can be placed in the `custom` directory and linked to via `siteConfig.js`.
 
 Below is an example directory structure.
 
@@ -34,8 +25,9 @@ Below is an example directory structure.
 
 ## Site Configuration
 
-The site configuration is required for vue-pybossa-frontend to run. To run the
-frontend with default settings:
+The site configuration is required for vue-pybossa-frontend to run.
+
+To run the frontend with default settings:
 
 ```bash
 cp src/siteConfig.js.tmpl src/siteConfig.js
@@ -45,8 +37,7 @@ This file can now be edited as required.
 
 ### analytics
 
-[Google Analytics](https://analytics.google.com) can be added to the site via
-the `analytics` property.
+[Google Analytics](https://analytics.google.com) can be added to the site via the `analytics` property.
 
 ```js
 siteConfig.analytics = 'UA-XXX-X'
@@ -62,10 +53,7 @@ siteConfig.brand: 'My Brand'
 
 ### collections
 
-The `collections` property is used to establish the two-way binding between
-the site configuration and each collection configuration. Each key must be the
-same as the [`key`](configuration.md#key) that appears in the linked collection
-configuration.
+The `collections` property is used to establish the two-way binding between the site configuration and each microsite configuration. Each key must be the same as the [`key`](configuration.md#key) that appears in the linked microsite configuration.
 
 ```js
 siteConfig.collections = {
@@ -94,8 +82,7 @@ siteConfig.contact = {
 
 ### dataLicense
 
-The `dataLicense` specifies the rights information for all data collected via
-the site.
+The `dataLicense` specifies the rights information for all data collected via the site.
 
 ```js
 siteConfig.dataLicense: {
@@ -106,8 +93,7 @@ siteConfig.dataLicense: {
 
 ### description
 
-The `description` will appear on the site homepage and form its meta
-description.
+The `description` will appear on the site homepage and form its meta description.
 
 ```js
 siteConfig.description: 'My SEO optimised meta description'
@@ -123,8 +109,7 @@ siteConfig.githubUrl = 'https://github.com/github'
 
 ### logo
 
-The logo, which should be an SVG file, will be displayed on each collection
-page.
+The `logo`, which should be an SVG file, will be displayed on each microsite homepage.
 
 ```js
 siteConfig.logo = require(`./company-logo.svg`)
@@ -132,8 +117,7 @@ siteConfig.logo = require(`./company-logo.svg`)
 
 ### mapbox
 
-The [Mapbox](https://www.mapbox.com/) configuration is set using the `mapbox`
-property and is used to setup any maps displayed on the site.
+[Mapbox](https://www.mapbox.com/) is used to present any maps present on the site and can be configured via the `mapbox` property.
 
 ```js
 siteConfig.mapbox = {
@@ -154,10 +138,11 @@ siteConfig.pybossaHost = process.env.NODE_ENV === 'development'
 
 ### sentryPublicDsn
 
-The `sentryPublicDsn` property is used to configure
-[Sentry](https://sentry.io/) error tracking.
+The `sentryPublicDsn` property is used to configure [Sentry](https://sentry.io/) error tracking.
 
+```js
 config.sentryPublicDsn = 'https://******@sentry.io/<project>'
+```
 
 ### tagline
 
@@ -167,18 +152,16 @@ The `tagline` will appear on the site homepage.
 siteConfig.tagline: 'My inspiring tagline'
 ```
 
-## Collection Configuration
+## Microsite Configuration
 
-The collection configuration is used to define the appearance and behaviour of
-each set of collection pages.
+Each microsite configuration is used to define the appearance and behaviour of a microsite.
 
 ### about
 
-The `about` property can be used to provide a series of Markdown files used
-to configure the about page.
+The `about` property is used to provide a series of Markdown files that form the content for the about page.
 
 ```js
-config.about = {
+micrositeConfig.about = {
   intro: require(`./about/intro.md`),
   subsections: [
     {
@@ -191,61 +174,58 @@ config.about = {
 
 ### bgImg
 
-The `bgImg` will be used to provide a consistent theme for the collection pages.
+The `bgImg` is the main background image used across the microsite.
 
 ```js
-collectionConfig.bgImg: require(`./background.jpg`)
+micrositeConfig.bgImg: require(`./background.jpg`)
 ```
 
 ### description
 
-The `description` will appear on the collection homepage and form its meta description.
+The `description` appears on the microsite homepage, as well as in its [meta description](https://moz.com/learn/seo/meta-description).
 
 ```js
-collectionConfig.description: 'My SEO optimised meta description'
+micrositeConfig.description: 'My SEO optimised meta description'
 ```
 
 ### forumUrl
 
-The `forumUrl` will be linked to from the collection navbar.
+The `forumUrl` will be linked to from the microsite's navbar.
 
 ```js
-collectionConfig.forumUrl: 'http://community.example.com/t/my_collection'
+micrositeConfig.forumUrl: 'http://community.example.com/t/my_collection'
 ```
 
 ### key
 
-The `key` is used to establish the two-way binding between the site and collection
-configuration files. This key must also appear in the site configuration's
-[`collections`](configuration.md#collections) property where its value must link
-to this collection configuration file.
+The `key` is used to establish the two-way binding between the core and the microsite configuration files. This key must also appear in the core site configuration's [`collections`](configuration.md#collections) property where its value must link to this microsite configuration file.
 
 ```js
-collectionConfig.key = 'my_collection'
+micrositeConfig.key = 'my_collection'
 ```
 
 ### name
 
-A `name` for the project collection.
+A `name` for the microsite.
 
 ```js
-collectionConfig.name = 'My Amazing Name'
+micrositeConfig.name = 'My Amazing Name'
 ```
 
 ### tagline
 
-The `tagline` will appear on the collection homepage.
+The `tagline` will appear on the microsite homepage.
 
 ```js
-collectionConfig.tagline = 'My inspiring tagline'
+micrositeConfig.tagline = 'My inspiring tagline'
 ```
 
 ### terminology
 
-The collection's `terminology` for categories, projects, tasks and task runs.
+The microsite's `terminology` for categories, projects, tasks and task runs.
 
 ```js
-collectionConfig.terminology = {
+micrositeConfig.terminology = {
   category: 'category',
   project: 'project',
   task: 'task',

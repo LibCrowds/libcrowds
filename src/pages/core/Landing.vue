@@ -57,24 +57,12 @@
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
-            <span v-if="!currentUser">
-              <b-button
-                class="mt-1"
-                variant="secondary"
-                :to="{
-                  name: 'signin'
-                }">
-                Sign in
-              </b-button>
-              <b-button
-                class="mt-1"
-                variant="success"
-                :to="{
-                  name: 'register'
-                }">
-                Sign up
-              </b-button>
-            </span>
+            <b-button
+              variant="success"
+              size="lg"
+              @click="scrollToCollections">
+              Get Started
+            </b-button>
           </div>
           <div class="col-lg-5 offset-lg-1 hidden-md-down">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
@@ -143,6 +131,7 @@
 </template>
 
 <script>
+import jump from 'jump.js'
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
@@ -154,7 +143,7 @@ import pybossaApi from '@/api/pybossa'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
-import getNumberWithCommas from '@/utils/get-number-with-commas'
+import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 import PublicationCard from '@/components/publications/PublicationCard'
 
@@ -196,7 +185,7 @@ export default {
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return getNumberWithCommas(sum)
+      return intComma(sum)
     },
     currentUser: function () {
       return this.$store.state.currentUser
@@ -205,37 +194,31 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
-      this.publications = data.publications
-    },
-
-    /**
      * Init scroll reveal.
      */
     scrollReveal () {
       ScrollReveal().reveal('.sr', {
         duration: 600 },
       50)
+    },
+
+    /**
+     * Scroll to the contribute section.
+     */
+    scrollToCollections () {
+      jump('#contribute')
     }
   },
 
   created () {
-    let data = {}
-    pybossaApi.get(`/`).then(r => {
-      data = r.data
-      return pybossaApi.get('stats/')
-    }).then(r => {
-      data.stats = r.data.stats
-      return pybossaApi.get('/announcements/')
-    }).then(r => {
-      data.publications = r.data.announcements
-      this.setData(data)
+    pybossaApi.get('stats/').then(r => {
+      this.stats = mapValues(r.data.stats, (n) => intComma(n))
+    })
+    pybossaApi.get('/announcements/').then(r => {
+      this.publications = r.data.announcements
+    })
+    pybossaApi.get('/').then(r => {
+      this.topUsers = r.data.top_users
     })
   }
 }

@@ -43,7 +43,6 @@ export default {
       sortingOpts: [
         { text: 'Default', value: 'default' },
         { text: 'Progress', value: 'overall_progress' },
-        { text: 'Tasks', value: 'n_tasks' },
         { text: 'Volunteers', value: 'n_volunteers' },
         { text: 'Creation Date', value: 'created' }
       ]

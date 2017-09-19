@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import sweetalert from 'sweetalert'
+import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
@@ -99,7 +99,12 @@ export default {
   metaInfo () {
     return {
       title: 'Register',
-      description: `Sign up for a new ${siteConfig.brand} account`
+      meta: [
+        {
+          name: 'description',
+          content: `Sign up for a new ${siteConfig.brand} account`
+        }
+      ]
     }
   },
 
@@ -124,10 +129,10 @@ export default {
      */
     onSuccess (data) {
       if (data.status === 'sent') {
-        sweetalert(
+        swal(
           'Confirm your email',
-          'To complete your registration please click the confirmation link in' +
-          'the email that we just sent you',
+          'To complete your registration please click the confirmation ' +
+          'link in the email that we just sent you',
           'success'
         )
         this.$router.push({ name: 'landing' })

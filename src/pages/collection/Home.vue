@@ -3,17 +3,22 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <div class="d-flex align-items-baseline justify-content-center">
+          <div
+            class="d-flex align-items-baseline justify-content-center">
             <div
               id="company-logo"
-              class="mr-2"
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <h1 class="display-3">{{ collectionConfig.name }}</h1>
-            <span class="mr-4" v-if="siteConfig.logo"></span>
+            <span class="mr-2 hidden-md-down" v-if="siteConfig.logo"></span>
+            <h1 class="display-3 hidden-md-down mb-0">
+              {{ collectionConfig.name }}
+            </h1>
+            <span class="mr-4 hidden-md-down" v-if="siteConfig.logo"></span>
           </div>
-          <h2 id="tagline">{{ collectionConfig.tagline }}</h2>
+          <h2 id="tagline" class="mt-2 mb-3">
+            {{ collectionConfig.tagline }}
+          </h2>
           <div>
             <b-button
               variant="success"
@@ -52,7 +57,7 @@
         <hr class="mt-3 w-75 sr">
         <b-button
           variant="secondary"
-          class="mt-1"
+          class="mt-md-1 sr"
           :to="{
             name: 'collection-about',
             params: {
@@ -89,7 +94,10 @@
           <div class="col-lg-10 offset-lg-1">
             <ul class="list-unstyled">
               <li v-for="project in featured" :key="project.id">
-                <project-card :project="project"></project-card>
+                <project-card
+                  :collection-config="collectionConfig"
+                  :project="project">
+                </project-card>
               </li>
             </ul>
             <b-button
@@ -181,7 +189,7 @@
     </section>
 
     <section id="final-cta" class="bg-white invert-navbar">
-      <div class="container pt-5 pb-4">
+      <div class="container pt-4 pb-3">
         <div class="row">
           <div class="col-sm-10 offset-sm-1 text-center">
             <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
@@ -206,8 +214,8 @@
     </section>
 
     <section id="social-media" class="bg-white invert-navbar">
-      <div class="container pb-5 text-center">
-        <hr class="mt-0 mb-4">
+      <div class="container pb-4 text-center">
+        <hr class="mt-0 mb-3">
         <social-media-buttons>
         </social-media-buttons>
       </div>
@@ -227,7 +235,7 @@ import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/project/Card'
 import UserAvatar from '@/components/user/Avatar'
-import getNumberWithCommas from '@/utils/get-number-with-commas'
+import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
@@ -259,7 +267,12 @@ export default {
   metaInfo () {
     return {
       title: this.collectionConfig.tagline,
-      description: this.collectionConfig.description
+      meta: [
+        {
+          name: 'description',
+          content: this.collectionConfig.description
+        }
+      ]
     }
   },
 
@@ -275,7 +288,7 @@ export default {
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return getNumberWithCommas(sum)
+      return intComma(sum)
     }
   },
 
@@ -290,7 +303,7 @@ export default {
         this.featured = data.categories_projects.featured
       }
       this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => getNumberWithCommas(n))
+      this.stats = mapValues(data.stats, (n) => intComma(n))
     },
 
     /**
@@ -368,11 +381,7 @@ export default {
   }
 
   #tagline {
-    font-size: $font-size-lg;
-
-    @include media-breakpoint-up(sm) {
-      font-size: 2rem;
-    }
+    font-size: 2rem;
   }
 
   .bg-white {

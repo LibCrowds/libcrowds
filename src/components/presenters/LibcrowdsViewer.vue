@@ -2,12 +2,13 @@
   <div class="libcrowds-viewer-presenter">
 
     <libcrowds-viewer
-      :show-related-tasks="true"
       :confirm-on-submit="false"
       :buttons="buttons"
       :taskOpts="taskOpts"
       :navigation="navigation"
       :message-bus="messageBus"
+      :browsable="false"
+      :selections-editable="false"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
@@ -18,13 +19,11 @@
 <script>
 import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 
 export default {
   data: function () {
     return {
-      tasks: [],
       messageBus: new Vue()
     }
   },
@@ -32,6 +31,10 @@ export default {
   props: {
     project: {
       type: Object,
+      required: true
+    },
+    tasks: {
+      type: Array,
       required: true
     },
     currentUser: {
@@ -56,9 +59,14 @@ export default {
       })
     },
     buttons: function () {
-      return {
-        like: !isEmpty(this.currentUser)
+      let buttons = {
+        note: 'Seen something interesting?<br>Add a note',
+        submit: 'Save'
       }
+      if (isEmpty(this.currentUser)) {
+        buttons.like = false
+      }
+      return buttons
     },
     navigation: function () {
       const names = ['home', 'about', 'contribute', 'data']
@@ -87,56 +95,27 @@ export default {
 
   methods: {
     /**
-     * Load the next 100 tasks.
-     */
-    loadTasks () {
-      const url = `/api/project/${this.project.id}/newtask?limit=100`
-      pybossaApi.get(url).then(r => {
-        this.tasks = Array.isArray(r.data) ? r.data : [r.data]
-      })
-    },
-
-    /**
      * Handle the task liked event.
-     * @param {Object} task
-     *   The task.
+     * @param {Object} taskData
+     *   The task data.
      */
-    onTaskLiked (task) {
-      if (task.liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: task.id }).then(() => {
-          this.messageBus.$emit('success', 'Task liked')
-        })
-      } else {
-        pybossaApi.delete(`/api/favorites/${task.id}`).then(() => {
-          this.messageBus.$emit('success', 'Task unliked!')
-        })
-      }
+    onTaskLiked (taskData) {
+      this.$emit('liked', taskData.id, taskData.liked)
     },
 
     /**
-     * Handle the submit event.
-     * @param {Object} task
-     *   The task.
+     * Submit an answer.
+     * @param {Object} taskData
+     *   The task data.
      */
-    onSubmit (task) {
-      const taskrun = JSON.stringify({
-        'project_id': this.project.id,
-        'task_id': task.id,
-        'info': task.annotations
-      })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
-        this.messageBus.$emit('success', 'Answer saved, thanks!')
-      })
+    onSubmit (taskData) {
+      this.$emit('submit', this.project.id, taskData.id, taskData.annotations)
     }
-  },
-
-  created () {
-    this.loadTasks()
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 .libcrowds-viewer-presenter {
   position: fixed;
   top: 0;
@@ -150,5 +129,12 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  img {
+    display: block;
+    margin: 2rem auto;
+    max-height: 200px;
+    max-width: 100%;
+  }
 }
 </style>

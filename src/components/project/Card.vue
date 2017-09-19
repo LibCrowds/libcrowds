@@ -40,8 +40,12 @@
         <span class="card-stat text-muted mb-2 mb-lg-0">
           {{ project.overall_progress }}% complete
         </span>
+        <span class="card-stat text-muted mb-2 mb-lg-0">
+          <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
+          {{ collectionConfig.terminology.task | pluralize(project.n_tasks) }}
+        </span>
         <span class="card-stat text-muted mb-1 mb-lg-0">
-          <icon name="users"></icon> {{ project.n_volunteers }}
+          <icon name="users"></icon> {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
         <div>
@@ -59,6 +63,7 @@
 <script>
 import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
+import 'vue-awesome/icons/tasks'
 import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
@@ -71,6 +76,10 @@ export default {
 
   props: {
     project: {
+      type: Object,
+      required: true
+    },
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -113,6 +122,7 @@ export default {
 
   @include media-breakpoint-up(lg) {
     max-width: 100%;
+    max-height: 250px;
     text-align: left;
     flex-direction: row;
   }
