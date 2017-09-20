@@ -1,0 +1,43 @@
+.ct-container {
+  position: relative;
+  display: flex;
+}
+
+.ct-legend {
+  font-size: $font-size-sm;
+  position: relative;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-left: 23px;
+  }
+
+  li:before {
+    width: 12px;
+    height: 12px;
+    margin: 3px;
+    position: absolute;
+    left: 0;
+    content: '';
+    border: 3px solid transparent;
+    border-radius: 2px;
+  }
+
+  li.inactive:before {
+    background: transparent;
+  }
+
+  &.ct-legend-inside {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  @for $i from 0 to length($ct-series-colors) {
+    .ct-series-#{$i}:before {
+      background-color: nth($ct-series-colors, $i + 1);
+      border-color: nth($ct-series-colors, $i + 1);
+    }
+  }
+}

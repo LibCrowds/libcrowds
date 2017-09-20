@@ -25,6 +25,12 @@
           <strong class="ml-1">{{ avgContribTime }} seconds</strong>
         </p>
 
+        <proportion-auth-users-chart
+          v-if="userStats.authenticated && userStats.anonymous"
+          :n-anon="userStats.anonymous.taskruns"
+          :n-auth="userStats.authenticated.taskruns">
+        </proportion-auth-users-chart>
+
         <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
       </span>
     </div>
@@ -37,6 +43,7 @@ import 'vue-awesome/icons/clock-o'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 import BarChart from '@/components/charts/BarChart'
+import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
 
 export default {
   data: function () {
@@ -49,7 +56,8 @@ export default {
 
   components: {
     Loading,
-    BarChart
+    BarChart,
+    ProportionAuthUsersChart
   },
 
   props: {

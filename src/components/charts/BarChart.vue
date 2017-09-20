@@ -30,8 +30,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~chartist/dist/scss/chartist';
-@import '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip';
-</style>
