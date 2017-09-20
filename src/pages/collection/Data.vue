@@ -50,7 +50,7 @@
         <div class="col-xl-3 mb-3">
           <category-list-chooser
             v-if="categories.length"
-            :collectionConfig="collectionConfig"
+            :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
