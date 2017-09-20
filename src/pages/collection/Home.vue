@@ -234,9 +234,6 @@ import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/project/Card'
-import UserAvatar from '@/components/user/Avatar'
-import intComma from '@/utils/intComma'
-import mapValues from 'lodash/mapValues'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
 
@@ -245,9 +242,8 @@ export default {
     return {
       siteConfig: siteConfig,
       logo: siteConfig.logo,
-      stats: {},
+      categories: [],
       featured: [],
-      topUsers: [],
       dataStyle: {
         backgroundImage: `url(${codeImage})`
       },
@@ -278,18 +274,8 @@ export default {
 
   components: {
     SocialMediaButtons,
-    UserAvatar,
-    ProjectCard
-  },
 
-  computed: {
-    topUsersTaskRuns: function () {
-      const scores = this.topUsers.map((user) => user.score)
-      const sum = scores.reduce(function (acc, val) {
-        return acc + val
-      }, 0)
-      return intComma(sum)
-    }
+    ProjectCard
   },
 
   methods: {
@@ -299,11 +285,19 @@ export default {
      *   The data.
      */
     setData (data) {
+      // Filter featured projects for this collection
       if ('featured' in data.categories_projects) {
-        this.featured = data.categories_projects.featured
+        const validProjectIds = data.categories.map(category => {
+          return data.categories_projects[category.short_name]
+        }).reduce((a, b) => {
+          return a.concat(b)
+        }).map(project => {
+          return project.id
+        })
+        this.featured = data.categories_projects.featured.filter(project => {
+          return validProjectIds.indexOf(project.id) > -1
+        })
       }
-      this.topUsers = data.top_users
-      this.stats = mapValues(data.stats, (n) => intComma(n))
     },
 
     /**
@@ -318,11 +312,17 @@ export default {
 
   created () {
     let data = {}
+    let key = this.collectionConfig.key
+    let q = `info=collection::${key}&fulltextsearch=1&limit=100`
+    let categoryUrl = `/api/category?${q}`
+
     pybossaApi.get(`/`).then(r => {
       data = r.data
-      return pybossaApi.get('stats/')
+      return pybossaApi.get(categoryUrl)
     }).then(r => {
-      data.stats = r.data.stats
+      data.categories = r.data.filter(category => {
+        return category.info.collection === key
+      })
       this.setData(data)
     })
   },
