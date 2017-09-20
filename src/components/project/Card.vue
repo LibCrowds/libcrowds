@@ -29,6 +29,15 @@
             {{ project.name }}
           </h4>
         </router-link>
+        <div>
+          <b-btn
+            v-b-modal="statsModalId"
+            class="project-stats-btn hidden-md-down"
+            variant="secondary">
+            Stats
+            <icon name="bar-chart"></icon>
+          </b-btn>
+        </div>
       </div>
       <p class="card-text project-description mb-0 px-2 pb-2">
         {{ project.description }}
@@ -44,12 +53,20 @@
           <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
           {{ collectionConfig.terminology.task | pluralize(project.n_tasks) }}
         </span>
-        <span class="card-stat text-muted mb-1 mb-lg-0">
+        <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="users"></icon> {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
-        <div>
+        <div class="footer-buttons">
+          <b-btn
+            block
+            v-b-modal="statsModalId"
+            class="hidden-lg-up mb-1"
+            variant="secondary">
+            Stats
+          </b-btn>
           <project-contrib-button
+            block
             :shortname="project.short_name"
             variant="success">
           </project-contrib-button>
@@ -57,20 +74,28 @@
       </div>
     </div>
 
+    <project-stats-modal
+      :project="project"
+      :modalId="statsModalId">
+    </project-stats-modal>
+
   </b-card>
 </template>
 
 <script>
+import 'vue-awesome/icons/bar-chart'
 import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/tasks'
 import ProjectThumbnail from '@/components/project/Thumbnail'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import ProjectStatsModal from '@/components/modals/ProjectStats'
 
 export default {
   data: function () {
     return {
-      progressId: `progress-${this.project.short_name}`
+      progressId: `progress-${this.project.short_name}`,
+      statsModalId: `project-stats-modal-${this.project.id}`
     }
   },
 
@@ -86,6 +111,7 @@ export default {
   },
 
   components: {
+    ProjectStatsModal,
     ProjectContribButton,
     ProjectThumbnail
   },
@@ -108,7 +134,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'src/assets/style/main';
 
 .card.project-card {
@@ -130,6 +156,7 @@ export default {
   .card-block {
 
     .card-title {
+      display: flex;
       a {
         color: inherit;
 
@@ -141,6 +168,12 @@ export default {
 
     .card-footer {
       border-top: none;
+
+      .footer-buttons {
+        @include media-breakpoint-down(md) {
+          width: 100%;
+        }
+      }
     }
 
     &:not(first-child) {
@@ -193,6 +226,21 @@ export default {
 
     svg {
       margin-right: 0.5em;
+    }
+  }
+
+  .project-stats-btn {
+    display: flex;
+    border-left: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-lighter;
+    border-top: 0;
+    border-right: 0;
+    color: $gray-light;
+    font-size: $font-size-xs;
+    text-transform: uppercase;
+
+    svg {
+      margin-left: 0.5rem;
     }
   }
 

@@ -106,11 +106,33 @@ $lg-path-images:                   '~lightgallery/src/img';
 /* SpinKit */
 $spinkit-spinner-color:            $brand-info;
 
+/* Chartist */
+$ct-series-colors:
+  #87D37C,
+  #59ABE3,
+  #4B77BE,
+  #4D8FAC,
+  #049372,
+  #407A52,
+  #8D608C,
+  #9B59B6,
+  #F4D03F,
+  #FFA631,
+  #C3272B,
+  #C93756,
+  #86797d,
+  #6C7A89,
+  #A748CA
+;
+
 @import
   '~bootstrap/scss/bootstrap',
   '~bootstrap-vue/dist/bootstrap-vue.css',
   '~sweetalert2/dist/sweetalert2.css',
+  '~chartist/dist/scss/chartist',
+  '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip',
   'partials/modals',
   'partials/tables',
-  'partials/cards'
+  'partials/cards',
+  'partials/charts'
 ;
