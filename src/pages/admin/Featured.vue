@@ -29,9 +29,12 @@
                 {{ project.item.overall_progress }}%
               </template>
               <template slot="action" scope="project">
-
-                <!-- Add featured btn -->
-
+                <b-btn
+                  :variant="project.item.featured ? 'warning' : 'success'"
+                  size="sm"
+                  @click="toggleFeatured(project.item)">
+                  {{ getButtonText(project.item.featured) }}
+                </b-btn>
               </template>
             </b-table>
           </transition>
@@ -81,7 +84,38 @@ export default {
     setData (data) {
       this.categories = data.categories
       this.projects = data.projects
-      this.csrf = data.csrf
+      this.csrf = data.form.csrf
+    },
+
+    /**
+     * Return the featured button text.
+     * @param {Boolean} featured
+     *   True if the project is featured, false otherwise.
+     */
+    getButtonText (featured) {
+      return featured ? 'Remove from featured' : 'Add to featured'
+    },
+
+    /**
+     * Add or remove a project from featured.
+     * @param {Object} project
+     *   The project.
+     */
+    toggleFeatured (project) {
+      pybossaApi({
+        method: project.featured ? 'DELETE' : 'POST',
+        url: `/admin/featured/${project.id}`,
+        data: {
+          csrf: this.csrf
+        },
+        headers: {
+          'X-CSRFToken': this.csrf
+        }
+      }).then(r => {
+        project.featured = !project.featured
+      }).catch(err => {
+        this.$router.push({ name: String(err.response.status) })
+      })
     },
 
     /**
