@@ -56,10 +56,24 @@
           </category-list-chooser>
         </div>
         <div class="col-xl-9">
-          <project-table
-            :action="'download'"
-            :projects="projects">
-          </project-table>
+
+          <b-table
+            hover
+            striped
+            show-empty
+            :items="projects"
+            :fields="tableFields">
+            <template slot="overall_progress" scope="project">
+              {{ project.item.overall_progress }}%
+            </template>
+            <template slot="action" scope="project">
+              <data-download-button
+                :project="project.item"
+                size="sm">
+              </data-download-button>
+            </template>
+          </b-table>
+
           <project-pagination
             :pagination="pagination"
             @change="onPageChange">
@@ -75,9 +89,9 @@
 <script>
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
-import ProjectTable from '@/components/project/Table'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
+import DataDownloadButton from '@/components/buttons/DataDownload'
 
 export default {
   data: function () {
@@ -93,7 +107,13 @@ export default {
       },
       projects: [],
       categories: [],
-      activeCategory: null
+      activeCategory: null,
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      }
     }
   },
 
@@ -119,9 +139,9 @@ export default {
   },
 
   components: {
-    ProjectTable,
     CategoryListChooser,
-    ProjectPagination
+    ProjectPagination,
+    DataDownloadButton
   },
 
   methods: {

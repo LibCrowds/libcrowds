@@ -29,10 +29,18 @@
           </user-favourites-card>
 
           <b-card no-block :header="'Contributions'">
-            <project-table
-              :action="'contribute'"
-              :projects="projects">
-            </project-table>
+            <b-table
+              hover
+              striped
+              show-empty
+              :items="projects"
+              :fields="tableFields">
+              <template slot="overall_progress" scope="project">
+                {{ project.item.overall_progress }}%
+              </template>
+              <template slot="action" scope="project">
+              </template>
+            </b-table>
           </b-card>
 
         </div>
@@ -45,13 +53,19 @@
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import UserFavouritesCard from '@/components/user/FavouritesCard'
-import ProjectTable from '@/components/project/Table'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   data: function () {
     return {
       user: null,
-      projects: []
+      projects: [],
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      }
     }
   },
 
@@ -62,9 +76,9 @@ export default {
   },
 
   components: {
-    ProjectTable,
     UserProfileCard,
-    UserFavouritesCard
+    UserFavouritesCard,
+    ProjectContribButton
   },
 
   computed: {

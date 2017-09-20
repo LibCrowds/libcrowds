@@ -63,12 +63,23 @@
                 name="fade"
                 mode="out-in"
                 appear>
-                <project-table
-                  key="project-table"
+                <b-table
                   v-if="activeView === 'table'"
-                  :action="'contribute'"
-                  :projects="filteredProjects">
-                </project-table>
+                  hover
+                  striped
+                  show-empty
+                  :items="projects"
+                  :fields="tableFields">
+                  <template slot="overall_progress" scope="project">
+                    {{ project.item.overall_progress }}%
+                  </template>
+                  <template slot="action" scope="project">
+                    <project-contrib-button
+                      :shortname="project.item.short_name"
+                      variant="success">
+                    </project-contrib-button>
+                  </template>
+                </b-table>
               </transition>
 
               <project-pagination
@@ -113,9 +124,9 @@ import { sortBy, forEach } from 'lodash'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
-import ProjectTable from '@/components/project/Table'
 import ProjectCardList from '@/components/project/CardList'
 import CategoryListChooser from '@/components/category/ListChooser'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   data: function () {
@@ -129,6 +140,12 @@ export default {
         { text: 'List', value: 'list' },
         { text: 'Table', value: 'table' }
       ],
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      },
       activeView: 'list',
       showCompleted: false,
       page: 1,
@@ -180,9 +197,9 @@ export default {
   components: {
     ProjectSortingOptions,
     ProjectPagination,
-    ProjectTable,
     ProjectCardList,
-    CategoryListChooser
+    CategoryListChooser,
+    ProjectContribButton
   },
 
   methods: {

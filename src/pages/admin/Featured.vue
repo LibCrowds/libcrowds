@@ -14,11 +14,28 @@
           no-block
           v-if="activeCategory"
           :header="`Projects - ${activeCategory.name}`">
-          <project-table
-            v-if="activeCategory"
-            :action="'contribute'"
-            :projects="categoryProjects">
-          </project-table>
+
+          <transition
+            name="fade"
+            mode="out-in"
+            appear>
+            <b-table
+              hover
+              striped
+              show-empty
+              :items="categoryProjects"
+              :fields="tableFields">
+              <template slot="overall_progress" scope="project">
+                {{ project.item.overall_progress }}%
+              </template>
+              <template slot="action" scope="project">
+
+                <!-- Add featured btn -->
+
+              </template>
+            </b-table>
+          </transition>
+
         </b-card>
       </div>
     </div>
@@ -28,7 +45,6 @@
 <script>
 import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
-import ProjectTable from '@/components/project/Table'
 
 export default {
   data: function () {
@@ -36,7 +52,13 @@ export default {
       categories: [],
       projects: {},
       csrf: '',
-      activeCategory: null
+      activeCategory: null,
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      }
     }
   },
 
@@ -47,8 +69,7 @@ export default {
   },
 
   components: {
-    CategoryListChooser,
-    ProjectTable
+    CategoryListChooser
   },
 
   methods: {
