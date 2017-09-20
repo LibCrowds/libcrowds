@@ -28,7 +28,7 @@
 
           <category-list-chooser
             v-if="categories.length"
-            :collectionConfig="collectionConfig"
+            :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
