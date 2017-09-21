@@ -223,14 +223,17 @@ export default {
         })
 
         this.categories.unshift({
+          id: 'featured',
           short_name: 'featured',
           name: 'Featured',
           description: 'A collection of our current favourites'
         })
       }
 
+      // Add draft after featured otherwise the filtering above breaks
       if (this.currentUser.admin) {
         this.categories.unshift({
+          id: 'draft',
           short_name: 'draft',
           name: 'Draft',
           description: 'Works in progress'
