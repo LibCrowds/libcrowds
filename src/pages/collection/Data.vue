@@ -1,7 +1,5 @@
 <template>
-
   <div id="collection-data">
-
     <section>
       <h2 class="text-center">Data</h2>
       <hr>
@@ -67,10 +65,12 @@
               {{ project.item.overall_progress }}%
             </template>
             <template slot="action" scope="project">
-              <data-download-button
-                :project="project.item"
-                size="sm">
-              </data-download-button>
+              <b-btn
+                variant="success"
+                size="sm"
+                v-b-modal="`data-download-project-${project.item.id}`">
+                Download
+              </b-btn>
             </template>
           </b-table>
 
@@ -82,8 +82,13 @@
       </div>
     </section>
 
+    <data-modal
+      v-for="project in projects"
+      :key="project.id"
+      :modalId="`data-download-project-${project.id}`"
+      :project="project">
+    </data-modal>
   </div>
-
 </template>
 
 <script>
@@ -91,7 +96,7 @@ import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
-import DataDownloadButton from '@/components/buttons/DataDownload'
+import DataModal from '@/components/modals/Data'
 
 export default {
   data: function () {
@@ -141,7 +146,7 @@ export default {
   components: {
     CategoryListChooser,
     ProjectPagination,
-    DataDownloadButton
+    DataModal
   },
 
   methods: {
