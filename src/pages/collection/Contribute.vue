@@ -210,20 +210,12 @@ export default {
     setData (data) {
       this.categories = data.categories
 
-      if (this.currentUser.admin) {
-        this.categories.unshift({
-          short_name: 'draft',
-          name: 'Draft',
-          description: 'Works in progress'
-        })
-      }
-
       if ('featured' in data.categories_projects) {
         const validProjectIds = data.categories.map(category => {
           return data.categories_projects[category.short_name]
         }).reduce((a, b) => {
           return a.concat(b)
-        }, []).map(project => {
+        }).map(project => {
           return project.id
         })
         this.featured = data.categories_projects.featured.filter(project => {
@@ -234,6 +226,14 @@ export default {
           short_name: 'featured',
           name: 'Featured',
           description: 'A collection of our current favourites'
+        })
+      }
+
+      if (this.currentUser.admin) {
+        this.categories.unshift({
+          short_name: 'draft',
+          name: 'Draft',
+          description: 'Works in progress'
         })
       }
     },
