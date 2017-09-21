@@ -1,6 +1,9 @@
 <template>
-  <b-modal :id="modalId" title="Download Data">
+  <b-modal :id="modalId" title="Download">
 
+    <p class="lead m-2">
+      Download the data for {{ project.name }}
+    </p>
     <b-table
       responsive
       striped
