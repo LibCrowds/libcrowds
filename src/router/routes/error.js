@@ -39,6 +39,16 @@ export default [
     }
   },
   {
+    path: '/415',
+    name: '415',
+    alias: '*',
+    component: Error,
+    props: {
+      title: 'Unsupported Media Type',
+      description: 'The request was made with an invalid media type.'
+    }
+  },
+  {
     path: '/500',
     name: '500',
     component: Error,
