@@ -42,6 +42,29 @@
         </b-card>
       </div>
     </div>
+    <b-card
+      no-block
+      class="mt-3"
+      header="Currently Featured Projects">
+      <b-table
+        hover
+        striped
+        show-empty
+        :items="featuredProjects"
+        :fields="tableFields">
+        <template slot="overall_progress" scope="project">
+          {{ project.item.overall_progress }}%
+        </template>
+        <template slot="action" scope="project">
+          <b-btn
+            variant="warning"
+            size="sm"
+            @click="toggleFeatured(project.item)">
+            {{ getButtonText(project.item.featured) }}
+          </b-btn>
+        </template>
+      </b-table>
+    </b-card>
   </div>
 </template>
 
@@ -131,6 +154,15 @@ export default {
   computed: {
     categoryProjects: function () {
       return this.projects[this.activeCategory.short_name]
+    },
+    featuredProjects: function () {
+      return Object.keys(this.projects).map(shortName => {
+        return this.projects[shortName].filter(project => {
+          return project.featured
+        })
+      }).reduce((a, b) => {
+        return a.concat(b)
+      }, [])
     }
   },
 
