@@ -84,6 +84,7 @@
 
               <project-pagination
                 key="project-pagination"
+                v-if="pagination"
                 :pagination="pagination"
                 @change="onPageChange">
               </project-pagination>
@@ -149,11 +150,9 @@ export default {
       activeView: 'list',
       showCompleted: false,
       page: 1,
-      pagination: {
-        per_page: 0,
-        total: 0
-      },
+      pagination: null,
       projects: [],
+      featured: [],
       categories: [],
       activeCategory: null
     }
@@ -212,10 +211,29 @@ export default {
       this.categories = data.categories
 
       if (this.currentUser.admin) {
-        this.categories.push({
+        this.categories.unshift({
           short_name: 'draft',
           name: 'Draft',
           description: 'Works in progress'
+        })
+      }
+
+      if ('featured' in data.categories_projects) {
+        const validProjectIds = data.categories.map(category => {
+          return data.categories_projects[category.short_name]
+        }).reduce((a, b) => {
+          return a.concat(b)
+        }).map(project => {
+          return project.id
+        })
+        this.featured = data.categories_projects.featured.filter(project => {
+          return validProjectIds.indexOf(project.id) > -1
+        })
+
+        this.categories.unshift({
+          short_name: 'featured',
+          name: 'Featured',
+          description: 'A collection of our current favourites'
         })
       }
     },
@@ -227,13 +245,19 @@ export default {
      */
     onCategoryChange (category) {
       this.activeCategory = category
-      this.fetchProjects(category)
+      this.fetchProjects()
     },
 
     /**
-     * Fetch the projects in a category.
+     * Fetch the projects in the active category.
      */
     fetchProjects () {
+      if (this.activeCategory.short_name === 'featured') {
+        this.projects = this.featured
+        this.pagination = null
+        return
+      }
+
       this.projects = []
       let url = `/project/category/${this.activeCategory.short_name}/`
       if (this.page > 1) {
@@ -285,18 +309,19 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // Get categories for this collection only
+    let data = {}
     let key = to.params.collectionname
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
-    let url = `/api/category?${q}`
-    pybossaApi.get(url).then(r => {
-      // Make sure as the search is not exact
-      r.data = {
-        categories: r.data.filter(category => {
-          return category.info.collection === key
-        })
-      }
-      next(vm => vm.setData(r.data))
+    let categoriesUrl = `/api/category?${q}`
+    return pybossaApi.get('/').then(r => {
+      data = r.data
+      return pybossaApi.get(categoriesUrl)
+    }).then(r => {
+      // Get categories for this collection only
+      data.categories = r.data.filter(category => {
+        return category.info.collection === key
+      })
+      next(vm => vm.setData(data))
     })
   },
 
