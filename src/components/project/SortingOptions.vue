@@ -28,7 +28,7 @@
         :value="showCompleted"
         :sync="true"
         :labels="true"
-        @change.native="onToggleCompleted">
+        @change="onToggleCompleted">
       </toggle-button>
     </div>
   </b-card>
