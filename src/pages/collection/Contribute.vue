@@ -42,6 +42,10 @@
             @togglecompleted="onToggleCompleted">
           </project-sorting-options>
 
+          <social-media-buttons
+            class="mt-3 hidden-lg-down text-center">
+          </social-media-buttons>
+
         </div>
         <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
@@ -128,6 +132,7 @@ import ProjectPagination from '@/components/project/Pagination'
 import ProjectCardList from '@/components/project/CardList'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 export default {
   data: function () {
@@ -198,7 +203,8 @@ export default {
     ProjectPagination,
     ProjectCardList,
     CategoryListChooser,
-    ProjectContribButton
+    ProjectContribButton,
+    SocialMediaButtons
   },
 
   methods: {
