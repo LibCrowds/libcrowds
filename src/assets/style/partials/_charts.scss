@@ -1,16 +1,20 @@
 .ct-container {
   position: relative;
   display: flex;
+  flex-direction: column;
+
+  @include media-breakpoint-up(lg) {
+    flex-direction: row;
+  }
 }
 
 .ct-legend {
   font-size: $font-size-sm;
-  position: relative;
   list-style: none;
 
   li {
     position: relative;
-    padding-left: 23px;
+    text-align: left;
   }
 
   li:before {
@@ -29,9 +33,15 @@
   }
 
   &.ct-legend-inside {
-    position: absolute;
+    margin-top: 1rem;
+    position: relative;
     top: 0;
     right: 0;
+
+    @include media-breakpoint-up(lg) {
+      margin-top: 0;
+      position: absolute;
+    }
   }
 
   @for $i from 0 to length($ct-series-colors) {

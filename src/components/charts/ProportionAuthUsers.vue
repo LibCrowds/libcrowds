@@ -15,7 +15,9 @@ export default {
       opts: {
         plugins: [
           Chartist.plugins.tooltip(),
-          Chartist.plugins.legend()
+          Chartist.plugins.legend({
+            position: 'bottom'
+          })
         ],
         labelInterpolationFnc: (value, idx) => {
           let sum = this.data.series.reduce((a, b) => a.value + b.value)
@@ -41,8 +43,8 @@ export default {
       return {
         labels: ['Authenticated Volunteers', 'Anonymous Volunteers'],
         series: [
-          {meta: 'Authenticated:', value: this.nAuth},
-          {meta: 'Anonymous', value: this.nAnon}
+          {meta: 'Authenticated Volunteers:', value: this.nAuth},
+          {meta: 'Anonymous Volunteers:', value: this.nAnon}
         ]
       }
     }
