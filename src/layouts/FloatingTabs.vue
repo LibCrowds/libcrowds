@@ -4,14 +4,14 @@
       <div class="container mb-5">
 
         <b-nav class="nav-unstyled" key="fading-nav">
-          <transition name="fade" mode="out-in" appear>
-            <b-nav-item
-              v-for="item in navItems"
-              @click="navigate(item)"
-              :key="item.id">
-              {{ item.text }}
-            </b-nav-item>
-          </transition>
+          <b-nav-item
+            v-for="item in navItems"
+            @click="navigate(item)"
+            :key="item.id">
+            <transition name="fade" mode="out-in" appear>
+              <span>{{ item.text }}</span>
+            </transition>
+          </b-nav-item>
           <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
         </b-nav>
 
