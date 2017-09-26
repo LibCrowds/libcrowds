@@ -34,9 +34,18 @@
         <single-line-chart
           v-if="projectStats.dayStats"
           class="mt-3"
-          :label="collectionConfig.terminology.taskRun"
+          :header="contributionsPerDayHeader"
+          :unit="collectionConfig.terminology.taskRun"
           :data="contributionsPerDay">
         </single-line-chart>
+
+        <bar-chart
+          v-if="userStats.authenticated"
+          class="mt-3"
+          header="Top Authenticated Users"
+          :unit="collectionConfig.terminology.taskRun"
+          :data="topUsers">
+        </bar-chart>
 
         <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
       </span>
@@ -46,8 +55,10 @@
 </template>
 
 <script>
+import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
 import pybossaApi from '@/api/pybossa'
+import capitalize from '@/utils/capitalize'
 import Loading from '@/components/Loading'
 import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'
@@ -109,6 +120,18 @@ export default {
         }),
         series: [
           this.projectStats.dayStats[0].values.map(value => value[1])
+        ]
+      }
+    },
+    contributionsPerDayHeader: function () {
+      const start = pluralize(this.collectionConfig.terminology.taskRun)
+      return capitalize(`${start} per day`)
+    },
+    topUsers: function () {
+      return {
+        labels: this.userStats.authenticated.top5.map(stat => stat.name),
+        series: [
+          this.userStats.authenticated.top5.map(stat => stat.tasks)
         ]
       }
     }
