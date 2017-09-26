@@ -27,3 +27,9 @@ To feature or un-feature a project locate it by category and click the **Add to 
 ![Admin - Featured Projects](./assets/admin-featured.png?raw=true)
 
 The page also provides a list of currently featured projects.
+
+## Background Jobs
+
+All background jobs currently running on the server can be monitored via this page.
+
+![Admin - Background Jobs](./assets/admin-background-jobs.png?raw=true)
