@@ -6,15 +6,17 @@ Administration settings can be accessed by admin users via the main navigation b
 
 ## Categories
 
-Categories for all microsites are managed via the categories admin section.
-
-Categories are created via the **New Category** section and edited or deleted via the **Current Categories** section.
+Categories for all microsites are created via the **New Category** section and edited or deleted via the **Current Categories** section.
 
 ![Admin - Categories](./assets/admin-categories.png?raw=true)
 
-To link a category to a particular microsite click **Edit**, then on the subsequent page select the key of the **Microsite** under which you want the category and all associated projects to appear.
+To link a category to a particular microsite click **Edit**, then on the subsequent page select the key of the **Microsite** under which you want the category (and all associated projects) to appear.
 
 ![Admin - Edit Categories](./assets/admin-edit-categories.png?raw=true)
+
+To save any changes click **Update**.
+
+![Admin - Edit Categories Success](./assets/admin-edit-categories-success.png?raw=true)
 
 ## Featured Projects
 

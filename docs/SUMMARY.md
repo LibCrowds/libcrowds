@@ -9,4 +9,5 @@
   * [Site Configuration](configuration.md#site-configuration)
   * [Microsite Configuration](configuration.md#microsite-configuration)
 * [Administration](administration.md)
+  * [Categories](administration.md#categories)
   * [Featured Projects](administration.md#featured-projects)
