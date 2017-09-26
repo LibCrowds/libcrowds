@@ -10,7 +10,9 @@
     border-radius: 0;
   }
 
-  .modal-body{
+  .modal-body {
+    position: relative;
+    max-height: 800px;
     overflow-y: auto;
   }
 
