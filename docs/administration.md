@@ -4,6 +4,16 @@ Administration settings can be accessed by admin users via the main navigation b
 
 ![Admin menu](./assets/admin-menu.png?raw=true)
 
+## Featured Projects
+
+Featured projects will appear on the homepage of the microsite that they belong to, as well as in the categories menu on the contribute page.
+
+To feature or un-feature a project locate it by category and click the **Add to featured** or **Remove from featured** buttons.
+
+![Admin - Featured Projects](./assets/admin-featured.png?raw=true)
+
+The page also provides a list of currently featured projects.
+
 ## Categories
 
 Categories for all microsites are created via the **New Category** section and edited or deleted via the **Current Categories** section.
@@ -18,15 +28,15 @@ To save any changes click **Update**.
 
 ![Admin - Edit Categories Success](./assets/admin-edit-categories-success.png?raw=true)
 
-## Featured Projects
+## Users
 
-Featured projects will appear on the homepage of the microsite that they belong to, as well as in the categories menu on the contribute page.
+To manage user administrator rights, search for the user by name and click the **Grant admin rights** or **Revoke admin rights** buttons.
 
-To feature or un-feature a project locate it by category and click the **Add to featured** or **Remove from featured** buttons.
+To download all user data click the **Export to CSV** or **Export to JSON** buttons.
 
-![Admin - Featured Projects](./assets/admin-featured.png?raw=true)
+![Admin - Manage Users](./assets/admin-users.png?raw=true)
 
-The page also provides a list of currently featured projects.
+The page also provides a list of current administrators.
 
 ## Background Jobs
 
