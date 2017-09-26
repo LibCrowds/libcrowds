@@ -2,7 +2,7 @@
   <div id="admin-users">
     <b-card header="Manage Users">
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-xl-4">
           <card-form
             submitText="Search"
             header="Search"
@@ -10,7 +10,7 @@
             @success="onSuccess">
           </card-form>
         </div>
-        <div class="col-lg-8">
+        <div class="col-xl-8 mt-4 mt-xl-0">
           <b-card
             no-block
             header="Results">
@@ -39,28 +39,29 @@
       </div>
     </b-card>
     <div class="row mt-4">
-      <div class="col-lg-4">
+      <div class="col-xl-4">
         <b-card
           header="Export">
           <p class="lead">
             There are {{ nUsers }} registered users
           </p>
-          <div class="text-right mt-3">
+          <div class="text-right">
             <b-btn
               variant="success"
+              class="mt-1"
               @click="download('csv')">
               Export as CSV
             </b-btn>
             <b-btn
               variant="success"
+              class="mt-1"
               @click="download('json')">
               Export as JSON
             </b-btn>
           </div>
         </b-card>
       </div>
-      <div class="col-lg-8">
-
+      <div class="col-xl-8 mt-4 mt-xl-0">
         <b-card
           no-block
           header="Current Administrators">
