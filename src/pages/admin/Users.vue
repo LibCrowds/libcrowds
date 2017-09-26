@@ -1,23 +1,51 @@
 <template>
   <div id="admin-users">
+    <b-card header="Manage Users">
+      <div class="row">
+        <div class="col-lg-4">
+          <card-form
+            submitText="Search"
+            header="Search"
+            :form="form"
+            @success="onSuccess">
+          </card-form>
+        </div>
+        <div class="col-lg-8">
+          <b-card
+            no-block
+            header="Results">
+            <b-table
+              hover
+              show-empty
+              :items="found"
+              :fields="tableFields">
 
-    <div class="row">
-      <div class="col-lg-6">
-        <card-form
-          header="Search"
-          submitText="Search"
-          :form="form"
-          @success="onSuccess">
-        </card-form>
+              <template slot="created" scope="user">
+                {{ user.item.created | formatDate }}
+              </template>
+
+              <template slot="action" scope="user">
+                <b-btn
+                  :variant="user.item.admin ? 'warning' : 'success'"
+                  size="sm"
+                  @click="toggleAdmin(user.item)">
+                  {{ getButtonText(user.item) }}
+                </b-btn>
+              </template>
+
+            </b-table>
+          </b-card>
+        </div>
       </div>
-      <div class="col-lg-6">
+    </b-card>
+    <div class="row mt-4">
+      <div class="col-lg-4">
         <b-card
-          header="Export"
-          class="mt-4 mt-lg-0">
+          header="Export">
           <p class="lead">
-            There are currently {{ nUsers }} registered users
+            There are {{ nUsers }} registered users
           </p>
-          <div class="text-right">
+          <div class="text-right mt-3">
             <b-btn
               variant="success">
               Export as CSV
@@ -29,64 +57,30 @@
           </div>
         </b-card>
       </div>
+      <div class="col-lg-8">
+
+        <b-card
+          no-block
+          header="Current Administrators">
+          <b-table
+            hover
+            show-empty
+            :items="adminUsers"
+            :fields="tableFields">
+
+            <template slot="action" scope="user">
+              <b-btn
+                variant="warning"
+                size="sm"
+                @click="toggleAdmin(user.item)">
+                {{ getButtonText(user.item) }}
+              </b-btn>
+            </template>
+
+          </b-table>
+        </b-card>
+      </div>
     </div>
-
-    <transition
-      name="fade"
-      appear>
-      <b-card
-        no-block
-        v-if="found.length"
-        header="Search Results"
-        class="mt-4">
-        <b-table
-          hover
-          show-empty
-          :items="found"
-          :fields="tableFields">
-
-          <template slot="created" scope="user">
-            {{ user.item.created | formatDate }}
-          </template>
-
-          <template slot="action" scope="user">
-            <b-btn
-              :variant="user.item.admin ? 'warning' : 'success'"
-              size="sm"
-              @click="toggleAdmin(user.item)">
-              {{ getButtonText(user.item) }}
-            </b-btn>
-          </template>
-
-        </b-table>
-      </b-card>
-    </transition>
-
-    <b-card
-      no-block
-      header="Administrators"
-      class="mt-4">
-      <b-table
-        hover
-        show-empty
-        :items="adminUsers"
-        :fields="tableFields">
-
-        <template slot="created" scope="user">
-          {{ user.item.created | formatDate }}
-        </template>
-
-        <template slot="action" scope="user">
-          <b-btn
-            variant="warning"
-            size="sm"
-            @click="toggleAdmin(user.item)">
-            {{ getButtonText(user.item) }}
-          </b-btn>
-        </template>
-
-      </b-table>
-    </b-card>
   </div>
 </template>
 
@@ -119,10 +113,7 @@ export default {
       tableFields: {
         id: { label: 'ID' },
         name: { label: 'Username' },
-        fullname: { label: 'Full name' },
         email_addr: { label: 'Email' },
-        created: { label: 'Created' },
-        admin: { label: 'Admin' },
         action: { label: 'Action' }
       }
     }
@@ -184,6 +175,7 @@ export default {
           this.adminUsers = this.adminUsers(adminUser => !user.id)
         }
       }).catch(err => {
+        console.log(err)
         this.$router.push({ name: String(err.response.status) })
       })
     },
@@ -209,17 +201,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#admin-users {
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 400ms ease;
-  }
-
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-  }
-}
-</style>
