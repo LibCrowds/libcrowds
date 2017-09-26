@@ -3,7 +3,7 @@
 MASTER='www.libcrowds.com'
 STAGING='dev.libcrowds.com'
 
-if [ "${TRAVIS_BRANCH}" == "master" -a "$TRAVIS_PULL_REQUEST" = "false" ] || [ "${TRAVIS_BRANCH}" == "dev" ] ; then
+if [ "${TRAVIS_BRANCH}" == "master" -a "$TRAVIS_PULL_REQUEST" = "false" ] || [ "${TRAVIS_BRANCH}" == "dev" -a "$TRAVIS_PULL_REQUEST" = "false" ] ; then
 
   # Configure
   bin/configure.sh

@@ -1,7 +1,7 @@
 import DashboardLayout from '@/layouts/Dashboard'
 
 import AdminDashboard from '@/pages/admin/AdminDashboard'
-import Administrators from '@/pages/admin/Administrators'
+import Users from '@/pages/admin/Users'
 import Publications from '@/pages/admin/Publications'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
@@ -36,10 +36,10 @@ export default [
           }
         },
         {
-          id: 'administrators',
-          label: 'Administrators',
+          id: 'users',
+          label: 'Users',
           link: {
-            name: 'admin-administrators'
+            name: 'admin-users'
           }
         },
         {
@@ -48,11 +48,6 @@ export default [
           link: {
             name: 'admin-publications'
           }
-        },
-        {
-          id: 'export-users',
-          label: 'Export Users',
-          link: '#'
         },
         {
           id: 'background-jobs',
@@ -70,9 +65,9 @@ export default [
         component: AdminDashboard
       },
       {
-        path: 'administrators',
-        name: 'admin-administrators',
-        component: Administrators
+        path: 'users',
+        name: 'admin-users',
+        component: Users
       },
       {
         path: 'announcement',
