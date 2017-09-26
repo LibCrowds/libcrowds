@@ -140,7 +140,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      console.log(data.users)
       this.adminUsers = data.users
       this.found = data.found
       this.form.model = data.form
@@ -163,7 +162,7 @@ export default {
      */
     toggleAdmin (user) {
       pybossaApi({
-        method: user.admin ? 'DELETE' : 'POST',
+        method: 'GET',
         url: user.admin
           ? `/admin/users/add/${user.id}`
           : `/admin/users/del/${user.id}`,
