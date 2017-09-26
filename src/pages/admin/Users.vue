@@ -178,7 +178,6 @@ export default {
           this.adminUsers = this.adminUsers(adminUser => !user.id)
         }
       }).catch(err => {
-        console.log(err)
         this.$router.push({ name: String(err.response.status) })
       })
     },
