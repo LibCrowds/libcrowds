@@ -23,10 +23,11 @@
     height: 12px;
     margin: 3px;
     position: absolute;
-    left: 0;
     content: '';
     border: 3px solid transparent;
     border-radius: 2px;
+    left: -23px;
+    top: 2px;
   }
 
   li.inactive:before {
