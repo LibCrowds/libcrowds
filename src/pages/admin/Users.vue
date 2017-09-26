@@ -47,11 +47,13 @@
           </p>
           <div class="text-right mt-3">
             <b-btn
-              variant="success">
+              variant="success"
+              @click="download('csv')">
               Export as CSV
             </b-btn>
             <b-btn
-              variant="success">
+              variant="success"
+              @click="download('json')">
               Export as JSON
             </b-btn>
           </div>
@@ -85,6 +87,7 @@
 </template>
 
 <script>
+import FileSaver from 'file-saver'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
@@ -186,6 +189,28 @@ export default {
     onSuccess (data) {
       this.form.model = data.form
       this.found = data.found
+    },
+
+    /**
+     * Download the user data.
+     * @param {String} format
+     *   The format to export.
+     */
+    download (format) {
+      if (format !== 'json' && format !== 'csv') {
+        throw Error('Invalid format')
+      }
+      const type = format === 'csv' ? 'text/csv' : 'application/json'
+      pybossaApi.get(`/admin/users/export`, {
+        responseType: 'arraybuffer',
+        params: {
+          format: format
+        }
+      }).then(res => {
+        const blob = new Blob([res.data], {type: type})
+        const fn = `user_data.${format}`
+        FileSaver.saveAs(blob, fn)
+      })
     }
   },
 
