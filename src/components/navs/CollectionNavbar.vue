@@ -383,10 +383,11 @@ export default {
   flex-direction: row;
 
   .container {
+    margin: 0;
+
     @include media-breakpoint-down(xs) {
       margin: 0;
       flex: 1 1 auto;
-      width: 100%;
     }
   }
 
