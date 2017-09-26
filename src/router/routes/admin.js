@@ -6,6 +6,7 @@ import Publications from '@/pages/admin/Publications'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
+import BackgroundJobs from '@/pages/admin/BackgroundJobs'
 
 export default [
   {
@@ -56,7 +57,9 @@ export default [
         {
           id: 'background-jobs',
           label: 'Background Jobs',
-          link: '#'
+          link: {
+            name: 'admin-background-jobs'
+          }
         }
       ]
     },
@@ -90,6 +93,11 @@ export default [
         path: 'featured',
         name: 'admin-featured',
         component: Featured
+      },
+      {
+        path: 'jobs',
+        name: 'admin-background-jobs',
+        component: BackgroundJobs
       }
     ]
   }
