@@ -4,6 +4,7 @@
       <iframe
         :src="rqSchedulerRoute"
         height="800"
+        width="100%"
         frameborder="0">
       </iframe>
     </b-card>
