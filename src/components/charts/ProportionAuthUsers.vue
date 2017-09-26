@@ -13,6 +13,7 @@ export default {
   data: function () {
     return {
       opts: {
+        height: '200px',
         plugins: [
           Chartist.plugins.tooltip(),
           Chartist.plugins.legend({

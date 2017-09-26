@@ -31,6 +31,12 @@
           :n-auth="userStats.authenticated.taskruns">
         </proportion-auth-users-chart>
 
+        <contributions-per-day-chart
+          v-if="projectStats.dayStats"
+          class="mt-3"
+          :dayStats="projectStats.dayStats">
+        </contributions-per-day-chart>
+
         <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
       </span>
     </div>
@@ -44,20 +50,23 @@ import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 import BarChart from '@/components/charts/BarChart'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
+import ContributionsPerDayChart from '@/components/charts/ContributionsPerDay'
 
 export default {
   data: function () {
     return {
       loading: true,
       avgContribTime: 0,
-      userStats: {}
+      userStats: {},
+      projectStats: {}
     }
   },
 
   components: {
     Loading,
     BarChart,
-    ProportionAuthUsersChart
+    ProportionAuthUsersChart,
+    ContributionsPerDayChart
   },
 
   props: {
@@ -81,6 +90,7 @@ export default {
         console.log(r.data)
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}
+        this.projectStats = r.data.projectStats || {}
       })
     }
   }
