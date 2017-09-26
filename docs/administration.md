@@ -10,7 +10,7 @@ Categories for all microsites are created via the **New Category** section and e
 
 ![Admin - Categories](./assets/admin-categories.png?raw=true)
 
-To link a category to a particular microsite click **Edit**, then on the subsequent page select the key of the **Microsite** under which you want the category (and all associated projects) to appear.
+To link a category to a particular microsite click **Edit**, then on the subsequent page select the key of the **Microsite** within which you want the category (and all associated projects) to appear.
 
 ![Admin - Edit Categories](./assets/admin-edit-categories.png?raw=true)
 
