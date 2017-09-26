@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Contributions per day">
+  <b-card :header="header">
     <div class="ct-container" ref="chart"></div>
   </b-card>
 </template>
@@ -7,18 +7,19 @@
 <script>
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
-import formatDate from '@/utils/formatDate'
 import pluralize from 'pluralize'
+import capitalize from '@/utils/capitalize'
 
 export default {
   data: function () {
     return {
+      header: capitalize(`${pluralize(this.label)} per day`),
       opts: {
         height: '300px',
         plugins: [
           Chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
-              let text = pluralize('contribution', Number(val))
+              let text = pluralize(this.label, Number(val))
               return `${val} ${text}`
             }
           })
@@ -36,22 +37,13 @@ export default {
   },
 
   props: {
-    dayStats: {
-      type: Array,
+    data: {
+      type: Object,
       required: true
-    }
-  },
-
-  computed: {
-    data: function () {
-      let d = {
-        labels: this.dayStats[0].values.map(value => {
-          return formatDate(new Date(value[0]), 'DD MMM')
-        }),
-        series: [ this.dayStats[0].values.map(value => value[1]) ]
-      }
-      console.log(d)
-      return d
+    },
+    label: {
+      type: String,
+      required: true
     }
   },
 

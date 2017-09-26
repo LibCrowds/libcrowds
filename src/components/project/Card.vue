@@ -76,6 +76,7 @@
 
     <project-stats-modal
       :project="project"
+      :collectionConfig="collectionConfig"
       :modalId="statsModalId">
     </project-stats-modal>
 

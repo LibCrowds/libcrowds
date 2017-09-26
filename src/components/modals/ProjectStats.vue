@@ -31,11 +31,12 @@
           :n-auth="userStats.authenticated.taskruns">
         </proportion-auth-users-chart>
 
-        <contributions-per-day-chart
+        <single-line-chart
           v-if="projectStats.dayStats"
           class="mt-3"
-          :dayStats="projectStats.dayStats">
-        </contributions-per-day-chart>
+          :label="collectionConfig.terminology.taskRun"
+          :data="contributionsPerDay">
+        </single-line-chart>
 
         <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
       </span>
@@ -48,9 +49,10 @@
 import 'vue-awesome/icons/clock-o'
 import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
+import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
-import ContributionsPerDayChart from '@/components/charts/ContributionsPerDay'
+import SingleLineChart from '@/components/charts/SingleLineChart'
 
 export default {
   data: function () {
@@ -66,7 +68,7 @@ export default {
     Loading,
     BarChart,
     ProportionAuthUsersChart,
-    ContributionsPerDayChart
+    SingleLineChart
   },
 
   props: {
@@ -75,6 +77,10 @@ export default {
       required: true
     },
     project: {
+      type: Object,
+      required: true
+    },
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -92,6 +98,19 @@ export default {
         this.userStats = r.data.userStats || {}
         this.projectStats = r.data.projectStats || {}
       })
+    }
+  },
+
+  computed: {
+    contributionsPerDay: function () {
+      return {
+        labels: this.projectStats.dayStats[0].values.map(value => {
+          return formatDate(new Date(value[0]), 'DD MMM')
+        }),
+        series: [
+          this.projectStats.dayStats[0].values.map(value => value[1])
+        ]
+      }
     }
   }
 }
