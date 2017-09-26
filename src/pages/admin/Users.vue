@@ -175,7 +175,9 @@ export default {
         if (user.admin) {
           this.adminUsers.push(user)
         } else {
-          this.adminUsers = this.adminUsers(adminUser => !user.id)
+          this.adminUsers = this.adminUsers.filter(adminUser => {
+            return adminUser.id !== user.id
+          })
         }
       }).catch(err => {
         this.$router.push({ name: String(err.response.status) })
