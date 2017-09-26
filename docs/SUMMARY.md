@@ -11,3 +11,4 @@
 * [Administration](administration.md)
   * [Categories](administration.md#categories)
   * [Featured Projects](administration.md#featured-projects)
+  * [Background Jobs](administration.md#background-jobs)
