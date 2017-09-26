@@ -1,14 +1,6 @@
-import moment from 'moment'
+import formatDate from '@/utils/formatDate'
 
 /**
- * Format a date.
- * @param {String} date
- *   The date.
- * @param {String} format
- *   The format.
+ * Format a Date.
  */
-export default function (date, format = 'DD MMM YYYY') {
-  if (date) {
-    return moment(String(date)).format(format)
-  }
-}
+export default formatDate
