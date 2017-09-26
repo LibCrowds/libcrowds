@@ -34,9 +34,17 @@
         <single-line-chart
           v-if="projectStats.dayStats"
           class="mt-3"
-          :header="contributionsPerDayHeader"
+          :header="dailyContributionsHeader"
           :unit="collectionConfig.terminology.taskRun"
-          :data="contributionsPerDay">
+          :data="dailyContributions">
+        </single-line-chart>
+
+        <single-line-chart
+          v-if="projectStats.hourStats"
+          class="mt-3"
+          :header="hourlyContributionsHeader"
+          :unit="collectionConfig.terminology.taskRun"
+          :data="hourlyContributions">
         </single-line-chart>
 
         <bar-chart
@@ -58,7 +66,6 @@
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
 import pybossaApi from '@/api/pybossa'
-import capitalize from '@/utils/capitalize'
 import Loading from '@/components/Loading'
 import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'
@@ -113,7 +120,7 @@ export default {
   },
 
   computed: {
-    contributionsPerDay: function () {
+    dailyContributions: function () {
       return {
         labels: this.projectStats.dayStats[0].values.map(value => {
           return formatDate(new Date(value[0]), 'DD MMM')
@@ -123,9 +130,22 @@ export default {
         ]
       }
     },
-    contributionsPerDayHeader: function () {
+    dailyContributionsHeader: function () {
       const start = pluralize(this.collectionConfig.terminology.taskRun)
-      return capitalize(`${start} per day`)
+      return `Daily ${start}`
+    },
+    hourlyContributions: function () {
+      let d = {
+        labels: this.projectStats.hourStats[0].values.map(value => value[0]),
+        series: [
+          this.projectStats.hourStats[0].values.map(value => value[1])
+        ]
+      }
+      return d
+    },
+    hourlyContributionsHeader: function () {
+      const start = pluralize(this.collectionConfig.terminology.taskRun)
+      return `Hourly ${start}`
     },
     topUsers: function () {
       return {
