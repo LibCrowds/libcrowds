@@ -6,7 +6,7 @@
           <span class="hidden-sm-down"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
           <div class="stat-row hidden-sm-down">
-            <div class="stat-circle stat-success">
+            <div class="stat-circle">
               <span class="stat">{{ stats.n_published_projects }}</span>
               <icon name="television"></icon>
               <p>Projects</p>
