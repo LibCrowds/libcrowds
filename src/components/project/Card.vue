@@ -149,7 +149,7 @@ export default {
 
   @include media-breakpoint-up(lg) {
     max-width: 100%;
-    max-height: 250px;
+    max-height: 280px;
     text-align: left;
     flex-direction: row;
   }
@@ -158,13 +158,25 @@ export default {
 
     .card-title {
       display: flex;
+
       a {
         color: inherit;
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: center;
 
         @include hover-focus {
           text-decoration: none;
         }
+
+        @include media-breakpoint-up(lg) {
+          display: block;
+        }
       }
+    }
+
+    .card-text {
+      font-size: $font-size-sm;
     }
 
     .card-footer {
@@ -187,6 +199,10 @@ export default {
         align-items: center;
         margin-top: auto;
         background-color: $white;
+
+        .btn {
+          margin-top: 0;
+        }
       }
 
       @include media-breakpoint-up(lg) {
@@ -213,10 +229,10 @@ export default {
     line-height: 0;
     flex-shrink: 2;
     width: auto;
-    height: 250px;
+    height: 280px;
 
     @include media-breakpoint-up(lg) {
-      width: 250px;
+      width: 200px;
     }
   }
 
