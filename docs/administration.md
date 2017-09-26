@@ -22,6 +22,8 @@ To save any changes click **Update**.
 
 Featured projects will appear on the homepage of the microsite that they belong to, as well as in the categories menu on the contribute page.
 
-To feature or un-feature a project locate it by category and click the **Add to featured** or **Remove from featured** buttons. The page also provides a list of currently featured projects.
+To feature or un-feature a project locate it by category and click the **Add to featured** or **Remove from featured** buttons.
 
 ![Admin - Featured Projects](./assets/admin-featured.png?raw=true)
+
+The page also provides a list of currently featured projects.
