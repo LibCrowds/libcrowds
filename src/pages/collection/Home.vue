@@ -10,11 +10,9 @@
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <span class="mr-2 hidden-md-down" v-if="siteConfig.logo"></span>
             <h1 class="display-3 hidden-md-down mb-0">
               {{ collectionConfig.name }}
             </h1>
-            <span class="mr-4 hidden-md-down" v-if="siteConfig.logo"></span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
@@ -357,6 +355,11 @@ export default {
     }
 
     #company-logo {
+      @include media-breakpoint-up(md) {
+        margin-right: 1.5rem;
+        margin-left: -1.5rem;
+      }
+
       svg {
         display: block;
       }
