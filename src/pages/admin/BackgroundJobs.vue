@@ -22,7 +22,7 @@ export default {
 
   metaInfo () {
     return {
-      title: `Background Jobs`
+      title: 'Background Jobs'
     }
   }
 }
