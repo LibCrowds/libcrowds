@@ -58,7 +58,7 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 export default {
   data: function () {
     return {
-      user: null,
+      user: {},
       projects: [],
       tableFields: {
         name: { label: 'Name' },
@@ -98,6 +98,7 @@ export default {
      *   The data.
      */
     setData (data) {
+      console.log(data)
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects
