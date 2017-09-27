@@ -1,5 +1,5 @@
 <template>
-  <div id="forgotten-password">
+  <div id="account-projects">
     <div class="container my-5">
       <b-card header="Open Project">
         <div class="row">
@@ -12,28 +12,33 @@
             </category-list-chooser>
           </div>
           <div class="col-lg-8">
-            <b-table
-              responsive
-              striped
-              hover
-              show-empty
-              :empty-text="emptyText"
-              :items="projects"
-              :fields="tableFields">
-              <template slot="action" scope="project">
-                <b-btn
-                  size="sm"
-                  variant="success"
-                  :to="{
-                    name: 'project-settings',
-                    params: {
-                      shortname: project.item.short_name
-                    }
-                  }">
-                  Open
-                </b-btn>
-              </template>
-            </b-table>
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <b-table
+                v-if="projects.length"
+                responsive
+                striped
+                hover
+                show-empty
+                :items="projects"
+                :fields="tableFields">
+                <template slot="action" scope="project">
+                  <b-btn
+                    size="sm"
+                    variant="success"
+                    :to="{
+                      name: 'project-settings',
+                      params: {
+                        shortname: project.item.short_name
+                      }
+                    }">
+                    Open
+                  </b-btn>
+                </template>
+              </b-table>
+            </transition>
           </div>
         </div>
       </b-card>
@@ -52,7 +57,6 @@ export default {
       authProjectIds: [],
       categories: [],
       projects: [],
-      emptyText: "You don't have access to any projects in this category",
       tableFields: {
         name: { label: 'Name' },
         published: { label: 'Published' },
@@ -162,3 +166,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#account-projects {
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 400ms ease;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
+}
+</style>
