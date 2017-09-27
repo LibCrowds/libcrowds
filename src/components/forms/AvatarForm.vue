@@ -47,7 +47,8 @@
 <script>
 import Croppie from 'croppie'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
+import axios from 'axios'
+import siteConfig from '@/siteConfig'
 import Loading from '@/components/Loading'
 
 export default {
@@ -112,11 +113,11 @@ export default {
       // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
       delete this.form.model.id
 
-      // The Content-Type is removed so that the avatar is handled properly
-      pybossaApi.post(this.form.endpoint, this.form.model, {
+      const url = `${siteConfig.pybossaHost}/${this.form.endpoint}`
+      axios.post(url, this.form.model, {
         headers: {
           'X-CSRFToken': this.form.model.csrf,
-          'Content-Type': null
+          'Content-Type': false
         },
         transformRequest: [function (data) {
           return data

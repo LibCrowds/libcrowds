@@ -49,6 +49,7 @@ export default {
      *   The data.
      */
     setData (data) {
+      this.project = data.project
       this.model = data.upload_form
       this.model.btn = 'Upload'
       this.loading = false
