@@ -1,48 +1,58 @@
 <template>
   <div id="forgotten-password">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
-        <b-card
-          no-block
-          header="Open Project">
-          <p class="m-2 lead">
-            Use the list below to open the settings pages for a project.
-          </p>
-          <b-table
-            responsive
-            striped
-            hover
-            show-empty
-            :items="projects"
-            :fields="tableFields">
-            <template slot="action" scope="project">
-              <b-btn
-                size="sm"
-                variant="success"
-                :to="{
-                  name: 'project-settings',
-                  params: {
-                    shortname: project.item.short_name
-                  }
-                }">
-                Open
-              </b-btn>
-            </template>
-          </b-table>
-        </b-card>
-      </div>
+      <b-card header="Open Project">
+        <div class="row">
+          <div class="col-lg-4">
+            <category-list-chooser
+              header="Categories"
+              v-if="categories.length"
+              :categories="categories"
+              @change="onCategoryChange">
+            </category-list-chooser>
+          </div>
+          <div class="col-lg-8">
+            <b-table
+              responsive
+              striped
+              hover
+              show-empty
+              :empty-text="emptyText"
+              :items="projects"
+              :fields="tableFields">
+              <template slot="action" scope="project">
+                <b-btn
+                  size="sm"
+                  variant="success"
+                  :to="{
+                    name: 'project-settings',
+                    params: {
+                      shortname: project.item.short_name
+                    }
+                  }">
+                  Open
+                </b-btn>
+              </template>
+            </b-table>
+          </div>
+        </div>
+      </b-card>
     </div>
   </div>
 </template>
 
 <script>
+import intersection from 'lodash/intersection'
 import pybossaApi from '@/api/pybossa'
-import CardForm from '@/components/forms/CardForm'
+import CategoryListChooser from '@/components/category/ListChooser'
 
 export default {
   data: function () {
     return {
+      authProjectIds: [],
+      categories: [],
       projects: [],
+      emptyText: "You don't have access to any projects in this category",
       tableFields: {
         name: { label: 'Name' },
         published: { label: 'Published' },
@@ -65,7 +75,7 @@ export default {
   },
 
   components: {
-    CardForm
+    CategoryListChooser
   },
 
   methods: {
@@ -75,29 +85,74 @@ export default {
      *   The data.
      */
     setData (data) {
-      // Add published flag
-      data.projects_published = data.projects_published.map(project => {
-        project.published = true
-        return project
-      })
-      data.projects_draft = data.projects_draft.map(project => {
-        project.published = false
-        return project
-      })
+      let authProjects = data.projects_published.concat(data.projects_draft)
+      this.authProjectIds = authProjects.map(project => project.id)
 
-      this.projects = data.projects_published.concat(data.projects_draft)
+      if (this.currentUser.admin) {
+        this.categories = data.categories
+        this.categories.unshift({
+          id: 'draft',
+          short_name: 'draft',
+          name: 'Draft',
+          description: 'Works in progress'
+        })
+      } else {
+        this.categories = data.categories.filter(category => {
+          let projects = data.categoriesProjects[category.short_name]
+          let projectIds = projects.map(project => project.id)
+          return intersection(this.authProjectIds, projectIds).length > 0
+        })
+      }
+    },
+
+    /**
+     * Handle category change.
+     * @param {String} category
+     *   The category.
+     */
+    onCategoryChange (category) {
+      this.fetchProjects(category)
+    },
+
+    /**
+     * Fetch the projects in a category.
+     * @param {Object} category
+     *   The category.
+     */
+    fetchProjects (category) {
+      this.projects = []
+      let url = `/project/category/${category.short_name}/`
+      if (this.page > 1) {
+        url += `page/${this.page}/`
+      }
+      pybossaApi.get(url).then(r => {
+        this.projects = r.data.projects
+        this.pagination = r.data.pagination
+      })
     }
   },
 
   beforeRouteEnter (to, from, next) {
+    let data = {}
     pybossaApi.get(`account/${to.params.username}/projects`).then(r => {
-      next(vm => vm.setData(r.data))
+      data = r.data
+      return pybossaApi.get('/')
+    }).then(r => {
+      data.categories = r.data.categories
+      data.categoriesProjects = r.data.categories_projects
+      next(vm => vm.setData(data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
+    let data = {}
     pybossaApi.get(`account/${to.params.username}/projects`).then(r => {
-      this.setData(r.data)
+      data = r.data
+      return pybossaApi.get('/')
+    }).then(r => {
+      data.categories = r.data.categories
+      data.categoriesProjects = r.data.categories_projects
+      this.setData(data)
       next()
     })
   }
