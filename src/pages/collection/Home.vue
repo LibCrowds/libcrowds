@@ -3,14 +3,14 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <div
-            class="d-flex align-items-baseline justify-content-center">
+          <div>
             <div
               id="company-logo"
+              class="d-inline-block"
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <h1 class="display-3 hidden-md-down mb-0">
+            <h1 class="display-3 d-inline-block hidden-md-down mb-0">
               {{ collectionConfig.name }}
             </h1>
           </div>
