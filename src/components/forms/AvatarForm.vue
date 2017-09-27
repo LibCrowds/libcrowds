@@ -19,7 +19,7 @@
     </loading>
 
     <span v-else>
-      <div ref="preview"></div>
+      <div id="preview" ref="preview"></div>
 
       <div class="mt-2">
         <b-form-file
@@ -151,10 +151,6 @@ export default {
         height: this.viewportHeight,
         type: this.cropType
       },
-      boundary: {
-        width: 300,
-        height: 300
-      },
       enableOrientation: true,
       update: (data) => {
         this.form.model.x1 = Math.floor(data.points[0])
@@ -178,6 +174,10 @@ export default {
 
   .custom-file {
     width: 100%;
+  }
+
+  #preview {
+    height: 400px;
   }
 }
 </style>
