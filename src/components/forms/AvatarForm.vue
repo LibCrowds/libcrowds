@@ -19,7 +19,7 @@
     </loading>
 
     <span v-else>
-      <div ref="preview"></div>
+      <div id="preview" ref="preview"></div>
 
       <div class="mt-2">
         <b-form-file
@@ -47,7 +47,8 @@
 <script>
 import Croppie from 'croppie'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
+import axios from 'axios'
+import siteConfig from '@/siteConfig'
 import Loading from '@/components/Loading'
 
 export default {
@@ -76,6 +77,14 @@ export default {
     cropType: {
       type: String,
       default: 'circle'
+    },
+    viewportWidth: {
+      type: Number,
+      default: 300
+    },
+    viewportHeight: {
+      type: Number,
+      default: 300
     }
   },
 
@@ -99,25 +108,29 @@ export default {
      * Submit the form.
      */
     submit () {
+      let formData = new FormData()
+      formData.append('x1', this.form.model.x1)
+      formData.append('x2', this.form.model.x2)
+      formData.append('y1', this.form.model.y1)
+      formData.append('y2', this.form.model.y2)
+      formData.append('csrf', this.form.model.csrf)
+      formData.append('btn', 'Upload')
+      formData.append('avatar', this.form.model.avatar)
+
       this.flash = ''
-
-      // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
-      delete this.form.model.id
-
-      // The Content-Type is removed so that the avatar is handled properly
-      pybossaApi.post(this.form.endpoint, this.form.model, {
+      const url = `${siteConfig.pybossaHost}/${this.form.endpoint}`
+      axios.post(url, formData, {
         headers: {
-          'X-CSRFToken': this.form.model.csrf,
-          'Content-Type': null
+          'X-CSRFToken': this.form.model.csrf
         },
-        transformRequest: [function (data) {
-          return data
-        }]
+        withCredentials: true
       }).then(r => {
-        if (r.data.status !== 'success') {
-          this.flash = r.data.flash
-          this.status = r.data.status
-        }
+        this.$store.dispatch('NOTIFY', {
+          msg: 'The image should be refreshed in a few minutes',
+          type: 'success'
+        })
+      }).catch(err => {
+        this.$router.push({ name: String(err.response.status) })
       })
     },
 
@@ -127,8 +140,9 @@ export default {
     onInput () {
       const reader = new FileReader()
       reader.onload = (evt) => {
+        this.file = evt.target.result
         this.croppie.bind({
-          url: evt.target.result
+          url: this.file
         })
       }
       reader.readAsDataURL(this.form.model.avatar)
@@ -139,13 +153,13 @@ export default {
     const previewEl = this.$refs.preview
     this.croppie = new Croppie(previewEl, {
       viewport: {
-        width: '100%',
-        height: 300,
+        width: this.viewportWidth,
+        height: this.viewportHeight,
         type: this.cropType
       },
       boundary: {
-        width: 300,
-        height: 300
+        width: '100%',
+        height: 350
       },
       enableOrientation: true,
       update: (data) => {
@@ -170,6 +184,10 @@ export default {
 
   .custom-file {
     width: 100%;
+  }
+
+  #preview {
+    height: 400px;
   }
 }
 </style>
