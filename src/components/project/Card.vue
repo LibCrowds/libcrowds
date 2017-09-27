@@ -155,11 +155,13 @@ export default {
   }
 
   .card-block {
+    flex: 1 1 0%;
 
     .card-title {
       display: flex;
 
       a {
+        width: 100%;
         color: inherit;
         flex: 1 1 auto;
         display: flex;
