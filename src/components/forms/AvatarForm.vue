@@ -151,6 +151,10 @@ export default {
         height: this.viewportHeight,
         type: this.cropType
       },
+      boundary: {
+        width: '100%',
+        height: 350
+      },
       enableOrientation: true,
       update: (data) => {
         this.form.model.x1 = Math.floor(data.points[0])
