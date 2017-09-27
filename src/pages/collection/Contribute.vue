@@ -28,7 +28,7 @@
 
           <category-list-chooser
             v-if="categories.length"
-            :collectionConfig="collectionConfig"
+            :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
@@ -42,37 +42,53 @@
             @togglecompleted="onToggleCompleted">
           </project-sorting-options>
 
+          <social-media-buttons
+            class="mt-3 hidden-lg-down text-center">
+          </social-media-buttons>
+
         </div>
         <div id="choose-a-project" class="col-xl-9">
           <span v-if="projects.length">
             <span v-if="filteredProjects.length">
 
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <project-card-list
-                key="project-list"
-                v-if="activeView === 'list'"
-                :collection-config="collectionConfig"
-                :projects="filteredProjects">
-              </project-card-list>
-            </transition>
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <project-card-list
+                  key="project-list"
+                  v-if="activeView === 'list'"
+                  :collection-config="collectionConfig"
+                  :projects="filteredProjects">
+                </project-card-list>
+              </transition>
 
               <transition
                 name="fade"
                 mode="out-in"
                 appear>
-                <project-table
-                  key="project-table"
+                <b-table
                   v-if="activeView === 'table'"
-                  :action="'contribute'"
-                  :projects="filteredProjects">
-                </project-table>
+                  hover
+                  striped
+                  show-empty
+                  :items="projects"
+                  :fields="tableFields">
+                  <template slot="overall_progress" scope="project">
+                    {{ project.item.overall_progress }}%
+                  </template>
+                  <template slot="action" scope="project">
+                    <project-contrib-button
+                      :shortname="project.item.short_name"
+                      variant="success">
+                    </project-contrib-button>
+                  </template>
+                </b-table>
               </transition>
 
               <project-pagination
                 key="project-pagination"
+                v-if="pagination"
                 :pagination="pagination"
                 @change="onPageChange">
               </project-pagination>
@@ -113,9 +129,10 @@ import { sortBy, forEach } from 'lodash'
 import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
-import ProjectTable from '@/components/project/Table'
 import ProjectCardList from '@/components/project/CardList'
 import CategoryListChooser from '@/components/category/ListChooser'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 export default {
   data: function () {
@@ -129,14 +146,18 @@ export default {
         { text: 'List', value: 'list' },
         { text: 'Table', value: 'table' }
       ],
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      },
       activeView: 'list',
       showCompleted: false,
       page: 1,
-      pagination: {
-        per_page: 0,
-        total: 0
-      },
+      pagination: null,
       projects: [],
+      featured: [],
       categories: [],
       activeCategory: null
     }
@@ -180,9 +201,10 @@ export default {
   components: {
     ProjectSortingOptions,
     ProjectPagination,
-    ProjectTable,
     ProjectCardList,
-    CategoryListChooser
+    CategoryListChooser,
+    ProjectContribButton,
+    SocialMediaButtons
   },
 
   methods: {
@@ -194,8 +216,30 @@ export default {
     setData (data) {
       this.categories = data.categories
 
+      if ('featured' in data.categories_projects) {
+        const validProjectIds = data.categories.map(category => {
+          return data.categories_projects[category.short_name]
+        }).reduce((a, b) => {
+          return a.concat(b)
+        }, []).map(project => {
+          return project.id
+        })
+        this.featured = data.categories_projects.featured.filter(project => {
+          return validProjectIds.indexOf(project.id) > -1
+        })
+
+        this.categories.unshift({
+          id: 'featured',
+          short_name: 'featured',
+          name: 'Featured',
+          description: 'A collection of our current favourites'
+        })
+      }
+
+      // Add draft after featured otherwise the filtering above breaks
       if (this.currentUser.admin) {
-        this.categories.push({
+        this.categories.unshift({
+          id: 'draft',
           short_name: 'draft',
           name: 'Draft',
           description: 'Works in progress'
@@ -210,13 +254,19 @@ export default {
      */
     onCategoryChange (category) {
       this.activeCategory = category
-      this.fetchProjects(category)
+      this.fetchProjects()
     },
 
     /**
-     * Fetch the projects in a category.
+     * Fetch the projects in the active category.
      */
     fetchProjects () {
+      if (this.activeCategory.short_name === 'featured') {
+        this.projects = this.featured
+        this.pagination = null
+        return
+      }
+
       this.projects = []
       let url = `/project/category/${this.activeCategory.short_name}/`
       if (this.page > 1) {
@@ -268,18 +318,19 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // Get categories for this collection only
+    let data = {}
     let key = to.params.collectionname
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
-    let url = `/api/category?${q}`
-    pybossaApi.get(url).then(r => {
-      // Make sure as the search is not exact
-      r.data = {
-        categories: r.data.filter(category => {
-          return category.info.collection === key
-        })
-      }
-      next(vm => vm.setData(r.data))
+    let categoriesUrl = `/api/category?${q}`
+    return pybossaApi.get('/').then(r => {
+      data = r.data
+      return pybossaApi.get(categoriesUrl)
+    }).then(r => {
+      // Get categories for this collection only
+      data.categories = r.data.filter(category => {
+        return category.info.collection === key
+      })
+      next(vm => vm.setData(data))
     })
   },
 

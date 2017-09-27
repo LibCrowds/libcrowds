@@ -1,7 +1,14 @@
 <template>
   <div id="profile">
     <div class="container pt-5 pb-3">
-      <div class="row">
+      <b-card v-if="loading">
+        <loading
+          v-if="loading"
+          text="Loading profile">
+        </loading>
+      </b-card>
+
+      <div class="row" v-else>
         <div class="col-lg-4">
           <user-profile-card
             v-if="user"
@@ -29,29 +36,47 @@
           </user-favourites-card>
 
           <b-card no-block :header="'Contributions'">
-            <project-table
-              :action="'contribute'"
-              :projects="projects">
-            </project-table>
+            <b-table
+              hover
+              striped
+              show-empty
+              :items="projects"
+              :fields="tableFields">
+              <template slot="overall_progress" scope="project">
+                {{ project.item.overall_progress }}%
+              </template>
+              <template slot="action" scope="project">
+              </template>
+            </b-table>
           </b-card>
 
         </div>
       </div>
+
+
     </div>
   </div>
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import UserFavouritesCard from '@/components/user/FavouritesCard'
-import ProjectTable from '@/components/project/Table'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
     return {
-      user: null,
-      projects: []
+      user: {},
+      projects: [],
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      }
     }
   },
 
@@ -62,9 +87,10 @@ export default {
   },
 
   components: {
-    ProjectTable,
     UserProfileCard,
-    UserFavouritesCard
+    UserFavouritesCard,
+    ProjectContribButton,
+    Loading
   },
 
   computed: {
@@ -74,6 +100,9 @@ export default {
         this.$store.state.currentUser &&
         this.user.name === this.$store.state.currentUser.name
       )
+    },
+    loading: function () {
+      return isEmpty(this.user)
     }
   },
 

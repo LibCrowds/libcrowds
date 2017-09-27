@@ -1,7 +1,5 @@
 <template>
-
   <div id="collection-data">
-
     <section>
       <h2 class="text-center">Data</h2>
       <hr>
@@ -50,16 +48,32 @@
         <div class="col-xl-3 mb-3">
           <category-list-chooser
             v-if="categories.length"
-            :collectionConfig="collectionConfig"
+            :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </category-list-chooser>
         </div>
         <div class="col-xl-9">
-          <project-table
-            :action="'download'"
-            :projects="projects">
-          </project-table>
+
+          <b-table
+            hover
+            striped
+            show-empty
+            :items="projects"
+            :fields="tableFields">
+            <template slot="overall_progress" scope="project">
+              {{ project.item.overall_progress }}%
+            </template>
+            <template slot="action" scope="project">
+              <b-btn
+                variant="success"
+                size="sm"
+                v-b-modal="`data-download-project-${project.item.id}`">
+                Download
+              </b-btn>
+            </template>
+          </b-table>
+
           <project-pagination
             :pagination="pagination"
             @change="onPageChange">
@@ -68,16 +82,21 @@
       </div>
     </section>
 
+    <data-modal
+      v-for="project in projects"
+      :key="project.id"
+      :modalId="`data-download-project-${project.id}`"
+      :project="project">
+    </data-modal>
   </div>
-
 </template>
 
 <script>
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
-import ProjectTable from '@/components/project/Table'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
+import DataModal from '@/components/modals/Data'
 
 export default {
   data: function () {
@@ -93,7 +112,13 @@ export default {
       },
       projects: [],
       categories: [],
-      activeCategory: null
+      activeCategory: null,
+      tableFields: {
+        name: { label: 'Name' },
+        n_volunteers: { label: 'Volunteers' },
+        overall_progress: { label: 'Progress' },
+        action: { label: 'Action' }
+      }
     }
   },
 
@@ -119,9 +144,9 @@ export default {
   },
 
   components: {
-    ProjectTable,
     CategoryListChooser,
-    ProjectPagination
+    ProjectPagination,
+    DataModal
   },
 
   methods: {

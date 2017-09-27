@@ -116,6 +116,20 @@
               @click.native="toggleCollapsibleSidebar">Settings
             </b-dropdown-item>
 
+            <!-- Project management -->
+            <span v-if="currentUser.admin">
+              <div role="separator" class="dropdown-divider"></div>
+              <b-dropdown-item
+                :to="{
+                  name: 'account-projects',
+                  params: {
+                    username: currentUser.name
+                  }
+                }">
+                Open Project
+              </b-dropdown-item>
+            </span>
+
             <!-- Admin -->
             <span v-if="currentUser.admin">
               <div role="separator" class="dropdown-divider"></div>
@@ -383,10 +397,11 @@ export default {
   flex-direction: row;
 
   .container {
+    margin: 0;
+
     @include media-breakpoint-down(xs) {
       margin: 0;
       flex: 1 1 auto;
-      width: 100%;
     }
   }
 

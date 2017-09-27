@@ -6,6 +6,7 @@
         shortname: shortname
       }
     }"
+    :block="block"
     :size="size"
     :variant="variant">
     Contribute
@@ -26,6 +27,10 @@ export default {
     variant: {
       type: String,
       default: 'success'
+    },
+    block: {
+      type: Boolean,
+      default: true
     }
   }
 }

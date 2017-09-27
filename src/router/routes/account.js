@@ -13,6 +13,7 @@ import Register from '@/pages/account/Register'
 import ForgottenPassword from '@/pages/account/ForgottenPassword'
 import ResetPassword from '@/pages/account/ResetPassword'
 import Newsletter from '@/pages/account/Newsletter'
+import Projects from '@/pages/account/Projects'
 
 export default [
   {
@@ -54,6 +55,11 @@ export default [
         path: ':username',
         name: 'profile',
         component: Profile
+      },
+      {
+        path: ':username/projects',
+        name: 'account-projects',
+        component: Projects
       },
       {
         path: 'register/confirmation',

@@ -2,7 +2,7 @@
   <b-card
     no-block
     id="category-list-chooser"
-    :header="collectionConfig.terminology.category | pluralize | capitalize">
+    :header="header | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
         v-for="(category, index) in categories"
@@ -41,8 +41,8 @@ export default {
       type: Array,
       required: true
     },
-    collectionConfig: {
-      type: Object,
+    header: {
+      type: String,
       required: true
     }
   },

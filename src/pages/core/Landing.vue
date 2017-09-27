@@ -6,7 +6,7 @@
           <span class="hidden-sm-down"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
           <div class="stat-row hidden-sm-down">
-            <div class="stat-circle stat-success">
+            <div class="stat-circle">
               <span class="stat">{{ stats.n_published_projects }}</span>
               <icon name="television"></icon>
               <p>Projects</p>
@@ -296,6 +296,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex: 1 1 auto;
 
     &:nth-child(1) {
       border-color: rgba($brand-success, 0.8);
@@ -313,23 +314,39 @@ export default {
     }
 
     .stat {
-      position: absolute;
       font-size: $font-size-lg;
       font-weight: 600;
     }
 
     svg {
+      width: 100%;
       position: absolute;
       bottom: 0;
+      left: 0;
+      right: 0;
     }
 
     p {
       position: absolute;
+      margin: auto;
+      left: 0;
+      right: 0;
+      text-align: center;
       letter-spacing: 0.5px;
       font-size: $font-size-sm;
       text-transform: uppercase;
-      margin: 0;
       bottom: -1.75rem;
+
+      // Fix for centering overflowing text
+      &:before {
+        content: "";
+        margin-left: -100px;
+      }
+
+      &:after {
+        content: "";
+        margin-right: -100px;
+      }
     }
   }
 }

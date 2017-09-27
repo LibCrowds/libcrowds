@@ -8,3 +8,8 @@
   * [Directory Structure](configuration.md#directory-structure)
   * [Site Configuration](configuration.md#site-configuration)
   * [Microsite Configuration](configuration.md#microsite-configuration)
+* [Administration](administration.md)
+  * [Featured Projects](administration.md#featured-projects)
+  * [Categories](administration.md#categories)
+  * [Users](administration.md#users)
+  * [Background Jobs](administration.md#background-jobs)
