@@ -108,25 +108,29 @@ export default {
      * Submit the form.
      */
     submit () {
+      let formData = new FormData()
+      formData.append('x1', this.form.model.x1)
+      formData.append('x2', this.form.model.x2)
+      formData.append('y1', this.form.model.y1)
+      formData.append('y2', this.form.model.y2)
+      formData.append('csrf', this.form.model.csrf)
+      formData.append('btn', 'Upload')
+      formData.append('avatar', this.form.model.avatar)
+
       this.flash = ''
-
-      // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
-      delete this.form.model.id
-
       const url = `${siteConfig.pybossaHost}/${this.form.endpoint}`
-      axios.post(url, this.form.model, {
+      axios.post(url, formData, {
         headers: {
-          'X-CSRFToken': this.form.model.csrf,
-          'Content-Type': false
+          'X-CSRFToken': this.form.model.csrf
         },
-        transformRequest: [function (data) {
-          return data
-        }]
+        withCredentials: true
       }).then(r => {
-        if (r.data.status !== 'success') {
-          this.flash = r.data.flash
-          this.status = r.data.status
-        }
+        this.$store.dispatch('NOTIFY', {
+          msg: 'The image should be refreshed in a few minutes',
+          type: 'success'
+        })
+      }).catch(err => {
+        this.$router.push({ name: String(err.response.status) })
       })
     },
 
@@ -136,8 +140,9 @@ export default {
     onInput () {
       const reader = new FileReader()
       reader.onload = (evt) => {
+        this.file = evt.target.result
         this.croppie.bind({
-          url: evt.target.result
+          url: this.file
         })
       }
       reader.readAsDataURL(this.form.model.avatar)
