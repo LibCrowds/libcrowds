@@ -76,6 +76,14 @@ export default {
     cropType: {
       type: String,
       default: 'circle'
+    },
+    viewportWidth: {
+      type: Number,
+      default: 300
+    },
+    viewportHeight: {
+      type: Number,
+      default: 300
     }
   },
 
@@ -139,8 +147,8 @@ export default {
     const previewEl = this.$refs.preview
     this.croppie = new Croppie(previewEl, {
       viewport: {
-        width: '100%',
-        height: 300,
+        width: this.viewportWidth,
+        height: this.viewportHeight,
         type: this.cropType
       },
       boundary: {
