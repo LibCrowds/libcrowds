@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Proportion of authenticated volunteers">
+  <b-card header="Proportion of authenticated users over the past 2 weeks">
     <div class="ct-container" ref="chart"></div>
   </b-card>
 </template>
