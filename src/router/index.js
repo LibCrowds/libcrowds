@@ -10,6 +10,7 @@ import errorRoutes from '@/router/routes/error'
 import helpRoutes from '@/router/routes/help'
 import collectionRoutes from '@/router/routes/collection'
 import adminRoutes from '@/router/routes/admin'
+import projectRoutes from '@/router/routes/project'
 
 Vue.use(VueRouter)
 Vue.use(VueMeta)
@@ -20,7 +21,8 @@ const routes = [].concat(
   errorRoutes,
   helpRoutes,
   collectionRoutes,
-  adminRoutes
+  adminRoutes,
+  projectRoutes
 )
 
 const router = new VueRouter({

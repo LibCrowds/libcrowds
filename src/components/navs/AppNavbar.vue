@@ -39,6 +39,20 @@
             }">Settings
           </b-dropdown-item>
 
+          <!-- Project management -->
+          <span v-if="currentUser.admin">
+            <div role="separator" class="dropdown-divider"></div>
+            <b-dropdown-item
+              :to="{
+                name: 'account-projects',
+                params: {
+                  username: currentUser.name
+                }
+              }">
+              Open Project
+            </b-dropdown-item>
+          </span>
+
           <!-- Admin -->
           <span v-if="currentUser.admin">
             <div role="separator" class="dropdown-divider"></div>
