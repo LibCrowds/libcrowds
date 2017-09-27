@@ -221,7 +221,7 @@ export default {
           return data.categories_projects[category.short_name]
         }).reduce((a, b) => {
           return a.concat(b)
-        }).map(project => {
+        }, []).map(project => {
           return project.id
         })
         this.featured = data.categories_projects.featured.filter(project => {
