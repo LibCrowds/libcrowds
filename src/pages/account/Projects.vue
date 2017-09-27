@@ -88,19 +88,23 @@ export default {
       let authProjects = data.projects_published.concat(data.projects_draft)
       this.authProjectIds = authProjects.map(project => project.id)
 
+      this.categories = data.categories.filter(category => {
+        let projects = data.categoriesProjects[category.short_name]
+        let projectIds = projects.map(project => project.id)
+        if (!projects.length) {
+          return false
+        } else if (this.currentUser.admin) {
+          return true
+        }
+        return intersection(this.authProjectIds, projectIds).length > 0
+      })
+
       if (this.currentUser.admin) {
-        this.categories = data.categories
         this.categories.unshift({
           id: 'draft',
           short_name: 'draft',
           name: 'Draft',
           description: 'Works in progress'
-        })
-      } else {
-        this.categories = data.categories.filter(category => {
-          let projects = data.categoriesProjects[category.short_name]
-          let projectIds = projects.map(project => project.id)
-          return intersection(this.authProjectIds, projectIds).length > 0
         })
       }
     },
