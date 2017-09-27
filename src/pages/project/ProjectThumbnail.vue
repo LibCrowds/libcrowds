@@ -3,8 +3,8 @@
     v-if="!loading"
     header="Project Thumbnail"
     submit-text="Update"
-    :viewport-height="280"
-    :viewport-width="200"
+    :viewport-height="250"
+    :viewport-width="250"
     crop-type="square"
     :form="form">
   </avatar-form>

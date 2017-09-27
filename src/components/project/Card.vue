@@ -25,7 +25,7 @@
               shortname: project.short_name
             }
           }">
-          <h4 class="card-title mb-2 px-2 pt-2">
+          <h4 class="card-title mb-1 px-2 pt-2">
             {{ project.name }}
           </h4>
         </router-link>
@@ -39,13 +39,13 @@
           </b-btn>
         </div>
       </div>
-      <p class="card-text project-description mb-0 px-2 pb-2">
+      <p class="card-text project-description mb-0 px-2 pb-1">
         {{ project.description }}
       </p>
 
       <div class="progress-container" :id="progressId"></div>
 
-      <div class="card-footer mt-1 p-2">
+      <div class="card-footer mt-1 px-2 py-1">
         <span class="card-stat text-muted mb-2 mb-lg-0">
           {{ project.overall_progress }}% complete
         </span>
@@ -149,7 +149,7 @@ export default {
 
   @include media-breakpoint-up(lg) {
     max-width: 100%;
-    max-height: 280px;
+    max-height: 250px;
     text-align: left;
     flex-direction: row;
   }
@@ -234,15 +234,15 @@ export default {
     line-height: 0;
     flex-shrink: 2;
     width: auto;
-    height: 280px;
+    height: 250px;
 
     @include media-breakpoint-up(lg) {
-      width: 200px;
+      width: 250px;
     }
   }
 
   .card-stat {
-    font-size: $font-size-sm;
+    font-size: $font-size-xs;
     display: flex;
     align-items: center;
 
