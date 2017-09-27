@@ -155,7 +155,10 @@ export default {
   }
 
   .card-block {
-    flex: 1 1 0%;
+
+    @include media-breakpoint-up(lg) {
+      flex: 1 1 0%;
+    }
 
     .card-title {
       display: flex;
