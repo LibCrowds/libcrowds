@@ -5,35 +5,15 @@
         <b-card
           no-block
           header="Open Project">
-          <h3 class="m-2">Published</h3>
+          <p class="m-2 lead">
+            Use the list below to open the settings pages for a project.
+          </p>
           <b-table
             responsive
             striped
             hover
             show-empty
-            :items="projectsPublished"
-            :fields="tableFields">
-            <template slot="action" scope="project">
-              <b-btn
-                size="sm"
-                variant="success"
-                :to="{
-                  name: 'project-settings',
-                  params: {
-                    shortname: project.item.short_name
-                  }
-                }">
-                Open
-              </b-btn>
-            </template>
-          </b-table>
-          <h3 class="m-2 mt-3">Draft</h3>
-          <b-table
-            responsive
-            striped
-            hover
-            show-empty
-            :items="projectsDraft"
+            :items="projects"
             :fields="tableFields">
             <template slot="action" scope="project">
               <b-btn
@@ -62,10 +42,10 @@ import CardForm from '@/components/forms/CardForm'
 export default {
   data: function () {
     return {
-      projectsPublished: [],
-      projectsDraft: [],
+      projects: [],
       tableFields: {
         name: { label: 'Name' },
+        published: { label: 'Published' },
         action: { label: 'Action' }
       }
     }
@@ -95,8 +75,17 @@ export default {
      *   The data.
      */
     setData (data) {
-      this.projectsPublished = data.projects_published
-      this.projectsDraft = data.projects_draft
+      // Add published flag
+      data.projects_published = data.projects_published.map(project => {
+        project.published = true
+        return project
+      })
+      data.projects_draft = data.projects_draft.map(project => {
+        project.published = false
+        return project
+      })
+
+      this.projects = data.projects_published.concat(data.projects_draft)
     }
   },
 
