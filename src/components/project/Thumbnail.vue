@@ -65,7 +65,7 @@ export default {
   }
 
   .thumbnail-placeholder {
-    @extend .bg-faded;
+    @extend .bg-light;
     height: 100%;
     display: flex;
     align-items: center;

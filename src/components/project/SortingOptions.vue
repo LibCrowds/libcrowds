@@ -92,7 +92,7 @@ export default {
   font-size: $font-size-sm;
 
   .card-header {
-    @extend .bg-faded;
+    @extend .bg-light;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
   }

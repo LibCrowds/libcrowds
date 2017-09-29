@@ -11,7 +11,7 @@
       </div>
       <div class="hidden-md-down col-lg-6">
         <b-card
-          class="bg-faded"
+          class="bg-light"
           :header="'Preview'">
           <publication-card
             show-placeholders

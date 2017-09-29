@@ -104,7 +104,7 @@ export default {
       }
 
       &:nth-child(even) {
-        @extend .bg-faded;
+        @extend .bg-light;
       }
 
       @include media-breakpoint-up(md) {

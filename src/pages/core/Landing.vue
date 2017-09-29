@@ -26,7 +26,7 @@
       </div>
     </transition>
 
-    <section id="contribute" class="bg-faded">
+    <section id="contribute" class="bg-light">
       <div class="container py-4">
         <h2 class="mt-4">Contribute</h2>
         <p class="lead">
@@ -110,7 +110,7 @@
     <section
       id="publications"
       v-if="publications.length"
-      class="bg-faded">
+      class="bg-light">
       <div class="container pt-4 pb-5">
         <h2 class="my-1">Publications</h2>
         <p class="lead mb-2">

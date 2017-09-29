@@ -78,7 +78,7 @@ export default {
 @import 'src/assets/style/main';
 
 .preview-card {
-  @extend .bg-faded;
+  @extend .bg-light;
 
   * {
     &:not(:last-child) {
