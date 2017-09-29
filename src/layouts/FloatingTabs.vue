@@ -116,7 +116,7 @@ export default {
   .nav.nav-unstyled {
     overflow-x: auto;
     padding: $navbar-padding-y $navbar-padding-x;
-    background-color: rgba($gray-lighter, 0.85);
+    background-color: rgba($gray-200, 0.85);
 
     .nav-link {
       font-size: $font-size-sm;

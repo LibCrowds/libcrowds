@@ -149,7 +149,7 @@ export default {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-200;
   }
 
   .navbar-brand {
@@ -173,7 +173,7 @@ export default {
     justify-content: center;
     flex-direction: column;
     padding: 0rem 1.25rem;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-200;
     height: 100%;
     white-space: nowrap;
   }

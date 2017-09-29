@@ -95,13 +95,13 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
-    color: $gray-dark;
+    color: $gray-600;
   }
 
   .info {
     font-size: $font-size-sm;
     font-style: italic;
-    color: $gray-light;
+    color: $gray-300;
   }
 }
 </style>

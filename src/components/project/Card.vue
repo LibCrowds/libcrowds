@@ -232,11 +232,11 @@ export default {
 
   .project-stats-btn {
     display: flex;
-    border-left: 1px solid $gray-lighter;
-    border-bottom: 1px solid $gray-lighter;
+    border-left: 1px solid $gray-200;
+    border-bottom: 1px solid $gray-200;
     border-top: 0;
     border-right: 0;
-    color: $gray-light;
+    color: $gray-300;
     font-size: $font-size-xs;
     text-transform: uppercase;
 

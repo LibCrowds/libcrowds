@@ -417,7 +417,7 @@ export default {
   }
 
   #featured-projects {
-    color: $gray-dark;
+    color: $gray-600;
     background-image: url('../../assets/img/white-wall.png');
     box-shadow: 0 0 3px rgba($black, 0.2);
     -webkit-box-shadow: 0 0 3px rgba($black, 0.2);
@@ -429,7 +429,7 @@ export default {
     display:block;
     width: 12rem;
     height: 12rem;
-    background: $gray-lighter;
+    background: $gray-200;
     position: absolute;
     top: -1px;
 
@@ -446,7 +446,7 @@ export default {
       height: 0;
       border-width: 2rem 6rem 4rem 6rem;
       border-style: solid;
-      border-color: $gray-lighter $gray-lighter transparent $gray-lighter;
+      border-color: $gray-200 $gray-200 transparent $gray-200;
     }
   }
 
@@ -462,7 +462,7 @@ export default {
   }
 
   #top-users {
-    color: $gray-dark;
+    color: $gray-600;
   }
 
   #results {

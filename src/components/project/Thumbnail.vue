@@ -72,7 +72,7 @@ export default {
     justify-content: center;
 
     svg {
-      color: $gray-light;
+      color: $gray-300;
     }
   }
 }

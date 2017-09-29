@@ -592,7 +592,7 @@ export default {
       align-self: flex-end;
       background: transparent;
       border: none;
-      color: lighten($gray-light, 15%);
+      color: lighten($gray-300, 15%);
       padding: 0;
     }
 

@@ -217,7 +217,7 @@ export default {
     pybossaApi.get('/announcements/').then(r => {
       this.publications = r.data.announcements
     })
-    pybossaApi.get('/').then(r => {
+    pybossaApi.get('/').then(r => {font-size-h3
       this.topUsers = r.data.top_users
     })
   }
@@ -275,7 +275,7 @@ export default {
   }
 
   #top-users {
-    color: $gray-dark;
+    color: $gray-600;
   }
 
   .stat-row {

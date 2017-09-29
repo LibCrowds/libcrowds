@@ -88,8 +88,8 @@ export default {
       left: 0;
       right: 0;
       bottom: 0;
-      color: $gray-lighter;
-      background-color: rgba($gray-lighter, 0.4);
+      color: $gray-200;
+      background-color: rgba($gray-200, 0.4);
       opacity: 0;
       font-size: $font-size-lg;
       text-transform: uppercase;
@@ -105,13 +105,13 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
-    color: $gray-dark;
+    color: $gray-600;
   }
 
   .card-footer {
     background-color: $white;
     border: none;
-    color: $gray-light;
+    color: $gray-300;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
