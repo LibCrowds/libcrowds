@@ -186,9 +186,9 @@ export default {
   }
 
   #btn-register {
-    background-color: $brand-success;
+    background-color: $green;
     font-weight: 400;
-    border-bottom: 1px solid $brand-success;
+    border-bottom: 1px solid $green;
 
     a {
       color: $white;

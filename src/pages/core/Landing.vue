@@ -6,7 +6,7 @@
           <span class="hidden-sm-down"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
           <div class="stat-row hidden-sm-down">
-            <div class="stat-circle stat-success">
+            <div class="stat-circle">
               <span class="stat">{{ stats.n_published_projects }}</span>
               <icon name="television"></icon>
               <p>Projects</p>
@@ -298,17 +298,17 @@ export default {
     justify-content: center;
 
     &:nth-child(1) {
-      border-color: rgba($brand-success, 0.8);
+      border-color: rgba($green, 0.8);
       border-bottom-color: transparent;
     }
 
     &:nth-child(2) {
-      border-color: rgba($brand-info, 0.8);
+      border-color: rgba($blue, 0.8);
       border-bottom-color: transparent;
     }
 
     &:nth-child(3) {
-      border-color: rgba($brand-warning, 0.8);
+      border-color: rgba($purple, 0.8);
       border-bottom-color: transparent;
     }
 

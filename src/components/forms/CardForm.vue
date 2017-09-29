@@ -198,7 +198,7 @@ export default {
   }
 
   .errors {
-    color: $brand-danger;
+    color: $red;
     font-size: $font-size-sm;
 
     span {

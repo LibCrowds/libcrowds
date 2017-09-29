@@ -437,7 +437,7 @@ export default {
         width: 100%;
         height: 2px;
         content: '';
-        background-color: $brand-primary;
+        background-color: $red;
         opacity: 0;
       }
 
@@ -456,7 +456,7 @@ export default {
           &:focus,
           &:hover,
           &.active {
-            color: $brand-primary;
+            color: $red;
           }
         }
 
@@ -513,7 +513,7 @@ export default {
   .nav-item:not(.nav-button) .nav-link:focus,
   .nav-item:not(.nav-button) .nav-link:hover,
   .nav-item:not(.nav-button) .nav-link.active {
-    color: $brand-primary !important;
+    color: $red !important;
     background-color: transparent;
   }
 
@@ -565,7 +565,7 @@ export default {
       z-index: 10;
       top: 0;
       left: 0;
-      background-color: $brand-inverse;
+      background-color: $gray-1100;
       overflow-x: hidden;
       overflow-y: auto;
       text-align: center;
@@ -597,7 +597,7 @@ export default {
           color: $white;
 
           @include hover-focus {
-            color: $brand-primary;
+            color: $red;
           }
         }
 

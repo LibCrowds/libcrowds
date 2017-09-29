@@ -70,8 +70,8 @@ export default {
     white-space: nowrap;
     z-index: 1;
     background:
-      linear-gradient(rgba($brand-info, 0.8),
-      rgba($brand-info, 0.8)),
+      linear-gradient(rgba($blue, 0.8),
+      rgba($blue, 0.8)),
       url('../../assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
