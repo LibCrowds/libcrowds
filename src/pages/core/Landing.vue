@@ -7,11 +7,6 @@
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
           <div class="stat-row d-none d-md-flex">
             <div class="stat-circle">
-              <span class="stat">{{ stats.n_published_projects }}</span>
-              <icon name="television"></icon>
-              <p>Projects</p>
-            </div>
-            <div class="stat-circle">
               <span class="stat">{{ stats.n_total_users }}</span>
               <icon name="users"></icon>
               <p>Volunteers</p>
@@ -20,6 +15,11 @@
               <span class="stat">{{ stats.n_task_runs }}</span>
               <icon name="list"></icon>
               <p>Contributions</p>
+            </div>
+            <div class="stat-circle">
+              <span class="stat">{{ stats.n_published_projects }}</span>
+              <icon name="television"></icon>
+              <p>Projects</p>
             </div>
           </div>
         </div>
@@ -308,7 +308,7 @@ export default {
     }
 
     &:nth-child(3) {
-      border-color: rgba($purple, 0.8);
+      border-color: rgba($orange, 0.8);
       border-bottom-color: transparent;
     }
 
