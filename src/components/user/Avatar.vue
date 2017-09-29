@@ -1,20 +1,27 @@
 <template>
-  <b-tooltip :content="user.name" :triggers="tooltipTriggers">
-    <div id="wrapper">
+  <div class="avatar">
 
-      <v-gravatar
-        v-if="avatar === 'gravatar'"
-        :email="user.name"
-        :size="size"
-        default-img="identicon"
-        :alt="altTag"
-        class="img-thumbnail rounded-circle">
-      </v-gravatar>
+    <v-gravatar
+      v-if="avatar === 'gravatar'"
+      v-b-tooltip
+      :triggers="tooltipTriggers"
+      :title="user.name"
+      :email="user.name"
+      :size="size"
+      default-img="identicon"
+      :alt="altTag"
+      class="img-thumbnail rounded-circle">
+    </v-gravatar>
 
-      <img v-else :src="avatar" :alt="altTag">
+    <img
+      v-else
+      v-b-tooltip
+      :triggers="tooltipTriggers"
+      :title="user.name"
+      :src="avatar"
+      :alt="altTag">
 
-    </div>
-  </b-tooltip>
+  </div>
 </template>
 
 <script>
