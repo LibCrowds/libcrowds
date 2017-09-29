@@ -217,7 +217,7 @@ export default {
     pybossaApi.get('/announcements/').then(r => {
       this.publications = r.data.announcements
     })
-    pybossaApi.get('/').then(r => {font-size-h3
+    pybossaApi.get('/').then(r => {
       this.topUsers = r.data.top_users
     })
   }
