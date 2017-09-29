@@ -10,11 +10,11 @@
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <span class="mr-2 hidden-md-down" v-if="siteConfig.logo"></span>
-            <h1 class="display-3 hidden-md-down mb-0">
+            <span class="mr-2 d-none d-lg-block" v-if="siteConfig.logo"></span>
+            <h1 class="display-3 d-none d-lg-block mb-0">
               {{ collectionConfig.name }}
             </h1>
-            <span class="mr-4 hidden-md-down" v-if="siteConfig.logo"></span>
+            <span class="mr-4 d-none d-lg-block" v-if="siteConfig.logo"></span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
@@ -84,7 +84,7 @@
               Choose from some of our current favourites.
             </p>
           </div>
-          <div class="col-lg-3 offset-lg-3 hidden-md-down">
+          <div class="col-lg-3 offset-lg-3 d-none d-lg-block">
             <span id="ribbon">
               <icon name="star" scale="7"></icon>
             </span>

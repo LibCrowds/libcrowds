@@ -3,9 +3,9 @@
     <transition appear>
       <div id="app-hero">
         <div class="container">
-          <span class="hidden-sm-down"></span>
+          <span class="d-none d-md-flex"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
-          <div class="stat-row hidden-sm-down">
+          <div class="stat-row d-none d-md-flex">
             <div class="stat-circle">
               <span class="stat">{{ stats.n_published_projects }}</span>
               <icon name="television"></icon>
@@ -64,7 +64,7 @@
               Get Started
             </b-button>
           </div>
-          <div class="col-lg-5 offset-lg-1 hidden-md-down">
+          <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
             <span id="wreath"></span>
           </div>

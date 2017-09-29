@@ -7,7 +7,7 @@
 
     <span id="app-navbar-left">
       <b-link
-        :class="`navbar-brand hidden-${hideBrandBreakpoint}-up`"
+        :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
         :to="{
           name: 'landing'
         }">

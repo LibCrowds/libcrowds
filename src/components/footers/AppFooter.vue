@@ -28,7 +28,7 @@
         </ul>
       </section>
 
-      <section class="hidden-md-down">
+      <section class="d-none d-lg-block">
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li
@@ -49,7 +49,7 @@
         </ul>
       </section>
 
-      <section class="hidden-md-down">
+      <section class="d-none d-lg-block">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">

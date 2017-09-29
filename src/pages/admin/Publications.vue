@@ -9,7 +9,7 @@
           @success="refreshCurrentPublications">
         </card-form>
       </div>
-      <div class="hidden-md-down col-lg-6">
+      <div class="d-none d-lg-block col-lg-6">
         <b-card
           class="bg-light"
           :header="'Preview'">

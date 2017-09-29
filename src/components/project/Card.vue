@@ -32,7 +32,7 @@
         <div>
           <b-btn
             v-b-modal="statsModalId"
-            class="project-stats-btn hidden-md-down"
+            class="project-stats-btn d-none d-lg-block"
             variant="secondary">
             Stats
             <icon name="bar-chart"></icon>
@@ -61,7 +61,7 @@
           <b-btn
             block
             v-b-modal="statsModalId"
-            class="hidden-lg-up mb-1"
+            class="d-lg-none mb-1"
             variant="secondary">
             Stats
           </b-btn>

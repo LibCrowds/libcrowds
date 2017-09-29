@@ -23,7 +23,7 @@
                   variant="facebook"
                   @click="redirect('facebook')">
                   <icon name="facebook"></icon>
-                  <span class="ml-1 hidden-sm-down">Facebook</span>
+                  <span class="ml-1 d-none d-sm-block">Facebook</span>
                 </b-button>
               </div>
 
@@ -33,7 +33,7 @@
                   variant="googleplus"
                   @click="redirect('google')">
                   <icon name="google"></icon>
-                  <span class="ml-1 hidden-sm-down">Google</span>
+                  <span class="ml-1 d-none d-sm-block">Google</span>
                 </b-button>
               </div>
 
@@ -43,7 +43,7 @@
                   variant="twitter"
                   @click="redirect('twitter')">
                   <icon name="twitter"></icon>
-                  <span class="ml-1 hidden-sm-down">Twitter</span>
+                  <span class="ml-1 d-none d-sm-block">Twitter</span>
                 </b-button>
               </div>
 
