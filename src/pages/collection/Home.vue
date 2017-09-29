@@ -144,7 +144,7 @@
           <div class="row pt-2 text-center">
             <div class="col-sm-12">
               <b-button
-                variant="outline-white"
+                variant="outline-light"
                 :to="{
                   name: 'collection-data',
                   params: {
@@ -392,8 +392,10 @@ export default {
     border-width: 3px;
   }
 
-  .btn-outline-white {
-    @include button-outline-variant($white, $black);
+  .btn-outline-light {
+    @include hover-focus {
+      background-color: transparent;
+    }
   }
 
   .btn-black-underline  {
