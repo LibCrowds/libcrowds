@@ -38,7 +38,7 @@
       <span>
         <b-button
           v-if="showCancel"
-          variant="secondary"
+          variant="outline-secondary"
           @click="cancel">
           Cancel
         </b-button>

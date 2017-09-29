@@ -32,7 +32,7 @@
           <b-button-group>
             <b-button
               :id="`edit-${category.id}`"
-              variant="secondary"
+              variant="info"
               size="sm"
               :to="{
                 name: 'admin-edit-category',

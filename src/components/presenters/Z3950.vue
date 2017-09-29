@@ -114,7 +114,7 @@
               <div
                 class="d-flex d-xl-block flex-column justify-content-center">
                 <b-button
-                  variant="secondary"
+                  variant="outline-dark"
                   class="my-1"
                   @click="onSkip">
                   Skip / Not Found

@@ -56,8 +56,9 @@
         </div>
         <hr class="mt-3 w-75 sr">
         <b-button
-          variant="secondary"
+          variant="outline-dark"
           class="mt-md-1 sr"
+          size="lg"
           :to="{
             name: 'collection-about',
             params: {

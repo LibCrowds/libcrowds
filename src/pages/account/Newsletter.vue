@@ -9,7 +9,7 @@
           <template slot="footer">
             <div class="float-right">
               <b-button
-                variant="secondary"
+                variant="outline-secondary"
                 @click="suscribe('False')">
                 No thanks
               </b-button>

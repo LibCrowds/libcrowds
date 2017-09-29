@@ -33,7 +33,7 @@
           <b-btn
             v-b-modal="statsModalId"
             class="project-stats-btn d-none d-lg-block"
-            variant="secondary">
+            variant="info">
             Stats
             <icon name="bar-chart"></icon>
           </b-btn>
@@ -62,7 +62,7 @@
             block
             v-b-modal="statsModalId"
             class="d-lg-none mb-1"
-            variant="secondary">
+            variant="info">
             Stats
           </b-btn>
           <project-contrib-button
