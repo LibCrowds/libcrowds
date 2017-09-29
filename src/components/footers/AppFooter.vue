@@ -126,9 +126,9 @@ export default {
 @import 'src/assets/style/main';
 
 #collection-footer.footer {
-  background-color: darken($gray-600, 5%);
+  background-color: $gray-1000;
   letter-spacing: 0.8px;
-  color: $gray-300;
+  color: $gray-600;
   font-size: $font-size-sm;
   line-height: 2;
 
@@ -151,7 +151,7 @@ export default {
   }
 
   a {
-    color: $gray-200;
+    color: $gray-300;
   }
 
   .brand-link {

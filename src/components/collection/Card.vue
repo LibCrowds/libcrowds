@@ -59,7 +59,7 @@ export default {
   border: none;
 
   a {
-    color: $gray;
+    color: $gray-800;
 
     @include hover-focus {
       text-decoration: none;
@@ -88,8 +88,8 @@ export default {
       left: 0;
       right: 0;
       bottom: 0;
-      color: $gray-200;
-      background-color: rgba($gray-200, 0.4);
+      color: $gray-300;
+      background-color: rgba($gray-300, 0.4);
       opacity: 0;
       font-size: $font-size-lg;
       text-transform: uppercase;
@@ -105,13 +105,13 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
-    color: $gray-600;
+    color: $gray-1000;
   }
 
   .card-footer {
     background-color: $white;
     border: none;
-    color: $gray-300;
+    color: $gray-600;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

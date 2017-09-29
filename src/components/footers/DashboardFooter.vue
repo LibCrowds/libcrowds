@@ -22,9 +22,9 @@ export default {
 @import 'src/assets/style/main';
 
 #dashboard-footer {
-  color: $gray-300;
+  color: $gray-600;
   background: $white;
   font-size: $font-size-sm;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid $gray-300;
 }
 </style>

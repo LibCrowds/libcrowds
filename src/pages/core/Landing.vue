@@ -275,7 +275,7 @@ export default {
   }
 
   #top-users {
-    color: $gray-600;
+    color: $gray-1000;
   }
 
   .stat-row {

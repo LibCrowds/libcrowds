@@ -14,11 +14,19 @@ $brand-info:                       #2589BD;
 $brand-warning:                    #E38D13;
 $brand-danger:                     #E4572E;
 $brand-inverse:                    #111111;
-$body-color:                       #26333F;
+$body-color:                       #202B35;
+
+$gray-1000:                        #1A1D21;
+$gray-1100:                        #14171A;
+$gray-1200:                        #0D1012;
+
+$grays: (
+  "1000": $gray-1000,
+  "1100": $gray-1100,
+  "1200": $gray-1200
+);
 
 $white:                            #FFFFFF;
-$gray:                             #404446;
-$gray-300:                       #888888;
 $black:                            #000000;
 $twitter:                          #00ACEE;
 $facebook:                         #3B5998;

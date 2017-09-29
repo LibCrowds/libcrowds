@@ -545,11 +545,11 @@ export default {
 
   &.navbar-light {
     background: $white;
-    border-bottom: 1px solid $gray-200;
+    border-bottom: 1px solid $gray-300;
 
     .nav-item.nav-button {
       transition: border-color 400ms;
-      border-color: $gray-300;
+      border-color: $gray-600;
     }
   }
 

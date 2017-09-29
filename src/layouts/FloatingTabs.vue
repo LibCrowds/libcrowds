@@ -116,13 +116,13 @@ export default {
   .nav.nav-unstyled {
     overflow-x: auto;
     padding: $navbar-padding-y $navbar-padding-x;
-    background-color: rgba($gray-200, 0.85);
+    background-color: rgba($gray-300, 0.85);
 
     .nav-link {
       font-size: $font-size-sm;
 
       transition: opacity 350ms ease;
-      color: lighten($gray, 15%);
+      color: $gray-600;
       display: none;
 
       @include media-breakpoint-up(sm) {
