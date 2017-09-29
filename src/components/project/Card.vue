@@ -237,7 +237,7 @@ export default {
     border-top: 0;
     border-right: 0;
     color: $gray-300;
-    font-size: $font-size-xs;
+    font-size: 0.75rem;
     text-transform: uppercase;
 
     svg {

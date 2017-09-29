@@ -159,7 +159,7 @@ export default {
   }
 
   #bg-img-attribution {
-    font-size: $font-size-xs;
+    font-size: 0.75rem;
   }
 }
 </style>
