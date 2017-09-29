@@ -13,7 +13,7 @@
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
         <b-card no-block>
 
-          <div class="card-block pb-0" v-if="alerts.length">
+          <div class="card-body pb-0" v-if="alerts.length">
             <b-alert
               show
               v-for="alert in alerts"
@@ -39,7 +39,7 @@
           </template>
 
           <transition name="fade" mode="out-in" appear>
-            <div key="search" v-if="stage == 'search'" class="card-block">
+            <div key="search" v-if="stage == 'search'" class="card-body">
               <vue-form-generator :schema="form.schema" :model="form.model">
               </vue-form-generator>
             </div>
@@ -83,7 +83,7 @@
               </b-list-group-item>
             </div>
 
-            <div key="submit" v-if="selectedRecord" class="card-block">
+            <div key="submit" v-if="selectedRecord" class="card-body">
               <div v-if="selectedRecord">
                 <h5 class="mb-1">{{ selectedRecord.title }}</h5>
                 <p class="mb-0">{{ selectedRecord.author }}</p>

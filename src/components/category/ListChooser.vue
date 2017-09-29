@@ -116,7 +116,7 @@ export default {
     }
   }
 
-  .card-block {
+  .card-body {
     display: flex;
     flex-direction: column;
   }

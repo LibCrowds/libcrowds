@@ -15,7 +15,7 @@
         class="collection-card-img"
         :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
       </div>
-      <div class="card-block">
+      <div class="card-body">
         <h4 class="card-title">
           {{ collectionConfig.name }}
         </h4>

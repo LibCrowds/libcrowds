@@ -16,7 +16,7 @@
       </div>
     </router-link>
 
-    <div class="card-block project-details p-0">
+    <div class="card-body project-details p-0">
       <div class="card-title mb-0">
         <router-link
           :to="{
@@ -154,7 +154,7 @@ export default {
     flex-direction: row;
   }
 
-  .card-block {
+  .card-body {
 
     .card-title {
       display: flex;

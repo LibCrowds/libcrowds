@@ -8,7 +8,7 @@
       </user-avatar>
     </div>
 
-    <div id="user-details" class="card-block">
+    <div id="user-details" class="card-body">
       <div class="card-title">
         <h2>{{ user.name }}</h2>
       </div>
@@ -23,7 +23,7 @@
         </ul>
       </div>
     </div>
-    <div class="card-block">
+    <div class="card-body">
       <slot></slot>
     </div>
   </div>
