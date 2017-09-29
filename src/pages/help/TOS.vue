@@ -1,5 +1,5 @@
 <template>
-  <b-card :header="'Terms of Service'">
+  <b-card header="Terms of Service">
     <p>
       These are the general terms and conditions on which we supply all our
       services. If you use our services, you agree to abide by these terms.

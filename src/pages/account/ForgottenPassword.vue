@@ -3,8 +3,8 @@
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
         <card-form
-          :header="'Forgotten Password'"
-          :submitText="'Reset'"
+          header="Forgotten Password"
+          submit-text="Reset"
           :form="form"
           @success="onSuccess">
         </card-form>

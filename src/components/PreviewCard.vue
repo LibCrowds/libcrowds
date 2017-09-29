@@ -1,7 +1,7 @@
 <template>
   <b-card
     class="preview-card"
-    :header="'Preview'">
+    header="Preview">
     <b-card>
       <div
         v-for="(field, index) in previewFields"

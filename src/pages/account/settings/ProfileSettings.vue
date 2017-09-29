@@ -1,7 +1,7 @@
 <template>
   <card-form
-    :header="'Profile Settings'"
-    :submitText="'Update'"
+    header="Profile Settings"
+    submit-text="Update"
     :form="form"
     @success="updateCurrentUser">
   </card-form>

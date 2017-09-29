@@ -1,7 +1,7 @@
 <template>
   <b-card
     id="project-sorting-options"
-    :header="'Sorting Options'">
+    header="Sorting Options">
 
     <div class="form-group">
       <label>Sort by:</label>

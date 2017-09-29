@@ -2,7 +2,11 @@
   <div id="reset-password">
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
-        <card-form :header="'Reset Password'" :submitText="'Reset'" :form="form" @success="onSuccess">
+        <card-form
+          header="Reset Password"
+          submitText="Reset"
+          :form="form"
+          @success="onSuccess">
         </card-form>
       </div>
     </div>

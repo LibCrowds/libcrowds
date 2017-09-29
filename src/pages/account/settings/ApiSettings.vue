@@ -1,7 +1,7 @@
 <template>
   <card-form
-    :header="'API Settings'"
-    :submitText="'Reset API Key'"
+    header="API Settings"
+    submit-text="Reset API Key"
     :form="form"
     @success="updateCurrentUser">
   </card-form>

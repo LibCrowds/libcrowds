@@ -1,7 +1,7 @@
 <template>
   <div id="admin-categories">
     <card-form
-      :header="'New Category'"
+      header="New Category"
       :form="form"
       class="mb-4"
       @success="onNewCategorySuccess">
@@ -9,7 +9,7 @@
 
     <b-card
       no-body
-      :header="'Current Categories'">
+      header="Current Categories">
       <b-table
         hover
         show-empty

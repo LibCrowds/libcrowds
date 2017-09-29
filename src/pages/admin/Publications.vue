@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12 col-lg-6">
         <card-form
-          :header="'New Publication'"
+          header="New Publication"
           :submitText="'Submit'"
           :form="form"
           @success="refreshCurrentPublications">
@@ -12,7 +12,7 @@
       <div class="d-none d-lg-block col-lg-6">
         <b-card
           class="bg-light"
-          :header="'Preview'">
+          header="Preview">
           <publication-card
             show-placeholders
             :publication="form.model">
@@ -24,7 +24,7 @@
       <div class="col-sm-12 mt-3">
         <b-card
           no-body
-          :header="'Current Publications'">
+          header="Current Publications">
           <b-table
             hover
             show-empty

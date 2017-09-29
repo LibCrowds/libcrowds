@@ -3,7 +3,7 @@
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
         <card-form
-          :header="'Register'"
+          header="Register"
           :lead="lead"
           :submitText="submitText"
           :form="form"

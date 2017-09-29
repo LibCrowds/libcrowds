@@ -3,9 +3,9 @@
     <div class="container my-5">
       <div class="col-lg-8 offset-lg-2">
         <card-form
-          :header="'Signin'"
+          header="Signin"
           :lead="lead"
-          :submitText="'Sign in'"
+          submit-text="Sign in"
           :form="form"
           @success="onSuccess">
 
