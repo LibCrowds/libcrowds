@@ -50,7 +50,7 @@
         <bar-chart
           v-if="userStats.authenticated"
           class="mt-3"
-          header="Top Authenticated Users"
+          header="Top authenticated users over the past 2 weeks"
           :unit="collectionConfig.terminology.taskRun"
           :data="topUsers">
         </bar-chart>
@@ -132,7 +132,7 @@ export default {
     },
     dailyContributionsHeader: function () {
       const start = pluralize(this.collectionConfig.terminology.taskRun)
-      return `Daily ${start}`
+      return `Daily ${start} over the past 2 weeks`
     },
     hourlyContributions: function () {
       let d = {
@@ -145,7 +145,7 @@ export default {
     },
     hourlyContributionsHeader: function () {
       const start = pluralize(this.collectionConfig.terminology.taskRun)
-      return `Hourly ${start}`
+      return `Hourly ${start} over the past 2 weeks`
     },
     topUsers: function () {
       return {
@@ -158,6 +158,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

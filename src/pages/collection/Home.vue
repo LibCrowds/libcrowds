@@ -3,18 +3,24 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <div
-            class="d-flex align-items-baseline justify-content-center">
+          <div>
             <div
               id="company-logo"
+              class="d-inline-block"
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
+<<<<<<< HEAD
             <span class="mr-2 d-none d-lg-block" v-if="siteConfig.logo"></span>
             <h1 class="display-3 d-none d-lg-block mb-0">
               {{ collectionConfig.name }}
             </h1>
             <span class="mr-4 d-none d-lg-block" v-if="siteConfig.logo"></span>
+=======
+            <h1 class="display-3 d-inline-block hidden-md-down mb-0">
+              {{ collectionConfig.name }}
+            </h1>
+>>>>>>> master
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
@@ -292,7 +298,7 @@ export default {
           return data.categories_projects[category.short_name]
         }).reduce((a, b) => {
           return a.concat(b)
-        }).map(project => {
+        }, []).map(project => {
           return project.id
         })
         this.featured = data.categories_projects.featured.filter(project => {
@@ -358,6 +364,11 @@ export default {
     }
 
     #company-logo {
+      @include media-breakpoint-up(md) {
+        margin-right: 1.5rem;
+        margin-left: -1.5rem;
+      }
+
       svg {
         display: block;
       }

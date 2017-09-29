@@ -1,7 +1,14 @@
 <template>
   <div id="profile">
     <div class="container pt-5 pb-3">
-      <div class="row">
+      <b-card v-if="loading">
+        <loading
+          v-if="loading"
+          text="Loading profile">
+        </loading>
+      </b-card>
+
+      <div class="row" v-else>
         <div class="col-lg-4">
           <user-profile-card
             v-if="user"
@@ -45,15 +52,19 @@
 
         </div>
       </div>
+
+
     </div>
   </div>
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import UserFavouritesCard from '@/components/user/FavouritesCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import Loading from '@/components/Loading'
 
 export default {
   data: function () {
@@ -78,7 +89,8 @@ export default {
   components: {
     UserProfileCard,
     UserFavouritesCard,
-    ProjectContribButton
+    ProjectContribButton,
+    Loading
   },
 
   computed: {
@@ -88,6 +100,9 @@ export default {
         this.$store.state.currentUser &&
         this.user.name === this.$store.state.currentUser.name
       )
+    },
+    loading: function () {
+      return isEmpty(this.user)
     }
   },
 
