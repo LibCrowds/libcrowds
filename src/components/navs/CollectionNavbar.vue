@@ -426,7 +426,7 @@ export default {
 
     .nav-item {
       font-size: $font-size-sm;
-      margin-left: calc(2 * #{$nav-item-inline-spacer});
+      margin-left: calc(2 * #{$spacer});
       margin-right: 0;
       position: relative;
 
