@@ -1,6 +1,6 @@
 <template>
   <div id="admin-background-jobs">
-    <b-card no-block header="Background Jobs">
+    <b-card no-body header="Background Jobs">
       <iframe
         :src="rqSchedulerRoute"
         height="800"

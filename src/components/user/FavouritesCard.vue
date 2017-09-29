@@ -1,5 +1,5 @@
 <template>
-  <b-card class="favourites-card" no-block :header="'Favourites'">
+  <b-card class="favourites-card" no-body :header="'Favourites'">
 
     <loading
       v-if="loading"

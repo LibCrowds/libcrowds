@@ -8,7 +8,7 @@
     </card-form>
 
     <b-card
-      no-block
+      no-body
       :header="'Current Categories'">
       <b-table
         hover

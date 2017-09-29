@@ -1,5 +1,5 @@
 <template>
-  <b-card class="user-card" no-block>
+  <b-card class="user-card" no-body>
 
     <div class="avatar-background">
       <user-avatar

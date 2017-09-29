@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     id="category-list-chooser"
     :header="header | pluralize | capitalize">
     <b-list-group>

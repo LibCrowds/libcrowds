@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     show-footer
     class="collection-card my-3">
     <router-link

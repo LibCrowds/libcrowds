@@ -23,7 +23,7 @@
     <div class="row">
       <div class="col-sm-12 mt-3">
         <b-card
-          no-block
+          no-body
           :header="'Current Publications'">
           <b-table
             hover

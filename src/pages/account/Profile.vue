@@ -35,7 +35,7 @@
             v-if="isCurrentUser">
           </user-favourites-card>
 
-          <b-card no-block :header="'Contributions'">
+          <b-card no-body :header="'Contributions'">
             <b-table
               hover
               striped

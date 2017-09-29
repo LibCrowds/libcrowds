@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     class="project-card">
     <router-link
       :to="{

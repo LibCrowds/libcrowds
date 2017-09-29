@@ -12,7 +12,7 @@
         </div>
         <div class="col-xl-8 mt-4 mt-xl-0">
           <b-card
-            no-block
+            no-body
             header="Results">
             <b-table
               hover
@@ -63,7 +63,7 @@
       </div>
       <div class="col-xl-8 mt-4 mt-xl-0">
         <b-card
-          no-block
+          no-body
           header="Current Administrators">
           <b-table
             hover

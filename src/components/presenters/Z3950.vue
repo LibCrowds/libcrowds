@@ -4,14 +4,14 @@
 
       <div class="col-sm-12 col-lg-6">
         <b-card
-          no-block
+          no-body
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
       </div>
 
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
-        <b-card no-block>
+        <b-card no-body>
 
           <div class="card-body pb-0" v-if="alerts.length">
             <b-alert

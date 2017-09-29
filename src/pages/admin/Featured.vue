@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-8">
           <b-card
-            no-block
+            no-body
             v-if="activeCategory"
             :header="`Projects - ${activeCategory.name}`">
 
@@ -45,7 +45,7 @@
       </div>
     </b-card>
     <b-card
-      no-block
+      no-body
       class="mt-4"
       header="Current Featured Projects">
       <b-table
