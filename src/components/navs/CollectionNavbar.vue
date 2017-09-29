@@ -397,7 +397,7 @@ export default {
     margin-right: 1rem;
 
     @include media-breakpoint-up(sm) {
-      font-size: $font-size-h3;
+      font-size: $h3-font-size;
     }
   }
 
