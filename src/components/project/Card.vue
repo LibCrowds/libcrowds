@@ -242,7 +242,7 @@ export default {
   }
 
   .card-stat {
-    font-size: $font-size-xs;
+    font-size: 0.75rem;
     display: flex;
     align-items: center;
 
