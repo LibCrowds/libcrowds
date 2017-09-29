@@ -5,16 +5,7 @@
         <div class="container">
           <span class="d-none d-md-flex"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
-<<<<<<< HEAD
           <div class="stat-row d-none d-md-flex">
-=======
-          <div class="stat-row hidden-sm-down">
-            <div class="stat-circle">
-              <span class="stat">{{ stats.n_published_projects }}</span>
-              <icon name="television"></icon>
-              <p>Projects</p>
-            </div>
->>>>>>> master
             <div class="stat-circle">
               <span class="stat">{{ stats.n_total_users }}</span>
               <icon name="users"></icon>

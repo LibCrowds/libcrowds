@@ -10,17 +10,11 @@
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-<<<<<<< HEAD
             <span class="mr-2 d-none d-lg-block" v-if="siteConfig.logo"></span>
             <h1 class="display-3 d-none d-lg-block mb-0">
               {{ collectionConfig.name }}
             </h1>
             <span class="mr-4 d-none d-lg-block" v-if="siteConfig.logo"></span>
-=======
-            <h1 class="display-3 d-inline-block hidden-md-down mb-0">
-              {{ collectionConfig.name }}
-            </h1>
->>>>>>> master
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
