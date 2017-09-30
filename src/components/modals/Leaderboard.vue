@@ -1,5 +1,9 @@
 <template>
-  <b-modal :id="modalId" title="Leaderboard" @shown="fetchData">
+  <b-modal
+    :id="modalId"
+    title="Leaderboard"
+    ok-only
+    @shown="fetchData">
 
     <loading
       v-if="loading"
