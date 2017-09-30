@@ -18,33 +18,33 @@
             <div class="row-btn-social">
 
               <div v-if="auth.facebook">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="facebook"
                   @click="redirect('facebook')">
                   <icon name="facebook"></icon>
                   <span class="ml-1 d-none d-sm-block">Facebook</span>
-                </b-button>
+                </b-btn>
               </div>
 
               <div v-if="auth.google">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="googleplus"
                   @click="redirect('google')">
                   <icon name="google"></icon>
                   <span class="ml-1 d-none d-sm-block">Google</span>
-                </b-button>
+                </b-btn>
               </div>
 
               <div v-if="auth.twitter">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="twitter"
                   @click="redirect('twitter')">
                   <icon name="twitter"></icon>
                   <span class="ml-1 d-none d-sm-block">Twitter</span>
-                </b-button>
+                </b-btn>
               </div>
 
             </div>

@@ -36,13 +36,13 @@
         <slot name="footer-left"></slot>
       </span>
       <span>
-        <b-button
+        <b-btn
           v-if="showCancel"
           variant="outline-secondary"
           @click="cancel">
           Cancel
-        </b-button>
-        <b-button
+        </b-btn>
+        <b-btn
           variant="success"
           @click="submit">
           <span v-if="!processing">{{ submitText }}</span>
@@ -51,7 +51,7 @@
             <div class="sk-child sk-bounce2"></div>
             <div class="sk-child sk-bounce3"></div>
           </div>
-        </b-button>
+        </b-btn>
       </span>
     </template>
 

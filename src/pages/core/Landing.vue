@@ -57,12 +57,12 @@
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
-            <b-button
+            <b-btn
               variant="success"
               size="lg"
               @click="scrollToCollections">
               Get Started
-            </b-button>
+            </b-btn>
           </div>
           <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">

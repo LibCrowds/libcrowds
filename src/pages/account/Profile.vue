@@ -14,7 +14,7 @@
             v-if="user"
             class="mb-3"
             :user="user">
-            <b-button
+            <b-btn
               v-if="isCurrentUser"
               block
               variant="success"
@@ -25,7 +25,7 @@
                 }
               }">
               Settings
-            </b-button>
+            </b-btn>
           </user-profile-card>
         </div>
         <div class="col-lg-8">

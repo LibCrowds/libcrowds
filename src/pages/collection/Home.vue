@@ -26,7 +26,7 @@
             {{ collectionConfig.tagline }}
           </h2>
           <div>
-            <b-button
+            <b-btn
               variant="success"
               size="lg"
               :to="{
@@ -36,7 +36,7 @@
                 }
               }">
               Get Started
-            </b-button>
+            </b-btn>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@
           research at {{ siteConfig.company }}.
         </p>
         <hr class="mt-3 w-75 sr">
-        <b-button
+        <b-btn
           variant="outline-dark"
           class="mt-md-1 sr"
           size="lg"
@@ -64,7 +64,7 @@
             }
           }">
           Learn More
-        </b-button>
+        </b-btn>
       </div>
     </section>
 
@@ -97,7 +97,7 @@
             </project-card>
           </li>
         </ul>
-        <b-button
+        <b-btn
           class="mt-2"
           variant="success"
           size="lg"
@@ -108,7 +108,7 @@
             }
           }">
           Browse all projects
-        </b-button>
+        </b-btn>
       </div>
     </section>
 
@@ -128,7 +128,7 @@
             and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
           </p>
-          <b-button
+          <b-btn
             variant="outline-light"
             class="my-1"
             :to="{
@@ -138,7 +138,7 @@
               }
             }">
             Get the data
-          </b-button>
+          </b-btn>
         </div>
       </b-jumbotron>
     </section>
@@ -153,14 +153,14 @@
             analysed and the outcome provided via our results page, making
             the efforts of our volunteers immediately apparent.
           </p>
-          <b-button
+          <b-btn
             variant="outline-light"
             class="my-1"
             :to="{
               name: 'collection-results'
             }">
             Browse the results
-          </b-button>
+          </b-btn>
         </div>
       </b-jumbotron>
     </section>
@@ -172,7 +172,7 @@
           Your contributions will have a direct impact on enabling future
           reasearch at {{ siteConfig.company }}.
         </p>
-        <b-button
+        <b-btn
           variant="success"
           size="lg"
           :to="{
@@ -182,7 +182,7 @@
             }
           }">
           Get Started
-        </b-button>
+        </b-btn>
       </div>
     </section>
 

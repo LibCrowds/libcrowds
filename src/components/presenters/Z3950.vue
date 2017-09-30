@@ -27,14 +27,14 @@
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
-              <b-button
+              <b-btn
                 v-if="searchResults.length || selectedRecord"
                 variant="info"
                 size="sm"
                 class="float-right"
                 @click="reset">
                 Search Again
-              </b-button>
+              </b-btn>
             </div>
           </template>
 
@@ -71,12 +71,12 @@
                   </div>
                   <div class="w-25 d-flex">
                     <div class="result-buttons">
-                      <b-button
+                      <b-btn
                         variant="success"
                         size="sm"
                         @click="selectedRecord = record">
                         Select
-                      </b-button>
+                      </b-btn>
                     </div>
                   </div>
                 </div>
@@ -105,21 +105,21 @@
 
           <template slot="footer">
             <div class="d-flex justify-content-between flex-column flex-xl-row">
-              <b-button
+              <b-btn
                 v-b-toggle.collapsecomment
                 class="p-0"
                 variant="link">
                 Add a comment
-              </b-button>
+              </b-btn>
               <div
                 class="d-flex d-xl-block flex-column justify-content-center">
-                <b-button
+                <b-btn
                   variant="outline-dark"
                   class="my-1"
                   @click="onSkip">
                   Skip / Not Found
-                </b-button>
-                <b-button
+                </b-btn>
+                <b-btn
                   v-if="stage !== 'results'"
                   variant="success"
                   @click="onSubmit">
@@ -131,7 +131,7 @@
                     <div class="sk-child sk-bounce2"></div>
                     <div class="sk-child sk-bounce3"></div>
                   </div>
-                </b-button>
+                </b-btn>
               </div>
             </div>
             <b-collapse id="collapsecomment" class="mt-1">

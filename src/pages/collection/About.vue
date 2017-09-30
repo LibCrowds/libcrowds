@@ -16,7 +16,7 @@
         future research.
       </p>
       <div class="text-center mt-3">
-        <b-button
+        <b-btn
           variant="success"
           size="lg"
           :to="{
@@ -26,7 +26,7 @@
             }
           }">
           Get Started
-        </b-button>
+        </b-btn>
       </div>
     </section>
 
@@ -41,7 +41,7 @@
         v-if="index === collectionConfig.about.subsections.length - 1"
         class="text-center">
         <hr>
-        <b-button
+        <b-btn
           class="mt-1"
           variant="success"
           size="lg"
@@ -52,7 +52,7 @@
             }
           }">
           Get Started
-        </b-button>
+        </b-btn>
       </div>
 
     </section>

@@ -8,16 +8,16 @@
           </p>
           <template slot="footer">
             <div class="float-right">
-              <b-button
+              <b-btn
                 variant="outline-secondary"
                 @click="suscribe('False')">
                 No thanks
-              </b-button>
-              <b-button
+              </b-btn>
+              <b-btn
                 variant="success"
                 @click="suscribe('True')">
                 Sure, sign me up!
-              </b-button>
+              </b-btn>
             </div>
           </template>
         </b-card>

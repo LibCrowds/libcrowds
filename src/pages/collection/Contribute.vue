@@ -78,10 +78,10 @@
                     {{ project.item.overall_progress }}%
                   </template>
                   <template slot="action" scope="project">
-                    <project-contrib-button
+                    <project-contrib-btn
                       :shortname="project.item.short_name"
                       variant="success">
-                    </project-contrib-button>
+                    </project-contrib-btn>
                   </template>
                 </b-table>
               </transition>

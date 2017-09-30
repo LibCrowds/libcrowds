@@ -33,12 +33,12 @@
     </span>
 
     <template slot="footer">
-      <b-button
+      <b-btn
         variant="success"
         class="float-right"
         @click="submit">
         {{ submitText }}
-      </b-button>
+      </b-btn>
     </template>
 
   </b-card>

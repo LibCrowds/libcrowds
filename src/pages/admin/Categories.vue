@@ -29,8 +29,8 @@
         </template>
 
         <template slot="action" scope="category">
-          <b-button-group>
-            <b-button
+          <b-btn-group>
+            <b-btn
               :id="`edit-${category.id}`"
               variant="info"
               size="sm"
@@ -41,16 +41,16 @@
                 }
               }">
               Edit
-            </b-button>
-            <b-button
+            </b-btn>
+            <b-btn
               :id="`del-${category.id}`"
               variant="danger"
               size="sm"
               :disabled="n_projects[category.item.short_name] > 0"
               @click="deleteCategory(category.item.id)">
               Delete
-            </b-button>
-          </b-button-group>
+            </b-btn>
+          </b-btn-group>
         </template>
 
       </b-table>

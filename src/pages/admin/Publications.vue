@@ -37,12 +37,12 @@
             </template>
 
             <template slot="action" scope="publication">
-              <b-button
+              <b-btn
                 variant="danger"
                 size="sm"
                 @click="deletePublication(publication.item.id)">
                 Delete
-              </b-button>
+              </b-btn>
             </template>
 
           </b-table>
