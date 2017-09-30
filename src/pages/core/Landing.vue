@@ -48,7 +48,7 @@
       class="bg-white">
       <div class="container py-4">
         <div class="row">
-          <div class="col-lg-5 offset-lg-1 pt-2 text-center">
+          <div class="col-lg-5 mx-auto pt-2 text-center">
             <h3 class="text-uppercase font-weight-bold">
               Most Active Volunteers
             </h3>
@@ -64,7 +64,7 @@
               Get Started
             </b-btn>
           </div>
-          <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+          <div class="col-lg-5 mx-auto d-none d-lg-block">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
             <span id="wreath"></span>
           </div>
@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="row text-center mt-2">
-          <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6">
+          <div class="col-sm-12 col-lg-5 mx-auto push-lg-6">
             <b-btn
               variant="black-underline"
               v-b-modal="leaderboardModalId">

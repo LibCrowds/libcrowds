@@ -1,7 +1,7 @@
 <template>
   <div id="reset-password">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 mx-auto">
         <card-form
           header="Reset Password"
           submitText="Reset"
