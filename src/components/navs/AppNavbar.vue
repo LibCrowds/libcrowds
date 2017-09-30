@@ -158,12 +158,19 @@ export default {
   min-height: $app-navbar-height;
   height: $app-navbar-height;
   width: 100%;
+  min-height: $app-navbar-height;
+  height: $app-navbar-height;
 
   #app-navbar-left {
+    height: 100%;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     border-bottom: 1px solid $gray-300;
+  }
+
+  #app-navbar-right {
+    height: 100%;
   }
 
   .navbar-brand {
@@ -193,6 +200,7 @@ export default {
   }
 
   #sign-in-up {
+    height: 100%;
     display: flex;
     flex-direction: row;
     font-size: $font-size-sm;
