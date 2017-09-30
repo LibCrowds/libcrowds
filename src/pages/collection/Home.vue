@@ -251,7 +251,6 @@ export default {
 
   components: {
     SocialMediaButtons,
-
     ProjectCard
   },
 
