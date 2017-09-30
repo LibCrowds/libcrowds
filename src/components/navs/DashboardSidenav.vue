@@ -144,6 +144,7 @@ export default {
         padding: $list-group-item-padding-y;
         width: 100%;
         color: $white;
+        display: block;
       }
 
       &:hover,

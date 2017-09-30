@@ -169,6 +169,10 @@ export default {
 
   #app-navbar-right {
     height: 100%;
+
+    .navbar-nav {
+      border-bottom: 1px solid $gray-300;
+    }
   }
 
   .navbar-brand {
