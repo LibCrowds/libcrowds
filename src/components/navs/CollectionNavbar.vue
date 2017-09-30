@@ -620,11 +620,22 @@ export default {
         }
 
         .dropdown-menu {
+          position: relative;
           display: block;
           background: transparent;
           text-align: center;
           padding: 0;
-          margin: 0;
+          margin-left: auto;
+          margin-left: auto;
+          min-width: auto;
+          border: none;
+
+          .dropdown-item {
+            @include hover-focus {
+              outline: 0;
+              background: transparent;
+            }
+          }
         }
       }
     }
