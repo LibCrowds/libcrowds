@@ -7,6 +7,17 @@
     :fixed="navType.fixed">
     <div class="container">
 
+      <b-link class="navbar-brand"
+        :to="{
+          name: 'collection-home',
+          params: {
+            collectionName: collectionConfig.key
+          }
+        }"
+        @click.native="scrollToTop">
+        <span>{{ collectionConfig.name }}</span>
+      </b-link>
+
       <button
         @click="toggleCollapsibleSidebar"
         ref="hamburger"
@@ -25,17 +36,6 @@
           <span class="hamburger-inner"></span>
         </span>
       </button>
-
-      <b-link class="navbar-brand"
-        :to="{
-          name: 'collection-home',
-          params: {
-            collectionName: collectionConfig.key
-          }
-        }"
-        @click.native="scrollToTop">
-        <span>{{ collectionConfig.name }}</span>
-      </b-link>
 
       <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
@@ -384,7 +384,6 @@ export default {
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 #collection-navbar {
-  color: $white;
   z-index: 200;
   font-family: $font-family-base;
   font-weight: 500;
@@ -406,6 +405,7 @@ export default {
   }
 
   .navbar-brand {
+    color: $white;
     font-family: $headings-font-family;
     font-weight: 300;
     transition: color 200ms;
@@ -441,7 +441,7 @@ export default {
 
     .nav-item {
       font-size: $font-size-sm;
-      margin-left: calc(2 * #{$spacer});
+      margin-left: 2rem;
       margin-right: 0;
       position: relative;
 
@@ -482,6 +482,7 @@ export default {
       }
 
       .nav-link {
+        color: $white;
         transition: color 200ms;
         padding: .35rem 0;
 
@@ -537,9 +538,6 @@ export default {
     padding: 0;
     display: flex;
     flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    flex: 1 1 auto;
     height: 100%;
 
     @include media-breakpoint-up(lg) {
