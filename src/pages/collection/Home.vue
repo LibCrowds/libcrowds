@@ -38,22 +38,14 @@
 
     <section id="intro" class="bg-white invert-navbar">
       <div class="container py-3 py-md-4 text-center">
-        <div class="row sr">
-          <div class="col-sm-10 offset-sm-1">
-            <p id="site-lead" class="mb-0">
-              {{ collectionConfig.description }}
-            </p>
-          </div>
-        </div>
+        <p id="site-lead" class="mb-0 px-1">
+          {{ collectionConfig.description }}
+        </p>
         <hr class="my-3 w-75 sr">
-        <div class="row sr">
-          <div class="col-sm-10 offset-sm-1">
-            <p class="lead mb-0">
-              Your contributions will have a direct impact on enabling future
-              research at {{ siteConfig.company }}.
-            </p>
-          </div>
-        </div>
+        <p class="lead mb-0 px-1">
+          Your contributions will have a direct impact on enabling future
+          research at {{ siteConfig.company }}.
+        </p>
         <hr class="mt-3 w-75 sr">
         <b-button
           variant="outline-dark"
@@ -121,96 +113,74 @@
     <section id="data">
       <span :style="dataStyle"></span>
       <b-jumbotron :style="dataStyle">
-        <div class="container py-4">
-          <div class="row text-center">
-            <div class="col-sm-12">
-              <h3 class="display-5">Open Data</h3>
-            </div>
-          </div>
-          <div class="row py-md-3">
-            <div class="col-md-8 offset-md-2">
-              <p class="lead">
-                All datasets generated from the experimental crowdsourcing
-                projects hosted on this platform are made available under a
-                <a
-                  :href="siteConfig.dataLicense.url"
-                  target="_blank">
-                  {{ siteConfig.dataLicense.name }} license
-                </a>
-                and can be downloaded by anyone in JSON or
-                CSV formats. Visit the data page to find out more.
-              </p>
-            </div>
-          </div>
-          <div class="row pt-2 text-center">
-            <div class="col-sm-12">
-              <b-button
-                variant="outline-light"
-                :to="{
-                  name: 'collection-data',
-                  params: {
-                    collectionname: collectionConfig.key
-                  }
-                }">
-                Get the data
-              </b-button>
-            </div>
-          </div>
+        <div class="container py-2 py-md-4 w-75 text-center">
+          <h3 class="display-5">Open Data</h3>
+          <p class="lead my-2 my-md-3 text-sm-left">
+            All datasets generated from the experimental crowdsourcing
+            projects hosted on this platform are made available under a
+            <a
+              :href="siteConfig.dataLicense.url"
+              target="_blank">
+              {{ siteConfig.dataLicense.name }} license
+            </a>
+            and can be downloaded by anyone in JSON or
+            CSV formats. Visit the data page to find out more.
+          </p>
+          <b-button
+            variant="outline-light"
+            class="my-1"
+            :to="{
+              name: 'collection-data',
+              params: {
+                collectionname: collectionConfig.key
+              }
+            }">
+            Get the data
+          </b-button>
         </div>
       </b-jumbotron>
     </section>
 
     <section id="results" v-if="collectionConfig.resultsComponent">
       <b-jumbotron :style="resultsStyle">
-        <div class="container py-4">
-          <div class="row text-center">
-            <div class="col-sm-12">
-              <h3 class="display-5">Results</h3>
-            </div>
-          </div>
-          <div class="row py-2">
-            <div class="col-md-8 offset-md-2">
-              <p class="lead">
-                As each {{ collectionConfig.terminology.task }} is completed,
-                {{ collectionConfig.terminology.taskRun | pluralize }} are
-                analysed and the outcome provided via our results page, making
-                the efforts of our volunteers immediately apparent.
-              </p>
-            </div>
-          </div>
-          <div class="row pt-2 text-center">
-            <div class="col-sm-12">
-              <b-button variant="outline-white" :to="{ name: 'results' }">
-                See the results
-              </b-button>
-            </div>
-          </div>
+        <div class="container py-2 py-md-4 w-75 text-center">
+          <h3 class="display-5">Results</h3>
+          <p class="lead my-2 my-md-3 text-sm-left">
+            As each {{ collectionConfig.terminology.task }} is completed,
+            {{ collectionConfig.terminology.taskRun | pluralize }} are
+            analysed and the outcome provided via our results page, making
+            the efforts of our volunteers immediately apparent.
+          </p>
+          <b-button
+            variant="outline-white"
+            class="my-1"
+            :to="{
+              name: 'results'
+            }">
+            See the results
+          </b-button>
         </div>
       </b-jumbotron>
     </section>
 
     <section id="final-cta" class="bg-white invert-navbar">
-      <div class="container pt-4 pb-3">
-        <div class="row">
-          <div class="col-sm-10 offset-sm-1 text-center">
-            <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
-            <p class="lead my-3">
-              Your contributions will have a direct impact on enabling future
-              reasearch at {{ siteConfig.company }}.
-            </p>
-            <b-button
-              variant="success"
-              size="lg"
-              :to="{
-                name: 'collection-contribute',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Get Started
-            </b-button>
-          </div>
-        </div>
+      <div class="container pt-4 pb-3 text-center">
+        <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
+        <p class="lead my-3">
+          Your contributions will have a direct impact on enabling future
+          reasearch at {{ siteConfig.company }}.
+        </p>
+        <b-button
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Get Started
+        </b-button>
       </div>
     </section>
 
