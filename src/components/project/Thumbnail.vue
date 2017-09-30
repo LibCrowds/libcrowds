@@ -1,6 +1,6 @@
 <template>
   <div class="project-thumbnail">
-    <img v-if="thumbnail" :src="thumbnail" :class="imgClass" :alt="altTag">
+    <img v-if="thumbnail" :src="thumbnail" :class="imgClass">
     <div class="thumbnail-placeholder">
       <icon name="picture-o" scale="4"></icon>
     </div>

@@ -18,8 +18,7 @@
       v-b-tooltip
       :triggers="tooltipTriggers"
       :title="user.name"
-      :src="avatar"
-      :alt="altTag">
+      :src="avatar">
 
   </div>
 </template>
