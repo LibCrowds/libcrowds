@@ -46,7 +46,7 @@
       <div class="progress-container" :id="progressId"></div>
 
       <div class="card-footer mt-1 px-2 py-1">
-        <span class="card-stat text-muted mb-2 mb-lg-0">
+        <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
           {{ project.overall_progress }}% complete
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
