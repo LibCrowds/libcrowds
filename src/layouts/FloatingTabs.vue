@@ -122,7 +122,7 @@ export default {
       font-size: $font-size-sm;
 
       transition: opacity 350ms ease;
-      color: $gray-600;
+      color: rgba($gray-700, 0.85);
       display: none;
 
       @include media-breakpoint-up(sm) {
