@@ -257,6 +257,7 @@ export default {
     border-bottom: 1px solid $gray-300;
     border-top: 0;
     border-right: 0;
+    background: $white;
     color: $gray-600;
     font-size: 0.75rem;
     text-transform: uppercase;
