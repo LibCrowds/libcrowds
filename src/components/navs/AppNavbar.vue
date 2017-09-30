@@ -158,8 +158,6 @@ export default {
   min-height: $app-navbar-height;
   height: $app-navbar-height;
   width: 100%;
-  min-height: $app-navbar-height;
-  height: $app-navbar-height;
 
   #app-navbar-left {
     height: 100%;
@@ -189,7 +187,7 @@ export default {
     height: 100%;
   }
 
-  .nav-item {
+  .nav-item:not(.dropdown) {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -222,6 +220,7 @@ export default {
   }
 
   .dropdown-menu {
+    position: absolute;
     border-radius: 0;
     right: 1rem;
     text-transform: none;
