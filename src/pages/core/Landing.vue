@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="row text-center mt-2">
-          <div class="col-sm-12 col-lg-5 mx-auto push-lg-6">
+          <div class="col-sm-12 col-lg-5 ml-lg-auto">
             <b-btn
               variant="black-underline"
               v-b-modal="leaderboardModalId">
