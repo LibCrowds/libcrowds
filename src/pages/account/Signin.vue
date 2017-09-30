@@ -177,10 +177,6 @@ export default {
     flex-direction: row;
     justify-content: center;
 
-    @include media-breakpoint-up(md) {
-      justify-content: space-around;
-    }
-
     .btn {
       @include hover-focus;
       border-radius: 0;
