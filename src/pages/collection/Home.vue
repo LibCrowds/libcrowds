@@ -72,47 +72,43 @@
       id="featured-projects"
       class="invert-navbar"
       v-if="featured.length">
-      <div class="container text-center text-lg-left pb-4">
-        <div class="row">
-          <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
+      <div class="container w-75 text-center pb-4">
+        <div class="row text-lg-left">
+          <div class="col-lg-5 text-uppercase py-4">
             <h2 class="display-5 font-weight-bold pt-1">
               Featured Projects
             </h2>
-            <hr class="wide mr-lg-5">
+            <hr class="wide">
             <p class="mr-lg-6">
               Choose from some of our current favourites.
             </p>
           </div>
-          <div class="col-lg-3 offset-lg-3 d-none d-lg-block">
-            <span id="ribbon">
+          <div class="col d-none d-lg-block">
+            <span class="ml-auto" id="ribbon">
               <icon name="star" scale="7"></icon>
             </span>
           </div>
         </div>
-        <div class="row text-center">
-          <div class="col-lg-10 offset-lg-1">
-            <ul class="list-unstyled">
-              <li v-for="project in featured" :key="project.id">
-                <project-card
-                  :collection-config="collectionConfig"
-                  :project="project">
-                </project-card>
-              </li>
-            </ul>
-            <b-button
-              class="mt-2"
-              variant="success"
-              size="lg"
-              :to="{
-                name: 'collection-contribute',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Browse all projects
-            </b-button>
-          </div>
-        </div>
+        <ul class="list-unstyled">
+          <li v-for="project in featured" :key="project.id">
+            <project-card
+              :collection-config="collectionConfig"
+              :project="project">
+            </project-card>
+          </li>
+        </ul>
+        <b-button
+          class="mt-2"
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Browse all projects
+        </b-button>
       </div>
     </section>
 
@@ -158,12 +154,12 @@
             the efforts of our volunteers immediately apparent.
           </p>
           <b-button
-            variant="outline-white"
+            variant="outline-light"
             class="my-1"
             :to="{
-              name: 'results'
+              name: 'collection-results'
             }">
-            See the results
+            Browse the results
           </b-button>
         </div>
       </b-jumbotron>
@@ -314,6 +310,7 @@ export default {
 
 #collection-home {
   .container.full-height {
+    min-height: 400px;
     height: 100vh;
     color: $white;
     opacity: 1;
@@ -408,7 +405,6 @@ export default {
     width: 12rem;
     height: 12rem;
     background: $gray-300;
-    position: absolute;
     top: -1px;
 
     svg {
