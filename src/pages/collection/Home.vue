@@ -10,11 +10,17 @@
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <span class="mr-2 d-none d-lg-block" v-if="siteConfig.logo"></span>
-            <h1 class="display-3 d-none d-lg-block mb-0">
+            <span
+              class="mr-2 d-none d-lg-inline-block"
+              v-if="siteConfig.logo">
+            </span>
+            <h1 class="display-3 d-none d-lg-inline-block mb-0">
               {{ collectionConfig.name }}
             </h1>
-            <span class="mr-4 d-none d-lg-block" v-if="siteConfig.logo"></span>
+            <span
+              class="mr-4 d-none d-lg-inline-block"
+              v-if="siteConfig.logo">
+            </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
@@ -328,11 +334,6 @@ export default {
     }
 
     #company-logo {
-      @include media-breakpoint-up(md) {
-        margin-right: 1.5rem;
-        margin-left: -1.5rem;
-      }
-
       svg {
         display: block;
       }
