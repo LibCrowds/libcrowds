@@ -1,5 +1,5 @@
 <template>
-  <b-card class="favourites-card" no-block :header="'Favourites'">
+  <b-card class="favourites-card" no-body :header="'Favourites'">
 
     <loading
       v-if="loading"
@@ -8,7 +8,7 @@
 
     <div
       v-else
-      class="card-block">
+      class="card-body">
       <p v-if="!images.length">
         You haven't added any favourite tasks yet.
       </p>
@@ -45,19 +45,13 @@ export default {
 
   methods: {
     /**
-     * Get the favourites data.
-     */
-    fetchFavourites () {
-      return pybossaApi.get(`/api/favorites`)
-    },
-
-    /**
      * Load the image data.
      * @param {Array} favourites
      *   The favourite tasks.
      */
     getImageData (favourites) {
       return favourites.map((task) => {
+        console.log(task)
         if ('imgInfoUri' in task.info) {
           return this.getIiifImageData(task)
         } else if ('url_m' in task.info) {
@@ -93,7 +87,8 @@ export default {
   },
 
   mounted () {
-    this.fetchFavourites().then(r => {
+    pybossaApi.get(`/api/favorites`).then(r => {
+      console.log('OK', r.data)
       this.images = this.getImageData(r.data)
       this.loading = false
     })

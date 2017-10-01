@@ -3,14 +3,9 @@
     <transition appear>
       <div id="app-hero">
         <div class="container">
-          <span class="hidden-sm-down"></span>
+          <span class="d-none d-md-flex"></span>
           <p id="site-tagline">{{ siteConfig.tagline }}</p>
-          <div class="stat-row hidden-sm-down">
-            <div class="stat-circle">
-              <span class="stat">{{ stats.n_published_projects }}</span>
-              <icon name="television"></icon>
-              <p>Projects</p>
-            </div>
+          <div class="stat-row d-none d-md-flex">
             <div class="stat-circle">
               <span class="stat">{{ stats.n_total_users }}</span>
               <icon name="users"></icon>
@@ -21,12 +16,17 @@
               <icon name="list"></icon>
               <p>Contributions</p>
             </div>
+            <div class="stat-circle">
+              <span class="stat">{{ stats.n_published_projects }}</span>
+              <icon name="television"></icon>
+              <p>Projects</p>
+            </div>
           </div>
         </div>
       </div>
     </transition>
 
-    <section id="contribute" class="bg-faded">
+    <section id="contribute" class="bg-light">
       <div class="container py-4">
         <h2 class="mt-4">Contribute</h2>
         <p class="lead">
@@ -48,23 +48,23 @@
       class="bg-white">
       <div class="container py-4">
         <div class="row">
-          <div class="col-lg-5 offset-lg-1 pt-2 text-center">
+          <div class="col-lg-5 mx-auto pt-2 text-center">
             <h3 class="text-uppercase font-weight-bold">
               Most Active Volunteers
             </h3>
             <hr class="my-2">
-            <p class="text-uppercase lead pb-2">
+            <p class="text-uppercase lead pb-lg-2">
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
-            <b-button
+            <b-btn
               variant="success"
               size="lg"
               @click="scrollToCollections">
               Get Started
-            </b-button>
+            </b-btn>
           </div>
-          <div class="col-lg-5 offset-lg-1 hidden-md-down">
+          <div class="col-lg-5 mx-auto d-none d-lg-block">
             <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
             <span id="wreath"></span>
           </div>
@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="row text-center mt-2">
-          <div class="col-sm-12 col-lg-5 offset-lg-1 push-lg-6">
+          <div class="col-sm-12 col-lg-6 ml-lg-auto">
             <b-btn
               variant="black-underline"
               v-b-modal="leaderboardModalId">
@@ -110,7 +110,7 @@
     <section
       id="publications"
       v-if="publications.length"
-      class="bg-faded">
+      class="bg-light">
       <div class="container pt-4 pb-5">
         <h2 class="my-1">Publications</h2>
         <p class="lead mb-2">
@@ -238,7 +238,7 @@ export default {
 
   #app-hero {
     height: 500px;
-    top: 50px;
+    top: $app-navbar-height;
     width: auto;
     overflow: hidden;
     position: relative;
@@ -275,7 +275,7 @@ export default {
   }
 
   #top-users {
-    color: $gray-dark;
+    color: $gray-1000;
   }
 
   .stat-row {
@@ -299,17 +299,17 @@ export default {
     flex: 1 1 auto;
 
     &:nth-child(1) {
-      border-color: rgba($brand-success, 0.8);
+      border-color: rgba($green, 0.8);
       border-bottom-color: transparent;
     }
 
     &:nth-child(2) {
-      border-color: rgba($brand-info, 0.8);
+      border-color: rgba($blue, 0.8);
       border-bottom-color: transparent;
     }
 
     &:nth-child(3) {
-      border-color: rgba($brand-warning, 0.8);
+      border-color: rgba($orange, 0.8);
       border-bottom-color: transparent;
     }
 

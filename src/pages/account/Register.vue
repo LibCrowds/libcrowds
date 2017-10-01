@@ -1,9 +1,9 @@
 <template>
   <div id="register">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 mx-auto">
         <card-form
-          :header="'Register'"
+          header="Register"
           :lead="lead"
           :submitText="submitText"
           :form="form"

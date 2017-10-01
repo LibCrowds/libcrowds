@@ -3,16 +3,16 @@
     <div class="row">
       <div class="col-sm-12 col-lg-6">
         <card-form
-          :header="'New Publication'"
+          header="New Publication"
           :submitText="'Submit'"
           :form="form"
           @success="refreshCurrentPublications">
         </card-form>
       </div>
-      <div class="hidden-md-down col-lg-6">
+      <div class="d-none d-lg-block col-lg-6">
         <b-card
-          class="bg-faded"
-          :header="'Preview'">
+          class="bg-light"
+          header="Preview">
           <publication-card
             show-placeholders
             :publication="form.model">
@@ -23,8 +23,8 @@
     <div class="row">
       <div class="col-sm-12 mt-3">
         <b-card
-          no-block
-          :header="'Current Publications'">
+          no-body
+          header="Current Publications">
           <b-table
             hover
             show-empty
@@ -37,12 +37,12 @@
             </template>
 
             <template slot="action" scope="publication">
-              <b-button
+              <b-btn
                 variant="danger"
                 size="sm"
                 @click="deletePublication(publication.item.id)">
                 Delete
-              </b-button>
+              </b-btn>
             </template>
 
           </b-table>
@@ -90,12 +90,25 @@ export default {
       },
       table: {
         fields: {
-          id: { label: 'ID' },
-          title: { label: 'Title' },
-          body: { label: 'Body' },
-          created: { label: 'Created' },
-          user_id: { label: 'User ID' },
-          action: { label: 'Action' }
+          id: {
+            label: 'ID',
+            class: 'text-center'
+          },
+          title: {
+            label: 'Title'
+          },
+          body: {
+            label: 'Body',
+            class: 'd-none d-xl-table-cell'
+          },
+          created: {
+            label: 'Created',
+            class: 'text-center'
+          },
+          action: {
+            label: 'Action',
+            class: 'text-center'
+          }
         }
       }
     }

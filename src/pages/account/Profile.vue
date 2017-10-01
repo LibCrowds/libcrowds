@@ -14,7 +14,7 @@
             v-if="user"
             class="mb-3"
             :user="user">
-            <b-button
+            <b-btn
               v-if="isCurrentUser"
               block
               variant="success"
@@ -25,7 +25,7 @@
                 }
               }">
               Settings
-            </b-button>
+            </b-btn>
           </user-profile-card>
         </div>
         <div class="col-lg-8">
@@ -35,7 +35,7 @@
             v-if="isCurrentUser">
           </user-favourites-card>
 
-          <b-card no-block :header="'Contributions'">
+          <b-card no-body header="Contributions">
             <b-table
               hover
               striped
@@ -113,6 +113,7 @@ export default {
      *   The data.
      */
     setData (data) {
+      console.log(data)
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects

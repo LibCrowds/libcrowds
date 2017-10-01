@@ -1,37 +1,41 @@
 <template>
   <div class="social-media-buttons">
 
-    <b-tooltip content="Share on Facebook" triggers="hover">
       <b-btn
+        v-b-tooltip
+        title="Share on Facebook"
         variant="facebook"
+        :size="size"
         @click="share(facebookUrl, 980, 620)">
         <icon name="facebook"></icon>
       </b-btn>
-    </b-tooltip>
 
-    <b-tooltip content="Share on Twitter" triggers="hover">
       <b-btn
+        v-b-tooltip
+        title="Share on Twitter"
         variant="twitter"
+        :size="size"
         @click="share(twitterUrl, 450, 550)">
         <icon name="twitter"></icon>
       </b-btn>
-    </b-tooltip>
 
-    <b-tooltip content="Share on Google Plus" triggers="hover">
       <b-btn
+        v-b-tooltip
+        title="Share on Google Plus"
         variant="googleplus"
+        :size="size"
         @click="share(googleplusUrl, 510, 725)">
         <icon name="google-plus"></icon>
       </b-btn>
-    </b-tooltip>
 
-    <b-tooltip content="Share on LinkedIn" triggers="hover">
       <b-btn
+        v-b-tooltip
+        title="Share on LinkedIn"
         variant="linkedin"
+        :size="size"
         @click="share(linkedinUrl, 510, 520)">
         <icon name="linkedin"></icon>
       </b-btn>
-    </b-tooltip>
 
   </div>
 </template>
@@ -63,6 +67,10 @@ export default {
     tweet: {
       type: String,
       default: `Crowdsourcing from ${siteConfig.company}`
+    },
+    size: {
+      type: String,
+      default: ''
     }
   },
 

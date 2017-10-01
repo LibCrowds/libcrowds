@@ -1,4 +1,8 @@
 .card {
+  .card-body {
+    overflow-y: auto;
+  }
+
   .card-header {
     font-family: $headings-font-family;
     background-color: $white;

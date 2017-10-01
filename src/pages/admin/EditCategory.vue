@@ -2,8 +2,8 @@
   <div id="admin-categories">
     <card-form
       show-cancel
-      :header="'Edit Category'"
-      :submitText="'Update'"
+      header="Edit Category"
+      submit-text="Update"
       :form="form"
       class="mb-4"
       @success="onSuccess"

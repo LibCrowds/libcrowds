@@ -1,5 +1,5 @@
 <template>
-  <b-card :header="'Privacy Policy'">
+  <b-card header="Privacy Policy">
     <p>
       Please read this Privacy Policy (“Privacy Policy”) carefully.
     </p>

@@ -1,5 +1,5 @@
 <template>
-  <b-card :header="'Cookies Policy'">
+  <b-card header="Cookies Policy">
     <p>
       {{ siteConfig.brand }} uses cookies to make our website easier for you to use
       and improve your overall experience, distinguish you from other users and

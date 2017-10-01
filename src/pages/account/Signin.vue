@@ -1,11 +1,11 @@
 <template>
   <div id="signin">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 mx-auto">
         <card-form
-          :header="'Signin'"
+          header="Signin"
           :lead="lead"
-          :submitText="'Sign in'"
+          submit-text="Sign in"
           :form="form"
           @success="onSuccess">
 
@@ -18,33 +18,33 @@
             <div class="row-btn-social">
 
               <div v-if="auth.facebook">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="facebook"
                   @click="redirect('facebook')">
                   <icon name="facebook"></icon>
-                  <span class="ml-1 hidden-sm-down">Facebook</span>
-                </b-button>
+                  <span class="ml-1 d-none d-sm-block">Facebook</span>
+                </b-btn>
               </div>
 
               <div v-if="auth.google">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="googleplus"
                   @click="redirect('google')">
                   <icon name="google"></icon>
-                  <span class="ml-1 hidden-sm-down">Google</span>
-                </b-button>
+                  <span class="ml-1 d-none d-sm-block">Google</span>
+                </b-btn>
               </div>
 
               <div v-if="auth.twitter">
-                <b-button
+                <b-btn
                   class="mx-1"
                   variant="twitter"
                   @click="redirect('twitter')">
                   <icon name="twitter"></icon>
-                  <span class="ml-1 hidden-sm-down">Twitter</span>
-                </b-button>
+                  <span class="ml-1 d-none d-sm-block">Twitter</span>
+                </b-btn>
               </div>
 
             </div>
@@ -176,10 +176,6 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-
-    @include media-breakpoint-up(md) {
-      justify-content: space-around;
-    }
 
     .btn {
       @include hover-focus;

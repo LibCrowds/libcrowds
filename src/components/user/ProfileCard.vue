@@ -1,5 +1,5 @@
 <template>
-  <b-card class="user-card" no-block>
+  <b-card class="user-card" no-body>
 
     <div class="avatar-background">
       <user-avatar
@@ -8,7 +8,7 @@
       </user-avatar>
     </div>
 
-    <div id="user-details" class="card-block">
+    <div id="user-details" class="card-body">
       <div class="card-title">
         <h2>{{ user.name }}</h2>
       </div>
@@ -23,7 +23,7 @@
         </ul>
       </div>
     </div>
-    <div class="card-block">
+    <div class="card-body">
       <slot></slot>
     </div>
   </div>
@@ -57,13 +57,13 @@ export default {
 .card.user-card {
   .avatar-background {
     text-align: center;
-    padding-top: $spacer-y* 2;
-    padding-left: $spacer-x * 2;
-    padding-right: $spacer-x * 2;
+    padding-top: $spacer * 2;
+    padding-left: $spacer * 2;
+    padding-right: $spacer * 2;
     background:
-      linear-gradient(to bottom, rgba($brand-info, 0) 0%,
-      rgba($brand-info, 0) calc(50% + (#{$spacer-y} * 1)),
-      $white calc(50% + (#{$spacer-y} * 1)), $white 100% ),
+      linear-gradient(to bottom, rgba($blue, 0) 0%,
+      rgba($blue, 0) calc(50% + (#{$spacer} * 1)),
+      $white calc(50% + (#{$spacer} * 1)), $white 100% ),
       url('../../assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;

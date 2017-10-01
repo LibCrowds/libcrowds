@@ -7,6 +7,17 @@
     :fixed="navType.fixed">
     <div class="container">
 
+      <b-link class="navbar-brand"
+        :to="{
+          name: 'collection-home',
+          params: {
+            collectionName: collectionConfig.key
+          }
+        }"
+        @click.native="scrollToTop">
+        <span>{{ collectionConfig.name }}</span>
+      </b-link>
+
       <button
         @click="toggleCollapsibleSidebar"
         ref="hamburger"
@@ -25,17 +36,6 @@
           <span class="hamburger-inner"></span>
         </span>
       </button>
-
-      <b-link class="navbar-brand"
-        :to="{
-          name: 'collection-home',
-          params: {
-            collectionName: collectionConfig.key
-          }
-        }"
-        @click.native="scrollToTop">
-        <span>{{ collectionConfig.name }}</span>
-      </b-link>
 
       <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
@@ -198,7 +198,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'inverse'
+      default: 'dark'
     },
     invertable: {
       type: Boolean,
@@ -260,12 +260,12 @@ export default {
         for (let b of bounds) {
           if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
             document.querySelector('.navbar').classList.add('navbar-light')
-            document.querySelector('.navbar').classList.remove('navbar-inverse')
+            document.querySelector('.navbar').classList.remove('navbar-dark')
             return
           }
         }
         document.querySelector('.navbar').classList.remove('navbar-light')
-        document.querySelector('.navbar').classList.add('navbar-inverse')
+        document.querySelector('.navbar').classList.add('navbar-dark')
       },
       10
     ),
@@ -384,7 +384,6 @@ export default {
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 #collection-navbar {
-  color: $white;
   z-index: 200;
   font-family: $font-family-base;
   font-weight: 500;
@@ -412,7 +411,7 @@ export default {
     margin-right: 1rem;
 
     @include media-breakpoint-up(sm) {
-      font-size: $font-size-h3;
+      font-size: $h3-font-size;
     }
   }
 
@@ -441,7 +440,7 @@ export default {
 
     .nav-item {
       font-size: $font-size-sm;
-      margin-left: calc(2 * #{$nav-item-inline-spacer});
+      margin-left: 2rem;
       margin-right: 0;
       position: relative;
 
@@ -452,7 +451,7 @@ export default {
         width: 100%;
         height: 2px;
         content: '';
-        background-color: $brand-primary;
+        background-color: $red;
         opacity: 0;
       }
 
@@ -471,7 +470,7 @@ export default {
           &:focus,
           &:hover,
           &.active {
-            color: $brand-primary;
+            color: $red;
           }
         }
 
@@ -528,7 +527,7 @@ export default {
   .nav-item:not(.nav-button) .nav-link:focus,
   .nav-item:not(.nav-button) .nav-link:hover,
   .nav-item:not(.nav-button) .nav-link.active {
-    color: $brand-primary !important;
+    color: $red !important;
     background-color: transparent;
   }
 
@@ -537,9 +536,6 @@ export default {
     padding: 0;
     display: flex;
     flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    flex: 1 1 auto;
     height: 100%;
 
     @include media-breakpoint-up(lg) {
@@ -547,8 +543,8 @@ export default {
     }
   }
 
-  &.navbar-inverse {
-    @extend .navbar-inverse;
+  &.navbar-dark {
+    @extend .navbar-dark;
     background-color: transparent;
 
     .hamburger-inner,
@@ -560,11 +556,11 @@ export default {
 
   &.navbar-light {
     background: $white;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-300;
 
     .nav-item.nav-button {
       transition: border-color 400ms;
-      border-color: $gray-light;
+      border-color: $gray-600;
     }
   }
 
@@ -580,7 +576,7 @@ export default {
       z-index: 10;
       top: 0;
       left: 0;
-      background-color: $brand-inverse;
+      background-color: $gray-1100;
       overflow-x: hidden;
       overflow-y: auto;
       text-align: center;
@@ -612,7 +608,7 @@ export default {
           color: $white;
 
           @include hover-focus {
-            color: $brand-primary;
+            color: $red;
           }
         }
 
@@ -622,11 +618,22 @@ export default {
         }
 
         .dropdown-menu {
+          position: relative;
           display: block;
           background: transparent;
           text-align: center;
           padding: 0;
-          margin: 0;
+          margin-left: auto;
+          margin-left: auto;
+          min-width: auto;
+          border: none;
+
+          .dropdown-item {
+            @include hover-focus {
+              outline: 0;
+              background: transparent;
+            }
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <card-form
-    :header="'Security Settings'"
-    :submitText="'Reset Password'"
+    header="Security Settings"
+    submit-text="Reset Password"
     :form="form">
   </card-form>
 </template>

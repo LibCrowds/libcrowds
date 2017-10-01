@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     class="project-card">
     <router-link
       :to="{
@@ -16,7 +16,7 @@
       </div>
     </router-link>
 
-    <div class="card-block project-details p-0">
+    <div class="card-body project-details p-0">
       <div class="card-title mb-0">
         <router-link
           :to="{
@@ -32,8 +32,8 @@
         <div>
           <b-btn
             v-b-modal="statsModalId"
-            class="project-stats-btn hidden-md-down"
-            variant="secondary">
+            class="project-stats-btn d-none d-lg-block"
+            variant="info">
             Stats
             <icon name="bar-chart"></icon>
           </b-btn>
@@ -46,7 +46,7 @@
       <div class="progress-container" :id="progressId"></div>
 
       <div class="card-footer mt-1 px-2 py-1">
-        <span class="card-stat text-muted mb-2 mb-lg-0">
+        <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
           {{ project.overall_progress }}% complete
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
@@ -61,8 +61,8 @@
           <b-btn
             block
             v-b-modal="statsModalId"
-            class="hidden-lg-up mb-1"
-            variant="secondary">
+            class="d-lg-none mb-1"
+            variant="info">
             Stats
           </b-btn>
           <project-contrib-button
@@ -142,7 +142,7 @@ export default {
   text-align: center;
   flex-direction: column;
   overflow-y: hidden;
-  margin-bottom: $spacer-y;
+  margin-bottom: $spacer;
   margin-left: auto;
   margin-right: auto;
   max-width: 300px;
@@ -154,7 +154,7 @@ export default {
     flex-direction: row;
   }
 
-  .card-block {
+  .card-body {
 
     @include media-breakpoint-up(lg) {
       flex: 1 1 0%;
@@ -242,7 +242,7 @@ export default {
   }
 
   .card-stat {
-    font-size: $font-size-xs;
+    font-size: 0.75rem;
     display: flex;
     align-items: center;
 
@@ -253,12 +253,13 @@ export default {
 
   .project-stats-btn {
     display: flex;
-    border-left: 1px solid $gray-lighter;
-    border-bottom: 1px solid $gray-lighter;
+    border-left: 1px solid $gray-300;
+    border-bottom: 1px solid $gray-300;
     border-top: 0;
     border-right: 0;
-    color: $gray-light;
-    font-size: $font-size-xs;
+    background: $white;
+    color: $gray-600;
+    font-size: 0.75rem;
     text-transform: uppercase;
 
     svg {

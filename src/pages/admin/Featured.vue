@@ -1,21 +1,18 @@
 <template>
   <div id="admin-featured">
-    <b-card header="Set Featured Projects">
-      <div class="row">
-        <div class="col-md-4">
-          <category-list-chooser
-            v-if="categories.length"
-            header="Categories"
-            :categories="categories"
-            @change="onCategoryChange">
-          </category-list-chooser>
-        </div>
-        <div class="col-md-8">
-          <b-card
-            no-block
-            v-if="activeCategory"
-            :header="`Projects - ${activeCategory.name}`">
-
+    <b-card no-body header="Set Featured Projects">
+      <b-card-body class="p-0">
+        <b-row no-gutters>
+          <b-col lg="4">
+            <category-list-chooser
+              v-if="categories.length"
+              class="nested-left nested-lg"
+              header="Categories"
+              :categories="categories"
+              @change="onCategoryChange">
+            </category-list-chooser>
+          </b-col>
+          <b-col lg="8" class="p-2">
             <transition
               name="fade"
               mode="out-in"
@@ -24,6 +21,7 @@
                 hover
                 striped
                 show-empty
+                v-if="activeCategory"
                 :items="categoryProjects"
                 :fields="tableFields">
                 <template slot="overall_progress" scope="project">
@@ -39,13 +37,13 @@
                 </template>
               </b-table>
             </transition>
-
-          </b-card>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-card-body>
     </b-card>
+
     <b-card
-      no-block
+      no-body
       class="mt-4"
       header="Current Featured Projects">
       <b-table
@@ -82,10 +80,21 @@ export default {
       csrf: '',
       activeCategory: null,
       tableFields: {
-        name: { label: 'Name' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
+        name: {
+          label: 'Name'
+        },
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center d-none d-xl-table-cell'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-xl-table-cell'
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
       }
     }
   },

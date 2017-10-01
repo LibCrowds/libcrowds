@@ -21,6 +21,12 @@ import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
+  data: function () {
+    return {
+      collectionName: this.$route.params.collectionname
+    }
+  },
+
   metaInfo () {
     return {
       titleTemplate: `%s - ${this.collectionConfig.name} | ${siteConfig.brand}`,
@@ -58,7 +64,7 @@ export default {
       }
     },
     collectionConfig: function () {
-      return siteConfig.collections[this.$route.params.collectionname]
+      return siteConfig.collections[this.collectionName]
     }
   }
 }

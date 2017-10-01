@@ -1,8 +1,8 @@
 <template>
   <avatar-form
     v-if="!loading"
-    :header="'Avatar Settings'"
-    :submitText="'Update Avatar'"
+    header="Avatar Settings"
+    submit-text="Update Avatar"
     :form="form">
   </avatar-form>
 </template>

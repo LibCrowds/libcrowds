@@ -1,6 +1,7 @@
 <template>
   <b-modal
     :id="modalId"
+    ok-only
     title="Project Stats"
     size="lg"
     @shown="fetchData">
