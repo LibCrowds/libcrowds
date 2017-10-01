@@ -198,7 +198,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'inverse'
+      default: 'dark'
     },
     invertable: {
       type: Boolean,
@@ -260,12 +260,12 @@ export default {
         for (let b of bounds) {
           if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
             document.querySelector('.navbar').classList.add('navbar-light')
-            document.querySelector('.navbar').classList.remove('navbar-inverse')
+            document.querySelector('.navbar').classList.remove('navbar-dark')
             return
           }
         }
         document.querySelector('.navbar').classList.remove('navbar-light')
-        document.querySelector('.navbar').classList.add('navbar-inverse')
+        document.querySelector('.navbar').classList.add('navbar-dark')
       },
       10
     ),
@@ -405,7 +405,6 @@ export default {
   }
 
   .navbar-brand {
-    color: $white;
     font-family: $headings-font-family;
     font-weight: 300;
     transition: color 200ms;
@@ -482,7 +481,6 @@ export default {
       }
 
       .nav-link {
-        color: $white;
         transition: color 200ms;
         padding: .35rem 0;
 
@@ -545,8 +543,8 @@ export default {
     }
   }
 
-  &.navbar-inverse {
-    @extend .navbar-inverse;
+  &.navbar-dark {
+    @extend .navbar-dark;
     background-color: transparent;
 
     .hamburger-inner,
