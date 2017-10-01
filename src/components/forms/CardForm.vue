@@ -38,7 +38,7 @@
       <span>
         <b-btn
           v-if="showCancel"
-          variant="outline-secondary"
+          variant="outline-dark"
           @click="cancel">
           Cancel
         </b-btn>
@@ -212,10 +212,6 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .btn {
-    transition: all 2s;
   }
 
   .sk-three-bounce {
