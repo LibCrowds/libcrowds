@@ -154,8 +154,7 @@ export default {
   components: {
     LeaderboardModal,
     UserAvatar,
-    CollectionCard,
-    PublicationCard
+    CollectionCard
   },
 
   computed: {

@@ -2,7 +2,7 @@ import DashboardLayout from '@/layouts/Dashboard'
 
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Users from '@/pages/admin/Users'
-import Publications from '@/pages/admin/Publications'
+import Announcements from '@/pages/admin/Announcements'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
@@ -43,10 +43,10 @@ export default [
           }
         },
         {
-          id: 'publications',
-          label: 'Publications',
+          id: 'announcements',
+          label: 'Announcements',
           link: {
-            name: 'admin-publications'
+            name: 'admin-announcements'
           }
         },
         {
@@ -71,8 +71,8 @@ export default [
       },
       {
         path: 'announcement',
-        name: 'admin-publications',
-        component: Publications
+        name: 'admin-announcements',
+        component: Announcements
       },
       {
         path: 'categories',
