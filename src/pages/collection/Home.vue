@@ -55,7 +55,7 @@
         <hr class="mt-3 w-75 sr">
         <b-btn
           variant="outline-dark"
-          class="mt-md-1 sr"
+          class="mt-md-2 sr"
           size="lg"
           :to="{
             name: 'collection-about',
