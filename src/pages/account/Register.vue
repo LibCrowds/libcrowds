@@ -4,16 +4,28 @@
       <div class="col-lg-8 mx-auto">
         <card-form
           header="Register"
-          :lead="lead"
           :submitText="submitText"
           :form="form"
           @success="onSuccess">
-
+          <div
+            slot="top"
+            v-if="auth.facebook || auth.twitter || auth.google">
+            <p class="lead text-center">
+              Sign up with
+            </p>
+            <oauth-buttons
+              :facebook="auth.facebook"
+              :google="auth.google"
+              :twitter="auth.twitter">
+            </oauth-buttons>
+            <p class="lead text-center mt-2">
+              or
+            </p>
+          </div>
           <div slot="footer-left">
             <p class="mb-0 mr-3">
               <small>
-                By clicking on "{{ submitText }}" you are agreeing to
-                the
+                By signing up you are agreeing to the
                 <router-link
                   :to="{
                     name: 'help-tos'
@@ -29,18 +41,6 @@
                 </router-link>
               </small>
             </p>
-          </div>
-          <div
-            slot="bottom"
-            v-if="auth.facebook || auth.twitter || auth.google">
-            <p class="lead text-center">
-              or sign in with
-            </p>
-            <oauth-buttons
-              :facebook="auth.facebook"
-              :google="auth.google"
-              :twitter="auth.twitter">
-            </oauth-buttons>
           </div>
         </card-form>
       </div>
@@ -91,11 +91,11 @@ export default {
               label: 'Password',
               type: 'input',
               inputType: 'password',
-              placeholder: 'Create a password'
+              placeholder: 'Choose a password'
             },
             {
               model: 'confirm',
-              label: 'Password',
+              label: 'Confirm Password',
               type: 'input',
               inputType: 'password',
               placeholder: 'Confirm your password'
@@ -103,8 +103,7 @@ export default {
           ]
         }
       },
-      auth: {},
-      lead: `Create an account for ${siteConfig.brand}`
+      auth: {}
     }
   },
 
