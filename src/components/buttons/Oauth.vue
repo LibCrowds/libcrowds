@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import siteConfig from '@/siteConfig'
+
 export default {
   props: {
     facebook: {
