@@ -3,6 +3,7 @@ import DashboardLayout from '@/layouts/Dashboard'
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Users from '@/pages/admin/Users'
 import Announcements from '@/pages/admin/Announcements'
+import NewAnnouncement from '@/pages/admin/NewAnnouncement'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
@@ -70,9 +71,14 @@ export default [
         component: Users
       },
       {
-        path: 'announcement',
+        path: 'announcements',
         name: 'admin-announcements',
         component: Announcements
+      },
+      {
+        path: 'announcement/new',
+        name: 'admin-new-announcement',
+        component: NewAnnouncement
       },
       {
         path: 'categories',

@@ -1,81 +1,54 @@
 <template>
   <div id="admin-announcements">
-    <div class="row">
-      <div class="col-sm-12 col-lg-6">
-        <card-form
-          header="New Announcement"
-          :submitText="'Submit'"
-          :form="form"
-          @success="refreshCurrentAnnouncements">
-        </card-form>
+    <b-card
+      no-body>
+      <div
+        slot="header"
+        class="mb-0 d-flex align-items-center justify-content-between">
+        <h6 class="mb-0">Announcements</h6>
+        <b-btn
+          variant="success"
+          size="sm"
+          :to="{
+            name: 'admin-new-announcement'
+          }">
+          New
+        </b-btn>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 mt-3">
-        <b-card
-          no-body
-          header="Current Announcements">
-          <b-table
-            hover
-            show-empty
-            :items="announcements"
-            :fields="table.fields">
 
-            <template slot="created" scope="announcement">
-              {{ announcement.item.created | formatDate }}
-            </template>
+      <b-table
+        hover
+        show-empty
+        :items="announcements"
+        :fields="table.fields">
 
-            <template slot="action" scope="announcement">
-              <b-btn
-                variant="danger"
-                size="sm"
-                @click="deleteAnnouncement(announcement.item.id)">
-                Delete
-              </b-btn>
-            </template>
+        <template slot="created" scope="announcement">
+          {{ announcement.item.created | formatDate }}
+        </template>
 
-          </b-table>
-        </b-card>
-      </div>
-    </div>
+        <template slot="action" scope="announcement">
+          <b-btn
+            variant="danger"
+            size="sm"
+            @click="deleteAnnouncement(announcement.item.id)">
+            Delete
+          </b-btn>
+        </template>
+
+      </b-table>
+    </b-card>
   </div>
 </template>
 
 <script>
 import swal from 'sweetalert2'
-import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
-import CardForm from '@/components/forms/CardForm'
 
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
       announcements: [],
-      form: {
-        endpoint: '/admin/announcement/new',
-        method: 'post',
-        model: {},
-        schema: {
-          fields: [
-            {
-              model: 'title',
-              label: 'Title',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Choose a title'
-            },
-            {
-              model: 'body',
-              label: 'Body',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Write an introduction (use Markdown)'
-            }
-          ]
-        }
-      },
       table: {
         fields: {
           id: {
@@ -108,10 +81,6 @@ export default {
     }
   },
 
-  components: {
-    CardForm
-  },
-
   methods: {
     /**
      * Set core data.
@@ -119,7 +88,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      this.form.model = data.form
       this.announcements = data.announcements
     },
 
@@ -171,13 +139,8 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    let data = {}
-    pybossaApi.get('/admin/announcement/new').then(r => {
-      data = r.data
-      return pybossaApi.get('/admin/announcement')
-    }).then(r => {
-      data.announcements = r.data.announcements
-      next(vm => vm.setData(data))
+    pybossaApi.get('/admin/announcement').then(r => {
+      next(vm => vm.setData(r.data))
     })
   }
 }
