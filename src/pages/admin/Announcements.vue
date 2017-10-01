@@ -1,46 +1,35 @@
 <template>
-  <div id="admin-publications">
+  <div id="admin-announcements">
     <div class="row">
       <div class="col-sm-12 col-lg-6">
         <card-form
-          header="New Publication"
+          header="New Announcement"
           :submitText="'Submit'"
           :form="form"
-          @success="refreshCurrentPublications">
+          @success="refreshCurrentAnnouncements">
         </card-form>
-      </div>
-      <div class="d-none d-lg-block col-lg-6">
-        <b-card
-          class="bg-light"
-          header="Preview">
-          <publication-card
-            show-placeholders
-            :publication="form.model">
-          </publication-card>
-        </b-card>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 mt-3">
         <b-card
           no-body
-          header="Current Publications">
+          header="Current Announcements">
           <b-table
             hover
             show-empty
-            :items="publications"
-            :fields="table.fields"
-            empty-text="No publications have been linked to yet">
+            :items="announcements"
+            :fields="table.fields">
 
-            <template slot="created" scope="publication">
-              {{ publication.item.created | formatDate }}
+            <template slot="created" scope="announcement">
+              {{ announcement.item.created | formatDate }}
             </template>
 
-            <template slot="action" scope="publication">
+            <template slot="action" scope="announcement">
               <b-btn
                 variant="danger"
                 size="sm"
-                @click="deletePublication(publication.item.id)">
+                @click="deleteAnnouncement(announcement.item.id)">
                 Delete
               </b-btn>
             </template>
@@ -58,13 +47,12 @@ import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
-import PublicationCard from '@/components/publications/PublicationCard'
 
 export default {
   data: function () {
     return {
       siteConfig: siteConfig,
-      publications: [],
+      announcements: [],
       form: {
         endpoint: '/admin/announcement/new',
         method: 'post',
@@ -116,13 +104,12 @@ export default {
 
   metaInfo () {
     return {
-      title: `Manage Publications`
+      title: `Manage Announcements`
     }
   },
 
   components: {
-    CardForm,
-    PublicationCard
+    CardForm
   },
 
   methods: {
@@ -133,18 +120,18 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
-      this.publications = data.publications
+      this.announcements = data.announcements
     },
 
     /**
-     * Delete a publication.
+     * Delete an announcement.
      * @param {Number} id
-     *   The publication ID.
+     *   The announcement ID.
      */
-    deletePublication (id) {
+    deleteAnnouncement (id) {
       swal({
-        title: 'Delete Publication',
-        text: 'Are you sure you want to delete this publication?',
+        title: 'Delete Announcement',
+        text: 'Are you sure you want to delete this announcement?',
         type: 'warning',
         showCancelButton: true,
         showLoaderOnConfirm: true,
@@ -162,7 +149,7 @@ export default {
           })
         }
       }).then(r => {
-        this.refreshCurrentPublications()
+        this.refreshCurrentAnnouncements()
         swal(
           capitalize(r.data.status),
           r.data.flash,
@@ -174,11 +161,11 @@ export default {
     },
 
     /**
-     * Refresh current publications data.
+     * Refresh current announcements data.
      */
-    refreshCurrentPublications () {
+    refreshCurrentAnnouncements () {
       pybossaApi.get('/admin/announcement').then(r => {
-        this.publications = r.data.announcements
+        this.announcements = r.data.announcements
       })
     }
   },
@@ -189,7 +176,7 @@ export default {
       data = r.data
       return pybossaApi.get('/admin/announcement')
     }).then(r => {
-      data.publications = r.data.announcements
+      data.announcements = r.data.announcements
       next(vm => vm.setData(data))
     })
   }
