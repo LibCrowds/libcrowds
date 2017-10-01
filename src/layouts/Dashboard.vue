@@ -17,7 +17,9 @@
       </dashboard-sidenav>
       <main>
         <div class="container py-4">
-          <router-view :currentUser="currentUser"></router-view>
+          <transition name="fade" mode="out-in" appear>
+            <router-view :currentUser="currentUser"></router-view>
+          </transition>
         </div>
       </main>
       <dashboard-footer></dashboard-footer>
@@ -74,6 +76,16 @@ export default {
       float: right;
       width: calc(100% - 260px);
     }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 200ms ease-in-out;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
   }
 }
 </style>
