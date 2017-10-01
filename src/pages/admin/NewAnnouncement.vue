@@ -2,8 +2,10 @@
   <card-form
     id="admin-new-announcement"
     header="New Announcement"
+    show-cancel
     :form="form"
-    @success="onSuccess">
+    @success="onSuccessOrCancel"
+    @cancel="onSuccessOrCancel">
   </card-form>
 </template>
 
@@ -60,11 +62,9 @@ export default {
     },
 
     /**
-     * Handle success.
-     * @param {Object} data
-     *   The response data
+     * Handle success or cancel.
      */
-    onSuccess (data) {
+    onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
     }
   },
