@@ -28,6 +28,17 @@
 
         <template slot="action" scope="announcement">
           <b-btn
+            variant="outline-dark"
+            size="sm"
+            :to="{
+              name: 'admin-update-announcement',
+              params: {
+                id: announcement.item.id
+              }
+            }">
+            Update
+          </b-btn>
+          <b-btn
             variant="danger"
             size="sm"
             @click="deleteAnnouncement(announcement.item.id)">

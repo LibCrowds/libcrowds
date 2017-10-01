@@ -4,6 +4,7 @@ import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Users from '@/pages/admin/Users'
 import Announcements from '@/pages/admin/Announcements'
 import NewAnnouncement from '@/pages/admin/NewAnnouncement'
+import UpdateAnnouncement from '@/pages/admin/UpdateAnnouncement'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
@@ -74,6 +75,11 @@ export default [
         path: 'announcements',
         name: 'admin-announcements',
         component: Announcements
+      },
+      {
+        path: 'announcement/:id/update',
+        name: 'admin-update-announcement',
+        component: UpdateAnnouncement
       },
       {
         path: 'announcement/new',
