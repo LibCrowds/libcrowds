@@ -6,7 +6,7 @@
           <b-col lg="4">
             <category-list-chooser
               header="Categories"
-              class="open-project-chooser"
+              class="nested-left nested-lg"
               v-if="categories.length"
               :categories="categories"
               @change="onCategoryChange">
@@ -180,17 +180,6 @@ export default {
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
-  }
-
-  .open-project-chooser {
-    border-right: none;
-    border-left: none;
-
-    @include media-breakpoint-up(lg) {
-      border-right: 1px solid $border-color;
-      border-top: none;
-      border-bottom: none;
-    }
   }
 }
 </style>

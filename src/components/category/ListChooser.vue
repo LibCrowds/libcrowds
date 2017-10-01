@@ -85,8 +85,23 @@ export default {
   max-height: 250px;
   overflow-y: auto;
 
-  @include media-breakpoint-up(xl) {
-    max-height: 100%;
+  &.nested-left {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      &.nested#{$infix} {
+        height: 100%;
+        max-height: 100%;
+        border-right: 1px solid $border-color;
+        border-bottom: none;
+      }
+    }
   }
 
   .card-header {
@@ -103,10 +118,6 @@ export default {
 
     &:first-child {
       border-top: none;
-    }
-
-    &:last-child {
-      border-bottom: none;
     }
   }
 
