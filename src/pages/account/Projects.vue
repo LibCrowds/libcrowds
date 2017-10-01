@@ -1,17 +1,18 @@
 <template>
   <div id="account-projects">
-    <div class="container my-5">
-      <b-card header="Open Project">
-        <div class="row">
-          <div class="col-lg-4">
+    <b-container class="my-5">
+      <b-card no-body header="Open Project">
+        <b-row no-gutters>
+          <b-col lg="4">
             <category-list-chooser
               header="Categories"
+              class="open-project-chooser"
               v-if="categories.length"
               :categories="categories"
               @change="onCategoryChange">
             </category-list-chooser>
-          </div>
-          <div class="col-lg-8">
+          </b-col>
+          <b-col class="p-2">
             <transition
               name="fade"
               mode="out-in"
@@ -39,10 +40,10 @@
                 </template>
               </b-table>
             </transition>
-          </div>
-        </div>
+          </b-col>
+        </b-row>
       </b-card>
-    </div>
+    </b-container>
   </div>
 </template>
 
@@ -168,6 +169,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/assets/style/main';
+
 #account-projects {
   .fade-enter-active,
   .fade-leave-active {
@@ -177,6 +180,17 @@ export default {
   .fade-enter,
   .fade-leave-to {
     opacity: 0;
+  }
+
+  .open-project-chooser {
+    border-right: none;
+    border-left: none;
+
+    @include media-breakpoint-up(lg) {
+      border-right: 1px solid $border-color;
+      border-top: none;
+      border-bottom: none;
+    }
   }
 }
 </style>

@@ -82,7 +82,7 @@ export default {
 
 #category-list-chooser {
   font-size: $font-size-sm;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
 
   @include media-breakpoint-up(xl) {
