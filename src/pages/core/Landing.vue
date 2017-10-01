@@ -107,25 +107,6 @@
       </div>
     </section>
 
-    <section
-      id="publications"
-      v-if="publications.length"
-      class="bg-light">
-      <div class="container pt-4 pb-5">
-        <h2 class="my-1">Publications</h2>
-        <p class="lead mb-2">
-          Articles, papers and blog posts about {{ siteConfig.brand }}.
-        </p>
-        <b-card-group columns>
-          <publication-card
-            v-for="publication in publications"
-            :key="publication.id"
-            :publication="publication">
-          </publication-card>
-        </b-card-group>
-      </div>
-    </section>
-
     <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
   </div>
 </template>
@@ -145,7 +126,6 @@ import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
-import PublicationCard from '@/components/publications/PublicationCard'
 
 export default {
   data: function () {
@@ -153,7 +133,6 @@ export default {
       siteConfig: siteConfig,
       stats: {},
       topUsers: [],
-      publications: [],
       leaderboardModalId: 'leaderboard-modal'
     }
   },
@@ -213,9 +192,6 @@ export default {
   created () {
     pybossaApi.get('stats/').then(r => {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
-    })
-    pybossaApi.get('/announcements/').then(r => {
-      this.publications = r.data.announcements
     })
     pybossaApi.get('/').then(r => {
       this.topUsers = r.data.top_users
