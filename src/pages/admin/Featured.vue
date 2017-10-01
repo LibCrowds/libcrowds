@@ -80,10 +80,21 @@ export default {
       csrf: '',
       activeCategory: null,
       tableFields: {
-        name: { label: 'Name' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
+        name: {
+          label: 'Name'
+        },
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center d-none d-xl-table-cell'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-xl-table-cell'
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
       }
     }
   },

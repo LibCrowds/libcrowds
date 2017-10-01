@@ -90,12 +90,25 @@ export default {
       },
       table: {
         fields: {
-          id: { label: 'ID' },
-          title: { label: 'Title' },
-          body: { label: 'Body' },
-          created: { label: 'Created' },
-          user_id: { label: 'User ID' },
-          action: { label: 'Action' }
+          id: {
+            label: 'ID',
+            class: 'text-center'
+          },
+          title: {
+            label: 'Title'
+          },
+          body: {
+            label: 'Body',
+            class: 'd-none d-xl-table-cell'
+          },
+          created: {
+            label: 'Created',
+            class: 'text-center'
+          },
+          action: {
+            label: 'Action',
+            class: 'text-center'
+          }
         }
       }
     }
