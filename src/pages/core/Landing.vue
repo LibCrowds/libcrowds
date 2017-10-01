@@ -115,7 +115,6 @@
 import jump from 'jump.js'
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
-import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'

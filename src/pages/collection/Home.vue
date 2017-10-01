@@ -198,11 +198,7 @@
 
 <script>
 import ScrollReveal from 'scrollreveal'
-import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/eye'
-import 'vue-awesome/icons/television'
-import 'vue-awesome/icons/list'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
