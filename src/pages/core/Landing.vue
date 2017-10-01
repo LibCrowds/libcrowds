@@ -53,7 +53,7 @@
               Most Active Volunteers
             </h3>
             <hr class="my-2">
-            <p class="text-uppercase lead pb-2">
+            <p class="text-uppercase lead pb-lg-2">
               To date, our top {{ topUsers.length }} volunteers have made
               {{ topUsersTaskRuns }} contributions!
             </p>
