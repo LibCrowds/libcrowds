@@ -18,7 +18,7 @@
               :google="auth.google"
               :twitter="auth.twitter">
             </oauth-buttons>
-            <p class="lead text-center mt-2">
+            <p class="lead text-center mt-2 mb-1">
               or
             </p>
           </div>
