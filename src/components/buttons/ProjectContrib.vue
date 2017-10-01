@@ -22,7 +22,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'md'
+      default: ''
     },
     variant: {
       type: String,
