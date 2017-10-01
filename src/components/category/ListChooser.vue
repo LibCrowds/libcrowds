@@ -10,7 +10,7 @@
         action
         v-b-toggle="`catlistitem-${category.id}`"
         :active="activeCategory === category"
-        @click.native="changeCategory(category)">
+        @click="changeCategory(category)">
         {{ category.name }}
         <b-collapse
           :visible="index == 0"
