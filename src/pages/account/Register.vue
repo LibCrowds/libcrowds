@@ -30,7 +30,18 @@
               </small>
             </p>
           </div>
-
+          <div
+            slot="bottom"
+            v-if="auth.facebook || auth.twitter || auth.google">
+            <p class="lead text-center">
+              or sign in with
+            </p>
+            <oauth-buttons
+              :facebook="auth.facebook"
+              :google="auth.google"
+              :twitter="auth.twitter">
+            </oauth-buttons>
+          </div>
         </card-form>
       </div>
     </div>
@@ -42,6 +53,7 @@ import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
+import OauthButtons from '@/components/buttons/Oauth'
 
 export default {
   data: function () {
@@ -109,7 +121,8 @@ export default {
   },
 
   components: {
-    CardForm
+    CardForm,
+    OauthButtons
   },
 
   methods: {
@@ -120,6 +133,7 @@ export default {
      */
     setData (data) {
       this.form.model = data.form
+      this.auth = data.auth
     },
 
     /**
@@ -143,8 +157,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
+    let data = {}
     pybossaApi.get('/account/register').then(r => {
-      next(vm => vm.setData(r.data))
+      data = r.data
+      return pybossaApi.get('/account/signin')
+    }).then(r => {
+      data.auth = r.data.auth
+      next(vm => vm.setData(data))
     })
   }
 }
