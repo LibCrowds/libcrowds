@@ -43,6 +43,7 @@
           </project-sorting-options>
 
           <social-media-buttons
+            size="sm"
             class="mt-3 d-none d-xl-block text-center">
           </social-media-buttons>
 
