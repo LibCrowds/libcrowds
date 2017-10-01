@@ -17,7 +17,7 @@ $orange:                           #E38D13 !default;
 $yellow:                           #ffc107 !default;
 $green:                            #408E40 !default;
 $teal:                             #20c997 !default;
-$cyan:                             #17a2b8 !default;
+$cyan:                             #03B5AA !default;
 
 $body-color:                       #202B35;
 
@@ -40,12 +40,9 @@ $googleplus:                       #D34836;
 $linkedin:                         #0E76A8;
 
 /* Links */
-$link-color:                       #03B5AA;
+$link-color:                       $cyan;
 $link-hover-color:                 darken($link-color, 5%);
 $link-hover-decoration:            underline;
-
-/* Components */
-$component-active-bg:              $blue;
 
 /* Buttons */
 $btn-border-radius:                0px;
@@ -57,22 +54,17 @@ $navbar-light-color:               rgba($black, .7);
 $app-navbar-height:                50px;
 
 /* Input */
-$input-padding-x:                  1.25rem;
-$input-padding-y:                  .75rem;
-$input-border-focus:               $blue;
-$custom-select-focus-border-color: lighten($blue, 25%);
+$input-btn-padding-x:              1.25rem;
+$input-btn-padding-y:              .75rem;
 
 /* Tables */
 $table-cell-padding:               .75rem 1.25rem;
-$table-bg-accent:                  darken($white, 3%);
-$table-bg-hover:                   darken($white, 5%);
-$table-border-color:               rgba($black, .075);
+$table-accent-bg:                  darken($white, 3%);
+$table-hover-bg:                   darken($white, 5%);
 
 /* Pagination */
 $pagination-color:                 $blue;
 $pagination-hover-color:           darken($blue, 10%);
-$pagination-active-bg:             $blue;
-$pagination-active-border:         $blue;
 
 /* Cards */
 $card-border-radius:               0px;
@@ -80,9 +72,6 @@ $card-columns-count:               2;
 
 /* Alerts */
 $alert-border-radius:              0;
-
-/* Forms */
-$form-group-margin-bottom:         1rem;
 
 /* List Groups */
 $list-group-border-radius:         0px;
@@ -96,7 +85,7 @@ $spacer:                           2.5rem;
 $modal-backdrop-opacity:           0.8;
 $modal-inner-padding:              0;
 $modal-dialog-margin-y-sm-up:      50px;
-$modal-backdrop-bg:                #EFEFEF;
+$modal-backdrop-bg:                $gray-100;
 
 /* Hamburger */
 $hamburger-hover-opacity:          100%;
