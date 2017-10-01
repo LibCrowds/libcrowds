@@ -1,35 +1,29 @@
 <template>
   <div id="oauth-buttons">
 
-    <div v-if="facebook">
-      <b-btn
-        class="mx-1"
-        variant="facebook"
-        @click="redirect('facebook')">
-        <icon name="facebook"></icon>
-        <span class="ml-1 d-none d-sm-block">Facebook</span>
-      </b-btn>
-    </div>
+    <b-btn
+      v-if="facebook"
+      variant="facebook"
+      @click="redirect('facebook')">
+      <icon name="facebook"></icon>
+      Facebook
+    </b-btn>
 
-    <div v-if="google">
-      <b-btn
-        class="mx-1"
-        variant="googleplus"
-        @click="redirect('google')">
-        <icon name="google"></icon>
-        <span class="ml-1 d-none d-sm-block">Google</span>
-      </b-btn>
-    </div>
+    <b-btn
+      v-if="google"
+      variant="googleplus"
+      @click="redirect('google')">
+      <icon name="google"></icon>
+      Google
+    </b-btn>
 
-    <div v-if="twitter">
-      <b-btn
-        class="mx-1"
-        variant="twitter"
-        @click="redirect('twitter')">
-        <icon name="twitter"></icon>
-        <span class="ml-1 d-none d-sm-block">Twitter</span>
-      </b-btn>
-    </div>
+    <b-btn
+      v-if="twitter"
+      variant="twitter"
+      @click="redirect('twitter')">
+      <icon name="twitter"></icon>
+      Twitter
+    </b-btn>
 
   </div>
 </template>
@@ -74,18 +68,29 @@ export default {
 
 #oauth-buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+
+  @include media-breakpoint-up (sm) {
+    flex-direction: row;
+  }
 
   .btn {
     @include hover-focus;
-    border-radius: 0;
-    color: $white;
-    height: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    color: $white;
+    margin: 0.25rem 0.5rem;
 
     @include hover-focus {
       color: $white;
+    }
+
+    @include media-breakpoint-up (sm) {
+      width: auto;
     }
 
     &.btn-twitter {
@@ -117,6 +122,7 @@ export default {
   svg {
     display: flex;
     height: 1.2rem;
+    margin-right: 0.5rem;
   }
 }
 </style>
