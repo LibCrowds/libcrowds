@@ -1,5 +1,5 @@
 <template>
-  <div class="oauth-buttons">
+  <div id="oauth-buttons">
 
     <div v-if="facebook">
       <b-btn
