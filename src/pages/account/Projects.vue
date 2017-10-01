@@ -2,46 +2,48 @@
   <div id="account-projects">
     <b-container class="my-5">
       <b-card no-body header="Open Project">
-        <b-row no-gutters>
-          <b-col lg="4">
-            <category-list-chooser
-              header="Categories"
-              class="nested-left nested-lg"
-              v-if="categories.length"
-              :categories="categories"
-              @change="onCategoryChange">
-            </category-list-chooser>
-          </b-col>
-          <b-col class="p-2">
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <b-table
-                v-if="projects.length"
-                responsive
-                striped
-                hover
-                show-empty
-                :items="projects"
-                :fields="tableFields">
-                <template slot="action" scope="project">
-                  <b-btn
-                    size="sm"
-                    variant="success"
-                    :to="{
-                      name: 'project-settings',
-                      params: {
-                        shortname: project.item.short_name
-                      }
-                    }">
-                    Open
-                  </b-btn>
-                </template>
-              </b-table>
-            </transition>
-          </b-col>
-        </b-row>
+        <b-card-body class="p-0">
+          <b-row no-gutters>
+            <b-col lg="4">
+              <category-list-chooser
+                header="Categories"
+                class="nested-left nested-lg"
+                v-if="categories.length"
+                :categories="categories"
+                @change="onCategoryChange">
+              </category-list-chooser>
+            </b-col>
+            <b-col class="p-2">
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <b-table
+                  v-if="projects.length"
+                  responsive
+                  striped
+                  hover
+                  show-empty
+                  :items="projects"
+                  :fields="tableFields">
+                  <template slot="action" scope="project">
+                    <b-btn
+                      size="sm"
+                      variant="success"
+                      :to="{
+                        name: 'project-settings',
+                        params: {
+                          shortname: project.item.short_name
+                        }
+                      }">
+                      Open
+                    </b-btn>
+                  </template>
+                </b-table>
+              </transition>
+            </b-col>
+          </b-row>
+        </b-card-body>
       </b-card>
     </b-container>
   </div>

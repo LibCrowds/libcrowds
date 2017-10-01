@@ -1,44 +1,45 @@
 <template>
   <div id="admin-featured">
-
     <b-card no-body header="Set Featured Projects">
-      <b-row no-gutters>
-        <b-col md="4">
-          <category-list-chooser
-            v-if="categories.length"
-            class="nested-left nested-md"
-            header="Categories"
-            :categories="categories"
-            @change="onCategoryChange">
-          </category-list-chooser>
-        </b-col>
-        <b-col class="p-2">
-          <transition
-            name="fade"
-            mode="out-in"
-            appear>
-            <b-table
-              hover
-              striped
-              show-empty
-              v-if="activeCategory"
-              :items="categoryProjects"
-              :fields="tableFields">
-              <template slot="overall_progress" scope="project">
-                {{ project.item.overall_progress }}%
-              </template>
-              <template slot="action" scope="project">
-                <b-btn
-                  :variant="project.item.featured ? 'warning' : 'success'"
-                  size="sm"
-                  @click="toggleFeatured(project.item)">
-                  {{ getButtonText(project.item.featured) }}
-                </b-btn>
-              </template>
-            </b-table>
-          </transition>
-        </b-col>
-      </b-row>
+      <b-card-body class="p-0">
+        <b-row no-gutters>
+          <b-col lg="4">
+            <category-list-chooser
+              v-if="categories.length"
+              class="nested-left nested-lg"
+              header="Categories"
+              :categories="categories"
+              @change="onCategoryChange">
+            </category-list-chooser>
+          </b-col>
+          <b-col lg="8" class="p-2">
+            <transition
+              name="fade"
+              mode="out-in"
+              appear>
+              <b-table
+                hover
+                striped
+                show-empty
+                v-if="activeCategory"
+                :items="categoryProjects"
+                :fields="tableFields">
+                <template slot="overall_progress" scope="project">
+                  {{ project.item.overall_progress }}%
+                </template>
+                <template slot="action" scope="project">
+                  <b-btn
+                    :variant="project.item.featured ? 'warning' : 'success'"
+                    size="sm"
+                    @click="toggleFeatured(project.item)">
+                    {{ getButtonText(project.item.featured) }}
+                  </b-btn>
+                </template>
+              </b-table>
+            </transition>
+          </b-col>
+        </b-row>
+      </b-card-body>
     </b-card>
 
     <b-card
