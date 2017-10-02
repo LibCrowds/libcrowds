@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     currentUser: {},
-    notification: {}
+    notification: {},
+    announcements: []
   },
 
   mutations: {
@@ -54,6 +55,14 @@ const store = new Vuex.Store({
         return
       }
       commit('SET_ITEM', { key: 'notification', value: notification })
+    },
+
+    UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
+      pybossaApi.get('/announcements/').then(r => {
+        commit('SET_ITEM', {
+          key: 'announcements', value: r.data.announcements
+        })
+      })
     }
   }
 })

@@ -129,6 +129,7 @@ export default {
         }
       }).then(r => {
         this.refreshCurrentAnnouncements()
+        this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
         swal(
           capitalize(r.data.status),
           r.data.flash,

@@ -75,8 +75,11 @@ export default {
   },
 
   mounted () {
-    // Stop the progress bar when App.vue is loaded
+    // Stop progress when App.vue is loaded
     this.$Progress.finish()
+
+    // Load announcements
+    this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
   }
 }
 </script>

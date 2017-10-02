@@ -17,6 +17,11 @@
 
     <span id="app-navbar-right">
       <b-nav is-nav-bar v-if="loggedIn" right>
+
+        <announcements
+          :current-user="currentUser">
+        </announcements>
+
         <b-nav-item-dropdown
           right
           :text="currentUser.name">
@@ -95,6 +100,7 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import siteConfig from '@/siteConfig'
+import Announcements from '@/components/Announcements'
 
 export default {
   data: function () {
@@ -120,6 +126,10 @@ export default {
       type: String,
       defualt: null
     }
+  },
+
+  components: {
+    Announcements
   },
 
   computed: {
