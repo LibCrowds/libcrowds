@@ -1,8 +1,15 @@
-import pybossaTestResponses from '../../fixtures/pybossaTestResponses'
+import pybossaTestResponses from 'test/unit/fixtures/pybossaTestResponses'
+import testSettings from 'test/testSettings'
 
-import pybossa from '@/api/pybossa'
+import PyBossaApi from '@/api/pybossa'
 
 describe('PyBossaApi', () => {
+  let pybossa = null
+
+  beforeEach (() => {
+    pybossa = new PyBossaApi(testSettings.pybossaHost)
+  })
+
   describe('_filterMicrositeCategories', () => {
     it('filters microsite categories for the given key only', () => {
       const categories = pybossaTestResponses.getApiCategories.data
@@ -73,38 +80,6 @@ describe('PyBossaApi', () => {
           categories: ['cat2']
         })
       })
-    })
-  })
-
-  describe('getProfile', () => {
-    it('makes the correct request', () => {
-      const name = 'me'
-      const expectedUrl = `/account/${name}`
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      pybossa.getProfile(name)
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
-    })
-  })
-
-  describe('signout', () => {
-    it('makes the correct request', () => {
-      const expectedUrl = '/account/signout'
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      pybossa.signout()
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
-    })
-  })
-
-  describe('getLeaderboard', () => {
-    it('makes the correct request', () => {
-      const window = 3
-      const expectedUrl = `/leaderboard/window/${window}`
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      pybossa.getLeaderboard(window)
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
 })
