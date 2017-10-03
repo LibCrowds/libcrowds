@@ -30,9 +30,9 @@ const store = new Vuex.Store({
 
   actions: {
     UPDATE_CURRENT_USER: ({ commit }) => {
-      this.pybossa.get('/account/profile').then(r => {
-        if ('user' in r.data) {
-          commit('LOGIN', r.data.user)
+      this.pybossa.getProfile().then(data => {
+        if ('user' in data) {
+          commit('LOGIN', data.user)
         } else {
           commit('LOGOUT')
         }
@@ -40,8 +40,8 @@ const store = new Vuex.Store({
     },
 
     LOGOUT: ({ commit }) => {
-      this.pybossa.get('/account/signout').then(r => {
-        if (r.data.next === '/') {
+      this.pybossa.signout().then(data => {
+        if (data.next === '/') {
           router.push({ name: 'landing' })
         }
         commit('LOGOUT')
