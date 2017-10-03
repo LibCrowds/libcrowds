@@ -50,6 +50,25 @@ class PyBossaApi {
   }
 
   /**
+   * Get a user's profile.
+   *
+   * If name is not given then a requests is sent to retrieve the current
+   * user's profile
+   * @param {String} [name='profile']
+   *   The current user's name.
+   */
+  getProfile (name='profile') {
+    return this.client.get(`/account/${name}`)
+  }
+
+  /**
+   * Signout the current user.
+   */
+  signout () {
+    return this.client.get('/account/signout')
+  }
+
+  /**
    * Return the categories for a microsite.
    *
    * This function assumes a limit of 100 categories per microsite.

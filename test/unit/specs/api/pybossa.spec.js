@@ -81,4 +81,25 @@ describe('PyBossaApi', () => {
       })
     })
   })
+
+  describe('getProfile', () => {
+    it('makes the correct request', () => {
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      const name = 'me'
+      const expectedUrl = `/account/${name}`
+      pybossa.getProfile(name)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('signout', () => {
+    it('makes the correct request', () => {
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      const expectedUrl = '/account/signout'
+      pybossa.signout()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
 })
