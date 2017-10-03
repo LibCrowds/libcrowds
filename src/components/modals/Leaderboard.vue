@@ -67,7 +67,7 @@ export default {
   },
 
   created () {
-    this.$store.state.pybossa.getLeaderboard().then(data => {
+    pybossa.get(`/leaderboard/window/${window}`).then(data => {
       this.setData(data)
     })
   }
