@@ -136,6 +136,9 @@
       "js",
       "vue"
     ],
+    "moduleNameMapper": {
+      "^./src/siteConfig$": "<rootDir>/test/testSettings.js"
+    },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
