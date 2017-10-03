@@ -56,16 +56,21 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
-        this.loading = false
-        this.topUsers = r.data.top_users
-      })
+    /**
+     * Set the core data.
+     * @param {Object} data
+     *   The core data.
+     */
+    setData (data) {
+      this.loading = false
+      this.topUsers = r.data.top_users
     }
   },
 
   created () {
-    this.fetchData()
+    this.$store.state.pybossa.getLeaderboard().then(data => {
+      this.setData(data)
+    })
   }
 }
 </script>

@@ -69,6 +69,15 @@ class PyBossaApi {
   }
 
   /**
+   * Get the leaderboard.
+   * @param {String} [window=0]
+   *   The current user's name.
+   */
+  getLeaderboard (window) {
+    return this.client.get(`/leaderboard/window/${window}`)
+  }
+
+  /**
    * Return the categories for a microsite.
    *
    * This function assumes a limit of 100 categories per microsite.

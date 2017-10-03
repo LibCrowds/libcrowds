@@ -21,14 +21,14 @@ describe('PyBossaApi', () => {
 
   describe('getMicrositeCategories', () => {
     it('makes the correct request', () => {
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
       const key = 'playbills'
       const expectedUrl = `/api/${key}`
       const expectedParams = {
         info: `collection::${key}`,
         fulltextsearch: 1
       }
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
       pybossa.getMicrositeCategories(key)
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
       expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
@@ -36,8 +36,8 @@ describe('PyBossaApi', () => {
 
     it('returns the correct categories', () => {
       const key = 'playbills'
-      const mockGet = jest.fn()
       const response = pybossaTestResponses.getApiCategories.data
+      const mockGet = jest.fn()
       pybossa.client.get = mockGet
       mockGet.mockReturnValue(new Promise((resolve, reject) => {
         resolve(response)
@@ -51,7 +51,6 @@ describe('PyBossaApi', () => {
 
   describe('getData', () => {
     it('merges multiple responses', () => {
-      const mockGet = jest.fn()
       const endpoints = [
         'endpoint_one',
         'endpoint_two'
@@ -65,6 +64,7 @@ describe('PyBossaApi', () => {
           categories: ['cat2']
         }
       ]
+      const mockGet = jest.fn()
       pybossa.client.get = mockGet
       mockGet.mockReturnValueOnce(new Promise((resolve, reject) => {
         resolve(responses[0])
@@ -84,10 +84,10 @@ describe('PyBossaApi', () => {
 
   describe('getProfile', () => {
     it('makes the correct request', () => {
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
       const name = 'me'
       const expectedUrl = `/account/${name}`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
       pybossa.getProfile(name)
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
@@ -95,10 +95,21 @@ describe('PyBossaApi', () => {
 
   describe('signout', () => {
     it('makes the correct request', () => {
+      const expectedUrl = '/account/signout'
       const mockGet = jest.fn()
       pybossa.client.get = mockGet
-      const expectedUrl = '/account/signout'
       pybossa.signout()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('getLeaderboard', () => {
+    it('makes the correct request', () => {
+      const window = 3
+      const expectedUrl = `/leaderboard/window/${window}`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getLeaderboard(window)
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
