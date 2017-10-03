@@ -14,19 +14,15 @@ class PyBossaApi {
   }
 
   /**
-   * Perform a GET request.
-   * @param {*} url
-   *   The URL.
-   * @param {*} params
-   *   The query parameters.
+   * Filter microsite categories based on key.
+   * @param {Array} categories
+   *   The categories.
+   * @param {String} key
+   *   The microsite key.
    */
-  get (url, params) {
-    return new Promise((resolve, reject) => {
-      this.client.get(url, params).then(r => {
-        resolve(r.data)
-      }).catch(err => {
-        reject(err)
-      })
+  _filterMicrositeCategories (categories, key) {
+    return categories.filter(category => {
+      return category.info ? category.info.collection === key : false
     })
   }
 
@@ -43,7 +39,14 @@ class PyBossaApi {
       info: `collection::${key}`,
       fulltextsearch: 1
     }
-    return this.get(url, params)
+    return new Promise((resolve, reject) => {
+      this.client.get(url, params).then(data => {
+        // Additional filter needed as the search is not exact (i.e. if one
+        // category name is a part of another both could be returned)
+        const filtered = this._filterMicrositeCategories(data, key)
+        resolve(filtered)
+      })
+    })
   }
 }
 
