@@ -66,7 +66,6 @@
 <script>
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
-import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'

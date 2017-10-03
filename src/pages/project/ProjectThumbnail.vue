@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
 
 export default {

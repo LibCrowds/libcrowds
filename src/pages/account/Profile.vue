@@ -60,7 +60,6 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import UserFavouritesCard from '@/components/user/FavouritesCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'

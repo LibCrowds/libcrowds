@@ -16,7 +16,6 @@
 <script>
 import swal from 'sweetalert2'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
 import DefaultPresenter from '@/components/presenters/Default'

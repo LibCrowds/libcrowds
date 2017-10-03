@@ -90,7 +90,6 @@
 
 <script>
 import FileSaver from 'file-saver'
-import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {

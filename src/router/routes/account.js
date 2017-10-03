@@ -1,5 +1,3 @@
-import pybossaApi from '@/api/pybossa'
-
 import CoreLayout from '@/layouts/Core'
 import DashboardLayout from '@/layouts/Dashboard'
 

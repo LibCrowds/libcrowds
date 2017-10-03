@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
 

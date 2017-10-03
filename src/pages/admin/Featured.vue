@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
 
 export default {

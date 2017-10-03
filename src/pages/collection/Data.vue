@@ -93,7 +93,6 @@
 
 <script>
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
 import DataModal from '@/components/modals/Data'

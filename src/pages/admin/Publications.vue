@@ -55,7 +55,6 @@
 <script>
 import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
 import PublicationCard from '@/components/publications/PublicationCard'

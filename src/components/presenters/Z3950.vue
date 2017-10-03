@@ -192,7 +192,6 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
-import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {

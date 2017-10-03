@@ -22,7 +22,6 @@
 
 <script>
 import FileSaver from 'file-saver'
-import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {

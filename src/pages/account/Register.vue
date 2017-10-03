@@ -51,7 +51,6 @@
 <script>
 import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
 

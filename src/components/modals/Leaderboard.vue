@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
 export default {

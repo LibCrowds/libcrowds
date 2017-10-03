@@ -127,7 +127,6 @@
 
 <script>
 import { sortBy, forEach } from 'lodash'
-import pybossaApi from '@/api/pybossa'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import ProjectPagination from '@/components/project/Pagination'
 import ProjectCardList from '@/components/project/CardList'

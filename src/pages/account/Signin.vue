@@ -42,7 +42,6 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
 

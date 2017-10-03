@@ -32,7 +32,6 @@ import 'leaflet.markercluster'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {
