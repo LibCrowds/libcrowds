@@ -1,14 +1,8 @@
 import pybossaTestResponses from '../../fixtures/pybossaTestResponses'
 
-import PyBossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 
 describe('PyBossaApi', () => {
-  let pybossa = null
-
-  beforeEach(() => {
-    pybossa = new PyBossaApi()
-  })
-
   describe('_filterMicrositeCategories', () => {
     it('filters microsite categories for the given key only', () => {
       const categories = pybossaTestResponses.getApiCategories.data

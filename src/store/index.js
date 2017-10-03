@@ -2,15 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '@/router'
 import siteConfig from '@/siteConfig'
-import PyBossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     currentUser: {},
-    notification: {},
-    pybossa: {}
+    notification: {}
   },
 
   mutations: {
@@ -30,7 +29,7 @@ const store = new Vuex.Store({
 
   actions: {
     UPDATE_CURRENT_USER: ({ commit }) => {
-      this.pybossa.getProfile().then(data => {
+      pybossa.getProfile().then(data => {
         if ('user' in data) {
           commit('LOGIN', data.user)
         } else {
@@ -40,7 +39,7 @@ const store = new Vuex.Store({
     },
 
     LOGOUT: ({ commit }) => {
-      this.pybossa.signout().then(data => {
+      pybossa.signout().then(data => {
         if (data.next === '/') {
           router.push({ name: 'landing' })
         }
@@ -56,12 +55,7 @@ const store = new Vuex.Store({
         return
       }
       commit('SET_ITEM', { key: 'notification', value: notification })
-    },
-
-    LOAD_PYBOSSA_API: ({ commit, state }, pybossaHost => {
-      const pybossa = new PyBossaApi(pybossaHost)
-      commit('SET_ITEM', { key: 'pybossa', value: pybossa })
-    })
+    }
   }
 })
 

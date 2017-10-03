@@ -1,10 +1,11 @@
 import merge from 'lodash/merge'
+import siteConfig from '@/siteConfig'
 import axios from 'axios'
 
 class PyBossaApi {
-  constructor (host) {
+  constructor () {
     this.client = axios.create({
-      baseURL: host,
+      baseURL: siteConfig.pybossaHost,
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
@@ -101,4 +102,4 @@ class PyBossaApi {
   }
 }
 
-export default PyBossaApi
+export default new PyBossaApi()

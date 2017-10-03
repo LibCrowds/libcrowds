@@ -45,9 +45,6 @@ export default {
   },
 
   created () {
-    // Load the pybossa Api client into the store
-    this.$store.dispatch('LOAD_PYBOSSA_API', siteConfig.pybossaHost)
-
     // Start the progress bar when the app is first loaded
     this.$Progress.start()
 
