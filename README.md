@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
 [![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
-> A Vue.js frontend for PyBossa (>=2.6.1).
+> A Vue.js frontend for PyBossa (>=2.7.2).
 
 Configurable PyBossa frontend with a microsite-based structure; as used by LibCrowds:
 
