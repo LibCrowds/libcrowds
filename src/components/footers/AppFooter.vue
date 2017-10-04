@@ -1,5 +1,5 @@
 <template>
-  <footer id="collection-footer" class="footer">
+  <footer id="app-footer" class="footer">
     <div class="container pt-3 pb-2">
 
       <section>
@@ -125,7 +125,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#collection-footer.footer {
+#app-footer.footer {
   background-color: $gray-1000;
   letter-spacing: 0.8px;
   color: $gray-600;
