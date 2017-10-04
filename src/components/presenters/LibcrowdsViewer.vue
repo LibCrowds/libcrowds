@@ -61,7 +61,7 @@ export default {
     buttons: function () {
       let buttons = {
         note: 'Seen something interesting?<br>Add a note',
-        submit: 'Save'
+        submit: 'Save and Continue'
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
