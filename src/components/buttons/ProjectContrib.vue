@@ -8,7 +8,8 @@
     }"
     :block="block"
     :size="size"
-    :variant="variant">
+    :variant="variant"
+    :disabled="disabled">
     Contribute
   </b-btn>
 </template>
@@ -45,6 +46,12 @@ export default {
         ]
         return value in valid
       }
+    }
+  },
+
+  computed: {
+    disabled: function () {
+      return this.status === 'cannot_contribute'
     }
   }
 }
