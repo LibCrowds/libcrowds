@@ -5,23 +5,29 @@
     <section>
       <h2 class="text-center">Contribute</h2>
       <hr>
-      <p class="lead text-center">
-        Choose a {{ collectionConfig.terminology.project }} from the list below
-        to get started!
-      </p>
-      <p class="text-center mb-0">
-        <small>
-          For more information see the
-          <router-link
-            :to="{
-              name: 'collection-about',
-              params: {
-                collectionname: collectionConfig.key
-              }
-            }">about page.
-          </router-link>
-        </small>
-      </p>
+      <span
+        v-if="collectionConfig.contribute"
+        v-html="collectionConfig.contribute">
+      </span>
+      <span v-else>
+        <p class="lead text-center">
+          Choose a {{ collectionConfig.terminology.project }} from the list below
+          to get started!
+        </p>
+        <p class="text-center mb-0">
+          <small>
+            For more information see the
+            <router-link
+              :to="{
+                name: 'collection-about',
+                params: {
+                  collectionname: collectionConfig.key
+                }
+              }">about page.
+            </router-link>
+          </small>
+        </p>
+      </span>
       <hr>
       <div class="row">
         <div class="col-xl-3 mb-3">
