@@ -170,7 +170,7 @@
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
           Your contributions will have a direct impact on enabling future
-          reasearch at {{ siteConfig.company }}.
+          research at {{ siteConfig.company }}.
         </p>
         <b-btn
           variant="success"
