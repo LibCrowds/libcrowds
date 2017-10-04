@@ -2,8 +2,7 @@
   <b-modal
     :id="modalId"
     title="Leaderboard"
-    ok-only
-    @shown="fetchData">
+    ok-only>
 
     <loading
       v-if="loading"
@@ -49,6 +48,10 @@ export default {
       type: String,
       required: true
     },
+    currentUser: {
+      type: Object,
+      required: true
+    },
     win: {
       type: Number,
       default: 0
@@ -56,16 +59,32 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
-        this.loading = false
-        this.topUsers = r.data.top_users
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.loading = false
+      this.topUsers = data.top_users.map(user => {
+        if (this.currentUser && this.currentUser.name === user.name) {
+          user._rowVariant = 'success'
+        }
+        return user
       })
+      let userRepeated = this.topUsers.filter(user => {
+        return user.name === this.currentUser.name
+      }).length
+      if (userRepeated) {
+        this.topUsers.splice(-1, 1)
+      }
     }
   },
 
   created () {
-    this.fetchData()
+    pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
+      this.setData(r.data)
+    })
   }
 }
 </script>
