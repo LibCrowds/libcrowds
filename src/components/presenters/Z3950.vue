@@ -386,7 +386,7 @@ export default {
             return this.parseSubfield(sf)
           }).join(' ') + ' '
         } else if (code !== '6') {
-          if (!codes || codes.indexOf(code)) {
+          if (!codes || codes.indexOf(code) > -1) {
             res = subfield[code] + ' '
           }
         }
