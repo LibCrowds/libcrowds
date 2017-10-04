@@ -116,6 +116,7 @@
     "vue-loader": "^12.2.2",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.4.2",
+    "vue-test-utils": "^1.0.0-beta.1",
     "webpack": "^2.7.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
@@ -137,7 +138,7 @@
       "vue"
     ],
     "moduleNameMapper": {
-      "^./src/siteConfig$": "<rootDir>/test/testSettings.js"
+      "^./src/siteConfig$": "<rootDir>/test/testSiteConfig.js"
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",

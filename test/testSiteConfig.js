@@ -13,10 +13,6 @@ export default {
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
   },
   collections: {
-    myCollection: {
-      name: 'My Amazing Project',
-      tagline: 'This project is amazing.',
-      description: 'Help enhance research.'
-    }
+    myCollection: require('./testMicrositeConfig')
   }
 }

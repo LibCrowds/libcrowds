@@ -1,5 +1,5 @@
 import pybossaTestResponses from 'test/unit/fixtures/pybossaTestResponses'
-import testSettings from 'test/testSettings'
+import testSiteConfig from 'test/testSiteConfig'
 
 import PyBossaApi from '@/api/pybossa'
 
@@ -7,7 +7,7 @@ describe('PyBossaApi', () => {
   let pybossa = null
 
   beforeEach (() => {
-    pybossa = new PyBossaApi(testSettings.pybossaHost)
+    pybossa = new PyBossaApi(testSiteConfig.pybossaHost)
   })
 
   describe('_filterMicrositeCategories', () => {
