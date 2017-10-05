@@ -100,7 +100,7 @@ export default {
      *   The task data.
      */
     onTaskLiked (taskData) {
-      this.$emit('liked', taskData.id, taskData.liked)
+      this.$emit('taskliked', taskData.id, taskData.liked)
     },
 
     /**

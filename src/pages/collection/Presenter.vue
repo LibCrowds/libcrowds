@@ -8,7 +8,7 @@
       :currentUser="currentUser"
       :collectionConfig="collectionConfig"
       @submit="onSubmit"
-      @taskLiked="onTaskLiked">
+      @taskliked="onTaskLiked">
     </component>
   </div>
 </template>
@@ -153,11 +153,19 @@ export default {
     onTaskLiked (taskId, liked) {
       if (liked) {
         pybossaApi.post(`/api/favorites`, { task_id: taskId }).then(() => {
-          // TODO: feedback
+          this.$store.dispatch('NOTIFY', {
+            msg: 'Added to favourites',
+            type: 'info',
+            position: 'bottomleft'
+          })
         })
       } else {
         pybossaApi.delete(`/api/favorites/${taskId}`).then(() => {
-          // TODO: feedback
+          this.$store.dispatch('NOTIFY', {
+            msg: 'Removed from favourites',
+            type: 'info',
+            position: 'bottomleft'
+          })
         })
       }
     },
