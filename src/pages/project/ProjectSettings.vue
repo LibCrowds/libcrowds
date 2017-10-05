@@ -61,6 +61,22 @@ export default {
               label: 'Webhook URL',
               type: 'input',
               inputType: 'text'
+            },
+            {
+              model: 'allow_anonymous_contributors',
+              label: 'Allow anonymous contributors',
+              type: 'checkbox'
+            },
+            {
+              model: 'protect',
+              label: 'Require a password',
+              type: 'checkbox'
+            },
+            {
+              model: 'pasword',
+              label: 'Password',
+              type: 'input',
+              inputType: 'text'
             }
           ]
         }
