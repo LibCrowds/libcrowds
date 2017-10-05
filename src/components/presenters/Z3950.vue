@@ -521,6 +521,7 @@ export default {
      */
     submit (answer) {
       this.$emit('submit', this.project.id, this.currentTask.id, answer)
+      this.reset()
     },
 
     /**
