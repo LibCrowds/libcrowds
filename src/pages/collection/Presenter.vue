@@ -197,7 +197,8 @@ export default {
         if (hasParticipated === 'true') {
           this.$store.dispatch('NOTIFY', {
             msg: 'Answer saved, thank you!',
-            type: 'success'
+            type: 'success',
+            position: 'bottomleft'
           })
         } else {
           swal({
