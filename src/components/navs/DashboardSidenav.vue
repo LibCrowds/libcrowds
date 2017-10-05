@@ -33,7 +33,6 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
-      activeItem: null,
       navClass: {
         side: this.position === 'side',
         top: this.position === 'top'
