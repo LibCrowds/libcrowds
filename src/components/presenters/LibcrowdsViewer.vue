@@ -100,7 +100,7 @@ export default {
      *   The task data.
      */
     onTaskLiked (taskData) {
-      this.$emit('liked', taskData.id, taskData.liked)
+      this.$emit('taskliked', taskData.id, taskData.liked)
     },
 
     /**
@@ -121,7 +121,7 @@ export default {
   top: 0;
   left: 0;
   bottom: 0;
-  z-index: 9999999;
+  z-index: 1040;
   background-color: #000;
   width: 100%;
   height: 100%;
