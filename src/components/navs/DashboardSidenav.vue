@@ -98,6 +98,10 @@ export default {
           calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y}) 0;
         font-weight: 400;
         letter-spacing: 0.8px;
+
+        &:first-child {
+          margin-top: 0;
+        }
       }
 
       ul {
@@ -147,7 +151,7 @@ export default {
       &:hover,
       &:focus,
       &.router-link-exact-active {
-        background-color: rgba($green, 0.25);
+        background-color: rgba($blue, 0.25);
 
         a {
           text-decoration: none;
@@ -155,7 +159,7 @@ export default {
       }
 
       &.router-link-exact-active {
-        background-color: rgba($green, 0.45);
+        background-color: rgba($blue, 0.45);
       }
     }
 
