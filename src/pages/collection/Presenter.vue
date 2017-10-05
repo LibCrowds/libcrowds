@@ -184,6 +184,8 @@ export default {
      *   The answer data.
      */
     onSubmit (projectId, taskId, answer) {
+      const cookieName = `${this.project.short_name}_participated`
+      const hasParticipated = this.$cookie.get(cookieName)
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
@@ -192,6 +194,20 @@ export default {
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
+        if (hasParticipated === 'true') {
+          this.$store.dispatch('NOTIFY', {
+            msg: 'Answer saved, thank you!',
+            type: 'success'
+          })
+        } else {
+          swal({
+            title: 'Thank you!',
+            html: 'Your contribution has been saved successfully and will ' +
+                  'directly help enable future research.',
+            type: 'success'
+          })
+        }
+        this.$cookie.set(cookieName, true, { expires: '1Y' })
       })
     }
   },
