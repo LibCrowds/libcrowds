@@ -2,8 +2,25 @@
   <card-form
     header="Project Settings"
     submit-text="Update"
-    :form="form"
-    @success="onSuccess">
+    :form="form">
+    <div slot="bottom" class="d-flex form-group mt-1">
+      <toggle-button
+        :value="model.protect"
+        :sync="true"
+        :labels="true"
+        @change="updateModelBoolean('protect', $event)">
+      </toggle-button>
+      <label class="ml-1">Require a password</label>
+    </div>
+    <div slot="bottom" class="d-flex form-group mt-1">
+      <toggle-button
+        :value="model.allow_anonymous_contributors"
+        :sync="true"
+        :labels="true"
+        @change="updateModelBoolean('allow_anonymous_contributors', $event)">
+      </toggle-button>
+      <label class="ml-1">Allow anonymous contributors</label>
+    </div>
   </card-form>
 </template>
 
@@ -63,16 +80,6 @@ export default {
               inputType: 'text'
             },
             {
-              model: 'allow_anonymous_contributors',
-              label: 'Allow anonymous contributors',
-              type: 'checkbox'
-            },
-            {
-              model: 'protect',
-              label: 'Require a password',
-              type: 'checkbox'
-            },
-            {
               model: 'pasword',
               label: 'Password',
               type: 'input',
@@ -97,9 +104,13 @@ export default {
 
     /**
      * Redirect the user on form submit success.
+     * @param {String} key
+     *   The model key.
+     * @param {Object} evt
+     *   The event.
      */
-    onSuccess (data) {
-      console.log(data)
+    updateModelBoolean (key, evt) {
+      this.model[key] = evt.value
     }
   },
 
