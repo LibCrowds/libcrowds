@@ -16,7 +16,7 @@
         :navItems="dashboardNavItems">
       </dashboard-sidenav>
       <main>
-        <div class="container py-4">
+        <div class="container px-lg-4 py-4">
           <transition name="fade" mode="out-in" appear>
             <router-view :currentUser="currentUser"></router-view>
           </transition>
@@ -74,7 +74,7 @@ export default {
       z-index: 2;
       height: 100vh;
       float: right;
-      width: calc(100% - 260px);
+      width: calc(100% - #{$sidebar-width});
     }
   }
 
