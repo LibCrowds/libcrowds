@@ -142,7 +142,7 @@ export default {
       padding: 0rem;
 
       a {
-        padding: $list-group-item-padding-x $list-group-item-padding-y;
+        padding: 0.75rem 1.25rem;
         width: 100%;
         color: $white;
         display: block;
