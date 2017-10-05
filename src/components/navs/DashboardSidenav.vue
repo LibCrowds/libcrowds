@@ -149,7 +149,7 @@ export default {
 
       &:hover,
       &:focus,
-      &.router-link-exact-active {
+      &.router-link-active {
         background-color: rgba($blue, 0.25);
 
         a {

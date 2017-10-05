@@ -1,6 +1,6 @@
 <template>
   <card-form
-    id="admin-update-announcement"
+    id="admin-announcement-update"
     header="Update Announcement"
     submit-text="Update"
     show-cancel

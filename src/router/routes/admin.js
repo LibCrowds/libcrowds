@@ -63,6 +63,12 @@ export default [
     children: [
       {
         path: '/',
+        beforeEnter (to, from, next) {
+          next({ name: 'admin-dashboard' })
+        }
+      },
+      {
+        path: '/admin/dashboard',
         name: 'admin-dashboard',
         component: AdminDashboard
       },
@@ -77,13 +83,13 @@ export default [
         component: Announcements
       },
       {
-        path: 'announcement/:id/update',
-        name: 'admin-update-announcement',
+        path: 'announcements/:id/update',
+        name: 'admin-announcement-update',
         component: UpdateAnnouncement
       },
       {
-        path: 'announcement/new',
-        name: 'admin-new-announcement',
+        path: 'announcements/new',
+        name: 'admin-announcement-new',
         component: NewAnnouncement
       },
       {
@@ -93,7 +99,7 @@ export default [
       },
       {
         path: 'categories/update/:categoryid',
-        name: 'admin-edit-category',
+        name: 'admin-categories-update',
         component: EditCategory
       },
       {

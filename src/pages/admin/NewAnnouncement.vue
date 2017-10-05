@@ -1,6 +1,6 @@
 <template>
   <card-form
-    id="admin-new-announcement"
+    id="admin-announcement-new"
     header="New Announcement"
     show-cancel
     :form="form"

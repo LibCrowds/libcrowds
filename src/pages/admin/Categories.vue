@@ -36,7 +36,7 @@
                 variant="info"
                 size="sm"
                 :to="{
-                  name: 'admin-edit-category',
+                  name: 'admin-categories-update',
                   params: {
                     categoryid: category.item.id
                   }
@@ -204,7 +204,7 @@ export default {
       },
       () => {
         this.$router.push({
-          name: 'admin-edit-category',
+          name: 'admin-categories-update',
           params: {
             categoryid: category.id
           }
