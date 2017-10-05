@@ -10,12 +10,22 @@
     </b-button>
     <b-card no-body v-show="show">
       <b-list-group>
-        <b-list-group-item
+        <span
           v-for="announcement in announcements"
-          :key="announcement.id"
-          :href="announcement.media_url">
-          {{ announcement.title }}
-        </b-list-group-item>
+          :key="announcement.id">
+          <b-list-group-item
+            v-if="announcement.isLocal"
+            :to="{
+              path: announcement.media_url
+            }">
+            {{ announcement.title }}
+          </b-list-group-item>
+          <b-list-group-item
+            v-else
+            :href="announcement.media_url">
+            {{ announcement.title }}
+          </b-list-group-item>
+        </span>
       </b-list-group>
     </b-card>
   </div>
@@ -45,7 +55,14 @@ export default {
 
   computed: {
     announcements: function () {
-      return this.$store.state.announcements
+      let announcements = this.$store.state.announcements || []
+      return announcements.map(announcement => {
+        announcement.isLocal = announcement.media_url && (
+          announcement.media_url.startsWith(window.location.origin) ||
+          announcement.media_url.startsWith('/')
+        )
+        return announcement
+      })
     },
     unread: function () {
       const read = this.currentUser.read || []

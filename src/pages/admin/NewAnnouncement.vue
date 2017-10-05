@@ -34,6 +34,12 @@ export default {
               type: 'textArea',
               rows: 3,
               placeholder: 'Use Markdown'
+            },
+            {
+              model: 'media_url',
+              label: 'URL',
+              type: 'input',
+              inputType: 'url'
             }
           ]
         }
