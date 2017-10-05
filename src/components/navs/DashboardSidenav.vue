@@ -91,6 +91,7 @@ export default {
 
       .brand-wrapper {
         display: flex;
+        min-height: $app-navbar-height;
       }
 
       .list-group-item {
