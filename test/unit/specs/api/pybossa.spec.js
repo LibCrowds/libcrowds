@@ -380,7 +380,7 @@ describe('PyBossaApi', () => {
 
   describe('Stats endpoints', () => {
     it('makes the correct request for getStats', () => {
-      const expectedUrl = `/stats`
+      const expectedUrl = `stats/`
       pybossa.getStats()
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
@@ -395,7 +395,7 @@ describe('PyBossaApi', () => {
   describe('Project endpoints', () => {
     it('makes the correct request for getCategory', () => {
       const shortname = 'my_category'
-      const expectedUrl = `/project/category/${shortname}/page/1`
+      const expectedUrl = `/project/category/${shortname}/`
       pybossa.getCategory(shortname)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
@@ -403,7 +403,7 @@ describe('PyBossaApi', () => {
     it('makes the correct request for getCategory with page', () => {
       const shortname = 'my_category'
       const page = 42
-      const expectedUrl = `/project/category/${shortname}/page/${page}`
+      const expectedUrl = `/project/category/${shortname}/page/${page}/`
       pybossa.getCategory(shortname, page)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
@@ -424,19 +424,18 @@ describe('PyBossaApi', () => {
         fulltextsearch: 1
       }
       pybossa.getMicrositeCategories(key)
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
-      expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
     })
 
     it('returns the correct categories', () => {
       const key = 'playbills'
-      const response = pybossaTestResponses.getApiCategories.data
+      const response = pybossaTestResponses.getApiCategories
       mockGet.mockReturnValue(new Promise((resolve, reject) => {
         resolve(response)
       }))
-      return pybossa.getMicrositeCategories(key).then(categories => {
-        expect(categories.length).toBe(1)
-        expect(categories[0].info.collection).toBe(key)
+      return pybossa.getMicrositeCategories(key).then(r => {
+        expect(r.data.categories.length).toBe(1)
+        expect(r.data.categories[0].info.collection).toBe(key)
       })
     })
 
