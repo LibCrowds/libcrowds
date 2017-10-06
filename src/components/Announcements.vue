@@ -3,10 +3,15 @@
     <b-button
       id="announcements-toggle"
       class="d-flex"
-      @click="show = !show"
+      @click="toggle"
       v-on-clickaway="hide">
       <icon name="bell"></icon>
-      <b-badge pill variant="info">{{ unread.length }}</b-badge>
+      <b-badge
+        pill
+        v-if="announcements.length"
+        variant="info">
+        {{ announcements.length }}
+      </b-badge>
     </b-button>
     <b-card no-body v-show="show">
       <b-list-group>
@@ -34,6 +39,7 @@
 <script>
 import 'vue-awesome/icons/bell'
 import { directive as onClickaway } from 'vue-clickaway'
+import pybossaApi from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -63,15 +69,6 @@ export default {
         )
         return announcement
       })
-    },
-    unread: function () {
-      const read = this.currentUser.read || []
-      return this.announcements.filter(announcement => {
-        return (
-          !(announcement.id in read) &&
-          announcement.created > this.currentUser.created
-        )
-      })
     }
   },
 
@@ -81,6 +78,23 @@ export default {
      */
     hide () {
       this.show = false
+    },
+
+    /**
+     * Toggle the announcements and mark as read if shown.
+     */
+    toggle () {
+      this.show = !this.show
+      if (this.show) {
+        let announcements = this.currentUser.announcements || {}
+        announcements['last_read'] = this.announcements[0].id
+        this.currentUser.info.announcements = announcements
+        pybossaApi.put(`/api/user/${this.currentUser.id}`, {
+          info: this.currentUser.info
+        }).then(r => {
+          this.$store.dispatch('UPDATE_CURRENT_USER')
+        })
+      }
     }
   }
 }

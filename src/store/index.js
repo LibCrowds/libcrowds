@@ -28,13 +28,14 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    UPDATE_CURRENT_USER: ({ commit }) => {
+    UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
       pybossaApi.get('/account/profile').then(r => {
         if ('user' in r.data) {
           commit('LOGIN', r.data.user)
         } else {
           commit('LOGOUT')
         }
+        dispatch('UPDATE_ANNOUNCEMENTS')
       })
     },
 
@@ -58,11 +59,19 @@ const store = new Vuex.Store({
     },
 
     UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
-      pybossaApi.get('/announcements/').then(r => {
+      if (!(state.currentUser.info)) {
         commit('SET_ITEM', {
-          key: 'announcements', value: r.data.announcements
+          key: 'announcements', value: []
         })
-      })
+      } else {
+        let announcements = state.currentUser.info.announcements || {}
+        let lastId = announcements['last_read'] || 0
+        pybossaApi.get(`/api/announcement?last_id=${lastId}`).then(r => {
+          commit('SET_ITEM', {
+            key: 'announcements', value: r.data
+          })
+        })
+      }
     }
   }
 })

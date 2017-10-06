@@ -40,6 +40,14 @@ CORS_RESOURCES = {
 
 For a full list of options see the [Flask-CORS documentation](https://flask-cors.readthedocs.io/en/latest/).
 
+You must modify the following in your PyBossa settings:
+
+| Setting                     | Value             |
+|-----------------------------|-------------------|
+| CATEGORY_INFO_PUBLIC_FIELDS | ['collection']    |
+| USER_INFO_PUBLIC_FIELDS     | ['announcements'] |
+
+
 Now, see the [Configuration](configuration.md) section for details of how to configure the site and each microsite.
 
 ## Building
