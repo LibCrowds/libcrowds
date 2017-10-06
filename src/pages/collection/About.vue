@@ -106,7 +106,7 @@ export default {
     },
 
     subsections: function () {
-      this.getCustom('subsections') || []
+      return this.getCustom('subsections') || []
     },
 
     intro: function () {
