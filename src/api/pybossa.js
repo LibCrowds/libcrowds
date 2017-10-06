@@ -1,4 +1,3 @@
-import merge from 'lodash/merge'
 import axios from 'axios'
 
 class PyBossaApi {
@@ -71,7 +70,7 @@ class PyBossaApi {
    * @param {String|Number} page
    *   The page.
    */
-  getAccountIndex(page=1) {
+  getAccountIndex (page = 1) {
     return this.client.get(`/account/page/${page}`)
   }
 
@@ -80,7 +79,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-registration
    */
-  getAccountRegistration() {
+  getAccountRegistration () {
     return this.client.get('/account/register')
   }
 
@@ -91,7 +90,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  register(form) {
+  register (form) {
     return this.client.post('/account/register', {
       params: form
     })
@@ -102,7 +101,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-sign-in
    */
-  getAccountSignin() {
+  getAccountSignin () {
     return this.client.get('/account/signin')
   }
 
@@ -113,7 +112,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  signin(form) {
+  signin (form) {
     return this.client.post('/account/signin', {
       params: form
     })
@@ -124,7 +123,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-sign-out
    */
-  signout() {
+  signout () {
     return this.client.get('/account/signout')
   }
 
@@ -133,7 +132,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-recover-password
    */
-  getRecoverPassword() {
+  getRecoverPassword () {
     return this.client.get('/account/forgot-password')
   }
 
@@ -144,7 +143,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  recoverPassword(form) {
+  recoverPassword (form) {
     return this.client.post('/account/forgot-password', {
       params: form
     })
@@ -157,7 +156,7 @@ class PyBossaApi {
    * @param {String} name
    *   The username.
    */
-  getAccount(name) {
+  getAccount (name) {
     return this.client.get(`/account/${name}`)
   }
 
@@ -166,7 +165,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-profile
    */
-  getProfile() {
+  getProfile () {
     return this.getAccount('profile')
   }
 
@@ -177,7 +176,7 @@ class PyBossaApi {
    * @param {String} name
    *   The username.
    */
-  getAccountProjects(name) {
+  getAccountProjects (name) {
     return this.client.get(`/account/${name}/projects`)
   }
 
@@ -188,7 +187,7 @@ class PyBossaApi {
    * @param {String} name
    *   The username.
    */
-  getUpdateProfile(name) {
+  getUpdateProfile (name) {
     return this.client.get(`/account/${name}/update`)
   }
 
@@ -203,7 +202,7 @@ class PyBossaApi {
     * @param {Object} type
    *   The additional form type (Upload, Password, or External).
    */
-  updateProfile(name, form, type=null) {
+  updateProfile (name, form, type) {
     form.btn = type
     return this.client.post(`/account/${name}/update`, {
       params: form
@@ -217,7 +216,7 @@ class PyBossaApi {
    * @param {String} params
    *   The query params given in the reset link.
    */
-  getResetPassword(params) {
+  getResetPassword (params) {
     return this.client.get('/account/reset-password', {
       params: params
     })
@@ -230,7 +229,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  resetPassword(form) {
+  resetPassword (form) {
     return this.client.post('/account/reset-password', {
       params: form
     })
@@ -280,7 +279,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-confirm-email
    */
-  getConfirmEmail() {
+  getConfirmEmail () {
     return this.client.get('/account/confirm-email')
   }
 
@@ -289,7 +288,7 @@ class PyBossaApi {
    * @param {String} params
    *   The query params given in the confirm link.
    */
-  confirmEmail(params) {
+  confirmEmail (params) {
     return this.client.get('/account/register/confirmation', {
       params: params
     })
@@ -300,7 +299,7 @@ class PyBossaApi {
    * @param {String|Number} window
    *   Number of users above and below the current user to show.
    */
-  getLeaderboard (window=0) {
+  getLeaderboard (window = 0) {
     return this.client.get(`leaderboard/window/${window}`)
   }
 
@@ -309,7 +308,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#announcements
    */
-  getAnnouncements() {
+  getAnnouncements () {
     return this.client.get(`/announcements`)
   }
 
@@ -318,7 +317,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#admin-announcement
    */
-  getAdminAnnouncements() {
+  getAdminAnnouncements () {
     return this.client.get(`/admin/announcement`)
   }
 
@@ -327,7 +326,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#new-announcement
    */
-  getNewAnnouncement() {
+  getNewAnnouncement () {
     return this.client.get(`/admin/announcement/new`)
   }
 
@@ -338,7 +337,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  newAnnouncement(form) {
+  newAnnouncement (form) {
     return this.client.post(`/admin/announcement/new`, {
       params: form
     })
@@ -351,7 +350,7 @@ class PyBossaApi {
    * @param {String|Number} announcementId
    *   The announcement ID.
    */
-  getUpdateAnnouncement(announcementId) {
+  getUpdateAnnouncement (announcementId) {
     return this.client.get(`/admin/announcement/${announcementId}/update`)
   }
 
@@ -364,7 +363,7 @@ class PyBossaApi {
    * @param {Object} form
    *   The form.
    */
-  updateAnnouncement(announcementId, form) {
+  updateAnnouncement (announcementId, form) {
     return this.client.post(`/admin/announcement/${announcementId}/update`, {
       params: form
     })
@@ -605,7 +604,7 @@ class PyBossaApi {
    * @param {Number} page
    *   The page number.
    */
-  getCategory (shortname, page=1) {
+  getCategory (shortname, page = 1) {
     return this.client.get(`/project/category/${shortname}/page/${page}`)
   }
 
@@ -639,7 +638,7 @@ class PyBossaApi {
    * @param {String} shortname
    *   The project's short name.
    */
-  getProject(shortname) {
+  getProject (shortname) {
     return this.client.get(`/project/${shortname}`)
   }
 
@@ -650,7 +649,7 @@ class PyBossaApi {
    * @param {String} shortname
    *   The project's short name.
    */
-  getProjectStats(shortname) {
+  getProjectStats (shortname) {
     return this.client.get(`/project/${shortname}/stats`)
   }
 
