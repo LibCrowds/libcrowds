@@ -45,7 +45,6 @@ import siteConfig from '@/siteConfig'
 import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
-import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {

@@ -139,6 +139,7 @@ import ProjectCardList from '@/components/project/CardList'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {

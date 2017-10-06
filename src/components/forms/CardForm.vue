@@ -61,6 +61,7 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import Loading from '@/components/Loading'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
