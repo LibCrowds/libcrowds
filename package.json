@@ -144,6 +144,7 @@
     "moduleNameMapper": {
       "/siteConfig$": "<rootDir>/test/testSiteConfig.js"
     },
+    "notify": true,
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
