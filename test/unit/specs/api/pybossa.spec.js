@@ -49,4 +49,25 @@ describe('PyBossaApi', () => {
       })
     })
   })
+
+  describe('exportData', () => {
+    it('makes the correct request', () => {
+      const shortName = 'my_project'
+      const type = 'result'
+      const format = 'json'
+      const mockGet = jest.fn()
+      const expectedUrl = `/project/${shortName}/tasks/export`
+      const expectedParams = {
+        responseType: 'arraybuffer',
+        params: {
+          type: type,
+          format: format
+        }
+      }
+      pybossa.client.get = mockGet
+      pybossa.exportData(shortName, type, format)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+      expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
+    })
+  })
 })

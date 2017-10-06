@@ -55,6 +55,25 @@ class PyBossaApi {
       })
     })
   }
+
+  /**
+   * Export the data from a project.
+   * @param {String} shortName
+   *   The short name of the project.
+   * @param {String} type
+   *   The domain object.
+   * @param {String} format
+   *   The output format (csv or json).
+   */
+  exportData (shortName, type, format) {
+    return this.client.get(`/project/${shortName}/tasks/export`, {
+      responseType: 'arraybuffer',
+      params: {
+        type: type,
+        format: format
+      }
+    })
+  }
 }
 
 export default PyBossaApi
