@@ -195,7 +195,7 @@ export default {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
     pybossa.getLeaderboard().then(r => {
-      this.topUsers = r.data.top_users
+      this.topUsers = r.data.top_users.slice(0, 10)
     })
   }
 }
