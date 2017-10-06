@@ -29,9 +29,9 @@ const store = new Vuex.Store({
 
   actions: {
     UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
-      pybossa.getProfile().then(data => {
-        if ('user' in data) {
-          commit('LOGIN', data.user)
+      pybossa.getProfile().then(r => {
+        if ('user' in r.data) {
+          commit('LOGIN', r.data.user)
         } else {
           commit('LOGOUT')
         }

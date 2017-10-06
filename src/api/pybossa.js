@@ -653,7 +653,7 @@ const PyBossaApi = {
          *   The project's short name.
          */
         getProject (shortname) {
-          return this.client.get(`/project/${shortname}`)
+          return this.client.get(`/project/${shortname}/`)
         },
 
         /**
