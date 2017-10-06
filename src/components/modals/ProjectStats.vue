@@ -112,7 +112,6 @@ export default {
     fetchData () {
       pybossa.getProjectStats(this.project.short_name).then(r => {
         this.loading = false
-        console.log(r.data)
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}
         this.projectStats = r.data.projectStats || {}

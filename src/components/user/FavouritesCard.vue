@@ -87,7 +87,6 @@ export default {
 
   mounted () {
     pybossa.getFavourites().then(r => {
-      console.log('OK', r.data)
       this.images = this.getImageData(r.data)
       this.loading = false
     })

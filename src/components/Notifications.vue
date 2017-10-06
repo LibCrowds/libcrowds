@@ -54,7 +54,6 @@ export default {
         default:
           break
       }
-      console.log(opts)
 
       /* eslint-disable no-new */
       new PNotify(opts)

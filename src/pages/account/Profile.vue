@@ -105,7 +105,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      console.log(data)
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects
