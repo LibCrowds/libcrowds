@@ -1,5 +1,7 @@
 import axios from 'axios'
 import siteConfig from '@/siteConfig'
+import addCsrfHeader from '@/api/interceptors/addCsrfHeader'
+import handleErrors from '@/api/interceptors/handleErrors'
 
 const PyBossaApi = {
   _instance: null,
@@ -807,9 +809,8 @@ const PyBossaApi = {
   }
 }
 
-// Error handler
-// PyBossaApi.instance.client.interceptors.response.use(undefined, error => {
-//   Promise.reject(error)
-// })
+// Interceptors
+PyBossaApi.instance.client.interceptors.request.use(addCsrfHeader)
+PyBossaApi.instance.client.interceptors.response.use(null, handleErrors)
 
 export default PyBossaApi.instance
