@@ -1,9 +1,8 @@
 import pybossaTestResponses from 'test/unit/fixtures/pybossaTestResponses'
 
-import PyBossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 
 describe('PyBossaApi', () => {
-  let pybossa = null
   let mockGet = null
   let mockPost = null
   let mockPut = null
@@ -11,7 +10,6 @@ describe('PyBossaApi', () => {
   let form = null
 
   beforeEach (() => {
-    pybossa = new PyBossaApi()
     mockGet = jest.fn()
     mockPost = jest.fn()
     mockPut = jest.fn()
