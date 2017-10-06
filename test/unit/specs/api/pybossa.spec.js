@@ -385,13 +385,27 @@ describe('PyBossaApi', () => {
       pybossa.getStats()
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
+
+    it('makes the correct request for getStatsSummary', () => {
+      const expectedUrl = `/api/globalstats`
+      pybossa.getStatsSummary()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
   })
 
   describe('Project endpoints', () => {
     it('makes the correct request for getCategory', () => {
       const shortname = 'my_category'
-      const expectedUrl = `/project/category/${shortname}`
+      const expectedUrl = `/project/category/${shortname}/page/1`
       pybossa.getCategory(shortname)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getCategory with page', () => {
+      const shortname = 'my_category'
+      const page = 42
+      const expectedUrl = `/project/category/${shortname}/page/${page}`
+      pybossa.getCategory(shortname, page)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
 

@@ -590,14 +590,23 @@ class PyBossaApi {
   }
 
   /**
+   * Get the server stats summary.
+   */
+  getStatsSummary () {
+    return this.client.get(`/api/globalstats`)
+  }
+
+  /**
    * Get a category.
    *
    * http://docs.pybossa.com/en/latest/api.html#project-category
    * @param {String} shortname
    *   The category's short name.
+   * @param {Number} page
+   *   The page number.
    */
-  getCategory (shortname) {
-    return this.client.get(`/project/category/${shortname}`)
+  getCategory (shortname, page=1) {
+    return this.client.get(`/project/category/${shortname}/page/${page}`)
   }
 
   /**
