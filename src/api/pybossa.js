@@ -74,6 +74,15 @@ class PyBossaApi {
       }
     })
   }
+
+  /**
+   * Get the main leaderboard.
+   * @param {*} window
+   *   Number of users above and below the current user to show.
+   */
+  getLeaderboard (window = 0) {
+    return this.client.get(`leaderboard/window/${window}`)
+  }
 }
 
 export default PyBossaApi

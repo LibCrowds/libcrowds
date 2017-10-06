@@ -139,7 +139,7 @@ export default {
     let data = {}
     pybossaApi.get('stats/').then(r => {
       data = r.data
-      return pybossa.get('/leaderboard/window/0')
+      return pybossa.getLeaderboard()
     }).then(r => {
       data.top_users = r.data.top_users
       next(vm => vm.setData(data))

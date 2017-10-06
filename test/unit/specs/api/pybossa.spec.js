@@ -70,4 +70,15 @@ describe('PyBossaApi', () => {
       expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
     })
   })
+
+  describe('getLeaderboard', () => {
+    it('makes the correct request', () => {
+      const window = 42
+      const expectedUrl = `leaderboard/window/${window}`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getLeaderboard(window)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
 })

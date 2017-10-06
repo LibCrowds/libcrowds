@@ -24,6 +24,7 @@
 
 <script>
 import Loading from '@/components/Loading'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -81,7 +82,7 @@ export default {
   },
 
   created () {
-    pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
+    pybossa.getLeaderboard().then(r => {
       this.setData(r.data)
     })
   }
