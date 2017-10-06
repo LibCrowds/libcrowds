@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver'
+import exportFile from '@/utils/exportFile'
 import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
@@ -204,11 +204,7 @@ export default {
         throw Error('Invalid format')
       }
       pybossa.exportUsers(format).then(r => {
-        const blob = new Blob([r.data], {
-          type: format === 'csv' ? 'text/csv' : 'application/json'
-        })
-        const fn = `user_data.${format}`
-        FileSaver.saveAs(blob, fn)
+        exportFile(r.data, 'user_data', format)
       })
     }
   },

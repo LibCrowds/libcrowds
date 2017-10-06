@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver'
 import pybossa from '@/api/pybossa'
+import exportFile from '@/utils/exportFile'
 
 export default {
   data: function () {
@@ -75,9 +75,7 @@ export default {
      */
     download (type, format) {
       pybossa.exportData(this.project.short_name, type, format).then(r => {
-        const blob = new Blob([r.data], { type: 'application/zip' })
-        const fn = `${this.project.short_name}_${type}_${format}.zip`
-        FileSaver.saveAs(blob, fn)
+        exportFile(r.data, `${this.project.short_name}_${type}`, format)
       })
     }
   }
