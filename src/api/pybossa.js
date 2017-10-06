@@ -34,28 +34,6 @@ class PyBossaApi {
   }
 
   /**
-   * Get data from multiple PYBOSSA endpoints
-   *
-   * Subsequent sources overwrite property assignments of previous sources.
-   * @param {Array} endpoints
-   *   The endpoints.
-   *
-   */
-  getData (endpoints) {
-    let promises = []
-    for (let endpoint of endpoints) {
-      promises.push(this.client.get(endpoint))
-    }
-    return new Promise((resolve, reject) => {
-      Promise.all(promises).then(values => {
-        resolve(values.reduce((a, b) => {
-          return merge(a, b)
-        }, {}))
-      })
-    })
-  }
-
-  /**
    * Return the categories for a microsite.
    *
    * This function assumes a limit of 100 categories per microsite.

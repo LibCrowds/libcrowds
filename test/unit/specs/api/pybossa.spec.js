@@ -49,37 +49,4 @@ describe('PyBossaApi', () => {
       })
     })
   })
-
-  describe('getData', () => {
-    it('merges multiple responses', () => {
-      const endpoints = [
-        'endpoint_one',
-        'endpoint_two'
-      ]
-      const responses = [
-        {
-          projects: ['project1'],
-          categories: ['cat1']
-        },
-        {
-          categories: ['cat2']
-        }
-      ]
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      mockGet.mockReturnValueOnce(new Promise((resolve, reject) => {
-        resolve(responses[0])
-      })).mockReturnValueOnce(new Promise((resolve, reject) => {
-        resolve(responses[1])
-      }))
-      return pybossa.getData(endpoints).then(data => {
-        expect(mockGet.mock.calls[0][0]).toBe(endpoints[0])
-        expect(mockGet.mock.calls[1][0]).toBe(endpoints[1])
-        expect(data).toEqual({
-          projects: ['project1'],
-          categories: ['cat2']
-        })
-      })
-    })
-  })
 })
