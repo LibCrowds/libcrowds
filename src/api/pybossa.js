@@ -240,8 +240,10 @@ class PyBossaApi {
    * Get the reset API key data.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-reset-api-key
+   * @param {String} name
+   *   The username.
    */
-  getResetApiKey () {
+  getResetApiKey (name) {
     return this.client.get(`/account/${name}/resetapikey`)
   }
 
@@ -249,10 +251,12 @@ class PyBossaApi {
    * Post the reset API key data.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-reset-api-key
+   * @param {String} name
+   *   The username.
    * @param {Object} form
    *   The form.
    */
-  resetApiKey (form) {
+  resetApiKey (name, form) {
     return this.client.post(`/account/${name}/resetapikey`, {
       params: form
     })

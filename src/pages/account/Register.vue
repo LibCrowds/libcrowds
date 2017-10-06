@@ -53,6 +53,7 @@ import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -156,9 +157,9 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.getAccountRegistration().then(r => {
+    pybossa.getAccountRegistration().then(r => {
       data = r.data
-      return pybossaApi.getAccountSignin()
+      return pybossa.getAccountSignin()
     }).then(r => {
       data.auth = r.data.auth
       next(vm => vm.setData(data))

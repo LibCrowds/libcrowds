@@ -16,6 +16,7 @@
 <script>
 import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -85,7 +86,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.getResetPassword(to.query).then(r => {
+    pybossa.getResetPassword(to.query).then(r => {
       r.data.params = to.query
       next(vm => vm.setData(r.data))
     }).catch(err => {

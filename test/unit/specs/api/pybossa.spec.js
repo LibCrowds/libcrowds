@@ -327,23 +327,25 @@ describe('PyBossaApi', () => {
 
   describe('getResetApiKey', () => {
     it('makes the correct request', () => {
+      const name = 'me'
       const expectedUrl = `/account/${name}/resetapikey`
       const mockGet = jest.fn()
       pybossa.client.get = mockGet
-      pybossa.getResetApiKey()
+      pybossa.getResetApiKey(name)
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
 
   describe('resetApiKey', () => {
     it('makes the correct request', () => {
+      const name = 'me'
       const expectedUrl = `/account/${name}/resetapikey`
       const form = {
         csrf: 'token'
       }
       const mockPost = jest.fn()
       pybossa.client.post = mockPost
-      pybossa.resetApiKey(form)
+      pybossa.resetApiKey(name, form)
       expect(mockPost.mock.calls[0][0]).toBe(expectedUrl)
       expect(mockPost.mock.calls[0][1]).toEqual({
         params: form
