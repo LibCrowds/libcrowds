@@ -74,7 +74,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/account/forgot-password').then(r => {
+    pybossaApi.getRecoverPassword().then(r => {
       next(vm => vm.setData(r.data))
     })
   }

@@ -80,14 +80,14 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossaApi.getUpdateProfile(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
     this.form.model = {}
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossaApi.getUpdateProfile(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

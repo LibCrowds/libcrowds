@@ -52,6 +52,7 @@ import isEmpty from 'lodash/isEmpty'
 import UserProfileCard from '@/components/user/ProfileCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import Loading from '@/components/Loading'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -115,14 +116,14 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+    pybossa.getAccount(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
     this.user = null
-    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+    pybossa.getAccount(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

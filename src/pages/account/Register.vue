@@ -156,9 +156,9 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get('/account/register').then(r => {
+    pybossaApi.getAccountRegistration().then(r => {
       data = r.data
-      return pybossaApi.get('/account/signin')
+      return pybossaApi.getAccountSignin()
     }).then(r => {
       data.auth = r.data.auth
       next(vm => vm.setData(data))

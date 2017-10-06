@@ -120,7 +120,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/account/signin').then(r => {
+    pybossaApi.getAccountSignin().then(r => {
       if (r.data.next === '/') {
         next({ path: to.params.next || r.data.next })
       } else {
