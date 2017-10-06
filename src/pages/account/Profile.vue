@@ -29,12 +29,6 @@
           </user-profile-card>
         </div>
         <div class="col-lg-8">
-
-          <user-favourites-card
-            class="mb-2"
-            v-if="isCurrentUser">
-          </user-favourites-card>
-
           <b-card no-body header="Contributions">
             <b-table
               hover
@@ -45,15 +39,10 @@
               <template slot="overall_progress" scope="project">
                 {{ project.item.overall_progress }}%
               </template>
-              <template slot="action" scope="project">
-              </template>
             </b-table>
           </b-card>
-
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -62,7 +51,6 @@
 import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
-import UserFavouritesCard from '@/components/user/FavouritesCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import Loading from '@/components/Loading'
 
@@ -73,9 +61,14 @@ export default {
       projects: [],
       tableFields: {
         name: { label: 'Name' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center'
+        }
       }
     }
   },
@@ -88,7 +81,6 @@ export default {
 
   components: {
     UserProfileCard,
-    UserFavouritesCard,
     ProjectContribButton,
     Loading
   },
