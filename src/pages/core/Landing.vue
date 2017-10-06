@@ -107,7 +107,10 @@
       </div>
     </section>
 
-    <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
+    <leaderboard-modal
+      :currentUser="currentUser"
+      :modalId="leaderboardModalId">
+    </leaderboard-modal>
   </div>
 </template>
 
