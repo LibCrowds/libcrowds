@@ -630,10 +630,10 @@ const PyBossaApi = {
             fulltextsearch: 1
           }
           return new Promise((resolve, reject) => {
-            this.client.get(url, params).then(data => {
+            this.client.get(url, params).then(r => {
               // Additional filter needed as the search is not exact (i.e. if one
               // category name is a part of another both could be returned)
-              const filtered = this._filterMicrositeCategories(data, key)
+              const filtered = this._filterMicrositeCategories(r.data, key)
               resolve(filtered)
             })
           })
