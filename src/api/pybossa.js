@@ -1,7 +1,8 @@
 import axios from 'axios'
 import siteConfig from '@/siteConfig'
-// import addCsrfHeader from '@/api/interceptors/addCsrfHeader'
-// import handleErrors from '@/api/interceptors/handleErrors'
+import addCsrfHeader from '@/api/interceptors/addCsrfHeader'
+import handleErrors from '@/api/interceptors/handleErrors'
+import handleFlash from '@/api/interceptors/handleFlash'
 
 const PyBossaApi = {
   _instance: null,
@@ -158,7 +159,7 @@ const PyBossaApi = {
          *   The username.
          */
         getAccount (name) {
-          return this.client.get(`/account/${name}`)
+          return this.client.get(`/account/${name}/`)
         },
 
         /**
@@ -816,7 +817,8 @@ const PyBossaApi = {
 }
 
 // Interceptors
-// PyBossaApi.instance.client.interceptors.request.use(addCsrfHeader)
-// PyBossaApi.instance.client.interceptors.response.use(null, handleErrors)
+PyBossaApi.instance.client.interceptors.request.use(addCsrfHeader)
+PyBossaApi.instance.client.interceptors.response.use(null, handleErrors)
+PyBossaApi.instance.client.interceptors.response.use(handleFlash)
 
 export default PyBossaApi.instance

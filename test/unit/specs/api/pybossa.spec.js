@@ -104,13 +104,13 @@ describe('PyBossaApi', () => {
 
     it('makes the correct request for getAccount', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}`
+      const expectedUrl = `/account/${name}/`
       pybossa.getAccount(name)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
 
     it('makes the correct request for getProfile', () => {
-      const expectedUrl = '/account/profile'
+      const expectedUrl = '/account/profile/'
       pybossa.getProfile()
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })

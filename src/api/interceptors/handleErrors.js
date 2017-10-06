@@ -1,15 +1,19 @@
 import router from '@/router'
 
+/**
+ * Handle different types of error.
+ * @param {Object} error
+ *   The error
+ */
 export default function (error) {
   if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
+    // Non-2xx status code
     router.push({ name: error.response.status })
   } else if (error.request) {
-    // The request was made but no response was received
+    // No response
     router.push({ name: 598 })
   } else {
-    // Something happened in setting up the request that triggered an Error
+    // Error setting up the request
     router.push({ name: 500 })
   }
   return Promise.reject(error)
