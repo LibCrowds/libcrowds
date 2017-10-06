@@ -593,7 +593,7 @@ const PyBossaApi = {
          * http://docs.pybossa.com/en/latest/api.html#pybossa-server-stats
          */
         getStats () {
-          return this.client.get(`stats`)
+          return this.client.get(`stats/`)
         },
 
         /**
