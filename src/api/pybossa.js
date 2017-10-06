@@ -296,25 +296,12 @@ class PyBossaApi {
   }
 
   /**
-   * Get project data.
-   *
-   * http://docs.pybossa.com/en/latest/api.html#project-shortname
-   * @param {String} shortname
-   *   The project's short name.
+   * Get the main leaderboard.
+   * @param {String|Number} window
+   *   Number of users above and below the current user to show.
    */
-  getProject(shortname) {
-    return this.client.get(`/project/${shortname}`)
-  }
-
-  /**
-   * Get project stats data.
-   *
-   * http://docs.pybossa.com/en/latest/api.html#project-settings
-   * @param {String} shortname
-   *   The project's short name.
-   */
-  getProjectStats(shortname) {
-    return this.client.get(`/project/${shortname}/stats`)
+  getLeaderboard (window=0) {
+    return this.client.get(`leaderboard/window/${window}`)
   }
 
   /**
@@ -588,9 +575,16 @@ class PyBossaApi {
     return this.client.get(`/stats`)
   }
 
-
-
-
+  /**
+   * Get a category.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-category
+   * @param {String} shortname
+   *   The category's short name.
+   */
+  getCategory (shortname) {
+    return this.client.get(`/project/category/${shortname}`)
+  }
 
   /**
    * Return the categories for a microsite.
@@ -616,6 +610,96 @@ class PyBossaApi {
   }
 
   /**
+   * Get project data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-shortname
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getProject(shortname) {
+    return this.client.get(`/project/${shortname}`)
+  }
+
+  /**
+   * Get project stats data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-settings
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getProjectStats(shortname) {
+    return this.client.get(`/project/${shortname}/stats`)
+  }
+
+  /**
+   * Get the new project data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-creation
+   */
+  getNewProject () {
+    return this.client.get(`/project/new`)
+  }
+
+  /**
+   * Add a new project.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-creation
+   * @param {Object} form
+   *   The form.
+   */
+  newProject (form) {
+    return this.client.post(`/project/new`, { params: form })
+  }
+
+  /**
+   * Get the delete project data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-delete
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getDeleteProject (shortname) {
+    return this.client.get(`/project/${shortname}/delete`)
+  }
+
+  /**
+   * Delete a project.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-delete
+   * @param {String} shortname
+   *   The project's short name.
+   * @param {Object} form
+   *   The form.
+   */
+  deleteProject (shortname, form) {
+    return this.client.post(`/project/${shortname}/delete`, { params: form })
+  }
+
+  /**
+   * Get the update project data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-update
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getUpdateProject (shortname) {
+    return this.client.get(`/project/${shortname}/update`)
+  }
+
+  /**
+   * Update a project.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-update
+   * @param {String} shortname
+   *   The project's short name.
+   * @param {Object} form
+   *   The form.
+   */
+  updateProject (shortname, form) {
+    return this.client.post(`/project/${shortname}/update`, { params: form })
+  }
+
+  /**
    * Export the data from a project.
    * @param {String} shortName
    *   The short name of the project.
@@ -635,12 +719,59 @@ class PyBossaApi {
   }
 
   /**
-   * Get the main leaderboard.
-   * @param {String|Number} window
-   *   Number of users above and below the current user to show.
+   * Browse tasks.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-tasks-browse
+   * @param {String} shortname
+   *   The project's short name.
+   * @param {String|Number} page
+   *   The page number.
    */
-  getLeaderboard (window=0) {
-    return this.client.get(`leaderboard/window/${window}`)
+  getBrowseTasks (shortname, page) {
+    return this.client.get(`/project/${shortname}/tasks/browse/${page}`)
+  }
+
+  /**
+   * Get a task importer.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-tasks-import
+   * @param {String} shortname
+   *   The project's short name.
+   * @param {String} type
+   *   The importer type.
+   */
+  getTaskImporter (shortname, type) {
+    return this.client.get(`/project/${shortname}/tasks/import`, {
+      params: {
+        type: type
+      }
+    })
+  }
+
+  /**
+   * Import tasks.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-tasks-import
+   * @param {String} shortname
+   *   The project's short name.
+   * @param {Object} form
+   *   The form.
+   */
+  importTasks (shortname, form) {
+    return this.client.post(`/project/${shortname}/tasks/import`, {
+      params: form
+    })
+  }
+
+  /**
+   * Get the project tutorial.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-tutorial
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getTutorial (shortname) {
+    return this.client.get(`/project/${shortname}/tutorial`)
   }
 }
 

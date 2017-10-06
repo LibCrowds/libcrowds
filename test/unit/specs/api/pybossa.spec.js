@@ -28,42 +28,6 @@ describe('PyBossaApi', () => {
     }
   })
 
-  describe('_filterMicrositeCategories', () => {
-    it('filters microsite categories for the given key only', () => {
-      const categories = pybossaTestResponses.getApiCategories.data
-      const key = 'playbills'
-      const filtered = pybossa._filterMicrositeCategories(categories, key)
-      expect(filtered.length).toBe(1)
-      expect(filtered[0].info.collection).toBe(key)
-    })
-  })
-
-  describe('getMicrositeCategories', () => {
-    it('makes the correct request', () => {
-      const key = 'playbills'
-      const expectedUrl = `/api/${key}`
-      const expectedParams = {
-        info: `collection::${key}`,
-        fulltextsearch: 1
-      }
-      pybossa.getMicrositeCategories(key)
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
-      expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
-    })
-
-    it('returns the correct categories', () => {
-      const key = 'playbills'
-      const response = pybossaTestResponses.getApiCategories.data
-      mockGet.mockReturnValue(new Promise((resolve, reject) => {
-        resolve(response)
-      }))
-      return pybossa.getMicrositeCategories(key).then(categories => {
-        expect(categories.length).toBe(1)
-        expect(categories[0].info.collection).toBe(key)
-      })
-    })
-  })
-
   describe('Favourites endpoints', () => {
     it('makes the correct request for getFavourites', () => {
       const expectedUrl = '/api/favourites'
@@ -409,9 +373,46 @@ describe('PyBossaApi', () => {
     })
   })
 
-
-
   describe('Project endpoints', () => {
+    it('makes the correct request for getCategory', () => {
+      const shortname = 'my_category'
+      const expectedUrl = `/project/category/${shortname}`
+      pybossa.getCategory(shortname)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('filters microsite categories for the given key only', () => {
+      const categories = pybossaTestResponses.getApiCategories.data
+      const key = 'playbills'
+      const filtered = pybossa._filterMicrositeCategories(categories, key)
+      expect(filtered.length).toBe(1)
+      expect(filtered[0].info.collection).toBe(key)
+    })
+
+    it('makes the correct request for getMicrositeCategories', () => {
+      const key = 'playbills'
+      const expectedUrl = `/api/${key}`
+      const expectedParams = {
+        info: `collection::${key}`,
+        fulltextsearch: 1
+      }
+      pybossa.getMicrositeCategories(key)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+      expect(mockGet.mock.calls[0][1]).toEqual(expectedParams)
+    })
+
+    it('returns the correct categories', () => {
+      const key = 'playbills'
+      const response = pybossaTestResponses.getApiCategories.data
+      mockGet.mockReturnValue(new Promise((resolve, reject) => {
+        resolve(response)
+      }))
+      return pybossa.getMicrositeCategories(key).then(categories => {
+        expect(categories.length).toBe(1)
+        expect(categories[0].info.collection).toBe(key)
+      })
+    })
+
     it('makes the correct request for getProject', () => {
       const shortname = 'my_project'
       const expectedUrl = `/project/${shortname}`
@@ -424,6 +425,46 @@ describe('PyBossaApi', () => {
       const expectedUrl = `/project/${shortname}/stats`
       pybossa.getProjectStats(shortname)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getNewProject', () => {
+      const expectedUrl = `/project/new`
+      pybossa.getNewProject()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for newProject', () => {
+      const expectedUrl = `/project/new`
+      pybossa.newProject(form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getDeleteProject', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/delete`
+      pybossa.getDeleteProject(shortname)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for deleteProject', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/delete`
+      pybossa.deleteProject(shortname, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getUpdateProject', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/update`
+      pybossa.getUpdateProject(shortname)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for updateProject', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/update`
+      pybossa.updateProject(shortname, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
     })
 
     it('makes the correct request for exportData', () => {
@@ -440,6 +481,38 @@ describe('PyBossaApi', () => {
       }
       pybossa.exportData(shortName, type, format)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
+    })
+
+    it('makes the correct request for getBrowseTasks', () => {
+      const shortname = 'my_project'
+      const page = 42
+      const expectedUrl = `/project/${shortname}/tasks/browse/${page}`
+      pybossa.getBrowseTasks(shortname, page)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getTaskImporter', () => {
+      const shortname = 'my_project'
+      const type = 'csv'
+      const expectedUrl = `/project/${shortname}/tasks/import`
+      pybossa.getTaskImporter(shortname, type)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: {
+        type: type
+      }})
+    })
+
+    it('makes the correct request for importTasks', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/tasks/import`
+      pybossa.importTasks(shortname, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getTutorial', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/tutorial`
+      pybossa.getTutorial(shortname)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
   })
 })
