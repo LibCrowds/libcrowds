@@ -401,6 +401,14 @@ describe('PyBossaApi', () => {
     })
   })
 
+  describe('Stats endpoints', () => {
+    it('makes the correct request for getStats', () => {
+      const expectedUrl = `/stats`
+      pybossa.getStats()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+  })
+
 
 
   describe('Project endpoints', () => {

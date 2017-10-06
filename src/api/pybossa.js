@@ -579,6 +579,15 @@ class PyBossaApi {
     return this.client.get(`/help/terms-of-use`)
   }
 
+  /**
+   * Get the server stats.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#pybossa-server-stats
+   */
+  getStats () {
+    return this.client.get(`/stats`)
+  }
+
 
 
 
