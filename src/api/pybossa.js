@@ -613,7 +613,11 @@ const PyBossaApi = {
          *   The page number.
          */
         getCategory (shortname, page = 1) {
-          return this.client.get(`/project/category/${shortname}/page/${page}`)
+          let endpoint = `/project/category/${shortname}/`
+          if (page > 1) {
+            endpoint += `page/${page}/`
+          }
+          return this.client.get(endpoint)
         },
 
         /**
@@ -633,8 +637,10 @@ const PyBossaApi = {
             this.client.get(url, params).then(r => {
               // Additional filter needed as the search is not exact (i.e. if one
               // category name is a part of another both could be returned)
-              const filtered = this._filterMicrositeCategories(r.data, key)
-              resolve(filtered)
+              r.data = {
+                categories: this._filterMicrositeCategories(r.data, key)
+              }
+              resolve(r)
             })
           })
         },
