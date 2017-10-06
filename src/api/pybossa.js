@@ -460,12 +460,19 @@ const PyBossaApi = {
          * http://docs.pybossa.com/en/latest/api.html#admin-categories-delete
          * @param {String|Number} categoryId
          *   The category ID.
-         * @param {Object} form
-         *   The form.
          */
-        deleteCategory (categoryId, form) {
-          return this.client.post(`/admin/categories/del/${categoryId}`, {
-            params: form
+        deleteCategory (categoryId) {
+          const endpoint = `/admin/categories/del/${categoryId}`
+          return new Promise((resolve, reject) => {
+            this.client.get(endpoint).then(r => {
+              return this.client.post(endpoint, {
+                headers: {
+                  'X-CSRFToken': r.data.form.csrf
+                }
+              })
+            }).then(r => {
+              resolve(r)
+            })
           })
         },
 

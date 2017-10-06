@@ -166,14 +166,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            const endpoint = `/admin/categories/del/${id}`
-            pybossa.client.get(endpoint).then(r => {
-              return pybossa.client.post(endpoint, null, {
-                headers: {
-                  'X-CSRFToken': r.data.form.csrf
-                }
-              })
-            }).then(r => {
+            pybossa.deleteCategory(id).then(r => {
               resolve()
             })
           })

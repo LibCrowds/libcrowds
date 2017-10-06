@@ -294,18 +294,21 @@ describe('PyBossaApi', () => {
       expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
     })
 
-    it('makes the correct request for getDeleteCategory', () => {
+    it('makes the correct requests for deleteCategory', () => {
       const categoryId = 42
       const expectedUrl = `/admin/categories/del/${categoryId}`
-      pybossa.getDeleteCategory(categoryId)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
-    })
-
-    it('makes the correct request for deleteCategory', () => {
-      const categoryId = 42
-      const expectedUrl = `/admin/categories/del/${categoryId}`
-      pybossa.deleteCategory(categoryId, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      const getDeleteCategoryResponse = pybossaTestResponses.getDeleteCategory
+      mockGet.mockReturnValue(new Promise((resolve, reject) => {
+        resolve(getDeleteCategoryResponse)
+      }))
+      return pybossa.deleteCategory(categoryId, form).then(r => {
+        expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+        expect(mockPost).toHaveBeenCalledWith(expectedUrl, {
+          headers: {
+            'X-CSRFToken': getDeleteCategoryResponse.data.form.csrf
+          }
+        })
+      })
     })
 
     it('makes the correct request for getUpdateCategory', () => {
