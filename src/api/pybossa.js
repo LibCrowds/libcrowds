@@ -168,7 +168,7 @@ const PyBossaApi = {
          * http://docs.pybossa.com/en/latest/api.html#account-profile
          */
         getProfile () {
-          return this.getAccount('profile')
+          return this.client.get(`/account/profile`)
         },
 
         /**

@@ -110,7 +110,7 @@ describe('PyBossaApi', () => {
     })
 
     it('makes the correct request for getProfile', () => {
-      const expectedUrl = '/account/profile/'
+      const expectedUrl = '/account/profile'
       pybossa.getProfile()
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
