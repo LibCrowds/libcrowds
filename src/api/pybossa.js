@@ -1,9 +1,16 @@
 import axios from 'axios'
+import siteConfig from '@/siteConfig'
 
+let instance = null
+
+/** PYBOSSA client singleton. */
 class PyBossaApi {
-  constructor (host) {
+  constructor () {
+    if (!instance) {
+      instance = this
+    }
     const opts = {
-      baseURL: host,
+      baseURL: siteConfig.host,
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json'
@@ -15,6 +22,7 @@ class PyBossaApi {
     this.client.interceptors.response.use(undefined, error => {
       Promise.reject(error)
     })
+    return instance
   }
 
   /**

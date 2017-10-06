@@ -140,7 +140,7 @@
       "vue"
     ],
     "moduleNameMapper": {
-      "^./src/siteConfig$": "<rootDir>/test/testSiteConfig.js"
+      "/siteConfig$": "<rootDir>/test/testSiteConfig.js"
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
