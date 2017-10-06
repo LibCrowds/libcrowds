@@ -378,9 +378,19 @@ describe('PyBossaApi', () => {
     })
   })
 
-  describe('confirmEmail', () => {
+  describe('getConfirmEmail', () => {
     it('makes the correct request', () => {
       const expectedUrl = '/account/confirm-email'
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getConfirmEmail(params)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('confirmEmail', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = '/account/register/confirmation'
       const params = {
         key: 'secret'
       }

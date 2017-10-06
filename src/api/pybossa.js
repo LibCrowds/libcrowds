@@ -272,14 +272,21 @@ class PyBossaApi {
   }
 
   /**
-   * Confirm an email address.
+   * Get confirm email data.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-confirm-email
+   */
+  confirmEmail(params) {
+    return this.client.get('/account/confirm-email')
+  }
+
+  /**
+   * Confirm an email address.
    * @param {String} params
    *   The query params given in the confirm link.
    */
   confirmEmail(params) {
-    return this.client.get('/account/confirm-email', {
+    return this.client.get('/account/register/confirmation', {
       params: params
     })
   }
