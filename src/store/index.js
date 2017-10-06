@@ -49,9 +49,11 @@ const store = new Vuex.Store({
 
     NOTIFY: ({ commit, state }, notification) => {
       // Avoid repeated notifications
-      if (state.notification !== null &&
-          notification.type === state.notification.type &&
-          notification.msg === state.notification.msg) {
+      if (
+        state.notification !== null &&
+        notification.type === state.notification.type &&
+        notification.msg === state.notification.msg
+      ) {
         return
       }
       commit('SET_ITEM', { key: 'notification', value: notification })

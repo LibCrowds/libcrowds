@@ -22,18 +22,18 @@ export default {
 
   methods: {
     notify (n) {
+      const position = n.position || 'topright'
       const title = n.type ? capitalize(n.type) : 'Info'
       const opts = {
         title: title,
         text: n.msg,
         type: n.type || 'info',
         hide: true,
-        width: '400px',
         delay: 2500,
         mobile: {
           styling: true
         },
-        addclass: 'p-sm-4',
+        addclass: `stack-${position}`,
         after_close: () => {
           store.commit('DELETE_ITEM', 'notification')
         },
@@ -54,6 +54,7 @@ export default {
         default:
           break
       }
+      console.log(opts)
 
       /* eslint-disable no-new */
       new PNotify(opts)
@@ -68,8 +69,14 @@ export default {
 @import '~pnotify/src/pnotify.brighttheme';
 @import '~pnotify/src/pnotify.nonblock';
 
-.ui-pnotify .ui-pnotify-text {
+.ui-pnotify {
+  .ui-pnotify-text {
     word-wrap: break-word;
+  }
+
+  &.stack-bottomleft {
+    top: auto;
+  }
 }
 
 .ui-pnotify-title {

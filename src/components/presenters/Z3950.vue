@@ -385,7 +385,7 @@ export default {
             return this.parseSubfield(sf)
           }).join(' ') + ' '
         } else if (code !== '6') {
-          if (!codes || codes.indexOf(code)) {
+          if (!codes || codes.indexOf(code) > -1) {
             res = subfield[code] + ' '
           }
         }
@@ -510,7 +510,7 @@ export default {
      *   The task.
      */
     onTaskLiked (task) {
-      this.$emit('liked', task.id, task.liked)
+      this.$emit('taskliked', task.id, task.liked)
     },
 
     /**
@@ -520,6 +520,7 @@ export default {
      */
     submit (answer) {
       this.$emit('submit', this.project.id, this.currentTask.id, answer)
+      this.reset()
     },
 
     /**

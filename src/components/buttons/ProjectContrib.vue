@@ -31,6 +31,20 @@ export default {
     block: {
       type: Boolean,
       default: true
+    },
+    status: {
+      type: String,
+      default: 'can_contribute',
+      validator: value => {
+        const valid = [
+          'completed',
+          'draft',
+          'publish',
+          'can_contribute',
+          'cannot_contribute'
+        ]
+        return value in valid
+      }
     }
   }
 }
