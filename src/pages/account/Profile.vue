@@ -45,8 +45,6 @@
               <template slot="overall_progress" scope="project">
                 {{ project.item.overall_progress }}%
               </template>
-              <template slot="action" scope="project">
-              </template>
             </b-table>
           </b-card>
 
@@ -74,8 +72,7 @@ export default {
       tableFields: {
         name: { label: 'Name' },
         n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
+        overall_progress: { label: 'Progress' }
       }
     }
   },
