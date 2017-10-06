@@ -8,7 +8,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     currentUser: {},
-    notification: {}
+    notification: {},
+    announcements: []
   },
 
   mutations: {
@@ -35,6 +36,7 @@ const store = new Vuex.Store({
         } else {
           commit('LOGOUT')
         }
+        dispatch('UPDATE_ANNOUNCEMENTS')
       })
     },
 
@@ -57,6 +59,22 @@ const store = new Vuex.Store({
         return
       }
       commit('SET_ITEM', { key: 'notification', value: notification })
+    },
+
+    UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
+      if (!(state.currentUser.info)) {
+        commit('SET_ITEM', {
+          key: 'announcements', value: []
+        })
+      } else {
+        let announcements = state.currentUser.info.announcements || {}
+        let lastId = announcements['last_read'] || 0
+        pybossaApi.get(`/api/announcement?last_id=${lastId}`).then(r => {
+          commit('SET_ITEM', {
+            key: 'announcements', value: r.data
+          })
+        })
+      }
     }
   }
 })

@@ -107,29 +107,7 @@
       </div>
     </section>
 
-    <section
-      id="publications"
-      v-if="publications.length"
-      class="bg-light">
-      <div class="container pt-4 pb-5">
-        <h2 class="my-1">Publications</h2>
-        <p class="lead mb-2">
-          Articles, papers and blog posts about {{ siteConfig.brand }}.
-        </p>
-        <b-card-group columns>
-          <publication-card
-            v-for="publication in publications"
-            :key="publication.id"
-            :publication="publication">
-          </publication-card>
-        </b-card-group>
-      </div>
-    </section>
-
-    <leaderboard-modal
-      :modal-id="leaderboardModalId"
-      :current-user="currentUser">
-    </leaderboard-modal>
+    <leaderboard-modal :modalId="leaderboardModalId"></leaderboard-modal>
   </div>
 </template>
 
@@ -137,7 +115,6 @@
 import jump from 'jump.js'
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
-import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
@@ -156,7 +133,6 @@ export default {
       siteConfig: siteConfig,
       stats: {},
       topUsers: [],
-      publications: [],
       leaderboardModalId: 'leaderboard-modal'
     }
   },
@@ -178,8 +154,7 @@ export default {
   components: {
     LeaderboardModal,
     UserAvatar,
-    CollectionCard,
-    PublicationCard
+    CollectionCard
   },
 
   computed: {
@@ -217,7 +192,11 @@ export default {
     pybossa.getStats().then(r => {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
+<<<<<<< HEAD
     pybossa.getLeaderboard().then(r => {
+=======
+    pybossaApi.get('/').then(r => {
+>>>>>>> fix-357
       this.topUsers = r.data.top_users
     })
   }

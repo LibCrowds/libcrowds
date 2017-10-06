@@ -33,7 +33,6 @@ export default {
   data: function () {
     return {
       siteConfig: siteConfig,
-      activeItem: null,
       navClass: {
         side: this.position === 'side',
         top: this.position === 'top'
@@ -70,20 +69,20 @@ export default {
     white-space: nowrap;
     z-index: 1;
     background:
-      linear-gradient(rgba($blue, 0.8),
-      rgba($blue, 0.8)),
+      linear-gradient(rgba($gray-900, 0.8),
+      rgba($gray-900, 0.8)),
       url('../../assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
     display: none;
-    font-size: $font-size-sm;
+    font-size: 0.75rem;
     text-transform: uppercase;
 
     &.side {
       max-height: 100%;
       height: 100%;
       flex-direction: column;
-      width: 260px;
+      width: $sidebar-width;
       position: absolute;
       top: 0;
       bottom: 0;
@@ -98,10 +97,13 @@ export default {
           calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y}) 0;
         font-weight: 400;
         letter-spacing: 0.8px;
+
+        &:first-child {
+          margin-top: 0;
+        }
       }
 
       ul {
-        padding: 1rem 1rem 1.25rem 1rem;
         display: block;
       }
 
@@ -112,7 +114,7 @@ export default {
           z-index: 2;
           max-height: 100%;
           float: right;
-          width: calc(100% - 260px);
+          width: calc(100% - $sidebar-width);
         }
       }
     }
@@ -136,12 +138,10 @@ export default {
     .list-group-item {
       border: none;
       background-color: transparent;
-      border-radius: $border-radius-lg;
       padding: 0rem;
-      text-align: center;
 
       a {
-        padding: $list-group-item-padding-y;
+        padding: 0.75rem 1.25rem;
         width: 100%;
         color: $white;
         display: block;
@@ -149,8 +149,8 @@ export default {
 
       &:hover,
       &:focus,
-      &.router-link-exact-active {
-        background-color: rgba($white, 0.23);
+      &.router-link-active {
+        background-color: rgba($blue, 0.25);
 
         a {
           text-decoration: none;
@@ -158,7 +158,7 @@ export default {
       }
 
       &.router-link-exact-active {
-        background-color: rgba($white, 0.33);
+        background-color: rgba($blue, 0.45);
       }
     }
 
@@ -170,6 +170,7 @@ export default {
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid rgba($gray-300, 0.5);
+      min-height: $app-navbar-height;
 
       .brand {
         @extend .navbar-brand;

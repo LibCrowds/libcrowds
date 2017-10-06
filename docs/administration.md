@@ -38,6 +38,10 @@ To download all user data click the **Export to CSV** or **Export to JSON** butt
 
 The page also provides a list of current administrators.
 
+## Announcements
+
+This section can make global announcements to all users, for example, when you want to draw attention to a new project.
+
 ## Background Jobs
 
 All background jobs currently running on the server can be monitored via this page.
