@@ -624,7 +624,7 @@ const PyBossaApi = {
          *   The microsite key.
          */
         getMicrositeCategories (key) {
-          const url = `/api/${key}`
+          const url = `/api/category`
           const params = {
             info: `collection::${key}`,
             fulltextsearch: 1

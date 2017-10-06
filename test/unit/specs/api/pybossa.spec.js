@@ -418,7 +418,7 @@ describe('PyBossaApi', () => {
 
     it('makes the correct request for getMicrositeCategories', () => {
       const key = 'playbills'
-      const expectedUrl = `/api/${key}`
+      const expectedUrl = `/api/category`
       const expectedParams = {
         info: `collection::${key}`,
         fulltextsearch: 1
