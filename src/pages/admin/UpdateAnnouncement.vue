@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
@@ -86,9 +86,15 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    let id = to.params.id
-    pybossaApi.get(`/admin/announcement/${id}/update`).then(r => {
+    pybossa.getUpdateAnnouncement(to.params.id).then(r => {
       next(vm => vm.setData(r.data))
+    })
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    pybossa.getUpdateAnnouncement(to.params.id).then(r => {
+      this.setData(r.data)
+      next()
     })
   }
 }

@@ -53,7 +53,7 @@
 
 <script>
 import swal from 'sweetalert2'
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import capitalize from '@/utils/capitalize'
 
 export default {
@@ -116,8 +116,8 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            pybossaApi.get('/admin/announcement').then(r => {
-              return pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
+            pybossa.client.get('/admin/announcement').then(r => {
+              return pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
                 headers: {
                   'X-CSRFToken': r.data.csrf
                 }
@@ -144,14 +144,14 @@ export default {
      * Refresh current announcements data.
      */
     refreshCurrentAnnouncements () {
-      pybossaApi.get('/admin/announcement').then(r => {
+      pybossa.getAdminAnnouncements().then(r => {
         this.announcements = r.data.announcements
       })
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/admin/announcement').then(r => {
+    pybossa.getAdminAnnouncements().then(r => {
       next(vm => vm.setData(r.data))
     })
   }

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
@@ -77,7 +77,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/admin/announcement/new').then(r => {
+    pybossa.getNewAnnouncement().then(r => {
       next(vm => vm.setData(r.data))
     })
   }
