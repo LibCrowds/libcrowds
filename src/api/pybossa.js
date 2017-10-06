@@ -3,7 +3,7 @@ import siteConfig from '@/siteConfig'
 
 const PyBossaApi = {
   _instance: null,
-  get instance() {
+  get instance () {
     if (!this._instance) {
       this._instance = {
         opts: {

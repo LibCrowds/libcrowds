@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Cookies from '@/pages/help/Cookies'
 import testSiteConfig from 'test/testSiteConfig'
 

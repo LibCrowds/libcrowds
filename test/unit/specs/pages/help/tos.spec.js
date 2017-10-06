@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import TOS from '@/pages/help/TOS'
 import testSiteConfig from 'test/testSiteConfig'
 

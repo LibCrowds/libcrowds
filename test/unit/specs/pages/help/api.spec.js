@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import API from '@/pages/help/API'
 import testSiteConfig from 'test/testSiteConfig'
 

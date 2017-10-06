@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Privacy from '@/pages/help/Privacy'
 import testSiteConfig from 'test/testSiteConfig'
 

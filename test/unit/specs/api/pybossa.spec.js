@@ -9,7 +9,7 @@ describe('PyBossaApi', () => {
   let mockDel = null
   let form = null
 
-  beforeEach (() => {
+  beforeEach(() => {
     mockGet = jest.fn()
     mockPost = jest.fn()
     mockPut = jest.fn()
@@ -270,7 +270,6 @@ describe('PyBossaApi', () => {
     })
 
     it('makes the correct request for exportUsers', () => {
-      const shortName = 'my_project'
       const format = 'json'
       const expectedUrl = `/admin/users/export`
       const expectedParams = {
