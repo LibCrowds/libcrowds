@@ -272,6 +272,20 @@ describe('PyBossaApi', () => {
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
 
+    it('makes the correct request for exportUsers', () => {
+      const shortName = 'my_project'
+      const format = 'json'
+      const expectedUrl = `/admin/users/export`
+      const expectedParams = {
+        responseType: 'arraybuffer',
+        params: {
+          format: format
+        }
+      }
+      pybossa.exportUsers(format)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
+    })
+
     it('makes the correct request for getAdminCategories', () => {
       const expectedUrl = `/admin/categories`
       pybossa.getAdminCategories()

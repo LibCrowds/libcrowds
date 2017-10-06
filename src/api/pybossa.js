@@ -411,6 +411,20 @@ class PyBossaApi {
   }
 
   /**
+   * Export users.
+   * @param {String} format
+   *   The output format (csv or json).
+   */
+  exportUsers (format) {
+    return this.client.get(`/admin/users/export`, {
+      responseType: 'arraybuffer',
+      params: {
+        format: format
+      }
+    })
+  }
+
+  /**
    * Get admin categories data.
    *
    * http://docs.pybossa.com/en/latest/api.html#admin-categories
