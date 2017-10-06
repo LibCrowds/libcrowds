@@ -151,7 +151,7 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: taskId }).then(() => {
+        pybossaApi.addFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Added to favourites',
             type: 'info',
@@ -159,7 +159,7 @@ export default {
           })
         })
       } else {
-        pybossaApi.delete(`/api/favorites/${taskId}`).then(() => {
+        pybossaApi.deleteFavourite(taskId}).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Removed from favourites',
             type: 'info',

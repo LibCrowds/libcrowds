@@ -34,6 +34,33 @@ class PyBossaApi {
   }
 
   /**
+   * Get the current user's favourites.
+   */
+  getFavourites () {
+    return this.client.get('/api/favourites')
+  }
+
+  /**
+   * Add a favourite.
+   * @param {String|Number} taskId
+   *   The task ID.
+   */
+  addFavourite (taskId) {
+    return this.client.post('/api/favourites', {
+      task_id: taskId
+    })
+  }
+
+  /**
+   * Delete a favourite.
+   * @param {String|Number} taskId
+   *   The task ID.
+   */
+  deleteFavourite (taskId) {
+    return this.client.del(`/api/favourites/${taskId}`)
+  }
+
+  /**
    * Return the categories for a microsite.
    *
    * This function assumes a limit of 100 categories per microsite.

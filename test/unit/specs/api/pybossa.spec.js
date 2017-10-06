@@ -81,4 +81,40 @@ describe('PyBossaApi', () => {
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
+
+  describe('getFavourites', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = '/api/favourites'
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getFavourites()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('addFavourite', () => {
+    it('makes the correct request', () => {
+      const taskId = 42
+      const expectedUrl = '/api/favourites'
+      const expectedParams = {
+        task_id: taskId
+      }
+      const mockPost = jest.fn()
+      pybossa.client.post = mockPost
+      pybossa.addFavourite(taskId)
+      expect(mockPost.mock.calls[0][0]).toBe(expectedUrl)
+      expect(mockPost.mock.calls[0][1]).toEqual(expectedParams)
+    })
+  })
+
+  describe('deleteFavourite', () => {
+    it('makes the correct request', () => {
+      const taskId = 42
+      const expectedUrl = `/api/favourites/${taskId}`
+      const mockDel = jest.fn()
+      pybossa.client.del = mockDel
+      pybossa.deleteFavourite(taskId)
+      expect(mockDel.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
 })
