@@ -71,17 +71,6 @@ describe('PyBossaApi', () => {
     })
   })
 
-  describe('getLeaderboard', () => {
-    it('makes the correct request', () => {
-      const window = 42
-      const expectedUrl = `leaderboard/window/${window}`
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      pybossa.getLeaderboard(window)
-      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
-    })
-  })
-
   describe('getFavourites', () => {
     it('makes the correct request', () => {
       const expectedUrl = '/api/favourites'
@@ -401,6 +390,39 @@ describe('PyBossaApi', () => {
       expect(mockGet.mock.calls[0][1]).toEqual({
         params: params
       })
+    })
+  })
+
+  describe('getProject', () => {
+    it('makes the correct request', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getProject(shortname)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('getProjectStats', () => {
+    it('makes the correct request', () => {
+      const shortname = 'my_project'
+      const expectedUrl = `/project/${shortname}/stats`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getProjectStats(shortname)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('getLeaderboard', () => {
+    it('makes the correct request', () => {
+      const window = 42
+      const expectedUrl = `leaderboard/window/${window}`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getLeaderboard(window)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
 })

@@ -291,6 +291,28 @@ class PyBossaApi {
     })
   }
 
+  /**
+   * Get project data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-shortname
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getProject(shortname) {
+    return this.client.get(`/project/${shortname}`)
+  }
+
+  /**
+   * Get project stats data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#project-settings
+   * @param {String} shortname
+   *   The project's short name.
+   */
+  getProjectStats(shortname) {
+    return this.client.get(`/project/${shortname}/stats`)
+  }
+
 
 
 
