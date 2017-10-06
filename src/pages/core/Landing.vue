@@ -192,11 +192,7 @@ export default {
     pybossa.getStats().then(r => {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
-<<<<<<< HEAD
     pybossa.getLeaderboard().then(r => {
-=======
-    pybossaApi.get('/').then(r => {
->>>>>>> fix-357
       this.topUsers = r.data.top_users
     })
   }
