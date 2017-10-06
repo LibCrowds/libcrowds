@@ -63,8 +63,7 @@ export default [
     component: Error,
     props: {
       title: 'Network Error',
-      description: 'Our network is taking too long to respond, we will fix ' +
-                   'it as soon as we can'
+      description: 'There is a problem communicating with our backend server'
     }
   }
 ]
