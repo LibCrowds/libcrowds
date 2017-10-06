@@ -28,7 +28,7 @@ const store = new Vuex.Store({
   },
 
   actions: {
-    UPDATE_CURRENT_USER: ({ commit }) => {
+    UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
       console.log(pybossa)
       pybossa.getProfile().then(data => {
         if ('user' in data) {
@@ -69,7 +69,7 @@ const store = new Vuex.Store({
       } else {
         let announcements = state.currentUser.info.announcements || {}
         let lastId = announcements['last_read'] || 0
-        pybossaApi.get(`/api/announcement?last_id=${lastId}`).then(r => {
+        pybossa.client.get(`/api/announcement?last_id=${lastId}`).then(r => {
           commit('SET_ITEM', {
             key: 'announcements', value: r.data
           })
