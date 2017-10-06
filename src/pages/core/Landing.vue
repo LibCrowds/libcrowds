@@ -124,7 +124,6 @@ import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
-import PublicationCard from '@/components/publications/PublicationCard'
 import pybossa from '@/api/pybossa'
 
 export default {
