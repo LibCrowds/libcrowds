@@ -159,7 +159,7 @@ export default {
           })
         })
       } else {
-        pybossaApi.deleteFavourite(taskId}).then(() => {
+        pybossaApi.deleteFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Removed from favourites',
             type: 'info',
