@@ -6,16 +6,15 @@ const PyBossaApi = {
   get instance () {
     if (!this._instance) {
       this._instance = {
-        opts: {
-          baseURL: siteConfig.host,
+        client: axios.create({
+          baseURL: siteConfig.pybossaHost,
           withCredentials: true,
           headers: {
             'Content-Type': 'application/json'
           },
           timeout: 10000,
           data: {}  // Must always be set otherwise Content-Type gets deleted
-        },
-        client: axios.create(this.opts),
+        }),
 
         /**
          * Filter microsite categories based on key.
@@ -592,7 +591,7 @@ const PyBossaApi = {
          * http://docs.pybossa.com/en/latest/api.html#pybossa-server-stats
          */
         getStats () {
-          return this.client.get(`/stats`)
+          return this.client.get(`stats`)
         },
 
         /**
@@ -809,8 +808,8 @@ const PyBossaApi = {
 }
 
 // Error handler
-PyBossaApi.instance.client.interceptors.response.use(undefined, error => {
-  Promise.reject(error)
-})
+// PyBossaApi.instance.client.interceptors.response.use(undefined, error => {
+//   Promise.reject(error)
+// })
 
 export default PyBossaApi.instance
