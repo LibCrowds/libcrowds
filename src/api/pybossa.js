@@ -276,7 +276,7 @@ class PyBossaApi {
    *
    * http://docs.pybossa.com/en/latest/api.html#account-confirm-email
    */
-  confirmEmail(params) {
+  confirmEmail() {
     return this.client.get('/account/confirm-email')
   }
 

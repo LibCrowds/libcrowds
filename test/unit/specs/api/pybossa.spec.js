@@ -383,7 +383,7 @@ describe('PyBossaApi', () => {
       const expectedUrl = '/account/confirm-email'
       const mockGet = jest.fn()
       pybossa.client.get = mockGet
-      pybossa.getConfirmEmail(params)
+      pybossa.getConfirmEmail()
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
