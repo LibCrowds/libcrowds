@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '@/router'
-import siteConfig from '@/siteConfig'
 import pybossa from '@/api/pybossa'
 
 Vue.use(Vuex)
