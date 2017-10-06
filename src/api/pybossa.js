@@ -544,6 +544,46 @@ class PyBossaApi {
   }
 
   /**
+   * Get the API help.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#help-api
+   */
+  getApiHelp () {
+    return this.client.get(`/help/api`)
+  }
+
+  /**
+   * Get the privacy policy.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#help-privacy
+   */
+  getPrivacyHelp () {
+    return this.client.get(`/help/privacy`)
+  }
+
+  /**
+   * Get the cookies policy.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#help-cookie-policy
+   */
+  getCookiesHelp () {
+    return this.client.get(`/help/cookies-policy`)
+  }
+
+  /**
+   * Get the terms of use.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#help-terms-of-use
+   */
+  getTermsHelp () {
+    return this.client.get(`/help/terms-of-use`)
+  }
+
+
+
+
+
+  /**
    * Return the categories for a microsite.
    *
    * This function assumes a limit of 100 categories per microsite.

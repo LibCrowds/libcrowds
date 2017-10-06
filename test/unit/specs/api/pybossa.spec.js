@@ -373,8 +373,32 @@ describe('PyBossaApi', () => {
       pybossa.unfeatureProject(projectId, form)
       expect(mockDel).toHaveBeenCalledWith(expectedUrl, { params: form })
     })
+  })
 
+  describe('Help endpoints', () => {
+    it('makes the correct request for getApiHelp', () => {
+      const expectedUrl = `/help/api`
+      pybossa.getApiHelp()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
 
+    it('makes the correct request for getPrivacyHelp', () => {
+      const expectedUrl = `/help/privacy`
+      pybossa.getPrivacyHelp()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getCookiesHelp', () => {
+      const expectedUrl = `/help/cookies-policy`
+      pybossa.getCookiesHelp()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getTermsHelp', () => {
+      const expectedUrl = `/help/terms-of-use`
+      pybossa.getTermsHelp()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
   })
 
 
