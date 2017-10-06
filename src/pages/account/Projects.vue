@@ -52,6 +52,7 @@
 <script>
 import intersection from 'lodash/intersection'
 import CategoryListChooser from '@/components/category/ListChooser'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -144,7 +145,7 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get(`account/${to.params.username}/projects`).then(r => {
+    pybossa.getAccountProjects(to.params.username).then(r => {
       data = r.data
       return pybossaApi.get('/')
     }).then(r => {

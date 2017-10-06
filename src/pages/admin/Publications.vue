@@ -58,6 +58,7 @@ import siteConfig from '@/siteConfig'
 import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
 import PublicationCard from '@/components/publications/PublicationCard'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -149,8 +150,8 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            pybossaApi.get('/admin/announcement').then(r => {
-              return pybossaApi.post(`/admin/announcement/${id}/delete`, null, {
+            pybossa.client.get('/admin/announcement').then(r => {
+              return pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
                 headers: {
                   'X-CSRFToken': r.data.csrf
                 }

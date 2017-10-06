@@ -19,6 +19,7 @@ import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
 import DefaultPresenter from '@/components/presenters/Default'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -151,7 +152,7 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        pybossaApi.addFavourite(taskId).then(() => {
+        pybossa.addFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Added to favourites',
             type: 'info',
@@ -159,7 +160,7 @@ export default {
           })
         })
       } else {
-        pybossaApi.deleteFavourite(taskId).then(() => {
+        pybossa.deleteFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Removed from favourites',
             type: 'info',

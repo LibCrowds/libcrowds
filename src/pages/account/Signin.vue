@@ -45,6 +45,7 @@ import siteConfig from '@/siteConfig'
 import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -120,7 +121,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.getAccountSignin().then(r => {
+    pybossa.getAccountSignin().then(r => {
       if (r.data.next === '/') {
         next({ path: to.params.next || r.data.next })
       } else {

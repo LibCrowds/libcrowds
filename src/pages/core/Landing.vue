@@ -148,6 +148,7 @@ import UserAvatar from '@/components/user/Avatar'
 import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 import PublicationCard from '@/components/publications/PublicationCard'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -213,10 +214,10 @@ export default {
   },
 
   created () {
-    pybossaApi.get('stats/').then(r => {
+    pybossa.getStats().then(r => {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
-    pybossaApi.get('/').then(r => {
+    pybossa.getLeaderboard().then(r => {
       this.topUsers = r.data.top_users
     })
   }

@@ -78,14 +78,14 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.getResetApiKey(to.params.username).then(r => {
+    pybossa.getResetApiKey(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
     this.form.model = {}
-    pybossaApi.get(to.params.username).then(r => {
+    pybossa.getResetApiKey(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

@@ -17,6 +17,7 @@ import swal from 'sweetalert2'
 import pick from 'lodash/pick'
 import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -136,7 +137,7 @@ export default {
   },
 
   beforeRouteUpdate (to, from, next) {
-    pybossaApi.get(`/api/category/${to.params.categoryid}`).then(r => {
+    pybossa.client.get(`/api/category/${to.params.categoryid}`).then(r => {
       r.data = {
         category: r.data
       }
@@ -146,7 +147,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`/api/category/${to.params.categoryid}`).then(r => {
+    pybossa.client.get(`/api/category/${to.params.categoryid}`).then(r => {
       r.data = {
         category: r.data
       }

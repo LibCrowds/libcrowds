@@ -8,6 +8,7 @@
 
 <script>
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -72,14 +73,14 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossa.getUpdateProfile(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
     this.form.model = {}
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossa.getUpdateProfile(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

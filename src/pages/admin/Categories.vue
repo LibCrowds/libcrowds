@@ -65,6 +65,7 @@ import swal from 'sweetalert2'
 import siteConfig from '@/siteConfig'
 import capitalize from '@/utils/capitalize'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -166,8 +167,8 @@ export default {
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
             const endpoint = `/admin/categories/del/${id}`
-            pybossaApi.get(endpoint).then(r => {
-              return pybossaApi.post(endpoint, null, {
+            pybossa.client.get(endpoint).then(r => {
+              return pybossa.client.post(endpoint, null, {
                 headers: {
                   'X-CSRFToken': r.data.form.csrf
                 }
@@ -215,14 +216,14 @@ export default {
      * Refresh current categories data.
      */
     refreshCurrentCategories () {
-      pybossaApi.get('/admin/categories').then(r => {
+      pybossa.getAdminCategories().then(r => {
         this.setData(r.data)
       })
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/admin/categories').then(r => {
+    pybossa.getAdminCategories().then(r => {
       next(vm => vm.setData(r.data))
     })
   }

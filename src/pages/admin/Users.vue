@@ -212,14 +212,10 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      const type = format === 'csv' ? 'text/csv' : 'application/json'
-      pybossaApi.get(`/admin/users/export`, {
-        responseType: 'arraybuffer',
-        params: {
-          format: format
-        }
-      }).then(res => {
-        const blob = new Blob([res.data], {type: type})
+      pybossaApi.exportUsers(format).then(res => {
+        const blob = new Blob([res.data], {
+          type: format === 'csv' ? 'text/csv' : 'application/json'
+        })
         const fn = `user_data.${format}`
         FileSaver.saveAs(blob, fn)
       })
