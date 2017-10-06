@@ -177,7 +177,7 @@ export default {
      * Refresh current publications data.
      */
     refreshCurrentPublications () {
-      pybossaApi.get('/admin/announcement').then(r => {
+      pybossa.getAdminAnnouncements().then(r => {
         this.publications = r.data.announcements
       })
     }
@@ -185,9 +185,9 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get('/admin/announcement/new').then(r => {
+    pybossa.getNewAnnouncement().then(r => {
       data = r.data
-      return pybossaApi.get('/admin/announcement')
+      return pybossa.getAdminAnnouncements()
     }).then(r => {
       data.publications = r.data.announcements
       next(vm => vm.setData(data))

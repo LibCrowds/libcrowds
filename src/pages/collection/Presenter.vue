@@ -110,7 +110,7 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      pybossaApi.get(url).then(r => {
+      pybossa.client.get(url).then(r => {
         if (isEmpty(r.data)) {
           this.handleCompletion()
         } else {
@@ -199,7 +199,7 @@ export default {
         'task_id': taskId,
         'info': answer
       })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
+      pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {
@@ -222,13 +222,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+    pybossa.getProject(to.params.shortname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+    pybossa.getProject(to.params.shortname).then(r => {
       this.setData(r.data)
       next()
     })

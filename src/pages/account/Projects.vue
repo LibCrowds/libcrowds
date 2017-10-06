@@ -132,11 +132,7 @@ export default {
      */
     fetchProjects (category) {
       this.projects = []
-      let url = `/project/category/${category.short_name}/`
-      if (this.page > 1) {
-        url += `page/${this.page}/`
-      }
-      pybossaApi.get(url).then(r => {
+      pybossa.getCategory(category.short_name, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -147,7 +143,7 @@ export default {
     let data = {}
     pybossa.getAccountProjects(to.params.username).then(r => {
       data = r.data
-      return pybossaApi.get('/')
+      return pybossa.client.get('/')
     }).then(r => {
       data.categories = r.data.categories
       data.categoriesProjects = r.data.categories_projects
@@ -157,9 +153,9 @@ export default {
 
   beforeRouteUpdate (to, from, next) {
     let data = {}
-    pybossaApi.get(`account/${to.params.username}/projects`).then(r => {
+    pybossa.getAccountProjects(to.params.username).then(r => {
       data = r.data
-      return pybossaApi.get('/')
+      return pybossa.client.get('/')
     }).then(r => {
       data.categories = r.data.categories
       data.categoriesProjects = r.data.categories_projects

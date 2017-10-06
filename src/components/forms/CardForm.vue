@@ -152,7 +152,7 @@ export default {
       }
 
       this.flash = ''
-      pybossaApi({
+      pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,

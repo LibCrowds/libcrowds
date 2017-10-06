@@ -91,6 +91,7 @@
 <script>
 import FileSaver from 'file-saver'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -172,27 +173,17 @@ export default {
      *   The user.
      */
     toggleAdmin (user) {
-      pybossaApi({
-        method: 'GET',
-        url: user.admin
-          ? `/admin/users/add/${user.id}`
-          : `/admin/users/del/${user.id}`,
-        data: this.form.model,
-        headers: {
-          'X-CSRFToken': this.form.model.csrf
-        }
-      }).then(r => {
-        user.admin = !user.admin
-        if (user.admin) {
+      if (user.admin) {
+        pybossa.addAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers.push(user)
-        } else {
+        })
+      } else {
+        pybossa.delAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers = this.adminUsers.filter(adminUser => {
             return adminUser.id !== user.id
           })
-        }
-      }).catch(err => {
-        this.$router.push({ name: String(err.response.status) })
-      })
+        })
+      }
     },
 
     /**
@@ -212,8 +203,8 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      pybossaApi.exportUsers(format).then(res => {
-        const blob = new Blob([res.data], {
+      pybossa.exportUsers(format).then(r => {
+        const blob = new Blob([r.data], {
           type: format === 'csv' ? 'text/csv' : 'application/json'
         })
         const fn = `user_data.${format}`
@@ -224,9 +215,9 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get('/admin/users').then(r => {
+    pybossa.getAdminUsers().then(r => {
       data = r.data
-      return pybossaApi.get('/api/globalstats')
+      return pybossa.getStatsSummary()
     }).then(r => {
       data.nUsers = r.data.n_users
       next(vm => vm.setData(data))

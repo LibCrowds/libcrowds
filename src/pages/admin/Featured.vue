@@ -173,7 +173,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/admin/featured').then(r => {
+    pybossa.getAdminFeatured().then(r => {
       next(vm => vm.setData(r.data))
     })
   }
