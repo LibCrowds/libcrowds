@@ -85,7 +85,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the account registration data.
+   * Register.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-registration
    * @param {Object} form
@@ -107,7 +107,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the account signin data.
+   * Sign in.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-sign-in
    * @param {Object} form
@@ -138,7 +138,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the recover password data.
+   * Recover a password.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-recover-password
    * @param {Object} form
@@ -171,7 +171,7 @@ class PyBossaApi {
   }
 
   /**
-   * Get the projects belonging to the current user.
+   * Get the projects belonging to a user.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-projects
    * @param {String} name
@@ -193,7 +193,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the update profile data.
+   * Update a profile.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-update-profile
    * @param {String} name
@@ -224,7 +224,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the reset password data.
+   * Reset a password.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-reset-password
    * @param {Object} form
@@ -248,7 +248,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post the reset API key data.
+   * Reset an API key.
    *
    * http://docs.pybossa.com/en/latest/api.html#account-reset-api-key
    * @param {String} name
@@ -345,7 +345,7 @@ class PyBossaApi {
   }
 
   /**
-   * Get new announcment data.
+   * Add a new announcment.
    *
    * http://docs.pybossa.com/en/latest/api.html#new-announcement
    * @param {Object} form
@@ -369,7 +369,7 @@ class PyBossaApi {
   }
 
   /**
-   * Post update announcment data.
+   * Update an announcment.
    *
    * http://docs.pybossa.com/en/latest/api.html#update-announcement
    * @param {String|Number} announcementId
@@ -383,8 +383,165 @@ class PyBossaApi {
     })
   }
 
+  /**
+   * Get admin users.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#id9
+   */
+  getAdminUsers () {
+    return this.client.get(`/admin/users`)
+  }
 
+  /**
+   * Search users.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#id9
+   * @param {Object} form
+   *   The form.
+   */
+  searchUsers (form) {
+    return this.client.post(`/admin/users`, {
+      params: form
+    })
+  }
 
+  /**
+   * Add a user to admin.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-users-add
+   */
+  addAdminUser (userId) {
+    return this.client.get(`/admin/users/add/${userId}`)
+  }
+
+  /**
+   * Remove a user from admin.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-users-del
+   */
+  delAdminUser (userId) {
+    return this.client.get(`/admin/users/del/${userId}`)
+  }
+
+  /**
+   * Get admin categories data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories
+   */
+  getAdminCategories () {
+    return this.client.get(`/admin/categories`)
+  }
+
+  /**
+   * Add a category.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories
+   * @param {Object} form
+   *   The form.
+   */
+  addCategory (form) {
+    return this.client.post(`/admin/categories`, { params: form })
+  }
+
+  /**
+   * Get delete category data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories-delete
+   * @param {String|Number} categoryId
+   *   The category ID.
+   */
+  getDeleteCategory (categoryId) {
+    return this.client.get(`/admin/categories/del/${categoryId}`)
+  }
+
+  /**
+   * Delete a category.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories-delete
+   * @param {String|Number} categoryId
+   *   The category ID.
+   * @param {Object} form
+   *   The form.
+   */
+  deleteCategory (categoryId, form) {
+    return this.client.post(`/admin/categories/del/${categoryId}`, {
+      params: form
+    })
+  }
+
+  /**
+   * Get update category data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories-update
+   * @param {String|Number} categoryId
+   *   The category ID.
+   */
+  getUpdateCategory (categoryId) {
+    return this.client.get(`/admin/categories/update/${categoryId}`)
+  }
+
+  /**
+   * Update a category.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-categories-update
+   * @param {String|Number} categoryId
+   *   The category ID.
+   * @param {Object} form
+   *   The form.
+   */
+  updateCategory (categoryId, form) {
+    return this.client.post(`/admin/categories/update/${categoryId}`, {
+      params: form
+    })
+  }
+
+  /**
+   * Get the admin dashboard.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-dashboard
+   */
+  getAdminDashboard () {
+    return this.client.get(`/admin/dashboard`)
+  }
+
+  /**
+   * Get the admin featured projects data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-featured
+   */
+  getAdminFeatured () {
+    return this.client.get(`/admin/featured`)
+  }
+
+  /**
+   * Feature a project.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-un-feature-projects
+   * @param {String|Number} projectId
+   *   The category ID.
+   * @param {Object} form
+   *   The form.
+   */
+  featureProject (projectId, form) {
+    return this.client.post(`/admin/featured/${projectId}`, {
+      params: form
+    })
+  }
+
+  /**
+   * Unfeature a project.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-un-feature-projects
+   * @param {String|Number} projectId
+   *   The category ID.
+   * @param {Object} form
+   *   The form.
+   */
+  unfeatureProject (projectId, form) {
+    return this.client.del(`/admin/featured/${projectId}`, {
+      params: form
+    })
+  }
 
   /**
    * Return the categories for a microsite.

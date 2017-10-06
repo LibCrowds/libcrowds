@@ -247,7 +247,9 @@ describe('PyBossaApi', () => {
       pybossa.getAnnouncements()
       expect(mockGet).toHaveBeenCalledWith(expectedUrl)
     })
+  })
 
+  describe('Admin endpoints', () => {
     it('makes the correct request for getAdminAnnouncements', () => {
       const expectedUrl = `/admin/announcement`
       pybossa.getAdminAnnouncements()
@@ -279,6 +281,100 @@ describe('PyBossaApi', () => {
       pybossa.updateAnnouncement(announcementId, form)
       expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
     })
+
+    it('makes the correct request for getAdminUsers', () => {
+      const expectedUrl = `/admin/users`
+      pybossa.getAdminUsers()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for searchUsers', () => {
+      const expectedUrl = `/admin/users`
+      pybossa.searchUsers(form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for addAdminUser', () => {
+      const userId = 42
+      const expectedUrl = `/admin/users/add/${userId}`
+      pybossa.addAdminUser(userId)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for delAdminUser', () => {
+      const userId = 42
+      const expectedUrl = `/admin/users/del/${userId}`
+      pybossa.delAdminUser(userId)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getAdminCategories', () => {
+      const expectedUrl = `/admin/categories`
+      pybossa.getAdminCategories()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for addCategory', () => {
+      const expectedUrl = `/admin/categories`
+      pybossa.addCategory(form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getDeleteCategory', () => {
+      const categoryId = 42
+      const expectedUrl = `/admin/categories/del/${categoryId}`
+      pybossa.getDeleteCategory(categoryId)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for deleteCategory', () => {
+      const categoryId = 42
+      const expectedUrl = `/admin/categories/del/${categoryId}`
+      pybossa.deleteCategory(categoryId, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getUpdateCategory', () => {
+      const categoryId = 42
+      const expectedUrl = `/admin/categories/update/${categoryId}`
+      pybossa.getUpdateCategory(categoryId)
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for updateCategory', () => {
+      const categoryId = 42
+      const expectedUrl = `/admin/categories/update/${categoryId}`
+      pybossa.updateCategory(categoryId, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for getAdminDashboard', () => {
+      const expectedUrl = `/admin/dashboard`
+      pybossa.getAdminDashboard()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for getAdminFeatured', () => {
+      const expectedUrl = `/admin/featured`
+      pybossa.getAdminFeatured()
+      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+    })
+
+    it('makes the correct request for featureProject', () => {
+      const projectId = 42
+      const expectedUrl = `/admin/featured/${projectId}`
+      pybossa.featureProject(projectId, form)
+      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+    it('makes the correct request for featureProject', () => {
+      const projectId = 42
+      const expectedUrl = `/admin/featured/${projectId}`
+      pybossa.unfeatureProject(projectId, form)
+      expect(mockDel).toHaveBeenCalledWith(expectedUrl, { params: form })
+    })
+
+
   })
 
 
