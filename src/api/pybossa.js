@@ -313,6 +313,72 @@ class PyBossaApi {
     return this.client.get(`/project/${shortname}/stats`)
   }
 
+  /**
+   * Get announcments data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#announcements
+   */
+  getAnnouncements() {
+    return this.client.get(`/announcements`)
+  }
+
+  /**
+   * Get admin announcments data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#admin-announcement
+   */
+  getAdminAnnouncements() {
+    return this.client.get(`/admin/announcement`)
+  }
+
+  /**
+   * Get new announcment data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#new-announcement
+   */
+  getNewAnnouncement() {
+    return this.client.get(`/admin/announcement/new`)
+  }
+
+  /**
+   * Get new announcment data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#new-announcement
+   * @param {Object} form
+   *   The form.
+   */
+  newAnnouncement(form) {
+    return this.client.post(`/admin/announcement/new`, {
+      params: form
+    })
+  }
+
+  /**
+   * Get update announcment data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#update-announcement
+   * @param {String|Number} announcementId
+   *   The announcement ID.
+   */
+  getUpdateAnnouncement(announcementId) {
+    return this.client.get(`/admin/announcement/${announcementId}/update`)
+  }
+
+  /**
+   * Post update announcment data.
+   *
+   * http://docs.pybossa.com/en/latest/api.html#update-announcement
+   * @param {String|Number} announcementId
+   *   The announcement ID.
+   * @param {Object} form
+   *   The form.
+   */
+  updateAnnouncement(announcementId, form) {
+    return this.client.post(`/admin/announcement/${announcementId}/update`, {
+      params: form
+    })
+  }
+
 
 
 

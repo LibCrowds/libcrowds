@@ -425,4 +425,88 @@ describe('PyBossaApi', () => {
       expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
     })
   })
+
+  describe('getAnnouncements', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = `/announcements`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getAnnouncements()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('getAdminAnnouncements', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = `/admin/announcement`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getAdminAnnouncements()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('getNewAnnouncement', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = `/admin/announcement/new`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getNewAnnouncement()
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('newAnnouncement', () => {
+    it('makes the correct request', () => {
+      const expectedUrl = `/admin/announcement/new`
+      const mockPost = jest.fn()
+      const form = {
+        body: null,
+        csrf: 'token',
+        errors: {},
+        title: null,
+        media_url: null,
+        published: false
+      }
+      pybossa.client.post = mockPost
+      pybossa.newAnnouncement(form)
+      expect(mockPost.mock.calls[0][0]).toBe(expectedUrl)
+      expect(mockPost.mock.calls[0][1]).toEqual({
+        params: form
+      })
+    })
+  })
+
+  describe('getUpdateAnnouncement', () => {
+    it('makes the correct request', () => {
+      const announcementId = 42
+      const expectedUrl = `/admin/announcement/${announcementId}/update`
+      const mockGet = jest.fn()
+      pybossa.client.get = mockGet
+      pybossa.getUpdateAnnouncement(announcementId)
+      expect(mockGet.mock.calls[0][0]).toBe(expectedUrl)
+    })
+  })
+
+  describe('updateAnnouncement', () => {
+    it('makes the correct request', () => {
+      const announcementId = 42
+      const expectedUrl = `/admin/announcement/${announcementId}/update`
+      const mockPost = jest.fn()
+      const form = {
+        body: null,
+        csrf: 'token',
+        errors: {},
+        title: null,
+        media_url: null,
+        published: false
+      }
+      pybossa.client.post = mockPost
+      pybossa.updateAnnouncement(announcementId, form)
+      expect(mockPost.mock.calls[0][0]).toBe(expectedUrl)
+      expect(mockPost.mock.calls[0][1]).toEqual({
+        params: form
+      })
+    })
+  })
 })
