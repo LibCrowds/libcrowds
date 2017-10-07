@@ -142,7 +142,8 @@
       "vue"
     ],
     "moduleNameMapper": {
-      "/siteConfig$": "<rootDir>/test/testSiteConfig.js"
+      "(.*)/siteConfig$": "<rootDir>/test/testSiteConfig.js",
+      "^./src/(.*)$": "<rootDir>/src/$1"
     },
     "notify": true,
     "transform": {
