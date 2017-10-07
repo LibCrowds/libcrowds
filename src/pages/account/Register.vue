@@ -157,11 +157,12 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossa.getAccountRegistration().then(r => {
-      data = r.data
-      return pybossa.getAccountSignin()
-    }).then(r => {
-      data.auth = r.data.auth
+    Promise.all([
+      pybossa.getAccountRegistration(),
+      pybossa.getAccountSignin()
+    ]).then(([regResponse, signinResponse]) => {
+      data = regResponse.data
+      data.auth = signinResponse.data.auth
       next(vm => vm.setData(data))
     })
   }

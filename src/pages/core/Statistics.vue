@@ -138,11 +138,12 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossa.getStats().then(r => {
-      data = r.data
-      return pybossa.getLeaderboard()
-    }).then(r => {
-      data.top_users = r.data.top_users
+    Promise.all([
+      pybossa.getStats(),
+      pybossa.getLeaderboard()
+    ]).then(([statsResponse, leaderboardResponse]) => {
+      data = statsResponse.data
+      data.top_users = getLeaderboard.data.top_users
       next(vm => vm.setData(data))
     })
   },

@@ -76,7 +76,7 @@ export default {
   },
 
   beforeRouteLeave (to, from, next) {
-    // Just to make the transition look a bit nicer
+    // Clear navitems to make the transition nicer
     this.navItems = []
     next()
   }

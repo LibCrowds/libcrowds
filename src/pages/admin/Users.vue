@@ -211,11 +211,12 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossa.getAdminUsers().then(r => {
-      data = r.data
-      return pybossa.getStatsSummary()
-    }).then(r => {
-      data.nUsers = r.data.n_users
+    Promise.all([
+      pybossa.getAdminUsers(),
+      pybossa.getStatsSummary()
+    ]).then(([adminUsersResponse, statsResponse]) => {
+      data = adminUsersResponse.data
+      data.nUsers = statsResponse.data.n_users
       next(vm => vm.setData(data))
     })
   }
