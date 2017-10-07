@@ -143,7 +143,7 @@ export default {
       pybossa.getLeaderboard()
     ]).then(([statsResponse, leaderboardResponse]) => {
       data = statsResponse.data
-      data.top_users = getLeaderboard.data.top_users
+      data.top_users = leaderboardResponse.data.top_users
       next(vm => vm.setData(data))
     })
   },
