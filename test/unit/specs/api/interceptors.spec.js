@@ -45,7 +45,8 @@ describe('Interceptors', () => {
         }
       }
       handleErrors(error)
-      expect(router.push).toBeCalledWith({ name: status })
+      expect(router.push).toHaveBeenLastCalledWith({ name: status })
+      router.push.mockReset()
     })
 
     it('handles network errors', () => {
@@ -53,13 +54,15 @@ describe('Interceptors', () => {
         request: {}
       }
       handleErrors(error)
-      expect(router.push).toBeCalledWith({ name: 598 })
+      expect(router.push).toHaveBeenLastCalledWith({ name: 598 })
+      router.push.mockReset()
     })
 
     it('handles request setup errors', () => {
       const error = {}
       handleErrors(error)
-      expect(router.push).toBeCalledWith({ name: 500 })
+      expect(router.push).toHaveBeenLastCalledWith({ name: 500 })
+      router.push.mockReset()
     })
   })
 
@@ -78,6 +81,7 @@ describe('Interceptors', () => {
         msg: flash,
         type: status
       })
+      store.dispatch.mockReset()
     })
 
     it('does not dispatch notification for error flash message', () => {
@@ -91,6 +95,7 @@ describe('Interceptors', () => {
       }
       handleFlash(response)
       expect(store.dispatch).not.toHaveBeenCalled()
+      store.dispatch.mockReset()
     })
   })
 })
