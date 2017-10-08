@@ -46,6 +46,7 @@ You must modify the following in your PyBossa settings:
 |-----------------------------|-------------------|
 | CATEGORY_INFO_PUBLIC_FIELDS | ['collection']    |
 | USER_INFO_PUBLIC_FIELDS     | ['announcements'] |
+| STRICT_SLASHES              | False             |
 
 
 Now, see the [Configuration](configuration.md) section for details of how to configure the site and each microsite.
