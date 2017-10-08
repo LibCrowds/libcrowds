@@ -4,7 +4,7 @@
  *   The request.
  */
 export default function (r) {
-  if ('csrf' in r.data) {
+  if (r.data.hasOwnProperty('csrf')) {
     r.headers['X-CSRFToken'] = r.data.csrf
   }
   return r
