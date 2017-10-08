@@ -143,7 +143,7 @@ export default {
      *   The data.
      */
     setData (data) {
-      // See https://github.com/LibCrowds/vue-pybossa-frontend/issues/100
+      // See https://github.com/LibCrowds/libcrowds/issues/100
       delete data.form.id
 
       this.form.model = data.form

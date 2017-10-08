@@ -1,12 +1,12 @@
 # Configuration
 
-There are two main parts to the vue-pybossa-frontend configuration; the [Site Configuration](configuration.md#core-configuration), which contains general options applied to whole of the frontend, and the [Microsite Configuration](configuration.md#microsite-configuration), which contains more specific options for each microsite.
+There are two main parts to the LibCrowds configuration; the [Site Configuration](configuration.md#core-configuration), which contains general options applied to whole of the frontend, and the [Microsite Configuration](configuration.md#microsite-configuration), which contains more specific options for each microsite.
 
 Note that the configuration settings found here relate to the overall structure and appearance of the site. Anything to do with modifying individual projects or categories is probably handled via the [Admin Interface](admin.md).
 
 ## Directory Structure
 
-Apart from the location of the `siteConfig.js` file, vue-pybossa-frontend does not enforce a particular directory structure. Rather, any additional configuration files can be placed in the `custom` directory and linked to via `siteConfig.js`.
+Apart from the location of the `siteConfig.js` file, LibCrowds does not enforce a particular directory structure. Rather, any additional configuration files can be placed in the `custom` directory and linked to via `siteConfig.js`.
 
 Below is an example directory structure.
 
@@ -25,7 +25,7 @@ Below is an example directory structure.
 
 ## Site Configuration
 
-The site configuration is required for vue-pybossa-frontend to run.
+The site configuration is required for LibCrowds to run.
 
 To run the frontend with default settings:
 
