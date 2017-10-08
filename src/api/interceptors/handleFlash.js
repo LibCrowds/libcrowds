@@ -6,11 +6,7 @@ import store from '@/store'
  *   The response.
  */
 export default function (r) {
-  if (r === undefined) {
-    return
-  }
-
-  if (r.data.status !== 'error' && 'flash' in r.data) {
+  if (r !== undefined && r.data.status !== 'error' && 'flash' in r.data) {
     store.dispatch('NOTIFY', {
       msg: r.data.flash,
       type: r.data.status
