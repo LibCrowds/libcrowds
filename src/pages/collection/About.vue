@@ -118,7 +118,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.$emit('navupdated', this.navItems)
   }
 }
