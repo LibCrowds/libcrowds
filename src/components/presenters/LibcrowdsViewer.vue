@@ -9,6 +9,7 @@
       :message-bus="messageBus"
       :browsable="false"
       :selections-editable="false"
+      show-help-on-mount
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
