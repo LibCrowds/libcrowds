@@ -12,3 +12,6 @@ dist
 
 # Backpack build
 build
+
+# Coverage
+test/unit/coverage
