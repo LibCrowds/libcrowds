@@ -29,6 +29,9 @@
         </li>
       </ul>
       <p>
+        The digitised card catalogue records can be downloaded from <a href="https://data.bl.uk/aas_cardcatalogues/">data.bl.uk</a>.
+      </p>  
+      <p>
         We are keen for these datasets to be used in innovative ways, perhaps
         to further research into new technologies. For instance, the digitised
         images alongside the final results might prove useful for testing
