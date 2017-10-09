@@ -1,12 +1,22 @@
-# vue-pybossa-frontend
+# libcrowds
 
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
-[![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
+> A Vue.js frontend for PYBOSSA.
 
-> A Vue.js frontend for PyBossa (>=2.7.2).
+## Build Setup
 
-Configurable PyBossa frontend with a microsite-based structure; as used by LibCrowds:
+``` bash
+# install dependencies
+$ npm install # Or yarn install
 
-[![Example of vue-pybossa-frontend](./docs/assets/site-homepage.png?raw=true "Example of vue-pybossa-frontend")](https://www.libcrowds.com)
+# serve with hot reload at localhost:3000
+$ npm run dev
 
-[**Read the documentation**](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
+# build for production and launch server
+$ npm start
+```
+
+For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+
+## Backpack
+
+We use [backpack](https://github.com/palmerhq/backpack) to watch and build the application, so you can use the latest ES6 features (module syntax, async/await, etc.).

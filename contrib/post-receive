@@ -1,2 +1,0 @@
-#!/bin/sh
-git --work-tree=/var/www/frontend --git-dir=/var/www/deployment/.git checkout -f
