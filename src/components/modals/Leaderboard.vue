@@ -71,21 +71,21 @@ export default {
   },
 
   computed: {
-    users: function () {
-      let filteredUsers = JSON.parse(JSON.stringify(this.topUsers))
-      filteredUsers = filteredUsers.map(user => {
+    filteredUsers: function () {
+      let users = JSON.parse(JSON.stringify(this.topUsers))
+      users = users.map(user => {
         if (this.currentUser && this.currentUser.name === user.name) {
           user._rowVariant = 'success'
         }
         return user
       })
-      let userRepeated = filteredUsers.filter(user => {
+      let userRepeated = users.filter(user => {
         return user.name === this.currentUser.name
       }).length
       if (userRepeated) {
-        filteredUsers.splice(-1, 1)
+        users.splice(-1, 1)
       }
-      return filteredUsers
+      return users
     }
   },
 
