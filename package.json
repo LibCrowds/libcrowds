@@ -4,6 +4,7 @@
   "description": "A Vue.js frontend for PYBOSSA.",
   "author": "Alex Mendes <alexanderhmendes@gmail.com>",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
