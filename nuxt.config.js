@@ -1,3 +1,5 @@
+const localConfig = require('./local.config.js')
+
 module.exports = {
   /*
   ** Headers of the page
@@ -35,5 +37,11 @@ module.exports = {
         })
       }
     }
+  },
+  /*
+  ** Local config.
+  */
+  env: {
+    localConfig: localConfig
   }
 }
