@@ -70,8 +70,8 @@ export default {
     white-space: nowrap;
     z-index: 1;
     background:
-      linear-gradient(rgba($brand-info, 0.8),
-      rgba($brand-info, 0.8)),
+      linear-gradient(rgba($blue, 0.8),
+      rgba($blue, 0.8)),
       url('../../assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
@@ -144,6 +144,7 @@ export default {
         padding: $list-group-item-padding-y;
         width: 100%;
         color: $white;
+        display: block;
       }
 
       &:hover,
@@ -168,7 +169,7 @@ export default {
       background: transparent;
       align-items: center;
       justify-content: center;
-      border-bottom: 1px solid rgba($gray-lighter, 0.5);
+      border-bottom: 1px solid rgba($gray-300, 0.5);
 
       .brand {
         @extend .navbar-brand;

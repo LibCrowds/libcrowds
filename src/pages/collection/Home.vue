@@ -10,15 +10,23 @@
               v-html="siteConfig.logo"
               v-if="siteConfig.logo">
             </div>
-            <h1 class="display-3 d-inline-block hidden-md-down mb-0">
+            <span
+              class="mr-2 d-none d-lg-inline-block"
+              v-if="siteConfig.logo">
+            </span>
+            <h1 class="display-3 d-none d-lg-inline-block mb-0">
               {{ collectionConfig.name }}
             </h1>
+            <span
+              class="mr-4 d-none d-lg-inline-block"
+              v-if="siteConfig.logo">
+            </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
             {{ collectionConfig.tagline }}
           </h2>
           <div>
-            <b-button
+            <b-btn
               variant="success"
               size="lg"
               :to="{
@@ -28,7 +36,7 @@
                 }
               }">
               Get Started
-            </b-button>
+            </b-btn>
           </div>
         </div>
       </div>
@@ -36,26 +44,19 @@
 
     <section id="intro" class="bg-white invert-navbar">
       <div class="container py-3 py-md-4 text-center">
-        <div class="row sr">
-          <div class="col-sm-10 offset-sm-1">
-            <p id="site-lead" class="mb-0">
-              {{ collectionConfig.description }}
-            </p>
-          </div>
-        </div>
+        <p id="site-lead" class="mb-0 px-1">
+          {{ collectionConfig.description }}
+        </p>
         <hr class="my-3 w-75 sr">
-        <div class="row sr">
-          <div class="col-sm-10 offset-sm-1">
-            <p class="lead mb-0">
-              Your contributions will have a direct impact on enabling future
-              research at {{ siteConfig.company }}.
-            </p>
-          </div>
-        </div>
+        <p class="lead mb-0 px-1">
+          Your contributions will have a direct impact on enabling future
+          research at {{ siteConfig.company }}.
+        </p>
         <hr class="mt-3 w-75 sr">
-        <b-button
-          variant="secondary"
-          class="mt-md-1 sr"
+        <b-btn
+          variant="outline-dark"
+          class="mt-md-2 sr"
+          size="lg"
           :to="{
             name: 'collection-about',
             params: {
@@ -63,7 +64,7 @@
             }
           }">
           Learn More
-        </b-button>
+        </b-btn>
       </div>
     </section>
 
@@ -71,143 +72,117 @@
       id="featured-projects"
       class="invert-navbar"
       v-if="featured.length">
-      <div class="container text-center text-lg-left pb-4">
-        <div class="row">
-          <div class="col-lg-5 offset-lg-1 text-uppercase py-4">
+      <div class="container w-75 text-center pb-4">
+        <div class="row text-lg-left">
+          <div class="col-lg-5 text-uppercase py-4">
             <h2 class="display-5 font-weight-bold pt-1">
               Featured Projects
             </h2>
-            <hr class="wide mr-lg-5">
+            <hr class="wide">
             <p class="mr-lg-6">
               Choose from some of our current favourites.
             </p>
           </div>
-          <div class="col-lg-3 offset-lg-3 hidden-md-down">
-            <span id="ribbon">
+          <div class="col d-none d-lg-block">
+            <span class="ml-auto" id="ribbon">
               <icon name="star" scale="7"></icon>
             </span>
           </div>
         </div>
-        <div class="row text-center">
-          <div class="col-lg-10 offset-lg-1">
-            <ul class="list-unstyled">
-              <li v-for="project in featured" :key="project.id">
-                <project-card
-                  :collection-config="collectionConfig"
-                  :project="project">
-                </project-card>
-              </li>
-            </ul>
-            <b-button
-              class="mt-2"
-              variant="success"
-              size="lg"
-              :to="{
-                name: 'collection-contribute',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Browse all projects
-            </b-button>
-          </div>
-        </div>
+        <ul class="list-unstyled">
+          <li v-for="project in featured" :key="project.id">
+            <project-card
+              :collection-config="collectionConfig"
+              :project="project">
+            </project-card>
+          </li>
+        </ul>
+        <b-btn
+          class="mt-2"
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Browse all projects
+        </b-btn>
       </div>
     </section>
 
     <section id="data">
       <span :style="dataStyle"></span>
       <b-jumbotron :style="dataStyle">
-        <div class="container py-4">
-          <div class="row text-center">
-            <div class="col-sm-12">
-              <h3 class="display-5">Open Data</h3>
-            </div>
-          </div>
-          <div class="row py-md-3">
-            <div class="col-md-8 offset-md-2">
-              <p class="lead">
-                All datasets generated from the experimental crowdsourcing
-                projects hosted on this platform are made available under a
-                <a
-                  :href="siteConfig.dataLicense.url"
-                  target="_blank">
-                  {{ siteConfig.dataLicense.name }} license
-                </a>
-                and can be downloaded by anyone in JSON or
-                CSV formats. Visit the data page to find out more.
-              </p>
-            </div>
-          </div>
-          <div class="row pt-2 text-center">
-            <div class="col-sm-12">
-              <b-button
-                variant="outline-white"
-                :to="{
-                  name: 'collection-data',
-                  params: {
-                    collectionname: collectionConfig.key
-                  }
-                }">
-                Get the data
-              </b-button>
-            </div>
-          </div>
+        <div class="container py-2 py-md-4 w-75 text-center">
+          <h3 class="display-5">Open Data</h3>
+          <p class="lead my-2 my-md-3 text-sm-left">
+            All datasets generated from the experimental crowdsourcing
+            projects hosted on this platform are made available under a
+            <a
+              :href="siteConfig.dataLicense.url"
+              target="_blank">
+              {{ siteConfig.dataLicense.name }} license
+            </a>
+            and can be downloaded by anyone in JSON or
+            CSV formats. Visit the data page to find out more.
+          </p>
+          <b-btn
+            variant="outline-light"
+            class="my-1"
+            :to="{
+              name: 'collection-data',
+              params: {
+                collectionname: collectionConfig.key
+              }
+            }">
+            Get the data
+          </b-btn>
         </div>
       </b-jumbotron>
     </section>
 
     <section id="results" v-if="collectionConfig.resultsComponent">
       <b-jumbotron :style="resultsStyle">
-        <div class="container py-4">
-          <div class="row text-center">
-            <div class="col-sm-12">
-              <h3 class="display-5">Results</h3>
-            </div>
-          </div>
-          <div class="row py-2">
-            <div class="col-md-8 offset-md-2">
-              <p class="lead">
-                As each {{ collectionConfig.terminology.task }} is completed,
-                {{ collectionConfig.terminology.taskRun | pluralize }} are
-                analysed and the outcome provided via our results page, making
-                the efforts of our volunteers immediately apparent.
-              </p>
-            </div>
-          </div>
-          <div class="row pt-2 text-center">
-            <div class="col-sm-12">
-              <b-button variant="outline-white" :to="{ name: 'results' }">
-                See the results
-              </b-button>
-            </div>
-          </div>
+        <div class="container py-2 py-md-4 w-75 text-center">
+          <h3 class="display-5">Results</h3>
+          <p class="lead my-2 my-md-3 text-sm-left">
+            As each {{ collectionConfig.terminology.task }} is completed,
+            {{ collectionConfig.terminology.taskRun | pluralize }} are
+            analysed and the outcome provided via our results page, making
+            the efforts of our volunteers immediately apparent.
+          </p>
+          <b-btn
+            variant="outline-light"
+            class="my-1"
+            :to="{
+              name: 'collection-results'
+            }">
+            Browse the results
+          </b-btn>
         </div>
       </b-jumbotron>
     </section>
 
     <section id="final-cta" class="bg-white invert-navbar">
-      <div class="container pt-4 pb-3">
-        <div class="row">
-          <div class="col-sm-10 offset-sm-1 text-center">
-            <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
-            <p class="lead my-3">
-              Your contributions will have a direct impact on enabling future
-              reasearch at {{ siteConfig.company }}.
-            </p>
-            <b-button
-              variant="success"
-              size="lg"
-              :to="{
-                name: 'collection-contribute',
-                params: {
-                  collectionname: collectionConfig.key
-                }
-              }">
-              Get Started
-            </b-button>
-          </div>
-        </div>
+      <div class="container pt-4 pb-3 text-center">
+        <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
+        <p class="lead my-3">
+          Your contributions will have a direct impact on enabling future
+          research at {{ siteConfig.company }}.
+        </p>
+        <b-btn
+          variant="success"
+          size="lg"
+          :to="{
+            name: 'collection-contribute',
+            params: {
+              collectionname: collectionConfig.key
+            }
+          }">
+          Get Started
+        </b-btn>
       </div>
     </section>
 
@@ -272,7 +247,6 @@ export default {
 
   components: {
     SocialMediaButtons,
-
     ProjectCard
   },
 
@@ -336,6 +310,7 @@ export default {
 
 #collection-home {
   .container.full-height {
+    min-height: 400px;
     height: 100vh;
     color: $white;
     opacity: 1;
@@ -355,11 +330,6 @@ export default {
     }
 
     #company-logo {
-      @include media-breakpoint-up(md) {
-        margin-right: 1.5rem;
-        margin-left: -1.5rem;
-      }
-
       svg {
         display: block;
       }
@@ -395,8 +365,10 @@ export default {
     border-width: 3px;
   }
 
-  .btn-outline-white {
-    @include button-outline-variant($white, $black);
+  .btn-outline-light {
+    @include hover-focus {
+      background-color: transparent;
+    }
   }
 
   .btn-black-underline  {
@@ -420,7 +392,7 @@ export default {
   }
 
   #featured-projects {
-    color: $gray-dark;
+    color: $gray-1000;
     background-image: url('../../assets/img/white-wall.png');
     box-shadow: 0 0 3px rgba($black, 0.2);
     -webkit-box-shadow: 0 0 3px rgba($black, 0.2);
@@ -432,8 +404,7 @@ export default {
     display:block;
     width: 12rem;
     height: 12rem;
-    background: $gray-lighter;
-    position: absolute;
+    background: $gray-300;
     top: -1px;
 
     svg {
@@ -449,7 +420,7 @@ export default {
       height: 0;
       border-width: 2rem 6rem 4rem 6rem;
       border-style: solid;
-      border-color: $gray-lighter $gray-lighter transparent $gray-lighter;
+      border-color: $gray-300 $gray-300 transparent $gray-300;
     }
   }
 
@@ -465,7 +436,7 @@ export default {
   }
 
   #top-users {
-    color: $gray-dark;
+    color: $gray-1000;
   }
 
   #results {

@@ -1,5 +1,8 @@
 <template>
-  <b-modal :id="modalId" title="Leaderboard" @shown="fetchData">
+  <b-modal
+    :id="modalId"
+    title="Leaderboard"
+    ok-only>
 
     <loading
       v-if="loading"
@@ -12,7 +15,7 @@
       striped
       hover
       show-empty
-      :items="topUsers"
+      :items="filteredUsers"
       :fields="fields">
     </b-table>
 
@@ -45,6 +48,10 @@ export default {
       type: String,
       required: true
     },
+    currentUser: {
+      type: Object,
+      required: true
+    },
     win: {
       type: Number,
       default: 0
@@ -52,16 +59,40 @@ export default {
   },
 
   methods: {
-    fetchData () {
-      pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
-        this.loading = false
-        this.topUsers = r.data.top_users
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.loading = false
+      this.topUsers = data.top_users
+    }
+  },
+
+  computed: {
+    filteredUsers: function () {
+      let users = JSON.parse(JSON.stringify(this.topUsers))
+      users = users.map(user => {
+        if (this.currentUser && this.currentUser.name === user.name) {
+          user._rowVariant = 'success'
+        }
+        return user
       })
+      let userRepeated = users.filter(user => {
+        return user.name === this.currentUser.name
+      }).length
+      if (userRepeated) {
+        users.splice(-1, 1)
+      }
+      return users
     }
   },
 
   created () {
-    this.fetchData()
+    pybossaApi.get(`leaderboard/window/${this.win}`).then(r => {
+      this.setData(r.data)
+    })
   }
 }
 </script>

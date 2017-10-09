@@ -1,9 +1,5 @@
 <template>
   <b-modal :id="modalId" title="Download">
-
-    <p class="lead m-2">
-      Download the data for {{ project.name }}
-    </p>
     <b-table
       responsive
       striped
@@ -32,9 +28,20 @@ export default {
   data: function () {
     return {
       fields: {
-        dataset: { label: 'Dataset' },
-        format: { label: 'Format' },
-        action: { label: 'Action' }
+        dataset: {
+          label: 'Dataset'
+        },
+        format: {
+          label: 'Format',
+          class: 'text-center',
+          formatter: value => {
+            return value.toUpperCase()
+          }
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
       },
       items: [
         { dataset: 'Tasks', type: 'task', format: 'csv' },
@@ -61,6 +68,10 @@ export default {
   methods: {
     /**
      * Download the data.
+     * @param {String} type
+     *   The download type.
+     * @param {String} format
+     *   The download format.
      */
     download (type, format) {
       pybossaApi.get(`/project/${this.project.short_name}/tasks/export`, {

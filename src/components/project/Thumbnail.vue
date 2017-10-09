@@ -1,6 +1,6 @@
 <template>
   <div class="project-thumbnail">
-    <img v-if="thumbnail" :src="thumbnail" :class="imgClass" :alt="altTag">
+    <img v-if="thumbnail" :src="thumbnail" :class="imgClass">
     <div class="thumbnail-placeholder">
       <icon name="picture-o" scale="4"></icon>
     </div>
@@ -65,14 +65,14 @@ export default {
   }
 
   .thumbnail-placeholder {
-    @extend .bg-faded;
+    @extend .bg-light;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 
     svg {
-      color: $gray-light;
+      color: $gray-600;
     }
   }
 }

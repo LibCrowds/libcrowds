@@ -5,23 +5,29 @@
     <section>
       <h2 class="text-center">Contribute</h2>
       <hr>
-      <p class="lead text-center">
-        Choose a {{ collectionConfig.terminology.project }} from the list below
-        to get started!
-      </p>
-      <p class="text-center mb-0">
-        <small>
-          For more information see the
-          <router-link
-            :to="{
-              name: 'collection-about',
-              params: {
-                collectionname: collectionConfig.key
-              }
-            }">about page.
-          </router-link>
-        </small>
-      </p>
+      <span
+        v-if="collectionConfig.contribute"
+        v-html="collectionConfig.contribute">
+      </span>
+      <span v-else>
+        <p class="lead text-center">
+          Choose a {{ collectionConfig.terminology.project }} from the list below
+          to get started!
+        </p>
+        <p class="text-center mb-0">
+          <small>
+            For more information see the
+            <router-link
+              :to="{
+                name: 'collection-about',
+                params: {
+                  collectionname: collectionConfig.key
+                }
+              }">about page.
+            </router-link>
+          </small>
+        </p>
+      </span>
       <hr>
       <div class="row">
         <div class="col-xl-3 mb-3">
@@ -34,7 +40,7 @@
           </category-list-chooser>
 
           <project-sorting-options
-            class="mt-3 hidden-lg-down"
+            class="mt-3 d-none d-xl-block"
             :viewOpts="viewOpts"
             :showCompleted="showCompleted"
             @sort="onSort"
@@ -43,7 +49,8 @@
           </project-sorting-options>
 
           <social-media-buttons
-            class="mt-3 hidden-lg-down text-center">
+            size="sm"
+            class="mt-3 d-none d-xl-block text-center">
           </social-media-buttons>
 
         </div>
@@ -78,10 +85,10 @@
                     {{ project.item.overall_progress }}%
                   </template>
                   <template slot="action" scope="project">
-                    <project-contrib-button
+                    <project-contrib-btn
                       :shortname="project.item.short_name"
                       variant="success">
-                    </project-contrib-button>
+                    </project-contrib-btn>
                   </template>
                 </b-table>
               </transition>
@@ -99,12 +106,12 @@
                 There are no projects to display.
               </p>
               <p>
-                <small class="hidden-lg-down">
+                <small class="d-none d-xl-block">
                   Use the list on the left of the screen to choose another
                   {{ collectionConfig.terminology.category }}, or the sorting
                   options to display any completed projects.
                 </small>
-                <small class="hidden-xl-up">
+                <small class="d-xl-none">
                   Use the list above to choose another
                   {{ collectionConfig.terminology.category }}.
                 </small>

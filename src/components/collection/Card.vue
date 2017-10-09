@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     show-footer
     class="collection-card my-3">
     <router-link
@@ -15,7 +15,7 @@
         class="collection-card-img"
         :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
       </div>
-      <div class="card-block">
+      <div class="card-body">
         <h4 class="card-title">
           {{ collectionConfig.name }}
         </h4>
@@ -59,7 +59,7 @@ export default {
   border: none;
 
   a {
-    color: $gray;
+    color: $gray-800;
 
     @include hover-focus {
       text-decoration: none;
@@ -88,8 +88,8 @@ export default {
       left: 0;
       right: 0;
       bottom: 0;
-      color: $gray-lighter;
-      background-color: rgba($gray-lighter, 0.4);
+      color: $gray-300;
+      background-color: rgba($gray-300, 0.4);
       opacity: 0;
       font-size: $font-size-lg;
       text-transform: uppercase;
@@ -105,13 +105,13 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
-    color: $gray-dark;
+    color: $gray-1000;
   }
 
   .card-footer {
     background-color: $white;
     border: none;
-    color: $gray-light;
+    color: $gray-600;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

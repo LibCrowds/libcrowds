@@ -14,7 +14,7 @@
             v-if="user"
             class="mb-3"
             :user="user">
-            <b-button
+            <b-btn
               v-if="isCurrentUser"
               block
               variant="success"
@@ -25,17 +25,11 @@
                 }
               }">
               Settings
-            </b-button>
+            </b-btn>
           </user-profile-card>
         </div>
         <div class="col-lg-8">
-
-          <user-favourites-card
-            class="mb-2"
-            v-if="isCurrentUser">
-          </user-favourites-card>
-
-          <b-card no-block :header="'Contributions'">
+          <b-card no-body header="Contributions">
             <b-table
               hover
               striped
@@ -45,15 +39,10 @@
               <template slot="overall_progress" scope="project">
                 {{ project.item.overall_progress }}%
               </template>
-              <template slot="action" scope="project">
-              </template>
             </b-table>
           </b-card>
-
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -62,7 +51,6 @@
 import isEmpty from 'lodash/isEmpty'
 import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
-import UserFavouritesCard from '@/components/user/FavouritesCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import Loading from '@/components/Loading'
 
@@ -73,9 +61,14 @@ export default {
       projects: [],
       tableFields: {
         name: { label: 'Name' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center'
+        }
       }
     }
   },
@@ -88,7 +81,6 @@ export default {
 
   components: {
     UserProfileCard,
-    UserFavouritesCard,
     ProjectContribButton,
     Loading
   },
@@ -113,6 +105,7 @@ export default {
      *   The data.
      */
     setData (data) {
+      console.log(data)
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects

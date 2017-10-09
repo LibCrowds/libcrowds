@@ -1,5 +1,5 @@
 <template>
-  <b-card :header="'API'">
+  <b-card header="API">
     <p>
       {{ siteConfig.brand }} provides a RESTful API that can be used for
       retreiving information about tasks, task runs, results, etc. The API

@@ -1,48 +1,51 @@
 <template>
   <div id="account-projects">
-    <div class="container my-5">
-      <b-card header="Open Project">
-        <div class="row">
-          <div class="col-lg-4">
-            <category-list-chooser
-              header="Categories"
-              v-if="categories.length"
-              :categories="categories"
-              @change="onCategoryChange">
-            </category-list-chooser>
-          </div>
-          <div class="col-lg-8">
-            <transition
-              name="fade"
-              mode="out-in"
-              appear>
-              <b-table
-                v-if="projects.length"
-                responsive
-                striped
-                hover
-                show-empty
-                :items="projects"
-                :fields="tableFields">
-                <template slot="action" scope="project">
-                  <b-btn
-                    size="sm"
-                    variant="success"
-                    :to="{
-                      name: 'project-settings',
-                      params: {
-                        shortname: project.item.short_name
-                      }
-                    }">
-                    Open
-                  </b-btn>
-                </template>
-              </b-table>
-            </transition>
-          </div>
-        </div>
+    <b-container class="my-5">
+      <b-card no-body header="Open Project">
+        <b-card-body class="p-0">
+          <b-row no-gutters>
+            <b-col lg="4">
+              <category-list-chooser
+                header="Categories"
+                class="nested-left nested-lg"
+                v-if="categories.length"
+                :categories="categories"
+                @change="onCategoryChange">
+              </category-list-chooser>
+            </b-col>
+            <b-col class="p-2">
+              <transition
+                name="fade"
+                mode="out-in"
+                appear>
+                <b-table
+                  v-if="projects.length"
+                  responsive
+                  striped
+                  hover
+                  show-empty
+                  :items="projects"
+                  :fields="tableFields">
+                  <template slot="action" scope="project">
+                    <b-btn
+                      size="sm"
+                      variant="success"
+                      :to="{
+                        name: 'project-settings',
+                        params: {
+                          shortname: project.item.short_name
+                        }
+                      }">
+                      Open
+                    </b-btn>
+                  </template>
+                </b-table>
+              </transition>
+            </b-col>
+          </b-row>
+        </b-card-body>
       </b-card>
-    </div>
+    </b-container>
   </div>
 </template>
 
@@ -168,6 +171,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'src/assets/style/main';
+
 #account-projects {
   .fade-enter-active,
   .fade-leave-active {

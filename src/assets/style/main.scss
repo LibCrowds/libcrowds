@@ -8,17 +8,31 @@ $headings-font-weight:             400;
 $line-height-base:                 1.6;
 
 /* Colors */
-$brand-primary:                    #D00000;
-$brand-success:                    #408E40;
-$brand-info:                       #2589BD;
-$brand-warning:                    #E38D13;
-$brand-danger:                     #E4572E;
-$brand-inverse:                    #111111;
-$body-color:                       #26333F;
+$blue:                             #2589BD !default;
+$indigo:                           #6610f2 !default;
+$purple:                           #6f42c1 !default;
+$pink:                             #e83e8c !default;
+$red:                              #D00000 !default;
+$orange:                           #E38D13 !default;
+$yellow:                           #ffc107 !default;
+$green:                            #408E40 !default;
+$teal:                             #20c997 !default;
+$cyan:                             #03B5AA !default;
+
+$body-color:                       #202B35;
+
+$gray-100:                         #f7f7f7;
+$gray-1000:                        #1A1D21;
+$gray-1100:                        #14171A;
+$gray-1200:                        #0D1012;
+
+$grays: (
+  "1000": $gray-1000,
+  "1100": $gray-1100,
+  "1200": $gray-1200
+);
 
 $white:                            #FFFFFF;
-$gray:                             #404446;
-$gray-light:                       #888888;
 $black:                            #000000;
 $twitter:                          #00ACEE;
 $facebook:                         #3B5998;
@@ -26,47 +40,29 @@ $googleplus:                       #D34836;
 $linkedin:                         #0E76A8;
 
 /* Links */
-$link-color:                       #03B5AA;
+$link-color:                       $cyan;
 $link-hover-color:                 darken($link-color, 5%);
 $link-hover-decoration:            underline;
 
-/* Components */
-$component-active-bg:              $brand-info;
-
 /* Buttons */
-$btn-secondary-color:              $brand-inverse;
-$btn-secondary-bg:                 $white;
-$btn-secondary-border:             $brand-inverse;
 $btn-border-radius:                0px;
 $btn-border-radius-lg:             0px;
 $btn-border-radius-sm:             0px;
 
-/* Navbar */
+/* Navbars */
 $navbar-light-color:               rgba($black, .7);
-$navbar-inverse-color:             $white;
-$navbar-inverse-toggler-border:    none;
 $app-navbar-height:                50px;
-
-/* Nav Pills*/
-$nav-pills-active-link-bg:         transparent;
-
-/* Input */
-$input-padding-x:                  1.25rem;
-$input-padding-y:                  .75rem;
-$input-border-focus:               $brand-info;
-$custom-select-focus-border-color: lighten($brand-info, 25%);
+$navbar-dark-color:                $white;
+$navbar-dark-toggler-border-color: transparent;
 
 /* Tables */
 $table-cell-padding:               .75rem 1.25rem;
-$table-bg-accent:                  darken($white, 3%);
-$table-bg-hover:                   darken($white, 5%);
-$table-border-color:               rgba($black, .075);
+$table-accent-bg:                  darken($white, 3%);
+$table-hover-bg:                   darken($white, 5%);
 
 /* Pagination */
-$pagination-color:                 $brand-info;
-$pagination-hover-color:           darken($brand-info, 10%);
-$pagination-active-bg:             $brand-info;
-$pagination-active-border:         $brand-info;
+$pagination-color:                 $blue;
+$pagination-hover-color:           darken($blue, 10%);
 
 /* Cards */
 $card-border-radius:               0px;
@@ -74,9 +70,6 @@ $card-columns-count:               2;
 
 /* Alerts */
 $alert-border-radius:              0;
-
-/* Forms */
-$form-group-margin-bottom:         1rem;
 
 /* List Groups */
 $list-group-border-radius:         0px;
@@ -90,7 +83,7 @@ $spacer:                           2.5rem;
 $modal-backdrop-opacity:           0.8;
 $modal-inner-padding:              0;
 $modal-dialog-margin-y-sm-up:      50px;
-$modal-backdrop-bg:                #EFEFEF;
+$modal-backdrop-bg:                $gray-100;
 
 /* Hamburger */
 $hamburger-hover-opacity:          100%;
@@ -104,7 +97,7 @@ $lg-path-fonts:                    '~lightgallery/src/fonts';
 $lg-path-images:                   '~lightgallery/src/img';
 
 /* SpinKit */
-$spinkit-spinner-color:            $brand-info;
+$spinkit-spinner-color:            $blue;
 
 /* Chartist */
 $ct-series-colors:

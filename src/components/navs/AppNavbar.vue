@@ -7,7 +7,7 @@
 
     <span id="app-navbar-left">
       <b-link
-        :class="`navbar-brand hidden-${hideBrandBreakpoint}-up`"
+        :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
         :to="{
           name: 'landing'
         }">
@@ -160,10 +160,19 @@ export default {
   width: 100%;
 
   #app-navbar-left {
+    height: 100%;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-300;
+  }
+
+  #app-navbar-right {
+    height: 100%;
+
+    .navbar-nav {
+      border-bottom: 1px solid $gray-300;
+    }
   }
 
   .navbar-brand {
@@ -182,17 +191,18 @@ export default {
     height: 100%;
   }
 
-  .nav-item {
+  .nav-item:not(.dropdown) {
     display: flex;
     justify-content: center;
     flex-direction: column;
     padding: 0rem 1.25rem;
-    border-bottom: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-300;
     height: 100%;
     white-space: nowrap;
   }
 
   #sign-in-up {
+    height: 100%;
     display: flex;
     flex-direction: row;
     font-size: $font-size-sm;
@@ -200,9 +210,9 @@ export default {
   }
 
   #btn-register {
-    background-color: $brand-success;
+    background-color: $green;
     font-weight: 400;
-    border-bottom: 1px solid $brand-success;
+    border-bottom: 1px solid $green;
 
     a {
       color: $white;
@@ -214,6 +224,7 @@ export default {
   }
 
   .dropdown-menu {
+    position: absolute;
     border-radius: 0;
     right: 1rem;
     text-transform: none;

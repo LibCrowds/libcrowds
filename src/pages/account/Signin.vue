@@ -1,11 +1,11 @@
 <template>
   <div id="signin">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 mx-auto">
         <card-form
-          :header="'Signin'"
+          header="Signin"
           :lead="lead"
-          :submitText="'Sign in'"
+          submit-text="Sign in"
           :form="form"
           @success="onSuccess">
 
@@ -15,39 +15,11 @@
             <p class="lead text-center">
               or sign in with
             </p>
-            <div class="row-btn-social">
-
-              <div v-if="auth.facebook">
-                <b-button
-                  class="mx-1"
-                  variant="facebook"
-                  @click="redirect('facebook')">
-                  <icon name="facebook"></icon>
-                  <span class="ml-1 hidden-sm-down">Facebook</span>
-                </b-button>
-              </div>
-
-              <div v-if="auth.google">
-                <b-button
-                  class="mx-1"
-                  variant="googleplus"
-                  @click="redirect('google')">
-                  <icon name="google"></icon>
-                  <span class="ml-1 hidden-sm-down">Google</span>
-                </b-button>
-              </div>
-
-              <div v-if="auth.twitter">
-                <b-button
-                  class="mx-1"
-                  variant="twitter"
-                  @click="redirect('twitter')">
-                  <icon name="twitter"></icon>
-                  <span class="ml-1 hidden-sm-down">Twitter</span>
-                </b-button>
-              </div>
-
-            </div>
+            <oauth-buttons
+              :facebook="auth.facebook"
+              :google="auth.google"
+              :twitter="auth.twitter">
+            </oauth-buttons>
           </div>
 
           <div slot="footer-left">
@@ -72,6 +44,7 @@ import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
 import pybossaApi from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
+import OauthButtons from '@/components/buttons/Oauth'
 
 export default {
   data: function () {
@@ -115,7 +88,8 @@ export default {
   },
 
   components: {
-    CardForm
+    CardForm,
+    OauthButtons
   },
 
   computed: {
@@ -125,16 +99,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Redirect to an external endpoint (for OAuth signin).
-     * @param {String} endpoint
-     *   The endpoint
-     */
-    redirect (endpoint) {
-      const nextExternal = `${document.location.origin}/${this.next}`
-      const query = `next=${nextExternal}`
-      window.location = `${siteConfig.pybossaHost}/${endpoint}?${query}`
-    },
 
     /**
      * Set core data.
@@ -167,61 +131,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-@import 'src/assets/style/main';
-
-#signin {
-  .row-btn-social {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-
-    @include media-breakpoint-up(md) {
-      justify-content: space-around;
-    }
-
-    .btn {
-      @include hover-focus;
-      border-radius: 0;
-      color: $white;
-      height: 100%;
-      display: flex;
-
-      @include hover-focus {
-        color: $white;
-      }
-
-      &.btn-twitter {
-        background: $twitter;
-
-        @include hover-focus {
-          background: darken($twitter, 5%);
-        }
-      }
-
-      &.btn-facebook {
-        background: $facebook;
-
-        @include hover-focus {
-          background: darken($facebook, 5%);
-        }
-      }
-
-      &.btn-googleplus {
-        background: $googleplus;
-
-        @include hover-focus {
-          background: darken($googleplus, 5%);
-        }
-      }
-    }
-
-    /* Fix inconsistend heights */
-    svg {
-      display: flex;
-      height: 1.2rem;
-    }
-  }
-}
-</style>

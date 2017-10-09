@@ -9,6 +9,7 @@ import VueFormGenerator from 'vue-form-generator'
 import VueImages from 'vue-images'
 import VueAnalytics from 'vue-analytics'
 import VueProgressBar from 'vue-progressbar'
+import VueCookie from 'vue-cookie'
 import Icon from 'vue-awesome/components/Icon'
 import LibcrowdsViewer from 'libcrowds-viewer'
 import ToggleButton from 'vue-js-toggle-button'
@@ -34,6 +35,7 @@ Vue.use(VueFormGenerator)
 Vue.use(ToggleButton)
 Vue.use(LibcrowdsViewer)
 Vue.use(VueProgressBar)
+Vue.use(VueCookie)
 
 Vue.component('v-gravatar', VueGravatar)
 Vue.component('v-images', VueImages)

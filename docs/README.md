@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
 [![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
-> A Vue.js frontend for PyBossa (>=2.6.1).
+> A Vue.js frontend for PyBossa (>=2.7.2).
 
 This frontend to PyBossa is a little different in that microsites can be defined to more easily group together large groups of similar projects. For example, on the [LibCrowds](www.libcrowds.com) site we define a meta-category for two of our major projects, *Convert-a-Card* and *In the Spotlight*.
 

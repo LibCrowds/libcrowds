@@ -1,5 +1,5 @@
 <template>
-  <footer id="collection-footer" class="footer">
+  <footer id="app-footer" class="footer">
     <div class="container pt-3 pb-2">
 
       <section>
@@ -28,7 +28,7 @@
         </ul>
       </section>
 
-      <section class="hidden-md-down">
+      <section class="d-none d-lg-block">
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li
@@ -49,7 +49,7 @@
         </ul>
       </section>
 
-      <section class="hidden-md-down">
+      <section class="d-none d-lg-block">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
@@ -125,10 +125,10 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-#collection-footer.footer {
-  background-color: darken($gray-dark, 5%);
+#app-footer.footer {
+  background-color: $gray-1000;
   letter-spacing: 0.8px;
-  color: $gray-light;
+  color: $gray-600;
   font-size: $font-size-sm;
   line-height: 2;
 
@@ -151,7 +151,7 @@ export default {
   }
 
   a {
-    color: $gray-lighter;
+    color: $gray-300;
   }
 
   .brand-link {
@@ -159,7 +159,7 @@ export default {
   }
 
   #bg-img-attribution {
-    font-size: $font-size-xs;
+    font-size: 0.75rem;
   }
 }
 </style>

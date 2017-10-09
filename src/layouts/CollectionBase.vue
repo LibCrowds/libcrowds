@@ -58,7 +58,8 @@ export default {
       }
     },
     collectionConfig: function () {
-      return siteConfig.collections[this.$route.params.collectionname]
+      const collectionName = this.$route.params.collectionname
+      return siteConfig.collections[collectionName]
     }
   }
 }

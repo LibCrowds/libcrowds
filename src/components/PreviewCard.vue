@@ -1,7 +1,7 @@
 <template>
   <b-card
     class="preview-card"
-    :header="'Preview'">
+    header="Preview">
     <b-card>
       <div
         v-for="(field, index) in previewFields"
@@ -78,7 +78,7 @@ export default {
 @import 'src/assets/style/main';
 
 .preview-card {
-  @extend .bg-faded;
+  @extend .bg-light;
 
   * {
     &:not(:last-child) {
@@ -95,13 +95,13 @@ export default {
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
-    color: $gray-dark;
+    color: $gray-1000;
   }
 
   .info {
     font-size: $font-size-sm;
     font-style: italic;
-    color: $gray-light;
+    color: $gray-600;
   }
 }
 </style>

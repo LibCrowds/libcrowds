@@ -1,59 +1,61 @@
 <template>
   <div id="admin-categories">
     <card-form
-      :header="'New Category'"
+      header="New Category"
       :form="form"
       class="mb-4"
       @success="onNewCategorySuccess">
     </card-form>
 
     <b-card
-      no-block
-      :header="'Current Categories'">
-      <b-table
-        hover
-        show-empty
-        :items="categories"
-        :fields="table.fields">
+      no-body
+      header="Current Categories">
+      <b-card-body class="p-0">
+        <b-table
+          hover
+          show-empty
+          :items="categories"
+          :fields="table.fields">
 
-        <template slot="n_projects" scope="category">
-          {{ n_projects[category.item.short_name] }}
-        </template>
+          <template slot="n_projects" scope="category">
+            {{ n_projects[category.item.short_name] }}
+          </template>
 
-        <template slot="collection" scope="category">
-          {{ category.item.info.collection }}
-        </template>
+          <template slot="collection" scope="category">
+            {{ category.item.info.collection }}
+          </template>
 
-        <template slot="created" scope="category">
-          {{ category.item.created | formatDate }}
-        </template>
+          <template slot="created" scope="category">
+            {{ category.item.created | formatDate }}
+          </template>
 
-        <template slot="action" scope="category">
-          <b-button-group>
-            <b-button
-              :id="`edit-${category.id}`"
-              variant="secondary"
-              size="sm"
-              :to="{
-                name: 'admin-edit-category',
-                params: {
-                  categoryid: category.item.id
-                }
-              }">
-              Edit
-            </b-button>
-            <b-button
-              :id="`del-${category.id}`"
-              variant="danger"
-              size="sm"
-              :disabled="n_projects[category.item.short_name] > 0"
-              @click="deleteCategory(category.item.id)">
-              Delete
-            </b-button>
-          </b-button-group>
-        </template>
+          <template slot="action" scope="category">
+            <b-btn-group>
+              <b-btn
+                :id="`edit-${category.id}`"
+                variant="info"
+                size="sm"
+                :to="{
+                  name: 'admin-edit-category',
+                  params: {
+                    categoryid: category.item.id
+                  }
+                }">
+                Edit
+              </b-btn>
+              <b-btn
+                :id="`del-${category.id}`"
+                variant="danger"
+                size="sm"
+                :disabled="n_projects[category.item.short_name] > 0"
+                @click="deleteCategory(category.item.id)">
+                Delete
+              </b-btn>
+            </b-btn-group>
+          </template>
 
-      </b-table>
+        </b-table>
+      </b-card-body>
     </b-card>
   </div>
 </template>
@@ -95,13 +97,29 @@ export default {
       },
       table: {
         fields: {
-          id: { label: 'ID' },
-          name: { label: 'Name' },
-          collection: { label: 'Collection' },
-          n_projects: { label: 'Projects' },
-          description: { label: 'Description' },
-          created: { label: 'Created' },
-          action: { label: 'Action' }
+          id: {
+            label: 'ID',
+            class: 'text-center'
+          },
+          name: {
+            label: 'Name'
+          },
+          collection: {
+            label: 'Collection',
+            class: 'text-center'
+          },
+          n_projects: {
+            label: 'Projects',
+            class: 'text-center d-none d-xl-table-cell'
+          },
+          created: {
+            label: 'Created',
+            class: 'text-center d-none d-xl-table-cell'
+          },
+          action: {
+            label: 'Action',
+            class: 'text-center'
+          }
         }
       },
       n_projects: {}

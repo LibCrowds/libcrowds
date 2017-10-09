@@ -1,19 +1,18 @@
 <template>
   <div id="admin-users">
-    <b-card header="Manage Users">
-      <div class="row">
-        <div class="col-xl-4">
-          <card-form
-            submitText="Search"
-            header="Search"
-            :form="form"
-            @success="onSuccess">
-          </card-form>
-        </div>
-        <div class="col-xl-8 mt-4 mt-xl-0">
-          <b-card
-            no-block
-            header="Results">
+
+    <b-card no-body header="Manage Users">
+      <b-card-body class="p-0">
+        <b-row no-gutters>
+          <b-col lg="4">
+            <card-form
+              submitText="Search"
+              header="Search"
+              :form="form"
+              @success="onSuccess">
+            </card-form>
+          </b-col>
+          <b-col lg="8" class="p-2">
             <b-table
               hover
               show-empty
@@ -34,36 +33,38 @@
               </template>
 
             </b-table>
-          </b-card>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-card-body>
     </b-card>
-    <div class="row mt-4">
-      <div class="col-xl-4">
+
+    <b-row class="mt-4">
+      <b-col xl="4">
         <b-card
-          header="Export">
+          header="Export"
+          class="text-center">
           <p class="lead">
-            There are {{ nUsers }} registered users
+            {{ nUsers }} users registered
           </p>
-          <div class="text-right">
-            <b-btn
-              variant="success"
-              class="mt-1"
-              @click="download('csv')">
-              Export as CSV
-            </b-btn>
-            <b-btn
-              variant="success"
-              class="mt-1"
-              @click="download('json')">
-              Export as JSON
-            </b-btn>
-          </div>
+          <b-btn
+            variant="success"
+            class="mt-1"
+            size="sm"
+            @click="download('csv')">
+            Export as CSV
+          </b-btn>
+          <b-btn
+            variant="success"
+            class="mt-1"
+            size="sm"
+            @click="download('json')">
+            Export as JSON
+          </b-btn>
         </b-card>
-      </div>
-      <div class="col-xl-8 mt-4 mt-xl-0">
+      </b-col>
+      <b-col xl="8" class="mt-4 mt-xl-0">
         <b-card
-          no-block
+          no-body
           header="Current Administrators">
           <b-table
             hover
@@ -82,8 +83,8 @@
 
           </b-table>
         </b-card>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -115,10 +116,21 @@ export default {
         }
       },
       tableFields: {
-        id: { label: 'ID' },
-        name: { label: 'Username' },
-        email_addr: { label: 'Email' },
-        action: { label: 'Action' }
+        id: {
+          label: 'ID',
+          class: 'text-center'
+        },
+        name: {
+          label: 'Username'
+        },
+        email_addr: {
+          label: 'Email',
+          class: 'd-none d-xl-table-cell'
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
       }
     }
   },

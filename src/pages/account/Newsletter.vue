@@ -1,23 +1,23 @@
 <template>
   <div id="newsletter">
     <div class="container my-5">
-      <div class="col-lg-8 offset-lg-2">
+      <div class="col-lg-8 mx-auto">
         <b-card :header="title">
           <p class="lead">
             {{ lead }}
           </p>
           <template slot="footer">
             <div class="float-right">
-              <b-button
-                variant="secondary"
+              <b-btn
+                variant="outline-secondary"
                 @click="suscribe('False')">
                 No thanks
-              </b-button>
-              <b-button
+              </b-btn>
+              <b-btn
                 variant="success"
                 @click="suscribe('True')">
                 Sure, sign me up!
-              </b-button>
+              </b-btn>
             </div>
           </template>
         </b-card>

@@ -104,7 +104,7 @@ export default {
       }
 
       &:nth-child(even) {
-        @extend .bg-faded;
+        @extend .bg-light;
       }
 
       @include media-breakpoint-up(md) {
@@ -116,13 +116,13 @@ export default {
   .nav.nav-unstyled {
     overflow-x: auto;
     padding: $navbar-padding-y $navbar-padding-x;
-    background-color: rgba($gray-lighter, 0.85);
+    background-color: rgba($gray-300, 0.85);
 
     .nav-link {
       font-size: $font-size-sm;
 
       transition: opacity 350ms ease;
-      color: lighten($gray, 15%);
+      color: rgba($gray-700, 0.85);
       display: none;
 
       @include media-breakpoint-up(sm) {

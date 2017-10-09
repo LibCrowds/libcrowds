@@ -1,6 +1,6 @@
 <template>
   <b-card
-    no-block
+    no-body
     id="category-list-chooser"
     :header="header | pluralize | capitalize">
     <b-list-group>
@@ -10,7 +10,7 @@
         action
         v-b-toggle="`catlistitem-${category.id}`"
         :active="activeCategory === category"
-        @click.native="changeCategory(category)">
+        @click="changeCategory(category)">
         {{ category.name }}
         <b-collapse
           :visible="index == 0"
@@ -82,15 +82,30 @@ export default {
 
 #category-list-chooser {
   font-size: $font-size-sm;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
 
-  @include media-breakpoint-up(xl) {
-    max-height: 100%;
+  &.nested-left {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      &.nested#{$infix} {
+        height: 100%;
+        max-height: 100%;
+        border-right: 1px solid $border-color;
+        border-bottom: none;
+      }
+    }
   }
 
   .card-header {
-    @extend .bg-faded;
+    @extend .bg-light;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
   }
@@ -104,10 +119,6 @@ export default {
     &:first-child {
       border-top: none;
     }
-
-    &:last-child {
-      border-bottom: none;
-    }
   }
 
   .category-description {
@@ -116,7 +127,7 @@ export default {
     }
   }
 
-  .card-block {
+  .card-body {
     display: flex;
     flex-direction: column;
   }
