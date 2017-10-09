@@ -15,7 +15,7 @@
       striped
       hover
       show-empty
-      :items="topUsers"
+      :items="users"
       :fields="fields">
     </b-table>
 
@@ -66,18 +66,26 @@ export default {
      */
     setData (data) {
       this.loading = false
-      this.topUsers = data.top_users.map(user => {
+      this.topUsers = data.top_users
+    }
+  },
+
+  computed: {
+    users: function () {
+      let users = JSON.parse(JSON.stringify(this.topUsers))
+      users = users.map(user => {
         if (this.currentUser && this.currentUser.name === user.name) {
           user._rowVariant = 'success'
         }
         return user
       })
-      let userRepeated = this.topUsers.filter(user => {
+      let userRepeated = this.users.filter(user => {
         return user.name === this.currentUser.name
       }).length
       if (userRepeated) {
-        this.topUsers.splice(-1, 1)
+        users.splice(-1, 1)
       }
+      return users
     }
   },
 
