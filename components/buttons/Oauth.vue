@@ -47,6 +47,10 @@ export default {
     twitter: {
       type: Boolean,
       default: false
+    },
+    next: {
+      type: String,
+      required: true
     }
   },
 
@@ -57,9 +61,8 @@ export default {
      *   The endpoint.
      */
     redirect (endpoint) {
-      const nextParam = `${document.location.origin}/${this.next}`
-      const query = `next=${nextParam}`
-      window.location = `${localConfig.pybossa.host}/${endpoint}?${query}`
+      const query = `next=${this.next}`
+      window.location.assign(`${localConfig.pybossa.host}/${endpoint}?${query}`)
     }
   }
 }
