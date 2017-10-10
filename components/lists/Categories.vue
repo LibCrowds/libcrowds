@@ -45,7 +45,6 @@ export default {
      *   The category.
      */
     changeCategory (category) {
-      console.log(this.activeCategory, category, this.activeCategory !== category)
       if (this.activeCategory !== category) {
         this.activeCategory = category
         this.$emit('change', category)
