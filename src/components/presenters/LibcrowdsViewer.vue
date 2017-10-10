@@ -6,9 +6,9 @@
       :buttons="buttons"
       :taskOpts="taskOpts"
       :navigation="navigation"
-      :message-bus="messageBus"
       :browsable="false"
       :selections-editable="false"
+      show-help-on-mount
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </libcrowds-viewer>
@@ -17,17 +17,10 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import isEmpty from 'lodash/isEmpty'
 import capitalize from '@/utils/capitalize'
 
 export default {
-  data: function () {
-    return {
-      messageBus: new Vue()
-    }
-  },
-
   props: {
     project: {
       type: Object,
