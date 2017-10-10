@@ -8,7 +8,8 @@
     }"
     :block="block"
     :size="size"
-    :variant="variant">
+    :variant="variant"
+    :disabled="disabled">
     Contribute
   </b-btn>
 </template>
@@ -38,13 +39,17 @@ export default {
       validator: value => {
         const valid = [
           'completed',
-          'draft',
-          'publish',
           'can_contribute',
           'cannot_contribute'
         ]
-        return value in valid
+        return valid.indexOf(value) > -1
       }
+    }
+  },
+
+  computed: {
+    disabled: function () {
+      return this.status !== 'can_contribute'
     }
   }
 }
