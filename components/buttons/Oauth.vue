@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 
 export default {
   props: {
@@ -54,9 +54,11 @@ export default {
      *   The endpoint.
      */
     redirect (endpoint) {
-      const nextExternal = `${document.location.origin}/${this.next}`
-      const query = `next=${nextExternal}`
-      window.location = `${siteConfig.pybossaHost}/${endpoint}?${query}`
+      if (process.browser) {
+        const nextExternal = `${document.location.origin}/${this.next}`
+        const query = `next=${nextExternal}`
+        window.location = `${localConfig.pybossa.host}/${endpoint}?${query}`
+      }
     }
   }
 }
@@ -64,7 +66,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
+@import '~/assets/style/main';
 
 #oauth-buttons {
   display: flex;

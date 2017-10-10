@@ -13,7 +13,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "unit": "cross-env NODE_ENV=testing jest --coverage",
     "test": "npm run lint && npm run unit",
-    "unit:nocoverage": "cross-env NODE_ENV=testing jest"
+    "unit:nocoverage": "cross-env NODE_ENV=testing jest",
+    "unit:updatesnapshots": "cross-env NODE_ENV=testing jest --updateSnapshot"
   },
   "dependencies": {
     "axios": "^0.16.2",
@@ -60,6 +61,8 @@
     "sass-loader": "^6.0.6",
     "shelljs": "^0.7.8",
     "svg-inline-loader": "^0.8.0",
+    "vue-server-renderer": "^2.4.4",
+    "vue-test-utils": "^1.0.0-beta.1",
     "webpack-node-externals": "^1.6.0"
   },
   "jest": {
