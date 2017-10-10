@@ -25,7 +25,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/style/main.scss'],
   build: {
     /*
     ** Add to the global vendor bundle.
