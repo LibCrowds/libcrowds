@@ -1,3 +1,4 @@
+const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
   ? require('./test/test.local.config.js')
   : require('./local.config.js')
@@ -25,16 +26,18 @@ module.exports = {
   ** Global CSS
   */
   css: ['~/assets/css/main.css'],
-  /*
-  ** Add axios globally
-  */
   build: {
-    vendor: ['axios'],
     /*
-    ** Run ESLINT on save
+    ** Add to the global vendor bundle.
     */
+    vendor: [
+      'axios',
+      'vue-awesome'
+    ],
     extend (config, ctx) {
+
       if (ctx.isClient) {
+        // Run eslint on save
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -42,12 +45,22 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
+
+      if (ctx.isServer) {
+        // Whitelist vue-awesome
+        config.externals = [
+          nodeExternals({
+            whitelist: [/\.(?!(?:js|json)$).{1,5}$/i, /^vue-awesome/]
+          })
+        ]
+      }
     }
   },
   /*
   ** Plugins.
   */
   plugins: [
-    { src: '~/plugins/pybossa.js' }
+    { src: '~/plugins/pybossa.js' },
+    { src: '~/plugins/vue-awesome.js' }
   ]
 }
