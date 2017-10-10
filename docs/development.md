@@ -89,9 +89,10 @@ npm lint
 # run unit tests
 npm unit
 
-# update snapshots
-npm unit:updatesnapshots
-
 # run all tests
 npm test
 ```
+
+{% hint style='info' %}
+Unit tests are run using Jest and the **npm unit** command accepts any of the [Jest CLI options](https://facebook.github.io/jest/docs/en/cli.html#options) by prefixing them with an extra **--** (e.g. npm run unit -- --coverage)
+{% endhint %}
