@@ -1,0 +1,132 @@
+@import url(https://fonts.googleapis.com/css?family=Varela+Round:300,400,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700);
+
+/* Text */
+$headings-font-family:             'Varela Round', sans-serif;
+$font-family-base:                 'Roboto', sans-serif;
+$headings-font-weight:             400;
+$line-height-base:                 1.6;
+
+/* Colors */
+$blue:                             #2589BD !default;
+$indigo:                           #6610f2 !default;
+$purple:                           #6f42c1 !default;
+$pink:                             #e83e8c !default;
+$red:                              #D00000 !default;
+$orange:                           #E38D13 !default;
+$yellow:                           #ffc107 !default;
+$green:                            #408E40 !default;
+$teal:                             #20c997 !default;
+$cyan:                             #03B5AA !default;
+
+$body-color:                       #202B35;
+
+$gray-100:                         #f7f7f7;
+$gray-1000:                        #1A1D21;
+$gray-1100:                        #14171A;
+$gray-1200:                        #0D1012;
+
+$grays: (
+  "1000": $gray-1000,
+  "1100": $gray-1100,
+  "1200": $gray-1200
+);
+
+$white:                            #FFFFFF;
+$black:                            #000000;
+$twitter:                          #00ACEE;
+$facebook:                         #3B5998;
+$googleplus:                       #D34836;
+$linkedin:                         #0E76A8;
+
+/* Links */
+$link-color:                       $cyan;
+$link-hover-color:                 darken($link-color, 5%);
+$link-hover-decoration:            underline;
+
+/* Buttons */
+$btn-border-radius:                0px;
+$btn-border-radius-lg:             0px;
+$btn-border-radius-sm:             0px;
+
+/* Navbars */
+$navbar-light-color:               rgba($black, .7);
+$app-navbar-height:                50px;
+$navbar-dark-color:                $white;
+$navbar-dark-toggler-border-color: transparent;
+$sidebar-width:                    250px;
+
+/* Tables */
+$table-cell-padding:               .75rem 1.25rem;
+$table-accent-bg:                  darken($white, 3%);
+$table-hover-bg:                   darken($white, 5%);
+
+/* Pagination */
+$pagination-color:                 $blue;
+$pagination-hover-color:           darken($blue, 10%);
+
+/* Cards */
+$card-border-radius:               0px;
+$card-columns-count:               2;
+
+/* Alerts */
+$alert-border-radius:              0;
+
+/* List Groups */
+$list-group-border-radius:         0px;
+$list-group-item-padding-y:        0.5rem;
+$list-group-item-padding-x:        0.75rem;
+
+/* Spacing */
+$spacer:                           2.5rem;
+
+/* Modals */
+$modal-backdrop-opacity:           0.8;
+$modal-inner-padding:              0;
+$modal-dialog-margin-y-sm-up:      50px;
+$modal-backdrop-bg:                $gray-100;
+
+/* Hamburger */
+$hamburger-hover-opacity:          100%;
+$hamburger-types:                  (collapse, arrow);
+
+/* Font-Awesome */
+$fa-font-path:                     '~font-awesome/fonts';
+
+/* Light Gallery */
+$lg-path-fonts:                    '~lightgallery/src/fonts';
+$lg-path-images:                   '~lightgallery/src/img';
+
+/* SpinKit */
+$spinkit-spinner-color:            $blue;
+
+/* Chartist */
+$ct-series-colors:
+  #59ABE3,
+  #87D37C,
+  #4B77BE,
+  #4D8FAC,
+  #049372,
+  #407A52,
+  #8D608C,
+  #9B59B6,
+  #F4D03F,
+  #FFA631,
+  #C3272B,
+  #C93756,
+  #86797d,
+  #6C7A89,
+  #A748CA
+;
+
+@import
+  '~bootstrap/scss/bootstrap',
+  '~bootstrap-vue/dist/bootstrap-vue.css',
+  '~sweetalert2/dist/sweetalert2.css',
+  '~chartist/dist/scss/chartist',
+  '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip',
+  'partials/modals',
+  'partials/tables',
+  'partials/cards',
+  'partials/charts'
+;

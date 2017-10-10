@@ -1,0 +1,22 @@
+.modal.show {
+  display: block !important;
+
+  .modal-dialog{
+    overflow-y: initial !important
+  }
+
+  .modal-content {
+    max-height: 85vh;
+    border-radius: 0;
+  }
+
+  .modal-body {
+    position: relative;
+    max-height: 600px;
+    overflow-y: auto;
+  }
+
+  .modal-footer {
+    padding: 25px 15px;
+  }
+}
