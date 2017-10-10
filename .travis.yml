@@ -1,0 +1,18 @@
+sudo: required
+
+dist: trusty
+
+language: node_js
+
+node_js:
+- '7'
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv
+  -in deploy-key.enc -out deploy-key -d
+
+install:
+- npm install
+
+script:
+- npm run test
