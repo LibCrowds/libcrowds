@@ -67,10 +67,11 @@
       "node_modules/(?!vue-awesome)"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,vue}",
-      "!src/main.js",
-      "!src/router/index.js",
-      "!**/node_modules/**"
+      "components/**/*.{js,vue}",
+      "pages/**/*.{js,vue}",
+      "plugins/**/*.{js,vue}",
+      "store/**/*.{js,vue}",
+      "utils/**/*.{js,vue}"
     ],
     "coverageDirectory": "<rootDir>/test/unit/coverage",
     "testRegex": "/test/unit/specs/.*(test|spec)\\.jsx?$"
