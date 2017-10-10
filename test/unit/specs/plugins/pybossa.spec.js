@@ -1,5 +1,4 @@
 import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses'
-import testLocalConfig from '~/test/test.local.config'
 import PybossaPlugin from '~/plugins/pybossa'
 
 describe('PYBOSSA plugin', () => {
