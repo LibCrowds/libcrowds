@@ -39,6 +39,12 @@ module.exports = {
     }
   },
   /*
+  ** Plugins.
+  */
+  plugins: [
+    { src: '~/plugins/pybossa.js' }
+  ],
+  /*
   ** Local config.
   */
   env: {

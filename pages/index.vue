@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import pybossa from '~/plugins/pybossa'
-
 export default {
-  asyncData ({ params }) {
-    return pybossa.getLeaderboard().then(r => {
+  asyncData ({ app }) {
+    return app.$pybossa.getLeaderboard().then(r => {
       return {
         users: r.data.top_users
       }
