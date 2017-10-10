@@ -29,6 +29,9 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/facebook'
+import 'vue-awesome/icons/google'
+import 'vue-awesome/icons/twitter'
 import localConfig from '@/local.config'
 
 export default {
@@ -54,11 +57,9 @@ export default {
      *   The endpoint.
      */
     redirect (endpoint) {
-      if (process.browser) {
-        const nextExternal = `${document.location.origin}/${this.next}`
-        const query = `next=${nextExternal}`
-        window.location = `${localConfig.pybossa.host}/${endpoint}?${query}`
-      }
+      const nextParam = `${document.location.origin}/${this.next}`
+      const query = `next=${nextParam}`
+      window.location = `${localConfig.pybossa.host}/${endpoint}?${query}`
     }
   }
 }

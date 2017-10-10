@@ -1,6 +1,9 @@
 import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons'
+import 'vue-awesome/icons/facebook'
+import 'vue-awesome/icons/google-plus'
+import 'vue-awesome/icons/twitter'
 
 import { mount, createLocalVue } from 'vue-test-utils'
 import Oauth from '~/components/buttons/Oauth'
@@ -16,7 +19,7 @@ describe('Oauth buttons', () => {
       localVue,
       propsData: {
         facebook: true,
-        goiogle: true,
+        google: true,
         twitter: true
       }
     })
