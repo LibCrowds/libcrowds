@@ -1,13 +1,23 @@
-import pybossaTestResponses from 'test/fixtures/pybossaTestResponses'
+import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses'
+import testLocalConfig from '~/test/test.local.config'
+import PybossaPlugin from '~/plugins/pybossa'
 
-import pybossa from '@/plugins/pybossa'
-
-describe('PyBossaApi', () => {
+describe('PYBOSSA plugin', () => {
+  let nuxt = null
+  let pybossa = null
+  let mockContext = null
+  let mockInject = null
   let mockGet = null
   let mockPost = null
   let mockPut = null
   let mockDel = null
   let form = null
+
+  beforeAll(async () => {
+    mockContext = jest.fn()
+    mockInject = jest.fn()
+    pybossa = new PybossaPlugin(mockContext, mockInject)
+  })
 
   beforeEach(() => {
     mockGet = jest.fn()
@@ -23,6 +33,13 @@ describe('PyBossaApi', () => {
       errors: {},
       some_key: null
     }
+  })
+
+  describe('Initialisation', () => {
+    it('injects $pybossa into the context', () => {
+      expect(mockContext.$pybossa).toBe(pybossa)
+      expect(mockInject).toHaveBeenCalledWith('pybossa' ,pybossa)
+    })
   })
 
   describe('Favourites endpoints', () => {
