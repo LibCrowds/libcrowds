@@ -35,7 +35,7 @@ describe('Social media buttons', () => {
   })
 
   it('sets the correct Twitter URL', () => {
-    const url = `https://twitter.com/intent/tweet`
+    const url = `https://twitter.com/intent/tweet` +
       `?original_referer=${shareUrl}` +
       `&text=${testLocalConfig.tagline}&tw_p=tweetbutton&url=${shareUrl}`
     expect(wrapper.vm.twitterUrl).toEqual(url)
