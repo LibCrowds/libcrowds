@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Oauth buttons renders all buttons 1`] = `
+exports[`Oauth buttons render correctly 1`] = `
 
 <div id="oauth-buttons"
      data-server-rendered="true"

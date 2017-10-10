@@ -24,14 +24,14 @@ describe('Oauth buttons', () => {
     }
   })
 
-  it('renders all buttons', () => {
+  it('render correctly', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()
     })
   })
 
-  it('redirects to the correct oauth endpoint', () => {
+  it('redirect to the correct oauth endpoint', () => {
     const endpoint = 'twitter'
     const host = testLocalConfig.pybossa.host
     const expectedUrl = `${host}/${endpoint}?next=${next}`

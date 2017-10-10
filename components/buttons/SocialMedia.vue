@@ -41,32 +41,32 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
 
 export default {
-  data: function () {
+  data () {
     return {
-      facebookUrl: `http://www.facebook.com/sharer.php?u=${this.url}`,
+      facebookUrl: `http://www.facebook.com/sharer.php?u=${this.shareUrl}`,
       twitterUrl: `https://twitter.com/intent/tweet?` +
-                  `original_referer=${this.url}&text=${this.tweet}` +
-                  `&tw_p=tweetbutton&url=${this.url}`,
-      googleplusUrl: `https://plus.google.com/share?url=${this.url}`,
-      linkedinUrl: `https://www.linkedin.com/cws/share?url=${this.url}`
+                  `original_referer=${this.shareUrl}&text=${this.tweet}` +
+                  `&tw_p=tweetbutton&url=${this.shareUrl}`,
+      googleplusUrl: `https://plus.google.com/share?url=${this.shareUrl}`,
+      linkedinUrl: `https://www.linkedin.com/cws/share?url=${this.shareUrl}`
     }
   },
 
   props: {
-    url: {
+    shareUrl: {
       type: String,
-      default: window.location.href
+      required: true
     },
     tweet: {
       type: String,
-      default: `Crowdsourcing from ${siteConfig.company}`
+      default: localConfig.tagline
     },
     size: {
       type: String,
@@ -75,7 +75,7 @@ export default {
   },
 
   methods: {
-    share (url, title, width, height) {
+    share (url, width, height) {
       const specs = `scrollbars=yes,width=${width},height=${height}`
       const popup = window.open(url, 'Share', specs)
       popup.focus()
