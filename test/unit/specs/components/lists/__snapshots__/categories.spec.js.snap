@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Categories list renders correctly 1`] = `
+
+<div id="categories-list"
+     data-server-rendered="true"
+     class="card"
+>
+  <div class="card-header">
+    <div>
+      Locations
+    </div>
+  </div>
+  <div class="list-group">
+    <div class="list-group-item list-group-item-action">
+      london
+    </div>
+    <div class="list-group-item list-group-item-action">
+      plymouth
+    </div>
+  </div>
+</div>
+
+`;

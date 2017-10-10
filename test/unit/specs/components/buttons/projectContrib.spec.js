@@ -2,12 +2,12 @@ import BootstrapVue from 'bootstrap-vue'
 
 import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import ProjectContrib from '~/components/buttons/ProjectContrib'
+import ProjectContribButton from '~/components/buttons/ProjectContrib'
 
 describe('ProjectContrib button', () => {
   const localVue = createLocalVue()
   localVue.use(BootstrapVue)
-  const wrapper = mount(ProjectContrib, {
+  const wrapper = mount(ProjectContribButton, {
     localVue,
     propsData: {
       shortname: 'my_project'

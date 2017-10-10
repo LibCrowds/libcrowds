@@ -7,14 +7,14 @@ import 'vue-awesome/icons/twitter'
 
 import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import Oauth from '~/components/buttons/Oauth'
+import OauthButtons from '~/components/buttons/Oauth'
 
 describe('Oauth buttons', () => {
   const localVue = createLocalVue()
   localVue.use(BootstrapVue)
   localVue.component('icon', Icon)
   const next = '/'
-  const wrapper = mount(Oauth, {
+  const wrapper = mount(OauthButtons, {
     localVue,
     propsData: {
       facebook: true,
@@ -24,7 +24,7 @@ describe('Oauth buttons', () => {
     }
   })
 
-  it('render correctly', () => {
+  it('renders correctly', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()

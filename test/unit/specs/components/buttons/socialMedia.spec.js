@@ -8,21 +8,21 @@ import 'vue-awesome/icons/linkedin'
 
 import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import SocialMedia from '~/components/buttons/SocialMedia'
+import SocialMediaButtons from '~/components/buttons/SocialMedia'
 
-describe('Social media buttons', () => {
+describe('SocialMedia buttons', () => {
   const localVue = createLocalVue()
   localVue.use(BootstrapVue)
   localVue.component('icon', Icon)
   const shareUrl = 'http://example.com'
-  const wrapper = mount(SocialMedia, {
+  const wrapper = mount(SocialMediaButtons, {
     localVue,
     propsData: {
       shareUrl: shareUrl
     }
   })
 
-  it('render correctly', () => {
+  it('renders correctly', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()

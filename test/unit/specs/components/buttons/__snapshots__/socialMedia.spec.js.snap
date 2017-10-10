@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Social media buttons render correctly 1`] = `
+exports[`SocialMedia buttons renders correctly 1`] = `
 
 <div data-server-rendered="true"
      class="social-media-buttons"
