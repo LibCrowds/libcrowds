@@ -49,6 +49,19 @@ module.exports = {
         })
       }
 
+      config.module.rules.push({
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      })
+
+      config.module.rules.push({
+        test: /\.md$/,
+        use: [
+          'html-loader',
+          'markdown-loader'
+        ]
+      })
+
       if (ctx.isServer) {
         // Whitelist vue-awesome
         config.externals = [
