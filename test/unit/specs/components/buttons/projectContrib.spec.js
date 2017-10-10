@@ -1,6 +1,5 @@
 import BootstrapVue from 'bootstrap-vue'
 
-import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
 import ProjectContribButton from '~/components/buttons/ProjectContrib'
 

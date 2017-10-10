@@ -1,8 +1,7 @@
-import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses'
+import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses.json'
 import PybossaPlugin from '~/modules/pybossa'
 
 describe('PYBOSSA plugin', () => {
-  let nuxt = null
   let pybossa = null
   let mockContext = null
   let mockInject = null
@@ -37,7 +36,7 @@ describe('PYBOSSA plugin', () => {
   describe('Initialisation', () => {
     it('injects $pybossa into the context', () => {
       expect(mockContext.$pybossa).toBe(pybossa)
-      expect(mockInject).toHaveBeenCalledWith('pybossa' ,pybossa)
+      expect(mockInject).toHaveBeenCalledWith('pybossa', pybossa)
     })
   })
 

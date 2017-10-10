@@ -35,7 +35,6 @@ module.exports = {
       'vue-awesome'
     ],
     extend (config, ctx) {
-
       if (ctx.isClient) {
         // Run eslint on save
         config.module.rules.push({
@@ -84,6 +83,6 @@ module.exports = {
   ** Modules.
   */
   modules: [
-    '~/modules/pybossa.js',
+    '~/modules/pybossa.js'
   ]
 }

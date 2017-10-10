@@ -131,7 +131,6 @@ import localConfig from '@/local.config'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
-import mapValues from 'lodash/mapValues'
 
 export default {
   data () {

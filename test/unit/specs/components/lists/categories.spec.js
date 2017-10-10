@@ -1,6 +1,7 @@
 import BootstrapVue from 'bootstrap-vue'
+import capitalize from 'capitalize'
+import pluralize from 'pluralize'
 
-import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
 import CategoriesList from '~/components/lists/Categories'
 
@@ -13,6 +14,8 @@ describe('Categories list', () => {
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
+    localVue.filter('capitalize', capitalize)
+    localVue.filter('pluralize', pluralize)
     categories = [
       {
         id: 1,
@@ -23,7 +26,7 @@ describe('Categories list', () => {
         name: 'plymouth'
       }
     ]
-    changeCategorySpy = spyOn(CategoriesList.methods, 'changeCategory')
+    changeCategorySpy = jest.spyOn(CategoriesList.methods, 'changeCategory')
     wrapper = mount(CategoriesList, {
       localVue,
       propsData: {
@@ -46,6 +49,7 @@ describe('Categories list', () => {
 
   it('emits change event and sets activeCategory on category change', () => {
     wrapper.vm.changeCategory(categories[1])
+    console.log(wrapper.vm.changeCategory)
     expect(wrapper.vm.activeCategory).toBe(categories[1])
     expect(wrapper.emitted()).toBe({
       'change': categories[1]

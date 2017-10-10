@@ -142,9 +142,9 @@ export default {
   },
 
   methods: {
-     /**
-     * Sign the user out.
-     */
+    /**
+    * Sign the user out.
+    */
     signout () {
       this.$store.dispatch('LOGOUT')
     }

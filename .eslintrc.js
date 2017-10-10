@@ -6,12 +6,14 @@ module.exports = {
   },
   env: {
     browser: true,
-    node: true
+    node: true,
+    'jest/globals': true
   },
   extends: 'standard',
   // required to lint *.vue files
   plugins: [
-    'html'
+    'html',
+    'jest'
   ],
   // add your custom rules here
   rules: {

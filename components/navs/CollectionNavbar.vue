@@ -245,8 +245,8 @@ export default {
 
         let ieScrollTop = document.documentElement.scrollTop
         let scrollTop = document.body.scrollTop === 0
-                          ? ieScrollTop
-                          : document.body.scrollTop
+          ? ieScrollTop
+          : document.body.scrollTop
 
         let bounds = []
         let nodes = document.getElementsByClassName('invert-navbar')
