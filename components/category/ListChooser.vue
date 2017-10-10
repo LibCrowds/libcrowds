@@ -5,32 +5,20 @@
     :header="header | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
+        action
         v-for="(category, index) in categories"
         :key="category.id"
-        action
-        v-b-toggle="`catlistitem-${category.id}`"
         :active="activeCategory === category"
         @click="changeCategory(category)">
         {{ category.name }}
-        <b-collapse
-          :visible="index == 0"
-          accordion="catlist-accordian"
-          :id="`catlistitem-${category.id}`">
-          <small
-            class="category-description"
-            v-html="getDescription(category)">
-          </small>
-        </b-collapse>
       </b-list-group-item>
     </b-list-group>
   </b-card>
 </template>
 
 <script>
-import marked from 'marked'
-
 export default {
-  data: function () {
+  data () {
     return {
       activeCategory: null
     }
@@ -58,16 +46,6 @@ export default {
         this.$emit('change', category)
         this.activeCategory = category
       }
-    },
-
-    /**
-     * Return the markdown processed category description.
-     * @param {Object} category
-     *   The category.
-     */
-    getDescription (category) {
-      const desc = category.description ? category.description : ''
-      return marked(desc)
     }
   },
 
