@@ -58,7 +58,7 @@
         "short_name": "new"
       },
       "form": {
-        "csrf": "token",
+        "csrf": "token"
       },
       "template": "admin/del_category.html",
       "title": "Delete Category"

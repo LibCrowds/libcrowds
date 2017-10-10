@@ -49,10 +49,9 @@ describe('Categories list', () => {
 
   it('emits change event and sets activeCategory on category change', () => {
     wrapper.vm.changeCategory(categories[1])
-    console.log(wrapper.vm.changeCategory)
     expect(wrapper.vm.activeCategory).toBe(categories[1])
-    expect(wrapper.emitted()).toBe({
-      'change': categories[1]
+    expect(wrapper.emitted()).toEqual({
+      'change': [[categories[1]]]
     })
   })
 })
