@@ -84,6 +84,7 @@
     ],
     "collectCoverageFrom": [
       "components/**/*.{js,vue}",
+      "modules/**/*.{js,vue}",
       "pages/**/*.{js,vue}",
       "plugins/**/*.{js,vue}",
       "store/**/*.{js,vue}",

@@ -1,5 +1,5 @@
 import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses'
-import PybossaPlugin from '~/plugins/pybossa'
+import PybossaPlugin from '~/modules/pybossa'
 
 describe('PYBOSSA plugin', () => {
   let nuxt = null

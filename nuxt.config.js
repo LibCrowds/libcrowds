@@ -5,7 +5,7 @@ const localConfig = process.env.NODE_ENV === 'testing'
 
 module.exports = {
   /*
-  ** Headers of the page
+  ** Headers.
   */
   head: {
     titleTemplate: ` %s - ${localConfig}`,
@@ -23,12 +23,12 @@ module.exports = {
     ]
   },
   /*
-  ** Global CSS
+  ** Global CSS.
   */
   css: ['~/assets/style/main.scss'],
   build: {
     /*
-    ** Add to the global vendor bundle.
+    ** Global vendor bundle.
     */
     vendor: [
       'axios',
@@ -78,7 +78,12 @@ module.exports = {
   plugins: [
     { src: '~/plugins/bootstrap-vue.js' },
     { src: '~/plugins/filters.js' },
-    { src: '~/plugins/pybossa.js' },
     { src: '~/plugins/vue-awesome.js' }
+  ],
+  /*
+  ** Modules.
+  */
+  modules: [
+    '~/modules/pybossa.js',
   ]
 }
