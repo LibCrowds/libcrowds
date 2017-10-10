@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    id="category-list-chooser"
+    id="categories-list"
     :header="header | pluralize | capitalize">
     <b-list-group>
       <b-list-group-item
@@ -58,7 +58,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/main';
 
-#category-list-chooser {
+#categories-list {
   font-size: $font-size-sm;
   max-height: 250px;
   overflow-y: auto;
