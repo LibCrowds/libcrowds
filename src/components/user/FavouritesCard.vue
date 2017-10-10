@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
 export default {
@@ -51,7 +51,6 @@ export default {
      */
     getImageData (favourites) {
       return favourites.map((task) => {
-        console.log(task)
         if ('imgInfoUri' in task.info) {
           return this.getIiifImageData(task)
         } else if ('url_m' in task.info) {
@@ -87,8 +86,7 @@ export default {
   },
 
   mounted () {
-    pybossaApi.get(`/api/favorites`).then(r => {
-      console.log('OK', r.data)
+    pybossa.getFavourites().then(r => {
       this.images = this.getImageData(r.data)
       this.loading = false
     })

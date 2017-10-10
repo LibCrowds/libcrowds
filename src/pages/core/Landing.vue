@@ -107,28 +107,9 @@
       </div>
     </section>
 
-    <section
-      id="publications"
-      v-if="publications.length"
-      class="bg-light">
-      <div class="container pt-4 pb-5">
-        <h2 class="my-1">Publications</h2>
-        <p class="lead mb-2">
-          Articles, papers and blog posts about {{ siteConfig.brand }}.
-        </p>
-        <b-card-group columns>
-          <publication-card
-            v-for="publication in publications"
-            :key="publication.id"
-            :publication="publication">
-          </publication-card>
-        </b-card-group>
-      </div>
-    </section>
-
     <leaderboard-modal
-      :modal-id="leaderboardModalId"
-      :current-user="currentUser">
+      :currentUser="currentUser"
+      :modalId="leaderboardModalId">
     </leaderboard-modal>
   </div>
 </template>
@@ -137,18 +118,16 @@
 import jump from 'jump.js'
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
-import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
 import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
-import PublicationCard from '@/components/publications/PublicationCard'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -156,7 +135,6 @@ export default {
       siteConfig: siteConfig,
       stats: {},
       topUsers: [],
-      publications: [],
       leaderboardModalId: 'leaderboard-modal'
     }
   },
@@ -178,8 +156,7 @@ export default {
   components: {
     LeaderboardModal,
     UserAvatar,
-    CollectionCard,
-    PublicationCard
+    CollectionCard
   },
 
   computed: {
@@ -214,14 +191,11 @@ export default {
   },
 
   created () {
-    pybossaApi.get('stats/').then(r => {
+    pybossa.getStats().then(r => {
       this.stats = mapValues(r.data.stats, (n) => intComma(n))
     })
-    pybossaApi.get('/announcements/').then(r => {
-      this.publications = r.data.announcements
-    })
-    pybossaApi.get('/').then(r => {
-      this.topUsers = r.data.top_users
+    pybossa.getLeaderboard().then(r => {
+      this.topUsers = r.data.top_users.slice(0, 10)
     })
   }
 }

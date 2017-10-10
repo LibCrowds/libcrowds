@@ -38,7 +38,7 @@
       <span>
         <b-btn
           v-if="showCancel"
-          variant="outline-secondary"
+          variant="outline-dark"
           @click="cancel">
           Cancel
         </b-btn>
@@ -60,8 +60,8 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import Loading from '@/components/Loading'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -153,7 +153,7 @@ export default {
       }
 
       this.flash = ''
-      pybossaApi({
+      pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
@@ -212,10 +212,6 @@ export default {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .btn {
-    transition: all 2s;
   }
 
   .sk-three-bounce {

@@ -32,7 +32,7 @@ import 'leaflet.markercluster'
 import Chartist from 'chartist'
 import 'chartist-plugin-tooltips'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -138,11 +138,12 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get('stats/').then(r => {
-      data = r.data
-      return pybossaApi.get('leaderboard/window/0')
-    }).then(r => {
-      data.top_users = r.data.top_users
+    Promise.all([
+      pybossa.getStats(),
+      pybossa.getLeaderboard()
+    ]).then(([statsResponse, leaderboardResponse]) => {
+      data = statsResponse.data
+      data.top_users = leaderboardResponse.data.top_users
       next(vm => vm.setData(data))
     })
   },

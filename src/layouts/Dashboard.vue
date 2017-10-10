@@ -16,8 +16,10 @@
         :navItems="dashboardNavItems">
       </dashboard-sidenav>
       <main>
-        <div class="container py-4">
-          <router-view :currentUser="currentUser"></router-view>
+        <div class="container px-lg-4 py-4">
+          <transition name="fade" mode="out-in" appear>
+            <router-view :currentUser="currentUser"></router-view>
+          </transition>
         </div>
       </main>
       <dashboard-footer></dashboard-footer>
@@ -72,8 +74,18 @@ export default {
       z-index: 2;
       height: 100vh;
       float: right;
-      width: calc(100% - 260px);
+      width: calc(100% - #{$sidebar-width});
     }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 150ms ease-out;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
   }
 }
 </style>

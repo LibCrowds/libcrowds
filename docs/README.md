@@ -1,6 +1,6 @@
-# vue-pybossa-frontend
+# LibCrowds
 
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
+[![Build Status](https://travis-ci.org/LibCrowds/libcrowds.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds)
 [![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
 > A Vue.js frontend for PyBossa (>=2.7.2).
@@ -20,7 +20,7 @@ npm install
 
 ## Usage
 
-On your PyBossa server, you will need to update the `CORS_RESOURCES` settings to allow requests from vue-pybossa-frontend. Something like this (modify origins according to your environement):
+On your PyBossa server, you will need to update the `CORS_RESOURCES` settings to allow requests from LibCrowds. Something like this (modify origins according to your environement):
 
 ``` python
 CORS_RESOURCES = {
@@ -39,6 +39,15 @@ CORS_RESOURCES = {
 ```
 
 For a full list of options see the [Flask-CORS documentation](https://flask-cors.readthedocs.io/en/latest/).
+
+You must modify the following in your PyBossa settings:
+
+| Setting                     | Value             |
+|-----------------------------|-------------------|
+| CATEGORY_INFO_PUBLIC_FIELDS | ['collection']    |
+| USER_INFO_PUBLIC_FIELDS     | ['announcements'] |
+| STRICT_SLASHES              | False             |
+
 
 Now, see the [Configuration](configuration.md) section for details of how to configure the site and each microsite.
 

@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import siteConfig from '@/siteConfig'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -59,12 +59,7 @@ export default {
      *   Subscribe, or otherwise.
      */
     suscribe (subscribe) {
-      pybossaApi.get('/account/newsletter', {
-        params: {
-          subscribe: subscribe
-        }
-      }).then(r => {
-        console.log(r)
+      pybossa.subscribeToNewsletter().then(r => {
         this.$router.push({ path: r.data.next })
       })
     }

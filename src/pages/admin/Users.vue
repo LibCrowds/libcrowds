@@ -89,9 +89,9 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver'
-import pybossaApi from '@/api/pybossa'
+import exportFile from '@/utils/exportFile'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -173,27 +173,17 @@ export default {
      *   The user.
      */
     toggleAdmin (user) {
-      pybossaApi({
-        method: 'GET',
-        url: user.admin
-          ? `/admin/users/add/${user.id}`
-          : `/admin/users/del/${user.id}`,
-        data: this.form.model,
-        headers: {
-          'X-CSRFToken': this.form.model.csrf
-        }
-      }).then(r => {
-        user.admin = !user.admin
-        if (user.admin) {
+      if (user.admin) {
+        pybossa.addAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers.push(user)
-        } else {
+        })
+      } else {
+        pybossa.delAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers = this.adminUsers.filter(adminUser => {
             return adminUser.id !== user.id
           })
-        }
-      }).catch(err => {
-        this.$router.push({ name: String(err.response.status) })
-      })
+        })
+      }
     },
 
     /**
@@ -213,27 +203,20 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      const type = format === 'csv' ? 'text/csv' : 'application/json'
-      pybossaApi.get(`/admin/users/export`, {
-        responseType: 'arraybuffer',
-        params: {
-          format: format
-        }
-      }).then(res => {
-        const blob = new Blob([res.data], {type: type})
-        const fn = `user_data.${format}`
-        FileSaver.saveAs(blob, fn)
+      pybossa.exportUsers(format).then(r => {
+        exportFile(r.data, 'user_data', format)
       })
     }
   },
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossaApi.get('/admin/users').then(r => {
-      data = r.data
-      return pybossaApi.get('/api/globalstats')
-    }).then(r => {
-      data.nUsers = r.data.n_users
+    Promise.all([
+      pybossa.getAdminUsers(),
+      pybossa.getStatsSummary()
+    ]).then(([adminUsersResponse, statsResponse]) => {
+      data = adminUsersResponse.data
+      data.nUsers = statsResponse.data.n_users
       next(vm => vm.setData(data))
     })
   }

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -60,7 +60,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossa.getUpdateProfile(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
@@ -68,7 +68,7 @@ export default {
   beforeRouteUpdate (to, from, next) {
     this.form.model = {}
     this.loading = true
-    pybossaApi.get(`account/${to.params.username}/update`).then(r => {
+    pybossa.getUpdateProfile(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

@@ -198,17 +198,13 @@
 
 <script>
 import ScrollReveal from 'scrollreveal'
-import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/star'
-import 'vue-awesome/icons/eye'
-import 'vue-awesome/icons/television'
-import 'vue-awesome/icons/list'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/project/Card'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -288,9 +284,9 @@ export default {
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
     let categoryUrl = `/api/category?${q}`
 
-    pybossaApi.get(`/`).then(r => {
+    pybossa.client.get(`/`).then(r => {
       data = r.data
-      return pybossaApi.get(categoryUrl)
+      return pybossa.client.get(categoryUrl)
     }).then(r => {
       data.categories = r.data.filter(category => {
         return category.info.collection === key

@@ -16,10 +16,10 @@
 <script>
 import swal from 'sweetalert2'
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
 import DefaultPresenter from '@/components/presenters/Default'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -110,7 +110,7 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      pybossaApi.get(url).then(r => {
+      pybossa.client.get(url).then(r => {
         if (isEmpty(r.data)) {
           this.handleCompletion()
         } else {
@@ -152,7 +152,7 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        pybossaApi.post(`/api/favorites`, { task_id: taskId }).then(() => {
+        pybossa.addFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Added to favourites',
             type: 'info',
@@ -160,7 +160,7 @@ export default {
           })
         })
       } else {
-        pybossaApi.delete(`/api/favorites/${taskId}`).then(() => {
+        pybossa.deleteFavourite(taskId).then(() => {
           this.$store.dispatch('NOTIFY', {
             msg: 'Removed from favourites',
             type: 'info',
@@ -199,7 +199,7 @@ export default {
         'task_id': taskId,
         'info': answer
       })
-      pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
+      pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {
@@ -222,19 +222,19 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+    pybossa.getProject(to.params.shortname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    pybossaApi.get(`/project/${to.params.shortname}/`).then(r => {
+    pybossa.getProject(to.params.shortname).then(r => {
       this.setData(r.data)
       next()
     })
   },
 
-  mounted () {
+  created () {
     this.$emit('navupdated', this.navItems)
   }
 }

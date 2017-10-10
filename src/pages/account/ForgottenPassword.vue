@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import siteConfig from '@/siteConfig'
 import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -75,7 +75,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/account/forgot-password').then(r => {
+    pybossa.getRecoverPassword().then(r => {
       next(vm => vm.setData(r.data))
     })
   }

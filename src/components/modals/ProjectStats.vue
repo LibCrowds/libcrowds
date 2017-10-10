@@ -66,7 +66,7 @@
 <script>
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
 import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'
@@ -110,9 +110,8 @@ export default {
      * Fetch the stats.
      */
     fetchData () {
-      pybossaApi.get(`/project/${this.project.short_name}/stats`).then(r => {
+      pybossa.getProjectStats(this.project.short_name).then(r => {
         this.loading = false
-        console.log(r.data)
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}
         this.projectStats = r.data.projectStats || {}

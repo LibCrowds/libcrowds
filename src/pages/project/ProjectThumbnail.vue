@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -57,13 +57,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`project/${to.params.shortname}/update`).then(r => {
+    pybossa.getUpdateProject(to.params.shortname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    pybossaApi.get(`project/${to.params.shortname}/update`).then(r => {
+    pybossa.getUpdateProject(to.params.shortname).then(r => {
       this.setData(r.data)
       next()
     })

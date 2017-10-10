@@ -42,7 +42,7 @@ import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google'
 import 'vue-awesome/icons/facebook'
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
 
@@ -99,7 +99,6 @@ export default {
   },
 
   methods: {
-
     /**
      * Set core data.
      * @param {Object} data
@@ -121,9 +120,9 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/account/signin').then(r => {
+    pybossa.getAccountSignin().then(r => {
       if (r.data.next === '/') {
-        next({ name: 'landing' })
+        next({ path: to.params.next || r.data.next })
       } else {
         next(vm => vm.setData(r.data))
       }

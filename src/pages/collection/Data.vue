@@ -93,10 +93,10 @@
 
 <script>
 import siteConfig from '@/siteConfig'
-import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
 import DataModal from '@/components/modals/Data'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -173,11 +173,7 @@ export default {
      * Fetch the projects in a category.
      */
     fetchProjects () {
-      let url = `/project/category/${this.activeCategory.short_name}/`
-      if (this.page > 1) {
-        url += `page/${this.page}/`
-      }
-      pybossaApi.get(url).then(r => {
+      pybossa.getCategory(this.activeCategory.short_name, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -195,22 +191,19 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    // Get categories for this collection only
-    let key = to.params.collectionname
-    let q = `info=collection::${key}&fulltextsearch=1&limit=100`
-    let url = `/api/category?${q}`
-    pybossaApi.get(url).then(r => {
-      // Make sure as the search is not exact
-      r.data = {
-        categories: r.data.filter(category => {
-          return category.info.collection === key
-        })
-      }
+    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
-  mounted () {
+  beforeRouteUpdate (to, from, next) {
+    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
+      this.setData(r.data)
+      next()
+    })
+  },
+
+  created () {
     this.$emit('navupdated', this.navItems)
   }
 }

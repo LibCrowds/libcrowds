@@ -1,20 +1,10 @@
 <template>
-
   <div id="collection-about">
 
     <section>
       <h2 class="text-center">About {{ collectionConfig.name }}</h2>
       <hr>
-      <span
-        v-if="collectionConfig.about.intro"
-        v-html="collectionConfig.about.intro">
-      </span>
-      <p v-else>
-        {{ siteConfig.brand }} is a platform for hosting experimental
-        crowdsourcing projects from {{ siteConfig.company }}. By contributing to
-        the projects on this platform you will be directly helping to enable
-        future research.
-      </p>
+      <span v-html="intro"></span>
       <div class="text-center mt-3">
         <b-btn
           variant="success"
@@ -31,14 +21,13 @@
     </section>
 
     <section
-      v-for="(item, index) in collectionConfig.about.subsections"
+      v-for="(item, index) in subsections"
       :key="item.id"
       :id="item.id">
       <h3 class="text-center">{{ item.title }}</h3>
       <span v-html="item.markdown"></span>
-
       <div
-        v-if="index === collectionConfig.about.subsections.length - 1"
+        v-if="index === subsections.length - 1"
         class="text-center">
         <hr>
         <b-btn
@@ -54,11 +43,9 @@
           Get Started
         </b-btn>
       </div>
-
     </section>
 
   </div>
-
 </template>
 
 <script>
@@ -90,15 +77,48 @@ export default {
     }
   },
 
-  computed: {
-    navItems: function () {
-      return this.collectionConfig.about.subsections.map((section) => {
-        return { id: section.id, text: section.title }
-      })
+  methods: {
+    /**
+     * Get a custom about config value.
+     * @param {String} key
+     *   The key for the about config value.
+     */
+    getCustom (key) {
+      if (!(this.collectionConfig.hasOwnProperty('about'))) {
+        return null
+      }
+      if (!(this.collectionConfig.about.hasOwnProperty(key))) {
+        return null
+      }
+      return this.collectionConfig.about[key]
     }
   },
 
-  mounted () {
+  computed: {
+    navItems: function () {
+      const subsections = this.getCustom('subsections')
+      if (!subsections) {
+        return []
+      }
+      return subsections.map((section) => {
+        return { id: section.id, text: section.title }
+      })
+    },
+
+    subsections: function () {
+      return this.getCustom('subsections') || []
+    },
+
+    intro: function () {
+      const intro = this.getCustom('intro')
+      return intro || `${siteConfig.brand} is a platform for hosting
+        experimental crowdsourcing projects from ${siteConfig.brand}. By
+        contributing to the projects on this platform you will be directly
+        helping to enable future research.`
+    }
+  },
+
+  created () {
     this.$emit('navupdated', this.navItems)
   }
 }

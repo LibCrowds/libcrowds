@@ -2,7 +2,9 @@ import DashboardLayout from '@/layouts/Dashboard'
 
 import AdminDashboard from '@/pages/admin/AdminDashboard'
 import Users from '@/pages/admin/Users'
-import Publications from '@/pages/admin/Publications'
+import Announcements from '@/pages/admin/Announcements'
+import NewAnnouncement from '@/pages/admin/NewAnnouncement'
+import UpdateAnnouncement from '@/pages/admin/UpdateAnnouncement'
 import Categories from '@/pages/admin/Categories'
 import EditCategory from '@/pages/admin/EditCategory'
 import Featured from '@/pages/admin/Featured'
@@ -43,10 +45,10 @@ export default [
           }
         },
         {
-          id: 'publications',
-          label: 'Publications',
+          id: 'announcements',
+          label: 'Announcements',
           link: {
-            name: 'admin-publications'
+            name: 'admin-announcements'
           }
         },
         {
@@ -61,6 +63,12 @@ export default [
     children: [
       {
         path: '/',
+        beforeEnter (to, from, next) {
+          next({ name: 'admin-dashboard' })
+        }
+      },
+      {
+        path: '/admin/dashboard',
         name: 'admin-dashboard',
         component: AdminDashboard
       },
@@ -70,9 +78,19 @@ export default [
         component: Users
       },
       {
-        path: 'announcement',
-        name: 'admin-publications',
-        component: Publications
+        path: 'announcements',
+        name: 'admin-announcements',
+        component: Announcements
+      },
+      {
+        path: 'announcements/:id/update',
+        name: 'admin-announcement-update',
+        component: UpdateAnnouncement
+      },
+      {
+        path: 'announcements/new',
+        name: 'admin-announcement-new',
+        component: NewAnnouncement
       },
       {
         path: 'categories',
@@ -81,7 +99,7 @@ export default [
       },
       {
         path: 'categories/update/:categoryid',
-        name: 'admin-edit-category',
+        name: 'admin-categories-update',
         component: EditCategory
       },
       {

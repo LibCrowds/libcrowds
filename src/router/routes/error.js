@@ -56,5 +56,14 @@ export default [
       title: 'Server Error',
       description: 'Something is broken, we will fix it as soon as we can'
     }
+  },
+  {
+    path: '/598',
+    name: '598',
+    component: Error,
+    props: {
+      title: 'Network Error',
+      description: 'There is a problem communicating with our backend server'
+    }
   }
 ]

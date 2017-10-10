@@ -1,4 +1,4 @@
-import pybossaApi from '@/api/pybossa'
+import pybossa from '@/api/pybossa'
 
 import CoreLayout from '@/layouts/Core'
 import DashboardLayout from '@/layouts/Dashboard'
@@ -65,9 +65,7 @@ export default [
         path: 'register/confirmation',
         name: 'register-confirmation',
         beforeEnter (to, from, next) {
-          pybossaApi.get('/account/register/confirmation', {
-            params: to.query
-          }).then(r => {
+          pybossa.confirmEmail(to.query).then(r => {
             next({ path: r.data.next })
           }).catch(err => {
             next({ name: String(err.response.status) })

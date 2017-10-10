@@ -49,10 +49,10 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import pybossaApi from '@/api/pybossa'
 import UserProfileCard from '@/components/user/ProfileCard'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import Loading from '@/components/Loading'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -105,7 +105,6 @@ export default {
      *   The data.
      */
     setData (data) {
-      console.log(data)
       this.user = data.user
       if (data.projects) {
         this.projects = data.projects
@@ -116,14 +115,14 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+    pybossa.getAccount(to.params.username).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
     this.user = null
-    pybossaApi.get(`account/${to.params.username}/`).then(r => {
+    pybossa.getAccount(to.params.username).then(r => {
       this.setData(r.data)
       next()
     })

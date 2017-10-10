@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import pybossaApi from '@/api/pybossa'
 import CategoryListChooser from '@/components/category/ListChooser'
+import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -136,20 +136,15 @@ export default {
      *   The project.
      */
     toggleFeatured (project) {
-      pybossaApi({
-        method: project.featured ? 'DELETE' : 'POST',
-        url: `/admin/featured/${project.id}`,
-        data: {
-          csrf: this.csrf
-        },
-        headers: {
-          'X-CSRFToken': this.csrf
-        }
-      }).then(r => {
-        project.featured = !project.featured
-      }).catch(err => {
-        this.$router.push({ name: String(err.response.status) })
-      })
+      if (project.featured) {
+        pybossa.featureProject(project.id, { csrf: this.csrf }).then(r => {
+          project.featured = !project.featured
+        })
+      } else {
+        pybossa.unfeatureProject(project.id, { csrf: this.csrf }).then(r => {
+          project.featured = !project.featured
+        })
+      }
     },
 
     /**
@@ -178,7 +173,7 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossaApi.get('/admin/featured').then(r => {
+    pybossa.getAdminFeatured().then(r => {
       next(vm => vm.setData(r.data))
     })
   }
