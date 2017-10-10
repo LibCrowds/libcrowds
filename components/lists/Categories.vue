@@ -27,7 +27,10 @@ export default {
   props: {
     categories: {
       type: Array,
-      required: true
+      required: true,
+      validator: value => {
+        return value.length > 0
+      }
     },
     header: {
       type: String,
@@ -43,8 +46,8 @@ export default {
      */
     changeCategory (category) {
       if (this.activeCategory !== category) {
-        this.$emit('change', category)
         this.activeCategory = category
+        this.$emit('change', category)
       }
     }
   },
