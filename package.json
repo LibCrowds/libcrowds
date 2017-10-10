@@ -23,7 +23,8 @@
     "express": "^4.15.3",
     "nuxt": "^1.0.0-rc3",
     "popper.js": "^1.12.5",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "vue-awesome": "^2.3.3"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
