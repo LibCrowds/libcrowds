@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import capitalize from '@/utils/capitalize'
-import formatDate from '@/utils/formatDate'
-import intComma from '@/utils/intComma'
+import capitalize from 'capitalize'
 import pluralize from 'pluralize'
 
-Vue.filter('formatDate', formatDate)
-Vue.filter('pluralize', pluralize)
 Vue.filter('capitalize', capitalize)
-Vue.filter('intComma', intComma)
+
+Vue.filter('pluralize', pluralize)
+
+Vue.filter('intComma', (n) => {
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+})

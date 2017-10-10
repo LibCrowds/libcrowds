@@ -64,11 +64,11 @@
 </template>
 
 <script>
+import moment from 'moment'
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
 import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
-import formatDate from '@/utils/formatDate'
 import BarChart from '@/components/charts/BarChart'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
 import SingleLineChart from '@/components/charts/SingleLineChart'
@@ -123,7 +123,7 @@ export default {
     dailyContributions: function () {
       return {
         labels: this.projectStats.dayStats[0].values.map(value => {
-          return formatDate(new Date(value[0]), 'DD MMM')
+          return moment(String(new Date(value[0])).format('DD MMM'))
         }),
         series: [
           this.projectStats.dayStats[0].values.map(value => value[1])

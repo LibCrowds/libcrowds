@@ -18,7 +18,7 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import capitalize from '@/utils/capitalize'
+import capitalize from 'capitalize'
 
 export default {
   props: {

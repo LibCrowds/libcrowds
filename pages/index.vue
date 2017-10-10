@@ -7,17 +7,23 @@
           <p id="site-tagline">{{ localConfig.tagline }}</p>
           <div class="stat-row d-none d-md-flex">
             <div class="stat-circle">
-              <span class="stat">{{ stats.n_total_users }}</span>
+              <span class="stat">
+                {{ stats.n_total_users | intComma }}
+              </span>
               <icon name="users"></icon>
               <p>Volunteers</p>
             </div>
             <div class="stat-circle">
-              <span class="stat">{{ stats.n_task_runs }}</span>
+              <span class="stat">
+                {{ stats.n_task_runs | intComma }}
+              </span>
               <icon name="list"></icon>
               <p>Contributions</p>
             </div>
             <div class="stat-circle">
-              <span class="stat">{{ stats.n_published_projects }}</span>
+              <span class="stat">
+                {{ stats.n_published_projects | intComma }}
+              </span>
               <icon name="television"></icon>
               <p>Projects</p>
             </div>
@@ -55,7 +61,7 @@
             <hr class="my-2">
             <p class="text-uppercase lead pb-lg-2">
               To date, our top {{ topUsers.length }} volunteers have made
-              {{ topUsersTaskRuns }} contributions!
+              {{ topUsersTaskRuns | intComma }} contributions!
             </p>
             <b-btn
               variant="success"
@@ -125,7 +131,6 @@ import localConfig from '@/local.config'
 import CollectionCard from '@/components/collection/Card'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/user/Avatar'
-import intComma from '@/utils/intComma'
 import mapValues from 'lodash/mapValues'
 
 export default {
@@ -142,7 +147,7 @@ export default {
       ctx.$pybossa.getLeaderboard()
     ]).then(([statsResponse, leaderboardResponse]) => {
       return {
-        stats: mapValues(statsResponse.data.stats, (n) => intComma(n)),
+        stats: statsResponse.data.stats,
         topUsers: leaderboardResponse.data.top_users.slice(0, 10)
       }
     })
@@ -174,7 +179,7 @@ export default {
       const sum = scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return intComma(sum)
+      return sum
     },
     currentUser: function () {
       return this.$store.state.currentUser

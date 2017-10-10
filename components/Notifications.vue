@@ -9,8 +9,8 @@
 
 <script>
 import PNotify from 'pnotify'
+import capitalize from 'capitalize'
 import store from '@/store'
-import capitalize from '@/utils/capitalize'
 import 'pnotify/src/pnotify.mobile'
 import 'pnotify/src/pnotify.callbacks'
 import 'pnotify/src/pnotify.nonblock'
