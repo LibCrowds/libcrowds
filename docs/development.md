@@ -83,11 +83,14 @@ Note that for cookies to be read properly you must access the website at http://
 To run tests:
 
 ``` bash
+# run lint
+npm lint
+
 # run unit tests
 npm unit
 
-# run e2e tests
-npm run e2e
+# update snapshots
+npm unit:updatesnapshots
 
 # run all tests
 npm test
