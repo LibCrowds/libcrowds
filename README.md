@@ -1,12 +1,19 @@
-# libcrowds
+# LibCrowds
 
-> A Vue.js frontend for PYBOSSA.
+[![Build Status](https://travis-ci.org/LibCrowds/libcrowds.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds)
+[![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
+
+> A Vue.js frontend for PyBossa (>=2.8.0).
+
+The LibCrowds package is a Vue.js UI that communicates with a PYBOSSA backend to present crowdsourcing projects using a microsite-based structure.
+
+[![The LibCrowds website](./docs/assets/site-homepage.png?raw=true "The LibCrowds website")](https://www.libcrowds.com)
 
 ## Build Setup
 
 ``` bash
 # install dependencies
-$ npm install # Or yarn install
+$ npm install
 
 # serve with hot reload at localhost:3000
 $ npm run dev
@@ -15,8 +22,4 @@ $ npm run dev
 $ npm start
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
-## Backpack
-
-We use [backpack](https://github.com/palmerhq/backpack) to watch and build the application, so you can use the latest ES6 features (module syntax, async/await, etc.).
+[**Read the documentation**](https://libcrowds.gitbooks.io/libcrowds/content/)
