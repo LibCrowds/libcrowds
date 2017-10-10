@@ -60,6 +60,7 @@ module.exports = {
   ** Plugins.
   */
   plugins: [
+    { src: '~/plugins/bootstrap-vue.js' },
     { src: '~/plugins/pybossa.js' },
     { src: '~/plugins/vue-awesome.js' }
   ]
