@@ -1,7 +1,7 @@
 * [Introduction](README.md)
 * [Development](development.md)
   * [Installation](README.md#installation)
-  * [Configuration](README.md#usage)
+  * [Configuration](README.md#configuration)
   * [Building](README.md#building)
   * [Testing](README.md#testing)
 * [Configuration](configuration.md)

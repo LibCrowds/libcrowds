@@ -5,7 +5,7 @@
 
 > A Vue.js frontend for PyBossa (>=2.7.2).
 
-{{ brand }} is a platform that hosts experimental crowdsourcing projects from {{ company }}.
+{{ book.brand }} is a platform that hosts experimental crowdsourcing projects from {{ book.company }}.
 
 The application comprises a set of core webpages, including a homepage and an administration interface. Sitting beneath these, microsites that encapsulate related projects can be configured, each with their own set of themed pages.
 

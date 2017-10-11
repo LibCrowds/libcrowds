@@ -8,10 +8,6 @@ To run the frontend with default settings:
 cp local.config.js.tmpl local.config.js
 ```
 
-{% hint style='info' %}
-The local site configuration is required for LibCrowds to run.
-{% endhint %}
-
 ## Directory Structure
 
 Apart from the location of the `local.config.js` file, LibCrowds does not enforce a particular directory structure. Rather, any additional configuration files can be placed in the `custom` directory and linked to via `localConfig.js`.
