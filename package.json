@@ -19,12 +19,14 @@
     "bootstrap": "4.0.0-beta",
     "bootstrap-vue": "^1.0.0-beta.9",
     "capitalize": "^1.0.0",
+    "chartist-plugin-tooltips": "0.0.17",
     "cross-env": "^5.0.1",
     "express": "^4.15.3",
     "nuxt": "^1.0.0-rc3",
     "popper.js": "^1.12.5",
     "source-map-support": "^0.4.15",
-    "vue-awesome": "^2.3.3"
+    "vue-awesome": "^2.3.3",
+    "vue-chartist": "^2.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

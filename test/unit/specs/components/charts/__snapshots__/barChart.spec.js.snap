@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bar chart renders correctly 1`] = `
+
+<div data-server-rendered="true"
+     class="card"
+>
+  <div class="card-header">
+    <div>
+      My Bar Chart
+    </div>
+  </div>
+  <div class="card-body">
+    <div>
+    </div>
+  </div>
+</div>
+
+`;

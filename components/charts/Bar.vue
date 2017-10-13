@@ -1,21 +1,23 @@
 <template>
   <b-card :header="header">
-    <div class="ct-container" ref="chart"></div>
+    <chartist
+      type="Bar"
+      :data="chartData"
+      :options="options">
+    </chartist>
   </b-card>
 </template>
 
 <script>
-import Chartist from 'chartist'
-import 'chartist-plugin-tooltips'
 import pluralize from 'pluralize'
 
 export default {
-  data: function () {
+  data () {
     return {
-      opts: {
+      options: {
         height: '300px',
         plugins: [
-          Chartist.plugins.tooltip({
+          this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
               let text = pluralize(this.unit, Number(val))
               return `${val} ${text}`
@@ -27,7 +29,7 @@ export default {
   },
 
   props: {
-    data: {
+    chartData: {
       type: Object,
       required: true
     },
@@ -39,11 +41,6 @@ export default {
       type: String,
       required: true
     }
-  },
-
-  mounted () {
-    const chart = this.$refs.chart
-    Chartist.Bar(chart, this.data, this.opts)
   }
 }
 </script>

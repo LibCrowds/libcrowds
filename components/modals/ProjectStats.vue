@@ -69,7 +69,7 @@ import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
 import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
-import BarChart from '@/components/charts/BarChart'
+import BarChart from '@/components/charts/Bar'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
 import SingleLineChart from '@/components/charts/SingleLineChart'
 

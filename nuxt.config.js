@@ -1,7 +1,7 @@
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
-  ? require('./test/test.local.config.js')
-  : require('./local.config.js')
+  ? require('./test/test.local.config')
+  : require('./local.config')
 
 module.exports = {
   /*
@@ -75,14 +75,15 @@ module.exports = {
   ** Plugins.
   */
   plugins: [
-    { src: '~/plugins/bootstrap-vue.js' },
-    { src: '~/plugins/filters.js' },
-    { src: '~/plugins/vue-awesome.js' }
+    { src: '~/plugins/bootstrap-vue' },
+    { src: '~/plugins/filters' },
+    { src: '~/plugins/vue-awesome' },
+    { src: '~/plugins/vue-chartist', ssr: false }
   ],
   /*
   ** Modules.
   */
   modules: [
-    '~/modules/pybossa.js'
+    '~/modules/pybossa'
   ]
 }
