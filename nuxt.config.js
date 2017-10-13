@@ -79,6 +79,7 @@ module.exports = {
     { src: '~/plugins/filters' },
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
+    { src: '~/plugins/vue-gravatar', },
     { src: '~/plugins/vue-scrollto', ssr: false }
   ],
   /*
