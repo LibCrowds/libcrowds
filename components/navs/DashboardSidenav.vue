@@ -114,7 +114,7 @@ export default {
           z-index: 2;
           max-height: 100%;
           float: right;
-          width: calc(100% - $sidebar-width);
+          width: calc(100% - #{$sidebar-width});
         }
       }
     }
