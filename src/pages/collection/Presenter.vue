@@ -2,7 +2,7 @@
   <div id="presenter">
     <component
       :is="presenter"
-      v-if="project && tasks.length"
+      v-if="project"
       :project="project"
       :tasks="tasks"
       :currentUser="currentUser"
@@ -89,27 +89,16 @@ export default {
       this.project = data.project
       this.title = this.project.name
       this.description = this.project.description
-      this.loadTasks()
+      this.loadNewTasks()
     },
 
     /**
-     * Return the URL to load the next set of tasks
+     * Load the next set of tasks, if there are less than 10 ready.
      */
-    getLoadTasksUrl () {
+    loadNewTasks () {
       const endpoint = `/api/project/${this.project.id}/newtask`
-      let q = 'limit=10'
-      if (this.tasks.length) {
-        const lastTask = this.tasks[this.tasks.length - 1]
-        q += `&last_id=${lastTask.id}`
-      }
-      return `${endpoint}?${q}`
-    },
-
-    /**
-     * Load the next set of tasks.
-     */
-    loadTasks () {
-      const url = this.getLoadTasksUrl()
+      const query = `limit=10&offset=${this.tasks.length}`
+      const url = `${endpoint}?${query}`
       pybossaApi.get(url).then(r => {
         if (isEmpty(r.data)) {
           this.handleCompletion()
@@ -201,7 +190,9 @@ export default {
       })
       pybossaApi.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
-        this.loadTasks()
+        if (this.tasks.length < 10) {
+          this.loadNewTasks()
+        }
         if (hasParticipated === 'true') {
           this.$store.dispatch('NOTIFY', {
             msg: 'Answer saved, thank you!',
