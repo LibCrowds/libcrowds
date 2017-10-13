@@ -13,7 +13,7 @@ describe('Oauth buttons', () => {
   const localVue = createLocalVue()
   localVue.use(BootstrapVue)
   localVue.component('icon', Icon)
-  const next = '/'
+  const next = '/example'
   const wrapper = mount(OauthButtons, {
     localVue,
     propsData: {
