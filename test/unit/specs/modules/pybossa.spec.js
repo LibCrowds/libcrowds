@@ -1,7 +1,7 @@
 import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses.json'
-import PybossaPlugin from '~/modules/pybossa'
+import PybossaModule from '~/modules/pybossa'
 
-describe('PYBOSSA plugin', () => {
+describe('PYBOSSA module', () => {
   let pybossa = null
   let mockContext = null
   let mockInject = null
@@ -14,7 +14,7 @@ describe('PYBOSSA plugin', () => {
   beforeAll(async () => {
     mockContext = jest.fn()
     mockInject = jest.fn()
-    pybossa = new PybossaPlugin(mockContext, mockInject)
+    pybossa = new PybossaModule(mockContext, mockInject)
   })
 
   beforeEach(() => {
