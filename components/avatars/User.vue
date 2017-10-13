@@ -1,5 +1,5 @@
 <template>
-  <div class="user-avatar">
+  <div class="user-avatar" :style="`width: ${size};`">
 
     <v-gravatar
       v-if="avatar === 'gravatar'"
