@@ -14,8 +14,8 @@ describe('Bar chart', () => {
     propsData: {
       header: 'My Bar Chart',
       chartData: {
-        labels: ["A", "B", "C"],
-        series:[[1, 3, 2], [4, 6, 5]]
+        labels: ['A', 'B', 'C'],
+        series: [[1, 3, 2], [4, 6, 5]]
       },
       unit: 'task'
     }

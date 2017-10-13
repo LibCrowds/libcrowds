@@ -80,7 +80,7 @@ module.exports = {
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
-    { src: '~/plugins/vue-gravatar', },
+    { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-scrollto', ssr: false }
   ],
   /*

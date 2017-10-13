@@ -5,7 +5,6 @@ import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 
-import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
 import IndexPage from '~/pages/index'
 
