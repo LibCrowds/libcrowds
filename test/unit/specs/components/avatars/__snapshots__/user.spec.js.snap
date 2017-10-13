@@ -1,9 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`User avatar renders Gravatar when no custom avatar 1`] = `
+exports[`User avatar renders Gravatar by default 1`] = `
 
 <div data-server-rendered="true"
      class="user-avatar"
+     style="width:80;"
 >
   <img src="//www.gravatar.com/avatar/6579e96f76baa00787a28653876c6127?s=80&amp;d=identicon&amp;r=g"
        alt="Avatar for JohnDoe"

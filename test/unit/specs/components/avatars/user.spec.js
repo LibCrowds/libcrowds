@@ -7,22 +7,31 @@ import { mount, createLocalVue } from 'vue-test-utils'
 import UserAvatar from '~/components/avatars/User'
 
 describe('User avatar', () => {
-  const localVue = createLocalVue()
-  localVue.use(BootstrapVue)
-  localVue.component('v-gravatar', VueGravatar)
-  let user = pbTestResponses.getAccount.data.user
-  const wrapper = mount(UserAvatar, {
-    localVue,
-    propsData: {
-      user: user
-    }
+  let localVue = null
+  let wrapper = null
+  let user = null
+  let loadAvatarSpy = null
+
+  beforeEach(() => {
+    localVue = createLocalVue()
+    localVue.use(BootstrapVue)
+    localVue.component('v-gravatar', VueGravatar)
+    user = pbTestResponses.getAccount.data.user
+    loadAvatarSpy = jest.spyOn(UserAvatar.methods, 'loadAvatar')
+    wrapper = mount(UserAvatar, {
+      localVue,
+      propsData: {
+        user: user
+      }
+    })
   })
 
-  it('renders Gravatar when no custom avatar', () => {
+  it('renders Gravatar by default', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     const src = wrapper.find('img').element.src
     expect(user.info.hasOwnProperty('avatar_url')).toBe(false)
     expect(src.startsWith('//www.gravatar.com')).toBe(true)
+    expect(loadAvatarSpy).toHaveBeenCalled()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()
     })
