@@ -22,6 +22,7 @@
     "chartist-plugin-tooltips": "0.0.17",
     "cross-env": "^5.0.1",
     "express": "~4.15.3",
+    "hamburgers": "^0.9.1",
     "nuxt": "~1.0.0-rc11",
     "popper.js": "^1.12.5",
     "source-map-support": "^0.4.15",
