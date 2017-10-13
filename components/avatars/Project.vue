@@ -1,7 +1,7 @@
 <template>
-  <div class="project-thumbnail">
-    <img v-if="thumbnail" :src="thumbnail" :class="imgClass">
-    <div class="thumbnail-placeholder">
+  <div class="project-avatar">
+    <img v-if="avatar" :src="avatar" :class="imgClass">
+    <div class="avatar-placeholder">
       <icon name="picture-o" scale="4"></icon>
     </div>
   </div>
@@ -14,8 +14,8 @@ import 'vue-awesome/icons/picture-o'
 export default {
   data: function () {
     return {
-      altTag: `Thumbnail for ${this.project.name}`,
-      thumbnail: null,
+      altTag: `Avatar for ${this.project.name}`,
+      avatar: null,
       imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
     }
   },
@@ -29,25 +29,25 @@ export default {
 
   methods: {
     /**
-     * Load a thumbnail.
+     * Load a project avatar.
+     * @param {String} avatarUrl
+     *   The avatar URL.
      */
-    loadThumbnail () {
-      const custom = this.project.info.thumbnail_url
-
-      if (custom === undefined || custom === null) {
+    loadAvatar (avatarUrl) {
+      if (avatarUrl === undefined || avatarUrl === null) {
         return
       }
 
-      if (custom.indexOf('/uploads') > -1) {
-        this.thumbnail = localConfig.pybossa.host + custom
+      if (avatarUrl.indexOf('/uploads') > -1) {
+        this.avatar = localConfig.pybossa.host + avatarUrl
         return
       }
-      this.thumbnail = custom
+      this.avatar = avatarUrl
     }
   },
 
   created () {
-    this.loadThumbnail()
+    this.loadAvatar(this.project.info.thumbnail_url)
   }
 }
 </script>
@@ -55,7 +55,7 @@ export default {
 <style lang="scss">
 @import 'src/assets/style/main';
 
-.project-thumbnail {
+.project-avatar {
   height: 100%;
   width: auto;
 
@@ -64,7 +64,7 @@ export default {
     height: auto;
   }
 
-  .thumbnail-placeholder {
+  .avatar-placeholder {
     @extend .bg-light;
     height: 100%;
     display: flex;
