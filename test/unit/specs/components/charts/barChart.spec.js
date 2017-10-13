@@ -2,7 +2,6 @@ import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
 
-import testLocalConfig from '~/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
 import BarChart from '~/components/charts/Bar'
 
