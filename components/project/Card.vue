@@ -9,10 +9,10 @@
           shortname: project.short_name
         }
       }">
-      <div class="thumbnail-wrapper">
-        <project-thumbnail
+      <div class="avatar-wrapper">
+        <project-avatar
           :project="project">
-        </project-thumbnail>
+        </project-avatar>
       </div>
     </router-link>
 
@@ -88,7 +88,7 @@ import 'vue-awesome/icons/bar-chart'
 import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/tasks'
-import ProjectThumbnail from '@/components/project/Thumbnail'
+import ProjectAvatar from '@/components/avatars/Project'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
 
@@ -114,7 +114,7 @@ export default {
   components: {
     ProjectStatsModal,
     ProjectContribButton,
-    ProjectThumbnail
+    ProjectAvatar
   },
 
   mounted () {
@@ -228,7 +228,7 @@ export default {
     overflow-y: auto;
   }
 
-  .thumbnail-wrapper {
+  .avatar-wrapper {
     position: relative;
     overflow: hidden;
     line-height: 0;
