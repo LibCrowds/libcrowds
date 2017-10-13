@@ -71,7 +71,7 @@ export default {
     background:
       linear-gradient(rgba($gray-900, 0.8),
       rgba($gray-900, 0.8)),
-      url('../../assets/img/app-background.jpg');
+      url('~/assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
     display: none;

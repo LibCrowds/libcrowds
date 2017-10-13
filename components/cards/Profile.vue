@@ -64,7 +64,7 @@ export default {
       linear-gradient(to bottom, rgba($blue, 0) 0%,
       rgba($blue, 0) calc(50% + (#{$spacer} * 1)),
       $white calc(50% + (#{$spacer} * 1)), $white 100% ),
-      url('../../assets/img/app-background.jpg');
+      url('~/assets/img/app-background.jpg');
     background-size: cover;
     background-position: center center;
   }

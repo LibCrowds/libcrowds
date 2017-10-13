@@ -1,52 +1,69 @@
 <template>
-  <div>
-    <nuxt/>
-    <my-footer/>
+  <div id="core-layout">
+    <div id="app-background" :style="appBgStyle"></div>
+    <app-navbar
+      :currentUser="currentUser">
+    </app-navbar>
+    <main>
+      <nuxt
+        :currentUser="currentUser">
+      </nuxt>
+    </main>
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script>
-import MyFooter from '~/components/Footer.vue'
+import AppFooter from '@/components/footers/AppFooter'
+import AppNavbar from '@/components/navs/AppNavbar'
+import appBackground from '@/assets/img/app-background.jpg'
 
 export default {
   components: {
-    MyFooter
+    AppNavbar,
+    AppFooter
+  },
+
+  props: {
+    currentUser: {
+      type: Object,
+      required: true
+    }
+  },
+
+  computed: {
+    appBgStyle: function () {
+      return {
+        background: `url(${appBackground}) no-repeat center left /cover fixed`
+      }
+    }
   }
 }
 </script>
 
-<style>
-.container
-{
-  margin: 0;
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-}
+<style lang="scss" scoped>
+#core-layout {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 
-.button, .button:visited
-{
-  display: inline-block;
-  color: black;
-  letter-spacing: 1px;
-  background-color: #fff;
-  border: 2px solid #000;
-  text-decoration: none;
-  text-transform: uppercase;
-  padding: 15px 45px;
-}
+  #app-background {
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    min-width: 1024px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
 
-.button:hover, .button:focus
-{
-  color: #fff;
-  background-color: #000;
-}
-
-.title
-{
-  color: #000;
-  font-weight: 300;
-  font-size: 2.5em;
-  margin: 0;
+  main {
+    flex: 1 1 auto;
+  }
 }
 </style>

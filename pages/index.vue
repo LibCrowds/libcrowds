@@ -72,7 +72,7 @@
             </b-btn>
           </div>
           <div class="col-lg-5 mx-auto d-none d-lg-block">
-            <img src="../../assets/img/wreath.png" alt="Wreath" class="img-fluid">
+            <img src="~/assets/img/wreath.png" alt="Wreath" class="img-fluid">
             <span id="wreath"></span>
           </div>
         </div>
@@ -208,7 +208,7 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('../../assets/img/app-background.jpg');
+    background-image: url('~/assets/img/app-background.jpg');
 
     .container {
       color: $white;
