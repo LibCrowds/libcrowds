@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import jump from 'jump.js'
-
 export default {
   data: function () {
     return {
@@ -69,8 +67,9 @@ export default {
     navigate (navItem) {
       if (navItem.route) {
         this.$router.push(navItem.route)
-      } else {
-        jump('#' + navItem.id)
+      } else if (process.browser) {
+        const VueScrollTo = require('vue-scrollto')
+        VueScrollTo.scrollTo('#' + navItem.id)
       }
     }
   },

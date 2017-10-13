@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import jump from 'jump.js'
 import localConfig from '@/local.config'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
@@ -114,8 +113,9 @@ export default {
 
   methods: {
     scrollIfCurrent: function (evt) {
-      if (evt.target.href === window.location.href) {
-        jump('body')
+      if (process.browser && evt.target.href === window.location.href) {
+        const VueScrollTo = require('vue-scrollto')
+        VueScrollTo.scrollTo('body')
       }
     }
   }

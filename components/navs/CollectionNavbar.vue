@@ -14,7 +14,7 @@
             collectionName: collectionConfig.key
           }
         }"
-        @click.native="scrollToTop">
+        v-scroll-to="'body'">
         <span>{{ collectionConfig.name }}</span>
       </b-link>
 
@@ -174,7 +174,6 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import jump from 'jump.js'
 import throttle from 'lodash/throttle'
 
 export default {
@@ -271,15 +270,6 @@ export default {
     ),
 
     /**
-     * Scroll to the top smoothly if target is the same as the current URI.
-     */
-    scrollToTop (evt) {
-      if (evt.target.baseURI === window.location.href) {
-        jump('body')
-      }
-    },
-
-    /**
      * Style the hamburger so that it always turns white over the sidebar.
      */
     styleHamburger () {
@@ -319,11 +309,6 @@ export default {
           }, 450)
         } else {
           this.restrictBody(false)
-          if (this.currentPath !== window.location.pathname) {
-            jump('body', {
-              duration: 0
-            })
-          }
         }
 
         this.currentPath = window.location.pathname
