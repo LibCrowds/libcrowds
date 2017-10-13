@@ -1,4 +1,4 @@
 import Vue from 'vue'
 import VueGravatar from 'vue-gravatar'
 
-Vue.use(VueGravatar)
+localVue.component('v-gravatar', VueGravatar)
