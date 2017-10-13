@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
+@import '@/assets/style/main';
 
 #dashboard-sidenav {
   nav {

@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
+@import '@/assets/style/main';
 @import '~spinkit/scss/spinners/3-wave';
 
 .loading {

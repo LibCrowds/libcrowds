@@ -94,8 +94,8 @@ $hamburger-types:                  (collapse, arrow);
 $fa-font-path:                     '~font-awesome/fonts';
 
 /* Light Gallery */
-$lg-path-fonts:                    '~lightgallery/src/fonts';
-$lg-path-images:                   '~lightgallery/src/img';
+$lg-path-fonts:                    '@/lightgallery/src/fonts';
+$lg-path-images:                   '@/lightgallery/src/img';
 
 /* SpinKit */
 $spinkit-spinner-color:            $blue;
@@ -120,11 +120,11 @@ $ct-series-colors:
 ;
 
 @import
-  '~bootstrap/scss/bootstrap',
-  '~bootstrap-vue/dist/bootstrap-vue.css',
-  '~sweetalert2/dist/sweetalert2.css',
-  '~chartist/dist/scss/chartist',
-  '~chartist-plugin-tooltips/dist/chartist-plugin-tooltip',
+  '@/bootstrap/scss/bootstrap',
+  '@/bootstrap-vue/dist/bootstrap-vue.css',
+  '@/sweetalert2/dist/sweetalert2.css',
+  '@/chartist/dist/scss/chartist',
+  '@/chartist-plugin-tooltips/dist/chartist-plugin-tooltip',
   'partials/modals',
   'partials/tables',
   'partials/cards',
