@@ -1,5 +1,5 @@
 <template>
-  <b-card class="user-card" no-body>
+  <b-card class="profile-card" no-body>
 
     <div class="avatar-background">
       <user-avatar
@@ -35,7 +35,7 @@
 import 'vue-awesome/icons/trophy'
 import 'vue-awesome/icons/tasks'
 import 'vue-awesome/icons/clock-o'
-import UserAvatar from '@/components/user/Avatar'
+import UserAvatar from '~/components/avatars/User'
 
 export default {
   props: {
@@ -54,7 +54,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/assets/style/main';
 
-.card.user-card {
+.profile-card {
   .avatar-background {
     text-align: center;
     padding-top: $spacer * 2;

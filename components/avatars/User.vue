@@ -1,5 +1,5 @@
 <template>
-  <div class="avatar">
+  <div class="user-avatar">
 
     <v-gravatar
       v-if="avatar === 'gravatar'"
@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import siteConfig from '~/local.config'
 
 export default {
   data () {
     return {
-      altTag: `Thumbnail for ${this.user.name}`,
+      altTag: `Avatar for ${this.user.name}`,
       avatar: null
     }
   },
@@ -76,9 +76,11 @@ export default {
 }
 </script>
 
-<style scoped>
-img {
-  width: 100%;
-  height: auto;
+<style lang="scss" scoped>
+.user-avatar {
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 </style>

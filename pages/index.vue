@@ -66,6 +66,7 @@
             <b-btn
               variant="success"
               size="lg"
+              v-scroll-to="'#contribute'"
               @click="scrollToCollections">
               Get Started
             </b-btn>
@@ -121,16 +122,14 @@
 </template>
 
 <script>
-import jump from 'jump.js'
-import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
-import localConfig from '@/local.config'
-import CollectionCard from '@/components/collection/Card'
-import LeaderboardModal from '@/components/modals/Leaderboard'
-import UserAvatar from '@/components/user/Avatar'
+import localConfig from '~/local.config'
+import CollectionCard from '~/components/cards/Collection'
+import LeaderboardModal from '~/components/modals/Leaderboard'
+import UserAvatar from '~/components/avatars/User'
 
 export default {
   data () {
@@ -141,6 +140,7 @@ export default {
   },
 
   asyncData (ctx) {
+    console.log(ctx, 'FETCHING')
     Promise.all([
       ctx.$pybossa.getStats(),
       ctx.$pybossa.getLeaderboard()
@@ -182,24 +182,6 @@ export default {
     },
     currentUser: function () {
       return this.$store.state.currentUser
-    }
-  },
-
-  methods: {
-    /**
-     * Init scroll reveal.
-     */
-    scrollReveal () {
-      ScrollReveal().reveal('.sr', {
-        duration: 600 },
-      50)
-    },
-
-    /**
-     * Scroll to the contribute section.
-     */
-    scrollToCollections () {
-      jump('#contribute')
     }
   }
 }
