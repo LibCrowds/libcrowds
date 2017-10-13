@@ -61,7 +61,7 @@ export default {
 
   main {
     flex: 1 1 auto;
-    background-image: url('../assets/img/geometry.png');
+    background-image: url('~/assets/img/geometry.png');
     overflow-y: auto;
   }
 
