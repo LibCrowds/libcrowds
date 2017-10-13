@@ -120,11 +120,10 @@ $ct-series-colors:
 ;
 
 @import
-  '@/bootstrap/scss/bootstrap',
-  '@/bootstrap-vue/dist/bootstrap-vue.css',
-  '@/sweetalert2/dist/sweetalert2.css',
-  '@/chartist/dist/scss/chartist',
-  '@/chartist-plugin-tooltips/dist/chartist-plugin-tooltip',
+  '~bootstrap/scss/bootstrap',
+  '~bootstrap-vue/dist/bootstrap-vue',
+  '~sweetalert2/dist/sweetalert2',
+  '~chartist/dist/scss/chartist',
   'partials/modals',
   'partials/tables',
   'partials/cards',

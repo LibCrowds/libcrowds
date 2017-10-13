@@ -71,7 +71,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '@/assets/style/main';
+@import '~assets/style/main';
 
 #oauth-buttons {
   display: flex;

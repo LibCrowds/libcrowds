@@ -539,7 +539,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/style/main';
+@import '~assets/style/main';
 @import '~spinkit/scss/spinners/7-three-bounce';
 
 #z3950-presenter {

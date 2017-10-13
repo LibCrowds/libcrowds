@@ -123,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/style/main';
+@import '~assets/style/main';
 
 #app-footer.footer {
   background-color: $gray-1000;

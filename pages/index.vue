@@ -188,7 +188,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/style/main';
+@import '~assets/style/main';
 
 #landing {
 
