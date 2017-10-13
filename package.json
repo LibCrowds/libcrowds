@@ -26,7 +26,8 @@
     "popper.js": "^1.12.5",
     "source-map-support": "^0.4.15",
     "vue-awesome": "^2.3.3",
-    "vue-chartist": "^2.1.1"
+    "vue-chartist": "^2.1.1",
+    "vue-scrollto": "^2.7.8"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

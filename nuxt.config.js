@@ -78,7 +78,8 @@ module.exports = {
     { src: '~/plugins/bootstrap-vue' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/vue-awesome' },
-    { src: '~/plugins/vue-chartist', ssr: false }
+    { src: '~/plugins/vue-chartist', ssr: false },
+    { src: '~/plugins/vue-scrollto', ssr: false }
   ],
   /*
   ** Modules.
