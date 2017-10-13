@@ -1,7 +1,10 @@
-import localConfig from '@/local.config'
+const axios = require('axios')
+const localConfig = require('../local.config')
 
-export default (ctx, inject) => {
-  let axios = require('axios')
+/**
+ * PyBossa module for communicating with the API.
+ */
+module.exports = (ctx, inject) => {
   let options = {
     baseURL: localConfig.pybossa.host,
     withCredentials: true,
