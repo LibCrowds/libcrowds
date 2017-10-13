@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import 'vue-awesome/icons/picture-o'
 
 export default {
@@ -39,7 +39,7 @@ export default {
       }
 
       if (custom.indexOf('/uploads') > -1) {
-        this.thumbnail = siteConfig.pybossaHost + custom
+        this.thumbnail = localConfig.pybossa.host + custom
         return
       }
       this.thumbnail = custom

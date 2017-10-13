@@ -48,7 +48,7 @@
 import Croppie from 'croppie'
 import isEmpty from 'lodash/isEmpty'
 import axios from 'axios'
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import Loading from '@/components/Loading'
 
 export default {
@@ -118,7 +118,7 @@ export default {
       formData.append('avatar', this.form.model.avatar)
 
       this.flash = ''
-      const url = `${siteConfig.pybossaHost}/${this.form.endpoint}`
+      const url = `${localConfig.pybossa.host}/${this.form.endpoint}`
       axios.post(url, formData, {
         headers: {
           'X-CSRFToken': this.form.model.csrf

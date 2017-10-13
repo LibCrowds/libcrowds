@@ -130,14 +130,15 @@ localConfig.mapbox = {
 }
 ```
 
-### pybossaHost
+### pybossa
 
-The `pybossaHost` is used for all PYBOSSA API calls.
+The `host` and `timeout` used for all PYBOSSA API calls.
 
 ```js
-localConfig.pybossaHost = process.env.NODE_ENV === 'development'
-  ? 'http://127.0.0.1:5000'
-  : 'https://pybossa.backend.com',
+localConfig.pybossa = {
+  host: 'https://pybossa.backend.com',
+  timeout: 10000
+}
 ```
 
 ### sentryPublicDsn

@@ -6,7 +6,7 @@
         <router-link
           :to="{ name: 'landing' }"
           @click.native="scrollIfCurrent">
-          Part of the {{ siteConfig.brand }} crowdsourcing platform
+          Part of the {{ localConfig.brand }} crowdsourcing platform
         </router-link>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
@@ -21,7 +21,7 @@
            </a>
           </li>
           <li class="list-inline-item m-0">
-            <a :href="siteConfig.githubUrl" class="text-muted">
+            <a :href="localConfig.githubUrl" class="text-muted">
               <icon name="github"></icon>
            </a>
           </li>
@@ -32,7 +32,7 @@
         <h5 class="list-title">Projects</h5>
         <ul class="list-unstyled">
           <li
-            v-for="(config, key) in siteConfig.collections"
+            v-for="(config, key) in localConfig.collections"
             :key="key"
             class="list-item">
             <router-link
@@ -97,7 +97,7 @@
 
 <script>
 import jump from 'jump.js'
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
@@ -105,10 +105,10 @@ import 'vue-awesome/icons/envelope'
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
-      twitterUrl: `https://twitter.com/${siteConfig.contact.twitter}`,
-      mailto: `mailto:${siteConfig.contact.email}`,
-      copyright: `&copy; ${siteConfig.company}, ${new Date().getFullYear()}`
+      localConfig: localConfig,
+      twitterUrl: `https://twitter.com/${localConfig.contact.twitter}`,
+      mailto: `mailto:${localConfig.contact.email}`,
+      copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
     }
   },
 

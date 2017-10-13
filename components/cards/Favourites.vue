@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
 
 export default {
@@ -86,7 +85,7 @@ export default {
   },
 
   mounted () {
-    pybossa.getFavourites().then(r => {
+    this.$pybossa.getFavourites().then(r => {
       this.images = this.getImageData(r.data)
       this.loading = false
     })

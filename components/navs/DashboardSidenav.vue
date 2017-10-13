@@ -7,7 +7,7 @@
           :to="{
             name: 'landing'
           }">
-          {{ siteConfig.brand }}
+          {{ localConfig.brand }}
         </router-link>
       </div>
         <ul class="nav list-group">
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
+      localConfig: localConfig,
       navClass: {
         side: this.position === 'side',
         top: this.position === 'top'

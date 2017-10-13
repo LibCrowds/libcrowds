@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 
 export default {
   data: function () {
     return {
-      copyright: `&copy; ${siteConfig.company}, ${new Date().getFullYear()}`
+      copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
     }
   }
 }

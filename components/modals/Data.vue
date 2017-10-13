@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import exportFile from '@/utils/exportFile'
 
 export default {
@@ -74,7 +73,8 @@ export default {
      *   The download format.
      */
     download (type, format) {
-      pybossa.exportData(this.project.short_name, type, format).then(r => {
+      const shortName = this.project.short_name
+      this.$pybossa.exportData(shortName, type, format).then(r => {
         exportFile(r.data, `${this.project.short_name}_${type}`, format)
       })
     }

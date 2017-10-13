@@ -61,7 +61,6 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import Loading from '@/components/Loading'
-import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -153,7 +152,7 @@ export default {
       }
 
       this.flash = ''
-      pybossa.client({
+      this.$pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,

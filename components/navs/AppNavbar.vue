@@ -11,7 +11,7 @@
         :to="{
           name: 'landing'
         }">
-        <span>{{ siteConfig.brand }}</span>
+        <span>{{ localConfig.brand }}</span>
       </b-link>
     </span>
 
@@ -99,13 +99,13 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import Announcements from '@/components/Announcements'
 
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig
+      localConfig: localConfig
     }
   },
 

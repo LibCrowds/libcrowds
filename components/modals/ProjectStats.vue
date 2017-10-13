@@ -67,7 +67,6 @@
 import moment from 'moment'
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
-import pybossa from '@/api/pybossa'
 import Loading from '@/components/Loading'
 import BarChart from '@/components/charts/Bar'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
@@ -110,7 +109,7 @@ export default {
      * Fetch the stats.
      */
     fetchData () {
-      pybossa.getProjectStats(this.project.short_name).then(r => {
+      this.$pybossa.getProjectStats(this.project.short_name).then(r => {
         this.loading = false
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}

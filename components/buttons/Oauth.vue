@@ -62,7 +62,8 @@ export default {
      */
     redirect (endpoint) {
       const query = `next=${this.next}`
-      window.location.assign(`${localConfig.pybossa.host}/${endpoint}?${query}`)
+      const url = `${localConfig.pybossa.host}/${endpoint}?${query}`
+      window.location.assign(url)
     }
   }
 }

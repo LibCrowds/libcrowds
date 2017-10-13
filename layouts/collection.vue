@@ -16,14 +16,15 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
   metaInfo () {
+    const tmpl = `%s - ${this.collectionConfig.name} | ${localConfig.brand}`
     return {
-      titleTemplate: `%s - ${this.collectionConfig.name} | ${siteConfig.brand}`,
+      titleTemplate: tmpl,
       meta: [
         { name: 'description', content: this.collectionConfig.description },
 
@@ -59,7 +60,7 @@ export default {
     },
     collectionConfig: function () {
       const collectionName = this.$route.params.collectionname
-      return siteConfig.collections[collectionName]
+      return localConfig.collections[collectionName]
     }
   }
 }

@@ -39,7 +39,6 @@
 <script>
 import 'vue-awesome/icons/bell'
 import { directive as onClickaway } from 'vue-clickaway'
-import pybossa from '@/api/pybossa'
 
 export default {
   data: function () {
@@ -89,7 +88,7 @@ export default {
         let announcements = this.currentUser.announcements || {}
         announcements['last_read'] = this.announcements[0].id
         this.currentUser.info.announcements = announcements
-        pybossa.client.put(`/api/user/${this.currentUser.id}`, {
+        this.$pybossa.client.put(`/api/user/${this.currentUser.id}`, {
           info: this.currentUser.info
         }).then(r => {
           this.$store.dispatch('UPDATE_CURRENT_USER')
