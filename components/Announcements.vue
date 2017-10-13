@@ -38,17 +38,12 @@
 
 <script>
 import 'vue-awesome/icons/bell'
-import { directive as onClickaway } from 'vue-clickaway'
 
 export default {
   data: function () {
     return {
       show: false
     }
-  },
-
-  directives: {
-    onClickaway: onClickaway
   },
 
   props: {
