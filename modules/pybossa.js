@@ -1,7 +1,7 @@
-import * as axios from 'axios'
 import localConfig from '@/local.config'
 
 export default (ctx, inject) => {
+  let axios = require('axios')
   let options = {
     baseURL: localConfig.pybossa.host,
     withCredentials: true,
