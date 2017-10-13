@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import siteConfig from '~/local.config'
+import localConfig from '~/local.config'
 
 export default {
   data () {
@@ -63,7 +63,7 @@ export default {
       }
 
       if (custom.indexOf('/uploads') > -1) {
-        this.avatar = siteConfig.pybossaHost + custom
+        this.avatar = localConfig.pybossaHost + custom
         return
       }
       this.avatar = custom
