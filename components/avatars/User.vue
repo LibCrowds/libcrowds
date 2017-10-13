@@ -52,26 +52,27 @@ export default {
   methods: {
     /**
      * Load an avatar.
+     * @param {String} avatarUrl
+     *   The avatar URL.
      */
-    loadAvatar () {
-      const custom = this.user.info.avatar_url
-
+    loadAvatar (avatarUrl) {
       // Use Gravatar if no custom avatar is available
-      if (custom === undefined || custom === null) {
+      if (avatarUrl === undefined || avatarUrl === null) {
         this.avatar = 'gravatar'
         return
       }
 
-      if (custom.indexOf('/uploads') > -1) {
-        this.avatar = localConfig.pybossaHost + custom
+      // Prepend the pybossa host if a standard upload
+      if (avatarUrl.indexOf('/uploads') > -1) {
+        this.avatar = localConfig.pybossa.host + avatarUrl
         return
       }
-      this.avatar = custom
+      this.avatar = avatarUrl
     }
   },
 
   created () {
-    this.loadAvatar()
+    this.loadAvatar(this.user.info.avatar_url)
   }
 }
 </script>
