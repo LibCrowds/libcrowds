@@ -4,32 +4,19 @@ const localConfig = process.env.NODE_ENV === 'testing'
   : require('./local.config')
 
 module.exports = {
-  /*
-  ** Headers.
-  */
+  mode: 'universal',
   head: {
-    titleTemplate: ` %s - ${localConfig}`,
+    titleTemplate: ` %s - ${localConfig.brand}`,
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
         content: localConfig.description
       }
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Global CSS.
-  */
   css: ['~assets/style/main.scss'],
   build: {
-    /*
-    ** Global vendor bundle.
-    */
     vendor: [
       'axios',
       'vue-awesome'
@@ -71,9 +58,6 @@ module.exports = {
       }
     }
   },
-  /*
-  ** Plugins.
-  */
   plugins: [
     { src: '~/plugins/bootstrap-vue' },
     { src: '~/plugins/filters' },
@@ -83,10 +67,13 @@ module.exports = {
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-scrollto', ssr: false }
   ],
-  /*
-  ** Modules.
-  */
   modules: [
+    '@nuxtjs/pwa',
     '~/modules/pybossa'
-  ]
+  ],
+  manifest: {
+    name: localConfig.brand,
+    description: localConfig.description,
+    theme_color: '#BA0000'
+  },
 }
