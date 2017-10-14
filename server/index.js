@@ -1,5 +1,6 @@
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
+import errorhandler from 'errorhandler'
 
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 8080
@@ -16,42 +17,18 @@ config.dev = !(process.env.NODE_ENV === 'production')
 const nuxt = new Nuxt(config)
 app.use(nuxt.render)
 
-// Build only in dev mode with hot-reloading
+
+// Build only in dev mode
 if (config.dev) {
-  new Builder(nuxt).build()
-  .then(listen)
-  .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
-}
-else {
-  listen()
+  const builder = new Builder(nuxt)
+  builder.build()
 }
 
 // Development error handler
-if (app.get('env') === 'development') {
-  app.use((err, req, res) => {
-    res.status(err.status || 500)
-    res.render('error', {
-      message: err.message,
-      error: err
-    })
-  })
+if (config.dev) {
+  app.use(errorhandler())
 }
-
-// Production error handler
-app.use((err, req, res) => {
-  console.log(err)
-  res.status(err.status || 500)
-  res.render('error', {
-    message: err.message,
-    error: {}
-  })
-})
 
 // Listen to the server
-function listen () {
-  app.listen(port, host)
-  console.log('Server listening on ' + host + ':' + port)
-}
+app.listen(port, host)
+console.log('Server listening on ' + host + ':' + port)
