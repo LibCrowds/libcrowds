@@ -1,17 +1,19 @@
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 
+const host = process.env.HOST || '0.0.0.0'
+const port = process.env.PORT || 8080
+
+// Init express
 const app = express()
-const isProd = (process.env.NODE_ENV === 'production')
-const host = process.env.HOST || '127.0.0.1'
-const port = process.env.PORT || 3000
+app.set('port', port)
 
-// We instantiate nuxt.js with the options
-const config = require('../nuxt.config.js')
-config.dev = !isProd
+// Import and Set Nuxt.js options
+let config = require('../nuxt.config.js')
+config.dev = !(process.env.NODE_ENV === 'production')
+
+// Init Nuxt.js
 const nuxt = new Nuxt(config)
-
-// Render every route with nuxt.js
 app.use(nuxt.render)
 
 // Build only in dev mode with hot-reloading
@@ -27,8 +29,29 @@ else {
   listen()
 }
 
-function listen() {
-  // Listen the server
-  app.listen(port, '0.0.0.0')
-  console.log('Server listening on localhost:' + port)
+// Development error handler
+if (app.get('env') === 'development') {
+  app.use((err, req, res) => {
+    res.status(err.status || 500)
+    res.render('error', {
+      message: err.message,
+      error: err
+    })
+  })
+}
+
+// Production error handler
+app.use((err, req, res) => {
+  console.log(err)
+  res.status(err.status || 500)
+  res.render('error', {
+    message: err.message,
+    error: {}
+  })
+})
+
+// Listen to the server
+function listen () {
+  app.listen(port, host)
+  console.log('Server listening on ' + host + ':' + port)
 }
