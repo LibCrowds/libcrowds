@@ -2,7 +2,7 @@ import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 import errorhandler from 'errorhandler'
 
-const host = process.env.HOST || '0.0.0.0'
+const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 8080
 
 // Init express
