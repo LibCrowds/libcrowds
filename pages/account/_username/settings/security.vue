@@ -11,12 +11,16 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  layout: 'dashboard',
+
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateProfile(params.username)
+    res.data.form.btn = 'Password'
     return {
       form: {
-        endpoint: `account/${this.currentUser.name}/update`,
+        endpoint: `account/${params.username}/update`,
         method: 'post',
-        model: {},
+        model: res.data.password_form,
         schema: {
           fields: [
             {
@@ -58,32 +62,6 @@ export default {
 
   components: {
     CardForm
-  },
-
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.form.model = data.password_form
-      this.form.model.btn = 'Password'
-    }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getUpdateProfile(to.params.username).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    this.form.model = {}
-    pybossa.getUpdateProfile(to.params.username).then(r => {
-      this.setData(r.data)
-      next()
-    })
   }
 }
 </script>
