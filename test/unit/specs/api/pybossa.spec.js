@@ -1,21 +1,12 @@
 import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses.json'
-import PybossaModule from '~/modules/pybossa'
+import pybossa from '~/api/pybossa'
 
 describe('PYBOSSA module', () => {
-  let pybossa = null
-  let mockContext = null
-  let mockInject = null
   let mockGet = null
   let mockPost = null
   let mockPut = null
   let mockDel = null
   let form = null
-
-  beforeAll(async () => {
-    mockContext = jest.fn()
-    mockInject = jest.fn()
-    pybossa = new PybossaModule(mockContext, mockInject)
-  })
 
   beforeEach(() => {
     mockGet = jest.fn()
@@ -31,13 +22,6 @@ describe('PYBOSSA module', () => {
       errors: {},
       some_key: null
     }
-  })
-
-  describe('Initialisation', () => {
-    it('injects $pybossa into the context', () => {
-      expect(mockContext.$pybossa).toBe(pybossa)
-      expect(mockInject).toHaveBeenCalledWith('pybossa', pybossa)
-    })
   })
 
   describe('Favourites endpoints', () => {
@@ -186,9 +170,9 @@ describe('PYBOSSA module', () => {
     it('makes the correct request for subscribeToNewsletter', () => {
       const expectedUrl = `/account/newsletter`
       const params = {
-        subscribe: true
+        subscribe: 'True'
       }
-      pybossa.subscribeToNewsletter()
+      pybossa.subscribeToNewsletter(true)
       expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: params })
     })
 

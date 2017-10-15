@@ -7,7 +7,7 @@ exports[`Profile card renders correctly 1`] = `
 >
   <div class="avatar-background">
     <div class="user-avatar"
-         style="width:200;"
+         style="width:200px;"
     >
       <v-gravatar triggers
                   title="JohnDoe"
