@@ -66,8 +66,7 @@
             <b-btn
               variant="success"
               size="lg"
-              v-scroll-to="'#contribute'"
-              @click="scrollToCollections">
+              v-scroll-to="'#contribute'">
               Get Started
             </b-btn>
           </div>
