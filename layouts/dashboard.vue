@@ -34,13 +34,15 @@ import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
 export default {
   props: {
-    currentUser: {
-      type: Object,
-      required: true
-    },
     dashboardNavItems: {
       type: Array,
       required: true
+    }
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

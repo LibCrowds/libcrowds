@@ -44,23 +44,19 @@ export default {
     AppFooter
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   computed: {
-    bgStyle: function () {
+    bgStyle () {
       const url = this.collectionConfig.bgImg
       return {
         background: `url(${url}) no-repeat center left /cover fixed`
       }
     },
-    collectionConfig: function () {
+    collectionConfig () {
       const collectionName = this.$route.params.collectionname
       return localConfig.collections[collectionName]
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
   }
 }

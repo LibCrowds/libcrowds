@@ -39,13 +39,15 @@ export default {
   },
 
   props: {
-    currentUser: {
-      type: Object,
-      required: true
-    },
     collectionConfig: {
       type: Object,
       required: true
+    }
+  },
+
+  computed () {
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

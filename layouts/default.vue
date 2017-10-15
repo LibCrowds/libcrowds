@@ -24,18 +24,14 @@ export default {
     AppFooter
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   computed: {
-    appBgStyle: function () {
+    appBgStyle () {
       return {
         background: `url(${appBackground}) no-repeat center left /cover fixed`
       }
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
   }
 }
