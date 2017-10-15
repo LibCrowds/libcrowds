@@ -17,25 +17,7 @@ export default {
   async asyncData ({ params }) {
     const res = await pybossa.getResetApiKey(params.username)
     return {
-      form: {
-        endpoint: `account/${params.username}/resetapikey`,
-        method: 'post',
-        model: {
-          csrf: res.data.form.csrf,
-          api_key: this.currentUser.api_key
-        },
-        schema: {
-          fields: [
-            {
-              model: 'api_key',
-              label: 'API Key',
-              type: 'input',
-              inputType: 'text',
-              readonly: true
-            }
-          ]
-        }
-      }
+      csrf: res.data.form.csrf
     }
   },
 
@@ -54,6 +36,33 @@ export default {
 
   components: {
     CardForm
+  },
+
+  computed: {
+    /**
+     * Return the form data.
+     */
+    form () {
+      return {
+        endpoint: `account/${this.currentUser.name}/resetapikey`,
+        method: 'post',
+        model: {
+          csrf: this.csrf,
+          api_key: this.currentUser.api_key
+        },
+        schema: {
+          fields: [
+            {
+              model: 'api_key',
+              label: 'API Key',
+              type: 'input',
+              inputType: 'text',
+              readonly: true
+            }
+          ]
+        }
+      }
+    }
   },
 
   methods: {

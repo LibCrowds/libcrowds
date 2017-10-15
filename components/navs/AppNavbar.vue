@@ -49,7 +49,7 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'account-projects',
+                name: 'account-username-projects',
                 params: {
                   username: currentUser.name
                 }
