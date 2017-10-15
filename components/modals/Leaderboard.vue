@@ -3,34 +3,23 @@
     :id="modalId"
     title="Leaderboard"
     ok-only>
-
-    <loading
-      v-if="loading"
-      text="Loading leaderboard">
-    </loading>
-
-    <b-table
-      responsive
-      v-else
-      striped
-      hover
-      show-empty
-      :items="filteredUsers"
-      :fields="fields">
-    </b-table>
-
+    <div>
+      <b-table
+        responsive
+        striped
+        hover
+        show-empty
+        :items="filteredUsers"
+        :fields="fields">
+      </b-table>
+    </div>
   </b-modal>
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
-import Loading from '~/components/Loading'
-
 export default {
-  data: function () {
+  data () {
     return {
-      loading: true,
-      topUsers: [],
       fields: {
         rank: { label: 'Rank' },
         name: { label: 'Name' },
@@ -39,60 +28,45 @@ export default {
     }
   },
 
-  components: {
-    Loading
-  },
-
   props: {
-    modalId: {
-      type: String,
-      required: true
-    },
     currentUser: {
       type: Object,
       required: true
     },
-    win: {
-      type: Number,
-      default: 0
-    }
-  },
-
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.loading = false
-      this.topUsers = data.top_users
+    topUsers: {
+      type: Array,
+      required: true
+    },
+    modalId: {
+      type: String,
+      required: true
     }
   },
 
   computed: {
-    filteredUsers: function () {
+    /**
+     * Highlight current user and remove from the end if they appear twice.
+     */
+    filteredUsers () {
       let users = JSON.parse(JSON.stringify(this.topUsers))
+
       users = users.map(user => {
         if (this.currentUser && this.currentUser.name === user.name) {
           user._rowVariant = 'success'
         }
         return user
       })
+
       let userRepeated = users.filter(user => {
         return user.name === this.currentUser.name
       }).length
+
       if (userRepeated) {
         users.splice(-1, 1)
       }
+
       return users
     }
-  },
-
-  created () {
-    pybossa.getLeaderboard().then(r => {
-      this.setData(r.data)
-    })
   }
 }
 </script>

@@ -60,8 +60,8 @@
             </h3>
             <hr class="my-2">
             <p class="text-uppercase lead pb-lg-2">
-              To date, our top {{ topUsers.length }} volunteers have made
-              {{ topUsersTaskRuns | intComma }} contributions!
+              To date, our top {{ top10Users.length }} volunteers have made
+              {{ top10UsersTaskRuns | intComma }} contributions!
             </p>
             <b-btn
               variant="success"
@@ -75,29 +75,31 @@
             <span id="wreath"></span>
           </div>
         </div>
-        <div class="row text-center mt-2">
+        <div class="row text-center mt-3">
           <div class="col-lg-12 pt-1">
             <ul class="list-unstyled">
               <li
                 :key="user.id"
-                class="text-center d-inline-block mx-1"
-                v-for="user in topUsers">
-                <nuxt-link
-                  :to="{
-                    name: 'account-username',
-                    params: {
-                      username: user.name
-                    }
-                  }"
-                  class="my-1">
-                  <div class="my-1">
-                    <user-avatar
-                      :user="user"
-                      tooltip-triggers="hover">
-                    </user-avatar>
-                  </div>
-                </nuxt-link>
-                <p class="badge badge-info">{{ user.score }}</p>
+                class="d-inline-block"
+                v-for="user in top10Users">
+                <div class="text-center mx-1">
+                  <nuxt-link
+                    :to="{
+                      name: 'account-username',
+                      params: {
+                        username: user.name
+                      }
+                    }"
+                    class="my-1">
+                    <div class="my-1">
+                      <user-avatar
+                        :user="user"
+                        tooltip-triggers="hover">
+                      </user-avatar>
+                    </div>
+                  </nuxt-link>
+                  <p class="badge badge-info">{{ user.score }}</p>
+                </div>
               </li>
             </ul>
           </div>
@@ -116,8 +118,10 @@
 
     <leaderboard-modal
       :current-user="currentUser"
+      :top-users="topUsers"
       :modal-id="leaderboardModalId">
     </leaderboard-modal>
+
   </div>
 </template>
 
@@ -147,7 +151,8 @@ export default {
     ])
     return {
       stats: statsResponse.data.stats,
-      topUsers: leaderboardResponse.data.top_users.slice(0, 10)
+      topUsers: leaderboardResponse.data.top_users,
+      top10Users: leaderboardResponse.data.top_users.slice(0, 10)
     }
   },
 
@@ -158,7 +163,6 @@ export default {
         { name: 'description', content: this.localConfig.description },
 
         // Facebook Open Graph Markup
-        { property: 'og:url', content: window.location.href },
         { property: 'og:title', content: this.localConfig.brand },
         { property: 'og:description', content: this.localConfig.tagline }
       ]
@@ -172,8 +176,8 @@ export default {
   },
 
   computed: {
-    topUsersTaskRuns () {
-      const scores = this.topUsers.map((user) => user.score)
+    top10UsersTaskRuns () {
+      const scores = this.top10Users.map((user) => user.score)
       return scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
