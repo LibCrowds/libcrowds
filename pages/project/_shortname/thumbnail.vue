@@ -1,6 +1,5 @@
 <template>
   <avatar-form
-    v-if="!loading"
     header="Project Thumbnail"
     submit-text="Update"
     :viewport-height="250"
@@ -15,11 +14,15 @@ import AvatarForm from '@/components/forms/AvatarForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateProject(params.shortname)
+    res.data.form.btn = 'Upload'
     return {
-      loading: true,
-      project: {},
-      model: {}
+      project: res.data.project,
+      form: {
+        endpoint: `project/${params.shortname}/update`,
+        model: res.data.upload_form
+      }
     }
   },
 
@@ -31,42 +34,6 @@ export default {
 
   components: {
     AvatarForm
-  },
-
-  computed: {
-    form: function () {
-      return {
-        endpoint: `project/${this.project.short_name}/update`,
-        model: this.model
-      }
-    }
-  },
-
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.project = data.project
-      this.model = data.upload_form
-      this.model.btn = 'Upload'
-      this.loading = false
-    }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getUpdateProject(to.params.shortname).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.getUpdateProject(to.params.shortname).then(r => {
-      this.setData(r.data)
-      next()
-    })
   }
 }
 </script>

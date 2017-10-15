@@ -3,6 +3,7 @@
     header="Project Settings"
     submit-text="Update"
     :form="form">
+
     <div slot="bottom" class="d-flex form-group mt-1">
       <toggle-button
         :value="model.protect"
@@ -10,8 +11,11 @@
         :labels="true"
         @change="updateModelBoolean('protect', $event)">
       </toggle-button>
-      <label class="ml-1">Require a password</label>
+      <label class="ml-1">
+        Require a password
+      </label>
     </div>
+
     <div slot="bottom" class="d-flex form-group mt-1">
       <toggle-button
         :value="model.allow_anonymous_contributors"
@@ -19,8 +23,11 @@
         :labels="true"
         @change="updateModelBoolean('allow_anonymous_contributors', $event)">
       </toggle-button>
-      <label class="ml-1">Allow anonymous contributors</label>
+      <label class="ml-1">
+        Allow anonymous contributors
+      </label>
     </div>
+
   </card-form>
 </template>
 
@@ -29,29 +36,14 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  async asyncData({ params }) {
+    const res = await pybossa.getUpdateProject(params.shortname)
     return {
-      project: {},
-      model: {}
-    }
-  },
-
-  metaInfo () {
-    return {
-      title: `${this.project.name}: Settings`
-    }
-  },
-
-  components: {
-    CardForm
-  },
-
-  computed: {
-    form: function () {
-      return {
-        endpoint: `project/${this.project.short_name}/update`,
+      project: res.data.project,
+      form: {
+        endpoint: `project/${params.shortname}/update`,
         method: 'post',
-        model: this.model,
+        model: res.data.form,
         schema: {
           fields: [
             {
@@ -91,17 +83,17 @@ export default {
     }
   },
 
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.project = data.project
-      this.model = data.form
-    },
+  metaInfo () {
+    return {
+      title: `${this.project.name}: Settings`
+    }
+  },
 
+  components: {
+    CardForm
+  },
+
+  methods: {
     /**
      * Redirect the user on form submit success.
      * @param {String} key
@@ -112,19 +104,6 @@ export default {
     updateModelBoolean (key, evt) {
       this.model[key] = evt.value
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getUpdateProject(to.params.shortname).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.getUpdateProject(to.params.shortname).then(r => {
-      this.setData(r.data)
-      next()
-    })
   }
 }
 </script>
