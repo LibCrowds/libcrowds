@@ -1,6 +1,6 @@
 <template>
   <card-form
-    id="admin-announcement-update"
+    id="admin-announcement-id-update"
     header="Update Announcement"
     submit-text="Update"
     show-cancel
@@ -15,19 +15,13 @@ import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
-  data: function () {
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateAnnouncement(params.id)
     return {
-      announcementId: null,
-      model: {}
-    }
-  },
-
-  computed: {
-    form: function () {
-      return {
-        endpoint: `/admin/announcement/${this.announcementId}/update`,
+      form: {
+        endpoint: `/admin/announcement/${this.res.data.form.id}/update`,
         method: 'post',
-        model: this.model,
+        model: res.data.form,
         schema: {
           fields: [
             {
@@ -67,35 +61,12 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.model = data.form
-      this.announcementId = data.form.id
-    },
-
-    /**
      * Handle success or cancel.
      */
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
       this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getUpdateAnnouncement(to.params.id).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.getUpdateAnnouncement(to.params.id).then(r => {
-      this.setData(r.data)
-      next()
-    })
   }
 }
 </script>

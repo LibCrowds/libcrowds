@@ -14,12 +14,13 @@ import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
-  data: function () {
+  async asyncData () {
+    const res = await pybossa.getNewAnnouncement()
     return {
       form: {
         endpoint: '/admin/announcement/new',
         method: 'post',
-        model: {},
+        model: res.data.form,
         schema: {
           fields: [
             {
@@ -59,27 +60,12 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.form.model = data.form
-    },
-
-    /**
      * Handle success or cancel.
      */
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
       this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getNewAnnouncement().then(r => {
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>

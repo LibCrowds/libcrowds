@@ -4,13 +4,13 @@
       <b-card-body class="p-0">
         <b-row no-gutters>
           <b-col lg="4">
-            <category-list-chooser
+            <categories-list
               v-if="categories.length"
               class="nested-left nested-lg"
               header="Categories"
               :categories="categories"
               @change="onCategoryChange">
-            </category-list-chooser>
+            </categories-list>
           </b-col>
           <b-col lg="8" class="p-2">
             <transition
@@ -69,15 +69,12 @@
 </template>
 
 <script>
-import CategoryListChooser from '@/components/category/ListChooser'
+import CategoriesList from '@/components/lists/Categories'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  data () {
     return {
-      categories: [],
-      projects: {},
-      csrf: '',
       activeCategory: null,
       tableFields: {
         name: {
@@ -99,6 +96,15 @@ export default {
     }
   },
 
+  async asyncData () {
+    const res = pybossa.getAdminFeatured()
+    return {
+      categories: res.data.categories,
+      projects: res.data.projects,
+      csrf: res.data.form.csrf
+    }
+  },
+
   metaInfo () {
     return {
       title: `Featured Projects`
@@ -106,21 +112,10 @@ export default {
   },
 
   components: {
-    CategoryListChooser
+    CategoriesList
   },
 
   methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.categories = data.categories
-      this.projects = data.projects
-      this.csrf = data.form.csrf
-    },
-
     /**
      * Return the featured button text.
      * @param {Boolean} featured
@@ -158,10 +153,10 @@ export default {
   },
 
   computed: {
-    categoryProjects: function () {
+    categoryProjects () {
       return this.projects[this.activeCategory.short_name]
     },
-    featuredProjects: function () {
+    featuredProjects () {
       return Object.keys(this.projects).map(shortName => {
         return this.projects[shortName].filter(project => {
           return project.featured
@@ -170,12 +165,6 @@ export default {
         return a.concat(b)
       }, [])
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getAdminFeatured().then(r => {
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>

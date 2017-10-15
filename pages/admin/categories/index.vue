@@ -18,7 +18,7 @@
           :fields="table.fields">
 
           <template slot="n_projects" scope="category">
-            {{ n_projects[category.item.short_name] }}
+            {{ nProjects[category.item.short_name] }}
           </template>
 
           <template slot="collection" scope="category">
@@ -47,7 +47,7 @@
                 :id="`del-${category.id}`"
                 variant="danger"
                 size="sm"
-                :disabled="n_projects[category.item.short_name] > 0"
+                :disabled="nProjects[category.item.short_name] > 0"
                 @click="deleteCategory(category.item.id)">
                 Delete
               </b-btn>
@@ -66,32 +66,8 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  data () {
     return {
-      categories: [],
-      form: {
-        endpoint: '/admin/categories',
-        method: 'post',
-        model: {},
-        schema: {
-          fields: [
-            {
-              model: 'name',
-              label: 'Name',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Choose a name'
-            },
-            {
-              model: 'description',
-              label: 'Description',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Write a description (use Markdown)'
-            }
-          ]
-        }
-      },
       table: {
         fields: {
           id: {
@@ -118,8 +94,42 @@ export default {
             class: 'text-center'
           }
         }
+      }
+    }
+  },
+
+  async asyncData () {
+    const res = pybossa.getAdminCategories()
+
+    // See https://github.com/LibCrowds/libcrowds/issues/100
+    delete res.data.form.id
+
+    return {
+      categories: res.data.categories,
+      form: {
+        endpoint: '/admin/categories',
+        method: 'post',
+        model: res.data.form,
+        schema: {
+          fields: [
+            {
+              model: 'name',
+              label: 'Name',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'Choose a name'
+            },
+            {
+              model: 'description',
+              label: 'Description',
+              type: 'textArea',
+              rows: 3,
+              placeholder: 'Write a description (use Markdown)'
+            }
+          ]
+        }
       },
-      n_projects: {}
+      nProjects: res.data.n_projects_per_category
     }
   },
 
@@ -134,20 +144,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      // See https://github.com/LibCrowds/libcrowds/issues/100
-      delete data.form.id
-
-      this.form.model = data.form
-      this.categories = data.categories
-      this.n_projects = data.n_projects_per_category
-    },
-
     /**
      * Delete a category.
      * @param {Number} id
@@ -169,7 +165,9 @@ export default {
           })
         }
       }).then(r => {
-        this.refreshCurrentCategories()
+        this.categories = this.categories.filter(category => {
+          return category.id !== id
+        })
         this.$swal(
           capitalize(r.data.status),
           r.data.flash,
@@ -200,22 +198,7 @@ export default {
           }
         })
       })
-    },
-
-    /**
-     * Refresh current categories data.
-     */
-    refreshCurrentCategories () {
-      pybossa.getAdminCategories().then(r => {
-        this.setData(r.data)
-      })
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getAdminCategories().then(r => {
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>

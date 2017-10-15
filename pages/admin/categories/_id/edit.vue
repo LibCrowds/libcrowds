@@ -19,7 +19,7 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  data () {
     return {
       category: {}
     }
@@ -36,7 +36,7 @@ export default {
   },
 
   computed: {
-    form: function () {
+    form () {
       return {
         endpoint: `/api/category/${this.category.id}`,
         method: 'put',
@@ -103,19 +103,16 @@ export default {
     }
   },
 
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      if (!data.category.info) {
-        data.category.info = {}
-      }
-      this.category = data.category
-    },
+  async asyncData ({ params }) {
+    const res = pybossa.client.get(`/api/category/${params.id}`)
+    const category = res.data
+    category.info = category.info || {}
+    return {
+      category: category
+    }
+  },
 
+  methods: {
     /**
      * Handle form success.
      */
@@ -133,25 +130,6 @@ export default {
     onCancel () {
       this.$router.push({ name: 'admin-categories' })
     }
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.client.get(`/api/category/${to.params.categoryid}`).then(r => {
-      r.data = {
-        category: r.data
-      }
-      this.setData(r.data)
-      next()
-    })
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.client.get(`/api/category/${to.params.categoryid}`).then(r => {
-      r.data = {
-        category: r.data
-      }
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>
