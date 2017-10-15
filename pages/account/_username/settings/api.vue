@@ -14,7 +14,7 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ query, params }) {
+  async asyncData ({ params }) {
     const res = await pybossa.getResetApiKey(params.username)
     return {
       form: {
