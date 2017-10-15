@@ -47,15 +47,15 @@
         <p id="site-lead" class="mb-0 px-1">
           {{ collectionConfig.description }}
         </p>
-        <hr class="my-3 w-75 sr">
+        <hr class="my-3 w-75">
         <p class="lead mb-0 px-1">
           Your contributions will have a direct impact on enabling future
           research at {{ localConfig.company }}.
         </p>
-        <hr class="mt-3 w-75 sr">
+        <hr class="mt-3 w-75">
         <b-btn
           variant="outline-dark"
-          class="mt-md-2 sr"
+          class="mt-md-2"
           size="lg"
           :to="{
             name: 'collection-about',
@@ -197,11 +197,10 @@
 </template>
 
 <script>
-import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import ProjectCard from '@/components/project/Card'
+import ProjectCard from '@/components/cards/Project'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
 import pybossa from '@/api/pybossa'
@@ -265,15 +264,6 @@ export default {
           return validProjectIds.indexOf(project.id) > -1
         })
       }
-    },
-
-    /**
-     * Init scroll reveal.
-     */
-    scrollReveal () {
-      ScrollReveal().reveal('.sr', {
-        duration: 600 },
-      50)
     }
   },
 
@@ -292,10 +282,6 @@ export default {
       })
       this.setData(data)
     })
-  },
-
-  mounted () {
-    this.scrollReveal()
   }
 }
 </script>

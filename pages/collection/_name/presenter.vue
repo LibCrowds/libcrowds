@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert2'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -24,10 +23,7 @@ import pybossa from '@/api/pybossa'
 export default {
   data: function () {
     return {
-      project: null,
       tasks: [],
-      title: '',
-      description: '',
       navItems: [
         {
           id: 'back-to-contribute',
@@ -40,6 +36,15 @@ export default {
           }
         }
       ]
+    }
+  },
+
+  async asyncData ({ params }) {
+    const res = await pybossa.getProject(params.shortname)
+    return {
+      project: res.data.project,
+      title: res.project.name,
+      description: res.project.description
     }
   },
 
@@ -67,7 +72,7 @@ export default {
   },
 
   computed: {
-    presenter: function () {
+    presenter () {
       const presenters = {
         'libcrowds-viewer': LibcrowdsViewerPresenter,
         'z3950': Z3950Presenter,
@@ -80,18 +85,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.project = data.project
-      this.title = this.project.name
-      this.description = this.project.description
-      this.loadTasks()
-    },
-
     /**
      * Return the URL to load the next set of tasks
      */
@@ -130,7 +123,7 @@ export default {
       if (projectComplete) {
         html = `<em>${this.project.name}</em> is now complete`
       }
-      swal({
+      this.$swal({
         title: 'Thank you!',
         html: html,
         type: 'success'
@@ -209,7 +202,7 @@ export default {
             position: 'bottomleft'
           })
         } else {
-          swal({
+          this.$swal({
             title: 'Thank you!',
             html: 'Your contribution has been saved successfully and will ' +
                   'directly help enable future research.',
@@ -221,21 +214,9 @@ export default {
     }
   },
 
-  beforeRouteEnter (to, from, next) {
-    pybossa.getProject(to.params.shortname).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.getProject(to.params.shortname).then(r => {
-      this.setData(r.data)
-      next()
-    })
-  },
-
   created () {
     this.$emit('navupdated', this.navItems)
+    this.loadTasks()
   }
 }
 </script>

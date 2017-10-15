@@ -53,7 +53,7 @@
 
 <script>
 import pybossa from '@/api/pybossa'
-import capitalize from '@/utils/capitalize'
+import capitalize from 'capitalize'
 
 export default {
   data: function () {

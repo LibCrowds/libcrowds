@@ -32,12 +32,12 @@
       <div class="row">
         <div class="col-xl-3 mb-3">
 
-          <category-list-chooser
+          <categories-list
             v-if="categories.length"
             :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
-          </category-list-chooser>
+          </categories-list>
 
           <project-sorting-options
             class="mt-3 d-none d-xl-block"
@@ -62,12 +62,12 @@
                 name="fade"
                 mode="out-in"
                 appear>
-                <project-card-list
+                <project-cards-list
                   key="project-list"
                   v-if="activeView === 'list'"
                   :collection-config="collectionConfig"
                   :projects="filteredProjects">
-                </project-card-list>
+                </project-cards-list>
               </transition>
 
               <transition
@@ -93,12 +93,12 @@
                 </b-table>
               </transition>
 
-              <project-pagination
+              <pagination
                 key="project-pagination"
                 v-if="pagination"
                 :pagination="pagination"
                 @change="onPageChange">
-              </project-pagination>
+              </pagination>
 
             </span>
             <span v-else class="text-center">
@@ -134,9 +134,9 @@
 <script>
 import { sortBy, forEach } from 'lodash'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
-import ProjectPagination from '@/components/project/Pagination'
-import ProjectCardList from '@/components/project/CardList'
-import CategoryListChooser from '@/components/category/ListChooser'
+import Pagination from '@/components/Pagination'
+import ProjectCardsList from '@/components/lists/ProjectCards'
+import CategoriesList from '@/components/lists/Categories'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import pybossa from '@/api/pybossa'
@@ -207,9 +207,9 @@ export default {
 
   components: {
     ProjectSortingOptions,
-    ProjectPagination,
-    ProjectCardList,
-    CategoryListChooser,
+    Pagination,
+    ProjectCardsList,
+    CategoriesList,
     ProjectContribButton,
     SocialMediaButtons
   },

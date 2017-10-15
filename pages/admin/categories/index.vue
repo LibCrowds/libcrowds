@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import capitalize from '@/utils/capitalize'
+import capitalize from 'capitalize'
 import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 

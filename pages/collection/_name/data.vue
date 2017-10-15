@@ -46,12 +46,12 @@
       <hr>
       <div :id="navItems[0].id" class="row">
         <div class="col-xl-3 mb-3">
-          <category-list-chooser
+          <categories-list
             v-if="categories.length"
             :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
-          </category-list-chooser>
+          </categories-list>
         </div>
         <div class="col-xl-9">
 
@@ -74,10 +74,11 @@
             </template>
           </b-table>
 
-          <project-pagination
+          <pagination
             :pagination="pagination"
             @change="onPageChange">
-          </project-pagination>
+          </pagination>
+
         </div>
       </div>
     </section>
@@ -93,12 +94,14 @@
 
 <script>
 import localConfig from '@/local.config'
-import CategoryListChooser from '@/components/category/ListChooser'
-import ProjectPagination from '@/components/project/Pagination'
+import CategoriesList from '@/components/lists/Categories'
+import Pagination from '@/components/Pagination'
 import DataModal from '@/components/modals/Data'
 import pybossa from '@/api/pybossa'
 
 export default {
+  layout: 'tabs',
+
   data: function () {
     return {
       localConfig: localConfig,
@@ -111,7 +114,6 @@ export default {
         total: 0
       },
       projects: [],
-      categories: [],
       activeCategory: null,
       tableFields: {
         name: { label: 'Name' },
@@ -119,6 +121,13 @@ export default {
         overall_progress: { label: 'Progress' },
         action: { label: 'Action' }
       }
+    }
+  },
+
+  async asyncData ({ params }) {
+    const res = await pybossa.getMicrositeCategories(params.name)
+    return {
+      categories: res.data.categories,
     }
   },
 
@@ -144,21 +153,12 @@ export default {
   },
 
   components: {
-    CategoryListChooser,
-    ProjectPagination,
+    CategoriesList,
+    Pagination,
     DataModal
   },
 
   methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.categories = data.categories
-    },
-
     /**
      * Handle category change.
      * @param {String} category
@@ -188,19 +188,6 @@ export default {
       this.page = page
       this.fetchProjects()
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
-      this.setData(r.data)
-      next()
-    })
   },
 
   created () {

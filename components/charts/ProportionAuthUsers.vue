@@ -5,10 +5,6 @@
 </template>
 
 <script>
-import Chartist from 'chartist'
-import 'chartist-plugin-tooltips'
-import 'chartist-plugin-legend'
-
 export default {
   data: function () {
     return {
