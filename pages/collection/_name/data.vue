@@ -127,7 +127,7 @@ export default {
   async asyncData ({ params }) {
     const res = await pybossa.getMicrositeCategories(params.name)
     return {
-      categories: res.data.categories,
+      categories: res.data.categories
     }
   },
 
