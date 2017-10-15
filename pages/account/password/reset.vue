@@ -6,8 +6,7 @@
           header="Reset Password"
           submitText="Reset"
           :form="form"
-          :next="next"
-          @success="onSuccess">
+          :next="next">
         </card-form>
       </div>
     </div>

@@ -6,8 +6,7 @@
           header="Forgotten Password"
           submit-text="Reset"
           :form="form"
-          :next="next"
-          @success="onSuccess">
+          :next="next">
         </card-form>
       </div>
     </div>
