@@ -31,5 +31,5 @@ export default {
 </script>
 
 <style>
-@import '~cookieconsent/build/cookieconsent.min.css'
+@import '~cookieconsent/build/cookieconsent.min.css';
 </style>

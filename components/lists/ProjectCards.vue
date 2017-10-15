@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import ProjectCard from '~/components/cards/Project'
+import ProjectCard from '@/components/cards/Project'
 
 export default {
   props: {
