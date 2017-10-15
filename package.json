@@ -88,7 +88,6 @@
       "\\.(css|less)$": "<rootDir>/test/assetsTransformer.js",
       "(.*)/local.config$": "<rootDir>/test/test.local.config.js"
     },
-    "notify": true,
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
