@@ -29,7 +29,7 @@
           <!-- Profile/settings -->
           <b-dropdown-item
             :to="{
-              name: 'profile',
+              name: 'account-username',
               params: {
                 username: currentUser.name
               }
@@ -37,7 +37,7 @@
           </b-dropdown-item>
           <b-dropdown-item
             :to="{
-              name: 'account-settings',
+              name: 'account-username-settings-profile',
               params: {
                 username: currentUser.name
               }

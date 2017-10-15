@@ -46,10 +46,10 @@ export default {
     dashboardNavItems () {
       if (this.$route.path.startsWith('/account')) {
         return [
-          { name: 'account-profile-settings', label: 'Profile' },
-          { name: 'account-api-settings', label: 'API' },
-          { name: 'account-avatar-settings', label: 'Avatar' },
-          { name: 'account-security-settings', label: 'Security' }
+          { name: 'account-username-settings-profile', label: 'Profile' },
+          { name: 'account-username-settings-api', label: 'API' },
+          { name: 'account-username-settings-avatar', label: 'Avatar' },
+          { name: 'account-username-settings-security', label: 'Security' }
         ]
       } else if (this.$route.path.startsWith('/admin')) {
         return [
