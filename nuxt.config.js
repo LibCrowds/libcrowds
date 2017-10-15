@@ -81,5 +81,8 @@ module.exports = {
   loading: {
     color: '#bffaf3',
     duration: localConfig.pybossa.timeout || 5000
+  },
+  router: {
+    middleware: 'auth'
   }
 }
