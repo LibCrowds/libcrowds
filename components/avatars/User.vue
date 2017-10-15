@@ -18,7 +18,8 @@
       v-b-tooltip
       :triggers="tooltipTriggers"
       :title="user.name"
-      :src="avatar">
+      :src="avatar"
+      class="img-thumbnail rounded-circle">
 
   </div>
 </template>
