@@ -5,9 +5,9 @@
       retreiving information about tasks, task runs, results, etc. The API
       expects and returns JSON and is available at:
     </p>
-    <pre class="my-2">
+    <pre class="mt-2 mb-0">
       <code>
-        {{ localConfig.pybossaHost }}/api
+        {{ localConfig.pybossa.host }}/api
       </code>
     </pre>
     <p>
@@ -17,7 +17,7 @@
     <p>
       Rather than replicating the documentation here please refer to the
       official
-      <a href="http://docs.pybossa.com/en/latest/api.html">
+      <a href="http://docs.pybossa.com/api/">
         PYBOSSA API documentation
       </a>
       for details.
