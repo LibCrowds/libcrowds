@@ -102,12 +102,6 @@ export default {
     }
   }
 
-  .category-description {
-    p {
-      margin-bottom: 0;
-    }
-  }
-
   .card-body {
     display: flex;
     flex-direction: column;
