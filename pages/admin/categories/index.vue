@@ -99,7 +99,7 @@ export default {
   },
 
   async asyncData () {
-    const res = pybossa.getAdminCategories()
+    const res = await pybossa.getAdminCategories()
 
     // See https://github.com/LibCrowds/libcrowds/issues/100
     delete res.data.form.id

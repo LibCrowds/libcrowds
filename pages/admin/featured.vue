@@ -97,7 +97,7 @@ export default {
   },
 
   async asyncData () {
-    const res = pybossa.getAdminFeatured()
+    const res = await pybossa.getAdminFeatured()
     return {
       categories: res.data.categories,
       projects: res.data.projects,

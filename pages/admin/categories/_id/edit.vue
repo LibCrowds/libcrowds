@@ -104,7 +104,7 @@ export default {
   },
 
   async asyncData ({ params }) {
-    const res = pybossa.client.get(`/api/category/${params.id}`)
+    const res = await pybossa.client.get(`/api/category/${params.id}`)
     const category = res.data
     category.info = category.info || {}
     return {
