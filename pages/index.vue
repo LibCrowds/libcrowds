@@ -126,10 +126,11 @@ import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
-import localConfig from '~/local.config'
-import CollectionCard from '~/components/cards/Collection'
-import LeaderboardModal from '~/components/modals/Leaderboard'
-import UserAvatar from '~/components/avatars/User'
+import localConfig from '@/local.config'
+import pybossa from '@/api/pybossa'
+import CollectionCard from '@/components/cards/Collection'
+import LeaderboardModal from '@/components/modals/Leaderboard'
+import UserAvatar from '@/components/avatars/User'
 
 export default {
   data () {
@@ -139,17 +140,15 @@ export default {
     }
   },
 
-  asyncData (ctx) {
-    console.log(ctx, 'FETCHING')
-    Promise.all([
-      ctx.$pybossa.getStats(),
-      ctx.$pybossa.getLeaderboard()
-    ]).then(([statsResponse, leaderboardResponse]) => {
-      return {
-        stats: statsResponse.data.stats,
-        topUsers: leaderboardResponse.data.top_users.slice(0, 10)
-      }
-    })
+  async asyncData () {
+    let [statsResponse, leaderboardResponse] = await Promise.all([
+      pybossa.getStats(),
+      pybossa.getLeaderboard()
+    ])
+    return {
+      stats: statsResponse.data.stats,
+      topUsers: leaderboardResponse.data.top_users.slice(0, 10)
+    }
   },
 
   metaInfo () {

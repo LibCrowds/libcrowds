@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import Loading from '~/components/Loading'
 
 export default {
@@ -89,7 +90,7 @@ export default {
   },
 
   created () {
-    this.$pybossa.getLeaderboard().then(r => {
+    pybossa.getLeaderboard().then(r => {
       this.setData(r.data)
     })
   }

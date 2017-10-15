@@ -68,12 +68,11 @@ module.exports = {
     { src: '~/plugins/vue-scrollto', ssr: false }
   ],
   modules: [
-    '@nuxtjs/pwa',
-    '~/modules/pybossa'
+    '@nuxtjs/pwa'
   ],
   manifest: {
     name: localConfig.brand,
     description: localConfig.description,
     theme_color: '#BA0000'
-  },
+  }
 }

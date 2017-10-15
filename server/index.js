@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 import errorhandler from 'errorhandler'
@@ -17,11 +18,12 @@ config.dev = !(process.env.NODE_ENV === 'production')
 const nuxt = new Nuxt(config)
 app.use(nuxt.render)
 
-
 // Build only in dev mode
 if (config.dev) {
   const builder = new Builder(nuxt)
-  builder.build()
+  builder.build().then(listen)
+} else {
+  listen()
 }
 
 // Development error handler
@@ -30,5 +32,7 @@ if (config.dev) {
 }
 
 // Listen to the server
-app.listen(port, host)
-console.log('Server listening on ' + host + ':' + port)
+function listen () {
+  app.listen(port, host)
+  console.log(chalk.green('Server listening on ' + host + ':' + port))
+}

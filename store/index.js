@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import pybossa from '@/api/pybossa'
 
 export default () => {
   return new Vuex.Store({
@@ -25,7 +26,7 @@ export default () => {
 
     actions: {
       UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
-        this.$pybossa.getProfile().then(r => {
+        pybossa.getProfile().then(r => {
           if ('user' in r.data) {
             commit('LOGIN', r.data.user)
           } else {
@@ -36,7 +37,7 @@ export default () => {
       },
 
       LOGOUT: ({ commit }) => {
-        this.$pybossa.signout().then(data => {
+        pybossa.signout().then(data => {
           if (data.next === '/') {
             this.$router.push({ name: 'landing' })
           }
@@ -64,7 +65,7 @@ export default () => {
         } else {
           let announcements = state.currentUser.info.announcements || {}
           let lastId = announcements['last_read'] || 0
-          this.$pybossa.client.get(`/api/announcement?last_id=${lastId}`).then(r => {
+          pybossa.client.get(`/api/announcement?last_id=${lastId}`).then(r => {
             commit('SET_ITEM', {
               key: 'announcements', value: r.data
             })
