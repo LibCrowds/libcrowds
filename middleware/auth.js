@@ -12,5 +12,7 @@ export default function ({ isServer, store, req }) {
   if (isServer && req) {
     axios.defaults.headers.common.cookie = req.headers.cookie
     manageSession(store, req.headers.cookie)
+  } else {
+    manageSession(store, document.cookie)
   }
 }
