@@ -5,7 +5,7 @@
         <nuxt-link
           class="brand"
           :to="{
-            name: 'landing'
+            name: 'index'
           }">
           {{ localConfig.brand }}
         </nuxt-link>

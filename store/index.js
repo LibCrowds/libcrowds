@@ -39,7 +39,7 @@ export default () => {
       LOGOUT: ({ commit }) => {
         pybossa.signout().then(data => {
           if (data.next === '/') {
-            this.$router.push({ name: 'landing' })
+            this.$router.push({ name: 'index' })
           }
           commit('LOGOUT')
         })

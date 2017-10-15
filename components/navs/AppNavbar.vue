@@ -9,7 +9,7 @@
       <b-link
         :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
         :to="{
-          name: 'landing'
+          name: 'index'
         }">
         <span>{{ localConfig.brand }}</span>
       </b-link>

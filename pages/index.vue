@@ -1,5 +1,5 @@
 <template>
-  <div id="landing">
+  <div id="index">
     <transition appear>
       <div id="app-hero">
         <div class="container">
@@ -189,7 +189,7 @@ export default {
 <style lang="scss">
 @import '~assets/style/main';
 
-#landing {
+#index {
 
   #site-tagline {
     font-weight: 600px;

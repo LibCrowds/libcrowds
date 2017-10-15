@@ -4,7 +4,7 @@
 
       <section>
         <nuxt-link
-          :to="{ name: 'landing' }"
+          :to="{ name: 'index' }"
           @click.native="scrollIfCurrent">
           Part of the {{ localConfig.brand }} crowdsourcing platform
         </nuxt-link>
