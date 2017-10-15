@@ -94,6 +94,10 @@ export default {
     noSubmit: {
       type: Boolean,
       default: false
+    },
+    next: {
+      type: String,
+      default: null
     }
   },
 
@@ -150,13 +154,25 @@ export default {
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
-          this.$emit('success', r.data)
+          handleSuccess(r.data)
         }
       }).catch(err => {
         this.processing = false
         this.flash = err.response.data.exception_msg
         this.status = 'error'
       })
+    },
+
+    /**
+     * Emit success and go to next, if present.
+     * @param {Object} data
+     *   The response data
+     */
+    handleSuccess (data) {
+      if (this.next) {
+        this.$nuxt.$router.push({ path: this.next })
+      }
+      this.$emit('success', r.data)
     },
 
     /**
