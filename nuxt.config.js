@@ -75,10 +75,10 @@ module.exports = {
   manifest: {
     name: localConfig.brand,
     description: localConfig.description,
-    theme_color: '#BA0000'
+    theme_color: '#ba0000'
   },
   loading: {
-    color: '#2589BD',
+    color: '#bffaf3',
     duration: localConfig.pybossa.timeout || 5000
   }
 }
