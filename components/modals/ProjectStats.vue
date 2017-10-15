@@ -14,50 +14,43 @@
         for this project.
       </p>
 
-      <loading
-        v-else-if="loading"
-        text="Loading statistics">
-      </loading>
+      <p class="lead d-flex">
+        <icon name="clock-o" scale="2" class="mr-1"></icon>
+        Average contribution time:
+        <strong class="ml-1">{{ avgContribTime }} seconds</strong>
+      </p>
 
-      <span v-else>
-        <p class="lead d-flex">
-          <icon name="clock-o" scale="2" class="mr-1"></icon>
-          Average contribution time:
-          <strong class="ml-1">{{ avgContribTime }} seconds</strong>
-        </p>
+      <proportion-auth-users-chart
+        v-if="userStats.authenticated && userStats.anonymous"
+        :n-anon="userStats.anonymous.taskruns"
+        :n-auth="userStats.authenticated.taskruns">
+      </proportion-auth-users-chart>
 
-        <proportion-auth-users-chart
-          v-if="userStats.authenticated && userStats.anonymous"
-          :n-anon="userStats.anonymous.taskruns"
-          :n-auth="userStats.authenticated.taskruns">
-        </proportion-auth-users-chart>
+      <single-line-chart
+        v-if="projectStats.dayStats"
+        class="mt-3"
+        :header="dailyContributionsHeader"
+        :unit="collectionConfig.terminology.taskRun"
+        :data="dailyContributions">
+      </single-line-chart>
 
-        <single-line-chart
-          v-if="projectStats.dayStats"
-          class="mt-3"
-          :header="dailyContributionsHeader"
-          :unit="collectionConfig.terminology.taskRun"
-          :data="dailyContributions">
-        </single-line-chart>
+      <single-line-chart
+        v-if="projectStats.hourStats"
+        class="mt-3"
+        :header="hourlyContributionsHeader"
+        :unit="collectionConfig.terminology.taskRun"
+        :data="hourlyContributions">
+      </single-line-chart>
 
-        <single-line-chart
-          v-if="projectStats.hourStats"
-          class="mt-3"
-          :header="hourlyContributionsHeader"
-          :unit="collectionConfig.terminology.taskRun"
-          :data="hourlyContributions">
-        </single-line-chart>
+      <bar-chart
+        v-if="userStats.authenticated"
+        class="mt-3"
+        header="Top authenticated users over the past 2 weeks"
+        :unit="collectionConfig.terminology.taskRun"
+        :data="topUsers">
+      </bar-chart>
 
-        <bar-chart
-          v-if="userStats.authenticated"
-          class="mt-3"
-          header="Top authenticated users over the past 2 weeks"
-          :unit="collectionConfig.terminology.taskRun"
-          :data="topUsers">
-        </bar-chart>
-
-        <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
-      </span>
+      <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
     </div>
 
   </b-modal>
@@ -67,7 +60,6 @@
 import moment from 'moment'
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
-import Loading from '@/components/Loading'
 import BarChart from '@/components/charts/Bar'
 import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
 import SingleLineChart from '@/components/charts/SingleLineChart'
@@ -75,7 +67,6 @@ import SingleLineChart from '@/components/charts/SingleLineChart'
 export default {
   data: function () {
     return {
-      loading: true,
       avgContribTime: 0,
       userStats: {},
       projectStats: {}
@@ -83,7 +74,6 @@ export default {
   },
 
   components: {
-    Loading,
     BarChart,
     ProportionAuthUsersChart,
     SingleLineChart
@@ -110,7 +100,6 @@ export default {
      */
     fetchData () {
       this.$pybossa.getProjectStats(this.project.short_name).then(r => {
-        this.loading = false
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}
         this.projectStats = r.data.projectStats || {}

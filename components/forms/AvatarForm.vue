@@ -13,24 +13,16 @@
       {{ msg }}
     </b-alert>
 
-    <loading
-      v-if="loading"
-      text="Loading form">
-    </loading>
+    <div id="preview" ref="preview"></div>
 
-    <span v-else>
-      <div id="preview" ref="preview"></div>
-
-      <div class="mt-2">
-        <b-form-file
-          ref="file"
-          accept="image/*"
-          v-model="form.model.avatar"
-          @input="onInput">
-        </b-form-file>
-      </div>
-
-    </span>
+    <div class="mt-2">
+      <b-form-file
+        ref="file"
+        accept="image/*"
+        v-model="form.model.avatar"
+        @input="onInput">
+      </b-form-file>
+    </div>
 
     <template slot="footer">
       <b-btn
@@ -45,10 +37,8 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import axios from 'axios'
 import localConfig from '@/local.config'
-import Loading from '@/components/Loading'
 
 export default {
   data: function () {
@@ -87,15 +77,7 @@ export default {
     }
   },
 
-  components: {
-    Loading
-  },
-
   computed: {
-    loading: function () {
-      return isEmpty(this.form.model)
-    },
-
     flashMsg: function () {
       // To handle disappearing and multiple alerts
       return this.flash ? [this.flash] : []

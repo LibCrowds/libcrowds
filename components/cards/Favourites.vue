@@ -1,14 +1,6 @@
 <template>
-  <b-card class="favourites-card" no-body :header="'Favourites'">
+  <b-card class="favourites-card" :header="'Favourites'">
 
-    <loading
-      v-if="loading"
-      text="Loading favourites">
-    </loading>
-
-    <div
-      v-else
-      class="card-body">
       <p v-if="!images.length">
         You haven't added any favourite tasks yet.
       </p>
@@ -23,23 +15,16 @@
         :showimagecount="true"
         :showthumbnails="true">
       </v-images>
-    </div>
+
   </b-card>
 </template>
 
 <script>
-import Loading from '@/components/Loading'
-
 export default {
   data: function () {
     return {
-      loading: true,
       images: []
     }
-  },
-
-  components: {
-    Loading
   },
 
   methods: {
@@ -87,7 +72,6 @@ export default {
   mounted () {
     this.$pybossa.getFavourites().then(r => {
       this.images = this.getImageData(r.data)
-      this.loading = false
     })
   }
 }

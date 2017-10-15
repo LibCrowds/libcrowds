@@ -17,13 +17,7 @@
 
     <slot name="top"></slot>
 
-    <loading
-      v-if="loading"
-      text="Loading form">
-    </loading>
-
     <vue-form-generator
-      v-else
       ref="form"
       :schema="form.schema"
       :model="form.model">
@@ -59,9 +53,6 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
-import Loading from '@/components/Loading'
-
 export default {
   data: function () {
     return {
@@ -106,15 +97,7 @@ export default {
     }
   },
 
-  components: {
-    Loading
-  },
-
   computed: {
-    loading: function () {
-      return isEmpty(this.form.model)
-    },
-
     flashMsg: function () {
       // To handle disappearing and multiple alerts
       return this.flash ? [this.flash] : []
