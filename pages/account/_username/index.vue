@@ -1,14 +1,7 @@
 <template>
   <div id="profile">
     <div class="container pt-5 pb-3">
-      <b-card v-if="loading">
-        <loading
-          v-if="loading"
-          text="Loading profile">
-        </loading>
-      </b-card>
-
-      <div class="row" v-else>
+      <div class="row">
         <div class="col-lg-4">
           <profile-card
             v-if="user"
@@ -19,7 +12,7 @@
               block
               variant="success"
               :to="{
-                name: 'account-settings',
+                name: 'account-settings-profile',
                 params: {
                   username: user.name
                 }
@@ -48,21 +41,19 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import ProfileCard from '@/components/cards/Profile'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
-import Loading from '@/components/Loading'
 import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
 
-  data: function () {
+  data () {
     return {
-      user: {},
-      projects: [],
       tableFields: {
-        name: { label: 'Name' },
+        name: {
+          label: 'Name'
+        },
         n_volunteers: {
           label: 'Volunteers',
           class: 'text-center'
@@ -75,6 +66,14 @@ export default {
     }
   },
 
+  async asyncData ({ params }) {
+    const res = await pybossa.getAccount(params.username)
+    return {
+      user: res.data.user,
+      projects: res.data.projects || res.data.projects_contrib
+    }
+  },
+
   metaInfo () {
     return {
       title: `${this.user.fullname}: User Profile`
@@ -83,51 +82,20 @@ export default {
 
   components: {
     ProfileCard,
-    ProjectContribButton,
-    Loading
+    ProjectContribButton
   },
 
   computed: {
-    isCurrentUser: function () {
+    /**
+     * Return true if the profile is for the current user, false otherwise.
+     */
+    isCurrentUser () {
       return (
         this.user &&
         this.$store.state.currentUser &&
         this.user.name === this.$store.state.currentUser.name
       )
-    },
-    loading: function () {
-      return isEmpty(this.user)
     }
-  },
-
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.user = data.user
-      if (data.projects) {
-        this.projects = data.projects
-      } else if (data.projects_contrib) {
-        this.projects = data.projects_contrib
-      }
-    }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getAccount(to.params.username).then(r => {
-      next(vm => vm.setData(r.data))
-    })
-  },
-
-  beforeRouteUpdate (to, from, next) {
-    this.user = null
-    pybossa.getAccount(to.params.username).then(r => {
-      this.setData(r.data)
-      next()
-    })
   }
 }
 </script>
