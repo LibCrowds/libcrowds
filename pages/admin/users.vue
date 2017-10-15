@@ -96,25 +96,6 @@ import pybossa from '@/api/pybossa'
 export default {
   data () {
     return {
-      found: [],
-      adminUsers: [],
-      nUsers: 0,
-      form: {
-        endpoint: '/admin/users',
-        method: 'post',
-        model: {},
-        schema: {
-          fields: [
-            {
-              model: 'user',
-              label: 'Search Users',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Search by name'
-            }
-          ]
-        }
-      },
       tableFields: {
         id: {
           label: 'ID',
@@ -135,6 +116,34 @@ export default {
     }
   },
 
+  async asyncData () {
+    let [adminUserRes, statsRes] = await Promise.all([
+      pybossa.getAdminUsers(),
+      pybossa.getStatsSummary()
+    ])
+    return {
+      nUsers: statsRes.data.n_users,
+      adminUsers: adminUserRes.data.users,
+      found: adminUserRes.data.found,
+      form: {
+        endpoint: '/admin/users',
+        method: 'post',
+        model: statsRes.data.form,
+        schema: {
+          fields: [
+            {
+              model: 'user',
+              label: 'Search Users',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'Search by name'
+            }
+          ]
+        }
+      }
+    }
+  },
+
   metaInfo () {
     return {
       title: `Manage Users`
@@ -146,18 +155,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.adminUsers = data.users
-      this.found = data.found
-      this.form.model = data.form
-      this.nUsers = data.nUsers
-    },
-
     /**
      * Return the featured button text.
      * @param {Object} user
@@ -207,18 +204,6 @@ export default {
         exportFile(r.data, 'user_data', format)
       })
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    let data = {}
-    Promise.all([
-      pybossa.getAdminUsers(),
-      pybossa.getStatsSummary()
-    ]).then(([adminUsersResponse, statsResponse]) => {
-      data = adminUsersResponse.data
-      data.nUsers = statsResponse.data.n_users
-      next(vm => vm.setData(data))
-    })
   }
 }
 </script>
