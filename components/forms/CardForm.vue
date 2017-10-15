@@ -154,7 +154,7 @@ export default {
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
-          handleSuccess(r.data)
+          this.handleSuccess(r.data)
         }
       }).catch(err => {
         this.processing = false
@@ -170,9 +170,9 @@ export default {
      */
     handleSuccess (data) {
       if (this.next) {
-        this.$nuxt.$router.push({ path: this.next })
+        this.$router.push({ path: this.next })
       }
-      this.$emit('success', r.data)
+      this.$emit('success', data)
     },
 
     /**

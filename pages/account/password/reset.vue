@@ -6,6 +6,7 @@
           header="Reset Password"
           submitText="Reset"
           :form="form"
+          :next="next"
           @success="onSuccess">
         </card-form>
       </div>
@@ -66,15 +67,6 @@ export default {
 
   components: {
     CardForm
-  },
-
-  methods: {
-    /**
-     * Handle success.
-     */
-    onSuccess () {
-      this.$nuxt.$router.push({ path: this.next })
-    }
   }
 }
 </script>

@@ -6,6 +6,7 @@
           header="Register"
           submit-text="Sign up"
           :form="form"
+          :next="next"
           @success="onSuccess">
           <div
             slot="top"
@@ -58,12 +59,13 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'default',
 
-  async asyncData () {
+  async asyncData ({ query }) {
     const [registrationRes, signinRes] = await Promise.all([
       pybossa.getAccountRegistration(),
       pybossa.getAccountSignin()
     ])
     return {
+      next: query.next || '/',
       form: {
         endpoint: '/account/register',
         method: 'post',
@@ -131,7 +133,7 @@ export default {
 
   methods: {
     /**
-     * Redirect after sucessful signup.
+     * Show alert if confirmation is required.
      * @param {Object} data
      *   The response.
      */
@@ -143,9 +145,6 @@ export default {
           'link in the email that we just sent you',
           'success'
         )
-        this.$router.push({ name: 'index' })
-      } else {
-        this.$router.push({ path: data.next })
       }
     }
   }

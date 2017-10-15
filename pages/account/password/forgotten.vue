@@ -6,6 +6,7 @@
           header="Forgotten Password"
           submit-text="Reset"
           :form="form"
+          :next="next"
           @success="onSuccess">
         </card-form>
       </div>
@@ -58,15 +59,6 @@ export default {
 
   components: {
     CardForm
-  },
-
-  methods: {
-    /**
-     * Redirect the user on form submit success.
-     */
-    onSuccess () {
-      this.$nuxt.$router.push({ path: this.next })
-    }
   }
 }
 </script>

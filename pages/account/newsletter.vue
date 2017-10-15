@@ -60,8 +60,9 @@ export default {
      *   True to subscribe, false otherwise.
      */
     subscribe (subscribe) {
+      const next = this.$route.query.next || '/'
       pybossa.subscribeToNewsletter(subscribe).then(res => {
-        this.$nuxt.$router.push({ path: res.data.next })
+        this.$router.push({ path: next })
       })
     }
   }

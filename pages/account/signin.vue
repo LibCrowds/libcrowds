@@ -7,7 +7,7 @@
           :lead="lead"
           submit-text="Sign in"
           :form="form"
-          @success="onSuccess">
+          :next="next">
 
           <div
             slot="bottom"
@@ -97,15 +97,6 @@ export default {
   components: {
     CardForm,
     OauthButtons
-  },
-
-  methods: {
-    /**
-     * Handle success.
-     */
-    onSuccess () {
-      this.$nuxt.$router.push({ path: this.next })
-    }
   }
 }
 </script>
