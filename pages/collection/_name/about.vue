@@ -49,12 +49,12 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig
+      localConfig: localConfig
     }
   },
 
@@ -64,7 +64,7 @@ export default {
       meta: [
         {
           name: 'description',
-          content: `Learn more about the ${siteConfig.brand} platform`
+          content: `Learn more about the ${localConfig.brand} platform`
         }
       ]
     }
@@ -111,8 +111,8 @@ export default {
 
     intro: function () {
       const intro = this.getCustom('intro')
-      return intro || `${siteConfig.brand} is a platform for hosting
-        experimental crowdsourcing projects from ${siteConfig.brand}. By
+      return intro || `${localConfig.brand} is a platform for hosting
+        experimental crowdsourcing projects from ${localConfig.brand}. By
         contributing to the projects on this platform you will be directly
         helping to enable future research.`
     }

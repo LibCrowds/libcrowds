@@ -6,8 +6,8 @@
       <p>
         All datasets generated from the experimental crowdsourcing projects
         hosted on this platform are made available under a
-        <a :href="siteConfig.dataLicense.url" target="_blank">
-          {{ siteConfig.dataLicense.name }}
+        <a :href="localConfig.dataLicense.url" target="_blank">
+          {{ localConfig.dataLicense.name }}
         </a> license.
       </p>
       <p>
@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import CategoryListChooser from '@/components/category/ListChooser'
 import ProjectPagination from '@/components/project/Pagination'
 import DataModal from '@/components/modals/Data'
@@ -101,7 +101,7 @@ import pybossa from '@/api/pybossa'
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
+      localConfig: localConfig,
       navItems: [
         { id: 'download', text: 'Download' }
       ],
@@ -130,7 +130,7 @@ export default {
           name: 'description',
           content: `All datasets generated from the experimental crowdsourcing
                    projects hosted on this platform are made available under a
-                   ${siteConfig.dataLicense.name} license.`
+                   ${localConfig.dataLicense.name} license.`
         }
       ]
     }

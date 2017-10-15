@@ -7,19 +7,19 @@
             <div
               id="company-logo"
               class="d-inline-block"
-              v-html="siteConfig.logo"
-              v-if="siteConfig.logo">
+              v-html="localConfig.logo"
+              v-if="localConfig.logo">
             </div>
             <span
               class="mr-2 d-none d-lg-inline-block"
-              v-if="siteConfig.logo">
+              v-if="localConfig.logo">
             </span>
             <h1 class="display-3 d-none d-lg-inline-block mb-0">
               {{ collectionConfig.name }}
             </h1>
             <span
               class="mr-4 d-none d-lg-inline-block"
-              v-if="siteConfig.logo">
+              v-if="localConfig.logo">
             </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
@@ -50,7 +50,7 @@
         <hr class="my-3 w-75 sr">
         <p class="lead mb-0 px-1">
           Your contributions will have a direct impact on enabling future
-          research at {{ siteConfig.company }}.
+          research at {{ localConfig.company }}.
         </p>
         <hr class="mt-3 w-75 sr">
         <b-btn
@@ -121,9 +121,9 @@
             All datasets generated from the experimental crowdsourcing
             projects hosted on this platform are made available under a
             <a
-              :href="siteConfig.dataLicense.url"
+              :href="localConfig.dataLicense.url"
               target="_blank">
-              {{ siteConfig.dataLicense.name }} license
+              {{ localConfig.dataLicense.name }} license
             </a>
             and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
@@ -170,7 +170,7 @@
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
           Your contributions will have a direct impact on enabling future
-          research at {{ siteConfig.company }}.
+          research at {{ localConfig.company }}.
         </p>
         <b-btn
           variant="success"
@@ -199,7 +199,7 @@
 <script>
 import ScrollReveal from 'scrollreveal'
 import 'vue-awesome/icons/star'
-import siteConfig from '@/siteConfig'
+import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/project/Card'
 import codeImage from '@/assets/img/code.png'
@@ -209,8 +209,7 @@ import pybossa from '@/api/pybossa'
 export default {
   data: function () {
     return {
-      siteConfig: siteConfig,
-      logo: siteConfig.logo,
+      localConfig: localConfig,
       categories: [],
       featured: [],
       dataStyle: {
@@ -302,7 +301,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/assets/style/main';
+@import '~/assets/style/main';
 
 #collection-home {
   .container.full-height {
