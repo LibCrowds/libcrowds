@@ -3,16 +3,14 @@
     :id="modalId"
     title="Leaderboard"
     ok-only>
-    <div>
-      <b-table
-        responsive
-        striped
-        hover
-        show-empty
-        :items="filteredUsers"
-        :fields="fields">
-      </b-table>
-    </div>
+    <b-table
+      responsive
+      striped
+      hover
+      show-empty
+      :items="filteredUsers"
+      :fields="fields">
+    </b-table>
   </b-modal>
 </template>
 
