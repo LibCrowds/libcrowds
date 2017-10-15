@@ -10,17 +10,19 @@
         </nuxt-link>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
-          <li class="list-inline-item m-0">
+          <li class="list-inline-item mx-1">
             <a :href="twitterUrl" class="text-muted">
               <icon name="twitter"></icon>
             </a>
           </li>
-          <li class="list-inline-item mx-3">
+          <li class="list-inline-item mx-1">
             <a :href="mailto" class="text-muted">
               <icon name="envelope"></icon>
            </a>
           </li>
-          <li class="list-inline-item m-0">
+          <li
+            v-if="localConfig.githubUrl"
+            class="list-inline-item mx-1">
             <a :href="localConfig.githubUrl" class="text-muted">
               <icon name="github"></icon>
            </a>
