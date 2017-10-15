@@ -12,12 +12,17 @@
   "plugins": [ "transform-runtime"],
   "env": {
     "testing": {
-      "presets": ["env", "stage-2", "backpack-core/babel"],
+      "presets": [
+        "env",
+        "stage-2",
+        "backpack-core/babel"
+      ],
       "plugins": [
         ["module-resolver", {
           "root": ["."],
           "alias": {
-            "~": "./"
+            "~": "./",
+            "@": "./"
           }
         }]
       ]

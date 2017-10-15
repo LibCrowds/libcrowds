@@ -1,0 +1,85 @@
+<template>
+  <div id="forgotten-password">
+    <div class="container my-5">
+      <div class="col-lg-8 mx-auto">
+        <card-form
+          header="Forgotten Password"
+          submit-text="Reset"
+          :form="form"
+          @success="onSuccess">
+        </card-form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import localConfig from '@/local.config'
+import CardForm from '@/components/forms/CardForm'
+import pybossa from '@/api/pybossa'
+
+export default {
+  layout: 'default',
+
+  data () {
+    return {
+      form: {
+        endpoint: '/account/forgot-password',
+        method: 'post',
+        model: {},
+        schema: {
+          fields: [
+            {
+              model: 'email_addr',
+              label: 'Email',
+              type: 'input',
+              inputType: 'email',
+              placeholder: 'you@example.com'
+            }
+          ]
+        }
+      }
+    }
+  },
+
+  metaInfo () {
+    return {
+      title: 'Forgotten Password',
+      meta: [
+        {
+          name: 'description',
+          content: `Reset your ${localConfig.brand} password`
+        }
+      ]
+    }
+  },
+
+  components: {
+    CardForm
+  },
+
+  methods: {
+    /**
+     * Set core data.
+     * @param {Object} data
+     *   The data.
+     */
+    setData (data) {
+      this.form.model = data.form
+    },
+
+    /**
+     * Redirect the user on form submit success.
+     */
+    onSuccess () {
+      this.$router.push({ name: 'landing' })
+    }
+  },
+
+  beforeRouteEnter (to, from, next) {
+    pybossa.getRecoverPassword().then(r => {
+      next(vm => vm.setData(r.data))
+    })
+  }
+}
+</script>

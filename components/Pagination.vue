@@ -1,6 +1,5 @@
 <template>
-  <div id="project-pagination">
-
+  <div id="pagination">
     <div class="justify-content-center row mt-2">
       <b-pagination
         variant="info"
@@ -10,7 +9,6 @@
         @change="onPageChange">
       </b-pagination>
     </div>
-
   </div>
 </template>
 

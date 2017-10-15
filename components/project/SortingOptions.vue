@@ -24,12 +24,12 @@
 
     <div id="show-completed" class="form-group mb-0 mt-2">
       <label>Show completed:</label>
-      <toggle-button
+      <vue-toggle-button
         :value="showCompleted"
         :sync="true"
         :labels="true"
         @change="onToggleCompleted">
-      </toggle-button>
+      </vue-toggle-button>
     </div>
   </b-card>
 </template>

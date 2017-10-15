@@ -78,7 +78,7 @@
       <b-nav id="sign-in-up" is-nav-bar v-else right>
         <b-nav-item
           :to="{
-            name: 'signin',
+            name: 'account-signin',
             query: {
               next: next
             }
@@ -88,7 +88,7 @@
         <b-nav-item
           id="btn-register"
           :to="{
-            name: 'register'
+            name: 'account-register'
           }">
           Sign up
         </b-nav-item>

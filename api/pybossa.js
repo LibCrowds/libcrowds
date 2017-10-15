@@ -267,11 +267,13 @@ const PyBossaApi = {
          * Subscribe to the newsletter.
          *
          * http://docs.pybossa.com/en/latest/api.html#account-subscribe-to-newsletter
+         * @param {Boolean} subscribe
+         *   True to subscribe, false otherwise.
          */
-        subscribeToNewsletter () {
+        subscribeToNewsletter (subscribe) {
           return this.client.get(`/account/newsletter`, {
             params: {
-              subscribe: true
+              subscribe: subscribe ? 'True' : 'False'
             }
           })
         },

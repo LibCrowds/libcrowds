@@ -150,7 +150,7 @@
           <b-nav is-nav-bar v-else>
             <b-nav-item
               :to="{
-                name: 'signin',
+                name: 'account-signin',
                 query: {
                   next: next
                 }
@@ -160,7 +160,7 @@
             <b-nav-item
               class="nav-button"
               :to="{
-                name: 'register'
+                name: 'account-register'
               }">
               Sign up
             </b-nav-item>

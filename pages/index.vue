@@ -83,8 +83,9 @@
                 :key="user.id"
                 class="text-center d-inline-block mx-1"
                 v-for="user in topUsers">
-                <nuxt-link :to="{
-                    name: 'profile',
+                <nuxt-link
+                  :to="{
+                    name: 'account-username',
                     params: {
                       username: user.name
                     }
@@ -93,7 +94,7 @@
                   <div class="my-1">
                     <user-avatar
                       :user="user"
-                      tooltipTriggers="hover">
+                      tooltip-triggers="hover">
                     </user-avatar>
                   </div>
                 </nuxt-link>
@@ -115,8 +116,8 @@
     </section>
 
     <leaderboard-modal
-      :currentUser="currentUser"
-      :modalId="leaderboardModalId">
+      :current-user="currentUser"
+      :modal-id="leaderboardModalId">
     </leaderboard-modal>
   </div>
 </template>
@@ -172,14 +173,13 @@ export default {
   },
 
   computed: {
-    topUsersTaskRuns: function () {
+    topUsersTaskRuns () {
       const scores = this.topUsers.map((user) => user.score)
-      const sum = scores.reduce(function (acc, val) {
+      return scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-      return sum
     },
-    currentUser: function () {
+    currentUser () {
       return this.$store.state.currentUser
     }
   }

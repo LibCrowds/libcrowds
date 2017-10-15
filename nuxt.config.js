@@ -64,8 +64,10 @@ module.exports = {
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
+    { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
-    { src: '~/plugins/vue-scrollto', ssr: false }
+    { src: '~/plugins/vue-scrollto', ssr: false },
+    { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
   modules: [
     '@nuxtjs/pwa'

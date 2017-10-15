@@ -45,7 +45,6 @@
 </template>
 
 <script>
-import Croppie from 'croppie'
 import isEmpty from 'lodash/isEmpty'
 import axios from 'axios'
 import localConfig from '@/local.config'
@@ -150,6 +149,7 @@ export default {
   },
 
   mounted () {
+    const Croppie = require('croppie')
     const previewEl = this.$refs.preview
     this.croppie = new Croppie(previewEl, {
       viewport: {
