@@ -1,28 +1,34 @@
 <template>
   <div id="dashboard-layout">
+
     <dashboard-sidenav
-      :position="'side'"
-      :navItems="dashboardNavItems">
+      position="side"
+      :nav-items="dashboardNavItems">
     </dashboard-sidenav>
 
     <div class="dashboard">
+
       <app-navbar
-        :currentUser="currentUser"
-        :hideBrandBreakpoint="'lg'"
+        :current-user="currentUser"
+        hide-brand-breakpoint="lg"
         :fixed="null">
       </app-navbar>
+
       <dashboard-sidenav
-        :position="'top'"
-        :navItems="dashboardNavItems">
+        position="top"
+        :nav-items="dashboardNavItems">
       </dashboard-sidenav>
+
       <main>
         <div class="container px-lg-4 py-4">
           <transition name="fade" mode="out-in" appear>
-            <nuxt :currentUser="currentUser"></nuxt>
+            <nuxt :current-user="currentUser"></nuxt>
           </transition>
         </div>
       </main>
+
       <dashboard-footer></dashboard-footer>
+
     </div>
   </div>
 </template>
@@ -33,16 +39,41 @@ import AppNavbar from '@/components/navs/AppNavbar'
 import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
 export default {
-  props: {
-    dashboardNavItems: {
-      type: Array,
-      required: true
-    }
-  },
-
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+    dashboardNavItems () {
+      if (this.$route.path.startsWith('/account')) {
+        return [
+          { name: 'account-profile-settings', label: 'Profile' },
+          { name: 'account-api-settings', label: 'API' },
+          { name: 'account-avatar-settings', label: 'Avatar' },
+          { name: 'account-security-settings', label: 'Security' }
+        ]
+      } else if (this.$route.path.startsWith('/admin')) {
+        return [
+          { name: 'admin-dashboard', label: 'Dashboard' },
+          { name: 'admin-featured', label: 'Featured Projects' },
+          { name: 'admin-categories', label: 'Categories' },
+          { name: 'admin-users', label: 'Users' },
+          { name: 'admin-announcements', label: 'Announcements' },
+          { name: 'admin-background-jobs', label: 'Background Jobs' }
+        ]
+      } else if (this.$route.path.startsWith('/help')) {
+        return [
+          { name: 'help-api', label: 'API' },
+          { name: 'help-cookies', label: 'Cookies Policy' },
+          { name: 'help-privacy', label: 'Privacy Policy' },
+          { name: 'help-tos', label: 'Terms of Service' }
+        ]
+      } else if (this.$route.path.startsWith('/project')) {
+        return [
+          { name: 'project-settings', label: 'Settings' },
+          { name: 'project-thumbnail', label: 'Thumbnail' }
+        ]
+      }
+      return []
     }
   },
 
