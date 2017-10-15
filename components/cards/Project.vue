@@ -2,7 +2,7 @@
   <b-card
     no-body
     class="project-card">
-    <router-link
+    <nuxt-link
       :to="{
         name: 'collection-presenter',
         params: {
@@ -14,11 +14,11 @@
           :project="project">
         </project-avatar>
       </div>
-    </router-link>
+    </nuxt-link>
 
     <div class="card-body project-details p-0">
       <div class="card-title mb-0">
-        <router-link
+        <nuxt-link
           :to="{
             name: 'collection-presenter',
             params: {
@@ -28,7 +28,7 @@
           <h4 class="card-title mb-1 px-2 pt-2">
             {{ project.name }}
           </h4>
-        </router-link>
+        </nuxt-link>
         <div>
           <b-btn
             v-b-modal="statsModalId"

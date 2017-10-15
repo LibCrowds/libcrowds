@@ -83,7 +83,7 @@
                 :key="user.id"
                 class="text-center d-inline-block mx-1"
                 v-for="user in topUsers">
-                <router-link :to="{
+                <nuxt-link :to="{
                     name: 'profile',
                     params: {
                       username: user.name
@@ -96,7 +96,7 @@
                       tooltipTriggers="hover">
                     </user-avatar>
                   </div>
-                </router-link>
+                </nuxt-link>
                 <p class="badge badge-info">{{ user.score }}</p>
               </li>
             </ul>
