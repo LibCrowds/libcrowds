@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
+
 export default {
   data: function () {
     return {
@@ -139,7 +141,7 @@ export default {
       }
 
       this.flash = ''
-      this.$pybossa.client({
+      pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
