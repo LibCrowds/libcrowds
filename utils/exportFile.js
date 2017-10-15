@@ -17,6 +17,5 @@ export default function (data, prefix, format) {
   }
   const blob = new Blob([data], { type: types[format] })
   const fn = `${prefix}.${format}`
-  console.log(blob, fn)
   return FileSaver.saveAs(blob, fn)
 }

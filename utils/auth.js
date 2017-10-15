@@ -25,7 +25,6 @@ export const manageSession = (store, cookie) => {
     (hasSession && currentUser.name !== sessionName)
   )
 
-  console.log('UPDATING', update)
   if (update) {
     store.dispatch('UPDATE_CURRENT_USER')
   }
