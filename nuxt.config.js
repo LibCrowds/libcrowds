@@ -76,5 +76,9 @@ module.exports = {
     name: localConfig.brand,
     description: localConfig.description,
     theme_color: '#BA0000'
+  },
+  loading: {
+    color: '#2589BD',
+    duration: localConfig.pybossa.timeout || 5000
   }
 }
