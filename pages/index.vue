@@ -1,36 +1,34 @@
 <template>
   <div id="index">
-    <transition appear>
-      <div id="app-hero">
-        <div class="container">
-          <span class="d-none d-md-flex"></span>
-          <p id="site-tagline">{{ localConfig.tagline }}</p>
-          <div class="stat-row d-none d-md-flex">
-            <div class="stat-circle">
-              <span class="stat">
-                {{ stats.n_total_users | intComma }}
-              </span>
-              <icon name="users"></icon>
-              <p>Volunteers</p>
-            </div>
-            <div class="stat-circle">
-              <span class="stat">
-                {{ stats.n_task_runs | intComma }}
-              </span>
-              <icon name="list"></icon>
-              <p>Contributions</p>
-            </div>
-            <div class="stat-circle">
-              <span class="stat">
-                {{ stats.n_published_projects | intComma }}
-              </span>
-              <icon name="television"></icon>
-              <p>Projects</p>
-            </div>
+    <div id="app-hero">
+      <div class="container">
+        <span class="d-none d-md-flex"></span>
+        <p id="site-tagline">{{ localConfig.tagline }}</p>
+        <div class="stat-row d-none d-md-flex">
+          <div class="stat-circle">
+            <span class="stat">
+              {{ stats.n_total_users | intComma }}
+            </span>
+            <icon name="users"></icon>
+            <p>Volunteers</p>
+          </div>
+          <div class="stat-circle">
+            <span class="stat">
+              {{ stats.n_task_runs | intComma }}
+            </span>
+            <icon name="list"></icon>
+            <p>Contributions</p>
+          </div>
+          <div class="stat-circle">
+            <span class="stat">
+              {{ stats.n_published_projects | intComma }}
+            </span>
+            <icon name="television"></icon>
+            <p>Projects</p>
           </div>
         </div>
       </div>
-    </transition>
+    </div>
 
     <section id="contribute" class="bg-light">
       <div class="container py-4">
