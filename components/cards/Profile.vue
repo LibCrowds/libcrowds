@@ -35,7 +35,7 @@
 import 'vue-awesome/icons/trophy'
 import 'vue-awesome/icons/tasks'
 import 'vue-awesome/icons/clock-o'
-import UserAvatar from '~/components/avatars/User'
+import UserAvatar from '@/components/avatars/User'
 
 export default {
   props: {

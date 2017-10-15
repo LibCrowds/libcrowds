@@ -43,7 +43,13 @@
         {{ project.description }}
       </p>
 
-      <div class="progress-container" :id="progressId"></div>
+      <div class="progress-container">
+        <vue-progress-bar
+          type="line"
+          ref="progress"
+          :options="progressBarOpts">
+        </vue-progress-bar>
+      </div>
 
       <div class="card-footer mt-1 px-2 py-1">
         <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
@@ -85,7 +91,6 @@
 
 <script>
 import 'vue-awesome/icons/bar-chart'
-import ProgressBar from 'progressbar.js'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/tasks'
 import ProjectAvatar from '@/components/avatars/Project'
@@ -95,8 +100,19 @@ import ProjectStatsModal from '@/components/modals/ProjectStats'
 export default {
   data: function () {
     return {
-      progressId: `progress-${this.project.short_name}`,
-      statsModalId: `project-stats-modal-${this.project.id}`
+      statsModalId: `project-stats-modal-${this.project.id}`,
+      progressBarOpts: {
+        strokeWidth: 4,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#d0e5d0',
+        trailColor: 'rgba(0, 0, 0, 0.125)',
+        trailWidth: 0.5,
+        svgStyle: {
+          width: '100%',
+          height: '100%'
+        }
+      }
     }
   },
 
@@ -118,19 +134,7 @@ export default {
   },
 
   mounted () {
-    const bar = new ProgressBar.Line(`#${this.progressId}`, {
-      strokeWidth: 4,
-      easing: 'easeInOut',
-      duration: 1400,
-      color: '#d0e5d0',
-      trailColor: 'rgba(0, 0, 0, 0.125)',
-      trailWidth: 0.5,
-      svgStyle: {
-        width: '100%',
-        height: '100%'
-      }
-    })
-    bar.animate(this.project.overall_progress / 100)
+    this.$refs.progress.animate(this.project.overall_progress / 100)
   }
 }
 </script>

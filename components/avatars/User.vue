@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import localConfig from '~/local.config'
+import localConfig from '@/local.config'
 
 export default {
   data () {
