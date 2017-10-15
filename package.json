@@ -14,6 +14,7 @@
     "test": "npm run lint && npm run unit"
   },
   "dependencies": {
+    "@nuxtjs/google-analytics": "^1.0.0",
     "@nuxtjs/pwa": "^1.0.2",
     "axios": "^0.16.2",
     "bootstrap": "4.0.0-beta",

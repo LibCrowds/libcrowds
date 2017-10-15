@@ -73,7 +73,8 @@ module.exports = {
     { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
   modules: [
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    ['@nuxtjs/google-analytics', { ua: localConfig.analytics }]
   ],
   manifest: {
     name: localConfig.brand,
