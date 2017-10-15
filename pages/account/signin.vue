@@ -53,10 +53,17 @@ export default {
     }
   },
 
-  async asyncData ({ query, params }) {
+  async asyncData ({ query, redirect }) {
     const res = await pybossa.getAccountSignin()
+    const next = query.next || '/'
+
+    // Redirect if already signed in
+    if (res.data.next === '/') {
+      redirect(next)
+    }
+
     return {
-      next: query.next || '/',
+      next: next,
       auth: res.data.auth,
       form: {
         endpoint: '/account/signin',

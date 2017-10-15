@@ -59,13 +59,20 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'default',
 
-  async asyncData ({ query }) {
+  async asyncData ({ query, redirect }) {
     const [registrationRes, signinRes] = await Promise.all([
       pybossa.getAccountRegistration(),
       pybossa.getAccountSignin()
     ])
+    const next = query.next || '/'
+
+    // Redirect if already signed in
+    if (signinRes.data.next === '/') {
+      redirect(next)
+    }
+
     return {
-      next: query.next || '/',
+      next: next,
       form: {
         endpoint: '/account/register',
         method: 'post',
