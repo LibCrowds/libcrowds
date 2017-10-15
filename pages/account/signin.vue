@@ -55,9 +55,8 @@ export default {
 
   async asyncData ({ query, params }) {
     const res = await pybossa.getAccountSignin()
-    const next = query.next || '/'
     return {
-      next: next,
+      next: query.next || '/',
       auth: res.data.auth,
       form: {
         endpoint: '/account/signin',

@@ -21,12 +21,14 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'default',
 
-  data () {
+  async asyncData ({ query }) {
+    let res = await pybossa.getRecoverPassword()
     return {
+      next: query.next || '/',
       form: {
         endpoint: '/account/forgot-password',
         method: 'post',
-        model: {},
+        model: res.data.form,
         schema: {
           fields: [
             {
@@ -60,26 +62,11 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.form.model = data.form
-    },
-
-    /**
      * Redirect the user on form submit success.
      */
     onSuccess () {
-      this.$router.push({ name: 'landing' })
+      this.$nuxt.$router.push({ path: this.next })
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getRecoverPassword().then(r => {
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>

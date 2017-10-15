@@ -21,15 +21,15 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'default',
 
-  async asyncData ({ params }) {
+  async asyncData ({ query }) {
     const res = await pybossa.getResetPassword()
     return {
-      next: params.query.next || '/',
+      next: query.next || '/',
       form: {
         endpoint: '/account/reset-password',
         method: 'post',
         model: res.data.form,
-        params: params.query || null,
+        params: query || null,
         schema: {
           fields: [
             {
@@ -73,7 +73,7 @@ export default {
      * Handle success.
      */
     onSuccess () {
-      this.$router.push({ path: this.next })
+      this.$nuxt.$router.push({ path: this.next })
     }
   }
 }
