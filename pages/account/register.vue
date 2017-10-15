@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert2'
 import localConfig from '@/local.config'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
@@ -60,7 +59,7 @@ export default {
   layout: 'default',
 
   async asyncData () {
-    const [registrationResponse, signinResponse] = await Promise.all([
+    const [registrationRes, signinRes] = await Promise.all([
       pybossa.getAccountRegistration(),
       pybossa.getAccountSignin()
     ])
@@ -68,7 +67,7 @@ export default {
       form: {
         endpoint: '/account/register',
         method: 'post',
-        model: registrationResponse.data.form,
+        model: registrationRes.data.form,
         schema: {
           fields: [
             {
@@ -109,7 +108,7 @@ export default {
           ]
         }
       },
-      auth: signinResponse.data.auth
+      auth: signinRes.data.auth
     }
   },
 
@@ -138,7 +137,7 @@ export default {
      */
     onSuccess (data) {
       if (data.status === 'sent') {
-        swal(
+        this.$swal(
           'Confirm your email',
           'To complete your registration please click the confirmation ' +
           'link in the email that we just sent you',
@@ -149,18 +148,6 @@ export default {
         this.$router.push({ path: data.next })
       }
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    let data = {}
-    Promise.all([
-      pybossa.getAccountRegistration(),
-      pybossa.getAccountSignin()
-    ]).then(([regResponse, signinResponse]) => {
-      data = regResponse.data
-      data.auth = signinResponse.data.auth
-      next(vm => vm.setData(data))
-    })
   }
 }
 </script>

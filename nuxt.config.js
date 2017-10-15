@@ -67,6 +67,7 @@ module.exports = {
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-scrollto', ssr: false },
+    { src: '~/plugins/vue-sweetalert', ssr: false },
     { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
   modules: [

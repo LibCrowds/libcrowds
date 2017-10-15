@@ -187,7 +187,6 @@
 </template>
 
 <script>
-import swal from 'sweetalert2'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
@@ -471,7 +470,7 @@ export default {
      * Handle the skip button click.
      */
     onSkip () {
-      swal({
+      this.$swal({
         title: 'Skip Task',
         text: 'Are you sure you want to skip this task?',
         type: 'warning',
@@ -484,7 +483,7 @@ export default {
           comments: this.$refs.comments.value
         })
       }, (dismiss) => {
-        swal.close()
+        this.$swal.close()
       })
     },
 
