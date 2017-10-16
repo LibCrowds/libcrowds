@@ -60,8 +60,9 @@ localConfig.brand: 'My Brand'
 The `collections` property is used to establish the two-way binding between the site configuration and each microsite configuration. Each key must be the same as the [`key`](configuration.md#key) that appears in the linked microsite configuration.
 
 ```js
+const path = require('path')
 localConfig.collections = {
-  my_collection: require(`./custom/collections/my_collection/config.js`)
+  my_collection: path.resolve(`./custom/collections/my_collection/config.js`)
 }
 ```
 
@@ -113,10 +114,11 @@ localConfig.githubUrl = 'https://github.com/github'
 
 ### logo
 
-The `logo`, which should be an SVG file, will be displayed on each microsite homepage.
+An absolute path to the `logo`, which should be an SVG file and will be displayed on each microsite homepage.
 
 ```js
-localConfig.logo = require(`./company-logo.svg`)
+const path = require('path')
+localConfig.logo = path.resolve(`./company-logo.svg`)
 ```
 
 ### mapbox
