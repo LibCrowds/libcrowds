@@ -6,7 +6,7 @@ exports[`Profile card renders correctly 1`] = `
      class="profile-card card"
 >
   <div class="avatar-background">
-    <div class="user-avatar"
+    <div class="user-avatar mx-auto"
          style="width:200px;"
     >
       <v-gravatar triggers
