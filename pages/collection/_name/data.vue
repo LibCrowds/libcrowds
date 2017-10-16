@@ -136,6 +136,7 @@ export default {
       title: 'Data',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: `All datasets generated from the experimental crowdsourcing
                    projects hosted on this platform are made available under a

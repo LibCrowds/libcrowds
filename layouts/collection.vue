@@ -27,7 +27,11 @@ export default {
     return {
       titleTemplate: tmpl,
       meta: [
-        { name: 'description', content: this.collectionConfig.description },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.collectionConfig.description
+        },
 
         // Facebook Open Graph Markup
         { property: 'og:url', content: window.location.href },

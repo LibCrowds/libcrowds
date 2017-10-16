@@ -65,6 +65,7 @@ export default {
       title: 'About',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: `Learn more about the ${localConfig.brand} platform`
         }

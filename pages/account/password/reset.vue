@@ -57,6 +57,7 @@ export default {
       title: 'Reset Password',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: `Reset your ${localConfig.brand} password`
         }

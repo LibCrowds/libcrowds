@@ -94,6 +94,7 @@ export default {
       title: 'Sign in',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: `Sign in to ${localConfig.brand}`
         }

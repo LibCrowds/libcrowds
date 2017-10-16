@@ -54,6 +54,7 @@ export default {
       title: this.title,
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: this.description
         }

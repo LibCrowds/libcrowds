@@ -177,6 +177,7 @@ export default {
       title: 'Contribute',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: 'Choose a project to contribute towards'
         }

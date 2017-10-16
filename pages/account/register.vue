@@ -126,6 +126,7 @@ export default {
       title: 'Register',
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: `Sign up for a new ${localConfig.brand} account`
         }

@@ -234,6 +234,7 @@ export default {
       title: this.collectionConfig.tagline,
       meta: [
         {
+          hid: 'description',
           name: 'description',
           content: this.collectionConfig.description
         }

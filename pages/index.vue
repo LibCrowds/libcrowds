@@ -159,7 +159,11 @@ export default {
     return {
       title: this.localConfig.tagline,
       meta: [
-        { name: 'description', content: this.localConfig.description },
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.localConfig.description
+        },
 
         // Facebook Open Graph Markup
         { property: 'og:title', content: this.localConfig.brand },
