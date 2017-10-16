@@ -9,9 +9,9 @@ import capitalize from 'capitalize'
 export default function (res) {
   if (res !== undefined && res.data.status !== 'error' && 'flash' in res.data) {
     Vue.Notification({
-      title: capitalize(r.data.status),
-      text: r.data.flash,
-      type: r.data.status
+      title: capitalize(res.data.status),
+      text: res.data.flash,
+      type: res.data.status
     })
   }
   return res
