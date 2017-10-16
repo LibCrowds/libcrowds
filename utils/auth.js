@@ -1,15 +1,12 @@
 /**
- * Check for a PyBossa session cookie for the current user, update accordingly.
- * @param {Object} store
- *   The vuex store.
- * @param {String} cookie
+ * Return true if the PYBOSSA session is not for the user, false otherwise.
+ * @param {Object} user
+ *   The user.
+ * @param {String} cookieStr
  *   The document cookie string.
- * @param {Object} app
- *   The Vue instance.
  */
-export const manageSession = (store, cookie, app) => {
-  const currentUser = store.state.currentUser
-  const allCookies = cookie.split(';')
+export const updateSession = (user, cookieStr) => {
+  const allCookies = cookieStr.split(';')
   let hasSession = false
   let sessionName = null
 
@@ -21,13 +18,9 @@ export const manageSession = (store, cookie, app) => {
     }
   }
 
-  // Update if the current user doesn't match the current session
-  const update = (
-    ((currentUser === null || currentUser === undefined) === hasSession) ||
-    (hasSession && currentUser.name !== sessionName)
+  // Return true if the user doesn't match the current session
+  return (
+    ((user === null || user === undefined) === hasSession) ||
+    (hasSession && user.name !== sessionName)
   )
-
-  if (update) {
-    store.dispatch('UPDATE_CURRENT_USER', app.$pybossa)
-  }
 }

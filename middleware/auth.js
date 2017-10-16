@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { manageSession } from '@/utils/auth'
+import { updateSession } from '@/utils/auth'
 
 /**
  * Router middleware to manage the user's session.
@@ -7,10 +7,17 @@ import { manageSession } from '@/utils/auth'
  *   The nuxt context.
  */
 export default function ({ isServer, store, req, app }) {
+  const currentUser = store.state.currentUser
+  const update = false
+
   if (isServer && req) {
     axios.defaults.headers.common.cookie = req.headers.cookie
-    manageSession(store, req.headers.cookie, app)
+    update = updateSession(currentUser, req.headers.cookie)
   } else {
-    manageSession(store, document.cookie, app)
+    update = updateSession(currentUser, document.cookie)
+  }
+
+  if (update) {
+    store.dispatch('UPDATE_CURRENT_USER', app.$pybossa)
   }
 }
