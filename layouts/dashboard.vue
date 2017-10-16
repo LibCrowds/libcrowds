@@ -29,7 +29,7 @@
 
       <dashboard-footer></dashboard-footer>
 
-      <vue-notifications position="bottom left"></vue-notifications>
+      <notifications position="bottom left"></notifications>
 
     </div>
   </div>
