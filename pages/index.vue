@@ -40,8 +40,7 @@
           <collection-card
             v-for="(config, key) in localConfig.collections"
             :key="key"
-            :collection-config="config"
-            :collection-name="key">
+            :collection="config">
           </collection-card>
         </div>
       </div>

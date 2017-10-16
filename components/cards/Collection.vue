@@ -8,20 +8,20 @@
       :to="{
         name: 'collection-home',
         params: {
-          collectionname: collectionName
+          collectionname: collection.key
         }
       }">
       <div
         class="collection-card-img"
-        :style="{ backgroundImage: `url('${collectionConfig.bgImg}')` }">
+        :style="{ backgroundImage: `url('${collection.bgImg}')` }">
       </div>
       <div class="card-body">
         <h4 class="card-title">
-          {{ collectionConfig.name }}
+          {{ collection.name }}
         </h4>
         <hr class="my-1">
         <p class="card-text">
-          {{ collectionConfig.tagline }}
+          {{ collection.tagline }}
         </p>
       </div>
       <div class="card-footer">
@@ -40,11 +40,7 @@ import 'vue-awesome/icons/circle-thin'
 
 export default {
   props: {
-    collectionName: {
-      type: String,
-      required: true
-    },
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }
