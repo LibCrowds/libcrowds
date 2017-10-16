@@ -1,14 +1,18 @@
+import Vue from 'vue'
+import capitalize from 'capitalize'
+
 /**
  * Process flash messages.
- * @param {Object} r
+ * @param {Object} res
  *   The response.
  */
 export default function (res) {
   if (res !== undefined && res.data.status !== 'error' && 'flash' in res.data) {
-    // store.dispatch('NOTIFY', {
-    //   msg: r.data.flash,
-    //   type: r.data.status
-    // })
+    Vue.Notification({
+      title: capitalize(r.data.status),
+      text: r.data.flash,
+      type: r.data.status
+    })
   }
   return res
 }

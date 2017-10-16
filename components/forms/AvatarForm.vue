@@ -106,8 +106,9 @@ export default {
         },
         withCredentials: true
       }).then(r => {
-        this.$store.dispatch('NOTIFY', {
-          msg: 'The image should be refreshed in a few minutes',
+        this.$notify({
+          title: 'Success',
+          text: 'The image should be refreshed in a few minutes',
           type: 'success'
         })
       }).catch(err => {

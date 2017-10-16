@@ -29,6 +29,8 @@
 
       <dashboard-footer></dashboard-footer>
 
+      <vue-notification position="bottom left"></vue-notification>
+
     </div>
   </div>
 </template>

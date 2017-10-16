@@ -146,18 +146,18 @@ export default {
     onTaskLiked (taskId, liked) {
       if (liked) {
         pybossa.addFavourite(taskId).then(() => {
-          this.$store.dispatch('NOTIFY', {
-            msg: 'Added to favourites',
-            type: 'info',
-            position: 'bottomleft'
+          this.$notify({
+            title: 'Success',
+            text: 'Added to favourites',
+            type: 'success'
           })
         })
       } else {
         pybossa.deleteFavourite(taskId).then(() => {
-          this.$store.dispatch('NOTIFY', {
-            msg: 'Removed from favourites',
-            type: 'info',
-            position: 'bottomleft'
+          this.$notify({
+            title: 'Success',
+            text: 'Removed from favourites',
+            type: 'success'
           })
         })
       }
@@ -196,10 +196,10 @@ export default {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {
-          this.$store.dispatch('NOTIFY', {
-            msg: 'Answer saved, thank you!',
-            type: 'success',
-            position: 'bottomleft'
+          this.$notify({
+            title: 'Answer saved',
+            text: 'Thank you for your contribution!',
+            type: 'success'
           })
         } else {
           this.$swal({

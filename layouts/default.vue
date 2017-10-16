@@ -10,6 +10,7 @@
       </nuxt>
     </main>
     <app-footer></app-footer>
+    <vue-notification position="bottom left"></vue-notification>
   </div>
 </template>
 

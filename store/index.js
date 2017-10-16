@@ -5,7 +5,6 @@ export default () => {
   return new Vuex.Store({
     state: {
       currentUser: {},
-      notification: {},
       announcements: []
     },
 
@@ -43,18 +42,6 @@ export default () => {
           }
           commit('LOGOUT')
         })
-      },
-
-      NOTIFY: ({ commit, state }, notification) => {
-        // Avoid repeated notifications
-        if (
-          state.notification !== null &&
-          notification.type === state.notification.type &&
-          notification.msg === state.notification.msg
-        ) {
-          return
-        }
-        commit('SET_ITEM', { key: 'notification', value: notification })
       },
 
       UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
