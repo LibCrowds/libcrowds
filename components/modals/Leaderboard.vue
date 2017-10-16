@@ -61,10 +61,10 @@ export default {
       }
 
       return users
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
-  },
-  currentUser () {
-    return this.$store.state.currentUser
   }
 }
 </script>
