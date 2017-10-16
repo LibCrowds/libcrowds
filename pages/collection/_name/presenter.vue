@@ -43,20 +43,18 @@ export default {
   async asyncData ({ params }) {
     const res = await pybossa.getProject(params.shortname)
     return {
-      project: res.data.project,
-      title: res.project.name,
-      description: res.project.description
+      project: res.data.project
     }
   },
 
   head () {
     return {
-      title: this.title,
+      title: this.project.name,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.description
+          content: this.project.description
         }
       ]
     }
