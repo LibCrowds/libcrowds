@@ -134,6 +134,8 @@ import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/avatars/User'
 
 export default {
+  layout: 'default',
+
   data () {
     return {
       localConfig: localConfig,

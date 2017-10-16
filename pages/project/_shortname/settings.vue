@@ -36,6 +36,8 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
+  layout: 'dashboard',
+
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProject(params.shortname)
     return {

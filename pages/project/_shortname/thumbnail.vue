@@ -14,6 +14,8 @@ import AvatarForm from '@/components/forms/AvatarForm'
 import pybossa from '@/api/pybossa'
 
 export default {
+  layout: 'dashboard',
+
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProject(params.shortname)
     res.data.form.btn = 'Upload'
