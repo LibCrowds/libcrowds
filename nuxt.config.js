@@ -19,7 +19,19 @@ module.exports = {
   build: {
     vendor: [
       'axios',
-      'vue-awesome'
+      'bootstrap-vue',
+      'libcrowds-viewer',
+      'vue-awesome',
+      'vue-chartist',
+      'vue-clickaway',
+      'vue-form-generator',
+      'vue-gravatar',
+      'vue-notification',
+      'vue-progress',
+      'vue-scrollto',
+      'vue-sweetalert',
+      'vue-toggle-button'
+
     ],
     extend (config, ctx) {
       if (ctx.isClient) {
