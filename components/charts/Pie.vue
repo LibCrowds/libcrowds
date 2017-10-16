@@ -1,7 +1,7 @@
 <template>
   <b-card :header="header">
     <vue-chartist
-      type="Bar"
+      type="Pie"
       :data="chartData"
       :options="opts" >
     </vue-chartist>
@@ -9,21 +9,21 @@
 </template>
 
 <script>
-import pluralize from 'pluralize'
-
 export default {
   data () {
     return {
-      options: {
-        height: '300px',
+      opts: {
+        height: '200px',
         plugins: [
-          this.$chartist.plugins.tooltip({
-            transformTooltipTextFnc: (val) => {
-              let text = pluralize(this.unit, Number(val))
-              return `${val} ${text}`
-            }
+          this.$chartist.plugins.tooltip(),
+          this.$chartist.plugins.legend({
+            position: 'bottom'
           })
-        ]
+        ],
+        labelInterpolationFnc: (value, idx) => {
+          let sum = this.data.series.reduce((a, b) => a.value + b.value)
+          return Math.round(this.data.series[idx].value / sum * 100) + '%'
+        }
       }
     }
   },
@@ -31,10 +31,6 @@ export default {
   props: {
     chartData: {
       type: Object,
-      required: true
-    },
-    unit: {
-      type: String,
       required: true
     },
     header: {

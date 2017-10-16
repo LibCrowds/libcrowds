@@ -1,28 +1,30 @@
 <template>
   <b-card :header="header">
-    <div class="ct-container" ref="chart"></div>
+    <vue-chartist
+      type="Line"
+      :data="chartData"
+      :options="opts" >
+    </vue-chartist>
   </b-card>
 </template>
 
 <script>
-import Chartist from 'chartist'
-import 'chartist-plugin-tooltips'
 import pluralize from 'pluralize'
 
 export default {
-  data: function () {
+  data () {
     return {
       opts: {
         height: '300px',
         plugins: [
-          Chartist.plugins.tooltip({
+          this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
               let text = pluralize(this.unit, Number(val))
               return `${val} ${text}`
             }
           })
         ],
-        lineSmooth: Chartist.Interpolation.cardinal({
+        lineSmooth: this.$chartist.Interpolation.cardinal({
           fillHoles: true
         })
       }
@@ -30,7 +32,7 @@ export default {
   },
 
   props: {
-    data: {
+    chartData: {
       type: Object,
       required: true
     },
@@ -42,11 +44,6 @@ export default {
       type: String,
       required: true
     }
-  },
-
-  mounted () {
-    const chart = this.$refs.chart
-    Chartist.Line(chart, this.data, this.opts)
   }
 }
 </script>

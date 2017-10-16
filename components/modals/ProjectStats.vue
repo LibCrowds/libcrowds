@@ -20,39 +20,37 @@
         <strong class="ml-1">{{ avgContribTime }} seconds</strong>
       </p>
 
-      <proportion-auth-users-chart
+      <pie-chart
         v-if="userStats.authenticated && userStats.anonymous"
-        :n-anon="userStats.anonymous.taskruns"
-        :n-auth="userStats.authenticated.taskruns">
-      </proportion-auth-users-chart>
+        :chart-data="proportionAuthData"
+        :header="proportionAuthHeader">
+      </pie-chart>
 
-      <single-line-chart
+      <line-chart
         v-if="projectStats.dayStats"
         class="mt-3"
         :header="dailyContributionsHeader"
         :unit="collectionConfig.terminology.taskRun"
-        :data="dailyContributions">
-      </single-line-chart>
+        :chart-data="dailyContributionsData">
+      </line-chart>
 
-      <single-line-chart
+      <line-chart
         v-if="projectStats.hourStats"
         class="mt-3"
         :header="hourlyContributionsHeader"
         :unit="collectionConfig.terminology.taskRun"
-        :data="hourlyContributions">
-      </single-line-chart>
+        :chart-data="hourlyContributionsData">
+      </line-chart>
 
       <bar-chart
         v-if="userStats.authenticated"
         class="mt-3"
         header="Top authenticated users over the past 2 weeks"
         :unit="collectionConfig.terminology.taskRun"
-        :data="topUsers">
+        :chart-data="topUsersData">
       </bar-chart>
 
-      <bar-chart v-if="userStats.top5" :data="userStats.top5"></bar-chart>
     </div>
-
   </b-modal>
 </template>
 
@@ -61,9 +59,9 @@ import pybossa from '@/api/pybossa'
 import moment from 'moment'
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
+import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
-import ProportionAuthUsersChart from '@/components/charts/ProportionAuthUsers'
-import SingleLineChart from '@/components/charts/SingleLineChart'
+import PieChart from '@/components/charts/Pie'
 
 export default {
   data: function () {
@@ -75,9 +73,9 @@ export default {
   },
 
   components: {
+    LineChart,
     BarChart,
-    ProportionAuthUsersChart,
-    SingleLineChart
+    PieChart
   },
 
   props: {
@@ -109,7 +107,7 @@ export default {
   },
 
   computed: {
-    dailyContributions: function () {
+    dailyContributionsData () {
       return {
         labels: this.projectStats.dayStats[0].values.map(value => {
           return moment(String(new Date(value[0])).format('DD MMM'))
@@ -119,11 +117,7 @@ export default {
         ]
       }
     },
-    dailyContributionsHeader: function () {
-      const start = pluralize(this.collectionConfig.terminology.taskRun)
-      return `Daily ${start} over the past 2 weeks`
-    },
-    hourlyContributions: function () {
+    hourlyContributionsData () {
       let d = {
         labels: this.projectStats.hourStats[0].values.map(value => value[0]),
         series: [
@@ -132,17 +126,42 @@ export default {
       }
       return d
     },
-    hourlyContributionsHeader: function () {
-      const start = pluralize(this.collectionConfig.terminology.taskRun)
-      return `Hourly ${start} over the past 2 weeks`
-    },
-    topUsers: function () {
+    topUsersData () {
       return {
         labels: this.userStats.authenticated.top5.map(stat => stat.name),
         series: [
           this.userStats.authenticated.top5.map(stat => stat.tasks)
         ]
       }
+    },
+    proportionAuthData () {
+      return {
+        labels: [
+          'Authenticated Volunteers',
+          'Anonymous Volunteers'
+        ],
+        series: [
+          {
+            meta: 'Authenticated Volunteers:',
+            value: this.userStats.anonymous.taskruns
+          },
+          {
+            meta: 'Anonymous Volunteers:',
+            value: this.userStats.authenticated.taskruns
+          }
+        ]
+      }
+    },
+    dailyContributionsHeader () {
+      const taskrun = pluralize(this.collectionConfig.terminology.taskRun)
+      return `Daily ${taskrun} over the past 2 weeks`
+    },
+    hourlyContributionsHeader () {
+      const taskrun = pluralize(this.collectionConfig.terminology.taskRun)
+      return `Hourly ${taskrun} over the past 2 weeks`
+    },
+    proportionAuthHeader () {
+      return 'Proportion of authenticated users over the past 2 weeks'
     }
   }
 }
