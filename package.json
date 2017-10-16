@@ -111,7 +111,6 @@
       "middleware/**/*.js",
       "modules/**/*.js",
       "pages/**/*.vue",
-      "plugins/**/*.js",
       "store/**/*.js",
       "utils/**/*.js"
     ],
