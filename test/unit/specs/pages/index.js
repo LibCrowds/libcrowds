@@ -6,7 +6,7 @@ import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import IndexPage from '~/pages/index'
+import IndexPage from '@/pages/index'
 
 describe('Index page', () => {
   const localVue = createLocalVue()

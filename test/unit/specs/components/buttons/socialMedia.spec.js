@@ -6,9 +6,9 @@ import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/linkedin'
 
-import testLocalConfig from '~/test/test.local.config'
+import testLocalConfig from '@/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import SocialMediaButtons from '~/components/buttons/SocialMedia'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 describe('SocialMedia buttons', () => {
   let localVue = null

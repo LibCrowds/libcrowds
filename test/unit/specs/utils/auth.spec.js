@@ -1,4 +1,4 @@
-import { manageSession } from '~/utils/auth'
+import { manageSession } from '@/utils/auth'
 
 describe('manageSession', () => {
   let store = null

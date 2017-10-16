@@ -2,10 +2,10 @@ import BootstrapVue from 'bootstrap-vue'
 import Icon from 'vue-awesome/components/Icon'
 import 'vue-awesome/icons/picture-o'
 
-import pbTestResponses from '~/test/fixtures/pybossaTestResponses.json'
-import testLocalConfig from '~/test/test.local.config'
+import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
+import testLocalConfig from '@/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import ProjectAvatar from '~/components/avatars/Project'
+import ProjectAvatar from '@/components/avatars/Project'
 
 describe('Project avatar', () => {
   let localVue = null

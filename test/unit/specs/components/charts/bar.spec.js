@@ -3,7 +3,7 @@ import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import BarChart from '~/components/charts/Bar'
+import BarChart from '@/components/charts/Bar'
 
 describe('Bar chart', () => {
   let localVue = null

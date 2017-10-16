@@ -1,7 +1,7 @@
 import BootstrapVue from 'bootstrap-vue'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import ProjectContribButton from '~/components/buttons/ProjectContrib'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 describe('ProjectContrib button', () => {
   let localVue = null

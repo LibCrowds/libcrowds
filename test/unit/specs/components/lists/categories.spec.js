@@ -3,7 +3,7 @@ import capitalize from 'capitalize'
 import pluralize from 'pluralize'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import CategoriesList from '~/components/lists/Categories'
+import CategoriesList from '@/components/lists/Categories'
 
 describe('Categories list', () => {
   let localVue = null

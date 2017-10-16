@@ -5,9 +5,9 @@ import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/twitter'
 
-import testLocalConfig from '~/test/test.local.config'
+import testLocalConfig from '@/test/test.local.config'
 import { mount, createLocalVue } from 'vue-test-utils'
-import OauthButtons from '~/components/buttons/Oauth'
+import OauthButtons from '@/components/buttons/Oauth'
 
 describe('Oauth buttons', () => {
   let localVue = null

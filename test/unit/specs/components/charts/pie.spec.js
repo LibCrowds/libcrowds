@@ -4,7 +4,7 @@ import 'chartist-plugin-tooltips'
 import 'chartist-plugin-legend'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import PieChart from '~/components/charts/Pie'
+import PieChart from '@/components/charts/Pie'
 
 describe('Pie chart', () => {
   let localVue = null

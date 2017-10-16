@@ -1,5 +1,5 @@
-import pybossaTestResponses from '~/test/fixtures/pybossaTestResponses.json'
-import pybossa from '~/api/pybossa'
+import pybossaTestResponses from '@/test/fixtures/pybossaTestResponses.json'
+import pybossa from '@/api/pybossa'
 
 describe('PYBOSSA module', () => {
   let mockGet = null

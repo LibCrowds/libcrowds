@@ -4,9 +4,9 @@ import 'vue-awesome/icons/trophy'
 import 'vue-awesome/icons/tasks'
 import 'vue-awesome/icons/clock-o'
 
-import pbTestResponses from '~/test/fixtures/pybossaTestResponses.json'
+import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
-import ProfileCard from '~/components/cards/Profile'
+import ProfileCard from '@/components/cards/Profile'
 
 describe('Profile card', () => {
   let localVue = null
