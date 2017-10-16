@@ -31,9 +31,22 @@ import localConfig from '@/local.config'
 export default {
   layout: 'dashboard',
 
-  data: function () {
+  data () {
     return {
       localConfig: localConfig
+    }
+  },
+
+  head () {
+    return {
+      title: 'API',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `The ${localConfig.brand} API documentation.`
+        }
+      ]
     }
   }
 }

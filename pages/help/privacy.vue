@@ -110,9 +110,22 @@ import localConfig from '@/local.config'
 export default {
   layout: 'dashboard',
 
-  data: function () {
+  data () {
     return {
       localConfig: localConfig
+    }
+  },
+
+  head () {
+    return {
+      title: 'Privacy Policy',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `The ${localConfig.brand} Privacy Policy.`
+        }
+      ]
     }
   }
 }

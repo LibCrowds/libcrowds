@@ -217,9 +217,22 @@ import localConfig from '@/local.config'
 export default {
   layout: 'dashboard',
 
-  data: function () {
+  data () {
     return {
       localConfig: localConfig
+    }
+  },
+
+  head () {
+    return {
+      title: 'Terms of Service',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `The ${localConfig.brand} Terms of Service.`
+        }
+      ]
     }
   }
 }
