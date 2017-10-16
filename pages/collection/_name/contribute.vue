@@ -142,7 +142,9 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  layout: 'tabs',
+
+  data () {
     return {
       navItems: [
         {
@@ -194,7 +196,7 @@ export default {
   },
 
   computed: {
-    filteredProjects: function () {
+    filteredProjects () {
       return this.projects.filter((project) => {
         if (!this.showCompleted && project.overall_progress === 100) {
           return false

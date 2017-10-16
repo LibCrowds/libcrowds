@@ -15,7 +15,9 @@
 import localConfig from '@/local.config'
 
 export default {
-  data: function () {
+  layout: 'dashboard',
+
+  data () {
     return {
       rqSchedulerRoute: `${localConfig.pybossa.host}/admin/rq`
     }

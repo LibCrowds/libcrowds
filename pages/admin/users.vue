@@ -94,6 +94,8 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
+  layout: 'dashboard',
+
   data () {
     return {
       tableFields: {

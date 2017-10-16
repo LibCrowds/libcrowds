@@ -56,7 +56,9 @@ import pybossa from '@/api/pybossa'
 import capitalize from 'capitalize'
 
 export default {
-  data: function () {
+  layout: 'dashboard',
+
+  data () {
     return {
       announcements: [],
       table: {

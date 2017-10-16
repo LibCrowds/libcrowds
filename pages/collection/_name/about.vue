@@ -52,7 +52,9 @@
 import localConfig from '@/local.config'
 
 export default {
-  data: function () {
+  layout: 'tabs',
+
+  data () {
     return {
       localConfig: localConfig
     }
@@ -95,7 +97,7 @@ export default {
   },
 
   computed: {
-    navItems: function () {
+    navItems () {
       const subsections = this.getCustom('subsections')
       if (!subsections) {
         return []
@@ -105,11 +107,11 @@ export default {
       })
     },
 
-    subsections: function () {
+    subsections () {
       return this.getCustom('subsections') || []
     },
 
-    intro: function () {
+    intro () {
       const intro = this.getCustom('intro')
       return intro || `${localConfig.brand} is a platform for hosting
         experimental crowdsourcing projects from ${localConfig.brand}. By

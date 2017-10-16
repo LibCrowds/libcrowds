@@ -73,6 +73,8 @@ import CategoriesList from '@/components/lists/Categories'
 import pybossa from '@/api/pybossa'
 
 export default {
+  layout: 'dashboard',
+
   data () {
     return {
       activeCategory: null,

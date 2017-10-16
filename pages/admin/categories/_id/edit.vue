@@ -19,9 +19,14 @@ import CardForm from '@/components/forms/CardForm'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data () {
+  layout: 'dashboard',
+
+  async asyncData ({ params }) {
+    const res = await pybossa.client.get(`/api/category/${params.id}`)
+    const category = res.data
+    category.info = category.info || {}
     return {
-      category: {}
+      category: category
     }
   },
 
@@ -100,15 +105,6 @@ export default {
           ]
         }
       }
-    }
-  },
-
-  async asyncData ({ params }) {
-    const res = await pybossa.client.get(`/api/category/${params.id}`)
-    const category = res.data
-    category.info = category.info || {}
-    return {
-      category: category
     }
   },
 

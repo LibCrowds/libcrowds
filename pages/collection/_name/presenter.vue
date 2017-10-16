@@ -21,7 +21,9 @@ import DefaultPresenter from '@/components/presenters/Default'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  layout: 'tabs',
+
+  data () {
     return {
       tasks: [],
       navItems: [

@@ -206,7 +206,9 @@ import newtonImage from '@/assets/img/newton.jpg'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  layout: 'collection',
+
+  data () {
     return {
       localConfig: localConfig,
       categories: [],

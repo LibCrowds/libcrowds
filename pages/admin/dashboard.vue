@@ -6,6 +6,8 @@
 
 <script>
 export default {
+  layout: 'dashboard',
+
   metaInfo () {
     return {
       title: `Admin Dashboard`

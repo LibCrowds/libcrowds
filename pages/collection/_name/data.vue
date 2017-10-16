@@ -102,7 +102,7 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'tabs',
 
-  data: function () {
+  data () {
     return {
       localConfig: localConfig,
       navItems: [

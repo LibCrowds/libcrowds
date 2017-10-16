@@ -15,6 +15,8 @@ import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
+  layout: 'dashboard',
+
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateAnnouncement(params.id)
     return {
