@@ -52,14 +52,13 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import capitalize from 'capitalize'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData () {
-    const res = await pybossa.getAdminAnnouncements()
+  async asyncData ({ app }) {
+    const res = await app.$pybossa.getAdminAnnouncements()
     return {
       announcements: res.data.announcements
     }
@@ -114,8 +113,8 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            pybossa.client.get('/admin/announcement').then(r => {
-              return pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
+            this.pybossa.client.get('/admin/announcement').then(r => {
+              return this.pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
                 headers: {
                   'X-CSRFToken': r.data.csrf
                 }

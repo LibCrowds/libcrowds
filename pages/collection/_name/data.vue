@@ -97,7 +97,6 @@ import localConfig from '@/local.config'
 import CategoriesList from '@/components/lists/Categories'
 import Pagination from '@/components/Pagination'
 import DataModal from '@/components/modals/Data'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'tabs',
@@ -124,8 +123,8 @@ export default {
     }
   },
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getMicrositeCategories(params.name)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getMicrositeCategories(params.name)
     return {
       categories: res.data.categories
     }
@@ -174,7 +173,8 @@ export default {
      * Fetch the projects in a category.
      */
     fetchProjects () {
-      pybossa.getCategory(this.activeCategory.short_name, this.page).then(r => {
+      const shortName = this.activeCategory.short_name
+      this.pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })

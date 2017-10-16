@@ -91,7 +91,6 @@
 <script>
 import exportFile from '@/utils/exportFile'
 import CardForm from '@/components/forms/CardForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
@@ -118,10 +117,10 @@ export default {
     }
   },
 
-  async asyncData () {
+  async asyncData ({ app }) {
     let [adminUserRes, statsRes] = await Promise.all([
-      pybossa.getAdminUsers(),
-      pybossa.getStatsSummary()
+      app.$pybossa.getAdminUsers(),
+      app.$pybossa.getStatsSummary()
     ])
     return {
       nUsers: statsRes.data.n_users,
@@ -173,11 +172,11 @@ export default {
      */
     toggleAdmin (user) {
       if (user.admin) {
-        pybossa.addAdminUser(user.id, this.form.model).then(r => {
+        this.pybossa.addAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers.push(user)
         })
       } else {
-        pybossa.delAdminUser(user.id, this.form.model).then(r => {
+        this.pybossa.delAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers = this.adminUsers.filter(adminUser => {
             return adminUser.id !== user.id
           })
@@ -202,7 +201,7 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      pybossa.exportUsers(format).then(r => {
+      this.pybossa.exportUsers(format).then(r => {
         exportFile(r.data, 'user_data', format)
       })
     }

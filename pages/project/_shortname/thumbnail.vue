@@ -11,13 +11,12 @@
 
 <script>
 import AvatarForm from '@/components/forms/AvatarForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProject(params.shortname)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getUpdateProject(params.shortname)
     res.data.form.btn = 'Upload'
     return {
       project: res.data.project,

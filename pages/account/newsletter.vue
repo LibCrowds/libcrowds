@@ -29,7 +29,6 @@
 
 <script>
 import localConfig from '@/local.config'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
@@ -63,7 +62,7 @@ export default {
      */
     subscribe (subscribe) {
       const next = this.$route.query.next || '/'
-      pybossa.subscribeToNewsletter(subscribe).then(res => {
+      this.pybossa.subscribeToNewsletter(subscribe).then(res => {
         this.$router.push({ path: next })
       })
     }

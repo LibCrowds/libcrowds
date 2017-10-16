@@ -40,7 +40,6 @@
 
 <script>
 import localConfig from '@/local.config'
-import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
 
@@ -53,8 +52,8 @@ export default {
     }
   },
 
-  async asyncData ({ query, redirect }) {
-    const res = await pybossa.getAccountSignin()
+  async asyncData ({ query, redirect, app }) {
+    const res = await app.$pybossa.getAccountSignin()
     const next = query.next || '/'
 
     // Redirect if already signed in

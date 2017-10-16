@@ -9,13 +9,12 @@
 
 <script>
 import CardForm from '@/components/forms/CardForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getResetApiKey(params.username)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getResetApiKey(params.username)
     return {
       csrf: res.data.form.csrf
     }

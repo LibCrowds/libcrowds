@@ -70,7 +70,6 @@
 
 <script>
 import CategoriesList from '@/components/lists/Categories'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
@@ -98,8 +97,8 @@ export default {
     }
   },
 
-  async asyncData () {
-    const res = await pybossa.getAdminFeatured()
+  async asyncData ({ app }) {
+    const res = await app.$pybossa.getAdminFeatured()
     return {
       categories: res.data.categories,
       projects: res.data.projects,
@@ -133,12 +132,13 @@ export default {
      *   The project.
      */
     toggleFeatured (project) {
+      const params = { csrf: this.csrf }
       if (project.featured) {
-        pybossa.featureProject(project.id, { csrf: this.csrf }).then(r => {
+        this.pybossa.featureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       } else {
-        pybossa.unfeatureProject(project.id, { csrf: this.csrf }).then(r => {
+        this.pybossa.unfeatureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       }

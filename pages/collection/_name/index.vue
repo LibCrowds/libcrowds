@@ -203,7 +203,6 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/cards/Project'
 import codeImage from '@/assets/img/code.png'
 import newtonImage from '@/assets/img/newton.jpg'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'collection',
@@ -276,9 +275,9 @@ export default {
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
     let categoryUrl = `/api/category?${q}`
 
-    pybossa.client.get(`/`).then(r => {
+    this.pybossa.client.get(`/`).then(r => {
       data = r.data
-      return pybossa.client.get(categoryUrl)
+      return this.pybossa.client.get(categoryUrl)
     }).then(r => {
       data.categories = r.data.filter(category => {
         return category.info.collection === key

@@ -54,15 +54,14 @@
 import localConfig from '@/local.config'
 import CardForm from '@/components/forms/CardForm'
 import OauthButtons from '@/components/buttons/Oauth'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
 
-  async asyncData ({ query, redirect }) {
+  async asyncData ({ query, redirect, app }) {
     const [registrationRes, signinRes] = await Promise.all([
-      pybossa.getAccountRegistration(),
-      pybossa.getAccountSignin()
+      app.$pybossa.getAccountRegistration(),
+      app.$pybossa.getAccountSignin()
     ])
     const next = query.next || '/'
 

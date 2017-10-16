@@ -16,13 +16,12 @@
 import pick from 'lodash/pick'
 import localConfig from '@/local.config'
 import CardForm from '@/components/forms/CardForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.client.get(`/api/category/${params.id}`)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.client.get(`/api/category/${params.id}`)
     const category = res.data
     category.info = category.info || {}
     return {

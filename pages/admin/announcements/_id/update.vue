@@ -11,14 +11,13 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import CardForm from '@/components/forms/CardForm'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateAnnouncement(params.id)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getUpdateAnnouncement(params.id)
     return {
       form: {
         endpoint: `/admin/announcement/${this.res.data.form.id}/update`,

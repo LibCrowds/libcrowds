@@ -128,7 +128,6 @@ import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 import localConfig from '@/local.config'
-import pybossa from '@/api/pybossa'
 import CollectionCard from '@/components/cards/Collection'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/avatars/User'
@@ -143,10 +142,10 @@ export default {
     }
   },
 
-  async asyncData () {
+  async asyncData ({ app }) {
     let [statsResponse, leaderboardResponse] = await Promise.all([
-      pybossa.getStats(),
-      pybossa.getLeaderboard()
+      app.$pybossa.getStats(),
+      app.$pybossa.getLeaderboard()
     ])
     return {
       stats: statsResponse.data.stats,

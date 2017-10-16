@@ -52,7 +52,6 @@
 <script>
 import intersection from 'lodash/intersection'
 import CategoriesList from '@/components/lists/Categories'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
@@ -133,7 +132,7 @@ export default {
      */
     fetchProjects (category) {
       this.projects = []
-      pybossa.getCategory(category.short_name, this.page).then(r => {
+      this.pybossa.getCategory(category.short_name, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -142,9 +141,9 @@ export default {
 
   beforeRouteEnter (to, from, next) {
     let data = {}
-    pybossa.getAccountProjects(to.params.username).then(r => {
+    this.pybossa.getAccountProjects(to.params.username).then(r => {
       data = r.data
-      return pybossa.client.get('/')
+      return this.pybossa.client.get('/')
     }).then(r => {
       data.categories = r.data.categories
       data.categoriesProjects = r.data.categories_projects
@@ -154,9 +153,9 @@ export default {
 
   beforeRouteUpdate (to, from, next) {
     let data = {}
-    pybossa.getAccountProjects(to.params.username).then(r => {
+    this.pybossa.getAccountProjects(to.params.username).then(r => {
       data = r.data
-      return pybossa.client.get('/')
+      return this.pybossa.client.get('/')
     }).then(r => {
       data.categories = r.data.categories
       data.categoriesProjects = r.data.categories_projects

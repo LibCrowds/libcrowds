@@ -8,13 +8,12 @@
 
 <script>
 import AvatarForm from '@/components/forms/AvatarForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProfile(params.username)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getUpdateProfile(params.username)
     res.data.form.btn = 'Upload'
     return {
       form: {

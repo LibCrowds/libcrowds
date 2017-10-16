@@ -9,13 +9,12 @@
 
 <script>
 import CardForm from '@/components/forms/CardForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProfile(params.username)
+  async asyncData ({ params, app }) {
+    const res = await app.$pybossa.getUpdateProfile(params.username)
     res.data.form.btn = 'Profile'
     return {
       form: {

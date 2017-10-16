@@ -16,13 +16,12 @@
 <script>
 import localConfig from '@/local.config'
 import CardForm from '@/components/forms/CardForm'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
 
-  async asyncData ({ query }) {
-    const res = await pybossa.getResetPassword()
+  async asyncData ({ query, app }) {
+    const res = await app.$pybossa.getResetPassword()
     return {
       next: query.next || '/',
       form: {

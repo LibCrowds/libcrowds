@@ -72,6 +72,7 @@ module.exports = {
     { src: '~/plugins/bootstrap-vue' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
+    { src: '~/plugins/pybossa' },
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },

@@ -139,7 +139,6 @@ import ProjectCardsList from '@/components/lists/ProjectCards'
 import CategoriesList from '@/components/lists/Categories'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'tabs',
@@ -270,14 +269,15 @@ export default {
      * Fetch the projects in the active category.
      */
     fetchProjects () {
-      if (this.activeCategory.short_name === 'featured') {
+      const shortName = this.activeCategory.short_name
+      if (shortName === 'featured') {
         this.projects = this.featured
         this.pagination = null
         return
       }
 
       this.projects = []
-      pybossa.getCategory(this.activeCategory.short_name, this.page).then(r => {
+      this.pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -323,13 +323,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
+    this.pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
+    this.pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       this.setData(r.data)
       next()
     })
