@@ -58,9 +58,15 @@ import capitalize from 'capitalize'
 export default {
   layout: 'dashboard',
 
+  async asyncData () {
+    const res = await pybossa.getAdminAnnouncements()
+    return {
+      announcements: res.data.announcements
+    }
+  },
+
   data () {
     return {
-      announcements: [],
       table: {
         fields: {
           id: {
@@ -95,15 +101,6 @@ export default {
 
   methods: {
     /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      this.announcements = data.announcements
-    },
-
-    /**
      * Delete an announcement.
      * @param {Number} id
      *   The announcement ID.
@@ -129,7 +126,9 @@ export default {
           })
         }
       }).then(r => {
-        this.refreshCurrentAnnouncements()
+        this.announcements = this.categories.filter(announcement => {
+          return announcement.id !== id
+        })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
         this.$swal(
           capitalize(r.data.status),
@@ -139,22 +138,7 @@ export default {
       }, (dismiss) => {
         this.$swal.close()
       })
-    },
-
-    /**
-     * Refresh current announcements data.
-     */
-    refreshCurrentAnnouncements () {
-      pybossa.getAdminAnnouncements().then(r => {
-        this.announcements = r.data.announcements
-      })
     }
-  },
-
-  beforeRouteEnter (to, from, next) {
-    pybossa.getAdminAnnouncements().then(r => {
-      next(vm => vm.setData(r.data))
-    })
   }
 }
 </script>
