@@ -65,7 +65,7 @@ export default {
      */
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
-      this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
+      this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.pybossa)
     }
   }
 }

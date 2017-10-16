@@ -82,7 +82,7 @@ export default {
         this.pybossa.client.put(`/api/user/${this.currentUser.id}`, {
           info: this.currentUser.info
         }).then(r => {
-          this.$store.dispatch('UPDATE_CURRENT_USER')
+          this.$store.dispatch('UPDATE_CURRENT_USER', this.pybossa)
         })
       }
     }

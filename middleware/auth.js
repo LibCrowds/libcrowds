@@ -6,11 +6,11 @@ import { manageSession } from '@/utils/auth'
  * @param {Object} context
  *   The nuxt context.
  */
-export default function ({ isServer, store, req }) {
+export default function ({ isServer, store, req, app }) {
   if (isServer && req) {
     axios.defaults.headers.common.cookie = req.headers.cookie
-    manageSession(store, req.headers.cookie)
+    manageSession(store, req.headers.cookie, app)
   } else {
-    manageSession(store, document.cookie)
+    manageSession(store, document.cookie, app)
   }
 }

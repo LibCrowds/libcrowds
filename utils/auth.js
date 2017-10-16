@@ -4,8 +4,10 @@
  *   The vuex store.
  * @param {String} cookie
  *   The document cookie string.
+ * @param {Object} app
+ *   The Vue instance.
  */
-export const manageSession = (store, cookie) => {
+export const manageSession = (store, cookie, app) => {
   const currentUser = store.state.currentUser
   const allCookies = cookie.split(';')
   let hasSession = false
@@ -26,6 +28,6 @@ export const manageSession = (store, cookie) => {
   )
 
   if (update) {
-    store.dispatch('UPDATE_CURRENT_USER')
+    store.dispatch('UPDATE_CURRENT_USER', app.$pybossa)
   }
 }

@@ -128,7 +128,7 @@ export default {
         this.announcements = this.categories.filter(announcement => {
           return announcement.id !== id
         })
-        this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
+        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.pybossa)
         this.$swal(
           capitalize(r.data.status),
           r.data.flash,
