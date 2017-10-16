@@ -52,7 +52,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Reset Password',
       meta: [

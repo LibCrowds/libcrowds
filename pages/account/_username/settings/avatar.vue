@@ -24,7 +24,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.currentUser.fullname}: Avatar Settings`
     }

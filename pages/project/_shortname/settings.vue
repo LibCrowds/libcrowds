@@ -85,7 +85,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.project.name}: Settings`
     }

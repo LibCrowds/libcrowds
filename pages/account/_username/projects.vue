@@ -70,7 +70,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.currentUser.fullname}: Open Project`
     }

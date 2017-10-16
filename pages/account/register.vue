@@ -121,7 +121,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Register',
       meta: [

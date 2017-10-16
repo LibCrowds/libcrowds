@@ -8,7 +8,7 @@
 export default {
   layout: 'dashboard',
 
-  metaInfo () {
+  head () {
     return {
       title: `Admin Dashboard`
     }

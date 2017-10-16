@@ -172,7 +172,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Contribute',
       meta: [

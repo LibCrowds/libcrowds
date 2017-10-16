@@ -229,7 +229,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: this.collectionConfig.tagline,
       meta: [

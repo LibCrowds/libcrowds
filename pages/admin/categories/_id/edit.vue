@@ -30,7 +30,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `Edit Category`
     }

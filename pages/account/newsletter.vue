@@ -42,7 +42,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: this.title,
       meta: [

@@ -51,7 +51,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Update Announcement'
     }

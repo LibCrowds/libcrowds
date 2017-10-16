@@ -74,7 +74,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.user.fullname}: User Profile`
     }

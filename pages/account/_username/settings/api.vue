@@ -21,7 +21,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.currentUser.fullname}: API Settings`
     }

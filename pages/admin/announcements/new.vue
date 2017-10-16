@@ -50,7 +50,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `New Announcement`
     }

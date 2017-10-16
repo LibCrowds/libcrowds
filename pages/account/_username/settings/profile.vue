@@ -48,7 +48,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `${this.currentUser.fullname}: Profile Settings`
     }

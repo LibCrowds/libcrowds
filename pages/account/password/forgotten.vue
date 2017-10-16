@@ -44,7 +44,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Forgotten Password',
       meta: [

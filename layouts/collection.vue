@@ -22,7 +22,7 @@ import CollectionNavbar from '@/components/navs/CollectionNavbar'
 import AppFooter from '@/components/footers/AppFooter'
 
 export default {
-  metaInfo () {
+  head () {
     const tmpl = `%s - ${this.collectionConfig.name} | ${localConfig.brand}`
     return {
       titleTemplate: tmpl,

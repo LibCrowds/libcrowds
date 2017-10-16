@@ -131,7 +131,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'Data',
       meta: [

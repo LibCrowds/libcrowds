@@ -146,7 +146,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `Manage Users`
     }

@@ -60,7 +60,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: 'About',
       meta: [

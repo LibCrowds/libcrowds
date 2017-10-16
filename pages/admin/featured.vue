@@ -107,7 +107,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: `Featured Projects`
     }

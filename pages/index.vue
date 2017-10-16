@@ -155,7 +155,7 @@ export default {
     }
   },
 
-  metaInfo () {
+  head () {
     return {
       title: this.localConfig.tagline,
       meta: [
