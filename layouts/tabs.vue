@@ -1,5 +1,5 @@
 <template>
-  <div class="floating-tabs-layout">
+  <div id="tabs-layout">
     <main>
       <div class="container mb-5">
 
@@ -81,10 +81,11 @@ export default {
 <style lang="scss">
 @import '~assets/style/main';
 
-.floating-tabs-layout {
+#tabs-layout {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  min-height: 100vh;
 
   #content {
     background-color: $white;
