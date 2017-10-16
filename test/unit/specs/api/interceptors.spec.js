@@ -1,6 +1,5 @@
 import addCsrfHeader from '@/api/interceptors/addCsrfHeader'
 import handleErrors from '@/api/interceptors/handleErrors'
-import handleFlash from '@/api/interceptors/handleFlash'
 
 describe('Interceptors', () => {
   describe('addCsrfHeader', () => {
