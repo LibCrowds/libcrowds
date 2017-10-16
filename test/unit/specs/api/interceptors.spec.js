@@ -26,35 +26,40 @@ describe('Interceptors', () => {
     })
   })
 
-  // describe('handleErrors', () => {
-  //   it('handles non-200 errors', () => {
-  //     const status = 404
-  //     const error = {
-  //       response: {
-  //         status: status
-  //       }
-  //     }
-  //     handleErrors(error)
-  //     expect(router.push).toHaveBeenLastCalledWith({ name: status })
-  //     router.push.mockReset()
-  //   })
+  describe('handleErrors', () => {
+    it('handles non-200 errors', () => {
+      const status = 404
+      const statusText = 'Uh oh'
+      const error = {
+        response: {
+          status: status,
+          statusText: statusText
+        }
+      }
+      return handleErrors(error).catch(err => {
+        expect(err.statusCode).toBe(status)
+        expect(err.message).toBe(statusText)
+      })
+    })
 
-  //   it('handles network errors', () => {
-  //     const error = {
-  //       request: {}
-  //     }
-  //     handleErrors(error)
-  //     expect(router.push).toHaveBeenLastCalledWith({ name: 598 })
-  //     router.push.mockReset()
-  //   })
+    it('handles network errors', () => {
+      const error = {
+        request: {}
+      }
+      return handleErrors(error).catch(err => {
+        expect(err.statusCode).toBe(598)
+        expect(err.message).toBe('Network Error')
+      })
+    })
 
-  //   it('handles request setup errors', () => {
-  //     const error = {}
-  //     handleErrors(error)
-  //     expect(router.push).toHaveBeenLastCalledWith({ name: 500 })
-  //     router.push.mockReset()
-  //   })
-  // })
+    it('handles request setup errors', () => {
+      const error = {}
+      return handleErrors(error).catch(err => {
+        expect(err.statusCode).toBe(500)
+        expect(err.message).toBe('Axios Error')
+      })
+    })
+  })
 
   // describe('handleFlash', () => {
   //   it('dispatches notification from flash message', () => {
