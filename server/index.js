@@ -33,6 +33,8 @@ if (config.dev) {
 
 // Listen to the server
 function listen () {
-  app.listen(port, host)
+  app.listen(port, host).on('error', function(err) {
+    console.log(chalk.red(err))
+  })
   console.log(chalk.green('Server listening on ' + host + ':' + port))
 }
