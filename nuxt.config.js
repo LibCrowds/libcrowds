@@ -86,6 +86,9 @@ module.exports = {
     duration: localConfig.pybossa.timeout || 5000
   },
   router: {
-    middleware: 'auth'
+    middleware: [
+      'auth',
+      'cookie-consent'
+    ]
   }
 }
