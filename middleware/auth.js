@@ -3,8 +3,6 @@ import { manageSession } from '@/utils/auth'
 
 /**
  * Router middleware to manage the user's session.
- *
- * Relies on
  * @param {Object} context
  *   The nuxt context.
  */
