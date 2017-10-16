@@ -1,13 +1,9 @@
 <template>
   <div id="core-layout">
     <div id="app-background" :style="appBgStyle"></div>
-    <app-navbar
-      :current-user="currentUser">
-    </app-navbar>
+    <app-navbar></app-navbar>
     <main>
-      <nuxt
-        :current-user="currentUser">
-      </nuxt>
+      <nuxt></nuxt>
     </main>
     <app-footer></app-footer>
     <notifications position="bottom left"></notifications>
@@ -30,9 +26,6 @@ export default {
       return {
         background: `url(${appBackground}) no-repeat center left /cover fixed`
       }
-    },
-    currentUser () {
-      return this.$store.state.currentUser
     }
   }
 }

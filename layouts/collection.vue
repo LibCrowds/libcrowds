@@ -2,13 +2,11 @@
   <div id="collection-base-layout">
     <div id="collection-background" :style="bgStyle"></div>
     <collection-navbar
-      :collection-config="collectionConfig"
-      :current-user="currentUser">
+      :collection-config="collectionConfig">
     </collection-navbar>
     <main>
       <nuxt
-        :collection-config="collectionConfig"
-        :current-user="currentUser">
+        :collection-config="collectionConfig">
       </nuxt>
     </main>
     <app-footer></app-footer>
@@ -57,9 +55,6 @@ export default {
     collectionConfig () {
       const collectionName = this.$route.params.collectionname
       return localConfig.collections[collectionName]
-    },
-    currentUser () {
-      return this.$store.state.currentUser
     }
   }
 }

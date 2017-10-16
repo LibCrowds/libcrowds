@@ -115,7 +115,6 @@
     </section>
 
     <leaderboard-modal
-      :current-user="currentUser"
       :top-users="topUsers"
       :modal-id="leaderboardModalId">
     </leaderboard-modal>
@@ -179,9 +178,6 @@ export default {
       return scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
-    },
-    currentUser () {
-      return this.$store.state.currentUser
     }
   }
 }

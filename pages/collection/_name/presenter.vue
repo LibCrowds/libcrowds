@@ -5,7 +5,6 @@
       v-if="project && tasks.length"
       :project="project"
       :tasks="tasks"
-      :current-user="currentUser"
       :collection-config="collectionConfig"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
@@ -64,10 +63,6 @@ export default {
 
   props: {
     collectionConfig: {
-      type: Object,
-      required: true
-    },
-    currentUser: {
       type: Object,
       required: true
     }

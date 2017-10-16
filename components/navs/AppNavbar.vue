@@ -18,9 +18,7 @@
     <span id="app-navbar-right">
       <b-nav is-nav-bar v-if="loggedIn" right>
 
-        <announcements
-          :current-user="currentUser">
-        </announcements>
+        <announcements></announcements>
 
         <b-nav-item-dropdown
           right
@@ -110,10 +108,6 @@ export default {
   },
 
   props: {
-    currentUser: {
-      type: Object,
-      required: true
-    },
     fixed: {
       type: String,
       default: 'top'
@@ -133,11 +127,14 @@ export default {
   },
 
   computed: {
-    loggedIn: function () {
+    loggedIn () {
       return !isEmpty(this.currentUser)
     },
-    next: function () {
+    next () {
       return this.$route.path
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

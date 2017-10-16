@@ -270,10 +270,6 @@ export default {
       type: Array,
       required: true
     },
-    currentUser: {
-      type: Object,
-      required: true
-    },
     collectionConfig: {
       type: Object,
       required: true
@@ -281,15 +277,18 @@ export default {
   },
 
   computed: {
-    currentTask: function () {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+    currentTask () {
       return this.tasks[0]
     },
-    buttons: function () {
+    buttons () {
       return {
         like: !isEmpty(this.currentUser)
       }
     },
-    stage: function () {
+    stage () {
       if (!this.searchResults.length && !this.selectedRecord) {
         return 'search'
       } else if (this.searchResults.length && !this.selectedRecord) {
@@ -298,7 +297,7 @@ export default {
         return 'submit'
       }
     },
-    form: function () {
+    form () {
       if (!this.searchResults.length && !this.selectedRecord) {
         return this.searchForm
       } else {

@@ -30,15 +30,14 @@ export default {
     }
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   components: {
     AvatarForm
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
   },
 
   methods: {

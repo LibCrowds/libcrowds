@@ -9,7 +9,6 @@
     <div class="dashboard">
 
       <app-navbar
-        :current-user="currentUser"
         hide-brand-breakpoint="lg"
         :fixed="null">
       </app-navbar>
@@ -22,7 +21,7 @@
       <main>
         <div class="container px-lg-4 py-4">
           <transition name="fade" mode="out-in" appear>
-            <nuxt :current-user="currentUser"></nuxt>
+            <nuxt></nuxt>
           </transition>
         </div>
       </main>
@@ -42,9 +41,6 @@ import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
 export default {
   computed: {
-    currentUser () {
-      return this.$store.state.currentUser
-    },
     dashboardNavItems () {
       if (this.$route.path.startsWith('/account')) {
         return [

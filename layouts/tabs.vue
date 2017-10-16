@@ -18,7 +18,6 @@
         <section id="content" key="fading-content">
           <transition name="fade" mode="out-in" appear>
             <nuxt
-              :current-user="currentUser"
               :collection-config="collectionConfig"
               @navupdated="onNavUpdated">
             </nuxt>
@@ -43,12 +42,6 @@ export default {
     collectionConfig: {
       type: Object,
       required: true
-    }
-  },
-
-  computed: {
-    currentUser () {
-      return this.$store.state.currentUser
     }
   },
 

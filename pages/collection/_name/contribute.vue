@@ -188,14 +188,13 @@ export default {
     collectionConfig: {
       type: Object,
       required: true
-    },
-    currentUser: {
-      type: Object,
-      required: true
     }
   },
 
   computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
     filteredProjects () {
       return this.projects.filter((project) => {
         if (!this.showCompleted && project.overall_progress === 100) {

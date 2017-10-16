@@ -27,18 +27,14 @@ export default {
     }
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   components: {
     CardForm
   },
 
   computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
     /**
      * Return the form data.
      */

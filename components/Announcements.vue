@@ -47,15 +47,8 @@ export default {
     }
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   computed: {
-    announcements: function () {
+    announcements () {
       let announcements = this.$store.state.announcements || []
       return announcements.map(announcement => {
         announcement.isLocal = announcement.media_url && (
@@ -64,6 +57,9 @@ export default {
         )
         return announcement
       })
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

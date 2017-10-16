@@ -30,10 +30,6 @@ export default {
       type: Array,
       required: true
     },
-    currentUser: {
-      type: Object,
-      required: true
-    },
     collectionConfig: {
       type: Object,
       required: true
@@ -41,7 +37,10 @@ export default {
   },
 
   computed: {
-    taskOpts: function () {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+    taskOpts () {
       return this.tasks.map((task) => {
         let opts = task.info
         opts.id = task.id
@@ -51,7 +50,7 @@ export default {
         return opts
       })
     },
-    buttons: function () {
+    buttons () {
       let buttons = {
         note: 'Seen something interesting?<br>Add a note',
         submit: 'Save and Continue'
@@ -61,7 +60,7 @@ export default {
       }
       return buttons
     },
-    navigation: function () {
+    navigation () {
       const names = ['home', 'about', 'contribute', 'data']
       const nav = names.map(name => {
         return {

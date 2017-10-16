@@ -187,10 +187,6 @@ export default {
   },
 
   props: {
-    currentUser: {
-      type: Object,
-      required: true
-    },
     collectionConfig: {
       type: Object,
       required: true
@@ -206,7 +202,7 @@ export default {
   },
 
   computed: {
-    navType: function () {
+    navType () {
       if (this.fixedNavbarRoutes.indexOf(this.$route.name) > -1) {
         return {
           fixed: 'top'
@@ -216,11 +212,14 @@ export default {
         fixed: null
       }
     },
-    loggedIn: function () {
+    loggedIn () {
       return !isEmpty(this.currentUser)
     },
-    next: function () {
+    next () {
       return this.$route.path
+    },
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

@@ -57,7 +57,7 @@ import pybossa from '@/api/pybossa'
 export default {
   layout: 'default',
 
-  data: function () {
+  data () {
     return {
       authProjectIds: [],
       categories: [],
@@ -76,15 +76,14 @@ export default {
     }
   },
 
-  props: {
-    currentUser: {
-      type: Object,
-      required: true
-    }
-  },
-
   components: {
     CategoriesList
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
   },
 
   methods: {

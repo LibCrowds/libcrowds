@@ -28,10 +28,6 @@ export default {
   },
 
   props: {
-    currentUser: {
-      type: Object,
-      required: true
-    },
     topUsers: {
       type: Array,
       required: true
@@ -66,6 +62,9 @@ export default {
 
       return users
     }
+  },
+  currentUser () {
+    return this.$store.state.currentUser
   }
 }
 </script>
