@@ -22,7 +22,7 @@ export default function (error) {
     error.message = error.message || 'Network Error'
   } else {
     // Error setting up the request
-    error.statusCode = error.statusCode || 0
+    error.statusCode = error.statusCode || 500
     error.message = error.message || 'Axios Error'
   }
   return Promise.reject(error)
