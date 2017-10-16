@@ -5,8 +5,8 @@
       v-if="project && tasks.length"
       :project="project"
       :tasks="tasks"
-      :currentUser="currentUser"
-      :collectionConfig="collectionConfig"
+      :current-user="currentUser"
+      :collection-config="collectionConfig"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </component>

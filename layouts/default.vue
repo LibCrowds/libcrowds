@@ -2,11 +2,11 @@
   <div id="core-layout">
     <div id="app-background" :style="appBgStyle"></div>
     <app-navbar
-      :currentUser="currentUser">
+      :current-user="currentUser">
     </app-navbar>
     <main>
       <nuxt
-        :currentUser="currentUser">
+        :current-user="currentUser">
       </nuxt>
     </main>
     <app-footer></app-footer>

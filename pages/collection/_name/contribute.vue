@@ -41,8 +41,8 @@
 
           <project-sorting-options
             class="mt-3 d-none d-xl-block"
-            :viewOpts="viewOpts"
-            :showCompleted="showCompleted"
+            :view-opts="viewOpts"
+            :show-completed="showCompleted"
             @sort="onSort"
             @viewchange="onViewChange"
             @togglecompleted="onToggleCompleted">

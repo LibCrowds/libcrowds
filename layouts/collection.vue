@@ -2,13 +2,13 @@
   <div id="collection-base-layout">
     <div id="collection-background" :style="bgStyle"></div>
     <collection-navbar
-      :collectionConfig="collectionConfig"
-      :currentUser="currentUser">
+      :collection-config="collectionConfig"
+      :current-user="currentUser">
     </collection-navbar>
     <main>
       <nuxt
-        :collectionConfig="collectionConfig"
-        :currentUser="currentUser">
+        :collection-config="collectionConfig"
+        :current-user="currentUser">
       </nuxt>
     </main>
     <app-footer></app-footer>

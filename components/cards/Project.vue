@@ -82,8 +82,8 @@
 
     <project-stats-modal
       :project="project"
-      :collectionConfig="collectionConfig"
-      :modalId="statsModalId">
+      :collection-config="collectionConfig"
+      :modal-id="statsModalId">
     </project-stats-modal>
 
   </b-card>

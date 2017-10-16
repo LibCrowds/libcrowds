@@ -6,7 +6,7 @@
         <b-row no-gutters>
           <b-col lg="4">
             <card-form
-              submitText="Search"
+              submit-text="Search"
               header="Search"
               :form="form"
               @success="onSuccess">

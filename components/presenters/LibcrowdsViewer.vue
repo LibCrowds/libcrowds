@@ -4,7 +4,7 @@
     <libcrowds-viewer
       :confirm-on-submit="false"
       :buttons="buttons"
-      :taskOpts="taskOpts"
+      :task-opts="taskOpts"
       :navigation="navigation"
       :browsable="false"
       :selections-editable="false"

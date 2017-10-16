@@ -86,7 +86,7 @@
     <data-modal
       v-for="project in projects"
       :key="project.id"
-      :modalId="`data-download-project-${project.id}`"
+      :modal-id="`data-download-project-${project.id}`"
       :project="project">
     </data-modal>
   </div>

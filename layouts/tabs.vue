@@ -18,8 +18,8 @@
         <section id="content" key="fading-content">
           <transition name="fade" mode="out-in" appear>
             <nuxt
-              :currentUser="currentUser"
-              :collectionConfig="collectionConfig"
+              :current-user="currentUser"
+              :collection-config="collectionConfig"
               @navupdated="onNavUpdated">
             </nuxt>
           </transition>
