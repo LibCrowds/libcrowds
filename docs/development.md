@@ -1,6 +1,8 @@
 # Development
 
-{{ book.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
+{{ book.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) [Progressive Web App (PWA)](https://developers.google.com/web/progressive-web-apps/) that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
+
+
 
 ## Installation
 
