@@ -27,7 +27,7 @@
 
       </div>
     </main>
-    <vue-notification position="bottom left"></vue-notification>
+    <vue-notifications position="bottom left"></vue-notifications>
   </div>
 </template>
 
