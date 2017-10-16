@@ -19,19 +19,30 @@ module.exports = {
   build: {
     vendor: [
       'axios',
+      'bootstrap',
       'bootstrap-vue',
+      'capitalize',
+      'chartist-plugin-legend',
+      'chartist-plugin-tooltips',
+      'cookieconsent',
+      'croppie',
+      'file-saver',
+      'hamburgers',
       'libcrowds-viewer',
+      'lodash',
+      'moment',
+      'popper.js',
+      'spinkit',
       'vue-awesome',
       'vue-chartist',
       'vue-clickaway',
       'vue-form-generator',
       'vue-gravatar',
+      'vue-js-toggle-button',
       'vue-notification',
       'vue-progress',
       'vue-scrollto',
-      'vue-sweetalert',
-      'vue-toggle-button'
-
+      'vue-sweetalert'
     ],
     extend (config, ctx) {
       if (ctx.isClient) {
