@@ -11,15 +11,21 @@ import { mount, createLocalVue } from 'vue-test-utils'
 import SocialMediaButtons from '~/components/buttons/SocialMedia'
 
 describe('SocialMedia buttons', () => {
-  const localVue = createLocalVue()
-  localVue.use(BootstrapVue)
-  localVue.component('icon', Icon)
-  const shareUrl = 'http://example.com'
-  const wrapper = mount(SocialMediaButtons, {
-    localVue,
-    propsData: {
-      shareUrl: shareUrl
-    }
+  let localVue = null
+  let wrapper = null
+  let shareUrl = null
+
+  beforeEach(() => {
+    localVue = createLocalVue()
+    localVue.use(BootstrapVue)
+    localVue.component('icon', Icon)
+    shareUrl = 'http://example.com'
+    wrapper = mount(SocialMediaButtons, {
+      localVue,
+      propsData: {
+        shareUrl: shareUrl
+      }
+    })
   })
 
   it('renders correctly', () => {

@@ -3,7 +3,7 @@
     <vue-chartist
       type="Line"
       :data="chartData"
-      :options="opts" >
+      :options="options" >
     </vue-chartist>
   </b-card>
 </template>
@@ -14,7 +14,7 @@ import pluralize from 'pluralize'
 export default {
   data () {
     return {
-      opts: {
+      options: {
         height: '300px',
         plugins: [
           this.$chartist.plugins.tooltip({

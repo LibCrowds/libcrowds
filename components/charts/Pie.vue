@@ -3,7 +3,7 @@
     <vue-chartist
       type="Pie"
       :data="chartData"
-      :options="opts" >
+      :options="options" >
     </vue-chartist>
   </b-card>
 </template>
@@ -12,7 +12,7 @@
 export default {
   data () {
     return {
-      opts: {
+      options: {
         height: '200px',
         plugins: [
           this.$chartist.plugins.tooltip(),
@@ -21,8 +21,8 @@ export default {
           })
         ],
         labelInterpolationFnc: (value, idx) => {
-          let sum = this.data.series.reduce((a, b) => a.value + b.value)
-          return Math.round(this.data.series[idx].value / sum * 100) + '%'
+          let sum = this.chartData.series.reduce((a, b) => a.value + b.value)
+          return Math.round(this.chartData.series[idx].value / sum * 100) + '%'
         }
       }
     }

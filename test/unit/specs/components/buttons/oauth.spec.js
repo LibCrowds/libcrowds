@@ -10,18 +10,24 @@ import { mount, createLocalVue } from 'vue-test-utils'
 import OauthButtons from '~/components/buttons/Oauth'
 
 describe('Oauth buttons', () => {
-  const localVue = createLocalVue()
-  localVue.use(BootstrapVue)
-  localVue.component('icon', Icon)
-  const next = '/example'
-  const wrapper = mount(OauthButtons, {
-    localVue,
-    propsData: {
-      facebook: true,
-      google: true,
-      twitter: true,
-      next: next
-    }
+  let localVue = null
+  let next = null
+  let wrapper = null
+
+  beforeEach(() => {
+    localVue = createLocalVue()
+    localVue.use(BootstrapVue)
+    localVue.component('icon', Icon)
+    next = '/example'
+    wrapper = mount(OauthButtons, {
+      localVue,
+      propsData: {
+        facebook: true,
+        google: true,
+        twitter: true,
+        next: next
+      }
+    })
   })
 
   it('renders correctly', () => {

@@ -3,7 +3,7 @@
     <vue-chartist
       type="Bar"
       :data="chartData"
-      :options="opts" >
+      :options="options" >
     </vue-chartist>
   </b-card>
 </template>

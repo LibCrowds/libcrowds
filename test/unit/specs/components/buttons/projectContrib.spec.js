@@ -4,13 +4,18 @@ import { mount, createLocalVue } from 'vue-test-utils'
 import ProjectContribButton from '~/components/buttons/ProjectContrib'
 
 describe('ProjectContrib button', () => {
-  const localVue = createLocalVue()
-  localVue.use(BootstrapVue)
-  const wrapper = mount(ProjectContribButton, {
-    localVue,
-    propsData: {
-      shortname: 'my_project'
-    }
+  let localVue = null
+  let wrapper = null
+
+  beforeEach(() => {
+    localVue = createLocalVue()
+    localVue.use(BootstrapVue)
+    wrapper = mount(ProjectContribButton, {
+      localVue,
+      propsData: {
+        shortname: 'my_project'
+      }
+    })
   })
 
   it('is active by default', () => {
