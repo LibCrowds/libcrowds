@@ -9,7 +9,6 @@ import CollectionCard from '@/components/cards/Collection'
 
 describe('Collection card', () => {
   let localVue = null
-  let user = null
   let wrapper = null
 
   beforeEach(() => {

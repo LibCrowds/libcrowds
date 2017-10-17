@@ -32,7 +32,6 @@ module.exports = {
       'vue-sweetalert'
     ],
     extend (config, ctx) {
-
       if (ctx.isClient) {
         // Run eslint on save
         config.module.rules.push({
