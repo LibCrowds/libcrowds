@@ -429,7 +429,22 @@ describe('PYBOSSA module', () => {
 
     it('returns the correct categories', () => {
       const key = 'playbills'
-      const response = pbTestResponses.getApiCategories
+      const response = {
+        data: [
+          {
+            "id": 1,
+            "info": {
+              "collection": key
+            }
+          },
+          {
+            "id": 2,
+            "info": {
+              "collection": "something_else"
+            }
+          }
+        ]
+      }
       mockGet.mockReturnValue(new Promise((resolve, reject) => {
         resolve(response)
       }))

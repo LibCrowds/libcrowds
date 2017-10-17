@@ -180,1140 +180,1201 @@
       ],
       "template":"account/projects.html",
       "title":"Projects"
-    },
-    "getUpdateProfile":{
-      "status":200,
-      "data":{
-        "flash":null,
-        "form":{
-          "ckan_api":null,
-          "csrf":"token",
-          "email_addr":"email@emai.com",
-          "errors":{
+    }
+  },
+  "getUpdateProfile":{
+    "status":200,
+    "data":{
+      "flash":null,
+      "form":{
+        "ckan_api":null,
+        "csrf":"token",
+        "email_addr":"email@emai.com",
+        "errors":{
 
-          },
-          "fullname":"John Doe",
-          "id":0,
-          "locale":"en",
-          "name":"johndoe",
-          "privacy_mode":true,
-          "subscribed":true
         },
-        "password_form":{
-          "confirm":null,
-          "csrf":"token",
-          "current_password":null,
-          "errors":{
+        "fullname":"John Doe",
+        "id":0,
+        "locale":"en",
+        "name":"johndoe",
+        "privacy_mode":true,
+        "subscribed":true
+      },
+      "password_form":{
+        "confirm":null,
+        "csrf":"token",
+        "current_password":null,
+        "errors":{
 
-          },
-          "new_password":null
         },
-        "show_passwd_form":true,
-        "template":"/account/update.html",
-        "title":"Update your profile: John Doe",
-        "upload_form":{
-          "avatar":null,
-          "csrf":"token",
-          "errors":{
+        "new_password":null
+      },
+      "show_passwd_form":true,
+      "template":"/account/update.html",
+      "title":"Update your profile: John Doe",
+      "upload_form":{
+        "avatar":null,
+        "csrf":"token",
+        "errors":{
 
-          },
-          "id":null,
-          "x1":0,
-          "x2":0,
-          "y1":0,
-          "y2":0
-        }
-      }
-    },
-    "getResetPassword":{
-      "status":200,
-      "data":{
-        "form":{
-          "confirm":null,
-          "csrf":"token",
-          "current_password":null,
-          "errors":{
-
-          },
-          "new_password":null
         },
-        "template":"/account/password_reset.html"
+        "id":null,
+        "x1":0,
+        "x2":0,
+        "y1":0,
+        "y2":0
       }
-    },
-    "getResetApiKey":{
-      "status":200,
-      "data":{
-        "form":{
-          "csrf":"token"
-        }
+    }
+  },
+  "getResetPassword":{
+    "status":200,
+    "data":{
+      "form":{
+        "confirm":null,
+        "csrf":"token",
+        "current_password":null,
+        "errors":{
+
+        },
+        "new_password":null
+      },
+      "template":"/account/password_reset.html"
+    }
+  },
+  "getResetApiKey":{
+    "status":200,
+    "data":{
+      "form":{
+        "csrf":"token"
       }
-    },
-    "getProject":{
-      "status":200,
-      "data":{
-        "last_activity":"2015-01-21T12:01:41.209270",
-        "n_completed_tasks":0,
-        "n_task_runs":3,
-        "n_tasks":8,
-        "n_volunteers":1,
-        "overall_progress":0,
-        "owner":{
-          "admin":false,
-          "api_key":"akjhfd85-8afd6-48af-f7afg-kjhsfdlkjhf1",
-          "confirmation_email_sent":false,
-          "created":"2014-08-11T08:59:32.079599",
-          "email_addr":"johndoe@johndoe.com",
-          "facebook_user_id":null,
-          "fullname":"John Doe",
-          "google_user_id":null,
-          "id":1234,
+    }
+  },
+  "getProject":{
+    "status":200,
+    "data":{
+      "last_activity":"2015-01-21T12:01:41.209270",
+      "n_completed_tasks":0,
+      "n_task_runs":3,
+      "n_tasks":8,
+      "n_volunteers":1,
+      "overall_progress":0,
+      "owner":{
+        "admin":false,
+        "api_key":"akjhfd85-8afd6-48af-f7afg-kjhsfdlkjhf1",
+        "confirmation_email_sent":false,
+        "created":"2014-08-11T08:59:32.079599",
+        "email_addr":"johndoe@johndoe.com",
+        "facebook_user_id":null,
+        "fullname":"John Doe",
+        "google_user_id":null,
+        "id":1234,
+        "info":{
+          "container":"user_1234"
+        },
+        "n_answers":56,
+        "name":"JohnDoe",
+        "rank":1813,
+        "registered_ago":"2 years ago",
+        "score":56,
+        "total":11093,
+        "twitter_user_id":null,
+        "valid_email":true
+      },
+      "pro_features":{
+        "auditlog_enabled":true,
+        "autoimporter_enabled":true,
+        "webhooks_enabled":true
+      },
+      "project":{
+        "allow_anonymous_contributors":true,
+        "category_id":2,
+        "contacted":true,
+        "contrib_button":"can_contribute",
+        "created":"2015-01-21T11:59:36.519541",
+        "description":"flickr678",
+        "featured":false,
+        "id":4567,
+        "info":{
+          "task_presenter":"<div> .... "
+        },
+        "long_description":"flickr678\r\n",
+        "n_blogposts":0,
+        "n_results":0,
+        "name":"flickr678",
+        "owner_id":9876,
+        "published":true,
+        "secret_key":"veryverysecretkey",
+        "short_name":"flickr678",
+        "updated":"2016-04-13T08:07:38.897626",
+        "webhook":null
+      },
+      "template":"/projects/project.html",
+      "title":"Project: flickr678"
+    }
+  },
+  "getProjectStats":{
+    "status":200,
+    "data":{
+      "avg_contrib_time":0,
+      "n_completed_tasks":2,
+      "n_tasks":2,
+      "n_volunteers":59,
+      "overall_progress":100,
+      "owner":{
+        "created":"2012-06-06T06:27:18.760254",
+        "fullname":"Daniel Lombraña González",
+        "info":{
+          "avatar":"1422360933.8_avatar.png",
+          "container":"user_3"
+        },
+        "n_answers":2998,
+        "name":"teleyinex",
+        "rank":66,
+        "registered_ago":"4 years ago",
+        "score":2998
+      },
+      "pro_features":{
+        "auditlog_enabled":false,
+        "autoimporter_enabled":false,
+        "better_stats_enabled":true,
+        "webhooks_enabled":false
+      },
+      "project":{
+        "created":"2013-01-10T19:58:55.454015",
+        "description":"Facial expressions that convey feelings",
+        "featured":true,
+        "id":253,
+        "info":{
+          "container":"user_3",
+          "thumbnail":"project_253_thumbnail_1460620575.png"
+        },
+        "last_activity":null,
+        "last_activity_raw":null,
+        "n_tasks":null,
+        "n_volunteers":null,
+        "name":"The Face We Make",
+        "overall_progress":null,
+        "owner":null,
+        "short_name":"thefacewemake",
+        "updated":"2016-04-14T07:56:16.114006"
+      },
+      "projectStats":"{\"userAuthStats\": {\"top5\": [], \"values\": [], \"label\": \"Authenticated Users\"} ...",
+      "template":"/projects/stats.html",
+      "title":"Project: The Face We Make &middot; Statistics",
+      "userStats":{
+        "anonymous":{
+          "pct_taskruns":0,
+          "taskruns":0,
+          "top5":[
+
+          ],
+          "users":0
+        },
+        "authenticated":{
+          "pct_taskruns":0,
+          "taskruns":0,
+          "top5":[
+
+          ],
+          "users":0
+        },
+        "geo":false
+      }
+    }
+  },
+  "getLeaderboard":{
+    "status":200,
+    "data":{
+      "template":"/stats/index.html",
+      "title":"Community Leaderboard",
+      "top_users":[
+        {
+          "created":"2014-08-17T18:28:56.738119",
+          "fullname":"Buzz Bot",
           "info":{
-            "container":"user_1234"
+            "avatar":"1410771548.09_avatar.png",
+            "container":"user_5305"
           },
-          "n_answers":56,
+          "n_answers":null,
+          "name":"buzzbot",
+          "rank":1,
+          "registered_ago":null,
+          "score":54259
+        },
+        {
+          "created":"2014-08-11T08:59:32.079599",
+          "fullname":"JohnDoe",
+          "info":{
+            "avatar":null,
+            "container":"user_4953"
+          },
+          "n_answers":null,
           "name":"JohnDoe",
           "rank":1813,
-          "registered_ago":"2 years ago",
-          "score":56,
-          "total":11093,
-          "twitter_user_id":null,
-          "valid_email":true
-        },
-        "pro_features":{
-          "auditlog_enabled":true,
-          "autoimporter_enabled":true,
-          "webhooks_enabled":true
-        },
-        "project":{
-          "allow_anonymous_contributors":true,
-          "category_id":2,
-          "contacted":true,
-          "contrib_button":"can_contribute",
-          "created":"2015-01-21T11:59:36.519541",
-          "description":"flickr678",
-          "featured":false,
-          "id":4567,
-          "info":{
-            "task_presenter":"<div> .... "
-          },
-          "long_description":"flickr678\r\n",
-          "n_blogposts":0,
-          "n_results":0,
-          "name":"flickr678",
-          "owner_id":9876,
-          "published":true,
-          "secret_key":"veryverysecretkey",
-          "short_name":"flickr678",
-          "updated":"2016-04-13T08:07:38.897626",
-          "webhook":null
-        },
-        "template":"/projects/project.html",
-        "title":"Project: flickr678"
-      }
-    },
-    "getProjectStats":{
-      "status":200,
-      "data":{
-        "avg_contrib_time":0,
-        "n_completed_tasks":2,
-        "n_tasks":2,
-        "n_volunteers":59,
-        "overall_progress":100,
-        "owner":{
-          "created":"2012-06-06T06:27:18.760254",
-          "fullname":"Daniel Lombraña González",
-          "info":{
-            "avatar":"1422360933.8_avatar.png",
-            "container":"user_3"
-          },
-          "n_answers":2998,
-          "name":"teleyinex",
-          "rank":66,
-          "registered_ago":"4 years ago",
-          "score":2998
-        },
-        "pro_features":{
-          "auditlog_enabled":false,
-          "autoimporter_enabled":false,
-          "better_stats_enabled":true,
-          "webhooks_enabled":false
-        },
-        "project":{
-          "created":"2013-01-10T19:58:55.454015",
-          "description":"Facial expressions that convey feelings",
-          "featured":true,
-          "id":253,
-          "info":{
-            "container":"user_3",
-            "thumbnail":"project_253_thumbnail_1460620575.png"
-          },
-          "last_activity":null,
-          "last_activity_raw":null,
-          "n_tasks":null,
-          "n_volunteers":null,
-          "name":"The Face We Make",
-          "overall_progress":null,
-          "owner":null,
-          "short_name":"thefacewemake",
-          "updated":"2016-04-14T07:56:16.114006"
-        },
-        "projectStats":"{\"userAuthStats\": {\"top5\": [], \"values\": [], \"label\": \"Authenticated Users\"} ...",
-        "template":"/projects/stats.html",
-        "title":"Project: The Face We Make &middot; Statistics",
-        "userStats":{
-          "anonymous":{
-            "pct_taskruns":0,
-            "taskruns":0,
-            "top5":[
-
-            ],
-            "users":0
-          },
-          "authenticated":{
-            "pct_taskruns":0,
-            "taskruns":0,
-            "top5":[
-
-            ],
-            "users":0
-          },
-          "geo":false
+          "registered_ago":null,
+          "score":56
         }
-      }
-    },
-    "getLeaderboard":{
-      "status":200,
-      "data":{
-        "template":"/stats/index.html",
-        "title":"Community Leaderboard",
-        "top_users":[
-          {
-            "created":"2014-08-17T18:28:56.738119",
-            "fullname":"Buzz Bot",
-            "info":{
-              "avatar":"1410771548.09_avatar.png",
-              "container":"user_5305"
-            },
-            "n_answers":null,
-            "name":"buzzbot",
-            "rank":1,
-            "registered_ago":null,
-            "score":54259
-          },
-          {
-            "created":"2014-08-11T08:59:32.079599",
-            "fullname":"JohnDoe",
-            "info":{
-              "avatar":null,
-              "container":"user_4953"
-            },
-            "n_answers":null,
-            "name":"JohnDoe",
-            "rank":1813,
-            "registered_ago":null,
-            "score":56
-          }
-        ]
-      }
-    },
-    "getAnnouncements":{
-      "status":200,
-      "data":{
-        "announcements":[
-          {
-            "body":"test123",
-            "created":"2017-05-31T15:23:44.858735",
-            "id":5,
-            "media_url":null,
-            "published":true,
-            "title":"title123",
-            "updated":"2017-05-31T15:23:44.858735",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-05-31T15:23:28.477516",
-            "id":4,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-05-31T15:23:28.477516",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-06-01T23:42:45.042010",
-            "id":7,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-06-01T23:42:45.042010",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-06-01T23:45:11.612801",
-            "id":8,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-06-01T23:45:11.612801",
-            "user_id":4953
-          }
-        ],
-        "csrf":"1504710446.52##6a7fakjsdhsdflkj",
-        "template":"admin/announcement.html",
-        "title":"Manage global Announcements"
-      }
-    },
-    "getAdminAnnouncements":{
-      "status":200,
-      "data":{
-        "announcements":[
-          {
-            "body":"test123",
-            "created":"2017-05-31T15:23:44.858735",
-            "id":5,
-            "media_url":null,
-            "published":true,
-            "title":"title123",
-            "updated":"2017-05-31T15:23:44.858735",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-05-31T15:23:28.477516",
-            "id":4,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-05-31T15:23:28.477516",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-06-01T23:42:45.042010",
-            "id":7,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-06-01T23:42:45.042010",
-            "user_id":4953
-          },
-          {
-            "body":"new body",
-            "created":"2017-06-01T23:45:11.612801",
-            "id":8,
-            "media_url":null,
-            "published":true,
-            "title":"blogpost title",
-            "updated":"2017-06-01T23:45:11.612801",
-            "user_id":4953
-          }
-        ],
-        "csrf":"1504710446.52##6a7fakjsdhsdflkj",
-        "template":"admin/announcement.html",
-        "title":"Manage global Announcements"
-      }
-    },
-    "getNewAnnouncement":{
-      "status":200,
-      "data":{
-        "form":{
-          "body":null,
-          "csrf":"1496394903.81##bb5fb0c527955073ec9ad694ed9097e7c868272a",
-          "errors":{
-
-          },
+      ]
+    }
+  },
+  "getAnnouncements":{
+    "status":200,
+    "data":{
+      "announcements":[
+        {
+          "body":"test123",
+          "created":"2017-05-31T15:23:44.858735",
+          "id":5,
           "media_url":null,
           "published":true,
-          "title":null
+          "title":"title123",
+          "updated":"2017-05-31T15:23:44.858735",
+          "user_id":4953
         },
-        "template":"admin/new_announcement.html",
-        "title":"Write a new post"
-      }
-    },
-    "getUpdateAnnouncement":{
-      "status":200,
-      "data":{
-        "form":{
-          "body":"test6",
-          "csrf":"1496328993.27##aa51e026938129afdfb0e6a5eab8c6b9427f81f6",
-          "errors":{
-
-          },
+        {
+          "body":"new body",
+          "created":"2017-05-31T15:23:28.477516",
           "id":4,
           "media_url":null,
           "published":true,
-          "title":"test6"
+          "title":"blogpost title",
+          "updated":"2017-05-31T15:23:28.477516",
+          "user_id":4953
         },
-        "template":"admin/new_announcement.html",
-        "title":"Edit a post"
-      }
-    },
-    "getAdminUsers":{
-      "status":200,
-      "data":{
-        "form":{
-          "csrf":"token",
-          "errors":{
-
-          },
-          "user":null
+        {
+          "body":"new body",
+          "created":"2017-06-01T23:42:45.042010",
+          "id":7,
+          "media_url":null,
+          "published":true,
+          "title":"blogpost title",
+          "updated":"2017-06-01T23:42:45.042010",
+          "user_id":4953
         },
-        "found":[
-
-        ],
-        "template":"/admin/users.html",
-        "title":"Manage Admin Users",
-        "users":[
-          {
-            "admin":true,
-            "api_key":"key",
-            "category":null,
-            "ckan_api":null,
-            "confirmation_email_sent":false,
-            "created":"date",
-            "email_addr":"email",
-            "facebook_user_id":null,
-            "flags":null,
-            "fullname":"John Doe",
-            "google_user_id":null,
-            "id":1,
-            "info":{
-              "avatar":"avatar.png",
-              "container":"user_1"
-            },
-            "locale":"en",
-            "name":"johndoe",
-            "newsletter_prompted":false,
-            "passwd_hash":"hash",
-            "privacy_mode":true,
-            "pro":false,
-            "subscribed":true,
-            "twitter_user_id":null,
-            "valid_email":true
-          }
-        ]
-      }
-    },
-    "getAdminCategories":{
-      "status":200,
-      "data":{
-        "categories":[
-          {
-            "created":null,
-            "description":"Social projects",
-            "id":2,
-            "name":"Social",
-            "short_name":"social"
-          },
-          {
-            "created":"2013-06-18T11:13:44.789149",
-            "description":"Art projects",
-            "id":3,
-            "name":"Art",
-            "short_name":"art"
-          }
-        ],
-        "form":{
-          "csrf":"token",
-          "description":null,
-          "errors":{
-
-          },
-          "id":null,
-          "name":null
-        },
-        "n_projects_per_category":{
-          "art":41,
-          "social":182
-        },
-        "template":"admin/categories.html",
-        "title":"Categories"
-      }
-    },
-    "getUpdateCategory":{
-      "status":200,
-      "data":{
-        "category":{
-          "created":"2017-01-24T13:08:09.873071",
-          "description":"new",
-          "id":9,
-          "name":"new",
-          "short_name":"new"
-        },
-        "form":{
-          "csrf":"token",
-          "description":"new",
-          "errors":{
-
-          },
-          "id":9,
-          "name":"new"
-        },
-        "template":"admin/update_category.html",
-        "title":"Update Category"
-      }
-    },
-    "getAdminDashboard":{
-      "status":200,
-      "data":{
-        "active_anon_last_week":{
-          "labels":[
-            "2016-04-28"
-          ],
-          "series":[
-            [
-              0
-            ]
-          ]
-        },
-        "active_users_last_week":{
-          "labels":[
-            "2016-04-28"
-          ],
-          "series":[
-            [
-              1
-            ]
-          ]
-        },
-        "draft_projects_last_week":[
-          {
-            "day":"2016-04-27",
-            "email_addr":"email",
-            "id":1,
-            "owner_id":2,
-            "p_name":"name",
-            "short_name":"name",
-            "u_name":"name"
-          },
-          {
-            "day":"2016-04-26",
-            "email_addr":"email",
-            "id":1,
-            "owner_id":2,
-            "p_name":"name",
-            "short_name":"name",
-            "u_name":"name"
-          }
-        ],
-        "new_task_runs_week":{
-          "labels":[
-            "2016-04-28"
-          ],
-          "series":[
-            [
-              4
-            ]
-          ]
-        },
-        "new_tasks_week":{
-          "labels":[
-            "2016-04-26",
-            "2016-04-28"
-          ],
-          "series":[
-            [
-              57,
-              4
-            ]
-          ]
-        },
-        "new_users_week":{
-          "labels":[
-            "2016-04-27"
-          ],
-          "series":[
-            [
-              1
-            ]
-          ]
-        },
-        "published_projects_last_week":[
-
-        ],
-        "returning_users_week":{
-          "labels":[
-            "1 day",
-            "2 days",
-            "3 days",
-            "4 days",
-            "5 days",
-            "6 days",
-            "7 days"
-          ],
-          "series":[
-            [
-              0,
-              0,
-              0,
-              0,
-              0,
-              0,
-              0
-            ]
-          ]
-        },
-        "template":"admin/dashboard.html",
-        "title":"Dashboard",
-        "update_feed":[
-
-        ],
-        "update_projects_last_week":[
-          {
-            "day":"2016-04-28",
-            "email_addr":"email",
-            "id":1,
-            "owner_id":2,
-            "p_name":"name",
-            "short_name":"name",
-            "u_name":"name"
-          },
-          {
-            "day":"2016-04-27",
-            "email_addr":"email",
-            "id":1,
-            "owner_id":2,
-            "p_name":"name",
-            "short_name":"name",
-            "u_name":"name"
-          },
-          {
-            "day":"2016-04-26",
-            "email_addr":"email",
-            "id":1,
-            "owner_id":2,
-            "p_name":"name",
-            "short_name":"name",
-            "u_name":"name"
-          }
-        ],
-        "wait":false
-      }
-    },
-    "getAdminFeatured":{
-      "status":200,
-      "data":{
-        "categories":[
-          {
-            "created":"2013-06-18T11:13:44.789149",
-            "description":"Art projects",
-            "id":3,
-            "name":"Art",
-            "short_name":"art"
-          },
-          {
-            "created":"2013-06-18T11:14:54.737672",
-            "description":"Humanities projects",
-            "id":4,
-            "name":"Humanities",
-            "short_name":"humanities"
-          }
-        ],
-        "projects":{
-          "art":[
-            {
-              "created":"2013-12-10T06:54:48.222642",
-              "description":"Description",
-              "id":1069,
-              "info":{
-                "container":"user_3738",
-                "thumbnail":"app_1069_thumbnail_1410772175.32.png"
-              },
-              "last_activity":"just now",
-              "last_activity_raw":null,
-              "n_tasks":13,
-              "n_volunteers":0,
-              "name":"AAAA Test",
-              "overall_progress":0,
-              "owner":"John Doe",
-              "short_name":"AAAATest",
-              "updated":"2014-11-05T14:55:07.564118"
-            }
-          ],
-          "humanities":[
-            {
-              "created":"2014-10-21T12:20:51.194485",
-              "description":"test project",
-              "id":2144,
-              "info":{
-                "container":null,
-                "thumbnail":null
-              },
-              "last_activity":"2 years ago",
-              "last_activity_raw":"2014-10-21T12:31:51.560422",
-              "n_tasks":9,
-              "n_volunteers":2,
-              "name":"zak's test",
-              "overall_progress":0,
-              "owner":"John Doe Cousin",
-              "short_name":"cousintest",
-              "updated":"2014-11-05T14:55:07.564118"
-            }
-          ]
-        },
-        "form":{
-          "csrf":"secret_token_here"
-        },
-        "template":"/admin/projects.html"
-      }
-    },
-    "getStats":{
-      "status":200,
-      "data":{
-        "locs":"[]",
-        "projects":{
-          "label":"Projects Statistics",
-          "values":[
-            {
-              "label":"Published",
-              "value":[
-                0,
-                534
-              ]
-            },
-            {
-              "label":"Draft",
-              "value":[
-                0,
-                1278
-              ]
-            }
-          ]
-        },
-        "show_locs":false,
-        "stats":{
-          "n_anon":27587,
-          "n_auth":11134,
-          "n_draft_projects":1278,
-          "n_published_projects":534,
-          "n_task_runs":1801222,
-          "n_tasks":553012,
-          "n_total_projects":1812,
-          "n_total_users":38721
-        },
-        "tasks":{
-          "label":"Task and Task Run Statistics",
-          "values":[
-            {
-              "label":"Tasks",
-              "value":[
-                0,
-                553012
-              ]
-            },
-            {
-              "label":"Answers",
-              "value":[
-                1,
-                1801222
-              ]
-            }
-          ]
-        },
-        "template":"/stats/global.html",
-        "title":"Global Statistics",
-        "top5_projects_24_hours":[
-
-        ],
-        "top5_users_24_hours":[
-
-        ],
-        "users":{
-          "label":"User Statistics",
-          "values":[
-            {
-              "label":"Anonymous",
-              "value":[
-                0,
-                27587
-              ]
-            },
-            {
-              "label":"Authenticated",
-              "value":[
-                0,
-                11134
-              ]
-            }
-          ]
+        {
+          "body":"new body",
+          "created":"2017-06-01T23:45:11.612801",
+          "id":8,
+          "media_url":null,
+          "published":true,
+          "title":"blogpost title",
+          "updated":"2017-06-01T23:45:11.612801",
+          "user_id":4953
         }
-      }
-    },
-    "getCategory":{
-      "status":200,
-      "data":{
-        "active_cat":{
+      ],
+      "csrf":"1504710446.52##6a7fakjsdhsdflkj",
+      "template":"admin/announcement.html",
+      "title":"Manage global Announcements"
+    }
+  },
+  "getAdminAnnouncements":{
+    "status":200,
+    "data":{
+      "announcements":[
+        {
+          "body":"test123",
+          "created":"2017-05-31T15:23:44.858735",
+          "id":5,
+          "media_url":null,
+          "published":true,
+          "title":"title123",
+          "updated":"2017-05-31T15:23:44.858735",
+          "user_id":4953
+        },
+        {
+          "body":"new body",
+          "created":"2017-05-31T15:23:28.477516",
+          "id":4,
+          "media_url":null,
+          "published":true,
+          "title":"blogpost title",
+          "updated":"2017-05-31T15:23:28.477516",
+          "user_id":4953
+        },
+        {
+          "body":"new body",
+          "created":"2017-06-01T23:42:45.042010",
+          "id":7,
+          "media_url":null,
+          "published":true,
+          "title":"blogpost title",
+          "updated":"2017-06-01T23:42:45.042010",
+          "user_id":4953
+        },
+        {
+          "body":"new body",
+          "created":"2017-06-01T23:45:11.612801",
+          "id":8,
+          "media_url":null,
+          "published":true,
+          "title":"blogpost title",
+          "updated":"2017-06-01T23:45:11.612801",
+          "user_id":4953
+        }
+      ],
+      "csrf":"1504710446.52##6a7fakjsdhsdflkj",
+      "template":"admin/announcement.html",
+      "title":"Manage global Announcements"
+    }
+  },
+  "getNewAnnouncement":{
+    "status":200,
+    "data":{
+      "form":{
+        "body":null,
+        "csrf":"1496394903.81##bb5fb0c527955073ec9ad694ed9097e7c868272a",
+        "errors":{
+
+        },
+        "media_url":null,
+        "published":true,
+        "title":null
+      },
+      "template":"admin/new_announcement.html",
+      "title":"Write a new post"
+    }
+  },
+  "getUpdateAnnouncement":{
+    "status":200,
+    "data":{
+      "form":{
+        "body":"test6",
+        "csrf":"1496328993.27##aa51e026938129afdfb0e6a5eab8c6b9427f81f6",
+        "errors":{
+
+        },
+        "id":4,
+        "media_url":null,
+        "published":true,
+        "title":"test6"
+      },
+      "template":"admin/new_announcement.html",
+      "title":"Edit a post"
+    }
+  },
+  "getAdminUsers":{
+    "status":200,
+    "data":{
+      "form":{
+        "csrf":"token",
+        "errors":{
+
+        },
+        "user":null
+      },
+      "found":[
+
+      ],
+      "template":"/admin/users.html",
+      "title":"Manage Admin Users",
+      "users":[
+        {
+          "admin":true,
+          "api_key":"key",
+          "category":null,
+          "ckan_api":null,
+          "confirmation_email_sent":false,
+          "created":"date",
+          "email_addr":"email",
+          "facebook_user_id":null,
+          "flags":null,
+          "fullname":"John Doe",
+          "google_user_id":null,
+          "id":1,
+          "info":{
+            "avatar":"avatar.png",
+            "container":"user_1"
+          },
+          "locale":"en",
+          "name":"johndoe",
+          "newsletter_prompted":false,
+          "passwd_hash":"hash",
+          "privacy_mode":true,
+          "pro":false,
+          "subscribed":true,
+          "twitter_user_id":null,
+          "valid_email":true
+        }
+      ]
+    }
+  },
+  "getAdminCategories":{
+    "status":200,
+    "data":{
+      "categories":[
+        {
           "created":null,
           "description":"Social projects",
           "id":2,
           "name":"Social",
           "short_name":"social"
         },
-        "categories":[
-          {
-            "created":null,
-            "description":"Featured projects",
-            "id":null,
-            "name":"Featured",
-            "short_name":"featured"
-          },
-          {
-            "created":null,
-            "description":"Social projects",
-            "id":2,
-            "name":"Social",
-            "short_name":"social"
-          },
-          {
-            "created":"2013-06-18T11:13:44.789149",
-            "description":"Art projects",
-            "id":3,
-            "name":"Art",
-            "short_name":"art"
-          }
-        ],
-        "pagination":{
-          "next":false,
-          "page":1,
-          "per_page":20,
-          "prev":false,
-          "total":1
-        },
-        "projects":[
-          {
-            "created":"2014-02-22T15:09:23.691811",
-            "description":"Image pattern recognition",
-            "id":1377,
-            "info":{
-              "container":"7",
-              "thumbnail":"58.png"
-            },
-            "last_activity":"2 weeks ago",
-            "last_activity_raw":"2017-01-31T09:18:28.450391",
-            "n_tasks":169671,
-            "n_volunteers":17499,
-            "name":"Name",
-            "overall_progress":80,
-            "owner":"John Doe",
-            "short_name":"name",
-            "updated":"2017-01-31T09:18:28.491496"
-          }
-        ],
-        "template":"/projects/index.html",
-        "title":"Projects"
-      }
-    },
-    "getDeleteProject":{
-      "status":200,
-      "data":{
-        "csrf":"token",
-        "last_activity":null,
-        "n_tasks":0,
-        "overall_progress":0,
-        "owner":{
-          "admin":false,
-          "api_key":"key",
-          "confirmation_email_sent":false,
-          "created":"2016-09-15T11:30:42.660450",
-          "email_addr":"prueba@prueba.com",
-          "facebook_user_id":null,
-          "fullname":"prueba de json",
-          "google_user_id":null,
-          "id":0,
-          "info":{
-            "avatar":"avatar.png",
-            "container":"0"
-          },
-          "n_answers":5,
-          "name":"pruebaadfadfa",
-          "rank":4411,
-          "registered_ago":"6 months ago",
-          "score":5,
-          "total":11134,
-          "twitter_user_id":null,
-          "valid_email":true
-        },
-        "pro_features":{
-          "auditlog_enabled":false,
-          "autoimporter_enabled":false,
-          "webhooks_enabled":false
-        },
-        "project":{
-          "allow_anonymous_contributors":true,
-          "category_id":2,
-          "contacted":false,
-          "created":"2017-03-15T15:02:12.160810",
-          "description":"asdf",
-          "featured":false,
+        {
+          "created":"2013-06-18T11:13:44.789149",
+          "description":"Art projects",
           "id":3,
-          "info":{
-
-          },
-          "long_description":"asdf",
-          "name":"algo",
-          "owner_id":12030,
-          "published":false,
-          "secret_key":"c5a77943-f5a4-484a-86bb-d69559e80357",
-          "short_name":"algo",
-          "updated":"2017-03-15T15:02:12.160823",
-          "webhook":null
-        },
-        "template":"/projects/delete.html",
-        "title":"Project: algo &middot; Delete"
-      }
-    },
-    "getUpdateProject":{
-      "status":200,
-      "data":{
-        "form":{
-          "allow_anonymous_contributors":false,
-          "category_id":2,
-          "csrf":"token",
-          "description":"description",
-          "errors":{
-
-          },
-          "id":3117,
-          "long_description":"long description",
-          "name":"name",
-          "password":null,
-          "protect":false,
-          "short_name":"slug",
-          "webhook":null
-        },
-        "last_activity":null,
-        "n_completed_tasks":0,
-        "n_task_runs":0,
-        "n_tasks":2,
-        "n_volunteers":0,
-        "overall_progress":0,
-        "owner":{
-          "admin":false,
-          "api_key":"key",
-          "confirmation_email_sent":false,
-          "created":"2012-06-06T06:27:18.760254",
-          "email_addr":"email.com",
-          "facebook_user_id":null,
-          "fullname":"John Doe",
-          "google_user_id":null,
-          "id":0,
-          "info":{
-            "avatar":"avatar.png",
-            "container":"user",
-            "twitter_token":{
-              "oauth_token":"token",
-              "oauth_token_secret":"token"
-            }
-          },
-          "n_answers":2414,
-          "name":"johndoe",
-          "rank":69,
-          "registered_ago":"4 years ago",
-          "score":2414,
-          "total":11134,
-          "twitter_user_id":12,
-          "valid_email":false
-        },
-        "pro_features":{
-          "auditlog_enabled":true,
-          "autoimporter_enabled":true,
-          "webhooks_enabled":true
-        },
-        "project":{
-          "allow_anonymous_contributors":false,
-          "category_id":2,
-          "contacted":false,
-          "contrib_button":"can_contribute",
-          "created":"2015-06-29T08:23:14.201331",
-          "description":"description",
-          "featured":false,
-          "id":0,
-          "info":{
-            "container":"user",
-            "passwd_hash":null,
-            "task_presenter":"HTML+CSS+JS",
-            "thumbnail":"thumbnail.png"
-          },
-          "long_description":"long description",
-          "n_blogposts":0,
-          "n_results":0,
-          "name":"name",
-          "owner_id":0,
-          "published":true,
-          "secret_key":"key",
-          "short_name":"slug",
-          "updated":"2017-03-16T14:50:45.055331",
-          "webhook":null
-        },
-        "template":"/projects/update.html",
-        "title":"Project: name &middot; Update",
-        "upload_form":{
-          "avatar":null,
-          "csrf":"token",
-          "errors":{
-
-          },
-          "id":null,
-          "x1":0,
-          "x2":0,
-          "y1":0,
-          "y2":0
+          "name":"Art",
+          "short_name":"art"
         }
-      }
-    },
-    "getBrowseTasks":{
-      "status":200,
-      "data":{
-        "n_completed_tasks":0,
-        "n_tasks":1,
-        "n_volunteers":0,
-        "overall_progress":0,
-        "owner":{
-          "created":"2017-04-17T23:56:22.892222",
-          "fullname":"John Doe",
-          "info":{
+      ],
+      "form":{
+        "csrf":"token",
+        "description":null,
+        "errors":{
 
-          },
-          "locale":null,
-          "n_answers":0,
-          "name":"johndoe",
-          "rank":null,
-          "registered_ago":"3 hours ago",
-          "score":null
         },
-        "pagination":{
-          "next":false,
-          "page":1,
-          "per_page":10,
-          "prev":false,
-          "total":1
+        "id":null,
+        "name":null
+      },
+      "n_projects_per_category":{
+        "art":41,
+        "social":182
+      },
+      "template":"admin/categories.html",
+      "title":"Categories"
+    }
+  },
+  "getUpdateCategory":{
+    "status":200,
+    "data":{
+      "category":{
+        "created":"2017-01-24T13:08:09.873071",
+        "description":"new",
+        "id":9,
+        "name":"new",
+        "short_name":"new"
+      },
+      "form":{
+        "csrf":"token",
+        "description":"new",
+        "errors":{
+
         },
-        "pro_features":{
-          "auditlog_enabled":false,
-          "autoimporter_enabled":false,
-          "webhooks_enabled":false
-        },
-        "project":{
-          "created":"2017-04-17T23:56:23.416754",
-          "description":"Description",
-          "featured":false,
+        "id":9,
+        "name":"new"
+      },
+      "template":"admin/update_category.html",
+      "title":"Update Category"
+    }
+  },
+  "getDeleteCategory":{
+    "status":200,
+    "data": {
+      "category": {
+        "created": "2017-01-24T13:08:09.873071",
+        "description": "new",
+        "id": 9,
+        "name": "new",
+        "short_name": "new"
+      },
+      "form": {
+        "csrf": "token"
+      },
+      "template": "admin/del_category.html",
+      "title": "Delete Category"
+    }
+  },
+  "getAdminDashboard":{
+    "status":200,
+    "data":{
+      "active_anon_last_week":{
+        "labels":[
+          "2016-04-28"
+        ],
+        "series":[
+          [
+            0
+          ]
+        ]
+      },
+      "active_users_last_week":{
+        "labels":[
+          "2016-04-28"
+        ],
+        "series":[
+          [
+            1
+          ]
+        ]
+      },
+      "draft_projects_last_week":[
+        {
+          "day":"2016-04-27",
+          "email_addr":"email",
           "id":1,
-          "info":{
-
-          },
-          "last_activity":null,
-          "last_activity_raw":null,
-          "n_tasks":null,
-          "n_volunteers":null,
-          "name":"Sample Project",
-          "overall_progress":null,
-          "owner":null,
-          "short_name":"sampleapp",
-          "updated":"2017-04-17T23:56:23.589652"
+          "owner_id":2,
+          "p_name":"name",
+          "short_name":"name",
+          "u_name":"name"
         },
-        "tasks":[
+        {
+          "day":"2016-04-26",
+          "email_addr":"email",
+          "id":1,
+          "owner_id":2,
+          "p_name":"name",
+          "short_name":"name",
+          "u_name":"name"
+        }
+      ],
+      "new_task_runs_week":{
+        "labels":[
+          "2016-04-28"
+        ],
+        "series":[
+          [
+            4
+          ]
+        ]
+      },
+      "new_tasks_week":{
+        "labels":[
+          "2016-04-26",
+          "2016-04-28"
+        ],
+        "series":[
+          [
+            57,
+            4
+          ]
+        ]
+      },
+      "new_users_week":{
+        "labels":[
+          "2016-04-27"
+        ],
+        "series":[
+          [
+            1
+          ]
+        ]
+      },
+      "published_projects_last_week":[
+
+      ],
+      "returning_users_week":{
+        "labels":[
+          "1 day",
+          "2 days",
+          "3 days",
+          "4 days",
+          "5 days",
+          "6 days",
+          "7 days"
+        ],
+        "series":[
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "template":"admin/dashboard.html",
+      "title":"Dashboard",
+      "update_feed":[
+
+      ],
+      "update_projects_last_week":[
+        {
+          "day":"2016-04-28",
+          "email_addr":"email",
+          "id":1,
+          "owner_id":2,
+          "p_name":"name",
+          "short_name":"name",
+          "u_name":"name"
+        },
+        {
+          "day":"2016-04-27",
+          "email_addr":"email",
+          "id":1,
+          "owner_id":2,
+          "p_name":"name",
+          "short_name":"name",
+          "u_name":"name"
+        },
+        {
+          "day":"2016-04-26",
+          "email_addr":"email",
+          "id":1,
+          "owner_id":2,
+          "p_name":"name",
+          "short_name":"name",
+          "u_name":"name"
+        }
+      ],
+      "wait":false
+    }
+  },
+  "getAdminFeatured":{
+    "status":200,
+    "data":{
+      "categories":[
+        {
+          "created":"2013-06-18T11:13:44.789149",
+          "description":"Art projects",
+          "id":3,
+          "name":"Art",
+          "short_name":"art"
+        },
+        {
+          "created":"2013-06-18T11:14:54.737672",
+          "description":"Humanities projects",
+          "id":4,
+          "name":"Humanities",
+          "short_name":"humanities"
+        }
+      ],
+      "projects":{
+        "art":[
           {
-            "id":1,
-            "n_answers":10,
-            "n_task_runs":0,
-            "pct_status":0.0
+            "created":"2013-12-10T06:54:48.222642",
+            "description":"Description",
+            "id":1069,
+            "info":{
+              "container":"user_3738",
+              "thumbnail":"app_1069_thumbnail_1410772175.32.png"
+            },
+            "last_activity":"just now",
+            "last_activity_raw":null,
+            "n_tasks":13,
+            "n_volunteers":0,
+            "name":"AAAA Test",
+            "overall_progress":0,
+            "owner":"John Doe",
+            "short_name":"AAAATest",
+            "updated":"2014-11-05T14:55:07.564118"
           }
         ],
-        "template":"/projects/tasks_browse.html",
-        "title":"Project: Sample Project &middot; Tasks"
+        "humanities":[
+          {
+            "created":"2014-10-21T12:20:51.194485",
+            "description":"test project",
+            "id":2144,
+            "info":{
+              "container":null,
+              "thumbnail":null
+            },
+            "last_activity":"2 years ago",
+            "last_activity_raw":"2014-10-21T12:31:51.560422",
+            "n_tasks":9,
+            "n_volunteers":2,
+            "name":"zak's test",
+            "overall_progress":0,
+            "owner":"John Doe Cousin",
+            "short_name":"cousintest",
+            "updated":"2014-11-05T14:55:07.564118"
+          }
+        ]
+      },
+      "form":{
+        "csrf":"secret_token_here"
+      },
+      "template":"/admin/projects.html"
+    }
+  },
+  "getStats":{
+    "status":200,
+    "data":{
+      "locs":"[]",
+      "projects":{
+        "label":"Projects Statistics",
+        "values":[
+          {
+            "label":"Published",
+            "value":[
+              0,
+              534
+            ]
+          },
+          {
+            "label":"Draft",
+            "value":[
+              0,
+              1278
+            ]
+          }
+        ]
+      },
+      "show_locs":false,
+      "stats":{
+        "n_anon":27587,
+        "n_auth":11134,
+        "n_draft_projects":1278,
+        "n_published_projects":534,
+        "n_task_runs":1801222,
+        "n_tasks":553012,
+        "n_total_projects":1812,
+        "n_total_users":38721
+      },
+      "tasks":{
+        "label":"Task and Task Run Statistics",
+        "values":[
+          {
+            "label":"Tasks",
+            "value":[
+              0,
+              553012
+            ]
+          },
+          {
+            "label":"Answers",
+            "value":[
+              1,
+              1801222
+            ]
+          }
+        ]
+      },
+      "template":"/stats/global.html",
+      "title":"Global Statistics",
+      "top5_projects_24_hours":[
+
+      ],
+      "top5_users_24_hours":[
+
+      ],
+      "users":{
+        "label":"User Statistics",
+        "values":[
+          {
+            "label":"Anonymous",
+            "value":[
+              0,
+              27587
+            ]
+          },
+          {
+            "label":"Authenticated",
+            "value":[
+              0,
+              11134
+            ]
+          }
+        ]
       }
-    },
-    "getTaskImporter":{
-      "status":200,
-      "data":{
-        "available_importers":[
-          "projects/tasks/epicollect.html",
-          "projects/tasks/csv.html",
-          "projects/tasks/s3.html",
-          "projects/tasks/twitter.html",
-          "projects/tasks/youtube.html",
-          "projects/tasks/gdocs.html",
-          "projects/tasks/dropbox.html",
-          "projects/tasks/flickr.html"
-        ],
-        "form":null,
-        "loading_text":"Importing tasks, this may take a while, wait...",
-        "n_completed_tasks":0,
-        "n_tasks":5,
-        "n_volunteers":0,
-        "overall_progress":0,
-        "owner":{
-          "admin":false,
-          "api_key":"key",
-          "confirmation_email_sent":false,
-          "created":"2012-06-06T06:27:18.760254",
-          "email_addr":"johndoe@gmail.com",
-          "facebook_user_id":null,
-          "fullname":"John Doe",
-          "google_user_id":null,
-          "id":0,
-          "info":{
-            "avatar":"avatar.png",
-            "container":"user",
-            "twitter_token":{
-              "oauth_token":"",
-              "oauth_token_secret":""
-            }
-          },
-          "n_answers":2414,
-          "name":"johndoe",
-          "rank":69,
-          "registered_ago":"4 years ago",
-          "score":2414,
-          "total":11134,
-          "twitter_user_id":12,
-          "valid_email":false
+    }
+  },
+  "getCategory":{
+    "status":200,
+    "data":{
+      "active_cat":{
+        "created":null,
+        "description":"Social projects",
+        "id":2,
+        "name":"Social",
+        "short_name":"social"
+      },
+      "categories":[
+        {
+          "created":null,
+          "description":"Featured projects",
+          "id":null,
+          "name":"Featured",
+          "short_name":"featured"
         },
-        "pro_features":{
-          "auditlog_enabled":true,
-          "autoimporter_enabled":true,
-          "webhooks_enabled":true
+        {
+          "created":null,
+          "description":"Social projects",
+          "id":2,
+          "name":"Social",
+          "short_name":"social"
         },
-        "project":{
-          "allow_anonymous_contributors":false,
-          "category_id":2,
-          "contacted":false,
-          "contrib_button":"can_contribute",
-          "created":"2015-06-29T08:23:14.201331",
-          "description":"old",
-          "featured":false,
-          "id":3117,
+        {
+          "created":"2013-06-18T11:13:44.789149",
+          "description":"Art projects",
+          "id":3,
+          "name":"Art",
+          "short_name":"art"
+        }
+      ],
+      "pagination":{
+        "next":false,
+        "page":1,
+        "per_page":20,
+        "prev":false,
+        "total":1
+      },
+      "projects":[
+        {
+          "created":"2014-02-22T15:09:23.691811",
+          "description":"Image pattern recognition",
+          "id":1377,
           "info":{
-            "container":"user",
-            "passwd_hash":null,
-            "task_presenter":"HTML+CSS+JS",
-            "thumbnail":"avatar.png"
+            "container":"7",
+            "thumbnail":"58.png"
           },
-          "long_description":"algo",
-          "n_blogposts":0,
-          "n_results":0,
-          "name":"name",
-          "owner_id":3,
-          "published":true,
-          "secret_key":"f",
+          "last_activity":"2 weeks ago",
+          "last_activity_raw":"2017-01-31T09:18:28.450391",
+          "n_tasks":169671,
+          "n_volunteers":17499,
+          "name":"Name",
+          "overall_progress":80,
+          "owner":"John Doe",
           "short_name":"name",
-          "updated":"2017-03-17T09:15:46.867215",
-          "webhook":null
+          "updated":"2017-01-31T09:18:28.491496"
+        }
+      ],
+      "template":"/projects/index.html",
+      "title":"Projects"
+    }
+  },
+  "getDeleteProject":{
+    "status":200,
+    "data":{
+      "csrf":"token",
+      "last_activity":null,
+      "n_tasks":0,
+      "overall_progress":0,
+      "owner":{
+        "admin":false,
+        "api_key":"key",
+        "confirmation_email_sent":false,
+        "created":"2016-09-15T11:30:42.660450",
+        "email_addr":"prueba@prueba.com",
+        "facebook_user_id":null,
+        "fullname":"prueba de json",
+        "google_user_id":null,
+        "id":0,
+        "info":{
+          "avatar":"avatar.png",
+          "container":"0"
         },
-        "target":"project.import_task",
-        "task_tmpls":[
-          "projects/tasks/gdocs-sound.html",
-          "projects/tasks/gdocs-map.html",
-          "projects/tasks/gdocs-image.html",
-          "projects/tasks/gdocs-video.html",
-          "projects/tasks/gdocs-pdf.html"
-        ],
-        "template":"/projects/task_import_options.html",
-        "title":"Project: bevan &middot; Import Tasks"
+        "n_answers":5,
+        "name":"pruebaadfadfa",
+        "rank":4411,
+        "registered_ago":"6 months ago",
+        "score":5,
+        "total":11134,
+        "twitter_user_id":null,
+        "valid_email":true
+      },
+      "pro_features":{
+        "auditlog_enabled":false,
+        "autoimporter_enabled":false,
+        "webhooks_enabled":false
+      },
+      "project":{
+        "allow_anonymous_contributors":true,
+        "category_id":2,
+        "contacted":false,
+        "created":"2017-03-15T15:02:12.160810",
+        "description":"asdf",
+        "featured":false,
+        "id":3,
+        "info":{
+
+        },
+        "long_description":"asdf",
+        "name":"algo",
+        "owner_id":12030,
+        "published":false,
+        "secret_key":"c5a77943-f5a4-484a-86bb-d69559e80357",
+        "short_name":"algo",
+        "updated":"2017-03-15T15:02:12.160823",
+        "webhook":null
+      },
+      "template":"/projects/delete.html",
+      "title":"Project: algo &middot; Delete"
+    }
+  },
+  "getUpdateProject":{
+    "status":200,
+    "data":{
+      "form":{
+        "allow_anonymous_contributors":false,
+        "category_id":2,
+        "csrf":"token",
+        "description":"description",
+        "errors":{
+
+        },
+        "id":3117,
+        "long_description":"long description",
+        "name":"name",
+        "password":null,
+        "protect":false,
+        "short_name":"slug",
+        "webhook":null
+      },
+      "last_activity":null,
+      "n_completed_tasks":0,
+      "n_task_runs":0,
+      "n_tasks":2,
+      "n_volunteers":0,
+      "overall_progress":0,
+      "owner":{
+        "admin":false,
+        "api_key":"key",
+        "confirmation_email_sent":false,
+        "created":"2012-06-06T06:27:18.760254",
+        "email_addr":"email.com",
+        "facebook_user_id":null,
+        "fullname":"John Doe",
+        "google_user_id":null,
+        "id":0,
+        "info":{
+          "avatar":"avatar.png",
+          "container":"user",
+          "twitter_token":{
+            "oauth_token":"token",
+            "oauth_token_secret":"token"
+          }
+        },
+        "n_answers":2414,
+        "name":"johndoe",
+        "rank":69,
+        "registered_ago":"4 years ago",
+        "score":2414,
+        "total":11134,
+        "twitter_user_id":12,
+        "valid_email":false
+      },
+      "pro_features":{
+        "auditlog_enabled":true,
+        "autoimporter_enabled":true,
+        "webhooks_enabled":true
+      },
+      "project":{
+        "allow_anonymous_contributors":false,
+        "category_id":2,
+        "contacted":false,
+        "contrib_button":"can_contribute",
+        "created":"2015-06-29T08:23:14.201331",
+        "description":"description",
+        "featured":false,
+        "id":0,
+        "info":{
+          "container":"user",
+          "passwd_hash":null,
+          "task_presenter":"HTML+CSS+JS",
+          "thumbnail":"thumbnail.png"
+        },
+        "long_description":"long description",
+        "n_blogposts":0,
+        "n_results":0,
+        "name":"name",
+        "owner_id":0,
+        "published":true,
+        "secret_key":"key",
+        "short_name":"slug",
+        "updated":"2017-03-16T14:50:45.055331",
+        "webhook":null
+      },
+      "template":"/projects/update.html",
+      "title":"Project: name &middot; Update",
+      "upload_form":{
+        "avatar":null,
+        "csrf":"token",
+        "errors":{
+
+        },
+        "id":null,
+        "x1":0,
+        "x2":0,
+        "y1":0,
+        "y2":0
       }
+    }
+  },
+  "getBrowseTasks":{
+    "status":200,
+    "data":{
+      "n_completed_tasks":0,
+      "n_tasks":1,
+      "n_volunteers":0,
+      "overall_progress":0,
+      "owner":{
+        "created":"2017-04-17T23:56:22.892222",
+        "fullname":"John Doe",
+        "info":{
+
+        },
+        "locale":null,
+        "n_answers":0,
+        "name":"johndoe",
+        "rank":null,
+        "registered_ago":"3 hours ago",
+        "score":null
+      },
+      "pagination":{
+        "next":false,
+        "page":1,
+        "per_page":10,
+        "prev":false,
+        "total":1
+      },
+      "pro_features":{
+        "auditlog_enabled":false,
+        "autoimporter_enabled":false,
+        "webhooks_enabled":false
+      },
+      "project":{
+        "created":"2017-04-17T23:56:23.416754",
+        "description":"Description",
+        "featured":false,
+        "id":1,
+        "info":{
+
+        },
+        "last_activity":null,
+        "last_activity_raw":null,
+        "n_tasks":null,
+        "n_volunteers":null,
+        "name":"Sample Project",
+        "overall_progress":null,
+        "owner":null,
+        "short_name":"sampleapp",
+        "updated":"2017-04-17T23:56:23.589652"
+      },
+      "tasks":[
+        {
+          "id":1,
+          "n_answers":10,
+          "n_task_runs":0,
+          "pct_status":0.0
+        }
+      ],
+      "template":"/projects/tasks_browse.html",
+      "title":"Project: Sample Project &middot; Tasks"
+    }
+  },
+  "getTaskImporter":{
+    "status":200,
+    "data":{
+      "available_importers":[
+        "projects/tasks/epicollect.html",
+        "projects/tasks/csv.html",
+        "projects/tasks/s3.html",
+        "projects/tasks/twitter.html",
+        "projects/tasks/youtube.html",
+        "projects/tasks/gdocs.html",
+        "projects/tasks/dropbox.html",
+        "projects/tasks/flickr.html"
+      ],
+      "form":null,
+      "loading_text":"Importing tasks, this may take a while, wait...",
+      "n_completed_tasks":0,
+      "n_tasks":5,
+      "n_volunteers":0,
+      "overall_progress":0,
+      "owner":{
+        "admin":false,
+        "api_key":"key",
+        "confirmation_email_sent":false,
+        "created":"2012-06-06T06:27:18.760254",
+        "email_addr":"johndoe@gmail.com",
+        "facebook_user_id":null,
+        "fullname":"John Doe",
+        "google_user_id":null,
+        "id":0,
+        "info":{
+          "avatar":"avatar.png",
+          "container":"user",
+          "twitter_token":{
+            "oauth_token":"",
+            "oauth_token_secret":""
+          }
+        },
+        "n_answers":2414,
+        "name":"johndoe",
+        "rank":69,
+        "registered_ago":"4 years ago",
+        "score":2414,
+        "total":11134,
+        "twitter_user_id":12,
+        "valid_email":false
+      },
+      "pro_features":{
+        "auditlog_enabled":true,
+        "autoimporter_enabled":true,
+        "webhooks_enabled":true
+      },
+      "project":{
+        "allow_anonymous_contributors":false,
+        "category_id":2,
+        "contacted":false,
+        "contrib_button":"can_contribute",
+        "created":"2015-06-29T08:23:14.201331",
+        "description":"old",
+        "featured":false,
+        "id":3117,
+        "info":{
+          "container":"user",
+          "passwd_hash":null,
+          "task_presenter":"HTML+CSS+JS",
+          "thumbnail":"avatar.png"
+        },
+        "long_description":"algo",
+        "n_blogposts":0,
+        "n_results":0,
+        "name":"name",
+        "owner_id":3,
+        "published":true,
+        "secret_key":"f",
+        "short_name":"name",
+        "updated":"2017-03-17T09:15:46.867215",
+        "webhook":null
+      },
+      "target":"project.import_task",
+      "task_tmpls":[
+        "projects/tasks/gdocs-sound.html",
+        "projects/tasks/gdocs-map.html",
+        "projects/tasks/gdocs-image.html",
+        "projects/tasks/gdocs-video.html",
+        "projects/tasks/gdocs-pdf.html"
+      ],
+      "template":"/projects/task_import_options.html",
+      "title":"Project: bevan &middot; Import Tasks"
+    }
+  },
+  "getApiCategories": {
+    "status:": 200,
+    "data": [
+      {
+        "info": null,
+        "description": "Transcribe cards to help create a searchable online database",
+        "short_name": "transcribe-a-card",
+        "created": "2016-04-04T14:32:23.801901",
+        "link": "<link rel='self' title='category' href='https://localhost:5000/api/category/6'/>",
+        "id": 6,
+        "name": "Transcribe-a-Card"
+      },
+      {
+        "info": {
+          "collection": "playbills"
+        },
+        "description": "Plays from margate",
+        "short_name": "margate",
+        "created": "2016-07-04T18:14:35.952702",
+        "link": "<link rel='self' title='category' href='https://localhost:5000/api/category/7'/>",
+        "id": 7, "name": "Margate"
+      }
+    ]
+  },
+  "getApiTaskRuns": {
+    "status": 200,
+    "data": {
+      "info": 65,
+      "user_id": null,
+      "links": [
+          "<link rel='parent' title='project' href='http://localhost:5000/api/project/90'/>",
+          "<link rel='parent' title='task' href='http://localhost:5000/api/task/5894'/>"
+      ],
+      "task_id": 5894,
+      "created": "2012-07-07T17:23:45.714184",
+      "finish_time": "2012-07-07T17:23:45.714210",
+      "calibration": null,
+      "project_id": 90,
+      "user_ip": "X.X.X.X",
+      "link": "<link rel='self' title='taskrun' href='http://localhost:5000/api/taskrun/8969'/>",
+      "timeout": null,
+      "id": 8969
     }
   }
 }
