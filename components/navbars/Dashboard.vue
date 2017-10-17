@@ -2,16 +2,16 @@
   <div id="dashboard-sidenav">
     <nav :class="navClass">
       <div class="brand-wrapper text-center">
-        <nuxt-link
+        <router-link
           class="brand"
           :to="{
             name: 'index'
           }">
           {{ localConfig.brand }}
-        </nuxt-link>
+        </router-link>
       </div>
         <ul class="nav list-group">
-          <nuxt-link
+          <router-link
             tag="li"
             class="list-group-item"
             :to="{
@@ -22,7 +22,7 @@
             <a>
               {{ item.label }}
             </a>
-          </nuxt-link>
+          </router-link>
         </ul>
     </nav>
   </div>
@@ -151,7 +151,7 @@ export default {
 
       &:hover,
       &:focus,
-      &.nuxt-link-active {
+      &.router-link-active {
         background-color: rgba($blue, 0.25);
 
         a {
@@ -159,7 +159,7 @@ export default {
         }
       }
 
-      &.nuxt-link-exact-active {
+      &.router-link-exact-active {
         background-color: rgba($blue, 0.45);
       }
     }

@@ -3,7 +3,7 @@
     no-body
     show-footer
     class="collection-card my-3">
-    <nuxt-link
+    <router-link
       class="float-right"
       :to="{
         name: 'collection-key',
@@ -30,7 +30,7 @@
           <icon name="circle-thin" scale="2"></icon>
         </icon>
       </div>
-    </nuxt-link>
+    </router-link>
   </b-card>
 </template>
 

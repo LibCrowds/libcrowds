@@ -6,8 +6,8 @@
       <h2 class="text-center">Contribute</h2>
       <hr>
       <span
-        v-if="collection.contribute"
-        v-html="collection.contribute">
+        v-if="collectionConfig.contribute"
+        v-html="collectionConfig.contribute">
       </span>
       <span v-else>
         <p class="lead text-center">
@@ -19,9 +19,9 @@
             For more information see the
             <router-link
               :to="{
-                name: 'collection-key-about',
+                name: 'collection-about',
                 params: {
-                  key: collection.key
+                  collectionname: collectionConfig.key
                 }
               }">about page.
             </router-link>
@@ -34,7 +34,7 @@
 
           <categories-list
             v-if="categories.length"
-            :header="collection.terminology.category"
+            :header="collectionConfig.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </categories-list>
@@ -65,7 +65,7 @@
                 <project-cards-list
                   key="project-list"
                   v-if="activeView === 'list'"
-                  :collection="collection"
+                  :collection-config="collectionConfig"
                   :projects="filteredProjects">
                 </project-cards-list>
               </transition>
@@ -108,19 +108,19 @@
               <p>
                 <small class="d-none d-xl-block">
                   Use the list on the left of the screen to choose another
-                  {{ collection.terminology.category }}, or the sorting
+                  {{ collectionConfig.terminology.category }}, or the sorting
                   options to display any completed projects.
                 </small>
                 <small class="d-xl-none">
                   Use the list above to choose another
-                  {{ collection.terminology.category }}.
+                  {{ collectionConfig.terminology.category }}.
                 </small>
               </p>
             </span>
 
           </span>
           <p v-else class="text-center mb-0">
-            No {{ collection.terminology.project | pluralize }}  have
+            No {{ collectionConfig.terminology.project | pluralize }}  have
             been published for this category
           </p>
         </div>
@@ -148,7 +148,7 @@ export default {
       navItems: [
         {
           id: 'choose-a-project',
-          text: `Choose a ${this.collection.terminology.project}` }
+          text: `Choose a ${this.collectionConfig.terminology.project}` }
       ],
       viewOpts: [
         { text: 'List', value: 'list' },
@@ -185,7 +185,7 @@ export default {
   },
 
   props: {
-    collection: {
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -323,13 +323,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    this.$pybossa.getMicrositeCategories(to.params.key).then(r => {
+    this.$pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.$pybossa.getMicrositeCategories(to.params.key).then(r => {
+    this.$pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       this.setData(r.data)
       next()
     })

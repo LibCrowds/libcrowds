@@ -3,11 +3,11 @@
     <div class="container pt-3 pb-2">
 
       <section>
-        <nuxt-link
+        <router-link
           :to="{ name: 'index' }"
           @click.native="scrollIfCurrent">
           Part of the {{ localConfig.brand }} crowdsourcing platform
-        </nuxt-link>
+        </router-link>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
           <li class="list-inline-item mx-1">
@@ -37,7 +37,7 @@
             v-for="(config, key) in localConfig.collections"
             :key="key"
             class="list-item">
-            <nuxt-link
+            <router-link
               :to="{
                 name: 'collection-key',
                 params: {
@@ -46,7 +46,7 @@
               }"
               @click.native="scrollIfCurrent">
               {{ config.name }}
-            </nuxt-link>
+            </router-link>
           </li>
         </ul>
       </section>
@@ -55,40 +55,40 @@
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item">
-            <nuxt-link
+            <router-link
               :to="{
                 name: 'help-tos'
               }"
               @click.native="scrollIfCurrent">
               Terms
-            </nuxt-link>
+            </router-link>
           </li>
           <li class="list-item">
-            <nuxt-link
+            <router-link
               :to="{
                 name: 'help-privacy'
               }"
               @click.native="scrollIfCurrent">
               Privacy
-            </nuxt-link>
+            </router-link>
           </li>
           <li class="list-item">
-            <nuxt-link
+            <router-link
               :to="{
                 name: 'help-cookies'
               }"
               @click.native="scrollIfCurrent">
               Cookies
-            </nuxt-link>
+            </router-link>
           </li>
           <li class="list-item">
-            <nuxt-link
+            <router-link
               :to="{
                 name: 'help-api'
               }"
               @click.native="scrollIfCurrent">
               API
-            </nuxt-link>
+            </router-link>
           </li>
         </ul>
       </section>
