@@ -1,6 +1,5 @@
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
-import isEmpty from 'lodash/isEmpty'
 
 import { routes } from '@/test/fixtures/routes'
 import { mount, createLocalVue } from 'vue-test-utils'

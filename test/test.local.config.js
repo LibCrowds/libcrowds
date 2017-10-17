@@ -15,7 +15,7 @@ const config = {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
   },
-  githubUrl: 'https://github.com/Organization/repo',
+  githubUrl: 'https://github.com/Organization/repo'
 }
 
 // Company logo

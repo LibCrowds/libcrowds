@@ -8,7 +8,6 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 describe('ProjectContrib button', () => {
   let localVue = null
   let wrapper = null
-  let project = null
 
   beforeEach(() => {
     localVue = createLocalVue()

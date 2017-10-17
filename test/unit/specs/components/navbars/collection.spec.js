@@ -1,7 +1,6 @@
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
-import isEmpty from 'lodash/isEmpty'
 
 import { routes } from '@/test/fixtures/routes'
 import collection from '@/test/fixtures/collection.json'

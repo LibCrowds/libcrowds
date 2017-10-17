@@ -5,7 +5,6 @@ import { mount, createLocalVue } from 'vue-test-utils'
 import DashboardFooter from '@/components/footers/Dashboard'
 
 describe('Dashboard footer', () => {
-  const RealDate = Date
   let localVue = null
   let wrapper = null
 
