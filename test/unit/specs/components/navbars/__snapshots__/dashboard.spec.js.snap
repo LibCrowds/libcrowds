@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard navbar renders correctly in side position 1`] = `
+
+<div id="dashboard-sidenav"
+     data-server-rendered="true"
+>
+  <nav class="side">
+    <div class="brand-wrapper text-center">
+      <a href="#/"
+         class="brand router-link-exact-active router-link-active"
+      >
+        My Brand
+      </a>
+    </div>
+    <ul class="nav list-group">
+      <li class="list-group-item">
+        <a href="#/admin/dashboard">
+          Dashboard
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="#/admin/featured">
+          Featured Projects
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+`;
+
+exports[`Dashboard navbar renders correctly in top position 1`] = `
+
+<div id="dashboard-sidenav"
+     data-server-rendered="true"
+>
+  <nav class="top">
+    <div class="brand-wrapper text-center">
+      <a href="#/"
+         class="brand router-link-exact-active router-link-active"
+      >
+        My Brand
+      </a>
+    </div>
+    <ul class="nav list-group">
+      <li class="list-group-item">
+        <a href="#/admin/dashboard">
+          Dashboard
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="#/admin/featured">
+          Featured Projects
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+`;
