@@ -78,7 +78,7 @@
           :to="{
             name: 'account-signin',
             query: {
-              next: next
+              next: nextOnSignin
             }
           }">
           Sign in
@@ -130,7 +130,7 @@ export default {
     loggedIn () {
       return !isEmpty(this.currentUser)
     },
-    next () {
+    nextOnSignin () {
       return this.$route.path
     },
     currentUser () {
