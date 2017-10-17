@@ -2,11 +2,11 @@
   <div id="collection-base-layout">
     <div id="collection-background" :style="bgStyle"></div>
     <collection-navbar
-      :collection-config="collectionConfig">
+      :collection="collection">
     </collection-navbar>
     <main>
       <nuxt
-        :collection-config="collectionConfig">
+        :collection="collection">
       </nuxt>
     </main>
     <app-footer></app-footer>
@@ -23,22 +23,22 @@ import AppFooter from '@/components/footers/App'
 
 export default {
   head () {
-    const tmpl = `%s - ${this.collectionConfig.name} | ${localConfig.brand}`
+    const tmpl = `%s - ${this.collection.name} | ${localConfig.brand}`
     return {
       titleTemplate: tmpl,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.collectionConfig.description
+          content: this.collection.description
         },
 
         // Facebook Open Graph Markup
         { property: 'og:url', content: window.location.href },
-        { property: 'og:title', content: this.collectionConfig.tagline },
+        { property: 'og:title', content: this.collection.tagline },
         {
           property: 'og:description',
-          content: this.collectionConfig.description
+          content: this.collection.description
         }
       ]
     }
@@ -51,14 +51,14 @@ export default {
 
   computed: {
     bgStyle () {
-      const url = this.collectionConfig.bgImg
+      const url = this.collection.bgImg
       return {
         background: `url(${url}) no-repeat center left /cover fixed`
       }
     },
-    collectionConfig () {
-      const collectionName = this.$route.params.collectionname
-      return localConfig.collections[collectionName]
+    collection () {
+      const key = this.$route.params.key
+      return localConfig.collections[key]
     }
   }
 }

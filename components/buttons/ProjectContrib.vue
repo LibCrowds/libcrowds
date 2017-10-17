@@ -1,9 +1,10 @@
 <template>
   <b-btn
     :to="{
-      name: 'collection-presenter',
+      name: 'collection-key-presenter',
       params: {
-        shortname: shortname
+        key: collection.key,
+        shortname: project.shortname
       }
     }"
     :block="block"
@@ -17,8 +18,12 @@
 <script>
 export default {
   props: {
-    shortname: {
-      type: String,
+    collection: {
+      type: Object,
+      required: true
+    },
+    project: {
+      type: Object,
       required: true
     },
     size: {
@@ -48,7 +53,7 @@ export default {
   },
 
   computed: {
-    disabled: function () {
+    disabled () {
       return this.status !== 'can_contribute'
     }
   }

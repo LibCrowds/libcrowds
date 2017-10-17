@@ -8,7 +8,7 @@
         v-for="project in projects"
         :key="project.short_name">
         <project-card
-          :collection-config="collectionConfig"
+          :collection="collection"
           :project="project">
         </project-card>
       </li>
@@ -25,7 +25,7 @@ export default {
       type: Array,
       required: true
     },
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }

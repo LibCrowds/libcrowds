@@ -6,9 +6,9 @@
     <nuxt-link
       class="float-right"
       :to="{
-        name: 'collection-home',
+        name: 'collection-key',
         params: {
-          collectionname: collection.key
+          key: collection.key
         }
       }">
       <div

@@ -17,11 +17,11 @@
       <ul>
         <li>
           <strong>Tasks: </strong>
-          The {{ collectionConfig.terminology.task }} data.
+          The {{ collection.terminology.task }} data.
         </li>
         <li>
           <strong>Task Runs: </strong>
-          The {{ collectionConfig.terminology.taskRun }} data.
+          The {{ collection.terminology.taskRun }} data.
         </li>
         <li>
           <strong>Results: </strong>
@@ -35,10 +35,10 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="collectionConfig.forumUrl">
+      <p v-if="collection.forumUrl">
         Head over to the
-        <a :href="collectionConfig.forumUrl">
-          {{ collectionConfig.brand }} Forum
+        <a :href="collection.forumUrl">
+          {{ collection.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
@@ -48,7 +48,7 @@
         <div class="col-xl-3 mb-3">
           <categories-list
             v-if="categories.length"
-            :header="collectionConfig.terminology.category"
+            :header="collection.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </categories-list>
@@ -146,7 +146,7 @@ export default {
   },
 
   props: {
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }

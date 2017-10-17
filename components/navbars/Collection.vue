@@ -9,13 +9,13 @@
 
       <b-link class="navbar-brand"
         :to="{
-          name: 'collection-home',
+          name: 'collection-key',
           params: {
-            collectionName: collectionConfig.key
+            key: collection.key
           }
         }"
         v-scroll-to="'body'">
-        <span>{{ collectionConfig.name }}</span>
+        <span>{{ collection.name }}</span>
       </b-link>
 
       <button
@@ -43,9 +43,9 @@
         <b-nav is-nav-bar>
           <b-nav-item
             :to="{
-              name: 'collection-about',
+              name: 'collection-key-about',
               params: {
-                collectionname: collectionConfig.key
+                key: collection.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -53,25 +53,25 @@
           </b-nav-item>
           <b-nav-item
             :to="{
-              name: 'collection-contribute',
+              name: 'collection-key-contribute',
               params: {
-                collectionname: collectionConfig.key
+                key: collection.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
             Contribute
           </b-nav-item>
           <b-nav-item
-            :href="collectionConfig.forumUrl"
-            v-if="collectionConfig.forumUrl">
+            :href="collection.forumUrl"
+            v-if="collection.forumUrl">
             Discuss
           </b-nav-item>
           <b-nav-item
-            v-if="collectionConfig.resultsComponent"
+            v-if="collection.resultsComponent"
             :to="{
-              name: 'collection-results',
+              name: 'collection-key-results',
               params: {
-                collectionname: collectionConfig.key
+                key: collection.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -79,9 +79,9 @@
           </b-nav-item>
           <b-nav-item
             :to="{
-              name: 'collection-data',
+              name: 'collection-key-data',
               params: {
-                collectionname: collectionConfig.key
+                key: collection.key
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -181,13 +181,13 @@ export default {
     return {
       currentPath: this.$store.state.route.path,
       fixedNavbarRoutes: [
-        'collection-home'
+        'collection-key'
       ]
     }
   },
 
   props: {
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     },

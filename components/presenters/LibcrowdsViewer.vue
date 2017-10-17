@@ -30,7 +30,7 @@ export default {
       type: Array,
       required: true
     },
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }
@@ -66,19 +66,19 @@ export default {
         return {
           label: capitalize(name),
           url: this.$router.resolve({
-            name: `collection-${name}`,
+            name: `collection-key-${name}`,
             params: {
-              collectionname: this.collectionConfig.key
+              key: this.collection.key
             }
           }).href
         }
       })
-      nav[0].label = this.collectionConfig.name
+      nav[0].label = this.collection.name
       nav[0].brand = true
-      if (this.collectionConfig.forumUrl) {
+      if (this.collection.forumUrl) {
         nav.splice(3, 0, {
           label: 'Discuss',
-          url: this.collectionConfig.forumUrl
+          url: this.collection.forumUrl
         })
       }
       return nav

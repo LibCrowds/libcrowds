@@ -268,10 +268,6 @@ export default {
     tasks: {
       type: Array,
       required: true
-    },
-    collectionConfig: {
-      type: Object,
-      required: true
     }
   },
 

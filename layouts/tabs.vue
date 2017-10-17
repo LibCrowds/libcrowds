@@ -18,7 +18,7 @@
         <section id="content" key="fading-content">
           <transition name="fade" mode="out-in" appear>
             <nuxt
-              :collection-config="collectionConfig"
+              :collection="collection"
               @navupdated="onNavUpdated">
             </nuxt>
           </transition>
@@ -39,7 +39,7 @@ export default {
   },
 
   props: {
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }

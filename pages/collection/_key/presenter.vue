@@ -5,7 +5,7 @@
       v-if="project && tasks.length"
       :project="project"
       :tasks="tasks"
-      :collection="collection"
+      :collection-config="collectionConfig"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </component>
@@ -29,9 +29,9 @@ export default {
           id: 'back-to-contribute',
           text: 'Back',
           route: {
-            name: 'collection-key-contribute',
+            name: 'collection-contribute',
             params: {
-              key: this.collection.key
+              collectionname: this.collectionConfig.key
             }
           }
         }
@@ -60,7 +60,7 @@ export default {
   },
 
   props: {
-    collection: {
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -73,8 +73,8 @@ export default {
         'z3950': Z3950Presenter,
         default: DefaultPresenter
       }
-      return this.collection.presenter
-        ? presenters[this.collection.presenter]
+      return this.collectionConfig.presenter
+        ? presenters[this.collectionConfig.presenter]
         : presenters.default
     }
   },
@@ -124,9 +124,9 @@ export default {
         type: 'success'
       })
       this.$router.push({
-        name: 'collection-key-contribute',
+        name: 'collection-contribute',
         params: {
-          key: this.collection.key
+          collectionname: this.collectionConfig.key
         }
       })
     },

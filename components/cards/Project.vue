@@ -4,8 +4,9 @@
     class="project-card">
     <nuxt-link
       :to="{
-        name: 'collection-presenter',
+        name: 'collection-key-presenter',
         params: {
+          key: collection.key,
           shortname: project.short_name
         }
       }">
@@ -20,8 +21,9 @@
       <div class="card-title mb-0">
         <nuxt-link
           :to="{
-            name: 'collection-presenter',
+            name: 'collection-key-presenter',
             params: {
+              key: collection.key,
               shortname: project.short_name
             }
           }">
@@ -57,7 +59,7 @@
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
-          {{ collectionConfig.terminology.task | pluralize(project.n_tasks) }}
+          {{ collection.terminology.task | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="users"></icon> {{ project.n_volunteers | intComma }}
@@ -82,7 +84,7 @@
 
     <project-stats-modal
       :project="project"
-      :collection-config="collectionConfig"
+      :collection="collection"
       :modal-id="statsModalId">
     </project-stats-modal>
 
@@ -121,7 +123,7 @@ export default {
       type: Object,
       required: true
     },
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }

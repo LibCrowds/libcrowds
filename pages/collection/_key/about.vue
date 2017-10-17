@@ -2,7 +2,7 @@
   <div id="collection-about">
 
     <section>
-      <h2 class="text-center">About {{ collectionConfig.name }}</h2>
+      <h2 class="text-center">About {{ collection.name }}</h2>
       <hr>
       <span v-html="intro"></span>
       <div class="text-center mt-3">
@@ -10,9 +10,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-contribute',
+            name: 'collection-key-contribute',
             params: {
-              collectionname: collectionConfig.key
+              key: collection.key
             }
           }">
           Get Started
@@ -35,9 +35,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-contribute',
+            name: 'collection-key-contribute',
             params: {
-              collectionname: collectionConfig.key
+              key: collection.key
             }
           }">
           Get Started
@@ -74,7 +74,7 @@ export default {
   },
 
   props: {
-    collectionConfig: {
+    collection: {
       type: Object,
       required: true
     }
@@ -87,13 +87,13 @@ export default {
      *   The key for the about config value.
      */
     getCustom (key) {
-      if (!(this.collectionConfig.hasOwnProperty('about'))) {
+      if (!(this.collection.hasOwnProperty('about'))) {
         return null
       }
-      if (!(this.collectionConfig.about.hasOwnProperty(key))) {
+      if (!(this.collection.about.hasOwnProperty(key))) {
         return null
       }
-      return this.collectionConfig.about[key]
+      return this.collection.about[key]
     }
   },
 

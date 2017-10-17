@@ -15,7 +15,7 @@
               v-if="localConfig.logo">
             </span>
             <h1 class="display-3 d-none d-lg-inline-block mb-0">
-              {{ collection.name }}
+              {{ collectionConfig.name }}
             </h1>
             <span
               class="mr-4 d-none d-lg-inline-block"
@@ -23,16 +23,16 @@
             </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
-            {{ collection.tagline }}
+            {{ collectionConfig.tagline }}
           </h2>
           <div>
             <b-btn
               variant="success"
               size="lg"
               :to="{
-                name: 'collection-key-contribute',
+                name: 'collection-contribute',
                 params: {
-                  key: collection.key
+                  collectionname: collectionConfig.key
                 }
               }">
               Get Started
@@ -45,7 +45,7 @@
     <section id="intro" class="bg-white invert-navbar">
       <div class="container py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
-          {{ collection.description }}
+          {{ collectionConfig.description }}
         </p>
         <hr class="my-3 w-75">
         <p class="lead mb-0 px-1">
@@ -58,9 +58,9 @@
           class="mt-md-2"
           size="lg"
           :to="{
-            name: 'collection-key-about',
+            name: 'collection-about',
             params: {
-              key: collection.key
+              collectionname: collectionConfig.key
             }
           }">
           Learn More
@@ -92,7 +92,7 @@
         <ul class="list-unstyled">
           <li v-for="project in featured" :key="project.id">
             <project-card
-              :collection="collection"
+              :collection-config="collectionConfig"
               :project="project">
             </project-card>
           </li>
@@ -102,9 +102,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-key-contribute',
+            name: 'collection-contribute',
             params: {
-              key: collection.key
+              collectionname: collectionConfig.key
             }
           }">
           Browse all projects
@@ -132,9 +132,9 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-key-data',
+              name: 'collection-data',
               params: {
-                key: collection.key
+                collectionname: collectionConfig.key
               }
             }">
             Get the data
@@ -143,13 +143,13 @@
       </b-jumbotron>
     </section>
 
-    <section id="results" v-if="collection.resultsComponent">
+    <section id="results" v-if="collectionConfig.resultsComponent">
       <b-jumbotron :style="resultsStyle">
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
-            As each {{ collection.terminology.task }} is completed,
-            {{ collection.terminology.taskRun | pluralize }} are
+            As each {{ collectionConfig.terminology.task }} is completed,
+            {{ collectionConfig.terminology.taskRun | pluralize }} are
             analysed and the outcome provided via our results page, making
             the efforts of our volunteers immediately apparent.
           </p>
@@ -157,10 +157,7 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-key-results',
-              params: {
-                key: collection.key
-              }
+              name: 'collection-results'
             }">
             Browse the results
           </b-btn>
@@ -179,9 +176,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-key-contribute',
+            name: 'collection-contribute',
             params: {
-              key: collection.key
+              collectionname: collectionConfig.key
             }
           }">
           Get Started
@@ -225,7 +222,7 @@ export default {
   },
 
   props: {
-    collection: {
+    collectionConfig: {
       type: Object,
       required: true
     }
@@ -233,12 +230,12 @@ export default {
 
   head () {
     return {
-      title: this.collection.tagline,
+      title: this.collectionConfig.tagline,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.collection.description
+          content: this.collectionConfig.description
         }
       ]
     }
@@ -274,7 +271,7 @@ export default {
 
   created () {
     let data = {}
-    let key = this.collection.key
+    let key = this.collectionConfig.key
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
     let categoryUrl = `/api/category?${q}`
 

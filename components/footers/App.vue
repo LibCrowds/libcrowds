@@ -39,9 +39,9 @@
             class="list-item">
             <nuxt-link
               :to="{
-                name: 'collection-home',
+                name: 'collection-key',
                 params: {
-                  collectionname: key
+                  key: key
                 }
               }"
               @click.native="scrollIfCurrent">
