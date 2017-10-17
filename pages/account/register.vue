@@ -2,7 +2,7 @@
   <div id="register">
     <div class="container my-5">
       <div class="col-lg-8 mx-auto">
-        <card-form
+        <pybossa-form
           header="Register"
           submit-text="Sign up"
           :form="form"
@@ -44,7 +44,7 @@
               </small>
             </p>
           </div>
-        </card-form>
+        </pybossa-form>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
 
 <script>
 import localConfig from '@/local.config'
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 
 export default {
@@ -134,7 +134,7 @@ export default {
   },
 
   components: {
-    CardForm,
+    PybossaForm,
     OauthButtons
   },
 

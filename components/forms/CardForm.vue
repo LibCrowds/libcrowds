@@ -1,6 +1,6 @@
 <template>
   <b-card
-    class="card-form"
+    class="pybossa-form"
     :header="header"
     show-footer>
 
@@ -189,7 +189,7 @@ export default {
 @import '~assets/style/main';
 @import '~spinkit/scss/spinners/7-three-bounce';
 
-.card-form {
+.pybossa-form {
   label {
     font-weight: 600;
     font-size: $font-size-sm;

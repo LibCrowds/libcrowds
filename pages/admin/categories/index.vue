@@ -1,11 +1,11 @@
 <template>
   <div id="admin-categories">
-    <card-form
+    <pybossa-form
       header="New Category"
       :form="form"
       class="mb-4"
       @success="onNewCategorySuccess">
-    </card-form>
+    </pybossa-form>
 
     <b-card
       no-body
@@ -62,7 +62,7 @@
 
 <script>
 import capitalize from 'capitalize'
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -141,7 +141,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   methods: {

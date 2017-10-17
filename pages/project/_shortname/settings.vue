@@ -1,5 +1,5 @@
 <template>
-  <card-form
+  <pybossa-form
     header="Project Settings"
     submit-text="Update"
     :form="form">
@@ -28,11 +28,11 @@
       </label>
     </div>
 
-  </card-form>
+  </pybossa-form>
 </template>
 
 <script>
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -91,7 +91,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   methods: {

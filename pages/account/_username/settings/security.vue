@@ -1,13 +1,13 @@
 <template>
-  <card-form
+  <pybossa-form
     header="Security Settings"
     submit-text="Reset Password"
     :form="form">
-  </card-form>
+  </pybossa-form>
 </template>
 
 <script>
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -53,7 +53,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   computed: {

@@ -5,12 +5,12 @@
       <b-card-body class="p-0">
         <b-row no-gutters>
           <b-col lg="4">
-            <card-form
+            <pybossa-form
               submit-text="Search"
               header="Search"
               :form="form"
               @success="onSuccess">
-            </card-form>
+            </pybossa-form>
           </b-col>
           <b-col lg="8" class="p-2">
             <b-table
@@ -90,7 +90,7 @@
 
 <script>
 import exportFile from '@/utils/exportFile'
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -152,7 +152,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   methods: {

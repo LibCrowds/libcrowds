@@ -1,6 +1,6 @@
 <template>
   <div id="admin-categories">
-    <card-form
+    <pybossa-form
       show-cancel
       header="Edit Category"
       submit-text="Update"
@@ -8,14 +8,14 @@
       class="mb-4"
       @success="onSuccess"
       @cancel="onCancel">
-    </card-form>
+    </pybossa-form>
   </div>
 </template>
 
 <script>
 import pick from 'lodash/pick'
 import localConfig from '@/local.config'
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -36,7 +36,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   computed: {

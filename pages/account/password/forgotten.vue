@@ -2,12 +2,12 @@
   <div id="forgotten-password">
     <div class="container my-5">
       <div class="col-lg-8 mx-auto">
-        <card-form
+        <pybossa-form
           header="Forgotten Password"
           submit-text="Reset"
           :form="form"
           :next="next">
-        </card-form>
+        </pybossa-form>
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script>
 import localConfig from '@/local.config'
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'default',
@@ -57,7 +57,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   }
 }
 </script>

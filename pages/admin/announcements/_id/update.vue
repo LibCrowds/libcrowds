@@ -1,5 +1,5 @@
 <template>
-  <card-form
+  <pybossa-form
     id="admin-announcement-id-update"
     header="Update Announcement"
     submit-text="Update"
@@ -7,11 +7,11 @@
     :form="form"
     @success="onSuccessOrCancel"
     @cancel="onSuccessOrCancel">
-  </card-form>
+  </pybossa-form>
 </template>
 
 <script>
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -57,7 +57,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   methods: {

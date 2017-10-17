@@ -1,14 +1,14 @@
 <template>
-  <card-form
+  <pybossa-form
     header="API Settings"
     submit-text="Reset API Key"
     :form="form"
     @success="updateCurrentUser">
-  </card-form>
+  </pybossa-form>
 </template>
 
 <script>
-import CardForm from '@/components/forms/CardForm'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
@@ -27,7 +27,7 @@ export default {
   },
 
   components: {
-    CardForm
+    PybossaForm
   },
 
   computed: {
