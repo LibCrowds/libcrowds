@@ -1,7 +1,21 @@
 import addCsrfHeader from '@/api/pybossa/interceptors/addCsrfHeader'
 import handleErrors from '@/api/pybossa/interceptors/handleErrors'
+import handleFlash from '@/api/pybossa/interceptors/handleFlash'
+import capitalize from 'capitalize'
 
 describe('Interceptors', () => {
+  let mockNotify = null
+  let mockCtx = null
+
+  beforeEach(() => {
+    mockNotify = jest.fn()
+    mockCtx = {
+      app: {
+        $notify: mockNotify
+      }
+    }
+  })
+
   describe('addCsrfHeader', () => {
     it('adds the CSRF header when it exists', () => {
       const token = 'token'
@@ -27,17 +41,15 @@ describe('Interceptors', () => {
 
   describe('handleErrors', () => {
     it('handles non-200 errors', () => {
-      const status = 404
-      const statusText = 'Uh oh'
       const error = {
         response: {
-          status: status,
-          statusText: statusText
+          status: 404,
+          statusText: 'Uh oh'
         }
       }
       return handleErrors(error).catch(err => {
-        expect(err.statusCode).toBe(status)
-        expect(err.message).toBe(statusText)
+        expect(err.statusCode).toBe(error.response.status)
+        expect(err.message).toBe(error.response.statusText)
       })
     })
 
@@ -60,36 +72,31 @@ describe('Interceptors', () => {
     })
   })
 
-  // describe('handleFlash', () => {
-  //   it('dispatches notification from flash message', () => {
-  //     const status = 'info'
-  //     const flash = 'Something happened'
-  //     const response = {
-  //       data: {
-  //         status: status,
-  //         flash: flash
-  //       }
-  //     }
-  //     handleFlash(response)
-  //     expect(store.dispatch).toBeCalledWith('NOTIFY', {
-  //       msg: flash,
-  //       type: status
-  //     })
-  //     store.dispatch.mockReset()
-  //   })
+  describe('handleFlash', () => {
+    it('dispatches notification from flash message', () => {
+      const response = {
+        data: {
+          status: 'info',
+          flash: 'Something happened'
+        }
+      }
+      handleFlash(response, mockCtx)
+      expect(mockNotify).toHaveBeenCalledWith({
+        title: capitalize(response.data.status),
+        text: response.data.flash,
+        type: response.data.status
+      })
+    })
 
-  //   it('does not dispatch notification for error flash message', () => {
-  //     const status = 'error'
-  //     const flash = 'Something happened'
-  //     const response = {
-  //       data: {
-  //         status: status,
-  //         flash: flash
-  //       }
-  //     }
-  //     handleFlash(response)
-  //     expect(store.dispatch).not.toHaveBeenCalled()
-  //     store.dispatch.mockReset()
-  //   })
-  // })
+    it('does not dispatch notification for error flash message', () => {
+      const response = {
+        data: {
+          status: 'error',
+          flash: 'Something bad happened'
+        }
+      }
+      handleFlash(response, mockCtx)
+      expect(mockNotify).not.toHaveBeenCalled()
+    })
+  })
 })
