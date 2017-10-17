@@ -177,9 +177,9 @@ import isEmpty from 'lodash/isEmpty'
 import throttle from 'lodash/throttle'
 
 export default {
-  data: function () {
+  data () {
     return {
-      currentPath: this.$store.state.route.path,
+      currentPath: this.$route.path,
       fixedNavbarRoutes: [
         'collection-key'
       ]
@@ -291,7 +291,7 @@ export default {
      * Toggle the collapsible sidebar.
      */
     toggleCollapsibleSidebar () {
-      if (window.innerWidth < 992) {
+      if (process.browser && window.innerWidth < 992) {
         const hamburger = this.$refs.hamburger
         const sidebar = this.$refs.sidebar
 
