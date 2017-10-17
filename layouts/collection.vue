@@ -18,7 +18,7 @@
 
 <script>
 import localConfig from '@/local.config'
-import CollectionNavbar from '@/components/navs/CollectionNavbar'
+import CollectionNavbar from '@/components/navbars/Collection'
 import AppFooter from '@/components/footers/App'
 
 export default {

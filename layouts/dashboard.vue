@@ -13,10 +13,10 @@
         :fixed="null">
       </app-navbar>
 
-      <dashboard-sidenav
+      <dashboard-navbar
         position="top"
         :nav-items="dashboardNavItems">
-      </dashboard-sidenav>
+      </dashboard-navbar>
 
       <main>
         <div class="container px-lg-4 py-4">
@@ -26,7 +26,7 @@
         </div>
       </main>
 
-      <dashboard-footer></dashboard-footer>
+      <dashboard-navbar></dashboard-navbar>
 
       <notifications position="bottom left"></notifications>
 
@@ -36,8 +36,8 @@
 
 <script>
 import DashboardFooter from '@/components/footers/Dashboard'
-import AppNavbar from '@/components/navs/AppNavbar'
-import DashboardSidenav from '@/components/navs/DashboardSidenav'
+import AppNavbar from '@/components/navbars/App'
+import DashboardNavbar from '@/components/navbars/Dashboard'
 
 export default {
   computed: {
@@ -78,7 +78,7 @@ export default {
   components: {
     AppNavbar,
     DashboardFooter,
-    DashboardSidenav
+    DashboardNavbar
   }
 }
 </script>
