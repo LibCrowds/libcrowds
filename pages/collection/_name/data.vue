@@ -174,7 +174,7 @@ export default {
      */
     fetchProjects () {
       const shortName = this.activeCategory.short_name
-      this.pybossa.getCategory(shortName, this.page).then(r => {
+      this.$pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })

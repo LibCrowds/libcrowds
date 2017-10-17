@@ -18,11 +18,7 @@ export const createAPI = (ctx) => {
     data: {} // Otherwise Content-Type gets deleted
   })
 
-  client.interceptors.request.use(addCsrfHeader)
-  client.interceptors.response.use(null, handleErrors)
-  client.interceptors.response.use((res, ctx) => handleFlash)
-
-  return {
+  const pybossa = {
     client: client,
 
     /**
@@ -819,4 +815,10 @@ export const createAPI = (ctx) => {
       return client.get(`/project/${shortname}/tutorial`)
     }
   }
+
+  // Interceptors
+  client.interceptors.request.use(addCsrfHeader)
+  client.interceptors.response.use(null, handleErrors)
+  client.interceptors.response.use((res, ctx) => handleFlash)
+  return pybossa
 }

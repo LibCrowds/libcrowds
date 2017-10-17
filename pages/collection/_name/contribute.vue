@@ -277,7 +277,7 @@ export default {
       }
 
       this.projects = []
-      this.pybossa.getCategory(shortName, this.page).then(r => {
+      this.$pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -323,13 +323,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    this.pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
+    this.$pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
+    this.$pybossa.getMicrositeCategories(to.params.collectionname).then(r => {
       this.setData(r.data)
       next()
     })

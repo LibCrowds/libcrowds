@@ -275,9 +275,9 @@ export default {
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
     let categoryUrl = `/api/category?${q}`
 
-    this.pybossa.client.get(`/`).then(r => {
+    this.$pybossa.client.get(`/`).then(r => {
       data = r.data
-      return this.pybossa.client.get(categoryUrl)
+      return this.$pybossa.client.get(categoryUrl)
     }).then(r => {
       data.categories = r.data.filter(category => {
         return category.info.collection === key

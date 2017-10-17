@@ -160,7 +160,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            this.pybossa.deleteCategory(id).then(r => {
+            this.$pybossa.deleteCategory(id).then(r => {
               resolve()
             })
           })

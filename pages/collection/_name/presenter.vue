@@ -98,7 +98,7 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      this.pybossa.client.get(url).then(r => {
+      this.$pybossa.client.get(url).then(r => {
         if (isEmpty(r.data)) {
           this.handleCompletion()
         } else {
@@ -140,7 +140,7 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        this.pybossa.addFavourite(taskId).then(() => {
+        this.$pybossa.addFavourite(taskId).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Added to favourites',
@@ -148,7 +148,7 @@ export default {
           })
         })
       } else {
-        this.pybossa.deleteFavourite(taskId).then(() => {
+        this.$pybossa.deleteFavourite(taskId).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Removed from favourites',
@@ -187,7 +187,7 @@ export default {
         'task_id': taskId,
         'info': answer
       })
-      this.pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
+      this.$pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {

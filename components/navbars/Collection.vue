@@ -229,7 +229,7 @@ export default {
      * Sign the user out.
      */
     signout () {
-      this.$store.dispatch('LOGOUT', this.pybossa)
+      this.$store.dispatch('LOGOUT', this.$pybossa)
     },
 
     /**

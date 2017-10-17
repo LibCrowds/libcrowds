@@ -68,7 +68,7 @@ export default {
      * Trigger an update of the current user.
      */
     updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER', this.pybossa)
+      this.$store.dispatch('UPDATE_CURRENT_USER', this.$pybossa)
     }
   }
 }

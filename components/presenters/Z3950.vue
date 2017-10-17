@@ -346,7 +346,7 @@ export default {
         fullQuery += `&position=${(page - 1) * this.pagination.perPage + 1}`
       }
       const url = `/z3950/search/oclc/json?${fullQuery}`
-      this.pybossa.client.get(url).then(r => {
+      this.$pybossa.client.get(url).then(r => {
         if (r.data.n_records === 0) {
           this.alerts.push({ msg: 'No results', type: 'info' })
         } else if (r.data.status !== 'success') {

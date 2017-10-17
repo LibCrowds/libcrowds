@@ -113,8 +113,8 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            this.pybossa.client.get('/admin/announcement').then(r => {
-              return this.pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
+            this.$pybossa.client.get('/admin/announcement').then(r => {
+              return this.$pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
                 headers: {
                   'X-CSRFToken': r.data.csrf
                 }
@@ -128,7 +128,7 @@ export default {
         this.announcements = this.categories.filter(announcement => {
           return announcement.id !== id
         })
-        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.pybossa)
+        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$pybossa)
         this.$swal(
           capitalize(r.data.status),
           r.data.flash,

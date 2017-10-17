@@ -62,7 +62,7 @@ export default {
      */
     subscribe (subscribe) {
       const next = this.$route.query.next || '/'
-      this.pybossa.subscribeToNewsletter(subscribe).then(res => {
+      this.$pybossa.subscribeToNewsletter(subscribe).then(res => {
         this.$router.push({ path: next })
       })
     }

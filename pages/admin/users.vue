@@ -173,11 +173,11 @@ export default {
      */
     toggleAdmin (user) {
       if (user.admin) {
-        this.pybossa.addAdminUser(user.id, this.form.model).then(r => {
+        this.$pybossa.addAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers.push(user)
         })
       } else {
-        this.pybossa.delAdminUser(user.id, this.form.model).then(r => {
+        this.$pybossa.delAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers = this.adminUsers.filter(adminUser => {
             return adminUser.id !== user.id
           })
@@ -202,7 +202,7 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      this.pybossa.exportUsers(format).then(r => {
+      this.$pybossa.exportUsers(format).then(r => {
         exportFile(r.data, 'user_data', format)
       })
     }

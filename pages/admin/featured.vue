@@ -134,11 +134,11 @@ export default {
     toggleFeatured (project) {
       const params = { csrf: this.csrf }
       if (project.featured) {
-        this.pybossa.featureProject(project.id, params).then(r => {
+        this.$pybossa.featureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       } else {
-        this.pybossa.unfeatureProject(project.id, params).then(r => {
+        this.$pybossa.unfeatureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       }

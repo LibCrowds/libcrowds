@@ -74,7 +74,7 @@ export default {
      */
     download (type, format) {
       const shortName = this.project.short_name
-      this.pybossa.exportData(shortName, type, format).then(r => {
+      this.$pybossa.exportData(shortName, type, format).then(r => {
         exportFile(r.data, `${this.project.short_name}_${type}`, format)
       })
     }

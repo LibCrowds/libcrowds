@@ -139,7 +139,7 @@ export default {
       }
 
       this.flash = ''
-      this.pybossa.client({
+      this.$pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
