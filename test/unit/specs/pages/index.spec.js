@@ -5,12 +5,11 @@ import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 
-import AxiosMockAdapter from 'axios-mock-adapter'
+import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 
 describe('Index page', () => {
   let nuxt = null
   let server = null
-  const mockAxios = new AxiosMockAdapter(axios)
 
   beforeAll(async () => {
     let config = {}
@@ -21,8 +20,12 @@ describe('Index page', () => {
     builder.build().then(() => {
       server = new nuxt.Server(nuxt)
       server.listen(4000, 'localhost')
+      console.log(server)
     })
-    mockAxios.onGet(`/api/globalstats`, pbTestResponses.getStats.data)
+    nuxt.$pybossa = {
+      getStats: jest.fn(() => pbTestResponses.getStats),
+      getLeaderboard: jest.fn(() => pbTestResponses.getLeaderboard)
+    }
   })
 
   it('renders correctly', async () => {
