@@ -2,8 +2,6 @@
 
 {{ book.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) [Progressive Web App (PWA)](https://developers.google.com/web/progressive-web-apps/) that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
 
-
-
 ## Installation
 
 Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
@@ -13,7 +11,9 @@ Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
 npm install
 ```
 
-You will also need to install and run a PYBOSSA server, according to the [PYBOSSA documentation](http://docs.pybossa.com/en/latest/).
+Install and run a PYBOSSA server, according to the [PYBOSSA documentation](http://docs.pybossa.com/en/latest/).
+
+Create a Firebase project according to the [Firebase documentation](https://firebase.google.com/docs/web/setup)
 
 ## Configuration
 

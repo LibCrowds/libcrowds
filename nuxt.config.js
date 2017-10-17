@@ -32,6 +32,7 @@ module.exports = {
       'vue-sweetalert'
     ],
     extend (config, ctx) {
+
       if (ctx.isClient) {
         // Run eslint on save
         config.module.rules.push({
@@ -43,6 +44,21 @@ module.exports = {
             formatter: require('eslint-friendly-formatter')
           }
         })
+
+        // Create Firebase API client alias
+        config.resolve.alias['create-api'] = '~/api/firebase/create-api-client.js'
+      }
+
+      if (ctx.isServer) {
+        // Whitelist vue-awesome
+        config.externals = [
+          nodeExternals({
+            whitelist: [/\.(?!(?:js|json)$).{1,5}$/i, /^vue-awesome/]
+          })
+        ]
+
+        // Create Firebase API server alias
+        config.resolve.alias['create-api'] = '~/api/firebase/create-api-server.js'
       }
 
       config.module.rules.push({
@@ -57,15 +73,6 @@ module.exports = {
           'markdown-loader'
         ]
       })
-
-      if (ctx.isServer) {
-        // Whitelist vue-awesome
-        config.externals = [
-          nodeExternals({
-            whitelist: [/\.(?!(?:js|json)$).{1,5}$/i, /^vue-awesome/]
-          })
-        ]
-      }
     }
   },
   plugins: [

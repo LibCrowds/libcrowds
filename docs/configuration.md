@@ -104,6 +104,20 @@ The `description` will appear on the site homepage and form its meta description
 localConfig.description: 'My SEO optimised meta description'
 ```
 
+### firebase
+
+Firebase is used to store the microsite and task configurations.
+
+```js
+localConfig.firebase: {
+  apiKey: "<API_KEY>",
+  authDomain: "<PROJECT_ID>.firebaseapp.com",
+  databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
+  storageBucket: "<BUCKET>.appspot.com",
+  messagingSenderId: "<SENDER_ID>",
+}
+```
+
 ### githubUrl
 
 The `githubUrl` will appear in the site footer.
