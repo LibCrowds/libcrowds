@@ -1,7 +1,8 @@
 import pybossaTestResponses from '@/test/fixtures/pybossaTestResponses.json'
-import pybossa from '@/api/pybossa'
+import { createAPI } from '@/api/pybossa'
 
 describe('PYBOSSA module', () => {
+  let pybossa = createAPI(jest.fn())
   let mockGet = null
   let mockPost = null
   let mockPut = null

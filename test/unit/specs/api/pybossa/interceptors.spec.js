@@ -1,5 +1,5 @@
-import addCsrfHeader from '@/api/interceptors/addCsrfHeader'
-import handleErrors from '@/api/interceptors/handleErrors'
+import addCsrfHeader from '@/api/pybossa/interceptors/addCsrfHeader'
+import handleErrors from '@/api/pybossa/interceptors/handleErrors'
 
 describe('Interceptors', () => {
   describe('addCsrfHeader', () => {
