@@ -127,7 +127,7 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/style/main';
 
-#app-footer.footer {
+#app-footer {
   background-color: $gray-1000;
   letter-spacing: 0.8px;
   color: $gray-600;

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AppFooter from '@/components/footers/AppFooter'
+import AppFooter from '@/components/footers/App'
 import AppNavbar from '@/components/navs/AppNavbar'
 import appBackground from '@/assets/img/app-background.jpg'
 

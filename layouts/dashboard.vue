@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import DashboardFooter from '@/components/footers/DashboardFooter'
+import DashboardFooter from '@/components/footers/Dashboard'
 import AppNavbar from '@/components/navs/AppNavbar'
 import DashboardSidenav from '@/components/navs/DashboardSidenav'
 
