@@ -104,7 +104,7 @@ import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
 
 export default {
-  data: function () {
+  data () {
     return {
       localConfig: localConfig,
       twitterUrl: `https://twitter.com/${localConfig.contact.twitter}`,
@@ -114,7 +114,12 @@ export default {
   },
 
   methods: {
-    scrollIfCurrent: function (evt) {
+    /**
+     * Scroll to the top if the link clicked is for the current page.
+     * @param {Object} evt
+     *   The event.
+     */
+    scrollIfCurrent (evt) {
       if (process.browser && evt.target.href === window.location.href) {
         const VueScrollTo = require('vue-scrollto')
         VueScrollTo.scrollTo('body')

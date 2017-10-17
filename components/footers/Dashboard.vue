@@ -10,7 +10,7 @@
 import localConfig from '@/local.config'
 
 export default {
-  data: function () {
+  data () {
     return {
       copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
     }

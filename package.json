@@ -82,6 +82,7 @@
     "jest-vue-preprocessor": "~1.2.0",
     "jsdom": "^11.3.0",
     "markdown-loader": "^2.0.1",
+    "mockdate": "^2.0.2",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "shelljs": "^0.7.8",
