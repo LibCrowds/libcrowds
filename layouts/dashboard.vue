@@ -56,7 +56,7 @@ export default {
           { name: 'admin-categories', label: 'Categories' },
           { name: 'admin-users', label: 'Users' },
           { name: 'admin-announcements', label: 'Announcements' },
-          { name: 'admin-background-jobs', label: 'Background Jobs' }
+          { name: 'admin-jobs', label: 'Background Jobs' }
         ]
       } else if (this.$route.path.startsWith('/help')) {
         return [

@@ -10,7 +10,7 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'admin-announcement-new'
+            name: 'admin-announcements-new'
           }">
           New
         </b-btn>
@@ -31,7 +31,7 @@
             variant="outline-dark"
             size="sm"
             :to="{
-              name: 'admin-announcement-update',
+              name: 'admin-announcements-update',
               params: {
                 id: announcement.item.id
               }
