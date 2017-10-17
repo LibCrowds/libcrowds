@@ -117,32 +117,33 @@ export default {
     }
   },
 
-  async asyncData ({ app }) {
-    let [adminUserRes, statsRes] = await Promise.all([
+  asyncData ({ app }) {
+    return Promise.all([
       app.$pybossa.getAdminUsers(),
       app.$pybossa.getStatsSummary()
-    ])
-    return {
-      nUsers: statsRes.data.n_users,
-      adminUsers: adminUserRes.data.users,
-      found: adminUserRes.data.found,
-      form: {
-        endpoint: '/admin/users',
-        method: 'post',
-        model: statsRes.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'user',
-              label: 'Search Users',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Search by name'
-            }
-          ]
+    ]).then(([adminUserRes, statsRes]) => {
+      return {
+        nUsers: statsRes.data.n_users,
+        adminUsers: adminUserRes.data.users,
+        found: adminUserRes.data.found,
+        form: {
+          endpoint: '/admin/users',
+          method: 'post',
+          model: statsRes.data.form,
+          schema: {
+            fields: [
+              {
+                model: 'user',
+                label: 'Search Users',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Search by name'
+              }
+            ]
+          }
         }
       }
-    }
+    })
   },
 
   head () {

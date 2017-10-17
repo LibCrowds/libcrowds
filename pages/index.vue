@@ -141,16 +141,17 @@ export default {
     }
   },
 
-  async asyncData ({ app }) {
-    let [statsResponse, leaderboardResponse] = await Promise.all([
+  asyncData ({ app }) {
+    return Promise.all([
       app.$pybossa.getStats(),
       app.$pybossa.getLeaderboard()
-    ])
-    return {
-      stats: statsResponse.data.stats,
-      topUsers: leaderboardResponse.data.top_users,
-      top10Users: leaderboardResponse.data.top_users.slice(0, 10)
-    }
+    ]).then(([statsResponse, leaderboardResponse]) => {
+      return {
+        stats: statsResponse.data.stats,
+        topUsers: leaderboardResponse.data.top_users,
+        top10Users: leaderboardResponse.data.top_users.slice(0, 10)
+      }
+    })
   },
 
   head () {

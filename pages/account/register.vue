@@ -58,66 +58,67 @@ import OauthButtons from '@/components/buttons/Oauth'
 export default {
   layout: 'default',
 
-  async asyncData ({ query, redirect, app }) {
-    const [registrationRes, signinRes] = await Promise.all([
+  asyncData ({ query, redirect, app }) {
+    return Promise.all([
       app.$pybossa.getAccountRegistration(),
       app.$pybossa.getAccountSignin()
-    ])
-    const next = query.next || '/'
+    ]).then(([registrationRes, signinRes]) => {
+      const next = query.next || '/'
 
-    // Redirect if already signed in
-    if (signinRes.data.next === '/') {
-      redirect(next)
-    }
+      // Redirect if already signed in
+      if (signinRes.data.next === '/') {
+        redirect(next)
+      }
 
-    return {
-      next: next,
-      form: {
-        endpoint: '/account/register',
-        method: 'post',
-        model: registrationRes.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'name',
-              label: 'Username',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Choose a username'
-            },
-            {
-              model: 'fullname',
-              label: 'Full name',
-              type: 'input',
-              inputType: 'text',
-              placeholder: 'Enter your full name'
-            },
-            {
-              model: 'email_addr',
-              label: 'Email',
-              type: 'input',
-              inputType: 'email',
-              placeholder: 'you@example.com'
-            },
-            {
-              model: 'password',
-              label: 'Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Choose a password'
-            },
-            {
-              model: 'confirm',
-              label: 'Confirm Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Confirm your password'
-            }
-          ]
-        }
-      },
-      auth: signinRes.data.auth
-    }
+      return {
+        next: next,
+        form: {
+          endpoint: '/account/register',
+          method: 'post',
+          model: registrationRes.data.form,
+          schema: {
+            fields: [
+              {
+                model: 'name',
+                label: 'Username',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Choose a username'
+              },
+              {
+                model: 'fullname',
+                label: 'Full name',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'Enter your full name'
+              },
+              {
+                model: 'email_addr',
+                label: 'Email',
+                type: 'input',
+                inputType: 'email',
+                placeholder: 'you@example.com'
+              },
+              {
+                model: 'password',
+                label: 'Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Choose a password'
+              },
+              {
+                model: 'confirm',
+                label: 'Confirm Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Confirm your password'
+              }
+            ]
+          }
+        },
+        auth: signinRes.data.auth
+      }
+    })
   },
 
   head () {
