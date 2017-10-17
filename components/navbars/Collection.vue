@@ -99,7 +99,7 @@
             <!-- Profile/settings -->
             <b-dropdown-item
               :to="{
-                name: 'profile',
+                name: 'account-username',
                 params: {
                   username: currentUser.name
                 }

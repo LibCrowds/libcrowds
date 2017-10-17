@@ -86,10 +86,10 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
           <div role="menu"
                class="dropdown-menu dropdown-menu-right"
           >
-            <a href="#/"
+            <a href="#/account/JohnDoe"
                role="menuitem"
                target="_self"
-               class="dropdown-item active"
+               class="dropdown-item"
             >
               Profile
             </a>
@@ -233,10 +233,10 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
           <div role="menu"
                class="dropdown-menu dropdown-menu-right"
           >
-            <a href="#/"
+            <a href="#/account/JohnDoe"
                role="menuitem"
                target="_self"
-               class="dropdown-item active"
+               class="dropdown-item"
             >
               Profile
             </a>
