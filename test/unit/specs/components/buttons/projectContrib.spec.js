@@ -1,11 +1,14 @@
 import BootstrapVue from 'bootstrap-vue'
 
+import collection from '@/test/fixtures/collection.json'
+import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 describe('ProjectContrib button', () => {
   let localVue = null
   let wrapper = null
+  let project = null
 
   beforeEach(() => {
     localVue = createLocalVue()
@@ -13,7 +16,8 @@ describe('ProjectContrib button', () => {
     wrapper = mount(ProjectContribButton, {
       localVue,
       propsData: {
-        shortname: 'my_project'
+        collection: collection,
+        project: pbTestResponses.getProject.data.project
       }
     })
   })

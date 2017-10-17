@@ -1,4 +1,4 @@
-import pybossaTestResponses from '@/test/fixtures/pybossaTestResponses.json'
+import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { createAPI } from '@/api/pybossa'
 
 describe('PYBOSSA module', () => {
@@ -297,7 +297,7 @@ describe('PYBOSSA module', () => {
     it('makes the correct requests for deleteCategory', () => {
       const categoryId = 42
       const expectedUrl = `/admin/categories/del/${categoryId}`
-      const getDeleteCategoryResponse = pybossaTestResponses.getDeleteCategory
+      const getDeleteCategoryResponse = pbTestResponses.getDeleteCategory
       mockGet.mockReturnValue(new Promise((resolve, reject) => {
         resolve(getDeleteCategoryResponse)
       }))
@@ -409,7 +409,7 @@ describe('PYBOSSA module', () => {
     })
 
     it('filters microsite categories for the given key only', () => {
-      const categories = pybossaTestResponses.getApiCategories.data
+      const categories = pbTestResponses.getApiCategories.data
       const key = 'playbills'
       const filtered = pybossa._filterMicrositeCategories(categories, key)
       expect(filtered.length).toBe(1)
@@ -429,7 +429,7 @@ describe('PYBOSSA module', () => {
 
     it('returns the correct categories', () => {
       const key = 'playbills'
-      const response = pybossaTestResponses.getApiCategories
+      const response = pbTestResponses.getApiCategories
       mockGet.mockReturnValue(new Promise((resolve, reject) => {
         resolve(response)
       }))
