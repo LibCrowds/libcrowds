@@ -350,18 +350,18 @@ describe('PYBOSSA module', () => {
 
     it('makes the correct requests for deleteCategory', () => {
       const categoryId = 42
-      const expectedUrl = `/admin/categories/del/${categoryId}`
-      const getDeleteCategoryResponse = pbTestResponses.getDeleteCategory
-      mockGet.mockReturnValue(new Promise((resolve, reject) => {
-        resolve(getDeleteCategoryResponse)
-      }))
+      randomData.form = {
+        csrf: uuid()
+      }
+      const url = `/admin/categories/del/${categoryId}`
+      mockAxios.onGet(url).reply(200, randomData)
+      mockAxios.onPost(url, {
+        headers: {
+          'X-CSRFToken': randomData.form.csrf
+        }
+      }).reply(200, randomData)
       return pybossa.deleteCategory(categoryId, form).then(r => {
-        expect(mockGet).toHaveBeenCalledWith(expectedUrl)
-        expect(mockPost).toHaveBeenCalledWith(expectedUrl, {
-          headers: {
-            'X-CSRFToken': getDeleteCategoryResponse.data.form.csrf
-          }
-        })
+        expect(r.data).toEqual(randomData)
       })
     })
 
