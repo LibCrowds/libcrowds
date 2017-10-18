@@ -57,8 +57,6 @@ export default {
     const res = pybossa.getAccountSignin()
     const next = query.next || '/'
 
-    console.log(res)
-
     // Redirect if already signed in
     if (res.data.next === '/') {
       redirect(next)
