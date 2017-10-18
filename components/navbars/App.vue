@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
 import Announcements from '@/components/Announcements'

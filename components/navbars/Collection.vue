@@ -173,7 +173,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import throttle from 'lodash/throttle'
 
