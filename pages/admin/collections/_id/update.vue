@@ -15,7 +15,6 @@
 <script>
 import pybossa from '@/api/pybossa'
 import pick from 'lodash/pick'
-import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -137,7 +136,7 @@ export default {
                 }
               ],
               default: 'CC0',
-              hint: 'See https://creativecommons.org/licenses/',
+              hint: 'See https://creativecommons.org/licenses/'
             }
           ]
         }

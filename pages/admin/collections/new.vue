@@ -12,7 +12,6 @@
 
 <script>
 import pybossa from '@/api/pybossa'
-import capitalize from 'capitalize'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -68,7 +67,7 @@ export default {
               model: 'name',
               label: 'Name',
               type: 'input',
-              inputType: 'text',
+              inputType: 'text'
             },
             {
               model: 'description',
@@ -76,7 +75,7 @@ export default {
               type: 'textArea',
               rows: 3,
               placeholder: 'Appears on the homepage and as its meta description'
-            },
+            }
           ]
         }
       },
