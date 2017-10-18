@@ -13,8 +13,6 @@ npm install
 
 Install and run a PYBOSSA server, according to the [PYBOSSA documentation](http://docs.pybossa.com/en/latest/).
 
-Create a Firebase project according to the [Firebase documentation](https://firebase.google.com/docs/web/setup)
-
 ## Configuration
 
 To run the server with default settings you can make a copy of the template settings file:

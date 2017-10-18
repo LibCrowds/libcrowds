@@ -1,13 +1,8 @@
 <template>
-  <firebase-form
-    header="New Collection"
-    submit-text="Create"
-    :form="form">
-  </firebase-form>
+
 </template>
 
 <script>
-import FirebaseForm from '@/components/forms/FirebaseForm'
 
 export default {
   layout: 'dashboard',
@@ -68,10 +63,6 @@ export default {
     return {
       title: `Collections`
     }
-  },
-
-  components: {
-    FirebaseForm
   }
 }
 </script>

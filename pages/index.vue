@@ -146,6 +146,7 @@ export default {
       app.$pybossa.getStats(),
       app.$pybossa.getLeaderboard()
     ]).then(([statsResponse, leaderboardResponse]) => {
+      console.log(statsResponse)
       return {
         stats: statsResponse.data.stats,
         topUsers: leaderboardResponse.data.top_users,
