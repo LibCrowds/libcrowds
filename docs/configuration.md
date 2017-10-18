@@ -187,46 +187,6 @@ The `bgImg` is the main background image used across the microsite.
 microlocalConfig.bgImg: require(`./background.jpg`)
 ```
 
-### description
-
-The `description` appears on the microsite homepage, as well as in its [meta description](https://moz.com/learn/seo/meta-description).
-
-```js
-microlocalConfig.description: 'My SEO optimised meta description'
-```
-
-### forumUrl
-
-The `forumUrl` will be linked to from the microsite's navbar.
-
-```js
-microlocalConfig.forumUrl: 'http://community.example.com/t/my_collection'
-```
-
-### key
-
-The `key` is used to establish the two-way binding between the core and the microsite configuration files. This key must also appear in the core site configuration's [`collections`](configuration.md#collections) property where its value must link to this microsite configuration file.
-
-```js
-microlocalConfig.key = 'my_collection'
-```
-
-### name
-
-A `name` for the microsite.
-
-```js
-microlocalConfig.name = 'My Amazing Name'
-```
-
-### tagline
-
-The `tagline` will appear on the microsite homepage.
-
-```js
-microlocalConfig.tagline = 'My inspiring tagline'
-```
-
 ### terminology
 
 The microsite's `terminology` for categories, projects, tasks and task runs.

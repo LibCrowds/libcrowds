@@ -45,9 +45,19 @@ export const routes = [
     name: 'admin-dashboard'
   },
   {
-    path: '/admin/categories',
+    path: '/admin/collections',
     component: jest.fn(),
-    name: 'admin-categories'
+    name: 'admin-collections'
+  },
+  {
+    path: '/admin/collections/:id/update',
+    component: jest.fn(),
+    name: 'admin-collections-id-update'
+  },
+  {
+    path: '/admin/collections/new',
+    component: jest.fn(),
+    name: 'admin-collections-new'
   },
   {
     path: '/admin/users',
@@ -88,11 +98,6 @@ export const routes = [
     path: '/admin/collections/new',
     component: jest.fn(),
     name: 'admin-collections-new'
-  },
-  {
-    path: '/admin/categories/:id/edit',
-    component: jest.fn(),
-    name: 'admin-categories-id-edit'
   },
   {
     path: '/admin/announcements/:id/update',

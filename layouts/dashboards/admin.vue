@@ -12,7 +12,7 @@ export default {
     navItems: [
       { name: 'admin-dashboard', label: 'Dashboard' },
       { name: 'admin-featured', label: 'Featured Projects' },
-      { name: 'admin-categories', label: 'Categories' },
+      { name: 'admin-collections', label: 'Categories' },
       { name: 'admin-users', label: 'Users' },
       { name: 'admin-announcements', label: 'Announcements' },
       { name: 'admin-jobs', label: 'Background Jobs' }

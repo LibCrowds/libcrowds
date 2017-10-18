@@ -1,8 +1,8 @@
 <template>
-  <div id="admin-categories">
+  <div id="admin-collections-update">
     <pybossa-form
       show-cancel
-      header="Edit Category"
+      header="Update Collection"
       submit-text="Update"
       :form="form"
       class="mb-4"
@@ -19,7 +19,7 @@ import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboards/admin',
+  layout: 'dashboards-admin',
 
   async asyncData ({ params }) {
     const res = await pybossa.client.get(`/api/category/${params.id}`)
@@ -32,7 +32,7 @@ export default {
 
   head () {
     return {
-      title: `Edit Category`
+      title: `Edit Collection`
     }
   },
 
@@ -138,21 +138,6 @@ export default {
               ],
               default: 'CC0',
               hint: 'See https://creativecommons.org/licenses/',
-            },
-
-
-
-            {
-              model: 'info.location.latitude',
-              label: 'Latitude',
-              type: 'input',
-              inputType: 'number'
-            },
-            {
-              model: 'info.location.longitude',
-              label: 'Longitude',
-              type: 'input',
-              inputType: 'number'
             }
           ]
         }
@@ -166,17 +151,17 @@ export default {
      */
     onSuccess () {
       this.$swal({
-        title: 'Category updated',
+        title: 'Collection updated',
         type: 'success'
       },
-      this.$router.push({ name: 'admin-categories' }))
+      this.$router.push({ name: 'admin-collections' }))
     },
 
     /**
      * Handle form cancel.
      */
     onCancel () {
-      this.$router.push({ name: 'admin-categories' })
+      this.$router.push({ name: 'admin-collections' })
     }
   }
 }
