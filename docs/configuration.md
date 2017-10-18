@@ -1,37 +1,8 @@
 # Configuration
 
-The [Site Configuration](configuration.md#site-configuration) contains general options applied to whole of the frontend, and the [Microsite Configuration](configuration.md#microsite-configuration) contains more specific options for each microsite.
+The [Site Configuration](configuration.md#site-configuration) contains general options applied to the core interface.
 
-To run the frontend with default settings:
-
-```bash
-cp local.config.js.tmpl local.config.js
-```
-
-## Directory Structure
-
-Apart from the location of the `local.config.js` file, LibCrowds does not enforce a particular directory structure. Rather, any additional configuration files can be placed in the `custom` directory and linked to via `localConfig.js`.
-
-Below is an example directory structure.
-
-```
-├── local.config.js                 # Main site configuration
-├── src
-    └── custom
-        └── collections
-            └── my_collection
-                ├── config.js       # The collection config
-                ├── background.jpg  # Some additional asset
-                └── about
-                    └── ...         # Markdown for the about page
-            └── ...
-```
-
-## Site Configuration
-
-The local site configuration is required for LibCrowds to run.
-
-To run the frontend with default settings:
+To run the application with default settings:
 
 ```bash
 cp local.config.js.tmpl local.config.js
@@ -55,17 +26,6 @@ The `brand` will appear throughout your site.
 localConfig.brand: 'My Brand'
 ```
 
-### collections
-
-The `collections` property is used to establish the two-way binding between the site configuration and each microsite configuration. Each key must be the same as the [`key`](configuration.md#key) that appears in the linked microsite configuration.
-
-```js
-const path = require('path')
-localConfig.collections = {
-  my_collection: path.resolve(`./custom/collections/my_collection/config.js`)
-}
-```
-
 ### company
 
 The `company` responsible for the site.
@@ -82,17 +42,6 @@ The `contact` information will appear in the site footer.
 localConfig.contact = {
   email: 'me@example.com',
   twitter: 'mytwitterhandle'
-}
-```
-
-### dataLicense
-
-The `dataLicense` specifies the rights information for all data collected via the site.
-
-```js
-localConfig.dataLicense: {
-  name: 'CC0',
-  url: 'https://creativecommons.org/publicdomain/zero/1.0/'
 }
 ```
 
@@ -157,45 +106,4 @@ The `tagline` will appear on the site homepage.
 
 ```js
 localConfig.tagline: 'My inspiring tagline'
-```
-
-## Microsite Configuration
-
-Each microsite configuration is used to define the appearance and behaviour of a microsite.
-
-### about
-
-The `about` property is used to provide a series of Markdown files that form the content for the about page.
-
-```js
-microlocalConfig.about = {
-  intro: require(`./about/intro.md`),
-  subsections: [
-    {
-      id: 'contact',
-      title: 'Contact',
-      markdown: require(`./about/contact.md`)
-    }
-}
-```
-
-### bgImg
-
-The `bgImg` is the main background image used across the microsite.
-
-```js
-microlocalConfig.bgImg: require(`./background.jpg`)
-```
-
-### terminology
-
-The microsite's `terminology` for categories, projects, tasks and task runs.
-
-```js
-microlocalConfig.terminology = {
-  category: 'category',
-  project: 'project',
-  task: 'task',
-  taskRun: 'task run'
-}
 ```
