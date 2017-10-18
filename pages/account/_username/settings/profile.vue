@@ -12,7 +12,7 @@ import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboard',
+  layout: 'dashboards/account',
 
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProfile(params.username)

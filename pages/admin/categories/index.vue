@@ -66,7 +66,7 @@ import capitalize from 'capitalize'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboard',
+  layout: 'dashboards/admin',
 
   data () {
     return {

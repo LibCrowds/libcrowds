@@ -19,7 +19,7 @@ import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboard',
+  layout: 'dashboards/admin',
 
   async asyncData ({ params }) {
     const res = await pybossa.client.get(`/api/category/${params.id}`)

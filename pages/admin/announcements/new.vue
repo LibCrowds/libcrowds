@@ -14,7 +14,7 @@ import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboard',
+  layout: 'dashboards/admin',
 
   async asyncData () {
     const res = await pybossa.getNewAnnouncement()

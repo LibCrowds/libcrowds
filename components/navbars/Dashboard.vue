@@ -1,6 +1,6 @@
 <template>
   <div id="dashboard-navbar">
-    <nav :class="navClass">
+    <nav :class="`${position}`">
       <div class="brand-wrapper text-center">
         <router-link
           class="brand"
@@ -14,11 +14,9 @@
           <router-link
             tag="li"
             class="list-group-item"
-            :to="{
-              name: item.name
-            }"
-            v-for="item in navItems"
-            :key="item.name">
+            v-for="(item, index) in navItems"
+            :key="index"
+            :to="item.link">
             <a>
               {{ item.label }}
             </a>
@@ -32,13 +30,9 @@
 import localConfig from '@/local.config'
 
 export default {
-  data: function () {
+  data () {
     return {
-      localConfig: localConfig,
-      navClass: {
-        side: this.position === 'side',
-        top: this.position === 'top'
-      }
+      localConfig: localConfig
     }
   },
 
