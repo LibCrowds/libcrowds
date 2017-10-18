@@ -29,7 +29,7 @@
 import localConfig from '@/local.config'
 
 export default {
-  layout: 'dashboards/help',
+  layout: 'help-dashboard',
 
   data () {
     return {

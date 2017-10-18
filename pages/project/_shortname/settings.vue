@@ -36,7 +36,7 @@ import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboards/project',
+  layout: 'project-dashboard',
 
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProject(params.shortname)
