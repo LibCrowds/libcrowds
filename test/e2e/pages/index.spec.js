@@ -1,5 +1,3 @@
-import axios from 'axios'
-import { Nuxt, Builder } from 'nuxt'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
@@ -16,7 +14,7 @@ describe('Index page', () => {
       getStats: jest.fn(() => pbTestResponses.getStats),
       getLeaderboard: jest.fn(() => pbTestResponses.getLeaderboard)
     }
-  }, 5*60)
+  })
 
   it('renders correctly', async () => {
     const window = await nuxt.renderAndGetWindow('http://localhost:4000/')

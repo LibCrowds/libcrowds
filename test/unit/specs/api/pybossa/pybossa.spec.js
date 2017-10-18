@@ -432,15 +432,15 @@ describe('PYBOSSA module', () => {
       const response = {
         data: [
           {
-            "id": 1,
-            "info": {
-              "collection": key
+            'id': 1,
+            'info': {
+              'collection': key
             }
           },
           {
-            "id": 2,
-            "info": {
-              "collection": "something_else"
+            'id': 2,
+            'info': {
+              'collection': 'something_else'
             }
           }
         ]
