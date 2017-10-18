@@ -20,7 +20,7 @@
               :fields="tableFields">
 
               <template slot="created" scope="user">
-                {{ user.item.created | formatDate }}
+                {{ user.item.created | moment('dd-mm-yyy') }}
               </template>
 
               <template slot="action" scope="user">

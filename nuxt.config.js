@@ -77,6 +77,7 @@ module.exports = {
     { src: '~/plugins/vue-clickaway', ssr: false },
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
+    { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-notification', ssr: false },
     { src: '~/plugins/vue-progress', ssr: false },
     { src: '~/plugins/vue-scrollto', ssr: false },

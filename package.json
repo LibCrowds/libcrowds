@@ -44,6 +44,7 @@
     "vue-form-generator": "^2.0.0",
     "vue-gravatar": "^1.1.3",
     "vue-js-toggle-button": "^1.2.0",
+    "vue-moment": "^2.1.0",
     "vue-notification": "^1.3.4",
     "vue-progress": "^0.2.1",
     "vue-scrollto": "^2.7.8",

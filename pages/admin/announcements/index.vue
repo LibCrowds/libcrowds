@@ -23,7 +23,7 @@
         :fields="table.fields">
 
         <template slot="created" scope="announcement">
-          {{ announcement.item.created | formatDate }}
+          {{ announcement.item.created | moment('dd-mm-yyy') }}
         </template>
 
         <template slot="action" scope="announcement">
