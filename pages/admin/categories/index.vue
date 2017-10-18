@@ -61,6 +61,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import capitalize from 'capitalize'
 import PybossaForm from '@/components/forms/PybossaForm'
 
@@ -99,8 +100,8 @@ export default {
     }
   },
 
-  async asyncData ({ app }) {
-    const res = await app.$pybossa.getAdminCategories()
+  async asyncData () {
+    const res = await pybossa.getAdminCategories()
 
     // See https://github.com/LibCrowds/libcrowds/issues/100
     delete res.data.form.id
@@ -160,7 +161,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return new Promise(function (resolve, reject) {
-            this.$pybossa.deleteCategory(id).then(r => {
+            pybossa.deleteCategory(id).then(r => {
               resolve()
             })
           })

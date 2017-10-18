@@ -8,13 +8,14 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getResetApiKey(params.username)
+  async asyncData ({ params }) {
+    const res = await pybossa.getResetApiKey(params.username)
     return {
       csrf: res.data.form.csrf
     }
@@ -65,7 +66,7 @@ export default {
      * Trigger an update of the current user.
      */
     updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER', this.$pybossa)
+      this.$store.dispatch('UPDATE_CURRENT_USER')
     }
   }
 }

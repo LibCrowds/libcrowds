@@ -42,6 +42,7 @@
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
+import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
@@ -53,8 +54,10 @@ export default {
   },
 
   async asyncData ({ query, redirect, app }) {
-    const res = await app.$pybossa.getAccountSignin()
+    const res = pybossa.getAccountSignin()
     const next = query.next || '/'
+
+    console.log(res)
 
     // Redirect if already signed in
     if (res.data.next === '/') {

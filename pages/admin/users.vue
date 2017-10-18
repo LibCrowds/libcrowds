@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import exportFile from '@/utils/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 
@@ -117,10 +118,10 @@ export default {
     }
   },
 
-  asyncData ({ app }) {
+  asyncData () {
     return Promise.all([
-      app.$pybossa.getAdminUsers(),
-      app.$pybossa.getStatsSummary()
+      pybossa.getAdminUsers(),
+      pybossa.getStatsSummary()
     ]).then(([adminUserRes, statsRes]) => {
       return {
         nUsers: statsRes.data.n_users,
@@ -173,11 +174,11 @@ export default {
      */
     toggleAdmin (user) {
       if (user.admin) {
-        this.$pybossa.addAdminUser(user.id, this.form.model).then(r => {
+        pybossa.addAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers.push(user)
         })
       } else {
-        this.$pybossa.delAdminUser(user.id, this.form.model).then(r => {
+        pybossa.delAdminUser(user.id, this.form.model).then(r => {
           this.adminUsers = this.adminUsers.filter(adminUser => {
             return adminUser.id !== user.id
           })
@@ -202,7 +203,7 @@ export default {
       if (format !== 'json' && format !== 'csv') {
         throw Error('Invalid format')
       }
-      this.$pybossa.exportUsers(format).then(r => {
+      pybossa.exportUsers(format).then(r => {
         exportFile(r.data, 'user_data', format)
       })
     }

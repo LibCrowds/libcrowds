@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
+
 export default {
   data: function () {
     return {
@@ -70,7 +72,7 @@ export default {
   },
 
   mounted () {
-    this.$pybossa.getFavourites().then(r => {
+    pybossa.getFavourites().then(r => {
       this.images = this.getImageData(r.data)
     })
   }

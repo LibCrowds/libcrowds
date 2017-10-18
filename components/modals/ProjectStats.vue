@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import moment from 'moment'
 import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
@@ -97,7 +98,7 @@ export default {
      * Fetch the stats.
      */
     fetchData () {
-      this.$pybossa.getProjectStats(this.project.short_name).then(r => {
+      pybossa.getProjectStats(this.project.short_name).then(r => {
         this.avgContribTime = r.data.avg_contrib_time
         this.userStats = r.data.userStats || {}
         this.projectStats = r.data.projectStats || {}

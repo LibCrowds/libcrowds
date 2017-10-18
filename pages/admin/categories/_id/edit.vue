@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import pick from 'lodash/pick'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -20,8 +21,8 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.client.get(`/api/category/${params.id}`)
+  async asyncData ({ params }) {
+    const res = await pybossa.client.get(`/api/category/${params.id}`)
     const category = res.data
     category.info = category.info || {}
     return {

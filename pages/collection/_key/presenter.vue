@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -39,8 +40,8 @@ export default {
     }
   },
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getProject(params.shortname)
+  async asyncData ({ params }) {
+    const res = await pybossa.getProject(params.shortname)
     return {
       project: res.data.project
     }
@@ -98,7 +99,7 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      this.$pybossa.client.get(url).then(r => {
+      pybossa.client.get(url).then(r => {
         if (isEmpty(r.data)) {
           this.handleCompletion()
         } else {
@@ -140,7 +141,7 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        this.$pybossa.addFavourite(taskId).then(() => {
+        pybossa.addFavourite(taskId).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Added to favourites',
@@ -148,7 +149,7 @@ export default {
           })
         })
       } else {
-        this.$pybossa.deleteFavourite(taskId).then(() => {
+        pybossa.deleteFavourite(taskId).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Removed from favourites',
@@ -187,7 +188,7 @@ export default {
         'task_id': taskId,
         'info': answer
       })
-      this.$pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
+      pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {

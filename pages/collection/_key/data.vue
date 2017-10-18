@@ -93,6 +93,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import CategoriesList from '@/components/lists/Categories'
 import Pagination from '@/components/Pagination'
@@ -123,8 +124,8 @@ export default {
     }
   },
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getMicrositeCategories(params.name)
+  async asyncData ({ params }) {
+    const res = await pybossa.getMicrositeCategories(params.name)
     return {
       categories: res.data.categories
     }
@@ -174,7 +175,7 @@ export default {
      */
     fetchProjects () {
       const shortName = this.activeCategory.short_name
-      this.$pybossa.getCategory(shortName, this.page).then(r => {
+      pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })

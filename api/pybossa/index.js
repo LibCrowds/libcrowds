@@ -26,7 +26,6 @@ const PyBossaApi = {
          *   The microsite key.
          */
         _filterMicrositeCategories (categories, key) {
-          console.log(categories, typeof(categories))
           return categories.filter(category => {
             return category.info ? category.info.collection === key : false
           })
@@ -604,7 +603,6 @@ const PyBossaApi = {
             this.client.get(url, params).then(r => {
               // Additional filter needed as the search is not exact (i.e. if one
               // category name is a part of another both could be returned)
-              console.log(typeof(r.data))
               r.data = {
                 categories: this._filterMicrositeCategories(r.data, key)
               }

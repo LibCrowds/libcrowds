@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
@@ -58,10 +59,10 @@ import OauthButtons from '@/components/buttons/Oauth'
 export default {
   layout: 'default',
 
-  asyncData ({ query, redirect, app }) {
+  asyncData ({ query, redirect }) {
     return Promise.all([
-      app.$pybossa.getAccountRegistration(),
-      app.$pybossa.getAccountSignin()
+      pybossa.getAccountRegistration(),
+      pybossa.getAccountSignin()
     ]).then(([registrationRes, signinRes]) => {
       const next = query.next || '/'
 

@@ -11,13 +11,14 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getUpdateAnnouncement(params.id)
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateAnnouncement(params.id)
     return {
       form: {
         endpoint: `/admin/announcement/${this.res.data.form.id}/update`,
@@ -66,7 +67,7 @@ export default {
      */
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
-      this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$pybossa)
+      this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
     }
   }
 }

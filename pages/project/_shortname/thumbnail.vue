@@ -10,13 +10,14 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getUpdateProject(params.shortname)
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateProject(params.shortname)
     res.data.form.btn = 'Upload'
     return {
       project: res.data.project,

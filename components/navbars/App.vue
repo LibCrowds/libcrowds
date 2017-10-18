@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
 import Announcements from '@/components/Announcements'
@@ -143,7 +144,7 @@ export default {
     * Sign the user out.
     */
     signout () {
-      this.$store.dispatch('LOGOUT', this.$pybossa)
+      this.$store.dispatch('LOGOUT')
     }
   }
 }

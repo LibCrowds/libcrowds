@@ -122,6 +122,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
@@ -143,8 +144,8 @@ export default {
 
   asyncData ({ app }) {
     return Promise.all([
-      app.$pybossa.getStats(),
-      app.$pybossa.getLeaderboard()
+      pybossa.getStats(),
+      pybossa.getLeaderboard()
     ]).then(([statsResponse, leaderboardResponse]) => {
       console.log(statsResponse)
       return {
@@ -152,6 +153,8 @@ export default {
         topUsers: leaderboardResponse.data.top_users,
         top10Users: leaderboardResponse.data.top_users.slice(0, 10)
       }
+    }).catch(err => {
+      console.log(err)
     })
   },
 

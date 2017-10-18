@@ -197,6 +197,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -275,9 +276,9 @@ export default {
     let q = `info=collection::${key}&fulltextsearch=1&limit=100`
     let categoryUrl = `/api/category?${q}`
 
-    this.$pybossa.client.get(`/`).then(r => {
+    pybossa.client.get(`/`).then(r => {
       data = r.data
-      return this.$pybossa.client.get(categoryUrl)
+      return pybossa.client.get(categoryUrl)
     }).then(r => {
       data.categories = r.data.filter(category => {
         return category.info.collection === key

@@ -7,13 +7,14 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'dashboard',
 
-  async asyncData ({ params, app }) {
-    const res = await app.$pybossa.getUpdateProfile(params.username)
+  async asyncData ({ params }) {
+    const res = await pybossa.getUpdateProfile(params.username)
     res.data.form.btn = 'Password'
     return {
       form: {

@@ -173,6 +173,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import throttle from 'lodash/throttle'
 
@@ -229,7 +230,7 @@ export default {
      * Sign the user out.
      */
     signout () {
-      this.$store.dispatch('LOGOUT', this.$pybossa)
+      this.$store.dispatch('LOGOUT')
     },
 
     /**

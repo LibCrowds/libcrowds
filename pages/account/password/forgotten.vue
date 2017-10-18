@@ -14,14 +14,15 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'default',
 
-  async asyncData ({ query, app }) {
-    let res = await app.$pybossa.getRecoverPassword()
+  async asyncData ({ query }) {
+    let res = await pybossa.getRecoverPassword()
     return {
       next: query.next || '/',
       form: {

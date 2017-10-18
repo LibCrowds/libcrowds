@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import CategoriesList from '@/components/lists/Categories'
 
 export default {
@@ -97,8 +98,8 @@ export default {
     }
   },
 
-  async asyncData ({ app }) {
-    const res = await app.$pybossa.getAdminFeatured()
+  async asyncData () {
+    const res = await pybossa.getAdminFeatured()
     return {
       categories: res.data.categories,
       projects: res.data.projects,
@@ -134,11 +135,11 @@ export default {
     toggleFeatured (project) {
       const params = { csrf: this.csrf }
       if (project.featured) {
-        this.$pybossa.featureProject(project.id, params).then(r => {
+        pybossa.featureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       } else {
-        this.$pybossa.unfeatureProject(project.id, params).then(r => {
+        pybossa.unfeatureProject(project.id, params).then(r => {
           project.featured = !project.featured
         })
       }

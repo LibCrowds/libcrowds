@@ -132,6 +132,7 @@
 </template>
 
 <script>
+import pybossa from '@/api/pybossa'
 import { sortBy, forEach } from 'lodash'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import Pagination from '@/components/Pagination'
@@ -277,7 +278,7 @@ export default {
       }
 
       this.projects = []
-      this.$pybossa.getCategory(shortName, this.page).then(r => {
+      pybossa.getCategory(shortName, this.page).then(r => {
         this.projects = r.data.projects
         this.pagination = r.data.pagination
       })
@@ -323,13 +324,13 @@ export default {
   },
 
   beforeRouteEnter (to, from, next) {
-    this.$pybossa.getMicrositeCategories(to.params.key).then(r => {
+    pybossa.getMicrositeCategories(to.params.key).then(r => {
       next(vm => vm.setData(r.data))
     })
   },
 
   beforeRouteUpdate (to, from, next) {
-    this.$pybossa.getMicrositeCategories(to.params.key).then(r => {
+    pybossa.getMicrositeCategories(to.params.key).then(r => {
       this.setData(r.data)
       next()
     })

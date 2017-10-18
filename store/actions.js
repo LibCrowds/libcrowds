@@ -1,5 +1,7 @@
+import pybossa from '@/api/pybossa'
+
 export default {
-  UPDATE_CURRENT_USER: ({ dispatch, commit }, pybossa) => {
+  UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
     pybossa.getProfile().then(r => {
       if ('user' in r.data) {
         commit('LOGIN', r.data.user)
@@ -19,7 +21,7 @@ export default {
     })
   },
 
-  UPDATE_ANNOUNCEMENTS: ({ commit, state }, pybossa) => {
+  UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
     if (!(state.currentUser.info)) {
       commit('SET_ITEM', {
         key: 'announcements', value: []
