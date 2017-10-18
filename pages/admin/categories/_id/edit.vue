@@ -58,49 +58,101 @@ export default {
               model: 'name',
               label: 'Name',
               type: 'input',
-              inputType: 'text',
-              placeholder: 'Choose a name',
-              required: true,
-              validator: 'string'
+              inputType: 'text'
             },
             {
               model: 'short_name',
               label: 'Short name',
               type: 'input',
               inputType: 'text',
-              required: true,
-              validator: 'string'
+              placeholder: 'Used to form the url'
+            },
+            {
+              model: 'info.tagline',
+              label: 'Tagline',
+              type: 'url',
+              placeholder: 'Appears on the homepage and as its title'
             },
             {
               model: 'description',
               label: 'Description',
               type: 'textArea',
               rows: 3,
-              placeholder: 'Write a description (use Markdown)',
-              required: true,
-              validator: 'string'
+              placeholder: 'Appears on the homepage and as its meta description'
             },
             {
-              model: 'info.collection',
-              label: 'Collection',
-              type: 'select',
-              values: Object.keys(localConfig.collections)
+              model: 'info.forumUrl',
+              label: 'Forum URL',
+              type: 'url',
+              placeholder: 'http://community.example.com/t/my_collection'
             },
+            {
+              model: 'info.presenter',
+              label: 'Project Type',
+              type: 'select',
+              values: [
+                {
+                  id: 'libcrowds-viewer',
+                  name: 'LibCrowds Viewer'
+                },
+                {
+                  id: 'z3950',
+                  name: 'Z39.50'
+                }
+              ],
+              default: 'libcrowds-viewer'
+            },
+            {
+              model: 'info.license',
+              label: 'Data Reuse License',
+              type: 'select',
+              values: [
+                {
+                  id: 'CC0',
+                  name: 'CC0'
+                },
+                {
+                  id: 'CC_BY',
+                  name: 'CC BY'
+                },
+                {
+                  id: 'CC_BY-SA',
+                  name: 'CC BY-SA'
+                },
+                {
+                  id: 'CC_BY-ND',
+                  name: 'CC BY-ND'
+                },
+                {
+                  id: 'CC_BY-NC',
+                  name: 'CC BY-NC'
+                },
+                {
+                  id: 'CC_BY-NC-SA',
+                  name: 'CC BY-NC-SA'
+                },
+                {
+                  id: 'CC_BY-NC-ND',
+                  name: 'CC_BY-NC-ND'
+                }
+              ],
+              default: 'CC0',
+              hint: 'See https://creativecommons.org/licenses/',
+            },
+
+
+
             {
               model: 'info.location.latitude',
               label: 'Latitude',
               type: 'input',
-              inputType: 'number',
-              min: -90,
-              max: 90
+              inputType: 'number'
             },
             {
               model: 'info.location.longitude',
               label: 'Longitude',
               type: 'input',
-              inputType: 'number',
-              min: -180,
-              max: 180
+              inputType: 'number'
             }
           ]
         }
