@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import DashboardBase from '@/layouts/dashboards/Base'
+import DashboardBase from '@/components/DashboardBase'
 
 export default {
   data () {

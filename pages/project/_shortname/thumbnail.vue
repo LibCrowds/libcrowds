@@ -14,7 +14,7 @@ import pybossa from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
 
 export default {
-  layout: 'dashboards/project',
+  layout: 'project-dashboard',
 
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProject(params.shortname)

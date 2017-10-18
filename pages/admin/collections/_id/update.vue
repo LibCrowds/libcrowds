@@ -18,7 +18,7 @@ import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboards-admin',
+  layout: 'admin-dashboard',
 
   async asyncData ({ params }) {
     const res = await pybossa.client.get(`/api/category/${params.id}`)

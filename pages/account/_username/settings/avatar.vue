@@ -11,7 +11,7 @@ import pybossa from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
 
 export default {
-  layout: 'dashboards/account',
+  layout: 'account-dashboard',
 
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateProfile(params.username)
