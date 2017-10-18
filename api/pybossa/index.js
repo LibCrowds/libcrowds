@@ -26,6 +26,7 @@ const PyBossaApi = {
          *   The microsite key.
          */
         _filterMicrositeCategories (categories, key) {
+          console.log(categories, typeof(categories))
           return categories.filter(category => {
             return category.info ? category.info.collection === key : false
           })
@@ -61,7 +62,7 @@ const PyBossaApi = {
          *   The task ID.
          */
         deleteFavourite (taskId) {
-          return this.client.del(`/api/favourites/${taskId}`)
+          return this.client.delete(`/api/favourites/${taskId}`)
         },
 
         /**
@@ -548,45 +549,9 @@ const PyBossaApi = {
          *   The form.
          */
         unfeatureProject (projectId, form) {
-          return this.client.del(`/admin/featured/${projectId}`, {
+          return this.client.delete(`/admin/featured/${projectId}`, {
             params: form
           })
-        },
-
-        /**
-         * Get the API help.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#help-api
-         */
-        getApiHelp () {
-          return this.client.get(`/help/api`)
-        },
-
-        /**
-         * Get the privacy policy.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#help-privacy
-         */
-        getPrivacyHelp () {
-          return this.client.get(`/help/privacy`)
-        },
-
-        /**
-         * Get the cookies policy.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#help-cookie-policy
-         */
-        getCookiesHelp () {
-          return this.client.get(`/help/cookies-policy`)
-        },
-
-        /**
-         * Get the terms of use.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#help-terms-of-use
-         */
-        getTermsHelp () {
-          return this.client.get(`/help/terms-of-use`)
         },
 
         /**
@@ -595,7 +560,7 @@ const PyBossaApi = {
          * http://docs.pybossa.com/en/latest/api.html#pybossa-server-stats
          */
         getStats () {
-          return this.client.get(`stats/`)
+          return this.client.get(`/stats`)
         },
 
         /**
@@ -615,9 +580,9 @@ const PyBossaApi = {
          *   The page number.
          */
         getCategory (shortname, page = 1) {
-          let endpoint = `/project/category/${shortname}/`
+          let endpoint = `/project/category/${shortname}`
           if (page > 1) {
-            endpoint += `page/${page}/`
+            endpoint += `/page/${page}`
           }
           return this.client.get(endpoint)
         },
@@ -639,6 +604,7 @@ const PyBossaApi = {
             this.client.get(url, params).then(r => {
               // Additional filter needed as the search is not exact (i.e. if one
               // category name is a part of another both could be returned)
+              console.log(typeof(r.data))
               r.data = {
                 categories: this._filterMicrositeCategories(r.data, key)
               }

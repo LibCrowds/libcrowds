@@ -1,296 +1,351 @@
+import uuid from 'uuid/v4'
+import AxiosMockAdapter from 'axios-mock-adapter'
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import pybossa from '@/api/pybossa'
 
 describe('PYBOSSA module', () => {
-  let mockGet = null
-  let mockPost = null
-  let mockPut = null
-  let mockDel = null
+  let mockAxios = null
   let form = null
+  let randomData = null
 
   beforeEach(() => {
-    mockGet = jest.fn()
-    mockPost = jest.fn()
-    mockPut = jest.fn()
-    mockDel = jest.fn()
-    pybossa.client.get = mockGet
-    pybossa.client.post = mockPost
-    pybossa.client.put = mockPut
-    pybossa.client.del = mockDel
+    mockAxios = new AxiosMockAdapter(pybossa.client)
     form = {
       csrf: 'token',
       errors: {},
       some_key: null
     }
+    randomData = {
+      key: uuid()
+    }
   })
 
   describe('Favourites endpoints', () => {
     it('makes the correct request for getFavourites', () => {
-      const expectedUrl = '/api/favourites'
-      pybossa.getFavourites()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/api/favourites').reply(200, randomData)
+      return pybossa.getFavourites().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for addFavourite', () => {
       const taskId = 42
-      const expectedUrl = '/api/favourites'
-      const expectedParams = {
+      const params = {
         task_id: taskId
       }
-      pybossa.addFavourite(taskId)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, expectedParams)
+      mockAxios.onPost('/api/favourites', params).reply(200, randomData)
+      return pybossa.addFavourite(taskId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for deleteFavourite', () => {
       const taskId = 42
-      const expectedUrl = `/api/favourites/${taskId}`
-      pybossa.deleteFavourite(taskId)
-      expect(mockDel).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onDelete(`/api/favourites/${taskId}`).reply(200, randomData)
+      return pybossa.deleteFavourite(taskId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Account endpoints', () => {
     it('makes the correct request for getAccountIndex', () => {
       const page = 42
-      const expectedUrl = `/account/page/${page}`
-      pybossa.getAccountIndex(page)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/account/page/${page}`).reply(200, randomData)
+      return pybossa.getAccountIndex(page).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAccountRegistration', () => {
-      const expectedUrl = '/account/register'
-      const mockGet = jest.fn()
-      pybossa.client.get = mockGet
-      pybossa.getAccountRegistration()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/register').reply(200, randomData)
+      return pybossa.getAccountRegistration().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for register', () => {
-      const expectedUrl = '/account/register'
-      pybossa.register(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost('/account/register', {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.register(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAccountSignin', () => {
-      const expectedUrl = '/account/signin'
-      pybossa.getAccountSignin()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/signin').reply(200, randomData)
+      return pybossa.getAccountSignin().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for signin', () => {
-      const expectedUrl = '/account/signin'
-      pybossa.signin(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost('/account/signin', {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.signin(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for signout', () => {
-      const expectedUrl = '/account/signout'
-      pybossa.signout()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/signout').reply(200, randomData)
+      return pybossa.signout().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getRecoverPassword', () => {
-      const expectedUrl = '/account/forgot-password'
-      pybossa.getRecoverPassword()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/forgot-password').reply(200, randomData)
+      return pybossa.getRecoverPassword().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for recoverPassword', () => {
-      const expectedUrl = '/account/forgot-password'
-      pybossa.recoverPassword(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost('/account/forgot-password', {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.recoverPassword(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAccount', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}/`
-      pybossa.getAccount(name)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/account/${name}/`).reply(200, randomData)
+      return pybossa.getAccount(name).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getProfile', () => {
-      const expectedUrl = '/account/profile'
-      pybossa.getProfile()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/profile').reply(200, randomData)
+      return pybossa.getProfile().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAccountProjects', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}/projects`
-      pybossa.getAccountProjects(name)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/account/${name}/projects`).reply(200, randomData)
+      return pybossa.getAccountProjects(name).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getUpdateProfile', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}/update`
-      pybossa.getUpdateProfile(name)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/account/${name}/update`).reply(200, randomData)
+      return pybossa.getUpdateProfile(name).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for updateProfile', () => {
       const name = 'me'
       const type = 'Upload'
-      const expectedUrl = `/account/${name}/update`
-      const expectedParams = JSON.parse(JSON.stringify(form))
-      expectedParams.btn = type
-      pybossa.updateProfile(name, form, type)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      form.btn = type
+      mockAxios.onPost(`/account/${name}/update`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.updateProfile(name, form, type).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getResetPassword', () => {
-      const expectedUrl = '/account/reset-password'
+      const url = '/account/reset-password'
       const params = {
         key: 'secret'
       }
-      pybossa.getResetPassword(params)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: params })
+      mockAxios.onGet(url, {
+        params: params
+      }).reply(200, randomData)
+      return pybossa.getResetPassword(params).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for resetPassword', () => {
-      const expectedUrl = '/account/reset-password'
-      pybossa.resetPassword(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      const url = '/account/reset-password'
+      mockAxios.onPost(url, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.resetPassword(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getResetApiKey', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}/resetapikey`
-      pybossa.getResetApiKey(name)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      const url = `/account/${name}/resetapikey`
+      mockAxios.onGet(url).reply(200, randomData)
+      return pybossa.getResetApiKey(name).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for resetApiKey', () => {
       const name = 'me'
-      const expectedUrl = `/account/${name}/resetapikey`
-      pybossa.resetApiKey(name, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/account/${name}/resetapikey`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.resetApiKey(name, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for subscribeToNewsletter', () => {
-      const expectedUrl = `/account/newsletter`
-      const params = {
+      mockAxios.onGet(`/account/newsletter`, {
         subscribe: 'True'
-      }
-      pybossa.subscribeToNewsletter(true)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: params })
+      }).reply(200, randomData)
+      return pybossa.subscribeToNewsletter(true).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getConfirmEmail', () => {
-      const expectedUrl = '/account/confirm-email'
-      pybossa.getConfirmEmail()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet('/account/confirm-email').reply(200, randomData)
+      return pybossa.getConfirmEmail().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for confirmEmail', () => {
-      const expectedUrl = '/account/register/confirmation'
       const params = {
         key: 'secret'
       }
-      pybossa.confirmEmail(params)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: params })
+      mockAxios.onGet('/account/register/confirmation', {
+        params: params
+      }).reply(200, randomData)
+      return pybossa.confirmEmail(params).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Leaderboard endpoints', () => {
     it('makes the correct request getLeaderboard', () => {
       const window = 42
-      const expectedUrl = `leaderboard/window/${window}`
-      pybossa.getLeaderboard(window)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`leaderboard/window/${window}`).reply(200, randomData)
+      return pybossa.getLeaderboard(window).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Announcements endpoints', () => {
     it('makes the correct request for getAnnouncements', () => {
-      const expectedUrl = `/announcements`
-      pybossa.getAnnouncements()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/announcements`).reply(200, randomData)
+      return pybossa.getAnnouncements().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Admin endpoints', () => {
     it('makes the correct request for getAdminAnnouncements', () => {
-      const expectedUrl = `/admin/announcement`
-      pybossa.getAdminAnnouncements()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/announcement`).reply(200, randomData)
+      return pybossa.getAdminAnnouncements().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getNewAnnouncement', () => {
-      const expectedUrl = `/admin/announcement/new`
-      pybossa.getNewAnnouncement()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/announcement/new`).reply(200, randomData)
+      return pybossa.getNewAnnouncement().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for newAnnouncement', () => {
-      const expectedUrl = `/admin/announcement/new`
-      pybossa.newAnnouncement(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/admin/announcement/new`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.newAnnouncement(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getUpdateAnnouncement', () => {
       const announcementId = 42
-      const expectedUrl = `/admin/announcement/${announcementId}/update`
-      pybossa.getUpdateAnnouncement(announcementId)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      const url = `/admin/announcement/${announcementId}/update`
+      mockAxios.onGet(url).reply(200, randomData)
+      return pybossa.getUpdateAnnouncement(announcementId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for updateAnnouncement', () => {
       const announcementId = 42
-      const expectedUrl = `/admin/announcement/${announcementId}/update`
-      pybossa.updateAnnouncement(announcementId, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      const url = `/admin/announcement/${announcementId}/update`
+      mockAxios.onPost(url, { params: form }).reply(200, randomData)
+      return pybossa.updateAnnouncement(announcementId, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAdminUsers', () => {
-      const expectedUrl = `/admin/users`
-      pybossa.getAdminUsers()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/users`).reply(200, randomData)
+      return pybossa.getAdminUsers().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for searchUsers', () => {
-      const expectedUrl = `/admin/users`
-      pybossa.searchUsers(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/admin/users`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.searchUsers(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for addAdminUser', () => {
       const userId = 42
-      const expectedUrl = `/admin/users/add/${userId}`
-      pybossa.addAdminUser(userId)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/users/add/${userId}`).reply(200, randomData)
+      return pybossa.addAdminUser(userId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for delAdminUser', () => {
       const userId = 42
-      const expectedUrl = `/admin/users/del/${userId}`
-      pybossa.delAdminUser(userId)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/users/del/${userId}`).reply(200, randomData)
+      return pybossa.delAdminUser(userId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for exportUsers', () => {
       const format = 'json'
-      const expectedUrl = `/admin/users/export`
-      const expectedParams = {
+      mockAxios.onGet(`/admin/users/export`, {
         responseType: 'arraybuffer',
         params: {
           format: format
         }
-      }
-      pybossa.exportUsers(format)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
+      }).reply(200, randomData)
+      pybossa.exportUsers(format).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAdminCategories', () => {
-      const expectedUrl = `/admin/categories`
-      pybossa.getAdminCategories()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/categories`).reply(200, randomData)
+      return pybossa.getAdminCategories().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for addCategory', () => {
-      const expectedUrl = `/admin/categories`
-      pybossa.addCategory(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/admin/categories`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.addCategory(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct requests for deleteCategory', () => {
@@ -312,107 +367,113 @@ describe('PYBOSSA module', () => {
 
     it('makes the correct request for getUpdateCategory', () => {
       const categoryId = 42
-      const expectedUrl = `/admin/categories/update/${categoryId}`
-      pybossa.getUpdateCategory(categoryId)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      const url = `/admin/categories/update/${categoryId}`
+      mockAxios.onGet(url).reply(200, randomData)
+      return pybossa.getUpdateCategory(categoryId).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for updateCategory', () => {
       const categoryId = 42
-      const expectedUrl = `/admin/categories/update/${categoryId}`
-      pybossa.updateCategory(categoryId, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      const expectedUrl =
+      mockAxios.onPost(`/admin/categories/update/${categoryId}`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.updateCategory(categoryId, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAdminDashboard', () => {
-      const expectedUrl = `/admin/dashboard`
-      pybossa.getAdminDashboard()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/dashboard`).reply(200, randomData)
+      return pybossa.getAdminDashboard().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getAdminFeatured', () => {
-      const expectedUrl = `/admin/featured`
-      pybossa.getAdminFeatured()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/admin/featured`).reply(200, randomData)
+      return pybossa.getAdminFeatured().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for featureProject', () => {
       const projectId = 42
-      const expectedUrl = `/admin/featured/${projectId}`
-      pybossa.featureProject(projectId, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/admin/featured/${projectId}`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.featureProject(projectId, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
-    it('makes the correct request for featureProject', () => {
+    it('makes the correct request for unfeatureProject', () => {
       const projectId = 42
-      const expectedUrl = `/admin/featured/${projectId}`
-      pybossa.unfeatureProject(projectId, form)
-      expect(mockDel).toHaveBeenCalledWith(expectedUrl, { params: form })
-    })
-  })
-
-  describe('Help endpoints', () => {
-    it('makes the correct request for getApiHelp', () => {
-      const expectedUrl = `/help/api`
-      pybossa.getApiHelp()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
-    })
-
-    it('makes the correct request for getPrivacyHelp', () => {
-      const expectedUrl = `/help/privacy`
-      pybossa.getPrivacyHelp()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
-    })
-
-    it('makes the correct request for getCookiesHelp', () => {
-      const expectedUrl = `/help/cookies-policy`
-      pybossa.getCookiesHelp()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
-    })
-
-    it('makes the correct request for getTermsHelp', () => {
-      const expectedUrl = `/help/terms-of-use`
-      pybossa.getTermsHelp()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onDelete(`/admin/featured/${projectId}`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.unfeatureProject(projectId, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Stats endpoints', () => {
     it('makes the correct request for getStats', () => {
-      const expectedUrl = `stats/`
-      pybossa.getStats()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/stats`).reply(200, randomData)
+      return pybossa.getStats().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getStatsSummary', () => {
-      const expectedUrl = `/api/globalstats`
-      pybossa.getStatsSummary()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/api/globalstats`).reply(200, randomData)
+      return pybossa.getStatsSummary().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 
   describe('Project endpoints', () => {
     it('makes the correct request for getCategory', () => {
       const shortname = 'my_category'
-      const expectedUrl = `/project/category/${shortname}/`
-      pybossa.getCategory(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/category/${shortname}`).reply(200, randomData)
+      return pybossa.getCategory(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getCategory with page', () => {
       const shortname = 'my_category'
       const page = 42
-      const expectedUrl = `/project/category/${shortname}/page/${page}/`
-      pybossa.getCategory(shortname, page)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      const url = `/project/category/${shortname}/page/${page}`
+      mockAxios.onGet(url).reply(200, randomData)
+      return pybossa.getCategory(shortname, page).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('filters microsite categories for the given key only', () => {
-      const categories = pbTestResponses.getApiCategories.data
       const key = 'playbills'
+      const matchingCategory = {
+        'id': 1,
+        'info': {
+          'collection': key
+        }
+      }
+      const categories = [
+        matchingCategory,
+        {
+          'id': 1,
+          'info': {
+            'collection': 'something_else'
+          }
+        }
+      ]
       const filtered = pybossa._filterMicrositeCategories(categories, key)
-      expect(filtered.length).toBe(1)
-      expect(filtered[0].info.collection).toBe(key)
+      expect(filtered).toEqual([matchingCategory])
     })
 
     it('makes the correct request for getMicrositeCategories', () => {
@@ -422,137 +483,168 @@ describe('PYBOSSA module', () => {
         info: `collection::${key}`,
         fulltextsearch: 1
       }
-      pybossa.getMicrositeCategories(key)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
+      return pybossa.getMicrositeCategories(key).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
-    it('returns the correct categories', () => {
+    it('returns the correct categories for a microsite', () => {
       const key = 'playbills'
+      const matchingCategory = {
+        'id': 1,
+        'info': {
+          'collection': key
+        }
+      }
       const response = {
         data: [
+          matchingCategory,
           {
             'id': 1,
-            'info': {
-              'collection': key
-            }
-          },
-          {
-            'id': 2,
             'info': {
               'collection': 'something_else'
             }
           }
         ]
       }
-      mockGet.mockReturnValue(new Promise((resolve, reject) => {
-        resolve(response)
-      }))
+      mockAxios.onGet(`/api/category`,
+      {
+        prams: {
+          info: `collection::${key}`,
+          fulltextsearch: 1
+        }
+      }).reply(200, response)
+
       return pybossa.getMicrositeCategories(key).then(r => {
-        expect(r.data.categories.length).toBe(1)
-        expect(r.data.categories[0].info.collection).toBe(key)
+        expect(r.data).toEqual({
+          categories: [ matchingCategory ]
+        })
       })
     })
 
     it('makes the correct request for getProject', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}`
-      pybossa.getProject(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/${shortname}`).reply(200, randomData)
+      return pybossa.getProject(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getProjectStats', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/stats`
-      pybossa.getProjectStats(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/${shortname}/stats`).reply(200, randomData)
+      return pybossa.getProjectStats(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getNewProject', () => {
-      const expectedUrl = `/project/new`
-      pybossa.getNewProject()
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/new`).reply(200, randomData)
+      return pybossa.getNewProject().then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for newProject', () => {
-      const expectedUrl = `/project/new`
-      pybossa.newProject(form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/project/new`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.newProject(form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getDeleteProject', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/delete`
-      pybossa.getDeleteProject(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/${shortname}/delete`).reply(200, randomData)
+      return pybossa.getDeleteProject(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for deleteProject', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/delete`
-      pybossa.deleteProject(shortname, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/project/${shortname}/delete`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.deleteProject(shortname, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getUpdateProject', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/update`
-      pybossa.getUpdateProject(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/${shortname}/update`).reply(200, randomData)
+      return pybossa.getUpdateProject(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for updateProject', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/update`
-      pybossa.updateProject(shortname, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/project/${shortname}/update`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.updateProject(shortname, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for exportData', () => {
       const shortName = 'my_project'
       const type = 'result'
       const format = 'json'
-      const expectedUrl = `/project/${shortName}/tasks/export`
-      const expectedParams = {
+      mockAxios.onGet(`/project/${shortName}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
           type: type,
           format: format
         }
-      }
-      pybossa.exportData(shortName, type, format)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, expectedParams)
+      }).reply(200, randomData)
+      return pybossa.exportData(shortName, type, format).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getBrowseTasks', () => {
       const shortname = 'my_project'
       const page = 42
-      const expectedUrl = `/project/${shortname}/tasks/browse/${page}`
-      pybossa.getBrowseTasks(shortname, page)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      const url = `/project/${shortname}/tasks/browse/${page}`
+      mockAxios.onGet(url).reply(200, randomData)
+      return pybossa.getBrowseTasks(shortname, page).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getTaskImporter', () => {
       const shortname = 'my_project'
       const type = 'csv'
-      const expectedUrl = `/project/${shortname}/tasks/import`
-      pybossa.getTaskImporter(shortname, type)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl, { params: {
-        type: type
-      }})
+      mockAxios.onGet(`/project/${shortname}/tasks/import`, {
+        params: {
+          type: type
+        }
+      }).reply(200, randomData)
+      return pybossa.getTaskImporter(shortname, type).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for importTasks', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/tasks/import`
-      pybossa.importTasks(shortname, form)
-      expect(mockPost).toHaveBeenCalledWith(expectedUrl, { params: form })
+      mockAxios.onPost(`/project/${shortname}/tasks/import`, {
+        params: form
+      }).reply(200, randomData)
+      return pybossa.importTasks(shortname, form).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
 
     it('makes the correct request for getTutorial', () => {
       const shortname = 'my_project'
-      const expectedUrl = `/project/${shortname}/tutorial`
-      pybossa.getTutorial(shortname)
-      expect(mockGet).toHaveBeenCalledWith(expectedUrl)
+      mockAxios.onGet(`/project/${shortname}/tutorial`).reply(200, randomData)
+      return pybossa.getTutorial(shortname).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
     })
   })
 })
