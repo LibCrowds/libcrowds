@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard-sidenav">
+  <div id="dashboard-navbar">
     <nav :class="navClass">
       <div class="brand-wrapper text-center">
         <router-link
@@ -65,7 +65,7 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/style/main';
 
-#dashboard-sidenav {
+#dashboard-navbar {
   nav {
     overflow: auto;
     white-space: nowrap;
