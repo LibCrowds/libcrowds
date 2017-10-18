@@ -12,21 +12,11 @@ describe('Index page', () => {
   let server = null
 
   beforeAll(async () => {
-    let config = {}
-    try { config = require('@/nuxt.config.js') } catch (e) {}
-    config.dev = false // production build
-    nuxt = new Nuxt(config)
-    const builder = new Builder(nuxt)
-    builder.build().then(() => {
-      server = new nuxt.Server(nuxt)
-      server.listen(4000, 'localhost')
-      console.log(server)
-    })
-    nuxt.$pybossa = {
+    nuxt.app.$pybossa = {
       getStats: jest.fn(() => pbTestResponses.getStats),
       getLeaderboard: jest.fn(() => pbTestResponses.getLeaderboard)
     }
-  })
+  }, 5*60)
 
   it('renders correctly', async () => {
     const window = await nuxt.renderAndGetWindow('http://localhost:4000/')
