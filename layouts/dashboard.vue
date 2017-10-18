@@ -1,10 +1,10 @@
 <template>
   <div id="dashboard-layout">
 
-    <dashboard-sidenav
+    <dashboard-navbar
       position="side"
       :nav-items="dashboardNavItems">
-    </dashboard-sidenav>
+    </dashboard-navbar>
 
     <div class="dashboard">
 
@@ -26,7 +26,7 @@
         </div>
       </main>
 
-      <dashboard-navbar></dashboard-navbar>
+      <dashboard-footer></dashboard-footer>
 
       <notifications position="bottom left"></notifications>
 
