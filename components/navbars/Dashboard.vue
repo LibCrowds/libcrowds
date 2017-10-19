@@ -1,9 +1,9 @@
 <template>
   <div id="dashboard-navbar">
     <nav :class="`${position}`">
-      <div class="brand-wrapper text-center">
+      <div class="brand-wrapper navbar-light text-center">
         <router-link
-          class="brand"
+          class="brand navbar-brand"
           :to="{
             name: 'index'
           }">
@@ -159,7 +159,6 @@ export default {
     }
 
     .brand-wrapper {
-      @extend .navbar-light;
       display: none;
       height: $app-navbar-height;
       background: transparent;
@@ -169,7 +168,6 @@ export default {
       min-height: $app-navbar-height;
 
       .brand {
-        @extend .navbar-brand;
         margin: 0;
         color: $white;
 

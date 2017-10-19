@@ -528,7 +528,6 @@ export default {
   }
 
   &.navbar-dark {
-    @extend .navbar-dark;
     background-color: transparent;
 
     .hamburger-inner,
