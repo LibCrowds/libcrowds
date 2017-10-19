@@ -42,7 +42,7 @@ import DashboardNavbar from '@/components/navbars/Dashboard'
 export default {
   props: {
     navItems: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
