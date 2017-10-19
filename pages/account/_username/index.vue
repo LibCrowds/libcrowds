@@ -99,9 +99,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#profile {
-  background-image: url('~/assets/img/geometry.png');
-}
-</style>

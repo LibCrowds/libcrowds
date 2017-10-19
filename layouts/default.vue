@@ -1,5 +1,5 @@
 <template>
-  <div id="core-layout">
+  <div id="default-layout">
     <div id="app-background" :style="appBgStyle"></div>
     <app-navbar></app-navbar>
     <main>
@@ -32,11 +32,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#core-layout {
+#default-layout {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-image: url('~/assets/img/geometry.png');
 
   #app-background {
     z-index: -1;
