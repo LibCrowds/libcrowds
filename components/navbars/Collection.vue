@@ -364,7 +364,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/main';
+@import '~assets/style/settings';
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 #collection-navbar {

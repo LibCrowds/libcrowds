@@ -188,7 +188,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/main';
+@import '~assets/style/settings';
 @import '~spinkit/scss/spinners/7-three-bounce';
 
 .pybossa-form {

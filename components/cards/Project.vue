@@ -142,7 +142,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/main';
+@import '~assets/style/settings';
 
 .card.project-card {
   text-align: center;

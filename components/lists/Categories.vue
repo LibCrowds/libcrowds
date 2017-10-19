@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/main';
+@import '~assets/style/settings';
 
 #categories-list {
   font-size: $font-size-sm;

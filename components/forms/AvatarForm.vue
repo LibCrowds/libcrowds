@@ -157,7 +157,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/main';
+@import '~assets/style/settings';
 @import '~croppie/croppie';
 
 .avatar-form {
