@@ -9,26 +9,28 @@ import DashboardBase from '@/components/DashboardBase'
 
 export default {
   data () {
-    navItems: [
-      {
-        label: 'Settings',
-        link: {
-          name: 'project-shortname-settings',
-          params: {
-            shortname: this.$route.params.shortname
+    return {
+      navItems: [
+        {
+          label: 'Settings',
+          link: {
+            name: 'project-shortname-settings',
+            params: {
+              shortname: this.$route.params.shortname
+            }
+          }
+        },
+        {
+          label: 'Thumbnail',
+          link: {
+            name: 'project-shortname-thumbnail',
+            params: {
+              shortname: this.$route.params.shortname
+            }
           }
         }
-      },
-      {
-        label: 'Thumbnail',
-        link: {
-          name: 'project-shortname-thumbnail',
-          params: {
-            shortname: this.$route.params.shortname
-          }
-        }
-      }
-    ]
+      ]
+    }
   },
 
   components: {
