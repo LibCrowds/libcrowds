@@ -4,11 +4,10 @@
     show-footer
     class="collection-card my-3">
     <nuxt-link
-      class="float-right"
       :to="{
         name: 'collection-key',
         params: {
-          key: collection.key
+          key: collection.short_name
         }
       }">
       <div
@@ -21,7 +20,7 @@
         </h4>
         <hr class="my-1">
         <p class="card-text">
-          {{ collection.tagline }}
+          {{ collection.info.tagline }}
         </p>
       </div>
       <div class="card-footer">

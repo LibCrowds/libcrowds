@@ -1,13 +1,9 @@
 <template>
   <div id="collection-base-layout">
     <div id="collection-background" :style="bgStyle"></div>
-    <collection-navbar
-      :collection="collection">
-    </collection-navbar>
+    <collection-navbar></collection-navbar>
     <main>
-      <nuxt
-        :collection="collection">
-      </nuxt>
+      <nuxt></nuxt>
     </main>
     <app-footer></app-footer>
 
@@ -22,28 +18,6 @@ import CollectionNavbar from '@/components/navbars/Collection'
 import AppFooter from '@/components/footers/App'
 
 export default {
-  head () {
-    const tmpl = `%s - ${this.collection.name} | ${localConfig.brand}`
-    return {
-      titleTemplate: tmpl,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.collection.description
-        },
-
-        // Facebook Open Graph Markup
-        { property: 'og:url', content: window.location.href },
-        { property: 'og:title', content: this.collection.tagline },
-        {
-          property: 'og:description',
-          content: this.collection.description
-        }
-      ]
-    }
-  },
-
   components: {
     CollectionNavbar,
     AppFooter
@@ -51,14 +25,10 @@ export default {
 
   computed: {
     bgStyle () {
-      const url = this.collection.bgImg
+      const url = this.$store.state.backgroundImage
       return {
         background: `url(${url}) no-repeat center left /cover fixed`
       }
-    },
-    collection () {
-      const key = this.$route.params.key
-      return localConfig.collections[key]
     }
   }
 }

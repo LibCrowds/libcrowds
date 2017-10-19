@@ -22,6 +22,8 @@ const PyBossaApi = {
          * List domain objects.
          * @param {String} domainObject
          *   The domain object.
+         * @param {Object} params
+         *   Optional query params.
          */
         list (domainObject, params = {}) {
           return this.client.get(`/api/${domainObject}`, {
@@ -38,6 +40,19 @@ const PyBossaApi = {
          */
         get (domainObject, id) {
           return this.client.get(`/api/${domainObject}/${id}`)
+        },
+
+        /**
+         * Get a specific domain object.
+         * @param {String} domainObject
+         *   The domain object.
+         * @param {Object} params
+         *   The query params.
+         */
+        search (domainObject, id, params = {}) {
+          return this.client.get(`/api/${domainObject}`, {
+            params: params
+          })
         },
 
         /**

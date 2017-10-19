@@ -1,5 +1,5 @@
 <template>
-  <div id="collection-home">
+  <div id="collection-index">
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
@@ -15,7 +15,7 @@
               v-if="localConfig.logo">
             </span>
             <h1 class="display-3 d-none d-lg-inline-block mb-0">
-              {{ collectionConfig.name }}
+              {{ collection.name }}
             </h1>
             <span
               class="mr-4 d-none d-lg-inline-block"
@@ -23,16 +23,16 @@
             </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
-            {{ collectionConfig.tagline }}
+            {{ collection.info.tagline }}
           </h2>
           <div>
             <b-btn
               variant="success"
               size="lg"
               :to="{
-                name: 'collection-contribute',
+                name: 'collection-key-contribute',
                 params: {
-                  collectionname: collectionConfig.key
+                  key: collection.short_name
                 }
               }">
               Get Started
@@ -45,7 +45,7 @@
     <section id="intro" class="bg-white invert-navbar">
       <div class="container py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
-          {{ collectionConfig.description }}
+          {{ collection.description }}
         </p>
         <hr class="my-3 w-75">
         <p class="lead mb-0 px-1">
@@ -58,9 +58,9 @@
           class="mt-md-2"
           size="lg"
           :to="{
-            name: 'collection-about',
+            name: 'collection-key-about',
             params: {
-              collectionname: collectionConfig.key
+              key: collection.short_name
             }
           }">
           Learn More
@@ -92,7 +92,7 @@
         <ul class="list-unstyled">
           <li v-for="project in featured" :key="project.id">
             <project-card
-              :collection-config="collectionConfig"
+              :collection="collection"
               :project="project">
             </project-card>
           </li>
@@ -104,7 +104,7 @@
           :to="{
             name: 'collection-contribute',
             params: {
-              collectionname: collectionConfig.key
+              key: collection.short_name
             }
           }">
           Browse all projects
@@ -121,9 +121,9 @@
             All datasets generated from the experimental crowdsourcing
             projects hosted on this platform are made available under a
             <a
-              :href="localConfig.dataLicense.url"
+              :href="collection.info.dataLicense.url"
               target="_blank">
-              {{ localConfig.dataLicense.name }} license
+              {{ collection.info.datalicense }} license
             </a>
             and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
@@ -132,9 +132,9 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-data',
+              name: 'collection-key-data',
               params: {
-                collectionname: collectionConfig.key
+                ket: collectoin.short_name
               }
             }">
             Get the data
@@ -148,8 +148,8 @@
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
-            As each {{ collectionConfig.terminology.task }} is completed,
-            {{ collectionConfig.terminology.taskRun | pluralize }} are
+            As each {{ collection.info.terminology.task }} is completed,
+            {{ collection.info.terminology.taskRun | pluralize }} are
             analysed and the outcome provided via our results page, making
             the efforts of our volunteers immediately apparent.
           </p>
@@ -157,7 +157,7 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-results'
+              key: 'collection-key-results'
             }">
             Browse the results
           </b-btn>
@@ -176,9 +176,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-contribute',
+            name: 'collection-key-contribute',
             params: {
-              collectionname: collectionConfig.key
+              key: collection.short_name
             }
           }">
           Get Started
@@ -208,11 +208,38 @@ import newtonImage from '@/assets/img/newton.jpg'
 export default {
   layout: 'collection',
 
+  async asyncData ({ params, error }) {
+    let categoryRes = await pybossa.search('category', {
+      short_name: params.key
+    })
+
+    if (!res.data.length) {
+       error({ statusCode: 404 })
+    }
+
+    const category = res.data[0]
+
+    // TODO: figure out the solution for featured categories.
+    let featuredRes = await pybossa.search('category', {
+      category_id: category.id,
+      featured: true
+    })
+
+    return Promise.all([
+      pybossa.pybossa.search('category', { short_name: params.key }),
+      pybossa.pybossa.search('category', { category: params.key })
+    ]).then(([categoryRes, featuredRes]) => {
+      return {
+        collection: res[0],
+        featured:
+      }
+    })
+  },
+
   data () {
     return {
       localConfig: localConfig,
       categories: [],
-      featured: [],
       dataStyle: {
         backgroundImage: `url(${codeImage})`
       },
@@ -222,21 +249,35 @@ export default {
     }
   },
 
-  props: {
-    collectionConfig: {
-      type: Object,
-      required: true
-    }
-  },
-
   head () {
     return {
-      title: this.collectionConfig.tagline,
+      title: this.collection.info.tagline,
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: this.collectionConfig.description
+          content: this.collection.description
+        }
+      ]
+    }
+  },
+
+  head () {
+    const title = `${this.collection.info.tagline} - ${this.collection.name}`
+    return {
+      title: title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.collection.description
+        },
+
+        // Facebook Open Graph Markup
+        { property: 'og:title', content: this.collection.info.tagline },
+        {
+          property: 'og:description',
+          content: this.collection.description
         }
       ]
     }
@@ -268,23 +309,6 @@ export default {
         })
       }
     }
-  },
-
-  created () {
-    let data = {}
-    let key = this.collectionConfig.key
-    let q = `info=collection::${key}&fulltextsearch=1&limit=100`
-    let categoryUrl = `/api/category?${q}`
-
-    pybossa.client.get(`/`).then(r => {
-      data = r.data
-      return pybossa.client.get(categoryUrl)
-    }).then(r => {
-      data.categories = r.data.filter(category => {
-        return category.info.collection === key
-      })
-      this.setData(data)
-    })
   }
 }
 </script>
@@ -292,7 +316,7 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/style/settings';
 
-#collection-home {
+#collection-index {
   .container.full-height {
     min-height: 400px;
     height: 100vh;

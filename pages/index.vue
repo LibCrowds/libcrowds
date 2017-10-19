@@ -36,13 +36,16 @@
         <p class="lead">
           {{ localConfig.description }}
         </p>
-        <div class="card-deck">
+        <b-card-group
+          deck
+          v-for="(batch, index) in batchedCollections"
+          :key="index">
           <collection-card
-            v-for="(config, key) in localConfig.collections"
-            :key="key"
-            :collection="config">
+            v-for="collection in batch"
+            :key="collection.id"
+            :collection="collection">
           </collection-card>
-        </div>
+        </b-card-group>
       </div>
     </section>
 
@@ -131,6 +134,7 @@ import localConfig from '@/local.config'
 import CollectionCard from '@/components/cards/Collection'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/avatars/User'
+import { batch } from '@/utils/batch'
 
 export default {
   layout: 'default',
@@ -145,12 +149,15 @@ export default {
   asyncData () {
     return Promise.all([
       pybossa.getStats(),
-      pybossa.getLeaderboard()
-    ]).then(([statsResponse, leaderboardResponse]) => {
+      pybossa.getLeaderboard(),
+      pybossa.list('category')
+    ]).then(([statsResponse, leaderboardResponse, categoryResponse]) => {
+      console.log(categoryResponse.data)
       return {
         stats: statsResponse.data.stats,
         topUsers: leaderboardResponse.data.top_users,
-        top10Users: leaderboardResponse.data.top_users.slice(0, 10)
+        top10Users: leaderboardResponse.data.top_users.slice(0, 10),
+        collections: categoryResponse.data
       }
     })
   },
@@ -184,6 +191,9 @@ export default {
       return scores.reduce(function (acc, val) {
         return acc + val
       }, 0)
+    },
+    batchedCollections () {
+      return batch(this.collections, 2)
     }
   }
 }
