@@ -1,6 +1,5 @@
 import uuid from 'uuid/v4'
 import AxiosMockAdapter from 'axios-mock-adapter'
-import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import pybossa from '@/api/pybossa'
 
 describe('PYBOSSA module', () => {
@@ -402,7 +401,6 @@ describe('PYBOSSA module', () => {
 
     it('makes the correct request for updateCategory', () => {
       const categoryId = 42
-      const expectedUrl =
       mockAxios.onPost(`/admin/categories/update/${categoryId}`, {
         params: form
       }).reply(200, randomData)

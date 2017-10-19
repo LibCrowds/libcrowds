@@ -6,8 +6,8 @@ exports[`Collection card renders correctly 1`] = `
      data-server-rendered="true"
      class="collection-card my-3 card"
 >
-  <router-link to="[object Object]"
-               class="float-right"
+  <nuxt-link to="[object Object]"
+             class="float-right"
   >
     <div class="collection-card-img"
          style="background-image:url('background.jpg');"
@@ -58,7 +58,7 @@ exports[`Collection card renders correctly 1`] = `
         </svg>
       </svg>
     </div>
-  </router-link>
+  </nuxt-link>
 </div>
 
 `;

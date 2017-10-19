@@ -2,28 +2,32 @@
 
 exports[`Dashboard navbar renders correctly in side position 1`] = `
 
-<div id="dashboard-sidenav"
+<div id="dashboard-navbar"
      data-server-rendered="true"
 >
   <nav class="side">
-    <div class="brand-wrapper text-center">
-      <a href="#/"
-         class="brand router-link-exact-active router-link-active"
+    <div class="brand-wrapper navbar-light text-center">
+      <nuxt-link to="[object Object]"
+                 class="brand navbar-brand"
       >
         My Brand
-      </a>
+      </nuxt-link>
     </div>
     <ul class="nav list-group">
-      <li class="list-group-item">
-        <a href="#/admin/dashboard">
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
           Dashboard
         </a>
-      </li>
-      <li class="list-group-item">
-        <a href="#/admin/featured">
+      </nuxt-link>
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
           Featured Projects
         </a>
-      </li>
+      </nuxt-link>
     </ul>
   </nav>
 </div>
@@ -32,28 +36,32 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
 
 exports[`Dashboard navbar renders correctly in top position 1`] = `
 
-<div id="dashboard-sidenav"
+<div id="dashboard-navbar"
      data-server-rendered="true"
 >
   <nav class="top">
-    <div class="brand-wrapper text-center">
-      <a href="#/"
-         class="brand router-link-exact-active router-link-active"
+    <div class="brand-wrapper navbar-light text-center">
+      <nuxt-link to="[object Object]"
+                 class="brand navbar-brand"
       >
         My Brand
-      </a>
+      </nuxt-link>
     </div>
     <ul class="nav list-group">
-      <li class="list-group-item">
-        <a href="#/admin/dashboard">
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
           Dashboard
         </a>
-      </li>
-      <li class="list-group-item">
-        <a href="#/admin/featured">
+      </nuxt-link>
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
           Featured Projects
         </a>
-      </li>
+      </nuxt-link>
     </ul>
   </nav>
 </div>

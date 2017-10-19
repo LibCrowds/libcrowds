@@ -6,7 +6,7 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
      data-server-rendered="true"
      class="navbar navbar-light fixed-top"
 >
-  <span id="app-navbar-left">
+  <span class="app-navbar-left">
     <a href="#/"
        target="_self"
        class="active navbar-brand d-undefined-none"
@@ -16,7 +16,7 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
       </span>
     </a>
   </span>
-  <span id="app-navbar-right">
+  <span class="app-navbar-right border-bottom">
     <ul right
         class="nav navbar-nav"
     >
@@ -115,7 +115,7 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
      data-server-rendered="true"
      class="navbar navbar-light fixed-top"
 >
-  <span id="app-navbar-left">
+  <span class="app-navbar-left">
     <a href="#/"
        target="_self"
        class="active navbar-brand d-undefined-none"
@@ -125,7 +125,7 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
       </span>
     </a>
   </span>
-  <span id="app-navbar-right">
+  <span class="app-navbar-right border-bottom">
     <ul right
         class="nav navbar-nav"
     >
@@ -200,7 +200,7 @@ exports[`App navbar renders correctly when signed out 1`] = `
      data-server-rendered="true"
      class="navbar navbar-light fixed-top"
 >
-  <span id="app-navbar-left">
+  <span class="app-navbar-left">
     <a href="#/"
        target="_self"
        class="active navbar-brand d-undefined-none"
@@ -210,7 +210,7 @@ exports[`App navbar renders correctly when signed out 1`] = `
       </span>
     </a>
   </span>
-  <span id="app-navbar-right">
+  <span class="app-navbar-right">
     <ul id="sign-in-up"
         right
         class="nav navbar-nav"
