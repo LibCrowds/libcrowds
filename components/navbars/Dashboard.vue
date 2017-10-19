@@ -2,16 +2,16 @@
   <div id="dashboard-navbar">
     <nav :class="`${position}`">
       <div class="brand-wrapper navbar-light text-center">
-        <router-link
+        <nuxt-link
           class="brand navbar-brand"
           :to="{
             name: 'index'
           }">
           {{ localConfig.brand }}
-        </router-link>
+        </nuxt-link>
       </div>
         <ul class="nav list-group">
-          <router-link
+          <nuxt-link
             tag="li"
             class="list-group-item"
             v-for="(item, index) in navItems"
@@ -20,7 +20,7 @@
             <a>
               {{ item.label }}
             </a>
-          </router-link>
+          </nuxt-link>
         </ul>
     </nav>
   </div>
@@ -145,7 +145,7 @@ export default {
 
       &:hover,
       &:focus,
-      &.router-link-active {
+      &.nuxt-link-active {
         background-color: rgba($blue, 0.25);
 
         a {
@@ -153,7 +153,7 @@ export default {
         }
       }
 
-      &.router-link-exact-active {
+      &.nuxt-link-exact-active {
         background-color: rgba($blue, 0.45);
       }
     }

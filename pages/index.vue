@@ -80,7 +80,7 @@
                 class="d-inline-block"
                 v-for="user in top10Users">
                 <div class="text-center mx-1">
-                  <router-link
+                  <nuxt-link
                     :to="{
                       name: 'account-username',
                       params: {
@@ -94,7 +94,7 @@
                         tooltip-triggers="hover">
                       </user-avatar>
                     </div>
-                  </router-link>
+                  </nuxt-link>
                   <p class="badge badge-info">{{ user.score }}</p>
                 </div>
               </li>

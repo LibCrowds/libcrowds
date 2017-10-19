@@ -24,12 +24,12 @@
           </div>
 
           <div slot="footer-left">
-            <router-link
+            <nuxt-link
               :to="{
                 name: 'account-password-forgotten'
               }">
               Forgot your password?
-            </router-link>
+            </nuxt-link>
           </div>
 
         </pybossa-form>

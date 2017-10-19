@@ -17,14 +17,14 @@
         <p class="text-center mb-0">
           <small>
             For more information see the
-            <router-link
+            <nuxt-link
               :to="{
                 name: 'collection-key-about',
                 params: {
                   key: collection.key
                 }
               }">about page.
-            </router-link>
+            </nuxt-link>
           </small>
         </p>
       </span>

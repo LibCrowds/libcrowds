@@ -28,19 +28,19 @@
             <p class="mb-0 mr-3">
               <small>
                 By signing up you are agreeing to the
-                <router-link
+                <nuxt-link
                   :to="{
                     name: 'help-tos'
                   }">
                   Terms of Service
-                </router-link>
+                </nuxt-link>
                 and the
-                <router-link
+                <nuxt-link
                   :to="{
                     name: 'help-privacy'
                   }">
                   Privacy Policy.
-                </router-link>
+                </nuxt-link>
               </small>
             </p>
           </div>
