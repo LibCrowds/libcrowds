@@ -113,4 +113,8 @@ $ct-series-colors:
   #A748CA
 ;
 
-@import '~bootstrap/scss/bootstrap/variables';
+@import
+  '~bootstrap/scss/functions',
+  '~bootstrap/scss/variables',
+  '~bootstrap/scss/mixins'
+;
