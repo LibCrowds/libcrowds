@@ -5,7 +5,7 @@
     :sticky="sticky"
     :fixed="fixed">
 
-    <span id="app-navbar-left">
+    <span class="app-navbar-left">
       <b-link
         :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
         :to="{
@@ -15,8 +15,8 @@
       </b-link>
     </span>
 
-    <span id="app-navbar-right">
-      <b-nav is-nav-bar v-if="loggedIn" right>
+    <span class="app-navbar-right border-bottom" v-if="loggedIn">
+      <b-nav is-nav-bar right>
 
         <announcements></announcements>
 
@@ -73,7 +73,9 @@
       </b-nav>
 
       <!-- Sign in/sign up -->
-      <b-nav id="sign-in-up" is-nav-bar v-else right>
+    </span>
+    <span class="app-navbar-right" v-else>
+      <b-nav id="sign-in-up" is-nav-bar right>
         <b-nav-item
           :to="{
             name: 'account-signin',
@@ -166,7 +168,7 @@ export default {
   height: $app-navbar-height;
   width: 100%;
 
-  #app-navbar-left {
+  .app-navbar-left {
     height: 100%;
     flex: 1 1 auto;
     display: flex;
@@ -174,10 +176,10 @@ export default {
     border-bottom: 1px solid $gray-300;
   }
 
-  #app-navbar-right {
+  .app-navbar-right {
     height: 100%;
 
-    .navbar-nav {
+    &.border-bottom {
       border-bottom: 1px solid $gray-300;
     }
   }
