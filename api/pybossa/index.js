@@ -563,8 +563,8 @@ const PyBossaApi = {
         unfeatureProject (projectId, form) {
           console.log(projectId, form)
           return this.client.delete(`/admin/featured/${projectId}`, {
-        params: form
-      })
+            params: form
+          })
         },
 
         /**
