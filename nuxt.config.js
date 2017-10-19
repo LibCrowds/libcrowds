@@ -15,7 +15,10 @@ module.exports = {
       }
     ]
   },
-  css: ['~assets/style/main.scss'],
+  css: [
+    '~/assets/style/main.scss',
+    'cookieconsent/build/cookieconsent.min.css'
+  ],
   build: {
     vendor: [
       'axios',
