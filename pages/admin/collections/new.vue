@@ -52,9 +52,6 @@ export default {
   async asyncData () {
     const res = await pybossa.getAdminCategories()
 
-    // See https://github.com/LibCrowds/libcrowds/issues/100
-    delete res.data.form.id
-
     return {
       categories: res.data.categories,
       form: {
@@ -100,6 +97,7 @@ export default {
      *   The response data.
      */
     onSuccess (data) {
+      console.log(data)
       const category = data.categories.filter(category => {
         return category.name === data.form.name
       })[0]
@@ -121,7 +119,7 @@ export default {
     /**
      * Handle cancel.
      */
-    handleCancel () {
+    onCancel () {
       this.$router.push({ name: 'admin-collections' })
     }
   }
