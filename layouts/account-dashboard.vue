@@ -16,7 +16,7 @@ export default {
           link: {
             name: 'account-username-settings-profile',
             params: {
-              params: this.$route.params.username
+              username: this.$route.params.username
             }
           }
         },
@@ -25,7 +25,7 @@ export default {
           link: {
             name: 'account-username-settings-api',
             params: {
-              params: this.$route.params.username
+              username: this.$route.params.username
             }
           }
         },
@@ -34,7 +34,7 @@ export default {
           link: {
             name: 'account-username-settings-avatar',
             params: {
-              params: this.$route.params.username
+              username: this.$route.params.username
             }
           }
         },
@@ -43,7 +43,7 @@ export default {
           link: {
             name: 'account-username-settings-security',
             params: {
-              params: this.$route.params.username
+              username: this.$route.params.username
             }
           }
         }
