@@ -102,7 +102,7 @@ export default {
               default: 'libcrowds-viewer'
             },
             {
-              model: 'info.license',
+              model: 'info.datalicense',
               label: 'Data Reuse License',
               type: 'select',
               values: [

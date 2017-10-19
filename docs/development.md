@@ -26,7 +26,7 @@ See the [Configuration](configuration.md) section for full details of how to use
 You will also need to change a few things in your PYBOSSA settings file:
 
 ``` python
-# To allow requests from {{book.brand }} (modify origins according to your environment)
+# To allow requests from the frontend (modify origins according to your environment)
 CORS_RESOURCES = {
   r"/*": {
     "origins": [
@@ -41,9 +41,18 @@ CORS_RESOURCES = {
   }
 }
 
-# Additional domain object info fields
-CATEGORY_INFO_PUBLIC_FIELDS = ['collection', 'location']
-CATEGORY_INFO_PUBLIC_FIELDS = ['announcements']
+# Additional category fields
+CATEGORY_INFO_PUBLIC_FIELDS = [
+  'tagline',
+  'forumUrl',
+  'presenter',
+  'datalicense',
+]
+
+# Additional user fields
+USER_INFO_PUBLIC_FIELDS = [
+  'announcements'
+]
 
 # Avoid 404 errors when accessing URLs with or without a trailing slash
 STRICT_SLASHES = False
@@ -51,7 +60,7 @@ STRICT_SLASHES = False
 # Specify an SPA frontend
 SPA_SERVER_NAME = 'http://127.0.0.1:8080'
 
-# Allow projects to be published with no traditional presenter
+# Allow projects to be published with no traditional task presenter
 DISABLE_TASK_PRESENTER = True
 ```
 
