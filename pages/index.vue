@@ -152,8 +152,6 @@ export default {
         topUsers: leaderboardResponse.data.top_users,
         top10Users: leaderboardResponse.data.top_users.slice(0, 10)
       }
-    }).catch(err => {
-      console.log(err)
     })
   },
 
