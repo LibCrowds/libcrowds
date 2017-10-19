@@ -28,7 +28,7 @@
           </template>
 
           <template slot="created" scope="category">
-            {{ category.item.created | moment('dd-mm-yyy') }}
+            {{ category.item.created | moment('DD MMMM YYYY') }}
           </template>
 
           <template slot="action" scope="collection">
