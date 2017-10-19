@@ -54,7 +54,7 @@ export default {
   },
 
   async asyncData ({ query, redirect, app }) {
-    const res = pybossa.getAccountSignin()
+    const res = await pybossa.getAccountSignin()
     const next = query.next || '/'
 
     // Redirect if already signed in
