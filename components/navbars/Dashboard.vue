@@ -146,15 +146,11 @@ export default {
       &:hover,
       &:focus,
       &.nuxt-link-active {
-        background-color: rgba($blue, 0.25);
+        background-color: rgba($blue, 0.45);
 
         a {
           text-decoration: none;
         }
-      }
-
-      &.nuxt-link-exact-active {
-        background-color: rgba($blue, 0.45);
       }
     }
 
