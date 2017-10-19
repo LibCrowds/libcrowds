@@ -119,7 +119,7 @@ export default {
      * @param {Number} id
      *   The collection ID.
      */
-    deleteCategory (id) {
+    deleteCollection (id) {
       this.$swal({
         title: 'Delete Collection',
         text: 'Are you sure you want to delete this collection?',
