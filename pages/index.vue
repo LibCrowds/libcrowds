@@ -142,7 +142,7 @@ export default {
     }
   },
 
-  asyncData ({ app }) {
+  asyncData () {
     return Promise.all([
       pybossa.getStats(),
       pybossa.getLeaderboard()
