@@ -27,6 +27,7 @@
                 <b-btn
                   :variant="user.item.admin ? 'warning' : 'success'"
                   size="sm"
+                  class="btn-block"
                   @click="toggleAdmin(user.item)">
                   {{ getButtonText(user.item) }}
                 </b-btn>
@@ -76,6 +77,7 @@
               <b-btn
                 variant="warning"
                 size="sm"
+                class="btn-block"
                 @click="toggleAdmin(user.item)">
                 {{ getButtonText(user.item) }}
               </b-btn>

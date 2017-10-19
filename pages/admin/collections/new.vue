@@ -52,6 +52,8 @@ export default {
   async asyncData () {
     const res = await pybossa.getAdminCategories()
 
+    delete res.data.form.id
+
     return {
       categories: res.data.categories,
       form: {

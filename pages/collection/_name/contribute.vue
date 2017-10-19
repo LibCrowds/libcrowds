@@ -87,6 +87,7 @@
                   <template slot="action" scope="project">
                     <project-contrib-btn
                       :shortname="project.item.short_name"
+                      class="btn-block"
                       variant="success">
                     </project-contrib-btn>
                   </template>

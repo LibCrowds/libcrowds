@@ -31,6 +31,7 @@
                   <b-btn
                     :variant="project.item.featured ? 'warning' : 'success'"
                     size="sm"
+                    class="btn-block"
                     @click="toggleFeatured(project.item)">
                     {{ getButtonText(project.item.featured) }}
                   </b-btn>
@@ -59,6 +60,7 @@
           <b-btn
             variant="warning"
             size="sm"
+            class="btn-block"
             @click="toggleFeatured(project.item)">
             {{ getButtonText(project.item.featured) }}
           </b-btn>
