@@ -69,7 +69,8 @@ export default {
             {
               model: 'info.tagline',
               label: 'Tagline',
-              type: 'url',
+              type: 'input',
+              inputType: 'text',
               placeholder: 'Appears on the homepage and as its title'
             },
             {
@@ -82,8 +83,9 @@ export default {
             {
               model: 'info.forumUrl',
               label: 'Forum URL',
-              type: 'url',
-              placeholder: 'http://community.example.com/t/my_collection'
+              type: 'input',
+              inputType: 'url',
+              placeholder: 'https://community.example.com/t/collection'
             },
             {
               model: 'info.presenter',
@@ -135,8 +137,7 @@ export default {
                   name: 'CC_BY-NC-ND'
                 }
               ],
-              default: 'CC0',
-              hint: 'See https://creativecommons.org/licenses/'
+              default: 'CC0'
             }
           ]
         }
