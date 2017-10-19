@@ -73,7 +73,7 @@ import pybossa from '@/api/pybossa'
 import CategoriesList from '@/components/lists/Categories'
 
 export default {
-  layout: 'dashboards/admin',
+  layout: 'admin-dashboard',
 
   data () {
     return {

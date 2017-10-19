@@ -56,7 +56,7 @@ import pybossa from '@/api/pybossa'
 import capitalize from 'capitalize'
 
 export default {
-  layout: 'dashboards/admin',
+  layout: 'admin-dashboard',
 
   async asyncData () {
     const res = await pybossa.getAdminAnnouncements()

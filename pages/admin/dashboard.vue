@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  layout: 'dashboards/admin',
+  layout: 'admin-dashboard',
 
   head () {
     return {

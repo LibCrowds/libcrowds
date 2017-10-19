@@ -15,7 +15,7 @@ import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboards/admin',
+  layout: 'admin-dashboard',
 
   async asyncData ({ params }) {
     const res = await pybossa.getUpdateAnnouncement(params.id)

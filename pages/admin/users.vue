@@ -94,7 +94,7 @@ import exportFile from '@/utils/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'dashboards/admin',
+  layout: 'admin-dashboard',
 
   data () {
     return {
