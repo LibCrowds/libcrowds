@@ -229,7 +229,7 @@ describe('PYBOSSA module', () => {
   describe('Leaderboard endpoints', () => {
     it('makes the correct request getLeaderboard', () => {
       const window = 42
-      mockAxios.onGet(`leaderboard/window/${window}`).reply(200, randomData)
+      mockAxios.onGet(`/leaderboard/window/${window}`).reply(200, randomData)
       return pybossa.getLeaderboard(window).then(r => {
         expect(r.data).toEqual(randomData)
       })

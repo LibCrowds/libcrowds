@@ -303,7 +303,7 @@ const PyBossaApi = {
          *   Number of users above and below the current user to show.
          */
         getLeaderboard (window = 0) {
-          return this.client.get(`leaderboard/window/${window}`)
+          return this.client.get(`/leaderboard/window/${window}`)
         },
 
         /**
