@@ -19,49 +19,62 @@ const PyBossaApi = {
         }),
 
         /**
-         * Filter microsite categories based on key.
-         * @param {Array} categories
-         *   The categories.
-         * @param {String} key
-         *   The microsite key.
+         * List domain objects.
+         * @param {String} domainObject
+         *   The domain object.
          */
-        _filterMicrositeCategories (categories, key) {
-          return categories.filter(category => {
-            return category.info ? category.info.collection === key : false
+        list (domainObject, params = {}) {
+          return this.client.get(`/api/${domainObject}`, {
+            params: params
           })
         },
 
         /**
-         * Get the current user's favourites.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#favorites
+         * Get a specific domain object.
+         * @param {String} domainObject
+         *   The domain object.
+         * @param {String|Number} id
+         *   The domain object ID.
          */
-        getFavourites () {
-          return this.client.get('/api/favourites')
+        get (domainObject, id) {
+          return this.client.get(`/api/${domainObject}/${id}`)
         },
 
         /**
-         * Add a favourite.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#favorites
-         * @param {String|Number} taskId
-         *   The task ID.
+         * Create a domain object.
+         * @param {String} domainObject
+         *   The domain object.
+         * @param {data} data
+         *   The data.
          */
-        addFavourite (taskId) {
-          return this.client.post('/api/favourites', {
-            task_id: taskId
+        create (domainObject, data) {
+          return this.client.post(`/api/${domainObject}`, {
+            params: data
           })
         },
 
         /**
-         * Delete a favourite.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#favorites
-         * @param {String|Number} taskId
-         *   The task ID.
+         * Update a domain object.
+         * @param {String} domainObject
+         *   The domain object.
+         * @param {data} data
+         *   The data.
          */
-        deleteFavourite (taskId) {
-          return this.client.delete(`/api/favourites/${taskId}`)
+        update (domainObject, data) {
+          return this.client.put(`/api/${domainObject}`, {
+            params: data
+          })
+        },
+
+        /**
+         * Delete a domain object.
+         * @param {String} domainObject
+         *   The domain object.
+         * @param {String|Number} id
+         *   The domain object ID.
+         */
+        delete (domainObject, id) {
+          return this.client.delete(`/api/${domainObject}/${id}`)
         },
 
         /**
@@ -548,9 +561,10 @@ const PyBossaApi = {
          *   The form.
          */
         unfeatureProject (projectId, form) {
+          console.log(projectId, form)
           return this.client.delete(`/admin/featured/${projectId}`, {
-            params: form
-          })
+        params: form
+      })
         },
 
         /**
@@ -584,31 +598,6 @@ const PyBossaApi = {
             endpoint += `/page/${page}`
           }
           return this.client.get(endpoint)
-        },
-
-        /**
-         * Return the categories for a microsite.
-         *
-         * This function assumes a limit of 100 categories per microsite.
-         * @param {String} key
-         *   The microsite key.
-         */
-        getMicrositeCategories (key) {
-          const url = `/api/category`
-          const params = {
-            info: `collection::${key}`,
-            fulltextsearch: 1
-          }
-          return new Promise((resolve, reject) => {
-            this.client.get(url, params).then(r => {
-              // Additional filter needed as the search is not exact (i.e. if one
-              // category name is a part of another both could be returned)
-              r.data = {
-                categories: this._filterMicrositeCategories(r.data, key)
-              }
-              resolve(r)
-            })
-          })
         },
 
         /**

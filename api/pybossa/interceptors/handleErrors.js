@@ -25,6 +25,5 @@ export default function (error) {
     error.statusCode = error.statusCode || 500
     error.message = error.message || 'Axios Error'
   }
-  console.log(error)
   return Promise.reject(error)
 }

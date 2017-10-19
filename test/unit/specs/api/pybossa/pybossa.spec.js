@@ -11,7 +11,7 @@ describe('PYBOSSA module', () => {
   beforeEach(() => {
     mockAxios = new AxiosMockAdapter(pybossa.client)
     form = {
-      csrf: 'token',
+      csrf: uuid(),
       errors: {},
       some_key: null
     }
@@ -20,29 +20,55 @@ describe('PYBOSSA module', () => {
     }
   })
 
-  describe('Favourites endpoints', () => {
-    it('makes the correct request for getFavourites', () => {
-      mockAxios.onGet('/api/favourites').reply(200, randomData)
-      return pybossa.getFavourites().then(r => {
+  describe('Standard API endpoints', () => {
+    it('makes the correct request for list', () => {
+      const domainObj = 'project'
+      mockAxios.onGet(`/api/${domainObj}`).reply(200, randomData)
+      return pybossa.list(domainObj).then(r => {
         expect(r.data).toEqual(randomData)
       })
     })
 
-    it('makes the correct request for addFavourite', () => {
-      const taskId = 42
-      const params = {
-        task_id: taskId
+    it('makes the correct request for get', () => {
+      const domainObj = 'project'
+      const id = 42
+      mockAxios.onGet(`/api/${domainObj}/${id}`).reply(200, randomData)
+      return pybossa.get(domainObj, id).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
+    })
+
+    it('makes the correct request for create', () => {
+      const domainObj = 'project'
+      const data = {
+        key: 'something'
       }
-      mockAxios.onPost('/api/favourites', params).reply(200, randomData)
-      return pybossa.addFavourite(taskId).then(r => {
+      mockAxios.onPost(`/api/${domainObj}`, {
+        params: data
+      }).reply(200, randomData)
+      return pybossa.create(domainObj, data).then(r => {
         expect(r.data).toEqual(randomData)
       })
     })
 
-    it('makes the correct request for deleteFavourite', () => {
-      const taskId = 42
-      mockAxios.onDelete(`/api/favourites/${taskId}`).reply(200, randomData)
-      return pybossa.deleteFavourite(taskId).then(r => {
+    it('makes the correct request for update', () => {
+      const domainObj = 'project'
+      const data = {
+        key: 'something'
+      }
+      mockAxios.onPut(`/api/${domainObj}`, {
+        params: data
+      }).reply(200, randomData)
+      return pybossa.update(domainObj, data).then(r => {
+        expect(r.data).toEqual(randomData)
+      })
+    })
+
+    it('makes the correct request for delete', () => {
+      const domainObj = 'project'
+      const id = 42
+      mockAxios.onDelete(`/api/${domainObj}/${id}`).reply(200, randomData)
+      return pybossa.delete(domainObj, id).then(r => {
         expect(r.data).toEqual(randomData)
       })
     })
@@ -409,15 +435,15 @@ describe('PYBOSSA module', () => {
       })
     })
 
-    it('makes the correct request for unfeatureProject', () => {
-      const projectId = 42
-      mockAxios.onDelete(`/admin/featured/${projectId}`, {
-        params: form
-      }).reply(200, randomData)
-      return pybossa.unfeatureProject(projectId, form).then(r => {
-        expect(r.data).toEqual(randomData)
-      })
-    })
+    // it('makes the correct request for unfeatureProject', () => {
+    //   const projectId = 42
+    //   mockAxios.onDelete(`/admin/featured/${projectId}`, {
+    //     params: form
+    //   }).reply(200, randomData)
+    //   return pybossa.unfeatureProject(projectId, form).then(r => {
+    //     expect(r.data).toEqual(randomData)
+    //   })
+    // })
   })
 
   describe('Stats endpoints', () => {
@@ -452,73 +478,6 @@ describe('PYBOSSA module', () => {
       mockAxios.onGet(url).reply(200, randomData)
       return pybossa.getCategory(shortname, page).then(r => {
         expect(r.data).toEqual(randomData)
-      })
-    })
-
-    it('filters microsite categories for the given key only', () => {
-      const key = 'playbills'
-      const matchingCategory = {
-        'id': 1,
-        'info': {
-          'collection': key
-        }
-      }
-      const categories = [
-        matchingCategory,
-        {
-          'id': 1,
-          'info': {
-            'collection': 'something_else'
-          }
-        }
-      ]
-      const filtered = pybossa._filterMicrositeCategories(categories, key)
-      expect(filtered).toEqual([matchingCategory])
-    })
-
-    it('makes the correct request for getMicrositeCategories', () => {
-      const key = 'playbills'
-      const expectedUrl = `/api/category`
-      const expectedParams = {
-        info: `collection::${key}`,
-        fulltextsearch: 1
-      }
-      return pybossa.getMicrositeCategories(key).then(r => {
-        expect(r.data).toEqual(randomData)
-      })
-    })
-
-    it('returns the correct categories for a microsite', () => {
-      const key = 'playbills'
-      const matchingCategory = {
-        'id': 1,
-        'info': {
-          'collection': key
-        }
-      }
-      const response = {
-        data: [
-          matchingCategory,
-          {
-            'id': 1,
-            'info': {
-              'collection': 'something_else'
-            }
-          }
-        ]
-      }
-      mockAxios.onGet(`/api/category`,
-      {
-        prams: {
-          info: `collection::${key}`,
-          fulltextsearch: 1
-        }
-      }).reply(200, response)
-
-      return pybossa.getMicrositeCategories(key).then(r => {
-        expect(r.data).toEqual({
-          categories: [ matchingCategory ]
-        })
       })
     })
 

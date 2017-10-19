@@ -72,7 +72,7 @@ export default {
   },
 
   mounted () {
-    pybossa.getFavourites().then(r => {
+    pybossa.list('favorites').then(r => {
       this.images = this.getImageData(r.data)
     })
   }

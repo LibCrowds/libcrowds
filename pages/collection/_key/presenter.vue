@@ -141,7 +141,9 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        pybossa.addFavourite(taskId).then(() => {
+        pybossa.create('favorite', {
+          task_id: taskId
+        }).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Added to favourites',
@@ -149,7 +151,7 @@ export default {
           })
         })
       } else {
-        pybossa.deleteFavourite(taskId).then(() => {
+        pybossa.delete('favorite', taskId).then(() => {
           this.$notify({
             title: 'Success',
             text: 'Removed from favourites',
