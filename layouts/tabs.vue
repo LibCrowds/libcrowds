@@ -100,7 +100,7 @@ export default {
       }
 
       &:nth-child(even) {
-        @extend .bg-light;
+        background-color: $gray-100;
       }
 
       @include media-breakpoint-up(md) {

@@ -30,7 +30,7 @@
       </div>
     </div>
 
-    <section id="contribute" class="bg-light">
+    <section id="contribute">
       <div class="container py-4">
         <h2 class="mt-4">Contribute</h2>
         <p class="lead">
@@ -243,6 +243,10 @@ export default {
 
   #top-users {
     color: $gray-1000;
+  }
+
+  #contribute {
+    background-color: $gray-100;
   }
 
   .stat-row {
