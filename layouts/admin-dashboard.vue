@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DashboardBase from '@/components/DashboardBase'
 
 export default {
@@ -53,6 +54,12 @@ export default {
 
   components: {
     DashboardBase
+  },
+
+  head () {
+    return {
+      titleTemplate: ` %s - Admin | ${localConfig.brand}`
+    }
   }
 }
 </script>
