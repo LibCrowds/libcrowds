@@ -33,6 +33,7 @@
         <b-btn
           v-if="showCancel"
           variant="outline-dark"
+          class="mr-1"
           @click="cancel">
           Cancel
         </b-btn>

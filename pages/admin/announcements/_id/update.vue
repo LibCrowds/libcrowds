@@ -1,6 +1,5 @@
 <template>
   <pybossa-form
-    id="admin-announcement-id-update"
     header="Update Announcement"
     submit-text="Update"
     show-cancel
@@ -21,7 +20,7 @@ export default {
     const res = await pybossa.getUpdateAnnouncement(params.id)
     return {
       form: {
-        endpoint: `/admin/announcement/${this.res.data.form.id}/update`,
+        endpoint: `/admin/announcement/${params.id}/update`,
         method: 'post',
         model: res.data.form,
         schema: {

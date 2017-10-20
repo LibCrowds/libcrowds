@@ -101,7 +101,7 @@
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
-import Announcements from '@/components/Announcements'
+import Announcements from '@/components/lists/Announcements'
 
 export default {
   data () {

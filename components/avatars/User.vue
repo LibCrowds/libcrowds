@@ -77,12 +77,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.user-avatar {
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>

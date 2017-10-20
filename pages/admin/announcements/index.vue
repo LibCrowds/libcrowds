@@ -23,7 +23,7 @@
         :fields="table.fields">
 
         <template slot="created" scope="announcement">
-          {{ announcement.item.created | moment('DD MMMM YYYY') }}
+          {{ announcement.item.created | moment('DD MMMM YYYY, hh:mm') }}
         </template>
 
         <template slot="action" scope="announcement">
@@ -32,7 +32,7 @@
             size="sm"
             class="btn-block"
             :to="{
-              name: 'admin-announcements-update',
+              name: 'admin-announcements-id-update',
               params: {
                 id: announcement.item.id
               }
@@ -115,24 +115,18 @@ export default {
         showCancelButton: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return new Promise(function (resolve, reject) {
-            pybossa.client.get('/admin/announcement').then(r => {
-              return pybossa.client.post(`/admin/announcement/${id}/delete`, null, {
-                headers: {
-                  'X-CSRFToken': r.data.csrf
-                }
-              })
-            }).then(() => {
-              resolve()
-            })
-          })
+          return pybossa.client.delete(`/api/announcement/${id}`)
         }
       }).then(r => {
-        this.announcements = this.categories.filter(announcement => {
+        this.announcements = this.announcements.filter(announcement => {
           return announcement.id !== id
         })
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: 'Announcement deleted'
+        })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
-        this.flash(r)
       }, (dismiss) => {
         this.$swal.close()
       })

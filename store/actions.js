@@ -8,7 +8,6 @@ export default {
       } else {
         commit('LOGOUT')
       }
-      dispatch('UPDATE_ANNOUNCEMENTS')
     })
   },
 
@@ -20,14 +19,17 @@ export default {
   },
 
   UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
-    if (!(state.currentUser.info)) {
+    if (state.currentUser.info === undefined) {
       commit('SET_ITEM', {
         key: 'announcements', value: []
       })
     } else {
-      let announcements = state.currentUser.info.announcements || {}
-      let lastId = announcements['last_read'] || 0
-      pybossa.client.get(`/api/announcement?last_id=${lastId}`).then(r => {
+      pybossa.client.get('/api/announcement', {
+        params: {
+          orderby: 'created',
+          desc: true
+        }
+      }).then(r => {
         commit('SET_ITEM', {
           key: 'announcements', value: r.data
         })
