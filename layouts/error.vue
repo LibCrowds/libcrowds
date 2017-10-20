@@ -10,7 +10,7 @@
         {{ error.statusCode }}
       </h1>
       <h2 class="info">
-        {{ error.message }}
+        {{ message }}
       </h2>
       <b-btn
         variant="dark"
@@ -28,6 +28,7 @@
 import 'vue-awesome/icons/circle-thin'
 import 'vue-awesome/icons/lock'
 import 'vue-awesome/icons/exclamation'
+import statuses from 'statuses'
 
 export default {
   props: {
@@ -42,6 +43,12 @@ export default {
         return 'lock'
       }
       return 'exclamation'
+    },
+    message () {
+      if (!this.error.message) {
+        return statuses[this.error.statusCode]
+      }
+      return this.error.message
     }
   }
 }

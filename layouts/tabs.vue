@@ -26,7 +26,6 @@
 
       </div>
     </main>
-    <notifications position="bottom left"></notifications>
   </div>
 </template>
 

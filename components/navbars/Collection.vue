@@ -172,6 +172,7 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import throttle from 'lodash/throttle'
 
@@ -227,7 +228,12 @@ export default {
      * Sign the user out.
      */
     signout () {
-      this.$store.dispatch('LOGOUT')
+      this.$store.dispatch('LOGOUT', (res) => {
+        if (res.data.next === '/') {
+          this.$router.push({ name: 'index' })
+        }
+        this.flash(res)
+      })
     },
 
     /**
@@ -348,6 +354,8 @@ export default {
       }
     }
   },
+
+  mixins: [ notifications ],
 
   mounted () {
     window.addEventListener('scroll', this.onWindowScroll)

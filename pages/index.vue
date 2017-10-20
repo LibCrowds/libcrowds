@@ -146,13 +146,12 @@ export default {
     }
   },
 
-  asyncData () {
+  asyncData ({ app }) {
     return Promise.all([
       pybossa.getStats(),
       pybossa.getLeaderboard(),
       pybossa.list('category')
     ]).then(([statsResponse, leaderboardResponse, categoryResponse]) => {
-      console.log(categoryResponse.data)
       return {
         stats: statsResponse.data.stats,
         topUsers: leaderboardResponse.data.top_users,

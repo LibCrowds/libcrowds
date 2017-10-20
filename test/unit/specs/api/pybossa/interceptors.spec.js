@@ -1,21 +1,8 @@
 import addCsrfHeader from '@/api/pybossa/interceptors/addCsrfHeader'
 import handleErrors from '@/api/pybossa/interceptors/handleErrors'
-import handleFlash from '@/api/pybossa/interceptors/handleFlash'
 import capitalize from 'capitalize'
 
 describe('Interceptors', () => {
-  let mockNotify = null
-  let mockCtx = null
-
-  beforeEach(() => {
-    mockNotify = jest.fn()
-    mockCtx = {
-      app: {
-        $notify: mockNotify
-      }
-    }
-  })
-
   describe('addCsrfHeader', () => {
     it('adds the CSRF header when it exists', () => {
       const token = 'token'
@@ -69,34 +56,6 @@ describe('Interceptors', () => {
         expect(err.statusCode).toBe(500)
         expect(err.message).toBe('Axios Error')
       })
-    })
-  })
-
-  describe('handleFlash', () => {
-    it('dispatches notification from flash message', () => {
-      const response = {
-        data: {
-          status: 'info',
-          flash: 'Something happened'
-        }
-      }
-      handleFlash(response, mockCtx)
-      expect(mockNotify).toHaveBeenCalledWith({
-        title: capitalize(response.data.status),
-        text: response.data.flash,
-        type: response.data.status
-      })
-    })
-
-    it('does not dispatch notification for error flash message', () => {
-      const response = {
-        data: {
-          status: 'error',
-          flash: 'Something bad happened'
-        }
-      }
-      handleFlash(response, mockCtx)
-      expect(mockNotify).not.toHaveBeenCalled()
     })
   })
 })

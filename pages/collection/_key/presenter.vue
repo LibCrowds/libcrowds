@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
@@ -144,17 +145,17 @@ export default {
         pybossa.create('favorite', {
           task_id: taskId
         }).then(() => {
-          this.$notify({
+          this.notify({
             title: 'Success',
-            text: 'Added to favourites',
+            text: 'Removed from favourites',
             type: 'success'
           })
         })
       } else {
         pybossa.delete('favorite', taskId).then(() => {
-          this.$notify({
+          this.notify({
             title: 'Success',
-            text: 'Removed from favourites',
+            text: 'Added to favourites',
             type: 'success'
           })
         })
@@ -194,7 +195,7 @@ export default {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {
-          this.$notify({
+          this.notify({
             title: 'Answer saved',
             text: 'Thank you for your contribution!',
             type: 'success'
@@ -215,6 +216,8 @@ export default {
   created () {
     this.$emit('navupdated', this.navItems)
     this.loadTasks()
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>

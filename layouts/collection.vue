@@ -10,8 +10,6 @@
 
     <app-footer></app-footer>
 
-    <notifications position="bottom left"></notifications>
-
   </div>
 </template>
 

@@ -213,7 +213,8 @@ export default {
     })
 
     if (!categoryRes.data.length) {
-      error({ statusCode: 404 })
+      error()
+      return
     }
 
     const category = categoryRes.data[0]

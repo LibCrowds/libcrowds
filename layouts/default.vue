@@ -1,12 +1,15 @@
 <template>
   <div id="default-layout">
     <div id="app-background" :style="appBgStyle"></div>
+
     <app-navbar></app-navbar>
+
     <main>
       <nuxt></nuxt>
     </main>
+
     <app-footer></app-footer>
-    <notifications position="bottom left"></notifications>
+
   </div>
 </template>
 

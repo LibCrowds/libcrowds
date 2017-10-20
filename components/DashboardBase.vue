@@ -28,8 +28,6 @@
 
       <dashboard-footer></dashboard-footer>
 
-      <notifications position="bottom left"></notifications>
-
     </div>
   </div>
 </template>

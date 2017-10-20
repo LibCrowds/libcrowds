@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import axios from 'axios'
 import localConfig from '@/local.config'
 
@@ -106,7 +107,7 @@ export default {
         },
         withCredentials: true
       }).then(r => {
-        this.$notify({
+        this.notify({
           title: 'Success',
           text: 'The image should be refreshed in a few minutes',
           type: 'success'
@@ -152,7 +153,9 @@ export default {
         this.form.model.y2 = Math.floor(data.points[3])
       }
     })
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>
 

@@ -49,7 +49,7 @@ const PyBossaApi = {
          * @param {Object} params
          *   The query params.
          */
-        search (domainObject, id, params = {}) {
+        search (domainObject, params = {}) {
           return this.client.get(`/api/${domainObject}`, {
             params: params
           })

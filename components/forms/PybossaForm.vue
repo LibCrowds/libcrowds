@@ -53,13 +53,14 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import pybossa from '@/api/pybossa'
 
 export default {
-  data: function () {
+  data () {
     return {
       status: null,
-      flash: '',
+      alert: '',
       processing: false
     }
   },
@@ -104,9 +105,9 @@ export default {
   },
 
   computed: {
-    flashMsg: function () {
+    flashMsg () {
       // To handle disappearing and multiple alerts
-      return this.flash ? [this.flash] : []
+      return this.alert ? [this.alert] : []
     }
   },
 
@@ -140,7 +141,7 @@ export default {
         return
       }
 
-      this.flash = ''
+      this.alert = ''
       pybossa.client({
         method: this.form.method,
         url: this.form.endpoint,
@@ -152,16 +153,13 @@ export default {
       }).then(r => {
         this.processing = false
         if (r.data.status === 'error') {
-          this.flash = r.data.flash
+          this.alert = r.data.alert
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
+          this.flash(r)
           this.handleSuccess(r.data)
         }
-      }).catch(err => {
-        this.processing = false
-        this.flash = err.response.data.exception_msg
-        this.status = 'error'
       })
     },
 
@@ -183,7 +181,9 @@ export default {
     cancel () {
       this.$emit('cancel')
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>
 

@@ -12,11 +12,9 @@ export default {
     })
   },
 
-  LOGOUT: ({ commit }) => {
-    pybossa.signout().then(data => {
-      if (data.next === '/') {
-        this.$router.push({ name: 'index' })
-      }
+  LOGOUT: ({ commit }, callback) => {
+    pybossa.signout().then(res => {
+      callback(res)
       commit('LOGOUT')
     })
   },

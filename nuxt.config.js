@@ -6,7 +6,7 @@ const localConfig = process.env.NODE_ENV === 'testing'
 module.exports = {
   mode: 'universal',
   head: {
-    titleTemplate: ` %s - ${localConfig.brand}`,
+    titleTemplate: ` %s | ${localConfig.brand}`,
     meta: [
       {
         hid: 'description',
@@ -17,7 +17,8 @@ module.exports = {
   },
   css: [
     '~/assets/style/main.scss',
-    'cookieconsent/build/cookieconsent.min.css'
+    'cookieconsent/build/cookieconsent.min.css',
+    'izitoast/dist/css/iziToast.min.css'
   ],
   build: {
     vendor: [
@@ -29,7 +30,7 @@ module.exports = {
       'vue-form-generator',
       'vue-gravatar',
       'vue-js-toggle-button',
-      'vue-notification',
+      'vue-notifications',
       'vue-progress',
       'vue-scrollto',
       'vue-sweetalert'
@@ -75,13 +76,13 @@ module.exports = {
     { src: '~/plugins/bootstrap-vue' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
+    { src: '~/plugins/notifications', ssr: false },
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-moment' },
-    { src: '~/plugins/vue-notification', ssr: false },
     { src: '~/plugins/vue-progress', ssr: false },
     { src: '~/plugins/vue-scrollto', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },

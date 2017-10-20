@@ -98,12 +98,13 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
 import Announcements from '@/components/Announcements'
 
 export default {
-  data: function () {
+  data () {
     return {
       localConfig: localConfig
     }
@@ -145,9 +146,16 @@ export default {
     * Sign the user out.
     */
     signout () {
-      this.$store.dispatch('LOGOUT')
+      this.$store.dispatch('LOGOUT', (res) => {
+        if (res.data.next === '/') {
+          this.$router.push({ name: 'index' })
+        }
+        this.flash(res)
+      })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>
 
