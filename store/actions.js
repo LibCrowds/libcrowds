@@ -1,39 +1,30 @@
 import pybossa from '@/api/pybossa'
 
 export default {
-  UPDATE_CURRENT_USER: ({ dispatch, commit }) => {
-    pybossa.getProfile().then(r => {
-      if ('user' in r.data) {
-        commit('LOGIN', r.data.user)
-      } else {
-        commit('LOGOUT')
+  UPDATE_CURRENT_USER: async ({ dispatch, commit }) => {
+    const res = await pybossa.getProfile()
+    if ('user' in res.data) {
+      commit('LOGIN', res.data.user)
+    } else {
+      commit('LOGOUT')
+    }
+  },
+
+  LOGOUT: async ({ commit }, callback) => {
+    const res = await pybossa.signout()
+    callback(res)
+    commit('LOGOUT')
+  },
+
+  UPDATE_ANNOUNCEMENTS: async ({ commit, state }) => {
+    let res = await pybossa.client.get('/api/announcement', {
+      params: {
+        orderby: 'created',
+        desc: true
       }
     })
-  },
-
-  LOGOUT: ({ commit }, callback) => {
-    pybossa.signout().then(res => {
-      callback(res)
-      commit('LOGOUT')
+    commit('SET_ITEM', {
+      key: 'announcements', value: res.data
     })
-  },
-
-  UPDATE_ANNOUNCEMENTS: ({ commit, state }) => {
-    if (state.currentUser.info === undefined) {
-      commit('SET_ITEM', {
-        key: 'announcements', value: []
-      })
-    } else {
-      pybossa.client.get('/api/announcement', {
-        params: {
-          orderby: 'created',
-          desc: true
-        }
-      }).then(r => {
-        commit('SET_ITEM', {
-          key: 'announcements', value: r.data
-        })
-      })
-    }
   }
 }
