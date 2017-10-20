@@ -91,10 +91,10 @@
         </div>
         <ul class="list-unstyled">
           <li v-for="project in featured" :key="project.id">
-            <project-card
+            <!-- <project-card
               :collection="collection"
               :project="project">
-            </project-card>
+            </project-card> -->
           </li>
         </ul>
         <b-btn
@@ -121,9 +121,9 @@
             All datasets generated from the experimental crowdsourcing
             projects hosted on this platform are made available under a
             <a
-              :href="collection.info.dataLicense.url"
+              :href="collection.info.license"
               target="_blank">
-              {{ collection.info.datalicense }} license
+              {{ collection.info.license }} license
             </a>
             and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
@@ -134,7 +134,7 @@
             :to="{
               name: 'collection-key-data',
               params: {
-                ket: collectoin.short_name
+                ket: collection.short_name
               }
             }">
             Get the data
@@ -143,7 +143,7 @@
       </b-jumbotron>
     </section>
 
-    <section id="results" v-if="collectionConfig.resultsComponent">
+    <!-- <section id="results" v-if="collectionConfig.resultsComponent">
       <b-jumbotron :style="resultsStyle">
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
@@ -163,7 +163,7 @@
           </b-btn>
         </div>
       </b-jumbotron>
-    </section>
+    </section> -->
 
     <section id="final-cta" class="bg-white invert-navbar">
       <div class="container pt-4 pb-3 text-center">
@@ -197,13 +197,12 @@
 </template>
 
 <script>
+import { computeCollection } from '@/mixins/computeCollection'
 import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/cards/Project'
-import codeImage from '@/assets/img/code.png'
-import newtonImage from '@/assets/img/newton.jpg'
 
 export default {
   layout: 'collection',
@@ -213,52 +212,28 @@ export default {
       short_name: params.key
     })
 
-    if (!res.data.length) {
-       error({ statusCode: 404 })
+    if (!categoryRes.data.length) {
+      error({ statusCode: 404 })
     }
 
-    const category = res.data[0]
+    const category = categoryRes.data[0]
 
     // TODO: figure out the solution for featured categories.
+    // See https://github.com/Scifabric/pybossa/issues/1712
     let featuredRes = await pybossa.search('category', {
       category_id: category.id,
       featured: true
     })
 
-    return Promise.all([
-      pybossa.pybossa.search('category', { short_name: params.key }),
-      pybossa.pybossa.search('category', { category: params.key })
-    ]).then(([categoryRes, featuredRes]) => {
-      return {
-        collection: res[0],
-        featured:
-      }
-    })
+    return {
+      category: category,
+      featured: featuredRes.data
+    }
   },
 
   data () {
     return {
-      localConfig: localConfig,
-      categories: [],
-      dataStyle: {
-        backgroundImage: `url(${codeImage})`
-      },
-      resultsStyle: {
-        backgroundImage: `url(${newtonImage})`
-      }
-    }
-  },
-
-  head () {
-    return {
-      title: this.collection.info.tagline,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.collection.description
-        }
-      ]
+      localConfig: localConfig
     }
   },
 
@@ -271,13 +246,6 @@ export default {
           hid: 'description',
           name: 'description',
           content: this.collection.description
-        },
-
-        // Facebook Open Graph Markup
-        { property: 'og:title', content: this.collection.info.tagline },
-        {
-          property: 'og:description',
-          content: this.collection.description
         }
       ]
     }
@@ -288,28 +256,9 @@ export default {
     ProjectCard
   },
 
-  methods: {
-    /**
-     * Set core data.
-     * @param {Object} data
-     *   The data.
-     */
-    setData (data) {
-      // Filter featured projects for this collection
-      if ('featured' in data.categories_projects) {
-        const validProjectIds = data.categories.map(category => {
-          return data.categories_projects[category.short_name]
-        }).reduce((a, b) => {
-          return a.concat(b)
-        }, []).map(project => {
-          return project.id
-        })
-        this.featured = data.categories_projects.featured.filter(project => {
-          return validProjectIds.indexOf(project.id) > -1
-        })
-      }
-    }
-  }
+  mixins: [
+    computeCollection
+  ]
 }
 </script>
 
@@ -437,6 +386,7 @@ export default {
       color: $white;
       font-weight: 300;
       margin-bottom: 0;
+      background-image: url('~/assets/img/code.png');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-position: left;
@@ -452,7 +402,7 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background: url('~/assets/img/newton.jpg');
+      background-image: url('~/assets/img/newton.jpg');
       background-attachment: fixed;
       background-position: center;
       background-size: cover;

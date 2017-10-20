@@ -1,10 +1,13 @@
 <template>
-  <div id="collection-base-layout">
+  <div id="collection-layout">
     <div id="collection-background" :style="bgStyle"></div>
-    <collection-navbar></collection-navbar>
+
+    <!-- <collection-navbar></collection-navbar> -->
+
     <main>
       <nuxt></nuxt>
     </main>
+
     <app-footer></app-footer>
 
     <notifications position="bottom left"></notifications>
@@ -13,7 +16,6 @@
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import CollectionNavbar from '@/components/navbars/Collection'
 import AppFooter from '@/components/footers/App'
 
@@ -25,7 +27,7 @@ export default {
 
   computed: {
     bgStyle () {
-      const url = this.$store.state.backgroundImage
+      const url = this.$store.state.background
       return {
         background: `url(${url}) no-repeat center left /cover fixed`
       }
@@ -35,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#collection-base-layout {
+#collection-layout {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;

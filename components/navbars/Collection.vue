@@ -66,8 +66,7 @@
             v-if="collection.forumUrl">
             Discuss
           </b-nav-item>
-          <b-nav-item
-            v-if="collection.resultsComponent"
+          <!-- <b-nav-item
             :to="{
               name: 'collection-key-results',
               params: {
@@ -76,7 +75,7 @@
             }"
             @click.native="toggleCollapsibleSidebar">
             Results
-          </b-nav-item>
+          </b-nav-item> -->
           <b-nav-item
             :to="{
               name: 'collection-key-data',
@@ -187,10 +186,6 @@ export default {
   },
 
   props: {
-    collection: {
-      type: Object,
-      required: true
-    },
     type: {
       type: String,
       default: 'dark'
@@ -202,6 +197,9 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.collection
+    },
     navType () {
       if (this.fixedNavbarRoutes.indexOf(this.$route.name) > -1) {
         return {

@@ -30,7 +30,7 @@
         v-if="projectStats.dayStats"
         class="mt-3"
         :header="dailyContributionsHeader"
-        :unit="collection.terminology.taskRun"
+        :unit="collection.info.terminology.taskRun"
         :chart-data="dailyContributionsData">
       </line-chart>
 
@@ -38,7 +38,7 @@
         v-if="projectStats.hourStats"
         class="mt-3"
         :header="hourlyContributionsHeader"
-        :unit="collection.terminology.taskRun"
+        :unit="collection.info.terminology.taskRun"
         :chart-data="hourlyContributionsData">
       </line-chart>
 
@@ -46,7 +46,7 @@
         v-if="userStats.authenticated"
         class="mt-3"
         header="Top authenticated users over the past 2 weeks"
-        :unit="collection.terminology.taskRun"
+        :unit="collection.info.terminology.taskRun"
         :chart-data="topUsersData">
       </bar-chart>
 
@@ -153,11 +153,11 @@ export default {
       }
     },
     dailyContributionsHeader () {
-      const taskrun = pluralize(this.collection.terminology.taskRun)
+      const taskrun = pluralize(this.collection.info.terminology.taskRun)
       return `Daily ${taskrun} over the past 2 weeks`
     },
     hourlyContributionsHeader () {
-      const taskrun = pluralize(this.collection.terminology.taskRun)
+      const taskrun = pluralize(this.collection.info.terminology.taskRun)
       return `Hourly ${taskrun} over the past 2 weeks`
     },
     proportionAuthHeader () {

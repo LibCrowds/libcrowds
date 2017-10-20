@@ -11,7 +11,7 @@ const config = {
     host: 'http://example.com',
     timeout: 10000
   },
-  dataLicense: {
+  license: {
     name: 'CC0',
     url: 'https://creativecommons.org/publicdomain/zero/1.0/'
   },

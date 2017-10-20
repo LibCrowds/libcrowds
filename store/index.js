@@ -7,7 +7,8 @@ export default () => {
   return new Vuex.Store({
     state: {
       currentUser: {},
-      announcements: []
+      announcements: [],
+      collection: {}
     },
 
     mutations,

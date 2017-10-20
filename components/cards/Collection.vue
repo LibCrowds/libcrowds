@@ -19,7 +19,7 @@
           {{ collection.name }}
         </h4>
         <hr class="my-1">
-        <p class="card-text">
+        <p class="card-text" v-if="collection.info">
           {{ collection.info.tagline }}
         </p>
       </div>

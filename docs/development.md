@@ -46,7 +46,7 @@ CATEGORY_INFO_PUBLIC_FIELDS = [
   'tagline',
   'forumUrl',
   'presenter',
-  'datalicense',
+  'license',
 ]
 
 # Additional user fields

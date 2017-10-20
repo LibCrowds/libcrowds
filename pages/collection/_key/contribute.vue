@@ -34,7 +34,7 @@
 
           <categories-list
             v-if="categories.length"
-            :header="collection.terminology.category"
+            :header="collection.info.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </categories-list>
@@ -109,19 +109,19 @@
               <p>
                 <small class="d-none d-xl-block">
                   Use the list on the left of the screen to choose another
-                  {{ collection.terminology.category }}, or the sorting
+                  {{ collection.info.terminology.category }}, or the sorting
                   options to display any completed projects.
                 </small>
                 <small class="d-xl-none">
                   Use the list above to choose another
-                  {{ collection.terminology.category }}.
+                  {{ collection.info.terminology.category }}.
                 </small>
               </p>
             </span>
 
           </span>
           <p v-else class="text-center mb-0">
-            No {{ collection.terminology.project | pluralize }}  have
+            No {{ collection.info.terminology.project | pluralize }} have
             been published for this category
           </p>
         </div>
@@ -150,7 +150,7 @@ export default {
       navItems: [
         {
           id: 'choose-a-project',
-          text: `Choose a ${this.collection.terminology.project}` }
+          text: `Choose a ${this.collection.info.terminology.project}` }
       ],
       viewOpts: [
         { text: 'List', value: 'list' },

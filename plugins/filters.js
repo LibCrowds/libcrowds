@@ -7,5 +7,7 @@ Vue.filter('capitalize', capitalize)
 Vue.filter('pluralize', pluralize)
 
 Vue.filter('intComma', (n) => {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  if (n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
 })

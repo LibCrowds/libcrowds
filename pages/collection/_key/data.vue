@@ -6,8 +6,8 @@
       <p>
         All datasets generated from the experimental crowdsourcing projects
         hosted on this platform are made available under a
-        <a :href="localConfig.dataLicense.url" target="_blank">
-          {{ localConfig.dataLicense.name }}
+        <a :href="localConfig.license.url" target="_blank">
+          {{ localConfig.license.name }}
         </a> license.
       </p>
       <p>
@@ -17,11 +17,11 @@
       <ul>
         <li>
           <strong>Tasks: </strong>
-          The {{ collection.terminology.task }} data.
+          The {{ collection.info.terminology.task }} data.
         </li>
         <li>
           <strong>Task Runs: </strong>
-          The {{ collection.terminology.taskRun }} data.
+          The {{ collection.info.terminology.taskRun }} data.
         </li>
         <li>
           <strong>Results: </strong>
@@ -48,7 +48,7 @@
         <div class="col-xl-3 mb-3">
           <categories-list
             v-if="categories.length"
-            :header="collection.terminology.category"
+            :header="collection.info.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
           </categories-list>
@@ -141,7 +141,7 @@ export default {
           name: 'description',
           content: `All datasets generated from the experimental crowdsourcing
                    projects hosted on this platform are made available under a
-                   ${localConfig.dataLicense.name} license.`
+                   ${localConfig.license.name} license.`
         }
       ]
     }
