@@ -220,7 +220,7 @@ export default {
 
     // TODO: figure out the solution for featured categories.
     // See https://github.com/Scifabric/pybossa/issues/1712
-    let featuredRes = await pybossa.search('category', {
+    let featuredRes = await pybossa.search('project', {
       category_id: category.id,
       featured: true
     })
