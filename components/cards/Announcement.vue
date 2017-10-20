@@ -39,9 +39,11 @@ export default {
      */
     onClick () {
       const url = this.announcement.media_url
+      const parser = document.createElement('a')
       const internal = this.isInternal(url)
       if (internal) {
-        this.$router.push({ path: window.location.path })
+        parser.href = url
+        this.$router.push({ path: parser.pathname })
       } else if (url) {
         window.open(url)
       }
