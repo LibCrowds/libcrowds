@@ -60,8 +60,8 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import pybossa from '@/api/pybossa'
-import capitalize from 'capitalize'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -138,13 +138,11 @@ export default {
         this.categories = this.categories.filter(category => {
           return category.id !== id
         })
-        this.$swal(
-          capitalize(r.data.status),
-          r.data.flash,
-          r.data.status
-        )
+        this.flash(r)
       })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>

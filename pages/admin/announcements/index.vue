@@ -54,8 +54,8 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import pybossa from '@/api/pybossa'
-import capitalize from 'capitalize'
 
 export default {
   layout: 'admin-dashboard',
@@ -132,15 +132,13 @@ export default {
           return announcement.id !== id
         })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
-        this.$swal(
-          capitalize(r.data.status),
-          r.data.flash,
-          r.data.status
-        )
+        this.flash(r)
       }, (dismiss) => {
         this.$swal.close()
       })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>

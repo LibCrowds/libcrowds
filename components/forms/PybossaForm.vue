@@ -7,7 +7,7 @@
     <b-alert
       show
       :variant="status === 'error' ? 'danger' : status"
-      v-for="msg in flashMsg"
+      v-for="msg in alertMsg"
       class="mb-1"
       :key="msg">
       {{ msg }}
@@ -105,7 +105,7 @@ export default {
   },
 
   computed: {
-    flashMsg () {
+    alertMsg () {
       // To handle disappearing and multiple alerts
       return this.alert ? [this.alert] : []
     }
@@ -153,13 +153,19 @@ export default {
       }).then(r => {
         this.processing = false
         if (r.data.status === 'error') {
-          this.alert = r.data.alert
+          this.alert = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
           this.flash(r)
           this.handleSuccess(r.data)
         }
+      }).catch(err => {
+        this.notify({
+          type: 'error',
+          title: 'Error',
+          message: err.message || 'Server Error'
+        })
       })
     },
 

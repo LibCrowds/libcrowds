@@ -4,15 +4,6 @@
     :header="header"
     show-footer>
 
-    <b-alert
-      show
-      :variant="status === 'error' ? 'danger' : status"
-      v-for="msg in flashMsg"
-      :key="msg"
-      key="flash">
-      {{ msg }}
-    </b-alert>
-
     <div id="preview" ref="preview"></div>
 
     <div class="mt-2">
@@ -45,7 +36,6 @@ export default {
   data: function () {
     return {
       status: null,
-      flash: '',
       file: null,
       croppie: null
     }
@@ -78,13 +68,6 @@ export default {
     }
   },
 
-  computed: {
-    flashMsg: function () {
-      // To handle disappearing and multiple alerts
-      return this.flash ? [this.flash] : []
-    }
-  },
-
   methods: {
     /**
      * Submit the form.
@@ -99,7 +82,6 @@ export default {
       formData.append('btn', 'Upload')
       formData.append('avatar', this.form.model.avatar)
 
-      this.flash = ''
       const url = `${localConfig.pybossa.host}/${this.form.endpoint}`
       axios.post(url, formData, {
         headers: {
