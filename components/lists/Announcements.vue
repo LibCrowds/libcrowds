@@ -27,13 +27,15 @@
         We have not made any announcements
       </div>
 
-      <announcement-card
-        v-for="announcement in announcements"
-        :key="announcement.id"
-        :announcement="announcement">
-      </announcement-card>
+      <div id="announcements-list">
+        <announcement-card
+          v-for="announcement in announcements"
+          :key="announcement.id"
+          :announcement="announcement">
+        </announcement-card>
+      </div>
 
-      <div class="card-body p-1 text-center font-size-sm">
+      <div class="card-footer p-1 text-center font-size-sm footer">
         <!-- <nuxt-link
         :to="{
           name: 'announcements-key'
@@ -154,6 +156,11 @@ export default {
 
     .list-group {
       border: none;
+    }
+
+    #announcements-list {
+      max-height: 400px;
+      overflow-y: auto;
     }
   }
 

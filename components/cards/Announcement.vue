@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="p-1">
-        <small class="text-muted">
+        <small class="no-wrap text-muted">
           {{ announcement.created | moment('calendar') }}
         </small>
       </div>
@@ -67,6 +67,7 @@ export default {
 
 .announcement-card {
   cursor: pointer;
+  display: block;
 
   a {
     text-decoration: none;
@@ -75,6 +76,10 @@ export default {
 
   .flex-grow {
     flex: 1 1 auto;
+  }
+
+  .no-wrap {
+    white-space: nowrap;
   }
 
   @include hover-focus {
