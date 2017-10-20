@@ -17,7 +17,7 @@
     "@nuxtjs/google-analytics": "^1.0.0",
     "@nuxtjs/pwa": "^1.0.2",
     "axios": "^0.16.2",
-    "bootstrap": "4.0.0-beta",
+    "bootstrap": "4.0.0-beta.2",
     "bootstrap-vue": "^1.0.0-beta.9",
     "capitalize": "^1.0.0",
     "chartist-plugin-legend": "^0.6.2",
