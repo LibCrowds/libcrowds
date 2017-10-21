@@ -35,7 +35,7 @@
             <b-btn
               variant="outline-dark"
               size="sm"
-              class="btn-block"
+              block
               :to="{
                 name: 'admin-collections-id-update',
                 params: {
@@ -47,7 +47,7 @@
             <b-btn
               variant="danger"
               size="sm"
-              class="btn-block"
+              block
               @click="deleteCollection(collection.item.id)">
               Delete
             </b-btn>

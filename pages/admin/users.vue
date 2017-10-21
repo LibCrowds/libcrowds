@@ -27,7 +27,7 @@
                 <b-btn
                   :variant="user.item.admin ? 'warning' : 'success'"
                   size="sm"
-                  class="btn-block"
+                  block
                   @click="toggleAdmin(user.item)">
                   {{ getButtonText(user.item) }}
                 </b-btn>
@@ -50,6 +50,7 @@
           <b-btn
             variant="success"
             class="mt-1"
+            block
             size="sm"
             @click="download('csv')">
             Export as CSV
@@ -57,6 +58,7 @@
           <b-btn
             variant="success"
             class="mt-1"
+            block
             size="sm"
             @click="download('json')">
             Export as JSON
@@ -77,7 +79,7 @@
               <b-btn
                 variant="warning"
                 size="sm"
-                class="btn-block"
+                block
                 @click="toggleAdmin(user.item)">
                 {{ getButtonText(user.item) }}
               </b-btn>

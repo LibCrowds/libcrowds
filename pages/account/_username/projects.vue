@@ -30,7 +30,7 @@
                     <b-btn
                       size="sm"
                       variant="success"
-                      class="btn-block"
+                      block
                       :to="{
                         name: 'project-settings',
                         params: {

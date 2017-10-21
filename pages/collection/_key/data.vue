@@ -68,7 +68,7 @@
               <b-btn
                 variant="success"
                 size="sm"
-                class="btn-block"
+                block
                 v-b-modal="`data-download-project-${project.item.id}`">
                 Download
               </b-btn>

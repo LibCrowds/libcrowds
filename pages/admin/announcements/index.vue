@@ -30,7 +30,7 @@
           <b-btn
             variant="outline-dark"
             size="sm"
-            class="btn-block"
+            block
             :to="{
               name: 'admin-announcements-id-update',
               params: {
@@ -42,7 +42,7 @@
           <b-btn
             variant="danger"
             size="sm"
-            class="btn-block"
+            block
             @click="deleteAnnouncement(announcement.item.id)">
             Delete
           </b-btn>

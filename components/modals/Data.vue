@@ -11,7 +11,7 @@
         <b-btn
           variant="success"
           size="sm"
-          class="btn-block"
+          block
           @click="download(data.item.type, data.item.format)">
           Download
         </b-btn>
