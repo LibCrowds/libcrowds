@@ -54,7 +54,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import pybossa from '@/api/pybossa'
 
@@ -115,14 +114,9 @@ export default {
         })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
       })
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Announcement deleted'
-      })
     }
   },
 
-  mixins: [ notifications, deleteDomainObject ]
+  mixins: [ deleteDomainObject ]
 }
 </script>

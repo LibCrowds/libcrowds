@@ -1,5 +1,6 @@
 import capitalize from 'capitalize'
 import pybossa from '@/api/pybossa'
+import { notifications } from '@/mixins/notifications'
 
 export const deleteDomainObject = {
   methods: {
@@ -16,10 +17,17 @@ export const deleteDomainObject = {
           return pybossa.client.delete(`/api/${type}/${id}`)
         }
       }).then(r => {
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: `${capitalize(terminology)} deleted`
+        })
         callback()
       }, (dismiss) => {
         this.$swal.close()
       })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }

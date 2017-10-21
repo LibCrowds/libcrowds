@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -125,15 +124,10 @@ export default {
         this.collections = this.collections.filter(collection => {
           return collection.id !== id
         })
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: 'Collection deleted'
-        })
       })
     }
   },
 
-  mixins: [ notifications, deleteDomainObject ]
+  mixins: [ deleteDomainObject ]
 }
 </script>
