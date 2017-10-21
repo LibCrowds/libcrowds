@@ -27,22 +27,16 @@ export default {
           fields: [
             {
               model: 'title',
-              label: 'Title',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'body',
-              label: 'Body',
+              label: 'Announcement',
               type: 'textArea',
               rows: 3,
               placeholder: 'Use Markdown'
             },
             {
-              model: 'media_url',
-              label: 'URL',
+              model: 'body',
+              label: 'Link URL',
               type: 'input',
-              inputType: 'url'
+              inputType: 'text'
             }
           ]
         }

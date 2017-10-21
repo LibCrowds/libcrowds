@@ -1,7 +1,7 @@
 <template>
   <div class="project-avatar">
     <img v-if="avatar" :src="avatar" :class="imgClass">
-    <div class="avatar-placeholder">
+    <div class="placeholder">
       <icon name="picture-o" scale="4"></icon>
     </div>
   </div>
@@ -62,18 +62,6 @@ export default {
   img {
     width: 100%;
     height: auto;
-  }
-
-  .avatar-placeholder {
-    background-color: $gray-100;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    svg {
-      color: $gray-600;
-    }
   }
 }
 </style>

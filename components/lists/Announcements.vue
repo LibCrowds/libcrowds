@@ -1,5 +1,5 @@
 <template>
-  <div id="announcements">
+  <div id="announcements-list">
 
     <b-button
       v-if="showAnnouncements"
@@ -36,12 +36,15 @@
       </div>
 
       <div class="card-footer p-1 text-center font-size-sm footer">
-        <!-- <nuxt-link
+        <nuxt-link
         :to="{
-          name: 'announcements-key'
-        }"> -->
-        <strong>See all</strong>
-        <!-- </nuxt-link> -->
+          name: 'account-username-announcements',
+          params: {
+            username: currentUser.username
+          }
+        }">
+        See all
+        </nuxt-link>
       </div>
 
     </b-card>
@@ -128,7 +131,7 @@ export default {
 <style lang="scss">
 @import '~assets/style/settings';
 
-#announcements {
+#announcements-list {
   padding-right: 0;
   position: relative;
   text-transform: none;
@@ -162,12 +165,6 @@ export default {
       max-height: 400px;
       overflow-y: auto;
     }
-  }
-
-  .card:not(#announcements-container) {
-    border-top: none;
-    border-left: none;
-    border-right: none;
   }
 
   .border-bottom {

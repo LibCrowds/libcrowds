@@ -248,7 +248,7 @@ export default {
   }
 
   .card-stat {
-    font-size: 0.75rem;
+    font-size: $font-size-xs;
     display: flex;
     align-items: center;
 
@@ -265,7 +265,7 @@ export default {
     border-right: 0;
     background: $white;
     color: $gray-600;
-    font-size: 0.75rem;
+    font-size: $font-size-xs;
     text-transform: uppercase;
 
     svg {
