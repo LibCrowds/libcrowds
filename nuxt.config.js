@@ -1,9 +1,10 @@
+const git = require('git-rev-sync')
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
   ? require('./test/test.local.config')
   : require('./local.config')
 
-module.exports = {
+const config = {
   mode: 'universal',
   head: {
     titleTemplate: ` %s | ${localConfig.brand}`,
@@ -89,8 +90,7 @@ module.exports = {
     { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
   modules: [
-    '@nuxtjs/pwa',
-    ['@nuxtjs/google-analytics', { ua: localConfig.analytics }]
+    '@nuxtjs/pwa'
   ],
   manifest: {
     name: localConfig.brand,
@@ -108,3 +108,17 @@ module.exports = {
     ]
   }
 }
+
+if (localConfig.hasOwnProperty('analytics')) {
+  config.modules.push([ '@nuxtjs/google-analytics', { ua: localConfig.analytics } ])
+}
+
+if (localConfig.hasOwnProperty('sentry')) {
+  localConfig.sentry.release = git.tag()
+  localConfig.sentry.tags = {
+    git_commit: git.short()
+  }
+  config.modules.push([ '~/modules/sentry/sentry', localConfig.sentry ])
+}
+
+module.exports = config
