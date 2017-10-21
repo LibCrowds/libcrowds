@@ -58,7 +58,7 @@ export default {
      * Handle navigation when the card is clicked.
      */
     onClick () {
-      const url = this.announcement.media_url
+      const url = this.announcement.body
       const parser = document.createElement('a')
       const internal = this.isInternal(url)
       if (internal) {
