@@ -55,6 +55,7 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
+import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import pybossa from '@/api/pybossa'
 
 export default {
@@ -104,35 +105,24 @@ export default {
   methods: {
     /**
      * Delete an announcement.
-     * @param {Number} id
+     * @param {Number|String} id
      *   The announcement ID.
      */
     deleteAnnouncement (id) {
-      this.$swal({
-        title: 'Delete Announcement',
-        text: 'Are you sure you want to delete this announcement?',
-        type: 'warning',
-        showCancelButton: true,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          return pybossa.client.delete(`/api/announcement/${id}`)
-        }
-      }).then(r => {
+      this.deleteDomainObject('announcement', id, () => {
         this.announcements = this.announcements.filter(announcement => {
           return announcement.id !== id
         })
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: 'Announcement deleted'
-        })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
-      }, (dismiss) => {
-        this.$swal.close()
+      })
+      this.notify({
+        type: 'success',
+        title: 'Success',
+        message: 'Announcement deleted'
       })
     }
   },
 
-  mixins: [ notifications ]
+  mixins: [ notifications, deleteDomainObject ]
 }
 </script>

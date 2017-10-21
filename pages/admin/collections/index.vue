@@ -20,15 +20,15 @@
         <b-table
           hover
           show-empty
-          :items="categories"
+          :items="collections"
           :fields="table.fields">
 
-          <template slot="n_projects" scope="category">
-            {{ nProjects[category.item.short_name] }}
+          <template slot="n_projects" scope="collection">
+            {{ nProjects[collection.item.short_name] }}
           </template>
 
-          <template slot="created" scope="category">
-            {{ category.item.created | moment('calendar') }}
+          <template slot="created" scope="collection">
+            {{ collection.item.created | moment('calendar') }}
           </template>
 
           <template slot="action" scope="collection">
@@ -61,6 +61,7 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
+import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
@@ -80,7 +81,7 @@ export default {
           },
           n_projects: {
             label: 'Projects',
-            class: 'text-center d-none d-xl-table-cell'
+            class: 'text-center d-none d-md-table-cell'
           },
           created: {
             label: 'Created',
@@ -98,7 +99,7 @@ export default {
   async asyncData () {
     const res = await pybossa.getAdminCategories()
     return {
-      categories: res.data.categories,
+      collections: res.data.categories,
       nProjects: res.data.n_projects_per_category
     }
   },
@@ -116,33 +117,23 @@ export default {
   methods: {
     /**
      * Delete a collection.
-     * @param {Number} id
+     * @param {Number|String} id
      *   The collection ID.
      */
     deleteCollection (id) {
-      this.$swal({
-        title: 'Delete Collection',
-        text: 'Are you sure you want to delete this collection?',
-        type: 'warning',
-        showCancelButton: true,
-        closeOnConfirm: false,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          return new Promise(function (resolve, reject) {
-            pybossa.deleteCategory(id).then(r => {
-              resolve()
-            })
-          })
-        }
-      }).then(r => {
-        this.categories = this.categories.filter(category => {
-          return category.id !== id
+      this.deleteDomainObject('category', id, () => {
+        this.collections = this.collections.filter(collection => {
+          return collection.id !== id
         })
-        this.flash(r)
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: 'Collection deleted'
+        })
       })
     }
   },
 
-  mixins: [ notifications ]
+  mixins: [ notifications, deleteDomainObject ]
 }
 </script>
