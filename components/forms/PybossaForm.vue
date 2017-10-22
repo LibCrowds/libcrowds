@@ -151,7 +151,6 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
-        console.log(r.data)
         this.processing = false
         if (r.data.status === 'error') {
           this.alert = r.data.flash
