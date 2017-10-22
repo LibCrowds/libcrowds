@@ -123,7 +123,7 @@ const config = {
 }
 
 if (localConfig.hasOwnProperty('analytics')) {
-  config.modules.push([ '@nuxtjs/google-analytics', { ua: localConfig.analytics } ])
+  config.modules.push([ '@nuxtjs/google-analytics', localConfig.analytics ])
 }
 
 if (localConfig.hasOwnProperty('sentry')) {
