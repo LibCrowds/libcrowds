@@ -217,7 +217,7 @@ export default {
         error({ statusCode: 404, message: 'Page not found' })
       }
       data.category = categoryData
-      return this.$axios.$get('project', {
+      return app.$axios.$get('/api/project', {
         params: {
           category_id: data.category.id,
           featured: true
