@@ -83,6 +83,13 @@ export default {
               placeholder: 'Appears on the homepage and as its meta description'
             },
             {
+              model: 'info.background',
+              label: 'Background Image',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'https://example.com/img.jpg'
+            },
+            {
               model: 'info.forumUrl',
               label: 'Forum URL',
               type: 'input',
