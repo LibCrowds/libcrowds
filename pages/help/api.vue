@@ -7,7 +7,7 @@
     </p>
     <pre class="mt-2 mb-0">
       <code>
-        {{ localConfig.pybossa.host }}/api
+        {{ apiRoute }}
       </code>
     </pre>
     <p>
@@ -33,7 +33,8 @@ export default {
 
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      apiRoute: `${window.location.origin}/api`
     }
   },
 
