@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import ProfileCard from '@/components/cards/Profile'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
@@ -66,12 +65,15 @@ export default {
     }
   },
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getAccount(params.username)
-    return {
-      user: res.data.user,
-      projects: res.data.projects || res.data.projects_contrib
-    }
+  async asyncData ({ params, app, error }) {
+    return app.$axios.$get(`/account/${params.username}`).then((data) => {
+      return {
+        user: data.user,
+        projects: data.projects || data.projects_contrib
+      }
+    }).catch((e) => {
+      error({ statusCode: e.statusCode, message: e.message })
+    })
   },
 
   head () {
