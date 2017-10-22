@@ -157,6 +157,8 @@ export default {
             text: 'Removed from favourites',
             type: 'success'
           })
+        }).catch(err => {
+          this.error({ statusCode: err.statusCode, message: err.message })
         })
       } else {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
@@ -165,6 +167,8 @@ export default {
             text: 'Added to favourites',
             type: 'success'
           })
+        }).catch(err => {
+          this.error({ statusCode: err.statusCode, message: err.message })
         })
       }
     },
@@ -216,6 +220,8 @@ export default {
           })
         }
         this.$cookie.set(cookieName, true, { expires: '1Y' })
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   },

@@ -183,6 +183,8 @@ export default {
       this.$axios.$get(endpoint).then(data => {
         this.projects = data.projects
         this.pagination = data.pagination
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 

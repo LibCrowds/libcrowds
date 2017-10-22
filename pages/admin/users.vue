@@ -121,7 +121,7 @@ export default {
     }
   },
 
-  asyncData ({ app }) {
+  asyncData ({ app, error }) {
     return Promise.all([
       app.$axios.$get('/admin/users'),
       app.$axios.$get('/api/globalstats')
@@ -147,6 +147,8 @@ export default {
           }
         }
       }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

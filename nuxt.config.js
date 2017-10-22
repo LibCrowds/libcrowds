@@ -96,6 +96,7 @@ const config = {
   axios: {
     baseURL: localConfig.pybossa.host,
     requestInterceptor: (config) => {
+      config.headers['Content-Type'] = 'application/json'
       if (config.data && config.data.hasOwnProperty('csrf')) {
         config.headers['X-CSRFToken'] = config.data.csrf
       }

@@ -145,7 +145,7 @@ export default {
     }
   },
 
-  asyncData ({ app }) {
+  asyncData ({ app, error }) {
     return Promise.all([
       app.$axios.$get('/stats'),
       app.$axios.$get('/leaderboard'),
@@ -157,6 +157,8 @@ export default {
         top10Users: leaderboardData.top_users.slice(0, 10),
         collections: categoryData
       }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

@@ -119,7 +119,7 @@ export default {
         this.announcements = this.announcements.filter(announcement => {
           return announcement.id !== id
         })
-        this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
+        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
       })
     },
 

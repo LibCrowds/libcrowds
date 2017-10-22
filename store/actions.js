@@ -1,6 +1,6 @@
 export default {
   UPDATE_CURRENT_USER: async ({ dispatch, commit }, axios) => {
-    axios.$get(`/account/profile`).then(data => {
+    return axios.$get(`/account/profile`).then(data => {
       if ('user' in data) {
         commit('LOGIN', data.user)
       } else {
@@ -9,15 +9,14 @@ export default {
     })
   },
 
-  LOGOUT: async ({ commit }, { axios, callback }) => {
-    axios.$get('/account/signout').then(data => {
+  LOGOUT: async ({ commit }, axios) => {
+    return axios.$get('/account/signout').then(data => {
       commit('LOGOUT')
-      callback(data)
     })
   },
 
   UPDATE_ANNOUNCEMENTS: async ({ commit, state }, axios) => {
-    axios.$get('/api/announcement', {
+    return axios.$get('/api/announcement', {
       params: {
         orderby: 'created',
         desc: true

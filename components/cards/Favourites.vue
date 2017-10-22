@@ -70,8 +70,10 @@ export default {
   },
 
   mounted () {
-    this.$axios.get('/api/favorites').then(data => {
+    this.$axios.$get('/api/favorites').then(data => {
       this.images = this.getImageData(data)
+    }).catch(err => {
+      this.error({ statusCode: err.statusCode, message: err.message })
     })
   }
 }

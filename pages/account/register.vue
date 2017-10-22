@@ -58,7 +58,7 @@ import OauthButtons from '@/components/buttons/Oauth'
 export default {
   layout: 'default',
 
-  async asyncData ({ query, redirect, app }) {
+  async asyncData ({ query, redirect, app, error }) {
     return Promise.all([
       app.$axios.$get('/account/register'),
       app.$axios.$get('/account/signin')
@@ -118,6 +118,8 @@ export default {
         },
         auth: signinData.auth
       }
+    }).catch(err => {
+      this.error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

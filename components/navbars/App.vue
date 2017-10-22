@@ -146,11 +146,11 @@ export default {
     * Sign the user out.
     */
     signout () {
-      this.$store.dispatch('LOGOUT', this.$axios, (res) => {
-        if (res.data.next === '/') {
+      return this.$store.dispatch('LOGOUT', this.$axios).then(data => {
+        if (data.next === '/') {
           this.$router.push({ name: 'index' })
         }
-        this.flash(res)
+        this.flash(data)
       })
     }
   },
