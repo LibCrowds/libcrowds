@@ -42,7 +42,6 @@
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'default',
@@ -53,40 +52,43 @@ export default {
     }
   },
 
-  async asyncData ({ query, redirect, app }) {
-    const res = await pybossa.getAccountSignin()
-    const next = query.next || '/'
+  async asyncData ({ query, redirect, app, error }) {
+    const endpoint = '/account/signin'
+    return app.$axios.$get(endpoint).then(data => {
+      const next = query.next || '/'
 
-    // Redirect if already signed in
-    if (res.data.next === '/') {
-      redirect(next)
-    }
-
-    return {
-      next: next,
-      auth: res.data.auth,
-      form: {
-        endpoint: '/account/signin',
-        method: 'post',
-        model: res.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'email',
-              label: 'Email',
-              type: 'input',
-              inputType: 'email'
-            },
-            {
-              model: 'password',
-              label: 'Password',
-              type: 'input',
-              inputType: 'password'
-            }
-          ]
+      // Redirect if already signed in
+      if (data.next === '/') {
+        redirect(next)
+      }
+      return {
+        next: data.next,
+        auth: data.auth,
+        form: {
+          endpoint: '/account/signin',
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'email',
+                label: 'Email',
+                type: 'input',
+                inputType: 'email'
+              },
+              {
+                model: 'password',
+                label: 'Password',
+                type: 'input',
+                inputType: 'password'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

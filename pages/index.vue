@@ -125,7 +125,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
@@ -148,15 +147,15 @@ export default {
 
   asyncData ({ app }) {
     return Promise.all([
-      pybossa.getStats(),
-      pybossa.getLeaderboard(),
-      pybossa.list('category')
-    ]).then(([statsResponse, leaderboardResponse, categoryResponse]) => {
+      app.$axios.$get('/stats'),
+      app.$axios.$get('/leaderboard'),
+      app.$axios.$get('/api/category')
+    ]).then(([statsData, leaderboardData, categoryData]) => {
       return {
-        stats: statsResponse.data.stats,
-        topUsers: leaderboardResponse.data.top_users,
-        top10Users: leaderboardResponse.data.top_users.slice(0, 10),
-        collections: categoryResponse.data
+        stats: statsData.stats,
+        topUsers: leaderboardData.top_users,
+        top10Users: leaderboardData.top_users.slice(0, 10),
+        collections: categoryData
       }
     })
   },

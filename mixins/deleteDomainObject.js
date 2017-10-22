@@ -1,5 +1,4 @@
 import capitalize from 'capitalize'
-import pybossa from '@/api/pybossa'
 import { notifications } from '@/mixins/notifications'
 
 export const deleteDomainObject = {
@@ -14,9 +13,9 @@ export const deleteDomainObject = {
         closeOnConfirm: false,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return pybossa.client.delete(`/api/${type}/${id}`)
+          return this.$axios.$delete(`/api/${type}/${id}`)
         }
-      }).then(r => {
+      }).then(data => {
         this.notify({
           type: 'success',
           title: 'Success',

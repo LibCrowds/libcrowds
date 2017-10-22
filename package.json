@@ -18,7 +18,6 @@
     "@nuxtjs/google-analytics": "^1.0.0",
     "@nuxtjs/proxy": "^1.1.2",
     "@nuxtjs/pwa": "^1.0.2",
-    "axios": "^0.16.2",
     "bootstrap": "4.0.0-beta.2",
     "bootstrap-vue": "^1.0.0-beta.9",
     "capitalize": "^1.0.0",

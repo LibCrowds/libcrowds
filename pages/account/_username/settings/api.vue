@@ -8,17 +8,20 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'account-dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getResetApiKey(params.username)
-    return {
-      csrf: res.data.form.csrf
-    }
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/account/${params.name}/resetapikey`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        csrf: data.form.csrf
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {
@@ -66,7 +69,7 @@ export default {
      * Trigger an update of the current user.
      */
     updateCurrentUser () {
-      this.$store.dispatch('UPDATE_CURRENT_USER')
+      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
     }
   }
 }

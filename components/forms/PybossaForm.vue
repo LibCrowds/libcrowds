@@ -55,7 +55,6 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
-import pybossa from '@/api/pybossa'
 
 export default {
   data () {
@@ -101,7 +100,7 @@ export default {
     },
     next: {
       type: String,
-      default: null
+      default: ''
     }
   },
 
@@ -143,7 +142,7 @@ export default {
       }
 
       this.alert = ''
-      pybossa.client({
+      this.$axios({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
@@ -152,13 +151,14 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
+        console.log(r.data)
         this.processing = false
         if (r.data.status === 'error') {
           this.alert = r.data.flash
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
-          this.flash(r)
+          this.flash(r.data)
           this.handleSuccess(r.data)
         }
       }).catch(err => {
@@ -176,7 +176,7 @@ export default {
      *   The response data
      */
     handleSuccess (data) {
-      if (this.next) {
+      if (this.next && this.next.length) {
         this.$router.push({ path: this.next })
       }
       this.$emit('success', data)

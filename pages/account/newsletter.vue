@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 
 export default {
@@ -63,8 +62,14 @@ export default {
      */
     subscribe (subscribe) {
       const next = this.$route.query.next || '/'
-      pybossa.subscribeToNewsletter(subscribe).then(res => {
+      this.$axios.$get(`/account/newsletter`, {
+        params: {
+          subscribe: subscribe ? 'True' : 'False'
+        }
+      }).then(data => {
         this.$router.push({ path: next })
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

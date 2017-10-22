@@ -10,38 +10,41 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
 
-  async asyncData () {
-    const res = await pybossa.getNewAnnouncement()
-    return {
-      form: {
-        endpoint: '/admin/announcement/new',
-        method: 'post',
-        model: res.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'title',
-              label: 'Content',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Use Markdown'
-            },
-            {
-              model: 'body',
-              label: 'URL',
-              type: 'input',
-              inputType: 'text'
-            }
-          ]
+  async asyncData ({ app, error }) {
+    const endpoint = `/admin/announcement/new`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        form: {
+          endpoint: '/admin/announcement/new',
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'title',
+                label: 'Content',
+                type: 'textArea',
+                rows: 3,
+                placeholder: 'Use Markdown'
+              },
+              {
+                model: 'body',
+                label: 'URL',
+                type: 'input',
+                inputType: 'text'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

@@ -61,7 +61,6 @@
 
 <script>
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -91,12 +90,16 @@ export default {
     }
   },
 
-  async asyncData () {
-    const res = await pybossa.getAdminCategories()
-    return {
-      collections: res.data.categories,
-      nProjects: res.data.n_projects_per_category
-    }
+  async asyncData ({ app, error }) {
+    const endpoint = `/admin/categories`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        collections: data.categories,
+        nProjects: data.n_projects_per_category
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

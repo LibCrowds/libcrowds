@@ -7,44 +7,47 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'account-dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProfile(params.username)
-    res.data.form.btn = 'Password'
-    return {
-      form: {
-        endpoint: `account/${params.username}/update`,
-        method: 'post',
-        model: res.data.password_form,
-        schema: {
-          fields: [
-            {
-              model: 'current_password',
-              label: 'Current Password',
-              type: 'input',
-              inputType: 'password'
-            },
-            {
-              model: 'new_password',
-              label: 'New Password',
-              type: 'input',
-              inputType: 'password'
-            },
-            {
-              model: 'confirm',
-              label: 'Confirm New Password',
-              type: 'input',
-              inputType: 'password'
-            }
-          ]
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/account/${params.username}/update`
+    return app.$axios.$get(endpoint).then(data => {
+      data.form.btn = 'Password'
+      return {
+        form: {
+          endpoint: `account/${params.username}/update`,
+          method: 'post',
+          model: data.password_form,
+          schema: {
+            fields: [
+              {
+                model: 'current_password',
+                label: 'Current Password',
+                type: 'input',
+                inputType: 'password'
+              },
+              {
+                model: 'new_password',
+                label: 'New Password',
+                type: 'input',
+                inputType: 'password'
+              },
+              {
+                model: 'confirm',
+                label: 'Confirm New Password',
+                type: 'input',
+                inputType: 'password'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

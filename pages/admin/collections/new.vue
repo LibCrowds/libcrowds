@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -49,37 +48,41 @@ export default {
     }
   },
 
-  async asyncData () {
-    const res = await pybossa.getAdminCategories()
-
-    delete res.data.form.id
-
-    return {
-      categories: res.data.categories,
-      form: {
-        endpoint: '/admin/categories',
-        method: 'post',
-        model: res.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'name',
-              label: 'Name',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'description',
-              label: 'Description',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Appears on the homepage and as its meta description'
-            }
-          ]
-        }
-      },
-      nProjects: res.data.n_projects_per_category
-    }
+  async asyncData ({ app, error }) {
+    const endpoint = `/admin/categories/new`
+    return app.$axios.$get(endpoint).then(data => {
+      // See https://github.com/LibCrowds/libcrowds/issues/100
+      delete data.form.id
+      return {
+        categories: data.categories,
+        form: {
+          endpoint: '/admin/categories',
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'name',
+                label: 'Name',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'description',
+                label: 'Description',
+                type: 'textArea',
+                rows: 3,
+                placeholder: 'Appears on the microsite homepage and as its ' +
+                  'meta description'
+              }
+            ]
+          }
+        },
+        nProjects: data.n_projects_per_category
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {
@@ -99,7 +102,6 @@ export default {
      *   The response data.
      */
     onSuccess (data) {
-      console.log(data)
       const category = data.categories.filter(category => {
         return category.name === data.form.name
       })[0]

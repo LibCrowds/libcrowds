@@ -32,57 +32,60 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'project-dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProject(params.shortname)
-    return {
-      project: res.data.project,
-      form: {
-        endpoint: `project/${params.shortname}/update`,
-        method: 'post',
-        model: res.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'name',
-              label: 'Name',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'short_name',
-              label: 'Short name',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'description',
-              label: 'Description',
-              type: 'textArea',
-              rows: 2,
-              placeholder: 'Short description shown on the project cards'
-            },
-            {
-              model: 'webhook',
-              label: 'Webhook URL',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'pasword',
-              label: 'Password',
-              type: 'input',
-              inputType: 'text'
-            }
-          ]
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/project/${params.shortname}/update`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        project: data.project,
+        form: {
+          endpoint: `project/${params.shortname}/update`,
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'name',
+                label: 'Name',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'short_name',
+                label: 'Short name',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'description',
+                label: 'Description',
+                type: 'textArea',
+                rows: 2,
+                placeholder: 'Short description shown on the project cards'
+              },
+              {
+                model: 'webhook',
+                label: 'Webhook URL',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'pasword',
+                label: 'Password',
+                type: 'input',
+                inputType: 'text'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

@@ -10,22 +10,25 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import AvatarForm from '@/components/forms/AvatarForm'
 
 export default {
   layout: 'project-dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getUpdateProject(params.shortname)
-    res.data.form.btn = 'Upload'
-    return {
-      project: res.data.project,
-      form: {
-        endpoint: `project/${params.shortname}/update`,
-        model: res.data.upload_form
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/project/${params.shortname}/update`
+    return app.$axios.$get(endpoint).then(data => {
+      data.form.btn = 'Upload'
+      return {
+        project: data.project,
+        form: {
+          endpoint: `project/${params.shortname}/update`,
+          model: data.upload_form
+        }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

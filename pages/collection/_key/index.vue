@@ -198,7 +198,6 @@
 
 <script>
 import { computeCollection } from '@/mixins/computeCollection'
-import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -207,29 +206,29 @@ import ProjectCard from '@/components/cards/Project'
 export default {
   layout: 'collection',
 
-  async asyncData ({ params, error }) {
-    let categoryRes = await pybossa.search('category', {
-      short_name: params.key
+  async asyncData ({ params, app, error }) {
+    const data = {}
+    return app.$axios.$get('/api/category', {
+      params: {
+        short_name: params.key
+      }
+    }).then(categoryData => {
+      if (!categoryData.length) {
+        error({ statusCode: 404, message: 'Page not found' })
+      }
+      data.category = categoryData
+      return this.$axios.$get('project', {
+        params: {
+          category_id: data.category.id,
+          featured: true
+        }
+      })
+    }).then(featuredData => {
+      data.featured = featuredData
+      return data
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
     })
-
-    if (!categoryRes.data.length) {
-      error()
-      return
-    }
-
-    const category = categoryRes.data[0]
-
-    // TODO: figure out the solution for featured categories.
-    // See https://github.com/Scifabric/pybossa/issues/1712
-    let featuredRes = await pybossa.search('project', {
-      category_id: category.id,
-      featured: true
-    })
-
-    return {
-      category: category,
-      featured: featuredRes.data
-    }
   },
 
   data () {

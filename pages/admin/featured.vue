@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import CategoriesList from '@/components/lists/Categories'
 
 export default {
@@ -100,13 +99,17 @@ export default {
     }
   },
 
-  async asyncData () {
-    const res = await pybossa.getAdminFeatured()
-    return {
-      categories: res.data.categories,
-      projects: res.data.projects,
-      csrf: res.data.form.csrf
-    }
+  async asyncData ({ app, error }) {
+    const endpoint = `/admin/featured`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        categories: data.categories,
+        projects: data.projects,
+        csrf: data.form.csrf
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {
@@ -135,16 +138,13 @@ export default {
      *   The project.
      */
     toggleFeatured (project) {
-      const params = { csrf: this.csrf }
-      if (project.featured) {
-        pybossa.featureProject(project.id, params).then(r => {
-          project.featured = !project.featured
-        })
-      } else {
-        pybossa.unfeatureProject(project.id, params).then(r => {
-          project.featured = !project.featured
-        })
-      }
+      this.$axios.$put(`/api/project/${this.project.id}`, {
+        featured: !this.project.featured
+      }).then(data => {
+        this.project.featured = !this.project.featured
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
+      })
     },
 
     /**

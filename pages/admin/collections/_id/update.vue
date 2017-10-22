@@ -13,20 +13,22 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
 
-  async asyncData ({ params }) {
-    const res = await pybossa.client.get(`/api/category/${params.id}`)
-    const category = res.data
-    category.info = category.info || {}
-    return {
-      category: category
-    }
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/api/category/${params.id}`
+    return app.$axios.$get(endpoint).then(data => {
+      data.info = data.info || {}
+      return {
+        category: data
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

@@ -29,7 +29,6 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
-import axios from 'axios'
 import localConfig from '@/local.config'
 
 export default {
@@ -83,19 +82,19 @@ export default {
       formData.append('avatar', this.form.model.avatar)
 
       const url = `${localConfig.pybossa.host}/${this.form.endpoint}`
-      axios.post(url, formData, {
+      this.$axios.post(url, formData, {
         headers: {
           'X-CSRFToken': this.form.model.csrf
         },
         withCredentials: true
-      }).then(r => {
+      }).then(data => {
         this.notify({
           title: 'Success',
           text: 'The image should be refreshed in a few minutes',
           type: 'success'
         })
       }).catch(err => {
-        this.$router.push({ name: String(err.response.status) })
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 

@@ -1,8 +1,7 @@
 const Raven = require('raven')
 const path = require('path')
 
-
-module.exports = function sentryErrorMiddleware(options) {
+module.exports = function sentryErrorMiddleware (options) {
   // Setup raven
   Raven.config(`https://${options.public_key}:` +
     `${options.private_key}@sentry.io/` +

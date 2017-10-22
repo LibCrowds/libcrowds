@@ -62,16 +62,19 @@
 <script>
 import marked from 'marked'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
-import pybossa from '@/api/pybossa'
 
 export default {
   layout: 'admin-dashboard',
 
-  async asyncData () {
-    const res = await pybossa.getAdminAnnouncements()
-    return {
-      announcements: res.data.announcements
-    }
+  async asyncData ({ app, error }) {
+    const endpoint = `/admin/announcement`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        announcements: data.announcements
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   data () {

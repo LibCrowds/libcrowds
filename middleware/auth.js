@@ -6,7 +6,7 @@ import { updateSession } from '@/utils/auth'
  * @param {Object} context
  *   The nuxt context.
  */
-export default function ({ isServer, store, req }) {
+export default function ({ isServer, store, req, app, error }) {
   const currentUser = store.state.currentUser
   let update = false
 
@@ -18,6 +18,6 @@ export default function ({ isServer, store, req }) {
   }
 
   if (update) {
-    store.dispatch('UPDATE_CURRENT_USER')
+    store.dispatch('UPDATE_CURRENT_USER', app.$axios)
   }
 }

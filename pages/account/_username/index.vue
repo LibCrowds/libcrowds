@@ -71,8 +71,8 @@ export default {
         user: data.user,
         projects: data.projects || data.projects_contrib
       }
-    }).catch((e) => {
-      error({ statusCode: e.statusCode, message: e.message })
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

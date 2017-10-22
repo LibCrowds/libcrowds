@@ -14,34 +14,37 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'default',
 
-  async asyncData ({ query }) {
-    let res = await pybossa.getRecoverPassword()
-    return {
-      next: query.next || '/',
-      form: {
-        endpoint: '/account/forgot-password',
-        method: 'post',
-        model: res.data.form,
-        schema: {
-          fields: [
-            {
-              model: 'email_addr',
-              label: 'Email',
-              type: 'input',
-              inputType: 'email',
-              placeholder: 'you@example.com'
-            }
-          ]
+  async asyncData ({ query, app, error }) {
+    const endpoint = '/account/forgot-password'
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        next: query.next || '/',
+        form: {
+          endpoint: '/account/forgot-password',
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'email_addr',
+                label: 'Email',
+                type: 'input',
+                inputType: 'email',
+                placeholder: 'you@example.com'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

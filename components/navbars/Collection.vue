@@ -228,7 +228,7 @@ export default {
      * Sign the user out.
      */
     signout () {
-      this.$store.dispatch('LOGOUT', (res) => {
+      this.$store.dispatch('LOGOUT', this.$axios, (res) => {
         if (res.data.next === '/') {
           this.$router.push({ name: 'index' })
         }

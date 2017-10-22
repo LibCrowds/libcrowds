@@ -91,7 +91,7 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/proxy',
+    '@nuxtjs/proxy'
   ],
   axios: {
     baseURL: localConfig.pybossa.host,

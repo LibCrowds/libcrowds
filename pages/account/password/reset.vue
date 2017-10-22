@@ -14,42 +14,45 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'default',
 
-  async asyncData ({ query }) {
-    const res = await pybossa.getResetPassword()
-    return {
-      next: query.next || '/',
-      form: {
-        endpoint: '/account/reset-password',
-        method: 'post',
-        model: res.data.form,
-        params: query || null,
-        schema: {
-          fields: [
-            {
-              model: 'new_password',
-              label: 'New Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Choose a new password'
-            },
-            {
-              model: 'confirm',
-              label: 'Confirm Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Confirm your new password'
-            }
-          ]
+  async asyncData ({ query, app, error }) {
+    const endpoint = '/account/reset-password'
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        next: query.next || '/',
+        form: {
+          endpoint: '/account/reset-password',
+          method: 'post',
+          model: data.form,
+          params: query || null,
+          schema: {
+            fields: [
+              {
+                model: 'new_password',
+                label: 'New Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Choose a new password'
+              },
+              {
+                model: 'confirm',
+                label: 'Confirm Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Confirm your new password'
+              }
+            ]
+          }
         }
       }
-    }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {

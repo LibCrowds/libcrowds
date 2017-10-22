@@ -14,7 +14,6 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
-import pybossa from '@/api/pybossa'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -41,11 +40,15 @@ export default {
     }
   },
 
-  async asyncData ({ params }) {
-    const res = await pybossa.getProject(params.shortname)
-    return {
-      project: res.data.project
-    }
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/project/${params.shortname}`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        project: data.project
+      }
+    }).catch(err => {
+      error({ statusCode: err.statusCode, message: err.message })
+    })
   },
 
   head () {
@@ -100,13 +103,15 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      pybossa.client.get(url).then(r => {
-        if (isEmpty(r.data)) {
+      this.$axios.$get(url).then(data => {
+        if (isEmpty(data)) {
           this.handleCompletion()
         } else {
-          const loadedTasks = Array.isArray(r.data) ? r.data : [r.data]
+          const loadedTasks = Array.isArray(data) ? data : [data]
           this.tasks = this.tasks.concat(loadedTasks)
         }
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 
@@ -142,8 +147,10 @@ export default {
      */
     onTaskLiked (taskId, liked) {
       if (liked) {
-        pybossa.create('favorite', {
-          task_id: taskId
+        this.axios.$post('/api/favorite', {
+          params: {
+            task_id: taskId
+          }
         }).then(() => {
           this.notify({
             title: 'Success',
@@ -152,7 +159,7 @@ export default {
           })
         })
       } else {
-        pybossa.delete('favorite', taskId).then(() => {
+        this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
           this.notify({
             title: 'Success',
             text: 'Added to favourites',
@@ -191,7 +198,7 @@ export default {
         'task_id': taskId,
         'info': answer
       })
-      pybossa.client.post(`/api/taskrun`, taskrun).then(r => {
+      this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
         this.removeTask(taskId)
         this.loadTasks()
         if (hasParticipated === 'true') {

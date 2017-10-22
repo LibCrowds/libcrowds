@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
@@ -59,15 +58,15 @@ import OauthButtons from '@/components/buttons/Oauth'
 export default {
   layout: 'default',
 
-  asyncData ({ query, redirect }) {
+  async asyncData ({ query, redirect, app }) {
     return Promise.all([
-      pybossa.getAccountRegistration(),
-      pybossa.getAccountSignin()
-    ]).then(([registrationRes, signinRes]) => {
+      app.$axios.$get('/account/register'),
+      app.$axios.$get('/account/signin')
+    ]).then(([registrationData, signinData]) => {
       const next = query.next || '/'
 
       // Redirect if already signed in
-      if (signinRes.data.next === '/') {
+      if (signinData.next === '/') {
         redirect(next)
       }
 
@@ -76,7 +75,7 @@ export default {
         form: {
           endpoint: '/account/register',
           method: 'post',
-          model: registrationRes.data.form,
+          model: registrationData.form,
           schema: {
             fields: [
               {
@@ -117,7 +116,7 @@ export default {
             ]
           }
         },
-        auth: signinRes.data.auth
+        auth: signinData.auth
       }
     })
   },

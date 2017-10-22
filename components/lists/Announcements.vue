@@ -40,7 +40,7 @@
         :to="{
           name: 'account-username-announcements',
           params: {
-            username: currentUser.username
+            username: currentUser.name
           }
         }">
         See all
@@ -53,7 +53,6 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import pybossa from '@/api/pybossa'
 import 'vue-awesome/icons/bell'
 import AnnouncementCard from '@/components/cards/Announcement'
 
@@ -117,11 +116,14 @@ export default {
       }
 
       // Set last read announcement for the user
-      this.currentUser.info.announcements.lead_read = this.announcements[0].id
-      pybossa.client.put(`/api/user/${this.currentUser.id}`, {
+      delete this.currentUser.info.announcements.lead_read
+      this.currentUser.info.announcements.last_read = this.announcements[0].id
+      this.$axios.$put(`/api/user/${this.currentUser.id}`, {
         info: this.currentUser.info
-      }).then(r => {
-        this.$store.dispatch('UPDATE_CURRENT_USER')
+      }).then(data => {
+        this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

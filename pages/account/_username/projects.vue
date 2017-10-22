@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import intersection from 'lodash/intersection'
 import CategoriesList from '@/components/lists/Categories'
 
@@ -132,38 +131,39 @@ export default {
      * @param {Object} category
      *   The category.
      */
-    fetchProjects (category) {
-      this.projects = []
-      pybossa.getCategory(category.short_name, this.page).then(r => {
-        this.projects = r.data.projects
-        this.pagination = r.data.pagination
+    fetchProjects () {
+      const shortName = this.activeCategory.short_name
+      const endpoint = `/project/category/${shortName}/page/${this.page}`
+      this.$axios.$get(endpoint).then(data => {
+        this.projects = data.projects
+        this.pagination = data.pagination
       })
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    let data = {}
-    pybossa.getAccountProjects(to.params.username).then(r => {
-      data = r.data
-      return pybossa.client.get('/')
-    }).then(r => {
-      data.categories = r.data.categories
-      data.categoriesProjects = r.data.categories_projects
-      next(vm => vm.setData(data))
-    })
+    // let data = {}
+    // pybossa.getAccountProjects(to.params.username).then(r => {
+    //   data = r.data
+    //   return pybossa.client.get('/')
+    // }).then(r => {
+    //   data.categories = r.data.categories
+    //   data.categoriesProjects = r.data.categories_projects
+    //   next(vm => vm.setData(data))
+    // })
   },
 
   beforeRouteUpdate (to, from, next) {
-    let data = {}
-    pybossa.getAccountProjects(to.params.username).then(r => {
-      data = r.data
-      return pybossa.client.get('/')
-    }).then(r => {
-      data.categories = r.data.categories
-      data.categoriesProjects = r.data.categories_projects
-      this.setData(data)
-      next()
-    })
+    // let data = {}
+    // pybossa.getAccountProjects(to.params.username).then(r => {
+    //   data = r.data
+    //   return pybossa.client.get('/')
+    // }).then(r => {
+    //   data.categories = r.data.categories
+    //   data.categoriesProjects = r.data.categories_projects
+    //   this.setData(data)
+    //   next()
+    // })
   }
 }
 </script>

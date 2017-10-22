@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import exportFile from '@/utils/exportFile'
 
 export default {
@@ -76,8 +75,16 @@ export default {
      */
     download (type, format) {
       const shortName = this.project.short_name
-      pybossa.exportData(shortName, type, format).then(r => {
-        exportFile(r.data, `${this.project.short_name}_${type}`, format)
+      this.$axios.$get(`/project/${shortName}/tasks/export`, {
+        responseType: 'arraybuffer',
+        params: {
+          type: type,
+          format: format
+        }
+      }).then(data => {
+        exportFile(data, `${this.project.short_name}_${type}`, format)
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

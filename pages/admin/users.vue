@@ -93,7 +93,6 @@
 </template>
 
 <script>
-import pybossa from '@/api/pybossa'
 import exportFile from '@/utils/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 
@@ -122,19 +121,19 @@ export default {
     }
   },
 
-  asyncData () {
+  asyncData ({ app }) {
     return Promise.all([
-      pybossa.getAdminUsers(),
-      pybossa.getStatsSummary()
-    ]).then(([adminUserRes, statsRes]) => {
+      app.$axios.$get('/admin/users'),
+      app.$axios.$get('/api/globalstats')
+    ]).then(([adminUserData, statsData]) => {
       return {
-        nUsers: statsRes.data.n_users,
-        adminUsers: adminUserRes.data.users,
-        found: adminUserRes.data.found,
+        nUsers: statsData.n_users,
+        adminUsers: adminUserData.users,
+        found: adminUserData.found,
         form: {
           endpoint: '/admin/users',
           method: 'post',
-          model: statsRes.data.form,
+          model: adminUserData.form,
           schema: {
             fields: [
               {
@@ -177,17 +176,13 @@ export default {
      *   The user.
      */
     toggleAdmin (user) {
-      if (user.admin) {
-        pybossa.addAdminUser(user.id, this.form.model).then(r => {
-          this.adminUsers.push(user)
-        })
-      } else {
-        pybossa.delAdminUser(user.id, this.form.model).then(r => {
-          this.adminUsers = this.adminUsers.filter(adminUser => {
-            return adminUser.id !== user.id
-          })
-        })
-      }
+      this.$axios.$put(`/api/user/${user.id}`, {
+        admin: !user.admin
+      }).then(data => {
+        user.admin = !user.admin
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
+      })
     },
 
     /**
@@ -204,11 +199,15 @@ export default {
      *   The format to export.
      */
     download (format) {
-      if (format !== 'json' && format !== 'csv') {
-        throw Error('Invalid format')
-      }
-      pybossa.exportUsers(format).then(r => {
-        exportFile(r.data, 'user_data', format)
+      this.$axios.$get(`/admin/users/export`, {
+        responseType: 'arraybuffer',
+        params: {
+          format: format
+        }
+      }).then(data => {
+        exportFile(data, 'user_data', format)
+      }).catch(err => {
+        this.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

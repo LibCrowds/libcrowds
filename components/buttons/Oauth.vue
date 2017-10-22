@@ -50,7 +50,7 @@ export default {
     },
     next: {
       type: String,
-      required: true
+      required: ''
     }
   },
 
