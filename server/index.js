@@ -1,7 +1,6 @@
 import chalk from 'chalk'
 import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
-import errorhandler from 'errorhandler'
 
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 8080
@@ -24,11 +23,6 @@ if (config.dev) {
   builder.build().then(listen)
 } else {
   listen()
-}
-
-// Development error handler
-if (config.dev) {
-  app.use(errorhandler())
 }
 
 // Listen to the server

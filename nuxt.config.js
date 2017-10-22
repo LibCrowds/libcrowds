@@ -93,6 +93,15 @@ const config = {
     '@nuxtjs/pwa',
     '@nuxtjs/proxy',
   ],
+  axios: {
+    baseURL: localConfig.pybossa.host,
+    requestInterceptor: (config) => {
+      if (config.data && config.data.hasOwnProperty('csrf')) {
+        config.headers['X-CSRFToken'] = config.data.csrf
+      }
+      return config
+    }
+  },
   proxy: {
     '/api': localConfig.pybossa.host
   },
