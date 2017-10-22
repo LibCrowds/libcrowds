@@ -15,7 +15,9 @@ This file can now be edited as required.
 [Google Analytics](https://analytics.google.com) can be added to the site via the `analytics` property.
 
 ```js
-localConfig.analytics = 'UA-XXX-X'
+config.analytics = {
+  ua: 'UA-XXX-X'
+}
 ```
 
 ### brand
@@ -23,7 +25,7 @@ localConfig.analytics = 'UA-XXX-X'
 The `brand` will appear throughout your site.
 
 ```js
-localConfig.brand: 'My Brand'
+config.brand: 'My Brand'
 ```
 
 ### company
@@ -31,7 +33,7 @@ localConfig.brand: 'My Brand'
 The `company` responsible for the site.
 
 ```js
-localConfig.company: 'My Company'
+config.company: 'My Company'
 ```
 
 ### contact
@@ -39,7 +41,7 @@ localConfig.company: 'My Company'
 The `contact` information will appear in the site footer.
 
 ```js
-localConfig.contact = {
+config.contact = {
   email: 'me@example.com',
   twitter: 'mytwitterhandle'
 }
@@ -50,7 +52,7 @@ localConfig.contact = {
 The `description` will appear on the site homepage and form its meta description.
 
 ```js
-localConfig.description: 'My SEO optimised meta description'
+config.description: 'My SEO optimised meta description'
 ```
 
 ### githubUrl
@@ -58,7 +60,7 @@ localConfig.description: 'My SEO optimised meta description'
 The `githubUrl` will appear in the site footer.
 
 ```js
-localConfig.githubUrl = 'https://github.com/github'
+config.githubUrl = 'https://github.com/github'
 ```
 
 ### logo
@@ -67,7 +69,7 @@ An absolute path to the `logo`, which should be an SVG file and will be displaye
 
 ```js
 const path = require('path')
-localConfig.logo = path.resolve(`./company-logo.svg`)
+config.logo = path.resolve(`./company-logo.svg`)
 ```
 
 ### mapbox
@@ -75,7 +77,7 @@ localConfig.logo = path.resolve(`./company-logo.svg`)
 [Mapbox](https://www.mapbox.com/) is used to present any maps present on the site and can be configured via the `mapbox` property.
 
 ```js
-localConfig.mapbox = {
+config.mapbox = {
   id: 'mapbox.streets',
   publicApiToken: 'token'
 }
@@ -86,24 +88,32 @@ localConfig.mapbox = {
 The `host` and `timeout` used for all PYBOSSA API calls.
 
 ```js
-localConfig.pybossa = {
+config.pybossa = {
   host: 'https://pybossa.backend.com',
   timeout: 10000
 }
 ```
 
-### sentryPublicDsn
+### sentry
 
-The `sentryPublicDsn` property is used to configure [Sentry](https://sentry.io/) error tracking.
+[Sentry](https://sentry.io/) error tracking can be enabled via the `sentry` property.
 
 ```js
-localConfig.sentryPublicDsn = 'https://******@sentry.io/<project>'
+config.sentry = {
+  public_key: '',
+  private_key: '',
+  project_id: ''
+}
 ```
+
+{% hint style='info' %}
+The LibCrowds release and commit running on the server when the error was thrown will be appended automatically.
+{% endhint %}
 
 ### tagline
 
 The `tagline` will appear on the site homepage.
 
 ```js
-localConfig.tagline: 'My inspiring tagline'
+config.tagline: 'My inspiring tagline'
 ```
