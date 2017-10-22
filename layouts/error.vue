@@ -2,16 +2,12 @@
   <main id="error-layout">
     <div class="container text-center">
       <icon label="Error" class="mb-2">
-        <icon :name="iconName"></icon>
+        <icon name="exclamation"></icon>
         <icon name="circle-thin" scale="2"></icon>
       </icon>
-
       <h1 class="title">
-        {{ error.statusCode }}
+         {{ error.message }}
       </h1>
-      <h2 class="info">
-        {{ message }}
-      </h2>
       <b-btn
         variant="dark"
         size="lg"
@@ -26,31 +22,10 @@
 
 <script>
 import 'vue-awesome/icons/circle-thin'
-import 'vue-awesome/icons/lock'
 import 'vue-awesome/icons/exclamation'
-import statuses from 'statuses'
 
 export default {
-  props: {
-    error: {
-      type: Object
-    }
-  },
-
-  computed: {
-    iconName () {
-      if (this.error.statusCode === 403 || this.error.statusCode === 401) {
-        return 'lock'
-      }
-      return 'exclamation'
-    },
-    message () {
-      if (!this.error.message) {
-        return statuses[this.error.statusCode]
-      }
-      return this.error.message
-    }
-  }
+  props: ['error']
 }
 </script>
 
