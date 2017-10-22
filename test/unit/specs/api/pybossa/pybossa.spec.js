@@ -261,15 +261,6 @@ describe('PYBOSSA module', () => {
     })
   })
 
-  describe('Announcements endpoints', () => {
-    it('makes the correct request for getAnnouncements', () => {
-      mockAxios.onGet(`/announcements`).reply(200, randomData)
-      return pybossa.getAnnouncements().then(r => {
-        expect(r.data).toEqual(randomData)
-      })
-    })
-  })
-
   describe('Admin endpoints', () => {
     it('makes the correct request for getAdminAnnouncements', () => {
       mockAxios.onGet(`/admin/announcement`).reply(200, randomData)

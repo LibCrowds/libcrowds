@@ -335,15 +335,6 @@ const PyBossaApi = {
         },
 
         /**
-         * Get announcments data.
-         *
-         * http://docs.pybossa.com/en/latest/api.html#announcements
-         */
-        getAnnouncements () {
-          return this.client.get(`/announcements`)
-        },
-
-        /**
          * Get admin announcments data.
          *
          * http://docs.pybossa.com/en/latest/api.html#admin-announcement
