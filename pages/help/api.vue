@@ -7,7 +7,7 @@
     </p>
     <pre class="mt-2 mb-0">
       <code>
-        {{ apiRoute }}
+        {{ apiBase }}
       </code>
     </pre>
     <p>
@@ -17,7 +17,7 @@
     <p>
       Rather than replicating the documentation here please refer to the
       official
-      <a href="http://docs.pybossa.com/api/">
+      <a target="_blank" href="http://docs.pybossa.com/api/">
         PYBOSSA API documentation
       </a>
       for details.
@@ -33,8 +33,15 @@ export default {
 
   data () {
     return {
-      localConfig: localConfig,
-      apiRoute: `${window.location.origin}/api`
+      localConfig: localConfig
+    }
+  },
+
+  computed: {
+    apiBase () {
+      if (process.browser) {
+        return `${window.location.origin}/api`
+      }
     }
   },
 
