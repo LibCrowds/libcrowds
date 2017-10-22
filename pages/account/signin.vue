@@ -61,8 +61,9 @@ export default {
       if (data.next === '/') {
         redirect(next)
       }
+
       return {
-        next: data.next,
+        next: next,
         auth: data.auth,
         form: {
           endpoint: '/account/signin',

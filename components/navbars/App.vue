@@ -80,7 +80,7 @@
           :to="{
             name: 'account-signin',
             query: {
-              next: nextOnSignin
+              next: $route.path
             }
           }">
           Sign in
@@ -133,9 +133,6 @@ export default {
     loggedIn () {
       return !isEmpty(this.currentUser)
     },
-    nextOnSignin () {
-      return this.$route.path
-    },
     currentUser () {
       return this.$store.state.currentUser
     }
@@ -146,10 +143,9 @@ export default {
     * Sign the user out.
     */
     signout () {
-      return this.$store.dispatch('LOGOUT', this.$axios).then(data => {
-        if (data.next === '/') {
-          this.$router.push({ name: 'index' })
-        }
+      return this.$axios.$get('/account/signout').then(data => {
+        this.$store.dispatch('LOGOUT')
+        this.$router.push({ name: 'index' })
         this.flash(data)
       })
     }

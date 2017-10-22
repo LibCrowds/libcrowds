@@ -9,10 +9,8 @@ export default {
     })
   },
 
-  LOGOUT: async ({ commit }, axios) => {
-    return axios.$get('/account/signout').then(data => {
-      commit('LOGOUT')
-    })
+  LOGOUT: async ({ commit }) => {
+    commit('LOGOUT')
   },
 
   UPDATE_ANNOUNCEMENTS: async ({ commit, state }, axios) => {
