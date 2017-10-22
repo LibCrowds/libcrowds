@@ -23,7 +23,6 @@ const config = {
   ],
   build: {
     vendor: [
-      'axios',
       'bootstrap-vue',
       'vue-awesome',
       'vue-chartist',
@@ -90,6 +89,7 @@ const config = {
     { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
   modules: [
+    '@nuxtjs/axios',
     '@nuxtjs/pwa'
   ],
   manifest: {
