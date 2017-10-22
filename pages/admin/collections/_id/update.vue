@@ -89,7 +89,7 @@ export default {
             },
             {
               model: 'info.presenter',
-              label: 'Project Type',
+              label: 'Task Presenter',
               type: 'select',
               values: [
                 {

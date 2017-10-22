@@ -71,10 +71,6 @@ export default {
     return {
       table: {
         fields: {
-          id: {
-            label: 'ID',
-            class: 'text-center'
-          },
           name: {
             label: 'Name'
           },
@@ -84,7 +80,7 @@ export default {
           },
           created: {
             label: 'Created',
-            class: 'text-center d-none d-xl-table-cell'
+            class: 'text-center d-none d-md-table-cell'
           },
           action: {
             label: 'Action',
