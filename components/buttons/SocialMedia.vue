@@ -93,6 +93,9 @@ export default {
   }
 
   .btn {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+
     @include hover-focus;
     border-radius: 0;
     color: $white;
