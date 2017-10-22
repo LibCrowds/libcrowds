@@ -90,8 +90,12 @@ const config = {
   ],
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/proxy',
   ],
+  proxy: {
+    '/api': localConfig.pybossa.host
+  },
   manifest: {
     name: localConfig.brand,
     description: localConfig.description,
