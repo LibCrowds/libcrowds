@@ -27,14 +27,14 @@ export default {
           fields: [
             {
               model: 'title',
-              label: 'Announcement',
+              label: 'Content',
               type: 'textArea',
               rows: 3,
               placeholder: 'Use Markdown'
             },
             {
               model: 'body',
-              label: 'Link URL',
+              label: 'URL',
               type: 'input',
               inputType: 'text'
             }

@@ -22,6 +22,12 @@
         :items="announcements"
         :fields="table.fields">
 
+        <template slot="title" scope="announcement">
+          <span
+            v-html="marked(announcement.item.title)">
+          </span>
+        </template>
+
         <template slot="created" scope="announcement">
           {{ announcement.item.created | moment('calendar') }}
         </template>
@@ -54,6 +60,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import pybossa from '@/api/pybossa'
 
@@ -71,20 +78,17 @@ export default {
     return {
       table: {
         fields: {
-          id: {
-            label: 'ID',
-            class: 'text-center'
-          },
           title: {
-            label: 'Title'
+            label: 'Content',
+            class: 'markdown'
           },
           body: {
-            label: 'Body',
+            label: 'URL',
             class: 'd-none d-xl-table-cell'
           },
           created: {
             label: 'Created',
-            class: 'text-center'
+            class: 'text-center d-none d-md-table-cell'
           },
           action: {
             label: 'Action',
@@ -114,7 +118,12 @@ export default {
         })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS')
       })
-    }
+    },
+
+    /**
+     * Mardown processor.
+     */
+    marked
   },
 
   mixins: [ deleteDomainObject ]
