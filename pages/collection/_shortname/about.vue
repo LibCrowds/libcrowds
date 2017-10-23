@@ -4,10 +4,9 @@
     <h1 class="text-center">About {{ collection.name }}</h1>
     <span v-html="marked(collection.info.content.about)"></span>
 
-    <div class="text-center do-not-wrap">
+    <div class="text-center">
       <hr>
       <b-btn
-        class="mt-1"
         variant="success"
         size="lg"
         :to="{
