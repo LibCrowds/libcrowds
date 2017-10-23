@@ -19,7 +19,8 @@ const config = {
   css: [
     '~/assets/style/main.scss',
     'cookieconsent/build/cookieconsent.min.css',
-    'izitoast/dist/css/iziToast.min.css'
+    'izitoast/dist/css/iziToast.min.css',
+    'vue-multiselect/dist/vue-multiselect.min.css'
   ],
   build: {
     vendor: [

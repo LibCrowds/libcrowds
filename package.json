@@ -51,6 +51,7 @@
     "vue-infinite-loading": "^2.2.1",
     "vue-js-toggle-button": "^1.2.0",
     "vue-moment": "^2.1.0",
+    "vue-multiselect": "^2.0.3",
     "vue-notifications": "^0.9.0",
     "vue-progress": "^0.2.1",
     "vue-scrollto": "^2.7.8",
