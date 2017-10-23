@@ -97,8 +97,15 @@ const config = {
     baseURL: localConfig.pybossa.host,
     requestInterceptor: (config) => {
       config.headers['Content-Type'] = 'application/json'
+
+      // Set CSRF token from form as header
       if (config.data && config.data.hasOwnProperty('csrf')) {
         config.headers['X-CSRFToken'] = config.data.csrf
+      }
+
+      // Ensure some data otherwise axois can delete Content-Type
+      if (config.data === undefined) {
+        config.data = {}
       }
       return config
     }
