@@ -198,7 +198,7 @@
 
 <script>
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
-import { computeFeatured } from '@/mixins/computeFeatured'
+import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
@@ -234,7 +234,7 @@ export default {
 
   mixins: [
     loadAsyncCollection,
-    computeFeatured,
+    loadCollectionFeatured,
     computeShareUrl
   ]
 }
