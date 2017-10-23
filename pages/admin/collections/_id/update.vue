@@ -26,9 +26,7 @@
               Use the text areas below to write custom content for the
               collection microsite using
               <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
-            </p>
-            <p slot="top">
-              The top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
+              Top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
               will be added automatically.
             </p>
             <hr>
@@ -46,6 +44,21 @@
             <p slot="top" class="mb-3 mt-2">
               You can use the fields below to modify the domain object
               terminology used throughout the collection microsite.
+            </p>
+            <hr>
+          </pybossa-form>
+        </b-tab>
+        <b-tab title="Tags">
+          <pybossa-form
+            show-cancel
+            no-border
+            submit-text="Update"
+            cancel-text="Back"
+            :form="tagsForm"
+            @success="onSuccess"
+            @cancel="onCancel">
+            <p slot="top" class="mb-3 mt-2">
+              Tags can be used to organise projects within a collection.
             </p>
             <hr>
           </pybossa-form>
@@ -69,7 +82,8 @@ export default {
   data () {
     return {
       gfmDocs: 'https://help.github.com/articles' +
-        '/basic-writing-and-formatting-syntax/'
+        '/basic-writing-and-formatting-syntax/',
+      newTag: null
     }
   },
 
@@ -272,6 +286,26 @@ export default {
             {
               model: 'info.terminology.taskrun',
               label: 'Task Run',
+              type: 'input',
+              inputType: 'text'
+            }
+          ]
+        }
+      }
+    },
+    tagsForm () {
+      return {
+        endpoint: `/api/category/${this.collection.id}`,
+        method: 'put',
+        model: pick(
+          this.collection,
+          'info'
+        ),
+        schema: {
+          fields: [
+            {
+              model: 'newTag',
+              label: 'New Tag',
               type: 'input',
               inputType: 'text'
             }

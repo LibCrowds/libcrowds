@@ -2,126 +2,53 @@
   <div id="collection-data">
     <section>
       <h1 class="text-center">Data</h1>
-      <hr>
-      <p>
-        All datasets generated from the experimental crowdsourcing projects
-        hosted on this platform are made available under a
-        <a :href="localConfig.license.url" target="_blank">
-          {{ localConfig.license.name }}
-        </a> license.
-      </p>
-      <p>
-        There are three types of dataset available, all of which
-        can be downloaded in JSON or CSV format:
-      </p>
-      <ul>
-        <li>
-          <strong>Tasks: </strong>
-          The {{ collection.info.terminology.task }} data.
-        </li>
-        <li>
-          <strong>Task Runs: </strong>
-          The {{ collection.info.terminology.taskRun }} data.
-        </li>
-        <li>
-          <strong>Results: </strong>
-          The final results data.
-        </li>
-      </ul>
-      <p>
-        We are keen for these datasets to be used in innovative ways, perhaps
-        to further research into new technologies. For instance, the digitised
-        images alongside the final results might prove useful for testing
-        pattern recognition applications, such as those using OCR or NER
-        technologies.
-      </p>
-      <p v-if="collection.info.forum">
-        Head over to the
-        <a :href="collection.info.forum">
-          {{ collection.info.brand }} Forum
-        </a>
-        to let us and others know how you have made use of the data, or if you
-        have any further enquiries.
-      </p>
-      <hr>
-      <div :id="navItems[0].id" class="row">
+      <span v-html="collection.info.content.data"></span>
+      <div class="row">
+
         <div class="col-xl-3 mb-3">
-          <categories-list
+          <!-- <categories-list
             v-if="categories.length"
             :header="collection.info.terminology.category"
             :categories="categories"
             @change="onCategoryChange">
-          </categories-list>
+          </categories-list> -->
         </div>
+
         <div class="col-xl-9">
-
-          <b-table
-            hover
-            striped
-            show-empty
-            :items="projects"
-            :fields="tableFields">
-            <template slot="overall_progress" scope="project">
-              {{ project.item.overall_progress }}%
-            </template>
-            <template slot="action" scope="project">
-              <b-btn
-                variant="success"
-                size="sm"
-                block
-                v-b-modal="`data-download-project-${project.item.id}`">
-                Download
-              </b-btn>
-            </template>
-          </b-table>
-
-          <pagination
-            :pagination="pagination"
-            @change="onPageChange">
-          </pagination>
-
+          <projects-table
+            :search-params="searchParams"
+            success-btn="Download"
+            @successclick="loadDataModal">
+          </projects-table>
         </div>
+
       </div>
     </section>
 
     <data-modal
-      v-for="project in projects"
-      :key="project.id"
-      :modal-id="`data-download-project-${project.id}`"
-      :project="project">
+      v-if="activeProject"
+      :show="showDataModal"
+      :project="activeProject">
     </data-modal>
+
   </div>
 </template>
 
 <script>
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
-import localConfig from '@/local.config'
-import CategoriesList from '@/components/lists/Categories'
-import Pagination from '@/components/Pagination'
+import ProjectsTable from '@/components/tables/Projects'
+// import CategoriesList from '@/components/lists/Categories'
 import DataModal from '@/components/modals/Data'
 
 export default {
   layout: 'collection-tabs',
 
+  mixins: [ loadAsyncCollection ],
+
   data () {
     return {
-      localConfig: localConfig,
-      navItems: [
-        { id: 'download', text: 'Download' }
-      ],
-      page: 1,
-      pagination: {
-        per_page: 0,
-        total: 0
-      },
-      projects: [],
-      activeCategory: null,
-      tableFields: {
-        name: { label: 'Name' },
-        n_volunteers: { label: 'Volunteers' },
-        overall_progress: { label: 'Progress' },
-        action: { label: 'Action' }
-      }
+      activeProject: null,
+      showDataModal: false
     }
   },
 
@@ -132,60 +59,33 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `All datasets generated from the experimental crowdsourcing
-                   projects hosted on this platform are made available under a
-                   ${localConfig.license.name} license.`
+          content: `All datasets generated from ${this.collection.name}
+            projects are made available under a ${this.collection.license}
+            license.`
         }
       ]
     }
   },
 
-  mixins: [ loadAsyncCollection ],
-
   components: {
-    CategoriesList,
-    Pagination,
+    ProjectsTable,
     DataModal
   },
 
-  methods: {
-    /**
-     * Handle category change.
-     * @param {String} category
-     *   The category.
-     */
-    onCategoryChange (category) {
-      this.activeCategory = category
-      this.fetchProjects(category)
-    },
-
-    /**
-     * Fetch the projects in a category.
-     */
-    fetchProjects () {
-      const shortName = this.activeCategory.short_name
-      const endpoint = `/project/category/${shortName}/page/${this.page}`
-      this.$axios.$get(endpoint).then(data => {
-        this.projects = data.projects
-        this.pagination = data.pagination
-      }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
-      })
-    },
-
-    /**
-     * Handle page change.
-     * @param {Number} page
-     *   The page number.
-     */
-    onPageChange (page) {
-      this.page = page
-      this.fetchProjects()
+  computed: {
+    searchParams () {
+      return {
+        category_id: this.collection.id,
+        published: true
+      }
     }
   },
 
-  created () {
-    this.$emit('navupdated', this.navItems)
+  methods: {
+    loadDataModal (project) {
+      this.activeProject = project
+      this.showDataModal = true
+    }
   }
 }
 </script>

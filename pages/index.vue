@@ -155,7 +155,6 @@ export default {
         }
       })
     ]).then(([statsData, leaderboardData, categoryData]) => {
-      console.log(categoryData)
       return {
         stats: statsData.stats,
         topUsers: leaderboardData.top_users,
@@ -198,7 +197,6 @@ export default {
       }, 0)
     },
     batchedCollections () {
-      console.log('this.collections', batch(this.collections, 1))
       return batch(this.collections, 2)
     }
   }

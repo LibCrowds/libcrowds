@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="modalId" title="Download">
+  <b-modal title="Download" v-model="show">
     <b-table
       responsive
       striped
@@ -17,7 +17,6 @@
         </b-btn>
       </template>
     </b-table>
-
   </b-modal>
 </template>
 
@@ -25,7 +24,7 @@
 import exportFile from '@/utils/exportFile'
 
 export default {
-  data: function () {
+  data () {
     return {
       fields: {
         dataset: {
@@ -55,13 +54,13 @@ export default {
   },
 
   props: {
-    modalId: {
-      type: String,
-      required: true
-    },
     project: {
       type: Object,
       required: true
+    },
+    show: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -74,6 +73,7 @@ export default {
      *   The download format.
      */
     download (type, format) {
+      console.log(this.project)
       const shortName = this.project.short_name
       this.$axios.$get(`/project/${shortName}/tasks/export`, {
         responseType: 'arraybuffer',
@@ -82,7 +82,7 @@ export default {
           format: format
         }
       }).then(data => {
-        exportFile(data, `${this.project.short_name}_${type}`, format)
+        exportFile(data, `${this.project.short_name}_${type}`, 'zip')
       }).catch(err => {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
