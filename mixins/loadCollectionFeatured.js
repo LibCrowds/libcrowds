@@ -16,7 +16,7 @@ export const loadCollectionFeatured = {
       }).then(data => {
         this.featured = data
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

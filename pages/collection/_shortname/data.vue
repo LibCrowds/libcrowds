@@ -169,7 +169,7 @@ export default {
         this.projects = data.projects
         this.pagination = data.pagination
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 

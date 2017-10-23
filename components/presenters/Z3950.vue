@@ -359,7 +359,7 @@ export default {
         }
         this.processing = false
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 

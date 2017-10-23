@@ -123,7 +123,7 @@ export default {
       }).then(data => {
         this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

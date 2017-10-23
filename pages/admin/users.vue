@@ -183,7 +183,7 @@ export default {
       }).then(data => {
         user.admin = !user.admin
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 
@@ -209,7 +209,7 @@ export default {
       }).then(data => {
         exportFile(data, 'user_data', format)
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

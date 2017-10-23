@@ -84,7 +84,7 @@ export default {
       }).then(data => {
         exportFile(data, `${this.project.short_name}_${type}`, format)
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }
