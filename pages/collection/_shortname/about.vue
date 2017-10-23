@@ -24,7 +24,6 @@
 
 <script>
 import marked from 'marked'
-import { wrapContent } from '@/utils/wrapContent'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import localConfig from '@/local.config'
 
@@ -57,12 +56,6 @@ export default {
      * Markdown processor.
      */
     marked
-  },
-
-  mounted () {
-    const content = document.querySelector('#collection-about')
-    const wrapper = document.createElement('section')
-    return wrapContent(content, 'h2', wrapper)
   }
 }
 </script>

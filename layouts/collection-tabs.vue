@@ -75,27 +75,24 @@ export default {
       text-align: center;
     }
 
-    /* Internal sections */
-    & > * > section {
-      transition: opacity 600ms;
-      padding: 2rem 2.5rem;
+    transition: opacity 600ms;
+    padding: 2rem 2.5rem;
+
+    @include media-breakpoint-up(md) {
+      padding: 3rem 4rem;
+    }
+
+    hr {
+      margin: 3rem;
+    }
+
+    h1 {
+      padding-bottom: 1rem;
+      border-bottom: 1px solid $gray-300;
 
       @include media-breakpoint-up(md) {
-        padding: 3rem 4rem;
-      }
-
-      &:nth-child(even) {
-        background-color: $gray-100;
-      }
-
-      h1 {
-        padding-bottom: 1rem;
-        border-bottom: 1px solid $gray-300;
-
-        @include media-breakpoint-up(md) {
-          font-size: 3.5rem;
-          margin-top: 0;
-        }
+        font-size: 3.5rem;
+        margin-top: 0;
       }
     }
   }

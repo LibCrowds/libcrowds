@@ -27,12 +27,9 @@
               collection microsite using
               <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
             </p>
-            <p>
+            <p slot="top">
               The top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
-              will be added automatically. Any second level page headings
-              written in Markdown below (e.g. <strong>## Contact</strong>) will
-              be used to generate navigation links to add to the top of the
-              page.
+              will be added automatically.
             </p>
             <hr>
           </pybossa-form>
