@@ -4,7 +4,7 @@
 
 ## Installation
 
-Install [Node.js >=5.0.0](https://nodejs.org/en/), then:
+Install [Node.js >=8.0.0](https://nodejs.org/en/), then:
 
 ``` bash
 # install dependencies
@@ -22,51 +22,6 @@ cp local.config.js.tmpl local.config.js
 ```
 
 See the [Configuration](configuration.md) section for full details of how to use this file to configure the site.
-
-You will also need to change a few things in your PYBOSSA settings file:
-
-``` python
-# To allow requests from the frontend (modify origins according to your environment)
-CORS_RESOURCES = {
-  r"/*": {
-    "origins": [
-      "http://127.0.0.1:8080"
-    ],
-    "allow_headers": [
-      'Content-Type',
-      'Authorization',
-      'X-CSRFToken'
-    ],
-    "supports_credentials": True
-  }
-}
-
-# Additional category fields
-CATEGORY_INFO_PUBLIC_FIELDS = [
-  'tagline',
-  'forumUrl',
-  'presenter',
-  'license',
-]
-
-# Additional user fields
-USER_INFO_PUBLIC_FIELDS = [
-  'announcements'
-]
-
-# Avoid 404 errors when accessing URLs with or without a trailing slash
-STRICT_SLASHES = False
-
-# Specify an SPA frontend
-SPA_SERVER_NAME = 'http://127.0.0.1:8080'
-
-# Allow projects to be published with no traditional task presenter
-DISABLE_TASK_PRESENTER = True
-```
-
-{% hint style='danger' %}
-The settings above are all required for the application to run correctly.
-{% endhint %}
 
 ## Building
 

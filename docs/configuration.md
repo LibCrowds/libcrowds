@@ -1,14 +1,60 @@
 # Configuration
 
-The [Site Configuration](configuration.md#site-configuration) contains general options applied to the core interface.
+## Configuring PYBOSSA
 
-To run the application with default settings:
+You will need to change a few things in your PYBOSSA settings file for the frontend to work correctly:
 
-```bash
-cp local.config.js.tmpl local.config.js
+``` python
+# To allow requests from the frontend (modify origins according to your environment)
+CORS_RESOURCES = {
+  r"/*": {
+    "origins": [
+      "http://127.0.0.1:8080"
+    ],
+    "allow_headers": [
+      'Content-Type',
+      'Authorization',
+      'X-CSRFToken'
+    ],
+    "supports_credentials": True
+  }
+}
+
+# Additional category fields
+CATEGORY_INFO_PUBLIC_FIELDS = [
+  'tagline',
+  'forumUrl',
+  'presenter',
+  'license',
+]
+
+# Additional user fields
+USER_INFO_PUBLIC_FIELDS = [
+  'announcements'
+]
+
+# Avoid 404 errors when accessing URLs with or without a trailing slash
+STRICT_SLASHES = False
+
+# Specify an SPA frontend
+SPA_SERVER_NAME = 'http://127.0.0.1:8080'
+
+# Allow projects to be published with no traditional task presenter
+DISABLE_TASK_PRESENTER = True
 ```
 
-This file can now be edited as required.
+{% hint style='danger' %}
+The settings above are all required for the application to run correctly.
+{% endhint %}
+
+## Configuring LibCrowds
+
+The configuration settings below are applied to the core interface.
+
+```bash
+# Copy the template
+cp local.config.js.tmpl local.config.js
+```
 
 ### analytics
 
