@@ -69,7 +69,6 @@ export default {
   async asyncData ({ app, error }) {
     const endpoint = `/admin/announcement`
     return app.$axios.$get(endpoint).then(data => {
-      console.log(data)
       return {
         announcements: data.announcements
       }
