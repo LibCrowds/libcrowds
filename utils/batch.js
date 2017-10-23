@@ -20,6 +20,7 @@ export const batch = function (items, n, fillWith = null) {
         tmp.push(fillWith)
       }
     }
+    batched.push(tmp)
   }
   return batched
 }
