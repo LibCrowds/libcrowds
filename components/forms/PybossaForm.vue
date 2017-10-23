@@ -2,7 +2,9 @@
   <b-card
     class="pybossa-form"
     :header="header"
-    show-footer>
+    show-footer
+    :no-body="noBody"
+    :style="cardStyle">
 
     <b-alert
       show
@@ -35,7 +37,7 @@
           variant="outline-dark"
           class="mr-1"
           @click="cancel">
-          Cancel
+          {{ cancelText }}
         </b-btn>
         <b-btn
           variant="success"
@@ -80,11 +82,15 @@ export default {
     },
     header: {
       type: String,
-      required: true
+      default: ''
     },
     submitText: {
       type: String,
       default: 'Submit'
+    },
+    cancelText: {
+      type: String,
+      default: 'Cancel'
     },
     lead: {
       type: String,
@@ -101,6 +107,14 @@ export default {
     next: {
       type: String,
       default: ''
+    },
+    noBorder: {
+      type: Boolean,
+      default: false
+    },
+    noBody: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -108,6 +122,13 @@ export default {
     alertMsg () {
       // To handle disappearing and multiple alerts
       return this.alert ? [this.alert] : []
+    },
+    cardStyle () {
+      if (this.noBorder) {
+        return {
+          border: 'none'
+        }
+      }
     }
   },
 
@@ -211,6 +232,14 @@ export default {
       margin-top: 0.25rem;
       display: block;
     }
+  }
+
+  fieldset {
+    padding: 0;
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
   }
 
   .card-footer {

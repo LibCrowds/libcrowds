@@ -9,9 +9,9 @@
 
       <b-link class="navbar-brand"
         :to="{
-          name: 'collection-key',
+          name: 'collection-shortname',
           params: {
-            key: collection.key
+            shortname: collection.short_name
           }
         }"
         v-scroll-to="'body'">
@@ -43,9 +43,9 @@
         <b-nav is-nav-bar>
           <b-nav-item
             :to="{
-              name: 'collection-key-about',
+              name: 'collection-shortname-about',
               params: {
-                key: collection.key
+                shortname: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -53,9 +53,9 @@
           </b-nav-item>
           <b-nav-item
             :to="{
-              name: 'collection-key-contribute',
+              name: 'collection-shortname-contribute',
               params: {
-                key: collection.key
+                shortname: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -68,9 +68,9 @@
           </b-nav-item>
           <!-- <b-nav-item
             :to="{
-              name: 'collection-key-results',
+              name: 'collection-shortname-results',
               params: {
-                key: collection.key
+                shortname: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -78,9 +78,9 @@
           </b-nav-item> -->
           <b-nav-item
             :to="{
-              name: 'collection-key-data',
+              name: 'collection-shortname-data',
               params: {
-                key: collection.key
+                shortname: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -181,12 +181,16 @@ export default {
     return {
       currentPath: this.$route.path,
       fixedNavbarRoutes: [
-        'collection-key'
+        'collection-shortname'
       ]
     }
   },
 
   props: {
+    collection: {
+      type: Object,
+      required: true
+    },
     type: {
       type: String,
       default: 'dark'
@@ -198,9 +202,6 @@ export default {
   },
 
   computed: {
-    collection () {
-      return this.$store.state.collection
-    },
     navType () {
       if (this.fixedNavbarRoutes.indexOf(this.$route.name) > -1) {
         return {

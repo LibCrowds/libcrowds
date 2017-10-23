@@ -1,11 +1,11 @@
 <template>
-  <div id="collection-layout">
+  <div id="collection-layout-base">
     <div id="collection-background" :style="bgStyle"></div>
 
-    <!-- <collection-navbar></collection-navbar> -->
+    <collection-navbar :collection="collection"></collection-navbar>
 
     <main>
-      <nuxt></nuxt>
+      <slot></slot>
     </main>
 
     <app-footer></app-footer>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import CollectionNavbar from '@/components/navbars/Collection'
 import AppFooter from '@/components/footers/App'
 
@@ -24,18 +25,30 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.collection
+    },
     bgStyle () {
-      const url = this.$store.state.background
-      return {
-        background: `url(${url}) no-repeat center left /cover fixed`
+      const bg = this.collection.info.background
+      if (!bg) {
+        return
       }
+      return {
+        backgroundImage: `url(${bg})`
+      }
+    }
+  },
+
+  head () {
+    return {
+      titleTemplate: `%s - ${this.collection.name} | ${localConfig.brand}`
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#collection-layout {
+#collection-layout-base {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
@@ -50,10 +63,10 @@ export default {
     height: auto;
     width: 100%;
     min-width: 1024px;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+    background-position: top center;
     background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('~/assets/img/app-background.jpg');
   }
 
   main {

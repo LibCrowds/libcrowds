@@ -4,7 +4,7 @@
   "tagline": "Bring past performances to life.",
   "description": "Help rediscover popular entertainment.",
   "forumUrl": "http://example.com/discuss",
-  "bgImg": "background.jpg",
+  "background": "background.jpg",
   "presenter": "libcrowds-viewer",
   "terminology": {
     "category": "volume",

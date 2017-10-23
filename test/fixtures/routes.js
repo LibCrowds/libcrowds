@@ -107,7 +107,7 @@ export const routes = [
   {
     path: '/collection/:key?',
     component: jest.fn(),
-    name: 'collection-key'
+    name: 'collection-shortname'
   },
   {
     path: '/account/:username?',
@@ -122,12 +122,12 @@ export const routes = [
   {
     path: '/collection/:key?/presenter',
     component: jest.fn(),
-    name: 'collection-key-presenter'
+    name: 'collection-shortname-presenter'
   },
   {
     path: '/collection/:key?/data',
     component: jest.fn(),
-    name: 'collection-key-data'
+    name: 'collection-shortname-data'
   },
   {
     path: '/project/:shortname?/thumbnail',
@@ -137,7 +137,7 @@ export const routes = [
   {
     path: '/collection/:key?/contribute',
     component: jest.fn(),
-    name: 'collection-key-contribute'
+    name: 'collection-shortname-contribute'
   },
   {
     path: '/project/:shortname?/settings',
@@ -162,7 +162,7 @@ export const routes = [
   {
     path: '/collection/:key?/about',
     component: jest.fn(),
-    name: 'collection-key-about'
+    name: 'collection-shortname-about'
   },
   {
     path: '/account/:username?/settings/security',

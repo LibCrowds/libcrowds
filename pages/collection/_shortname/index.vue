@@ -30,9 +30,9 @@
               variant="success"
               size="lg"
               :to="{
-                name: 'collection-key-contribute',
+                name: 'collection-shortname-contribute',
                 params: {
-                  key: collection.short_name
+                  shortname: collection.short_name
                 }
               }">
               Get Started
@@ -58,9 +58,9 @@
           class="mt-md-2"
           size="lg"
           :to="{
-            name: 'collection-key-about',
+            name: 'collection-shortname-about',
             params: {
-              key: collection.short_name
+              shortname: collection.short_name
             }
           }">
           Learn More
@@ -102,9 +102,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-contribute',
+            name: 'collection-shortname-contribute',
             params: {
-              key: collection.short_name
+              shortname: collection.short_name
             }
           }">
           Browse all projects
@@ -113,8 +113,7 @@
     </section>
 
     <section id="data">
-      <span :style="dataStyle"></span>
-      <b-jumbotron :style="dataStyle">
+      <b-jumbotron>
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
@@ -132,7 +131,7 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-key-data',
+              name: 'collection-shortname-data',
               params: {
                 ket: collection.short_name
               }
@@ -157,7 +156,7 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              key: 'collection-key-results'
+              key: 'collection-shortname-results'
             }">
             Browse the results
           </b-btn>
@@ -176,9 +175,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-key-contribute',
+            name: 'collection-shortname-contribute',
             params: {
-              key: collection.short_name
+              shortname: collection.short_name
             }
           }">
           Get Started
@@ -189,7 +188,8 @@
     <section id="social-media" class="bg-white invert-navbar">
       <div class="container pb-4 text-center">
         <hr class="mt-0 mb-3">
-        <social-media-buttons>
+        <social-media-buttons
+          :shareUrl="shareUrl">
         </social-media-buttons>
       </div>
     </section>
@@ -197,39 +197,16 @@
 </template>
 
 <script>
-import { computeCollection } from '@/mixins/computeCollection'
+import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
+import { computeFeatured } from '@/mixins/computeFeatured'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/cards/Project'
 
 export default {
-  layout: 'collection',
-
-  async asyncData ({ params, app, error }) {
-    const data = {}
-    return app.$axios.$get('/api/category', {
-      params: {
-        short_name: params.key
-      }
-    }).then(categoryData => {
-      if (!categoryData.length) {
-        error({ statusCode: 404, message: 'Page not found' })
-      }
-      data.category = categoryData
-      return app.$axios.$get('/api/project', {
-        params: {
-          category_id: data.category.id,
-          featured: true
-        }
-      })
-    }).then(featuredData => {
-      data.featured = featuredData
-      return data
-    }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
-    })
-  },
+  layout: 'collection-default',
 
   data () {
     return {
@@ -238,9 +215,8 @@ export default {
   },
 
   head () {
-    const title = `${this.collection.info.tagline} - ${this.collection.name}`
     return {
-      title: title,
+      title: this.collection.info.tagline,
       meta: [
         {
           hid: 'description',
@@ -257,7 +233,9 @@ export default {
   },
 
   mixins: [
-    computeCollection
+    loadAsyncCollection,
+    computeFeatured,
+    computeShareUrl
   ]
 }
 </script>

@@ -20,7 +20,9 @@
       </div>
 
       <div class="p-1 flex-grow">
-        <div class="card-title mb-0" v-html="content"></div>
+        <div class="card-title mb-0">
+          {{ content }}
+        </div>
       </div>
 
       <div class="p-1">

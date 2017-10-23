@@ -1,9 +1,9 @@
 <template>
   <b-btn
     :to="{
-      name: 'collection-key-presenter',
+      name: 'collection-shortname-presenter',
       params: {
-        key: collection.key,
+        shortname: collection.short_name,
         shortname: project.shortname
       }
     }"

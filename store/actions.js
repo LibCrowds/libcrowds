@@ -9,7 +9,7 @@ export default {
     })
   },
 
-  LOGOUT: async ({ commit }) => {
+  LOGOUT: ({ commit }) => {
     commit('LOGOUT')
   },
 
@@ -23,6 +23,12 @@ export default {
       commit('SET_ITEM', {
         key: 'announcements', value: data
       })
+    })
+  },
+
+  UPDATE_COLLECTION: ({ commit }, collection) => {
+    commit('SET_ITEM', {
+      key: 'collection', value: collection
     })
   }
 }

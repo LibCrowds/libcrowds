@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard-layout">
+  <div id="dashboard-layout-base">
 
     <dashboard-navbar
       position="side"
@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/style/settings';
 
-#dashboard-layout {
+#dashboard-layout-base {
   height: 100vh;
   width: auto;
 

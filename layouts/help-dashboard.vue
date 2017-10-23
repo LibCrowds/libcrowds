@@ -6,7 +6,7 @@
 
 <script>
 import localConfig from '@/local.config'
-import DashboardBase from '@/components/DashboardBase'
+import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
   data () {
@@ -46,7 +46,7 @@ export default {
 
   head () {
     return {
-      titleTemplate: ` %s - Help | ${localConfig.brand}`
+      titleTemplate: `%s - Help | ${localConfig.brand}`
     }
   }
 }

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -105,18 +106,16 @@ export default {
       const category = data.categories.filter(category => {
         return category.name === data.form.name
       })[0]
-      this.$swal({
-        title: 'Microsite created',
-        text: 'Click OK to begin configuration',
-        type: 'success'
-      },
-      () => {
-        this.$router.push({
-          name: 'admin-collections-id-update',
-          params: {
-            id: category.id
-          }
-        })
+      this.notify({
+        type: 'success',
+        title: 'Success',
+        message: 'Collection created'
+      })
+      this.$router.push({
+        name: 'admin-collections-id-update',
+        params: {
+          id: category.id
+        }
       })
     },
 
@@ -126,6 +125,8 @@ export default {
     onCancel () {
       this.$router.push({ name: 'admin-collections' })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>

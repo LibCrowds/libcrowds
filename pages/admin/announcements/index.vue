@@ -22,12 +22,6 @@
         :items="announcements"
         :fields="table.fields">
 
-        <template slot="title" scope="announcement">
-          <span
-            v-html="marked(announcement.item.title)">
-          </span>
-        </template>
-
         <template slot="created" scope="announcement">
           {{ announcement.item.created | moment('calendar') }}
         </template>
@@ -70,7 +64,10 @@ export default {
     const endpoint = `/admin/announcement`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        announcements: data.announcements
+        announcements: data.announcements.map(announcement => {
+          announcement.title = marked(announcement.title)
+          return announcement
+        })
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
@@ -121,12 +118,7 @@ export default {
         })
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
       })
-    },
-
-    /**
-     * Mardown processor.
-     */
-    marked
+    }
   },
 
   mixins: [ deleteDomainObject ]

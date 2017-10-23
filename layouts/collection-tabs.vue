@@ -1,59 +1,47 @@
 <template>
-  <div id="tabs-layout">
-    <main>
-      <div class="container mb-5">
+  <collection-base>
+    <div id="collection-tabs-layout">
+      <main>
+        <div class="container mb-5">
 
-        <b-nav class="nav-unstyled" key="fading-nav">
-          <b-nav-item
-            v-for="item in navItems"
-            @click="navigate(item)"
-            :key="item.id">
+          <b-nav class="nav-unstyled" key="fading-nav">
+            <b-nav-item
+              v-for="item in navItems"
+              @click="navigate(item)"
+              :key="item.id">
+              <transition name="fade" mode="out-in" appear>
+                <span>{{ item.text }}</span>
+              </transition>
+            </b-nav-item>
+            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+          </b-nav>
+
+          <section id="content" key="fading-content">
             <transition name="fade" mode="out-in" appear>
-              <span>{{ item.text }}</span>
+              <nuxt></nuxt>
             </transition>
-          </b-nav-item>
-          <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
-        </b-nav>
-
-        <section id="content" key="fading-content">
-          <transition name="fade" mode="out-in" appear>
-            <nuxt
-              :collection="collection"
-              @navupdated="onNavUpdated">
-            </nuxt>
-          </transition>
-        </section>
-
-      </div>
-    </main>
-  </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </collection-base>
 </template>
 
 <script>
+import CollectionBase from '@/layouts/bases/Collection'
+
 export default {
-  data: function () {
+  data () {
     return {
       navItems: []
     }
   },
 
-  props: {
-    collection: {
-      type: Object,
-      required: true
-    }
+  components: {
+    CollectionBase
   },
 
   methods: {
-    /**
-     * Handle nav item update.
-     * @param {Array} navItems
-     *   The nav items.
-     */
-    onNavUpdated (navItems) {
-      this.navItems = navItems
-    },
-
     /**
      * Navigate.
      * @param {Object} navItem
@@ -67,12 +55,6 @@ export default {
         VueScrollTo.scrollTo('#' + navItem.id)
       }
     }
-  },
-
-  beforeRouteLeave (to, from, next) {
-    // Clear navitems to make the transition nicer
-    this.navItems = []
-    next()
   }
 }
 </script>
@@ -80,7 +62,7 @@ export default {
 <style lang="scss">
 @import '~assets/style/settings';
 
-#tabs-layout {
+#collection-tabs-layout {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;

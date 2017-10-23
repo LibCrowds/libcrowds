@@ -4,9 +4,9 @@
     class="project-card">
     <nuxt-link
       :to="{
-        name: 'collection-key-presenter',
+        name: 'collection-shortname-presenter',
         params: {
-          key: collection.key,
+          shortname: collection.short_name,
           shortname: project.short_name
         }
       }">
@@ -21,9 +21,9 @@
       <div class="card-title mb-0">
         <nuxt-link
           :to="{
-            name: 'collection-key-presenter',
+            name: 'collection-shortname-presenter',
             params: {
-              key: collection.key,
+              shortname: collection.short_name,
               shortname: project.short_name
             }
           }">

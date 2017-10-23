@@ -35,10 +35,10 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="collection.forumUrl">
+      <p v-if="collection.info.forumUrl">
         Head over to the
-        <a :href="collection.forumUrl">
-          {{ collection.brand }} Forum
+        <a :href="collection.info.forumUrl">
+          {{ collection.info.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you
         have any further enquiries.
@@ -94,13 +94,14 @@
 </template>
 
 <script>
+import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import localConfig from '@/local.config'
 import CategoriesList from '@/components/lists/Categories'
 import Pagination from '@/components/Pagination'
 import DataModal from '@/components/modals/Data'
 
 export default {
-  layout: 'tabs',
+  layout: 'collection-tabs',
 
   data () {
     return {
@@ -124,17 +125,6 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
-    // return app.$axios.$get(endpoint).then(data => {
-    //   const res = await pybossa.getMicrositeCategories(params.name)
-    //   return {
-    //     categories: res.data.categories
-    //   }
-    // }).catch(err => {
-    //   error({ statusCode: err.statusCode, message: err.message })
-    // })
-  },
-
   head () {
     return {
       title: 'Data',
@@ -150,12 +140,7 @@ export default {
     }
   },
 
-  props: {
-    collection: {
-      type: Object,
-      required: true
-    }
-  },
+  mixins: [ loadAsyncCollection ],
 
   components: {
     CategoriesList,

@@ -19,9 +19,9 @@
             For more information see the
             <nuxt-link
               :to="{
-                name: 'collection-key-about',
+                name: 'collection-shortname-about',
                 params: {
-                  key: collection.key
+                  shortname: collection.short_name
                 }
               }">about page.
             </nuxt-link>
@@ -49,6 +49,7 @@
           </project-sorting-options>
 
           <social-media-buttons
+            :shareUrl="shareUrl"
             size="sm"
             class="mt-3 d-none d-xl-block text-center">
           </social-media-buttons>
@@ -133,6 +134,7 @@
 </template>
 
 <script>
+import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import { sortBy, forEach } from 'lodash'
 import ProjectSortingOptions from '@/components/project/SortingOptions'
 import Pagination from '@/components/Pagination'
@@ -142,7 +144,7 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 export default {
-  layout: 'tabs',
+  layout: 'collection-tabs',
 
   data () {
     return {
@@ -185,6 +187,8 @@ export default {
     }
   },
 
+  mixins: [ loadAsyncCollection ],
+
   props: {
     collection: {
       type: Object,
@@ -193,6 +197,9 @@ export default {
   },
 
   computed: {
+    shareUrl () {
+      return process.browser ? window.location.href : ''
+    },
     currentUser () {
       return this.$store.state.currentUser
     },

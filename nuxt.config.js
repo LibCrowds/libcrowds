@@ -7,7 +7,7 @@ const localConfig = process.env.NODE_ENV === 'testing'
 const config = {
   mode: 'universal',
   head: {
-    titleTemplate: ` %s | ${localConfig.brand}`,
+    titleTemplate: `%s | ${localConfig.brand}`,
     meta: [
       {
         hid: 'description',

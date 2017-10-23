@@ -5,14 +5,14 @@
     class="collection-card my-3">
     <nuxt-link
       :to="{
-        name: 'collection-key',
+        name: 'collection-shortname',
         params: {
-          key: collection.short_name
+          shortname: collection.short_name
         }
       }">
       <div
         class="collection-card-img"
-        :style="{ backgroundImage: `url('${collection.bgImg}')` }">
+        :style="{ backgroundImage: `url('${collection.info.background}')` }">
       </div>
       <div class="card-body">
         <h4 class="card-title">

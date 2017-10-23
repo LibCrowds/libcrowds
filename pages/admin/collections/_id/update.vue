@@ -1,23 +1,55 @@
 <template>
   <div id="admin-collections-update">
-    <pybossa-form
-      show-cancel
-      header="Update Collection"
-      submit-text="Update"
-      :form="form"
-      class="mb-4"
-      @success="onSuccess"
-      @cancel="onCancel">
-    </pybossa-form>
+    <b-card no-body>
+      <b-tabs ref="tabs" no-body card>
+        <b-tab title="Core Details" active>
+          <pybossa-form
+            show-cancel
+            no-border
+            submit-text="Update"
+            cancel-text="Back"
+            :form="form"
+            @success="onSuccess"
+            @cancel="onCancel">
+          </pybossa-form>
+        </b-tab>
+        <b-tab title="Content">
+          <pybossa-form
+            show-cancel
+            no-border
+            submit-text="Update"
+            cancel-text="Back"
+            :form="contentForm"
+            @success="onSuccess"
+            @cancel="onCancel">
+            <p slot="top" class="mb-3 mt-2">
+              Use the text areas below to write custom content for the
+              collection microsite using
+              <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
+            </p>
+            <hr>
+          </pybossa-form>
+        </b-tab>
+      </b-tabs>
+    </b-card>
   </div>
 </template>
 
 <script>
+import 'vue-awesome/icons/eye'
+import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
+
+  data () {
+    return {
+      gfmDocs: 'https://help.github.com/articles' +
+        '/basic-writing-and-formatting-syntax/'
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/api/category/${params.id}`
@@ -151,6 +183,41 @@ export default {
           ]
         }
       }
+    },
+    contentForm () {
+      return {
+        endpoint: `/api/category/${this.category.id}`,
+        method: 'put',
+        model: pick(
+          this.category,
+          'info'
+        ),
+        schema: {
+          fields: [
+            {
+              model: 'info.content.about',
+              label: 'About Page',
+              type: 'textArea',
+              rows: 15,
+              placeholder: 'Text for the about page'
+            },
+            {
+              model: 'info.content.contribute',
+              label: 'Contribute Page',
+              type: 'textArea',
+              rows: 15,
+              placeholder: 'Text for the contribute page'
+            },
+            {
+              model: 'info.content.data',
+              label: 'Data Page',
+              type: 'textArea',
+              rows: 15,
+              placeholder: 'Text for the data page'
+            }
+          ]
+        }
+      }
     }
   },
 
@@ -159,11 +226,11 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.$swal({
-        title: 'Collection updated',
-        type: 'success'
-      },
-      this.$router.push({ name: 'admin-collections' }))
+      this.notify({
+        type: 'success',
+        title: 'Success',
+        message: 'Collection updated'
+      })
     },
 
     /**
@@ -172,6 +239,16 @@ export default {
     onCancel () {
       this.$router.push({ name: 'admin-collections' })
     }
-  }
+  },
+
+  mixins: [ notifications ]
 }
 </script>
+
+<style lang="scss">
+#admin-collections-update {
+  .tab-content.card-body {
+    padding: 0;
+  }
+}
+</style>

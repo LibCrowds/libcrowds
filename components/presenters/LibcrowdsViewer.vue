@@ -66,9 +66,9 @@ export default {
         return {
           label: capitalize(name),
           url: this.$router.resolve({
-            name: `collection-key-${name}`,
+            name: `collection-shortname-${name}`,
             params: {
-              key: this.collection.key
+              key: this.collection.short_name
             }
           }).href
         }

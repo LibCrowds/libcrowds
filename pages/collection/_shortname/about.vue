@@ -10,9 +10,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-key-contribute',
+            name: 'collection-shortname-contribute',
             params: {
-              key: collection.key
+              shortname: collection.short_name
             }
           }">
           Get Started
@@ -21,13 +21,12 @@
     </section>
 
     <section
-      v-for="(item, index) in subsections"
-      :key="item.id"
-      :id="item.id">
-      <h3 class="text-center">{{ item.title }}</h3>
-      <span v-html="item.markdown"></span>
+      v-for="(section, index) in sections"
+      :key="index"
+      :id="index">
+      <span v-html="section"></span>
       <div
-        v-if="index === subsections.length - 1"
+        v-if="index === sections.length - 1"
         class="text-center">
         <hr>
         <b-btn
@@ -35,9 +34,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-key-contribute',
+            name: 'collection-shortname-contribute',
             params: {
-              key: collection.key
+              shortname: collection.short_name
             }
           }">
           Get Started
@@ -49,10 +48,13 @@
 </template>
 
 <script>
+import marked from 'marked'
+import { nextUntil } from '@/utils/nextUntil'
+import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import localConfig from '@/local.config'
 
 export default {
-  layout: 'tabs',
+  layout: 'collection-tabs',
 
   data () {
     return {
@@ -67,35 +69,13 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `Learn more about the ${localConfig.brand} platform`
+          content: `Learn more about ${this.collection.brand}`
         }
       ]
     }
   },
 
-  props: {
-    collection: {
-      type: Object,
-      required: true
-    }
-  },
-
-  methods: {
-    /**
-     * Get a custom about config value.
-     * @param {String} key
-     *   The key for the about config value.
-     */
-    getCustom (key) {
-      if (!(this.collection.hasOwnProperty('about'))) {
-        return null
-      }
-      if (!(this.collection.about.hasOwnProperty(key))) {
-        return null
-      }
-      return this.collection.about[key]
-    }
-  },
+  mixins: [ loadAsyncCollection ],
 
   computed: {
     navItems () {
@@ -108,21 +88,31 @@ export default {
       })
     },
 
-    subsections () {
-      return this.getCustom('subsections') || []
+    parse (markdown) {
+      console.log(markdown, typeof markdown)
+      const content = marked(markdown)
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(content, 'text/html')
+      return doc
+    },
+
+    sections () {
+      let sections = []
+      const doc = this.parse(this.collection.info.content.about)
+      const headers = doc.querySelector('h1,h2,h3')
+      console.log(headers)
+      let section = nextUntil(doc, 'h1,h2,h3')
+      sections.push(section)
+      console.log(section)
     },
 
     intro () {
-      const intro = this.getCustom('intro')
-      return intro || `${localConfig.brand} is a platform for hosting
-        experimental crowdsourcing projects from ${localConfig.brand}. By
-        contributing to the projects on this platform you will be directly
-        helping to enable future research.`
+      return ''
     }
   },
 
   created () {
-    this.$emit('navupdated', this.navItems)
+    this.sections()
   }
 }
 </script>

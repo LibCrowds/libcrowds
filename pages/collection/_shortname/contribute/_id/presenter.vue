@@ -13,14 +13,14 @@
 </template>
 
 <script>
+import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
-import DefaultPresenter from '@/components/presenters/Default'
 
 export default {
-  layout: 'tabs',
+  layout: 'collection-tabs',
 
   data () {
     return {
@@ -30,9 +30,9 @@ export default {
           id: 'back-to-contribute',
           text: 'Back',
           route: {
-            name: 'collection-contribute',
+            name: 'collection-shortname-contribute',
             params: {
-              collectionname: this.collectionConfig.key
+              collectionname: this.collection.short_name
             }
           }
         }
@@ -75,8 +75,7 @@ export default {
     presenter () {
       const presenters = {
         'libcrowds-viewer': LibcrowdsViewerPresenter,
-        'z3950': Z3950Presenter,
-        default: DefaultPresenter
+        'z3950': Z3950Presenter
       }
       return this.collectionConfig.presenter
         ? presenters[this.collectionConfig.presenter]
@@ -231,6 +230,6 @@ export default {
     this.loadTasks()
   },
 
-  mixins: [ notifications ]
+  mixins: [ notifications, loadAsyncCollection ]
 }
 </script>
