@@ -104,8 +104,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         categories: data.categories,
-        projects: data.projects,
-        csrf: data.form.csrf
+        projects: data.projects
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
