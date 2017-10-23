@@ -137,12 +137,12 @@ export default {
      *   The project.
      */
     toggleFeatured (project) {
-      this.$axios.$put(`/api/project/${this.project.id}`, {
-        featured: !this.project.featured
+      this.$axios.$put(`/api/project/${project.id}`, {
+        featured: !project.featured
       }).then(data => {
-        this.project.featured = !this.project.featured
+        this.project.featured = !project.featured
       }).catch(err => {
-        this.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     },
 
