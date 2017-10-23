@@ -23,9 +23,13 @@ CORS_RESOURCES = {
 # Additional category fields
 CATEGORY_INFO_PUBLIC_FIELDS = [
   'tagline',
-  'forumUrl',
+  'forum',
   'presenter',
   'license',
+  'published',
+  'content',
+  'terminology',
+  'background'
 ]
 
 # Additional user fields

@@ -3,20 +3,22 @@ import merge from 'lodash/merge'
 export const loadAsyncCollection = {
   async asyncData ({ params, app, error, store }) {
     const defaultInfo = {
-      forumUrl: null,
+      forum: null,
       tagline: '',
       background: null,
       terminology: {
-        category: 'category',
         project: 'project',
         task: 'task',
         taskRun: 'task run'
       },
+      license: 'CC0',
+      presenter: null,
       content: {
         about: '',
         data: '',
         contribute: ''
-      }
+      },
+      pubished: false
     }
 
     return app.$axios.$get('/api/category', {

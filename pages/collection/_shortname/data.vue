@@ -1,7 +1,7 @@
 <template>
   <div id="collection-data">
     <section>
-      <h2 class="text-center">Data</h2>
+      <h1 class="text-center">Data</h1>
       <hr>
       <p>
         All datasets generated from the experimental crowdsourcing projects
@@ -35,9 +35,9 @@
         pattern recognition applications, such as those using OCR or NER
         technologies.
       </p>
-      <p v-if="collection.info.forumUrl">
+      <p v-if="collection.info.forum">
         Head over to the
-        <a :href="collection.info.forumUrl">
+        <a :href="collection.info.forum">
           {{ collection.info.brand }} Forum
         </a>
         to let us and others know how you have made use of the data, or if you

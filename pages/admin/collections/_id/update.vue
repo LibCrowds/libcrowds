@@ -27,6 +27,29 @@
               collection microsite using
               <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
             </p>
+            <p>
+              The top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
+              will be added automatically. Any second level page headings
+              written in Markdown below (e.g. <strong>## Contact</strong>) will
+              be used to generate navigation links to add to the top of the
+              page.
+            </p>
+            <hr>
+          </pybossa-form>
+        </b-tab>
+        <b-tab title="Terminology">
+          <pybossa-form
+            show-cancel
+            no-border
+            submit-text="Update"
+            cancel-text="Back"
+            :form="terminologyForm"
+            @success="onSuccess"
+            @cancel="onCancel">
+            <p slot="top" class="mb-3 mt-2">
+              You can use the fields below to modify the domain object
+              terminology used throughout the collection microsite.
+            </p>
             <hr>
           </pybossa-form>
         </b-tab>
@@ -44,6 +67,8 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-dashboard',
 
+  mixins: [ notifications ],
+
   data () {
     return {
       gfmDocs: 'https://help.github.com/articles' +
@@ -56,7 +81,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       data.info = data.info || {}
       return {
-        category: data
+        collection: data
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
@@ -76,10 +101,10 @@ export default {
   computed: {
     form () {
       return {
-        endpoint: `/api/category/${this.category.id}`,
+        endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
         model: pick(
-          this.category,
+          this.collection,
           'name',
           'short_name',
           'description',
@@ -122,7 +147,7 @@ export default {
               placeholder: 'https://example.com/img.jpg'
             },
             {
-              model: 'info.forumUrl',
+              model: 'info.forum',
               label: 'Forum URL',
               type: 'input',
               inputType: 'url',
@@ -179,6 +204,12 @@ export default {
                 }
               ],
               default: 'CC0'
+            },
+            {
+              model: 'info.published',
+              type: 'checkbox',
+              label: 'Published',
+              default: false
             }
           ]
         }
@@ -186,10 +217,10 @@ export default {
     },
     contentForm () {
       return {
-        endpoint: `/api/category/${this.category.id}`,
+        endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
         model: pick(
-          this.category,
+          this.collection,
           'info'
         ),
         schema: {
@@ -218,6 +249,38 @@ export default {
           ]
         }
       }
+    },
+    terminologyForm () {
+      return {
+        endpoint: `/api/category/${this.collection.id}`,
+        method: 'put',
+        model: pick(
+          this.collection,
+          'info'
+        ),
+        schema: {
+          fields: [
+            {
+              model: 'info.terminology.project',
+              label: 'Project',
+              type: 'input',
+              inputType: 'text'
+            },
+            {
+              model: 'info.terminology.task',
+              label: 'Task',
+              type: 'input',
+              inputType: 'text'
+            },
+            {
+              model: 'info.terminology.taskrun',
+              label: 'Task Run',
+              type: 'input',
+              inputType: 'text'
+            }
+          ]
+        }
+      }
     }
   },
 
@@ -239,9 +302,7 @@ export default {
     onCancel () {
       this.$router.push({ name: 'admin-collections' })
     }
-  },
-
-  mixins: [ notifications ]
+  }
 }
 </script>
 

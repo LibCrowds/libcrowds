@@ -62,8 +62,8 @@
             Contribute
           </b-nav-item>
           <b-nav-item
-            :href="collection.forumUrl"
-            v-if="collection.forumUrl">
+            :href="collection.info.forum"
+            v-if="collection.info.forum">
             Discuss
           </b-nav-item>
           <!-- <b-nav-item

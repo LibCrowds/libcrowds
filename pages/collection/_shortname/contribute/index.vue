@@ -3,7 +3,7 @@
   <div id="collection-contribute">
 
     <section>
-      <h2 class="text-center">Contribute</h2>
+      <h1 class="text-center">Contribute</h1>
       <hr>
       <span
         v-if="collection.contribute"

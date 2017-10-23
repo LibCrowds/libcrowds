@@ -1,55 +1,30 @@
 <template>
   <div id="collection-about">
 
-    <section>
-      <h2 class="text-center">About {{ collection.name }}</h2>
+    <h1 class="text-center">About {{ collection.name }}</h1>
+    <span v-html="marked(collection.info.content.about)"></span>
+
+    <div class="text-center do-not-wrap">
       <hr>
-      <span v-html="intro"></span>
-      <div class="text-center mt-3">
-        <b-btn
-          variant="success"
-          size="lg"
-          :to="{
-            name: 'collection-shortname-contribute',
-            params: {
-              shortname: collection.short_name
-            }
-          }">
-          Get Started
-        </b-btn>
-      </div>
-    </section>
-
-    <section
-      v-for="(section, index) in sections"
-      :key="index"
-      :id="index">
-      <span v-html="section"></span>
-      <div
-        v-if="index === sections.length - 1"
-        class="text-center">
-        <hr>
-        <b-btn
-          class="mt-1"
-          variant="success"
-          size="lg"
-          :to="{
-            name: 'collection-shortname-contribute',
-            params: {
-              shortname: collection.short_name
-            }
-          }">
-          Get Started
-        </b-btn>
-      </div>
-    </section>
-
+      <b-btn
+        class="mt-1"
+        variant="success"
+        size="lg"
+        :to="{
+          name: 'collection-shortname-contribute',
+          params: {
+            shortname: collection.short_name
+          }
+        }">
+        Get Started
+      </b-btn>
+    </div>
   </div>
 </template>
 
 <script>
 import marked from 'marked'
-import { nextUntil } from '@/utils/nextUntil'
+import { wrapContent } from '@/utils/wrapContent'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import localConfig from '@/local.config'
 
@@ -77,42 +52,17 @@ export default {
 
   mixins: [ loadAsyncCollection ],
 
-  computed: {
-    navItems () {
-      const subsections = this.getCustom('subsections')
-      if (!subsections) {
-        return []
-      }
-      return subsections.map((section) => {
-        return { id: section.id, text: section.title }
-      })
-    },
-
-    parse (markdown) {
-      console.log(markdown, typeof markdown)
-      const content = marked(markdown)
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(content, 'text/html')
-      return doc
-    },
-
-    sections () {
-      let sections = []
-      const doc = this.parse(this.collection.info.content.about)
-      const headers = doc.querySelector('h1,h2,h3')
-      console.log(headers)
-      let section = nextUntil(doc, 'h1,h2,h3')
-      sections.push(section)
-      console.log(section)
-    },
-
-    intro () {
-      return ''
-    }
+  methods: {
+    /**
+     * Markdown processor.
+     */
+    marked
   },
 
-  created () {
-    this.sections()
+  mounted () {
+    const content = document.querySelector('#collection-about')
+    const wrapper = document.createElement('section')
+    return wrapContent(content, 'h2', wrapper)
   }
 }
 </script>

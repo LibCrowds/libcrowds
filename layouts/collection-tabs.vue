@@ -71,6 +71,10 @@ export default {
   #content {
     background-color: $white;
 
+    h1, h2, h3 {
+      text-align: center;
+    }
+
     /* Internal sections */
     & > * > section {
       transition: opacity 600ms;
@@ -84,8 +88,14 @@ export default {
         background-color: $gray-100;
       }
 
-      @include media-breakpoint-up(md) {
-        h2 { font-size: 3.5rem; }
+      h1 {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid $gray-300;
+
+        @include media-breakpoint-up(md) {
+          font-size: 3.5rem;
+          margin-top: 0;
+        }
       }
     }
   }

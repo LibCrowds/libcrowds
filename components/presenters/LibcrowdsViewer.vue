@@ -75,10 +75,10 @@ export default {
       })
       nav[0].label = this.collection.name
       nav[0].brand = true
-      if (this.collection.forumUrl) {
+      if (this.collection.info.forum) {
         nav.splice(3, 0, {
           label: 'Discuss',
-          url: this.collection.forumUrl
+          url: this.collection.info.forum
         })
       }
       return nav
