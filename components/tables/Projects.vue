@@ -6,6 +6,12 @@
       show-empty
       :items="projects"
       :fields="tableFields">
+      <template slot="created" scope="project">
+        {{ project.item.created | moment('calendar') }}
+      </template>
+      <template slot="overall_progress" scope="project">
+        {{ project.item.overall_progress }}%
+      </template>
       <template slot="action" scope="project">
         <b-btn
           v-if="successBtn"
@@ -22,7 +28,7 @@
       @infinite="infiniteLoadHandler">
        <span slot="no-results"></span>
        <span slot="no-more">
-         There are no more results to be loaded.
+         No more results
        </span>
     </infinite-loading>
   </div>
@@ -39,9 +45,25 @@ export default {
         name: {
           label: 'Name'
         },
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center d-none d-lg-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-lg-table-cell',
+          sortable: true
+        },
+        n_tasks: {
+          label: 'Tasks',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
         overall_progress: {
           label: 'Progress',
-          class: 'text-center'
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
         },
         action: {
           label: 'Action',
@@ -59,7 +81,7 @@ export default {
   props: {
     searchParams: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     },
     successBtn: {
       type: String,
@@ -67,30 +89,42 @@ export default {
     }
   },
 
-  computed: {
-    lastId () {
-      if (!this.projects.length) {
-        return 0
-      }
-      return this.projects[this.projects.length - 1].id
-    }
-  },
-
   methods: {
-    infiniteLoadHandler ($state) {
+    async infiniteLoadHandler ($state) {
+      // Merge search params with defaults and last ID
+      let lastId = 0
+      if (this.projects.length) {
+        lastId = this.projects[this.projects.length - 1].id
+      }
       const params = merge(this.defaultParams, this.searchParams, {
-        last_id: this.lastId
+        last_id: lastId
       })
-      this.$axios.$get('/api/project', { params: params }).then(data => {
-        if (!data.length) {
+
+      try {
+        // Get project data
+        const projectData = await this.$axios.$get('/api/project', {
+          params: params
+        })
+
+        // Loading complete
+        if (!projectData.length) {
           $state.complete()
           return
         }
-        this.projects = this.projects.concat(data)
+
+        // Enrich projects with stats
+        const statsData = await this.$axios.$get('/api/projectstats', {
+          project_id: projectData.map(project => project.id)
+        })
+        const enrichedProjects = projectData.map((project, idx) => {
+          return merge(statsData[idx], project)
+        })
+
+        this.projects = this.projects.concat(enrichedProjects)
         $state.loaded()
-      }).catch(err => {
+      } catch (err) {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
-      })
+      }
     }
   }
 }
