@@ -6,7 +6,7 @@
 
     <div slot="bottom" class="d-flex form-group mt-1">
       <toggle-button
-        :value="model.protect"
+        :value="form.model.protect"
         :sync="true"
         :labels="true"
         @change="updateModelBoolean('protect', $event)">
@@ -18,7 +18,7 @@
 
     <div slot="bottom" class="d-flex form-group mt-1">
       <toggle-button
-        :value="model.allow_anonymous_contributors"
+        :value="form.model.allow_anonymous_contributors"
         :sync="true"
         :labels="true"
         @change="updateModelBoolean('allow_anonymous_contributors', $event)">
@@ -40,6 +40,7 @@ export default {
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.shortname}/update`
     return app.$axios.$get(endpoint).then(data => {
+      console.log(data)
       return {
         project: data.project,
         form: {
