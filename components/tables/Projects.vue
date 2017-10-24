@@ -20,6 +20,10 @@
     </b-table>
     <infinite-loading
       @infinite="infiniteLoadHandler">
+       <span slot="no-results"></span>
+       <span slot="no-more">
+         There are no more results to be loaded.
+       </span>
     </infinite-loading>
   </div>
 </template>
