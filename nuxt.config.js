@@ -85,6 +85,7 @@ const config = {
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },
     { src: '~/plugins/vue-moment' },
+    { src: '~/plugins/vue-multiselect' },
     { src: '~/plugins/vue-progress', ssr: false },
     { src: '~/plugins/vue-scrollto', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },
