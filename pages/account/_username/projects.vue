@@ -6,6 +6,22 @@
           :search-params="searchParams"
           success-btn="Open"
           @successclick="openProject">
+
+          <template slot="action" scope="project">
+            <b-btn
+              variant="success"
+              size="sm"
+              block
+              :to="{
+                name: 'project-shortname-settings',
+                params: {
+                  shortname: project.item.short_name
+                }
+              }">
+              Open
+            </b-btn>
+          </template>
+
         </projects-table>
       </b-card>
     </b-container>
@@ -30,22 +46,6 @@ export default {
         params.owner_id = currentUser.id
       }
       return params
-    }
-  },
-
-  methods: {
-    /**
-     * Redirect to a project settings page.
-     * @param {Object} project
-     *   The project.
-     */
-    openProject (project) {
-      this.$router.push({
-        name: 'project-shortname-settings',
-        params: {
-          shortname: project.short_name
-        }
-      })
     }
   }
 }

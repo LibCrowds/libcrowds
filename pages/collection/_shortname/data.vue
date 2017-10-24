@@ -1,15 +1,22 @@
 <template>
   <div id="collection-data">
+
     <h1 class="text-center">Data</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
 
-    <projects-table
-      :search-params="searchParams"
-      success-btn="Download"
-      @successclick="loadDataModal">
+    <projects-table :search-params="searchParams">
+      <template slot="action" scope="project">
+        <b-btn
+          variant="success"
+          size="sm"
+          block
+          @click="loadDataModal(project.item)">
+          Download
+        </b-btn>
+      </template>
     </projects-table>
 
     <data-modal
@@ -17,6 +24,7 @@
       :show="showDataModal"
       :project="activeProject">
     </data-modal>
+
   </div>
 </template>
 
@@ -24,6 +32,7 @@
 import marked from 'marked'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import ProjectsTable from '@/components/tables/Projects'
+import ProjectSortingToolbar from '@/components/toolbars/ProjectSorting'
 import DataModal from '@/components/modals/Data'
 
 export default {
@@ -34,7 +43,8 @@ export default {
   data () {
     return {
       activeProject: null,
-      showDataModal: false
+      showDataModal: false,
+      customSearchParams: {}
     }
   },
 
@@ -55,7 +65,8 @@ export default {
 
   components: {
     ProjectsTable,
-    DataModal
+    DataModal,
+    ProjectSortingToolbar
   },
 
   computed: {
@@ -65,6 +76,7 @@ export default {
         published: true
       }
     },
+
     pageContent () {
       return marked(this.collection.info.content.data)
     }

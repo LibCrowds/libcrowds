@@ -6,28 +6,33 @@
       class="list-unstyled">
       <li class="shuffle-grid-item"
         v-for="project in projects"
-        :key="project.short_name">
+        :key="project.id">
         <project-card
           :collection="collection"
           :project="project">
         </project-card>
       </li>
     </transition-group>
+    <infinite-loading
+      @infinite="infinitelyLoadProjects">
+       <span slot="no-results"></span>
+       <span slot="no-more">
+         No more results
+       </span>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
 import ProjectCard from '@/components/cards/Project'
+import { infinitelyLoadProjects } from '@/mixins/infinitelyLoadProjects'
 
 export default {
-  props: {
-    projects: {
-      type: Array,
-      required: true
-    },
-    collection: {
-      type: Object,
-      required: true
+  mixins: [ infinitelyLoadProjects ],
+
+  computed: {
+    collection () {
+      return this.$store.state.collection
     }
   },
 

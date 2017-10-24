@@ -25,7 +25,7 @@
     <infinite-loading
       @infinite="infinitelyLoadProjects">
        <span slot="no-results"></span>
-       <span slot="no-more">
+       <span slot="no-more" id="no-more">
          No more results
        </span>
     </infinite-loading>
@@ -89,7 +89,8 @@ export default {
     cardStyle () {
       if (this.noBorder) {
         return {
-          border: 'none'
+          borderLeft: 'none',
+          borderRight: 'none'
         }
       }
     }
