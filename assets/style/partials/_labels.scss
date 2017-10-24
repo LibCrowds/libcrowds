@@ -1,0 +1,8 @@
+label {
+  &.label-muted {
+    font-weight: 300;
+    font-size: $font-size-sm;
+    color: $gray-600;
+    margin: 1.25rem 0 .625rem;
+  }
+}
