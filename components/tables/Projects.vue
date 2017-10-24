@@ -5,37 +5,36 @@
       striped
       show-empty
       :items="projects"
-      :fields="tableFields">
-      <template slot="created" scope="project">
-        {{ project.item.created | moment('calendar') }}
-      </template>
+      :fields="tableFields"
+      :style="cardStyle">
+
       <template slot="overall_progress" scope="project">
         {{ project.item.overall_progress }}%
       </template>
-      <template slot="action" scope="project">
-        <b-btn
-          v-if="successBtn"
-          slot="btn-action"
-          variant="success"
-          size="sm"
-          block
-          @click="$emit('successclick', project.item)">
-          {{ successBtn }}
-        </b-btn>
+
+      <template slot="actions" scope="project">
+        <slot name="action" :item="project.item"></slot>
       </template>
+
+      <template slot="created" scope="project">
+        {{ project.item.created | moment('calendar') }}
+      </template>
+
     </b-table>
+
     <infinite-loading
-      @infinite="infiniteLoadHandler">
+      @infinite="infinitelyLoadProjects">
        <span slot="no-results"></span>
        <span slot="no-more">
          No more results
        </span>
     </infinite-loading>
+
   </div>
 </template>
 
 <script>
-import infinitelyLoadProjects from '@/mixins/infinitelyLoadProjects'
+import { infinitelyLoadProjects } from '@/mixins/infinitelyLoadProjects'
 
 export default {
 
@@ -49,17 +48,12 @@ export default {
         },
         n_volunteers: {
           label: 'Volunteers',
-          class: 'text-center d-none d-lg-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-lg-table-cell',
+          class: 'text-center d-none d-xl-table-cell',
           sortable: true
         },
         n_tasks: {
           label: 'Tasks',
-          class: 'text-center d-none d-md-table-cell',
+          class: 'text-center d-none d-xl-table-cell',
           sortable: true
         },
         overall_progress: {
@@ -67,8 +61,13 @@ export default {
           class: 'text-center d-none d-md-table-cell',
           sortable: true
         },
-        action: {
-          label: 'Action',
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        actions: {
+          label: 'Actions',
           class: 'text-center'
         }
       }
@@ -80,9 +79,19 @@ export default {
       type: Object,
       default: () => ({})
     },
-    successBtn: {
-      type: String,
-      default: ''
+    noBorder: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    cardStyle () {
+      if (this.noBorder) {
+        return {
+          border: 'none'
+        }
+      }
     }
   }
 }
