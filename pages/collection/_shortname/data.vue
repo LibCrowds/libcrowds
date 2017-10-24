@@ -1,43 +1,29 @@
 <template>
   <div id="collection-data">
-    <section>
-      <h1 class="text-center">Data</h1>
-      <span v-html="collection.info.content.data"></span>
-      <div class="row">
+    <h1 class="text-center">Data</h1>
+    <span v-if="pageContent">
+      <span v-html="pageContent"></span>
+    </span>
+    <hr class="mx-0">
 
-        <div class="col-xl-3 mb-3">
-          <!-- <categories-list
-            v-if="categories.length"
-            :header="collection.info.terminology.category"
-            :categories="categories"
-            @change="onCategoryChange">
-          </categories-list> -->
-        </div>
-
-        <div class="col-xl-9">
-          <projects-table
-            :search-params="searchParams"
-            success-btn="Download"
-            @successclick="loadDataModal">
-          </projects-table>
-        </div>
-
-      </div>
-    </section>
+    <projects-table
+      :search-params="searchParams"
+      success-btn="Download"
+      @successclick="loadDataModal">
+    </projects-table>
 
     <data-modal
       v-if="activeProject"
       :show="showDataModal"
       :project="activeProject">
     </data-modal>
-
   </div>
 </template>
 
 <script>
+import marked from 'marked'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import ProjectsTable from '@/components/tables/Projects'
-// import CategoriesList from '@/components/lists/Categories'
 import DataModal from '@/components/modals/Data'
 
 export default {
@@ -78,6 +64,9 @@ export default {
         category_id: this.collection.id,
         published: true
       }
+    },
+    pageContent () {
+      return marked(this.collection.info.content.data)
     }
   },
 
