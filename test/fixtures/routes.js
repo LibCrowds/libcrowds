@@ -137,7 +137,7 @@ export const routes = [
   {
     path: '/collection/:key?/contribute',
     component: jest.fn(),
-    name: 'collection-shortname-contribute'
+    name: 'collection-shortname-projects'
   },
   {
     path: '/project/:shortname?/settings',

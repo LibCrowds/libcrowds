@@ -1,16 +1,17 @@
 <template>
   <div id="collection-about">
-
     <h1 class="text-center">About {{ collection.name }}</h1>
-    <span v-html="marked(collection.info.content.about)"></span>
+    <span v-if="pageContent">
+      <span v-html="pageContent"></span>
+      <hr class="mx-0">
+    </span>
 
     <div class="text-center">
-      <hr>
       <b-btn
         variant="success"
         size="lg"
         :to="{
-          name: 'collection-shortname-contribute',
+          name: 'collection-shortname-projects',
           params: {
             shortname: collection.short_name
           }
@@ -45,6 +46,12 @@ export default {
           content: `Learn more about ${this.collection.brand}`
         }
       ]
+    }
+  },
+
+  computed: {
+    pageContent () {
+      marked(this.collection.info.content.about)
     }
   },
 

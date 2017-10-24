@@ -30,7 +30,7 @@ export default {
           id: 'back-to-contribute',
           text: 'Back',
           route: {
-            name: 'collection-shortname-contribute',
+            name: 'collection-shortname-projects',
             params: {
               collectionname: this.collection.short_name
             }

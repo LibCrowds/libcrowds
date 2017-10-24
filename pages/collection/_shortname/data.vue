@@ -3,8 +3,8 @@
     <h1 class="text-center">Data</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
+      <hr class="mx-0">
     </span>
-    <hr class="mx-0">
 
     <projects-table
       :search-params="searchParams"

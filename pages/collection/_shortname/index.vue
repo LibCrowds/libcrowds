@@ -30,7 +30,7 @@
               variant="success"
               size="lg"
               :to="{
-                name: 'collection-shortname-contribute',
+                name: 'collection-shortname-projects',
                 params: {
                   shortname: collection.short_name
                 }
@@ -102,7 +102,7 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-shortname-contribute',
+            name: 'collection-shortname-projects',
             params: {
               shortname: collection.short_name
             }
@@ -175,7 +175,7 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-shortname-contribute',
+            name: 'collection-shortname-projects',
             params: {
               shortname: collection.short_name
             }
