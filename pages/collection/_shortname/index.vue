@@ -91,10 +91,10 @@
         </div>
         <ul class="list-unstyled">
           <li v-for="project in featured" :key="project.id">
-            <!-- <project-card
+            <project-card
               :collection="collection"
               :project="project">
-            </project-card> -->
+            </project-card>
           </li>
         </ul>
         <b-btn

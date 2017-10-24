@@ -1,18 +1,21 @@
 <template>
   <div class="project-card-list">
+
     <transition-group appear
-      ref="shuffle-grid"
       tag="ul"
       class="list-unstyled">
       <li class="shuffle-grid-item"
         v-for="project in projects"
         :key="project.id">
+
         <project-card
           :collection="collection"
           :project="project">
         </project-card>
+
       </li>
     </transition-group>
+
     <infinite-loading
       @infinite="infinitelyLoadProjects">
        <span slot="no-results"></span>
@@ -20,6 +23,7 @@
          No more results
        </span>
     </infinite-loading>
+
   </div>
 </template>
 

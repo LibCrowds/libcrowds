@@ -4,10 +4,10 @@
     class="project-card">
     <nuxt-link
       :to="{
-        name: 'collection-shortname-presenter',
+        name: 'collection-shortname-projects-id',
         params: {
           shortname: collection.short_name,
-          shortname: project.short_name
+          id: project.id
         }
       }">
       <div class="avatar-wrapper">
@@ -21,10 +21,10 @@
       <div class="card-title mb-0">
         <nuxt-link
           :to="{
-            name: 'collection-shortname-presenter',
+            name: 'collection-shortname-projects-id',
             params: {
               shortname: collection.short_name,
-              shortname: project.short_name
+              id: project.id
             }
           }">
           <h4 class="card-title mb-1 px-2 pt-2">
@@ -45,13 +45,11 @@
         {{ project.description }}
       </p>
 
-      <div class="progress-container">
-        <vue-progress-bar
-          type="line"
-          ref="progress"
-          :options="progressBarOpts">
-        </vue-progress-bar>
-      </div>
+      <progress-bar
+        type="line"
+        ref="progress"
+        :options="progressBarOpts">
+      </progress-bar>
 
       <div class="card-footer mt-1 px-2 py-1">
         <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
@@ -75,8 +73,8 @@
           </b-btn>
           <project-contrib-button
             block
-            :shortname="project.short_name"
-            variant="success">
+            :collection="collection"
+            :project="project">
           </project-contrib-button>
         </div>
       </div>
@@ -100,7 +98,7 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
 
 export default {
-  data: function () {
+  data () {
     return {
       statsModalId: `project-stats-modal-${this.project.id}`,
       progressBarOpts: {
@@ -112,7 +110,7 @@ export default {
         trailWidth: 0.5,
         svgStyle: {
           width: '100%',
-          height: '100%'
+          height: '4px'
         }
       }
     }
@@ -271,12 +269,6 @@ export default {
     svg {
       margin-left: 0.5rem;
     }
-  }
-
-  .progress-container {
-    height: 4px;
-    position: relative;
-    margin-bottom: 0.5rem;
   }
 }
 </style>

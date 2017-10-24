@@ -131,5 +131,9 @@ export default {
   p {
     margin: 0;
   }
+
+  .placeholder {
+    border: 1px solid $gray-300;
+  }
 }
 </style>

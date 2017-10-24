@@ -43,6 +43,8 @@ export const infinitelyLoadProjects = {
           return merge(statsData[idx], project)
         })
 
+        console.log(enrichedProjects)
+
         this.projects = this.projects.concat(enrichedProjects)
         $state.loaded()
       } catch (err) {
