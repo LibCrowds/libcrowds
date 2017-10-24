@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import infinitelyLoadProjects from '@/mixins/methods/infinitelyLoadProjects'
+import infinitelyLoadProjects from '@/mixins/infinitelyLoadProjects'
 
 export default {
 
