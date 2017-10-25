@@ -42,9 +42,11 @@
           :key="index">
           <collection-card
             v-for="collection in batch"
+            v-if="collection"
             :key="collection.id"
             :collection="collection">
           </collection-card>
+          <div class="card invisible" v-else></div>
         </b-card-group>
       </div>
     </section>
@@ -192,7 +194,7 @@ export default {
     },
 
     batchedCollections () {
-      return batch(this.$store.state.publishedCollections, 2)
+      return batch(this.$store.state.publishedCollections, 2, null)
     }
   }
 }

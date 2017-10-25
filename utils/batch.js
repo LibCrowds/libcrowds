@@ -1,10 +1,13 @@
 /**
  * Return an array of arrays, each a batch of n items.
  * @param {Array} items
+ *   The items.
  * @param {Number} n
- * @param {Object} fillWith
+ *   The size of each batch.
+ * @param {*} fillWith
+ *   The item to fill any incomplete batch with.
  */
-export const batch = function (items, n, fillWith = null) {
+export const batch = function (items, n, fillWith) {
   let batched = []
   let tmp = []
   for (let item of items) {
@@ -15,12 +18,13 @@ export const batch = function (items, n, fillWith = null) {
     tmp.push(item)
   }
   if (tmp.length) {
-    if (fillWith && tmp.length < n) {
+    if (fillWith !== undefined && tmp.length < n) {
       for (let i = 0; i < n - tmp.length; i++) {
         tmp.push(fillWith)
       }
     }
     batched.push(tmp)
   }
+  console.log(batch)
   return batched
 }
