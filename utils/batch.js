@@ -25,6 +25,5 @@ export const batch = function (items, n, fillWith) {
     }
     batched.push(tmp)
   }
-  console.log(batch)
   return batched
 }

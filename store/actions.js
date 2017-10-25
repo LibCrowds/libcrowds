@@ -37,7 +37,6 @@ export default {
         desc: true
       }
     }).then(data => {
-      console.log(data)
       commit('SET_ITEM', {
         key: 'publishedCollections', value: data
       })

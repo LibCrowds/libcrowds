@@ -4,7 +4,6 @@
 export const fetchProjectByName = {
   fetch ({ params, app, error, store }) {
     return app.$axios.$get('/api/project', { params: params }).then(data => {
-      console.log(data, params)
       if (!data || data.length !== 1) {
         error({ statusCode: 404, message: 'Page not found' })
         return
