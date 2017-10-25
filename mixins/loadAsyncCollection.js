@@ -3,28 +3,31 @@ import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 /**
  * Loads a collection asynchronously, setting defaults and updating the store.
  */
-export const loadAsyncCollection = {
+export const asyncLoadCollection = {
   async asyncData ({ params, app, error, store }) {
-    return app.$axios.$get('/api/category', {
-      params: {
-        short_name: params.shortname
+    return Promise((resolve, reject) => {
+      if (store.state.project) {
+        // Load the collection for the current project, if available
+        const endpoint = `/api/category/${store.state.project.category_id}`
+        return app.$axios.$get(endpoint)
+      } else {
+        // Otherwise attempt to load from URL params
+        return app.$axios.$get('/api/category', { params: params })
       }
     }).then(data => {
-      if (!data.length) {
+      if (!data || !data.length === 1) {
         error({ statusCode: 404, message: 'Page not found' })
       }
 
-      setCollectionDefaults(data[0])
-      store.dispatch('UPDATE_COLLECTION', data[0])
+      const collection = Array.isArray(data) ? data[0] : data
+
+      setCollectionDefaults(collection)
+      store.dispatch('UPDATE_COLLECTION', collection)
       return {
-        collection: data[0]
+        collection: collection
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
     })
-  },
-
-  validate ({ params }) {
-    return params.shortname !== undefined
   }
 }
