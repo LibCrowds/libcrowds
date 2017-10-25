@@ -1,26 +1,10 @@
-import merge from 'lodash/merge'
+import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
+/**
+ * Loads a collection asynchronously, setting defaults and updating the store.
+ */
 export const loadAsyncCollection = {
   async asyncData ({ params, app, error, store }) {
-    const defaultInfo = {
-      forum: null,
-      tagline: '',
-      background: null,
-      terminology: {
-        project: 'project',
-        task: 'task',
-        taskRun: 'task run'
-      },
-      license: 'CC0',
-      presenter: null,
-      content: {
-        about: '',
-        data: '',
-        contribute: ''
-      },
-      pubished: false
-    }
-
     return app.$axios.$get('/api/category', {
       params: {
         short_name: params.shortname
@@ -29,7 +13,8 @@ export const loadAsyncCollection = {
       if (!data.length) {
         error({ statusCode: 404, message: 'Page not found' })
       }
-      data[0].info = merge(defaultInfo, data[0].info) // Merge default info
+
+      setCollectionDefaults(data[0])
       store.dispatch('UPDATE_COLLECTION', data[0])
       return {
         collection: data[0]

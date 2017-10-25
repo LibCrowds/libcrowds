@@ -48,20 +48,39 @@
             <hr>
           </pybossa-form>
         </b-tab>
+
         <b-tab title="Tags">
-          <pybossa-form
-            show-cancel
-            no-border
-            submit-text="Update"
-            cancel-text="Back"
-            :form="tagsForm"
-            @success="onSuccess"
-            @cancel="onCancel">
-            <p slot="top" class="mb-3 mt-2">
-              Tags can be used to organise projects within a collection.
-            </p>
-            <hr>
-          </pybossa-form>
+          <p class="mt-2 mb-0 p-2">
+            Tags are used to organise projects within a collection. Each
+            unique tag type will be used to create a new multi-select sorting
+            field by which the projects within a collection can be filtered.
+          </p>
+          <div class="d-flex flex-row w-100">
+            <b-btn
+              size="sm"
+              class="mb-2 ml-auto mr-2"
+              variant="success"
+              @click="addTag">
+              Add a tag
+            </b-btn>
+          </div>
+          <b-table
+            responsive
+            striped
+            hover
+            show-empty
+            :items="collection.info.tags"
+            :fields="tagTableFields">
+            <template slot="actions" scope="tag">
+              <b-btn
+                variant="warning"
+                size="sm"
+                block
+                @click="removeTag(tag.item)">
+                Remove
+              </b-btn>
+            </template>
+          </b-table>
         </b-tab>
       </b-tabs>
     </b-card>
@@ -69,7 +88,7 @@
 </template>
 
 <script>
-import 'vue-awesome/icons/eye'
+import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -81,16 +100,29 @@ export default {
 
   data () {
     return {
-      gfmDocs: 'https://help.github.com/articles' +
-        '/basic-writing-and-formatting-syntax/',
-      newTag: null
+      gfmDocs: 'https://guides.github.com/features/mastering-markdown/',
+      newTag: null,
+      tagTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        type: {
+          label: 'Type',
+          class: 'text-center',
+          sortable: true
+        },
+        actions: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      }
     }
   },
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/api/category/${params.id}`
-    return app.$axios.$get(endpoint).then(data => {
-      data.info = data.info || {}
+    return app.$axios.$get(`/api/category/${params.id}`).then(data => {
+      setCollectionDefaults(data)
       return {
         collection: data
       }
@@ -292,26 +324,6 @@ export default {
           ]
         }
       }
-    },
-    tagsForm () {
-      return {
-        endpoint: `/api/category/${this.collection.id}`,
-        method: 'put',
-        model: pick(
-          this.collection,
-          'info'
-        ),
-        schema: {
-          fields: [
-            {
-              model: 'newTag',
-              label: 'New Tag',
-              type: 'input',
-              inputType: 'text'
-            }
-          ]
-        }
-      }
     }
   },
 
@@ -332,6 +344,80 @@ export default {
      */
     onCancel () {
       this.$router.push({ name: 'admin-collections' })
+    },
+
+    /**
+     * Show the add tag alert.
+     */
+    addTag () {
+      this.$swal({
+        title: 'Add a tag',
+        html:
+          `<input id="tag-type" class="swal2-input" placeholder="Type">
+          <input id="tag-name" class="swal2-input" placeholder="Name">`,
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const type = document.querySelector('#tag-type').value
+          const name = document.querySelector('#tag-name').value
+          const matches = this.collection.info.tags.filter(t => {
+            return t.type === type && t.name === name
+          })
+          if (matches.length > 0) {
+            const msg = 'A tag with that name and type already exists'
+            this.$swal.showValidationError(msg)
+            this.$swal.hideLoading()
+          } else if (!name.length || !type.length) {
+            this.$swal.showValidationError('Both type and name are required')
+            this.$swal.hideLoading()
+          } else {
+            this.collection.info.tags.push({
+              type: type,
+              name: name
+            })
+            return this.$axios.$put(`/api/category/${this.collection.id}`, {
+              info: this.collection.info
+            })
+          }
+        }
+      }).then(data => {
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: 'Tag added'
+        })
+      }, (dismiss) => {
+        this.$swal.close()
+      })
+    },
+
+    /**
+     * Show the remove tag alert.
+     */
+    removeTag (tag) {
+      this.$swal({
+        title: `Delete Tag`,
+        text: `Are you sure you want to delete "${tag.type} - ${tag.name}"?`,
+        type: 'warning',
+        showCancelButton: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          this.collection.info.tags = this.collection.info.tags.filter(t => {
+            return t.type !== tag.type || t.name !== tag.name
+          })
+          return this.$axios.$put(`/api/category/${this.collection.id}`, {
+            info: this.collection.info
+          })
+        }
+      }).then(data => {
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: `Tag deleted`
+        })
+      }, (dismiss) => {
+        this.$swal.close()
+      })
     }
   }
 }
