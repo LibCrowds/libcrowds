@@ -32,7 +32,6 @@
 import marked from 'marked'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
 import ProjectsTable from '@/components/tables/Projects'
-import ProjectSortingToolbar from '@/components/toolbars/ProjectSorting'
 import DataModal from '@/components/modals/Data'
 
 export default {
@@ -65,8 +64,7 @@ export default {
 
   components: {
     ProjectsTable,
-    DataModal,
-    ProjectSortingToolbar
+    DataModal
   },
 
   computed: {
