@@ -120,7 +120,8 @@ const config = {
     name: localConfig.brand,
     description: localConfig.description,
     theme_color: '#ba0000',
-    lang: 'en-GB'
+    lang: 'en-GB',
+    start_url: '.'
   },
   loading: {
     color: '#bffaf3',
