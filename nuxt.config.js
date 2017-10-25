@@ -124,7 +124,7 @@ const config = {
     start_url: '.'
   },
   loading: {
-    color: '#bffaf3',
+    color: '#2589BD',
     duration: localConfig.pybossa.timeout || 5000
   },
   router: {
