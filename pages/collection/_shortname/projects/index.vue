@@ -10,7 +10,7 @@
       <b-col xl="3" class="mb-3">
 
         <project-sorting-card
-          class="mt-3 d-none d-xl-block"
+          class="mb-3 d-none d-xl-block"
           :collection="collection">
         </project-sorting-card>
 

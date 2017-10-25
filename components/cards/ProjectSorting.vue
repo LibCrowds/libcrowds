@@ -3,11 +3,14 @@
     id="project-sorting-options"
     header="Sorting Options">
 
-    <div v-for="multiselect in multiselects" :key="multiselect.type">
+    <div
+      v-for="multiselect in multiselects"
+      :key="multiselect.type"
+      class="mb-2">
       <label>{{ multiselect.type }}</label>
       <multiselect
         label="name"
-        placeholder="Type to search"
+        :placeholder="`Filter by ${multiselect.type.toLowerCase()}`"
         :show-labels="false"
         :multiple="true"
         :options="multiselect.options">
