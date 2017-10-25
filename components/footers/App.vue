@@ -31,21 +31,21 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title">Projects</h5>
+        <h5 class="list-title">Collections</h5>
         <ul class="list-unstyled">
           <li
-            v-for="(config, key) in localConfig.collections"
-            :key="key"
+            v-for="collection in collections.slice(0, 5)"
+            :key="collection.id"
             class="list-item">
             <nuxt-link
               :to="{
                 name: 'collection-short_name',
                 params: {
-                  key: key
+                  short_name: collection.short_name
                 }
               }"
               @click.native="scrollIfCurrent">
-              {{ config.name }}
+              {{ collection.name }}
             </nuxt-link>
           </li>
         </ul>
@@ -110,6 +110,13 @@ export default {
       twitterUrl: `https://twitter.com/${localConfig.contact.twitter}`,
       mailto: `mailto:${localConfig.contact.email}`,
       copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
+    }
+  },
+
+  props: {
+    collections: {
+      type: Array,
+      required: true
     }
   },
 
