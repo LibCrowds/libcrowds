@@ -6,17 +6,30 @@
       <hr class="mx-0">
     </span>
 
-    <project-cards-list
-      :search-params="searchParams">
-    </project-cards-list>
+    <b-row>
+      <b-col xl="3" class="mb-3">
 
+        <project-sorting-card
+          class="mt-3 d-none d-xl-block"
+          :collection="collection">
+        </project-sorting-card>
+
+      </b-col>
+      <b-col xl="9">
+
+        <project-cards-list
+          :search-params="searchParams">
+        </project-cards-list>
+
+      </b-col>
+    </b-row>
   </div>
 </template>
 
 <script>
 import marked from 'marked'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
-import ProjectSortingToolbar from '@/components/toolbars/ProjectSorting'
+import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCardsList from '@/components/lists/ProjectCards'
 
 export default {
@@ -57,7 +70,7 @@ export default {
   },
 
   components: {
-    ProjectSortingToolbar,
+    ProjectSortingCard,
     ProjectCardsList
   }
 }
