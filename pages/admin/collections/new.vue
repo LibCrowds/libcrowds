@@ -1,9 +1,10 @@
 <template>
   <div id="admin-collections-new">
     <pybossa-form
-      header="New Collection"
       :form="form"
+      header="New Collection"
       class="mb-4"
+      show-cancel
       @success="onSuccess"
       @cancel="onCancel">
     </pybossa-form>
@@ -50,8 +51,7 @@ export default {
   },
 
   async asyncData ({ app, error }) {
-    const endpoint = `/admin/categories/new`
-    return app.$axios.$get(endpoint).then(data => {
+    return app.$axios.$get(`/admin/categories`).then(data => {
       // See https://github.com/LibCrowds/libcrowds/issues/100
       delete data.form.id
       return {

@@ -1,6 +1,6 @@
 <template>
   <div id="admin-collections-update">
-    <b-card no-body>
+    <b-card no-body :header="collection.name">
       <b-tabs ref="tabs" no-body card>
         <b-tab title="Core Details" active>
           <pybossa-form
@@ -29,7 +29,6 @@
               Top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
               will be added automatically.
             </p>
-            <hr>
           </pybossa-form>
         </b-tab>
         <b-tab title="Terminology">
@@ -45,7 +44,6 @@
               You can use the fields below to modify the domain object
               terminology used throughout the collection microsite.
             </p>
-            <hr>
           </pybossa-form>
         </b-tab>
 
@@ -88,7 +86,7 @@
 </template>
 
 <script>
-import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -96,7 +94,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ fetchCollectionByName, notifications ],
 
   data () {
     return {
@@ -120,17 +118,6 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
-    return app.$axios.$get(`/api/category/${params.id}`).then(data => {
-      setCollectionDefaults(data)
-      return {
-        collection: data
-      }
-    }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
-    })
-  },
-
   head () {
     return {
       title: `Edit Collection`
@@ -142,6 +129,10 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.collection
+    },
+
     form () {
       return {
         endpoint: `/api/category/${this.collection.id}`,
@@ -258,6 +249,7 @@ export default {
         }
       }
     },
+
     contentForm () {
       return {
         endpoint: `/api/category/${this.collection.id}`,
@@ -293,6 +285,7 @@ export default {
         }
       }
     },
+
     terminologyForm () {
       return {
         endpoint: `/api/category/${this.collection.id}`,
@@ -350,27 +343,54 @@ export default {
      * Show the add tag alert.
      */
     addTag () {
-      this.$swal({
-        title: 'Add a tag',
-        html:
-          `<input id="tag-type" class="swal2-input" placeholder="Type">
-          <input id="tag-name" class="swal2-input" placeholder="Name">`,
+      let type = ''
+      let name = ''
+
+      this.$swal.setDefaults({
+        input: 'text',
         showCancelButton: true,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const type = document.querySelector('#tag-type').value
-          const name = document.querySelector('#tag-name').value
-          const matches = this.collection.info.tags.filter(t => {
-            return t.type === type && t.name === name
-          })
-          if (matches.length > 0) {
-            const msg = 'A tag with that name and type already exists'
-            this.$swal.showValidationError(msg)
-            this.$swal.hideLoading()
-          } else if (!name.length || !type.length) {
-            this.$swal.showValidationError('Both type and name are required')
-            this.$swal.hideLoading()
-          } else {
+        progressSteps: ['1', '2']
+      })
+
+      const steps = [
+        {
+          title: 'Enter a type',
+          text: '(e.g. Location)',
+          confirmButtonText: 'Next',
+          inputPlaceholder: 'Short types work best',
+          inputValidator: (value) => {
+            type = value
+            return new Promise((resolve, reject) => {
+              if (value) {
+                resolve()
+              } else {
+                reject(new Error('The tag type is required'))
+              }
+            })
+          }
+        },
+        {
+          title: 'Enter a name',
+          text: '(e.g. London)',
+          showLoaderOnConfirm: true,
+          inputPlaceholder: 'Short names work best',
+          inputValidator: (value) => {
+            name = value
+            return new Promise((resolve, reject) => {
+              const matches = this.collection.info.tags.filter(t => {
+                return t.type === type && t.name === name
+              })
+              if (matches.length > 0) {
+                const msg = 'A tag with that name and type already exists'
+                reject(new Error(msg))
+              } else if (!value) {
+                reject(new Error('The tag type is required'))
+              } else {
+                resolve()
+              }
+            })
+          },
+          preConfirm: (value) => {
             this.collection.info.tags.push({
               type: type,
               name: name
@@ -380,6 +400,10 @@ export default {
             })
           }
         }
+      ]
+
+      this.$swal.queue(steps).then(result => {
+        this.$swal.resetDefaults()
       }).then(data => {
         this.notify({
           type: 'success',
@@ -387,6 +411,7 @@ export default {
           message: 'Tag added'
         })
       }, (dismiss) => {
+        this.$swal.resetDefaults()
         this.$swal.close()
       })
     },
