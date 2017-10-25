@@ -4,16 +4,16 @@
     header="Sorting Options">
 
     <div
-      v-for="multiselect in multiselects"
-      :key="multiselect.type"
+      v-for="tag in tags"
+      :key="tag.type"
       class="mb-2">
-      <label>{{ multiselect.type }}</label>
+      <label>{{ tag.type }}</label>
       <multiselect
         label="name"
-        :placeholder="`Filter by ${multiselect.type.toLowerCase()}`"
+        :placeholder="`Filter by ${tag.type.toLowerCase()}`"
         :show-labels="false"
         :multiple="true"
-        :options="multiselect.options">
+        :options="tag.options">
       </multiselect>
     </div>
 
@@ -31,28 +31,15 @@
 </template>
 
 <script>
+import { tags } from '@/mixins/tags'
+
 export default {
+  mixins: [ tags ],
+
   props: {
     collection: {
       type: Object,
       required: true
-    }
-  },
-
-  computed: {
-    multiselects () {
-      const multiselects = []
-      const tags = this.collection.info.tags
-      const uniqueTypes = [...new Set(tags.map(tag => tag.type))]
-      for (let type of uniqueTypes) {
-        multiselects.push({
-          type: type,
-          options: tags.filter(tag => {
-            return tag.type === type
-          })
-        })
-      }
-      return multiselects
     }
   }
 }
