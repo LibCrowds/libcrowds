@@ -12,9 +12,9 @@
               block
               variant="success"
               :to="{
-                name: 'account-username-settings-profile',
+                name: 'account-name-settings-profile',
                 params: {
-                  username: user.name
+                  name: user.name
                 }
               }">
               Settings

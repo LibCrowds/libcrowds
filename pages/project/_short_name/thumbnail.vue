@@ -16,13 +16,13 @@ export default {
   layout: 'project-dashboard',
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/project/${params.shortname}/update`
+    const endpoint = `/project/${params.short_name}/update`
     return app.$axios.$get(endpoint).then(data => {
       data.form.btn = 'Upload'
       return {
         project: data.project,
         form: {
-          endpoint: `project/${params.shortname}/update`,
+          endpoint: `project/${params.short_name}/update`,
           model: data.upload_form
         }
       }

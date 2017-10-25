@@ -27,17 +27,17 @@
           <!-- Profile/settings -->
           <b-dropdown-item
             :to="{
-              name: 'account-username',
+              name: 'account-name',
               params: {
-                username: currentUser.name
+                name: currentUser.name
               }
             }">Profile
           </b-dropdown-item>
           <b-dropdown-item
             :to="{
-              name: 'account-username-settings-profile',
+              name: 'account-name-settings-profile',
               params: {
-                username: currentUser.name
+                name: currentUser.name
               }
             }">Settings
           </b-dropdown-item>
@@ -47,9 +47,9 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'account-username-projects',
+                name: 'account-name-projects',
                 params: {
-                  username: currentUser.name
+                  name: currentUser.name
                 }
               }">
               Open Project

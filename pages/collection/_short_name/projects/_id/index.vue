@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
+import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
@@ -21,6 +21,8 @@ import Z3950Presenter from '@/components/presenters/Z3950'
 
 export default {
   layout: 'collection-tabs',
+
+  mixins: [ notifications, asyncLoadCollection ],
 
   data () {
     return {
@@ -30,7 +32,7 @@ export default {
           id: 'back-to-contribute',
           text: 'Back',
           route: {
-            name: 'collection-shortname-projects',
+            name: 'collection-short_name-projects',
             params: {
               collectionname: this.collection.short_name
             }
@@ -41,7 +43,7 @@ export default {
   },
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/project/${params.shortname}`
+    const endpoint = `/api/project/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
         project: data.project
@@ -228,8 +230,6 @@ export default {
   created () {
     this.$emit('navupdated', this.navItems)
     this.loadTasks()
-  },
-
-  mixins: [ notifications, loadAsyncCollection ]
+  }
 }
 </script>

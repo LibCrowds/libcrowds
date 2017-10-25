@@ -38,9 +38,9 @@
       <div class="card-footer p-1 text-center font-size-sm footer">
         <nuxt-link
         :to="{
-          name: 'account-username-announcements',
+          name: 'account-name-announcements',
           params: {
-            username: currentUser.name
+            name: currentUser.name
           }
         }">
         See all

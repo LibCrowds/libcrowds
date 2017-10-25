@@ -85,9 +85,9 @@
                 <div class="text-center mx-1">
                   <nuxt-link
                     :to="{
-                      name: 'account-username',
+                      name: 'account-name',
                       params: {
-                        username: user.name
+                        name: user.name
                       }
                     }"
                     class="my-1">

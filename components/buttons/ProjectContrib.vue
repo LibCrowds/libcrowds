@@ -1,9 +1,9 @@
 <template>
   <b-btn
     :to="{
-      name: 'collection-shortname-projects-id',
+      name: 'collection-short_name-projects-id',
       params: {
-        shortname: collection.short_name,
+        short_name: collection.short_name,
         id: project.id
       }
     }"

@@ -5,9 +5,9 @@
     class="collection-card my-3">
     <nuxt-link
       :to="{
-        name: 'collection-shortname',
+        name: 'collection-short_name',
         params: {
-          shortname: collection.short_name
+          short_name: collection.short_name
         }
       }">
       <div

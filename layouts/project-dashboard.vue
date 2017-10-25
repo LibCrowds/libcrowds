@@ -14,19 +14,22 @@ export default {
         {
           label: 'Settings',
           link: {
-            name: 'project-shortname-settings',
-            params: {
-              shortname: this.$route.params.shortname
-            }
+            name: 'project-short_name-settings',
+            params: this.$route.params
+          }
+        },
+        {
+          label: 'Tags',
+          link: {
+            name: 'project-short_name-tags',
+            params: this.$route.params
           }
         },
         {
           label: 'Thumbnail',
           link: {
-            name: 'project-shortname-thumbnail',
-            params: {
-              shortname: this.$route.params.shortname
-            }
+            name: 'project-short_name-thumbnail',
+            params: this.$route.params
           }
         }
       ]

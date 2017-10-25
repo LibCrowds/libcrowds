@@ -9,9 +9,9 @@
 
       <b-link class="navbar-brand"
         :to="{
-          name: 'collection-shortname',
+          name: 'collection-short_name',
           params: {
-            shortname: collection.short_name
+            short_name: collection.short_name
           }
         }"
         v-scroll-to="'body'">
@@ -43,9 +43,9 @@
         <b-nav is-nav-bar>
           <b-nav-item
             :to="{
-              name: 'collection-shortname-about',
+              name: 'collection-short_name-about',
               params: {
-                shortname: collection.short_name
+                short_name: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -53,9 +53,9 @@
           </b-nav-item>
           <b-nav-item
             :to="{
-              name: 'collection-shortname-projects',
+              name: 'collection-short_name-projects',
               params: {
-                shortname: collection.short_name
+                short_name: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -68,9 +68,9 @@
           </b-nav-item>
           <!-- <b-nav-item
             :to="{
-              name: 'collection-shortname-results',
+              name: 'collection-short_name-results',
               params: {
-                shortname: collection.short_name
+                short_name: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -78,9 +78,9 @@
           </b-nav-item> -->
           <b-nav-item
             :to="{
-              name: 'collection-shortname-data',
+              name: 'collection-short_name-data',
               params: {
-                shortname: collection.short_name
+                short_name: collection.short_name
               }
             }"
             @click.native="toggleCollapsibleSidebar">
@@ -98,18 +98,18 @@
             <!-- Profile/settings -->
             <b-dropdown-item
               :to="{
-                name: 'account-username',
+                name: 'account-name',
                 params: {
-                  username: currentUser.name
+                  name: currentUser.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">Profile
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
-                name: 'account-username-settings-profile',
+                name: 'account-name-settings-profile',
                 params: {
-                  username: currentUser.name
+                  name: currentUser.name
                 }
               }"
               @click.native="toggleCollapsibleSidebar">Settings
@@ -120,9 +120,9 @@
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item
                 :to="{
-                  name: 'account-username-projects',
+                  name: 'account-name-projects',
                   params: {
-                    username: currentUser.name
+                    name: currentUser.name
                   }
                 }">
                 Open Project
@@ -181,7 +181,7 @@ export default {
     return {
       currentPath: this.$route.path,
       fixedNavbarRoutes: [
-        'collection-shortname'
+        'collection-short_name'
       ]
     }
   },

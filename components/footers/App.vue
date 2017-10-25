@@ -39,7 +39,7 @@
             class="list-item">
             <nuxt-link
               :to="{
-                name: 'collection-shortname',
+                name: 'collection-short_name',
                 params: {
                   key: key
                 }

@@ -30,9 +30,9 @@
               variant="success"
               size="lg"
               :to="{
-                name: 'collection-shortname-projects',
+                name: 'collection-short_name-projects',
                 params: {
-                  shortname: collection.short_name
+                  collectionname: collection.short_name
                 }
               }">
               Get Started
@@ -58,9 +58,9 @@
           class="mt-md-2"
           size="lg"
           :to="{
-            name: 'collection-shortname-about',
+            name: 'collection-short_name-about',
             params: {
-              shortname: collection.short_name
+              short_name: collection.short_name
             }
           }">
           Learn More
@@ -102,9 +102,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-shortname-projects',
+            name: 'collection-short_name-projects',
             params: {
-              shortname: collection.short_name
+              short_name: collection.short_name
             }
           }">
           Browse all projects
@@ -131,9 +131,9 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              name: 'collection-shortname-data',
+              name: 'collection-short_name-data',
               params: {
-                ket: collection.short_name
+                short_name: collection.short_name
               }
             }">
             Get the data
@@ -156,7 +156,7 @@
             variant="outline-light"
             class="my-1"
             :to="{
-              key: 'collection-shortname-results'
+              key: 'collection-short_name-results'
             }">
             Browse the results
           </b-btn>
@@ -175,9 +175,9 @@
           variant="success"
           size="lg"
           :to="{
-            name: 'collection-shortname-projects',
+            name: 'collection-short_name-projects',
             params: {
-              shortname: collection.short_name
+              short_name: collection.short_name
             }
           }">
           Get Started
@@ -197,7 +197,7 @@
 </template>
 
 <script>
-import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
+import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
 import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import 'vue-awesome/icons/star'
@@ -207,6 +207,12 @@ import ProjectCard from '@/components/cards/Project'
 
 export default {
   layout: 'collection-default',
+
+  mixins: [
+    asyncLoadCollection,
+    loadCollectionFeatured,
+    computeShareUrl
+  ],
 
   data () {
     return {
@@ -230,13 +236,7 @@ export default {
   components: {
     SocialMediaButtons,
     ProjectCard
-  },
-
-  mixins: [
-    loadAsyncCollection,
-    loadCollectionFeatured,
-    computeShareUrl
-  ]
+  }
 }
 </script>
 

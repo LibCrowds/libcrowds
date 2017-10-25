@@ -13,7 +13,8 @@ export default () => {
     state: {
       currentUser: {},
       announcements: [],
-      collection: {}
+      collection: {},
+      project: {}
     },
 
     mutations,

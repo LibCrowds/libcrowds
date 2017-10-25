@@ -107,12 +107,12 @@ export const routes = [
   {
     path: '/collection/:key?',
     component: jest.fn(),
-    name: 'collection-shortname'
+    name: 'collection-short_name'
   },
   {
     path: '/account/:username?',
     component: jest.fn(),
-    name: 'account-username'
+    name: 'account-name'
   },
   {
     path: '/collection/:name?',
@@ -122,27 +122,27 @@ export const routes = [
   {
     path: '/collection/:key?/presenter',
     component: jest.fn(),
-    name: 'collection-shortname-presenter'
+    name: 'collection-short_name-presenter'
   },
   {
     path: '/collection/:key?/data',
     component: jest.fn(),
-    name: 'collection-shortname-data'
+    name: 'collection-short_name-data'
   },
   {
-    path: '/project/:shortname?/thumbnail',
+    path: '/project/:short_name?/thumbnail',
     component: jest.fn(),
-    name: 'project-shortname-thumbnail'
+    name: 'project-short_name-thumbnail'
   },
   {
     path: '/collection/:key?/contribute',
     component: jest.fn(),
-    name: 'collection-shortname-projects'
+    name: 'collection-short_name-projects'
   },
   {
-    path: '/project/:shortname?/settings',
+    path: '/project/:short_name?/settings',
     component: jest.fn(),
-    name: 'project-shortname-settings'
+    name: 'project-short_name-settings'
   },
   {
     path: '/collection/:name?/contribute',
@@ -152,7 +152,7 @@ export const routes = [
   {
     path: '/account/:username?/projects',
     component: jest.fn(),
-    name: 'account-username-projects'
+    name: 'account-name-projects'
   },
   {
     path: '/collection/:name?/presenter',
@@ -162,26 +162,26 @@ export const routes = [
   {
     path: '/collection/:key?/about',
     component: jest.fn(),
-    name: 'collection-shortname-about'
+    name: 'collection-short_name-about'
   },
   {
     path: '/account/:username?/settings/security',
     component: jest.fn(),
-    name: 'account-username-settings-security'
+    name: 'account-name-settings-security'
   },
   {
     path: '/account/:username?/settings/avatar',
     component: jest.fn(),
-    name: 'account-username-settings-avatar'
+    name: 'account-name-settings-avatar'
   },
   {
     path: '/account/:username?/settings/api',
     component: jest.fn(),
-    name: 'account-username-settings-api'
+    name: 'account-name-settings-api'
   },
   {
     path: '/account/:username?/settings/profile',
     component: jest.fn(),
-    name: 'account-username-settings-profile'
+    name: 'account-name-settings-profile'
   }
 ]

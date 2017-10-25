@@ -11,9 +11,9 @@
         variant="success"
         size="lg"
         :to="{
-          name: 'collection-shortname-projects',
+          name: 'collection-short_name-projects',
           params: {
-            shortname: collection.short_name
+            short_name: collection.short_name
           }
         }">
         Get Started
@@ -24,11 +24,13 @@
 
 <script>
 import marked from 'marked'
-import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
+import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
 import localConfig from '@/local.config'
 
 export default {
   layout: 'collection-tabs',
+
+  mixins: [ asyncLoadCollection ],
 
   data () {
     return {
@@ -54,8 +56,6 @@ export default {
       marked(this.collection.info.content.about)
     }
   },
-
-  mixins: [ loadAsyncCollection ],
 
   methods: {
     /**

@@ -14,9 +14,9 @@
               size="sm"
               block
               :to="{
-                name: 'project-shortname-settings',
+                name: 'project-short_name-settings',
                 params: {
-                  shortname: project.item.short_name
+                  short_name: project.item.short_name
                 }
               }">
               Open

@@ -28,14 +28,14 @@
 
 <script>
 import marked from 'marked'
-import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
+import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCardsList from '@/components/lists/ProjectCards'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ loadAsyncCollection ],
+  mixins: [ asyncLoadCollection ],
 
   head () {
     return {

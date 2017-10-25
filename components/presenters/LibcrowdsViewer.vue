@@ -5,7 +5,6 @@
       :confirm-on-submit="false"
       :buttons="buttons"
       :task-opts="taskOpts"
-      :navigation="navigation"
       :browsable="false"
       :selections-editable="false"
       show-help-on-mount
@@ -18,7 +17,6 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import capitalize from 'capitalize'
 
 export default {
   props: {
@@ -59,29 +57,6 @@ export default {
         buttons.like = false
       }
       return buttons
-    },
-    navigation () {
-      const names = ['home', 'about', 'contribute', 'data']
-      const nav = names.map(name => {
-        return {
-          label: capitalize(name),
-          url: this.$router.resolve({
-            name: `collection-shortname-${name}`,
-            params: {
-              key: this.collection.short_name
-            }
-          }).href
-        }
-      })
-      nav[0].label = this.collection.name
-      nav[0].brand = true
-      if (this.collection.info.forum) {
-        nav.splice(3, 0, {
-          label: 'Discuss',
-          url: this.collection.info.forum
-        })
-      }
-      return nav
     }
   },
 

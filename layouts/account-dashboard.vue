@@ -14,37 +14,29 @@ export default {
         {
           label: 'Profile',
           link: {
-            name: 'account-username-settings-profile',
-            params: {
-              username: this.$route.params.username
-            }
+            name: 'account-name-settings-profile',
+            params: this.$route.params
           }
         },
         {
           label: 'API',
           link: {
-            name: 'account-username-settings-api',
-            params: {
-              username: this.$route.params.username
-            }
+            name: 'account-name-settings-api',
+            params: this.$route.params
           }
         },
         {
           label: 'Avatar',
           link: {
-            name: 'account-username-settings-avatar',
-            params: {
-              username: this.$route.params.username
-            }
+            name: 'account-name-settings-avatar',
+            params: this.$route.params
           }
         },
         {
           label: 'Security',
           link: {
-            name: 'account-username-settings-security',
-            params: {
-              username: this.$route.params.username
-            }
+            name: 'account-name-settings-security',
+            params: this.$route.params
           }
         }
       ]

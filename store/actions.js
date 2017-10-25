@@ -30,5 +30,11 @@ export default {
     commit('SET_ITEM', {
       key: 'collection', value: collection
     })
+  },
+
+  UPDATE_PROJECT: ({ commit }, project) => {
+    commit('SET_ITEM', {
+      key: 'project', value: project
+    })
   }
 }

@@ -73,8 +73,8 @@ export default {
      *   The download format.
      */
     download (type, format) {
-      const shortName = this.project.short_name
-      this.$axios.$get(`/project/${shortName}/tasks/export`, {
+      const sn = this.project.short_name
+      this.$axios.$get(`/project/${sn}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
           type: type,
