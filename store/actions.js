@@ -28,6 +28,22 @@ export default {
     })
   },
 
+  UPDATE_PUBLISHED_COLLECTIONS: async ({ commit, state }, axios) => {
+    return axios.$get('/api/category', {
+      params: {
+        limit: 100,
+        info: 'published::true',
+        orderby: 'created',
+        desc: true
+      }
+    }).then(data => {
+      console.log(data)
+      commit('SET_ITEM', {
+        key: 'publishedCollections', value: data
+      })
+    })
+  },
+
   LOAD_COLLECTION: async ({ commit }, requestPromise) => {
     return requestPromise.then(data => {
       if (!data || !data.length === 1) {

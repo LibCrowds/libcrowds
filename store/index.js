@@ -6,6 +6,7 @@ import actions from '@/store/actions'
 actions.nuxtServerInit = async ({ dispatch }, { app }) => {
   dispatch('UPDATE_CURRENT_USER', app.$axios)
   dispatch('UPDATE_ANNOUNCEMENTS', app.$axios)
+  dispatch('UPDATE_PUBLISHED_COLLECTIONS', app.$axios)
 }
 
 export default () => {
@@ -13,6 +14,7 @@ export default () => {
     state: {
       currentUser: {},
       announcements: [],
+      publishedCollections: [],
       collection: {},
       project: {}
     },

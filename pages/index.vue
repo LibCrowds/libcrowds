@@ -148,18 +148,12 @@ export default {
   async asyncData ({ app, error }) {
     return Promise.all([
       app.$axios.$get('/stats'),
-      app.$axios.$get('/leaderboard'),
-      app.$axios.$get('/api/category', {
-        params: {
-          info: 'published::true'
-        }
-      })
+      app.$axios.$get('/leaderboard')
     ]).then(([statsData, leaderboardData, categoryData]) => {
       return {
         stats: statsData.stats,
         topUsers: leaderboardData.top_users,
-        top10Users: leaderboardData.top_users.slice(0, 10),
-        collections: categoryData
+        top10Users: leaderboardData.top_users.slice(0, 10)
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
@@ -196,8 +190,9 @@ export default {
         return acc + val
       }, 0)
     },
+
     batchedCollections () {
-      return batch(this.collections, 2)
+      return batch(this.$store.state.publishedCollections, 2)
     }
   }
 }

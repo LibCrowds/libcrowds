@@ -8,7 +8,7 @@
       <nuxt></nuxt>
     </main>
 
-    <app-footer></app-footer>
+    <app-footer :collections="publishedCollections"></app-footer>
 
   </div>
 </template>
@@ -29,6 +29,10 @@ export default {
       return {
         background: `url(${appBackground}) no-repeat center left /cover fixed`
       }
+    },
+
+    publishedCollections () {
+      return this.$store.state.publishedCollections
     }
   }
 }

@@ -8,7 +8,7 @@
       <slot></slot>
     </main>
 
-    <app-footer></app-footer>
+    <app-footer :collections="publishedCollections"></app-footer>
 
   </div>
 </template>
@@ -28,14 +28,18 @@ export default {
     collection () {
       return this.$store.state.collection
     },
+
     bgStyle () {
-      const bg = this.collection.info.background
-      if (!bg) {
+      if (!this.collection.info || !this.collection.info.background) {
         return
       }
       return {
-        backgroundImage: `url(${bg})`
+        backgroundImage: `url(${this.collection.info.backgroundbg})`
       }
+    },
+
+    publishedCollections () {
+      return this.$store.state.publishedCollections
     }
   },
 
