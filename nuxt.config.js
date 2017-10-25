@@ -119,7 +119,8 @@ const config = {
   manifest: {
     name: localConfig.brand,
     description: localConfig.description,
-    theme_color: '#ba0000'
+    theme_color: '#ba0000',
+    lang: 'en-GB'
   },
   loading: {
     color: '#bffaf3',
