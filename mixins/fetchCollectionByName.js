@@ -11,7 +11,7 @@ export const fetchCollectionByName = {
         return
       }
       setCollectionDefaults(data[0])
-      store.dispatch('UPDATE_COLLECTION', data[0])
+      store.dispatch('UPDATE_CURRENT_COLLECTION', data[0])
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
     })

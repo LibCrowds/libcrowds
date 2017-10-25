@@ -115,7 +115,7 @@ export default {
     },
 
     collection () {
-      return this.$store.state.collection
+      return this.$store.state.currentCollection
     }
   },
 

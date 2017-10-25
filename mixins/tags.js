@@ -5,7 +5,7 @@ export const tags = {
   computed: {
     tags () {
       const batches = []
-      const tags = this.$store.state.collection.info.tags
+      const tags = this.$store.state.currentCollection.info.tags
       const uniqueTypes = [...new Set(tags.map(tag => tag.type))]
       for (let type of uniqueTypes) {
         batches.push({

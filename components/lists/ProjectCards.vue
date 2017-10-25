@@ -36,7 +36,7 @@ export default {
 
   computed: {
     collection () {
-      return this.$store.state.collection
+      return this.$store.state.currentCollection
     }
   },
 

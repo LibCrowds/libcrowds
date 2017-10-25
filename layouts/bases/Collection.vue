@@ -26,7 +26,7 @@ export default {
 
   computed: {
     collection () {
-      return this.$store.state.collection
+      return this.$store.state.currentCollection
     },
 
     bgStyle () {
@@ -34,7 +34,7 @@ export default {
         return
       }
       return {
-        backgroundImage: `url(${this.collection.info.backgroundbg})`
+        backgroundImage: `url(${this.collection.info.background})`
       }
     },
 
