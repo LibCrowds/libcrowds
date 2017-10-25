@@ -32,7 +32,7 @@
               :to="{
                 name: 'collection-short_name-projects',
                 params: {
-                  collectionname: collection.short_name
+                  short_name: collection.short_name
                 }
               }">
               Get Started

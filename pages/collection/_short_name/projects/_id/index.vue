@@ -34,7 +34,7 @@ export default {
           route: {
             name: 'collection-short_name-projects',
             params: {
-              collectionname: this.collection.short_name
+              short_name: this.collection.short_name
             }
           }
         }
@@ -136,9 +136,9 @@ export default {
         type: 'success'
       })
       this.$router.push({
-        name: 'collection-contribute',
+        name: 'collection-short_name-contribute',
         params: {
-          collectionname: this.collectionConfig.key
+          short_name: this.collectionConfig.key
         }
       })
     },
