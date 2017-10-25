@@ -7,17 +7,23 @@
       <hr class="mx-0">
     </span>
 
-    <projects-table :search-params="searchParams">
-      <template slot="action" scope="project">
-        <b-btn
-          variant="success"
-          size="sm"
-          block
-          @click="loadDataModal(project.item)">
-          Download
-        </b-btn>
-      </template>
-    </projects-table>
+    <b-card no-body>
+      <infinite-loading-table
+        no-border
+        :fields="tableFields"
+        domain-object="project"
+        :search-params="searchParams">
+        <template slot="action" scope="project">
+          <b-btn
+            variant="success"
+            size="sm"
+            block
+            @click="loadDataModal(project.item)">
+            Download
+          </b-btn>
+        </template>
+      </infinite-loading-table>
+    </b-card>
 
     <data-modal
       v-if="activeProject"
@@ -31,7 +37,7 @@
 <script>
 import marked from 'marked'
 import { loadAsyncCollection } from '@/mixins/loadAsyncCollection'
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import DataModal from '@/components/modals/Data'
 
 export default {
@@ -43,7 +49,36 @@ export default {
     return {
       activeProject: null,
       showDataModal: false,
-      customSearchParams: {}
+      customSearchParams: {},
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        n_tasks: {
+          label: 'Tasks',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        actions: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      }
     }
   },
 
@@ -63,7 +98,7 @@ export default {
   },
 
   components: {
-    ProjectsTable,
+    InfiniteLoadingTable,
     DataModal
   },
 

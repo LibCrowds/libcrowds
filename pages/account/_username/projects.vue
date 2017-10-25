@@ -2,11 +2,12 @@
   <div id="account-projects">
     <b-container class="my-5">
       <b-card no-body header="Open Project">
-        <projects-table
-          :search-params="searchParams"
-          success-btn="Open"
-          @successclick="openProject">
 
+        <infinite-loading-table
+          domainObject="project"
+          :fields="tableFields"
+          :search-params="searchParams"
+          no-border>
           <template slot="action" scope="project">
             <b-btn
               variant="success"
@@ -21,21 +22,55 @@
               Open
             </b-btn>
           </template>
+        </infinite-loading-table>
 
-        </projects-table>
       </b-card>
     </b-container>
   </div>
 </template>
 
 <script>
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
   layout: 'default',
 
+  data () {
+    return {
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        n_volunteers: {
+          label: 'Volunteers',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        n_tasks: {
+          label: 'Tasks',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        actions: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      }
+    }
+  },
+
   components: {
-    ProjectsTable
+    InfiniteLoadingTable
   },
 
   computed: {

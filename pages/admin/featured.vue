@@ -1,6 +1,6 @@
 <template>
   <div id="admin-featured">
-    <b-card no-body header="Set Featured Projects">
+    <b-card no-body>
 
       <div slot="header">
         <h6 class="mb-1">Featured Projects</h6>
@@ -11,7 +11,11 @@
         </p>
       </div>
 
-      <projects-table :search-params="searchParams" no-border>
+      <infinite-loading-table
+        domain-object="project"
+        :fields="tableFields"
+        :search-params="searchParams"
+        no-border>
         <template slot="action" scope="project">
           <b-btn
             :variant="project.item.featured ? 'warning' : 'success'"
@@ -21,7 +25,7 @@
             {{ getButtonText(project.item.featured) }}
           </b-btn>
         </template>
-      </projects-table>
+      </infinite-loading-table>
 
     </b-card>
   </div>
@@ -29,12 +33,36 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
   layout: 'admin-dashboard',
 
   mixins: [ notifications ],
+
+  data () {
+    return {
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        actions: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      }
+    }
+  },
 
   head () {
     return {
@@ -43,7 +71,7 @@ export default {
   },
 
   components: {
-    ProjectsTable
+    InfiniteLoadingTable
   },
 
   methods: {

@@ -40,7 +40,6 @@ export default {
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.shortname}/update`
     return app.$axios.$get(endpoint).then(data => {
-      console.log(data)
       return {
         project: data.project,
         form: {

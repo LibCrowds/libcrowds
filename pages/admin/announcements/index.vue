@@ -16,22 +16,11 @@
         </b-btn>
       </div>
 
-      <b-table
-        hover
-        show-empty
-        :items="announcements"
-        :fields="table.fields">
-
-        <template slot="title" scope="announcement">
-          <span
-            v-html="marked(announcement.item.title)">
-          </span>
-        </template>
-
-        <template slot="created" scope="announcement">
-          {{ announcement.item.created | moment('calendar') }}
-        </template>
-
+      <infinite-loading-table
+        ref="table"
+        :fields="tableFields"
+        no-border
+        domain-object="announcement">
         <template slot="action" scope="announcement">
           <b-btn
             variant="outline-dark"
@@ -53,50 +42,36 @@
             Delete
           </b-btn>
         </template>
-
-      </b-table>
+      </infinite-loading-table>
     </b-card>
   </div>
 </template>
 
 <script>
-import marked from 'marked'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 
 export default {
   layout: 'admin-dashboard',
 
-  async asyncData ({ app, error }) {
-    const endpoint = `/admin/announcement`
-    return app.$axios.$get(endpoint).then(data => {
-      return {
-        announcements: data.announcements
-      }
-    }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
-    })
-  },
+  mixins: [ deleteDomainObject ],
 
   data () {
     return {
-      table: {
-        fields: {
-          title: {
-            label: 'Content',
-            class: 'markdown'
-          },
-          body: {
-            label: 'URL',
-            class: 'd-none d-xl-table-cell'
-          },
-          created: {
-            label: 'Created',
-            class: 'text-center d-none d-md-table-cell'
-          },
-          action: {
-            label: 'Action',
-            class: 'text-center'
-          }
+      tableFields: {
+        title: {
+          label: 'Content',
+          sortable: true
+        },
+        body: {
+          label: 'URL',
+          class: 'd-none d-lg-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
         }
       }
     }
@@ -104,8 +79,12 @@ export default {
 
   head () {
     return {
-      title: `Manage Announcements`
+      title: 'Manage Announcements'
     }
+  },
+
+  components: {
+    InfiniteLoadingTable
   },
 
   methods: {
@@ -116,19 +95,10 @@ export default {
      */
     deleteAnnouncement (id) {
       this.deleteDomainObject('announcement', id, () => {
-        this.announcements = this.announcements.filter(announcement => {
-          return announcement.id !== id
-        })
+        this.$refs.table.reset()
         this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
       })
-    },
-
-    /**
-     * Markdown processor.
-     */
-    marked
-  },
-
-  mixins: [ deleteDomainObject ]
+    }
+  }
 }
 </script>

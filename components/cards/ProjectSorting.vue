@@ -52,7 +52,6 @@ export default {
           })
         })
       }
-      console.log(multiselects)
       return multiselects
     }
   }
