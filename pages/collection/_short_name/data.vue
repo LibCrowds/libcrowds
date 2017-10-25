@@ -36,14 +36,14 @@
 
 <script>
 import marked from 'marked'
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import DataModal from '@/components/modals/Data'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ asyncLoadCollection ],
+  mixins: [ fetchCollectionByName ],
 
   data () {
     return {
@@ -112,6 +112,10 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.data)
+    },
+
+    collection () {
+      return this.$store.state.collection
     }
   },
 

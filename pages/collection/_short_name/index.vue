@@ -197,8 +197,8 @@
 </template>
 
 <script>
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
 import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
@@ -209,7 +209,7 @@ export default {
   layout: 'collection-default',
 
   mixins: [
-    asyncLoadCollection,
+    fetchCollectionByName,
     loadCollectionFeatured,
     computeShareUrl
   ],
@@ -217,6 +217,12 @@ export default {
   data () {
     return {
       localConfig: localConfig
+    }
+  },
+
+  computed: {
+    collection () {
+      return this.$store.state.collection
     }
   },
 

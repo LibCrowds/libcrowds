@@ -28,17 +28,23 @@
 
 <script>
 import { asyncLoadProject } from '@/mixins/asyncLoadProject'
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { tags } from '@/mixins/tags'
 
 export default {
   layout: 'project-dashboard',
 
-  mixins: [ asyncLoadProject, asyncLoadCollection, tags ],
+  mixins: [ asyncLoadProject, fetchCollectionByName, tags ],
 
   head () {
     return {
       title: `${this.project.name}: Tags`
+    }
+  },
+
+  computed: {
+    collection () {
+      return this.$store.state.collection
     }
   }
 }

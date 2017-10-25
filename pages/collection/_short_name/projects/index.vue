@@ -28,14 +28,14 @@
 
 <script>
 import marked from 'marked'
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCardsList from '@/components/lists/ProjectCards'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ asyncLoadCollection ],
+  mixins: [ fetchCollectionByName ],
 
   head () {
     return {
@@ -55,9 +55,15 @@ export default {
     currentUser () {
       return this.$store.state.currentUser
     },
-    pageContent () {
-      return marked(this.$store.state.collection.info.content.contribute)
+
+    collection () {
+      return this.$store.state.collection
     },
+
+    pageContent () {
+      return marked(this.collection.info.content.contribute)
+    },
+
     searchParams () {
       const params = {
         category_id: this.collection.id

@@ -24,13 +24,13 @@
 
 <script>
 import marked from 'marked'
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import localConfig from '@/local.config'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ asyncLoadCollection ],
+  mixins: [ fetchCollectionByName ],
 
   data () {
     return {
@@ -52,6 +52,10 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.collection
+    },
+
     pageContent () {
       marked(this.collection.info.content.about)
     }

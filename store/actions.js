@@ -1,3 +1,5 @@
+import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
+
 export default {
   UPDATE_CURRENT_USER: async ({ dispatch, commit }, axios) => {
     return axios.$get(`/account/profile`).then(data => {
@@ -23,6 +25,21 @@ export default {
       commit('SET_ITEM', {
         key: 'announcements', value: data
       })
+    })
+  },
+
+  LOAD_COLLECTION: async ({ commit }, requestPromise) => {
+    return requestPromise.then(data => {
+      if (!data || !data.length === 1) {
+        throw new Error({ statusCode: 404, message: 'Page not found' })
+      }
+
+      setCollectionDefaults(data[0])
+      commit('SET_ITEM', {
+        key: 'collection', value: data[0]
+      })
+    }).catch(err => {
+      throw new Error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

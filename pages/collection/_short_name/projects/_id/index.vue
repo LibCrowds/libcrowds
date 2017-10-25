@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { asyncLoadCollection } from '@/mixins/asyncLoadCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
@@ -22,7 +22,7 @@ import Z3950Presenter from '@/components/presenters/Z3950'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ notifications, asyncLoadCollection ],
+  mixins: [ notifications, fetchCollectionByName ],
 
   data () {
     return {
@@ -74,6 +74,10 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.collection
+    },
+
     presenter () {
       const presenters = {
         'libcrowds-viewer': LibcrowdsViewerPresenter,
