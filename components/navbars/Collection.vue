@@ -496,20 +496,15 @@ export default {
     }
 
     .dropdown-menu {
-      background-color: rgba($black, 0.75);
       font-size: $font-size-sm;
-      color: $white;
       right: 0;
 
       .dropdown-divider {
         width: 100%;
         margin: 0.75em 0;
-        background-color: rgba($white, 0.5);
       }
 
       .dropdown-item {
-        color: $white;
-
         @include hover-focus {
           color: $link-hover-color;
         }
@@ -541,6 +536,20 @@ export default {
 
   &.navbar-dark {
     background-color: transparent;
+
+    .dropdown-menu {
+      background-color: rgba($black, 0.75);
+      color: $white;
+
+      .dropdown-divider {
+        background-color: rgba($white, 0.35);
+      }
+
+      .dropdown-item {
+        color: $white;
+        background: transparent;
+      }
+    }
 
     .hamburger-inner,
     .hamburger-inner:before,
