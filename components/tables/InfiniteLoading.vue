@@ -34,7 +34,8 @@
     <infinite-load
       ref="infiniteload"
       :domain-object="domainObject"
-      v-model="items">
+      v-model="items"
+      no-more-results="No more results">
     </infinite-load>
 
   </div>

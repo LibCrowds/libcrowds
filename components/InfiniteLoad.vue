@@ -1,14 +1,15 @@
 <template>
-  <div class="infinite-loading">
-    <infinite-loading
-      ref="loading"
-      @infinite="infiniteLoadDomainObjects">
-      <span slot="no-results"></span>
-      <span slot="no-more" id="no-more">
-        No more results
-      </span>
-    </infinite-loading>
-  </div>
+  <infinite-loading
+    ref="infiniteload"
+    class="infinite-loading"
+    @infinite="infiniteLoadDomainObjects">
+    <span slot="no-results">
+      <span v-if="noResults">{{ noResults }}</span>
+    </span>
+    <span slot="no-more">
+      <span v-if="noMoreResults">{{ noMoreResults }}</span>
+    </span>
+  </infinite-loading>
 </template>
 
 <script>
@@ -73,6 +74,15 @@ export default {
       this.$nextTick(() => {
         this.$refs.loading.$emit('$InfiniteLoading:reset')
       })
+    },
+
+    /**
+     * Start the load manually (useful when modal first shown etc.).
+     */
+    initLoad () {
+      if (!this.$refs.infiniteload.isComplete) {
+        this.$refs.infiniteload.attemptLoad()
+      }
     }
   },
 
@@ -105,6 +115,14 @@ export default {
     searchParams: {
       type: Object,
       default: () => ({})
+    },
+    noResults: {
+      type: String,
+      default: null
+    },
+    noMoreResults: {
+      type: String,
+      default: 'No more results'
     }
   },
 
@@ -130,3 +148,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

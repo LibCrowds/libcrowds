@@ -17,25 +17,27 @@
     </b-button>
 
     <b-card
+      header="Notifications"
       id="announcements-container"
       class="dropdown-menu dropdown-menu-right"
       no-body
       v-show="show">
-
-      <div
-        v-if="noAnnouncements"
-        class="card-body text-center">
-        We have not made any announcements
-      </div>
-
       <div id="announcements">
-        <!-- <announcement-card
+         <announcement-card
           v-for="announcement in announcements"
           :key="announcement.id"
           :announcement="announcement">
-        </announcement-card> -->
+        </announcement-card>
       </div>
-
+      <infinite-load
+        ref="infiniteload"
+        :distance="1000"
+        :search-params="searchParams"
+        domain-object="announcement"
+        v-model="announcements">
+        <span slot="no-results"></span>
+        <span slot="no-more"></span>
+      </infinite-load>
     </b-card>
   </div>
 </template>
@@ -43,17 +45,24 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import 'vue-awesome/icons/bell'
+import InfiniteLoad from '@/components/InfiniteLoad'
 import AnnouncementCard from '@/components/cards/Announcement'
 
 export default {
-  data: function () {
+  data () {
     return {
-      show: false
+      show: false,
+      announcements: [],
+      searchParams: {
+        orderby: 'created',
+        desc: true
+      }
     }
   },
 
   components: {
-    AnnouncementCard
+    AnnouncementCard,
+    InfiniteLoad
   },
 
   computed: {
@@ -96,6 +105,9 @@ export default {
      */
     toggle () {
       this.show = !this.show
+      if (this.show) {
+        this.initLoad()
+      }
       if (this.show && this.hasUnread) {
         this.setLastRead()
       }
@@ -113,6 +125,13 @@ export default {
       }).catch(err => {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
+    },
+
+    /**
+     * Trigger initial load manually (necessary before scrolling starts).
+     */
+    initLoad () {
+      this.$refs.infiniteload.initLoad()
     }
   }
 }
@@ -158,6 +177,7 @@ export default {
     #announcements {
       max-height: 400px;
       overflow-y: auto;
+      border-bottom: 1px solid $gray-300;
     }
   }
 }
