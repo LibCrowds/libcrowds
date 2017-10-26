@@ -22,8 +22,8 @@
         </b-btn>
         <b-btn
           variant="success"
-          @click="$emit('submit')">
-          <span v-if="!processing">{{ submitText }}</span>
+          @click="submit">
+          <span v-if="!showLoading">{{ submitText }}</span>
           <div v-else class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
             <div class="sk-child sk-bounce2"></div>
@@ -37,8 +37,15 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/circle-o-notch'
 
 export default {
+  data () {
+    return {
+      fakeLoading: false
+    }
+  },
+
   props: {
     header: {
       type: String,
@@ -75,12 +82,29 @@ export default {
   },
 
   computed: {
+    showLoading () {
+      return this.processing || this.fakeLoading
+    },
+
     cardStyle () {
       if (this.noBorder) {
         return {
           border: 'none'
         }
       }
+    }
+  },
+
+  methods: {
+    /**
+     * Show the spinner for at least 500ms to avoid ugly flashes of styles.
+     */
+    submit () {
+      this.fakeLoading = true
+      setTimeout(() => {
+        this.$emit('submit')
+        this.fakeLoading = false
+      }, 500)
     }
   }
 }
@@ -121,6 +145,10 @@ export default {
     justify-content: space-between;
   }
 
+  .btn {
+    min-width: 120px;
+  }
+
   .sk-three-bounce {
     margin: 0;
 
@@ -128,6 +156,11 @@ export default {
       background-color: $white;
       width: 0.8rem;
       height: 0.8rem;
+
+      &:nth-child(2) {
+        margin-left: 0.2rem;
+        margin-right: 0.2rem;
+      }
     }
   }
 }
