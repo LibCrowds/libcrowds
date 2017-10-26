@@ -4,7 +4,7 @@
       hover
       striped
       show-empty
-      :items="domainObjects"
+      :items="items"
       :fields="tableFields"
       :style="cardStyle"
       @sort-changed="reset">
@@ -31,105 +31,33 @@
 
     </b-table>
 
-    <infinite-loading
-      ref="table"
-      @infinite="infiniteLoadDomainObjects">
-      <span slot="no-results"></span>
-      <span slot="no-more" id="no-more">
-        No more results
-      </span>
-    </infinite-loading>
+    <infinite-load
+      ref="infiniteload"
+      :domain-object="domainObject"
+      v-model="items">
+    </infinite-load>
 
   </div>
 </template>
 
 <script>
-import merge from 'lodash/merge'
+import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
   data () {
     return {
-      domainObjects: [],
-      defaultSearchParams: {
-        limit: 20,
-        all: 1
-      }
+      items: []
     }
   },
 
-  methods: {
-    /**
-     * Handler to infinitely load domain objects.
-     * @param {Object} $state
-     *   The vue-inifinite-loading state.
-     */
-    async infiniteLoadDomainObjects ($state) {
-      // Merge search params with defaults and last ID
-      const params = merge(this.defaultSearchParams, this.searchParams, {
-        last_id: this.lastId
-      })
-
-      try {
-        // Get the data
-        let data = await this.$axios.$get(`/api/${this.domainObject}`, {
-          params: params
-        })
-
-        // Loading complete
-        if (!data.length) {
-          $state.complete()
-          return
-        }
-
-        // Enrich projects data with stats
-        if (this.domainObject === 'project') {
-          const statsData = await this.$axios.$get('/api/projectstats', {
-            project_id: data.map(project => project.id)
-          })
-          data = data.map((project, idx) => {
-            return merge(statsData[idx], project)
-          })
-        }
-
-        this.domainObjects = this.domainObjects.concat(data)
-        $state.loaded()
-      } catch (err) {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
-      }
-    },
-
-    /**
-     * Reset the loaded domain objects.
-     */
-    reset () {
-      this.domainObjects = []
-      this.$nextTick(() => {
-        this.$refs.table.$emit('$InfiniteLoading:reset')
-      })
-    }
+  components: {
+    InfiniteLoad
   },
 
   props: {
     domainObject: {
       type: String,
-      required: true,
-      validator: (value) => {
-        const valid = [
-          'announcement',
-          'auditlog',
-          'blogpost',
-          'category',
-          'helpingmaterial',
-          'project',
-          'projectstats',
-          'result',
-          'task',
-          'taskrun',
-          'user',
-          'webhook'
-        ]
-        return valid.indexOf(value) > -1
-      }
+      required: true
     },
     searchParams: {
       type: Object,
@@ -137,23 +65,11 @@ export default {
     },
     fields: {
       type: Object,
-      required: true
-    },
-    noBorder: {
-      type: Boolean,
-      default: false
+      default: () => ({})
     }
   },
 
   computed: {
-    lastId () {
-      let lastId = 0
-      if (this.domainObjects.length) {
-        lastId = this.domainObjects[this.domainObjects.length - 1].id
-      }
-      return lastId
-    },
-
     cardStyle () {
       if (this.noBorder) {
         return {
@@ -162,6 +78,7 @@ export default {
         }
       }
     },
+
     tableFields () {
       const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {
@@ -174,14 +91,9 @@ export default {
     }
   },
 
-  watch: {
-    /**
-     * Reset the list when the search params change.
-     *
-     * This is necessary as we may be retrieving items in a different order.
-     */
-    searchParams () {
-      this.reset()
+  methods: {
+    reset () {
+      this.$refs.infiniteload.reset()
     }
   }
 }
