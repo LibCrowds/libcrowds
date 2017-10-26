@@ -3,10 +3,11 @@
 
     <b-button
       id="announcements-toggle"
-      class="d-flex nav-link"
+      class="d-flex nav-item"
       @click="toggle"
       v-on-clickaway="hide">
-      <icon name="bell"></icon>
+      <icon name="bell" class="d-none d-lg-flex"></icon>
+      <span class="d-lg-none nav-link">Notifications</span>
       <b-badge
         pill
         id="unread-badge"
