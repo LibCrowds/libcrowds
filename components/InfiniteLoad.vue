@@ -81,7 +81,11 @@ export default {
      */
     initLoad () {
       if (!this.$refs.infiniteload.isComplete) {
-        this.$refs.infiniteload.attemptLoad()
+        this.$refs.infiniteload.isLoading = true
+        this.$refs.infiniteload.$emit(
+          'infinite',
+          this.$refs.infiniteload.stateChanger
+        )
       }
     }
   },
