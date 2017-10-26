@@ -3,8 +3,38 @@
     id="admin-collections-update"
     no-body
     :header="title">
+
+    <div
+      slot="header"
+      class="mb-0 d-flex align-items-center justify-content-between">
+      <span>
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            Announcements will be shown to all users.
+          </small>
+        </p>
+      </span>
+      <span class="d-flex align-items-center">
+        <label class="mr-1 mb-0 toggle-label">
+          <strong>Published</strong>
+        </label>
+        <toggle-button
+          :value="collection.info.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </span>
+    </div>
+
     <b-tabs ref="tabs" no-body card>
       <b-tab title="Core Details" active>
+        <p slot="top" class="mb-3 mt-2">
+          Edit the core details for the collection microsite. When it's ready,
+          click the published toggle.
+        </p>
         <pybossa-form
           show-cancel
           no-border
@@ -73,9 +103,8 @@
           :fields="tagTableFields">
           <template slot="actions" scope="tag">
             <b-btn
-              variant="outline-dark"
+              variant="warning"
               size="sm"
-              block
               @click="removeTag(tag.item)">
               Remove
             </b-btn>
@@ -243,12 +272,6 @@ export default {
                 }
               ],
               default: 'CC0'
-            },
-            {
-              model: 'info.published',
-              type: 'checkbox',
-              label: 'Published',
-              default: false
             }
           ]
         }
@@ -447,6 +470,30 @@ export default {
         })
       }, (dismiss) => {
         this.$swal.close()
+      })
+    },
+
+    /**
+     * Publish or unpublish a collection microsite.
+     * @param {Object} project
+     *   The project.
+     */
+    togglePublished () {
+      this.collection.info.published = !this.collection.info.published
+      this.$axios.$put(`/api/category/${this.collection.id}`, {
+        info: this.collection.info
+      }).then(data => {
+        this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: this.collection.info.published
+            ? 'Collection microsite published'
+            : 'Collection microsite unpublished'
+        })
+      }).catch(err => {
+        this.collection.info.published = !this.collection.info.published
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }

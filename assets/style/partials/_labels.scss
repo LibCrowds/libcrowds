@@ -5,4 +5,10 @@ label {
     color: $gray-600;
     margin: 1.25rem 0 .625rem;
   }
+
+  &.toggle-label {
+    font-family: $font-family-base;
+    font-weight: 400;
+    font-size: $font-size-sm;
+  }
 }
