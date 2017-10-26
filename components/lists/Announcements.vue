@@ -1,25 +1,12 @@
 <template>
   <div id="announcements-list">
 
-    <b-button
+    <b-btn
       id="announcements-toggle"
-      class="d-flex nav-item"
-      v-on-clickaway="hide">
-      <icon
-        name="bell"
-        class="d-none d-lg-flex"
-        @click="toggle">
-      </icon>
-      <nuxt-link
-        class="d-lg-none nav-link"
-        :to="{
-          name: 'account-name-announcements',
-          params: {
-            name: currentUser.name
-          }
-        }">
-        Notifications
-      </nuxt-link>
+      class="nav-item d-none d-md-flex"
+      v-on-clickaway="hide"
+      @click="toggle">
+      <icon name="bell"></icon>
       <b-badge
         pill
         id="unread-badge"
@@ -27,12 +14,23 @@
         variant="info">
         &nbsp;
       </b-badge>
-    </b-button>
+    </b-btn>
+
+    <nuxt-link
+      class="d-md-none nav-link"
+      :to="{
+        name: 'account-name-announcements',
+        params: {
+          name: currentUser.name
+        }
+      }">
+      Notifications
+    </nuxt-link>
 
     <b-card
       header="Notifications"
       id="announcements-container"
-      class="dropdown-menu-right"
+      class="dropdown-menu-right d-none d-md-block"
       no-body
       v-show="show">
 
@@ -146,9 +144,11 @@ export default {
   text-transform: none;
 
   #announcements-toggle {
+    color: inherit;
     cursor: pointer;
     background: transparent;
     border: none;
+    padding: .5rem 1rem;
 
     &:after {
       display: none;
