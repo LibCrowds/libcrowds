@@ -46,7 +46,6 @@
 
       <infinite-load
         ref="infiniteload"
-        :distance="1000"
         :search-params="searchParams"
         domain-object="announcement"
         v-model="announcements">
