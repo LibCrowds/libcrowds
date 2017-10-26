@@ -33,7 +33,7 @@ export default {
 
   head () {
     return {
-      title: `${this.project.name}: Settings`
+      title: 'Thumbnail'
     }
   },
 

@@ -154,7 +154,7 @@ export default {
 
   head () {
     return {
-      title: `Manage Users`
+      title: 'Users'
     }
   },
 

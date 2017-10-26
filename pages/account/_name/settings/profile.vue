@@ -53,7 +53,7 @@ export default {
 
   head () {
     return {
-      title: `${this.currentUser.fullname}: Profile Settings`
+      title: 'Profile Settings'
     }
   },
 

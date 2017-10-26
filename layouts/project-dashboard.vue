@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
@@ -38,6 +39,18 @@ export default {
 
   components: {
     DashboardBase
+  },
+
+  computed: {
+    project () {
+      return this.$store.state.currentProject
+    }
+  },
+
+  head () {
+    return {
+      titleTemplate: `%s - ${this.project.name} | ${localConfig.brand}`
+    }
   }
 }
 </script>

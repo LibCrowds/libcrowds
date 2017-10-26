@@ -120,7 +120,7 @@ export default {
 
   head () {
     return {
-      title: `Edit Collection`
+      title: `Update Collection`
     }
   },
 

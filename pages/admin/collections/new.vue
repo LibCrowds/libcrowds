@@ -88,7 +88,7 @@ export default {
 
   head () {
     return {
-      title: `New Collection`
+      title: 'New Collection'
     }
   },
 

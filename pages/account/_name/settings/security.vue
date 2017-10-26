@@ -52,7 +52,7 @@ export default {
 
   head () {
     return {
-      title: `${this.currentUser.fullname}: Security Settings`
+      title: 'Security Settings'
     }
   },
 

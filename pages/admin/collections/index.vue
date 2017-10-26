@@ -104,7 +104,7 @@ export default {
 
   head () {
     return {
-      title: `Manage Collections`
+      title: 'Collections'
     }
   },
 

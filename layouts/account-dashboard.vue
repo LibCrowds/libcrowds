@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
@@ -45,6 +46,18 @@ export default {
 
   components: {
     DashboardBase
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
+  },
+
+  head () {
+    return {
+      titleTemplate: `%s - ${this.currentUser.name} | ${localConfig.brand}`
+    }
   }
 }
 </script>

@@ -26,7 +26,7 @@ export default {
 
   head () {
     return {
-      title: `${this.currentUser.fullname}: API Settings`
+      title: 'API Settings'
     }
   },
 

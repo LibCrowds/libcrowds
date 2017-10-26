@@ -10,7 +10,7 @@ export default {
 
   head () {
     return {
-      title: `Admin Dashboard`
+      title: 'Dashboard'
     }
   }
 }

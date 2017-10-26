@@ -29,7 +29,7 @@ export default {
 
   head () {
     return {
-      title: `${this.currentUser.fullname}: Avatar Settings`
+      title: 'Avatar Settings'
     }
   },
 
