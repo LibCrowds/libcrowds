@@ -120,7 +120,7 @@ export default {
     setLastRead () {
       const announcements = this.currentUser.info.announcements || {}
       announcements.last_read = this.lastAnnouncement.id
-      this.currentUser.announcements = announcements
+      this.currentUser.info.announcements = announcements
       this.$axios.$put(`/api/user/${this.currentUser.id}`, {
         info: this.currentUser.info
       }).then(data => {
