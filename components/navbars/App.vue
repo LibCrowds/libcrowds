@@ -240,6 +240,7 @@ export default {
     position: absolute;
     border-radius: 0;
     right: 1rem;
+    left: auto;
     text-transform: none;
   }
 
