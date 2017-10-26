@@ -1,14 +1,18 @@
+import merge from 'lodash/merge'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
 export default {
   UPDATE_CURRENT_USER: async ({ dispatch, commit }, axios) => {
-    return axios.$get(`/account/profile`).then(data => {
-      if ('user' in data) {
-        commit('LOGIN', data.user)
-      } else {
-        commit('LOGOUT')
-      }
-    })
+    // TODO remove multiple calls after cache properly busted
+    // https://github.com/Scifabric/pybossa/issues/1697
+    const data = await axios.$get(`/account/profile`)
+    if ('user' in data) {
+      const extraInfoData = await axios.$get(`/api/user/${data.user.id}`)
+      data.user.info = extraInfoData.info
+      commit('LOGIN', data.user)
+    } else {
+      commit('LOGOUT')
+    }
   },
 
   LOGOUT: ({ commit }) => {
