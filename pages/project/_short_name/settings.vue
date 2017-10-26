@@ -32,16 +32,18 @@
 </template>
 
 <script>
+import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'project-dashboard',
 
+  mixins: [ fetchProjectAndCollection ],
+
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        project: data.project,
         form: {
           endpoint: `project/${params.short_name}/update`,
           method: 'post',
