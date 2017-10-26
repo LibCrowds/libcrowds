@@ -99,7 +99,6 @@ const config = {
   axios: {
     baseURL: localConfig.pybossa.host,
     requestInterceptor: (config) => {
-      console.log(config)
       config.headers['Content-Type'] = 'application/json'
       config.timeout = 10000
 
@@ -132,6 +131,7 @@ const config = {
   router: {
     middleware: [
       'auth',
+      'announcements',
       'cookie-consent'
     ]
   }

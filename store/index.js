@@ -16,7 +16,8 @@ export default () => {
       announcements: [],
       publishedCollections: [],
       currentCollection: {},
-      currentProject: {}
+      currentProject: {},
+      lastAnnouncement: {}
     },
 
     mutations,

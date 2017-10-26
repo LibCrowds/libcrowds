@@ -88,11 +88,12 @@
           </b-nav-item>
         </b-nav>
 
-        <b-nav is-nav-bar>
+        <b-nav is-nav-bar v-if="loggedIn">
+
+          <announcements></announcements>
 
           <b-nav-item-dropdown
             right
-            v-if="loggedIn"
             :text="currentUser.name">
 
             <!-- Profile/settings -->
@@ -144,9 +145,11 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
+        </b-nav>
 
-          <!-- Sign in/sign up -->
-          <b-nav is-nav-bar v-else>
+        <!-- Sign in/sign up -->
+        <b-nav is-nav-bar v-else>
+          <b-nav is-nav-bar>
             <b-nav-item
               :to="{
                 name: 'account-signin',
@@ -175,6 +178,7 @@
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import throttle from 'lodash/throttle'
+import Announcements from '@/components/lists/Announcements'
 
 export default {
   data () {
@@ -199,6 +203,10 @@ export default {
       type: Boolean,
       default: true
     }
+  },
+
+  components: {
+    Announcements
   },
 
   computed: {
@@ -485,24 +493,25 @@ export default {
           }
         }
       }
+    }
 
-      .dropdown-menu {
-        background-color: rgba($black, 0.75);
-        font-size: $font-size-sm;
-        right: 0;
+    .dropdown-menu {
+      background-color: rgba($black, 0.75);
+      font-size: $font-size-sm;
+      color: $white;
+      right: 0;
 
-        .dropdown-divider {
-          width: 100%;
-          margin: 0.75em 0;
-          background-color: rgba($white, 0.5);
-        }
+      .dropdown-divider {
+        width: 100%;
+        margin: 0.75em 0;
+        background-color: rgba($white, 0.5);
+      }
 
-        .dropdown-item {
-          color: $white;
+      .dropdown-item {
+        color: $white;
 
-          @include hover-focus {
-            color: $link-hover-color;
-          }
+        @include hover-focus {
+          color: $link-hover-color;
         }
       }
     }

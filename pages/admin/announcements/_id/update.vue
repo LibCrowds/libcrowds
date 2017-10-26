@@ -30,13 +30,14 @@ export default {
                 label: 'Content',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'Use Markdown'
+                placeholder: 'Write an announcement (use Markdown)'
               },
               {
                 model: 'body',
                 label: 'URL',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                placeholder: 'http://example.com'
               }
             ]
           }

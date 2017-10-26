@@ -2,49 +2,38 @@
   <div id="announcements-list">
 
     <b-button
-      v-if="showAnnouncements"
       id="announcements-toggle"
-      class="d-flex"
+      class="d-flex nav-link"
       @click="toggle"
       v-on-clickaway="hide">
       <icon name="bell"></icon>
       <b-badge
         pill
-        v-if="unread.length"
+        id="unread-badge"
+        v-if="hasUnread"
         variant="info">
-        {{ unread.length }}
+        &nbsp;
       </b-badge>
     </b-button>
 
     <b-card
       id="announcements-container"
+      class="dropdown-menu dropdown-menu-right"
       no-body
       v-show="show">
 
       <div
-        v-if="announcementsEmpty"
-        class="card-body text-center border-bottom">
+        v-if="noAnnouncements"
+        class="card-body text-center">
         We have not made any announcements
       </div>
 
-      <div id="announcements-list">
-        <announcement-card
+      <div id="announcements">
+        <!-- <announcement-card
           v-for="announcement in announcements"
           :key="announcement.id"
           :announcement="announcement">
-        </announcement-card>
-      </div>
-
-      <div class="card-footer p-1 text-center font-size-sm footer">
-        <nuxt-link
-        :to="{
-          name: 'account-name-announcements',
-          params: {
-            name: currentUser.name
-          }
-        }">
-        See all
-        </nuxt-link>
+        </announcement-card> -->
       </div>
 
     </b-card>
@@ -68,29 +57,29 @@ export default {
   },
 
   computed: {
-    announcements () {
-      return this.$store.state.announcements
-    },
     currentUser () {
       return this.$store.state.currentUser
     },
-    showAnnouncements () {
-      return !isEmpty(this.currentUser)
+
+    noAnnouncements () {
+      return isEmpty(this.lastAnnouncement)
     },
-    announcementsEmpty () {
-      return isEmpty(this.announcements)
+
+    lastAnnouncement () {
+      console.log('last announcment ', this.$store.state.lastAnnouncement)
+      return this.$store.state.lastAnnouncement
     },
+
     lastReadId () {
       const userAnnouncements = this.currentUser.info.announcements || {}
       return userAnnouncements['last_read'] || 0
     },
-    unread () {
-      if (this.announcementsEmpty) {
-        return ''
+
+    hasUnread () {
+      if (this.noAnnouncements) {
+        return false
       }
-      return this.announcements.filter(announcement => {
-        return announcement.id > this.lastReadId
-      })
+      return this.lastReadId < this.lastAnnouncement.id
     }
   },
 
@@ -103,20 +92,19 @@ export default {
     },
 
     /**
-     * Toggle the announcements and mark as read if shown.
+     * Toggle the announcements.
      */
     toggle () {
       this.show = !this.show
-      if (
-        !this.show ||
-        this.announcementsEmpty ||
-        this.lastReadId >= this.announcements[0].id
-      ) {
-        return
+      if (this.show && this.hasUnread) {
+        this.setLastRead()
       }
+    },
 
-      // Set last read announcement for the user
-      delete this.currentUser.info.announcements.lead_read
+    /**
+     * Set last read announcement for the current user.
+     */
+    setLastRead () {
       this.currentUser.info.announcements.last_read = this.announcements[0].id
       this.$axios.$put(`/api/user/${this.currentUser.id}`, {
         info: this.currentUser.info
@@ -134,19 +122,23 @@ export default {
 @import '~assets/style/settings';
 
 #announcements-list {
+  display: flex;
   padding-right: 0;
   position: relative;
   text-transform: none;
 
   #announcements-toggle {
     cursor: pointer;
-    color: inherit;
     background: transparent;
     border: none;
 
     &:after {
       display: none;
     }
+  }
+
+  #unread-badge {
+    font-size: 0.5rem;
   }
 
   #announcements-container {
@@ -163,14 +155,10 @@ export default {
       border: none;
     }
 
-    #announcements-list {
+    #announcements {
       max-height: 400px;
       overflow-y: auto;
     }
-  }
-
-  .border-bottom {
-    border-bottom: 1px solid $gray-300;
   }
 }
 </style>

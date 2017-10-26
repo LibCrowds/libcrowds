@@ -58,15 +58,21 @@ export default {
     })
   },
 
-  UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
+  UPDATE_CURRENT_COLLECTION: async ({ commit }, collection) => {
     commit('SET_ITEM', {
       key: 'currentCollection', value: collection
     })
   },
 
-  UPDATE_CURRENT_PROJECT: ({ commit }, project) => {
+  UPDATE_CURRENT_PROJECT: async ({ commit }, project) => {
     commit('SET_ITEM', {
       key: 'currentProject', value: project
+    })
+  },
+
+  UPDATE_LAST_ANNOUNCEMENT: async ({ commit }, announcement) => {
+    commit('SET_ITEM', {
+      key: 'lastAnnouncement', value: announcement
     })
   }
 }

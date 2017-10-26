@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 
@@ -82,7 +83,7 @@ export default {
       formData.append('avatar', this.form.model.avatar)
 
       const url = `${localConfig.pybossa.host}/${this.form.endpoint}`
-      this.$axios.post(url, formData, {
+      axios.post(url, formData, {
         headers: {
           'X-CSRFToken': this.form.model.csrf
         },
