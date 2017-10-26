@@ -2,7 +2,7 @@
   <div id="admin-collections-new">
     <pybossa-form
       :form="form"
-      header="New Collection"
+      :header="title"
       class="mb-4"
       show-cancel
       @success="onSuccess"
@@ -20,6 +20,7 @@ export default {
 
   data () {
     return {
+      title: 'New Collection',
       table: {
         fields: {
           id: {
@@ -88,7 +89,7 @@ export default {
 
   head () {
     return {
-      title: 'New Collection'
+      title: this.title
     }
   },
 

@@ -12,4 +12,4 @@
   * [Featured Projects](administration.md#featured-projects)
   * [Categories](administration.md#categories)
   * [Users](administration.md#users)
-  * [Background Jobs](administration.md#background-jobs)
+  * [Background Tasks](administration.md#background-tasks)

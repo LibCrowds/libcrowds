@@ -1,7 +1,7 @@
 <template>
   <pybossa-form
     id="admin-announcement-new"
-    header="New Announcement"
+    :header="title"
     show-cancel
     :form="form"
     @success="onSuccessOrCancel"
@@ -15,6 +15,12 @@ import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
+
+  data () {
+    return {
+      title: 'New Announcement'
+    }
+  },
 
   async asyncData ({ app, error }) {
     const endpoint = `/admin/announcement/new`
@@ -51,7 +57,7 @@ export default {
 
   head () {
     return {
-      title: `New Announcement`
+      title: this.title
     }
   },
 

@@ -43,7 +43,7 @@ export default {
           }
         },
         {
-          label: 'Background Jobs',
+          label: 'Background Tasks',
           link: {
             name: 'admin-jobs'
           }

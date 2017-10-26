@@ -3,7 +3,7 @@
     <b-card no-body>
 
       <div slot="header">
-        <h6 class="mb-1">Featured Projects</h6>
+        <h6 class="mb-1">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
             Featured projects appear on their collection microsite homepage.
@@ -42,6 +42,7 @@ export default {
 
   data () {
     return {
+      title: 'Featured Projects',
       tableFields: {
         name: {
           label: 'Name'
@@ -66,7 +67,7 @@ export default {
 
   head () {
     return {
-      title: 'Featured Projects'
+      title: this.title
     }
   },
 

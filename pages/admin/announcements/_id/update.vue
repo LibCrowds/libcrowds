@@ -1,5 +1,8 @@
 <template>
-  <b-card no-body header="Update Announcement">
+  <b-card
+    id="admin-announcements-update"
+    no-body
+    :header="title">
     <b-tabs ref="tabs" no-body card>
       <b-tab title="Core Details" active>
         <pybossa-form
@@ -31,6 +34,12 @@ import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
+
+  data () {
+    return {
+      title: 'Update Announcement'
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/admin/announcement/${params.id}/update`
@@ -78,7 +87,7 @@ export default {
 
   head () {
     return {
-      title: 'Update Announcement'
+      title: this.title
     }
   },
 
@@ -100,7 +109,7 @@ export default {
 </script>
 
 <style lang="scss">
-#admin-collections-update {
+#admin-announcements-update {
   .tab-content.card-body {
     padding: 0;
   }

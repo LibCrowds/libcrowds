@@ -1,6 +1,14 @@
 <template>
   <div id="admin-jobs">
-    <b-card no-body header="Background Jobs">
+    <b-card no-body>
+      <template slot="header">
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            Monitor background tasks.
+          </small>
+        </p>
+      </template>
       <iframe
         :src="rqSchedulerRoute"
         height="800"
@@ -19,13 +27,14 @@ export default {
 
   data () {
     return {
+      title: 'Background Tasks',
       rqSchedulerRoute: `${localConfig.pybossa.host}/admin/rq`
     }
   },
 
   head () {
     return {
-      title: 'Background Jobs'
+      title: this.title
     }
   }
 }

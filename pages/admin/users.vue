@@ -1,7 +1,16 @@
 <template>
   <div id="admin-users">
+    <b-card no-body>
 
-    <b-card no-body header="Manage Users">
+      <template slot="header">
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            Manage registered users.
+          </small>
+        </p>
+      </template>
+
       <b-card-body class="p-0">
         <b-row no-gutters>
           <b-col lg="4">
@@ -101,6 +110,7 @@ export default {
 
   data () {
     return {
+      title: 'Users',
       tableFields: {
         id: {
           label: 'ID',
@@ -121,7 +131,7 @@ export default {
     }
   },
 
-  asyncData ({ app, error }) {
+  async asyncData ({ app, error }) {
     return Promise.all([
       app.$axios.$get('/admin/users'),
       app.$axios.$get('/api/globalstats')
@@ -154,7 +164,7 @@ export default {
 
   head () {
     return {
-      title: 'Users'
+      title: this.title
     }
   },
 

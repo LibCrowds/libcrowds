@@ -5,7 +5,14 @@
       <div
         slot="header"
         class="mb-0 d-flex align-items-center justify-content-between">
-        <h6 class="mb-0">Collections</h6>
+        <span>
+          <h6 class="mb-0">{{ title }}</h6>
+          <p class="text-muted mb-0">
+            <small>
+              Manage the collection microsites.
+            </small>
+          </p>
+        </span>
         <b-btn
           variant="success"
           size="sm"
@@ -68,6 +75,7 @@ export default {
 
   data () {
     return {
+      title: 'Collections',
       table: {
         fields: {
           name: {
@@ -104,7 +112,7 @@ export default {
 
   head () {
     return {
-      title: 'Collections'
+      title: this.title
     }
   },
 

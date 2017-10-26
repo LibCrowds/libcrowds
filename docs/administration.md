@@ -43,8 +43,8 @@ The page also provides a list of current administrators.
 
 This section can make global announcements to all users, for example, when you want to draw attention to a new project.
 
-## Background Jobs
+## Background Tasks
 
-All background jobs currently running on the server can be monitored via this page.
+All background tasks currently running on the server can be monitored via this page.
 
-![Admin - Background Jobs](./assets/admin-background-jobs.png?raw=true)
+![Admin - Background Tasks](./assets/admin-background-jobs.png?raw=true)

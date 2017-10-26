@@ -5,7 +5,14 @@
       <div
         slot="header"
         class="mb-0 d-flex align-items-center justify-content-between">
-        <h6 class="mb-0">Announcements</h6>
+        <span>
+          <h6 class="mb-0">{{ title }}</h6>
+          <p class="text-muted mb-0">
+            <small>
+              Announcements will be shown to all users.
+            </small>
+          </p>
+        </span>
         <b-btn
           variant="success"
           size="sm"
@@ -58,6 +65,7 @@ export default {
 
   data () {
     return {
+      title: 'Announcements',
       tableFields: {
         title: {
           label: 'Content',
@@ -79,7 +87,7 @@ export default {
 
   head () {
     return {
-      title: 'Announcements'
+      title: this.title
     }
   },
 

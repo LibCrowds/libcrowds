@@ -1,88 +1,89 @@
 <template>
-  <div id="admin-collections-update">
-    <b-card no-body :header="collection.name">
-      <b-tabs ref="tabs" no-body card>
-        <b-tab title="Core Details" active>
-          <pybossa-form
-            show-cancel
-            no-border
-            submit-text="Update"
-            cancel-text="Back"
-            :form="form"
-            @success="onSuccess"
-            @cancel="onCancel">
-          </pybossa-form>
-        </b-tab>
-        <b-tab title="Content">
-          <pybossa-form
-            show-cancel
-            no-border
-            submit-text="Update"
-            cancel-text="Back"
-            :form="contentForm"
-            @success="onSuccess"
-            @cancel="onCancel">
-            <p slot="top" class="mb-3 mt-2">
-              Use the text areas below to write custom content for the
-              collection microsite using
-              <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
-              Top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
-              will be added automatically.
-            </p>
-          </pybossa-form>
-        </b-tab>
-        <b-tab title="Terminology">
-          <pybossa-form
-            show-cancel
-            no-border
-            submit-text="Update"
-            cancel-text="Back"
-            :form="terminologyForm"
-            @success="onSuccess"
-            @cancel="onCancel">
-            <p slot="top" class="mb-3 mt-2">
-              You can use the fields below to modify the domain object
-              terminology used throughout the collection microsite.
-            </p>
-          </pybossa-form>
-        </b-tab>
-
-        <b-tab title="Tags">
-          <p class="mt-2 mb-0 p-2">
-            Tags are used to organise projects within a collection. Each
-            unique tag type will be used to create a new multi-select sorting
-            field by which the projects within a collection can be filtered.
+  <b-card
+    id="admin-collections-update"
+    no-body
+    :header="title">
+    <b-tabs ref="tabs" no-body card>
+      <b-tab title="Core Details" active>
+        <pybossa-form
+          show-cancel
+          no-border
+          submit-text="Update"
+          cancel-text="Back"
+          :form="form"
+          @success="onSuccess"
+          @cancel="onCancel">
+        </pybossa-form>
+      </b-tab>
+      <b-tab title="Content">
+        <pybossa-form
+          show-cancel
+          no-border
+          submit-text="Update"
+          cancel-text="Back"
+          :form="contentForm"
+          @success="onSuccess"
+          @cancel="onCancel">
+          <p slot="top" class="mb-3 mt-2">
+            Use the text areas below to write custom content for the
+            collection microsite using
+            <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
+            Top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
+            will be added automatically.
           </p>
-          <div class="d-flex flex-row w-100">
+        </pybossa-form>
+      </b-tab>
+      <b-tab title="Terminology">
+        <pybossa-form
+          show-cancel
+          no-border
+          submit-text="Update"
+          cancel-text="Back"
+          :form="terminologyForm"
+          @success="onSuccess"
+          @cancel="onCancel">
+          <p slot="top" class="mb-3 mt-2">
+            You can use the fields below to modify the domain object
+            terminology used throughout the collection microsite.
+          </p>
+        </pybossa-form>
+      </b-tab>
+
+      <b-tab title="Tags">
+        <p class="mt-2 mb-0 p-2">
+          Tags are used to organise projects within a collection. Each
+          unique tag type will be used to create a new multi-select sorting
+          field by which the projects within a collection can be filtered.
+        </p>
+        <div class="d-flex flex-row w-100">
+          <b-btn
+            size="sm"
+            class="mb-2 ml-auto mr-2"
+            variant="success"
+            @click="addTag">
+            Add a tag
+          </b-btn>
+        </div>
+        <b-table
+          responsive
+          striped
+          hover
+          show-empty
+          :items="collection.info.tags"
+          :fields="tagTableFields">
+          <template slot="actions" scope="tag">
             <b-btn
+              variant="warning"
               size="sm"
-              class="mb-2 ml-auto mr-2"
-              variant="success"
-              @click="addTag">
-              Add a tag
+              block
+              @click="removeTag(tag.item)">
+              Remove
             </b-btn>
-          </div>
-          <b-table
-            responsive
-            striped
-            hover
-            show-empty
-            :items="collection.info.tags"
-            :fields="tagTableFields">
-            <template slot="actions" scope="tag">
-              <b-btn
-                variant="warning"
-                size="sm"
-                block
-                @click="removeTag(tag.item)">
-                Remove
-              </b-btn>
-            </template>
-          </b-table>
-        </b-tab>
-      </b-tabs>
-    </b-card>
-  </div>
+          </template>
+        </b-table>
+      </b-tab>
+    </b-tabs>
+  </b-card>
 </template>
 
 <script>
@@ -120,7 +121,7 @@ export default {
 
   head () {
     return {
-      title: `Update Collection`
+      title: this.title
     }
   },
 
@@ -131,6 +132,10 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    title () {
+      return `Update ${this.collection.name}`
     },
 
     form () {
