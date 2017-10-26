@@ -19,16 +19,18 @@
     <b-card
       header="Notifications"
       id="announcements-container"
-      class="dropdown-menu dropdown-menu-right"
+      class="dropdown-menu-right"
       no-body
       v-show="show">
+
       <div id="announcements">
-         <announcement-card
+        <announcement-card
           v-for="announcement in announcements"
           :key="announcement.id"
           :announcement="announcement">
         </announcement-card>
       </div>
+
       <infinite-load
         ref="infiniteload"
         :distance="1000"
@@ -75,7 +77,6 @@ export default {
     },
 
     lastAnnouncement () {
-      console.log('last announcment ', this.$store.state.lastAnnouncement)
       return this.$store.state.lastAnnouncement
     },
 
@@ -117,7 +118,9 @@ export default {
      * Set last read announcement for the current user.
      */
     setLastRead () {
-      this.currentUser.info.announcements.last_read = this.announcements[0].id
+      const announcements = this.currentUser.info.announcements || {}
+      announcements.last_read = this.lastAnnouncement.id
+      this.currentUser.announcements = announcements
       this.$axios.$put(`/api/user/${this.currentUser.id}`, {
         info: this.currentUser.info
       }).then(data => {
@@ -174,10 +177,19 @@ export default {
       border: none;
     }
 
+    .announcement-card {
+      @include hover-focus {
+        background: rgba($gray-300, 0.25);
+      }
+    }
+
     #announcements {
       max-height: 400px;
       overflow-y: auto;
-      border-bottom: 1px solid $gray-300;
+    }
+
+    .infinite-status-prompt {
+      background: $white;
     }
   }
 }

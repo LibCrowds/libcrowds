@@ -70,9 +70,19 @@ export default {
     })
   },
 
-  UPDATE_LAST_ANNOUNCEMENT: async ({ commit }, announcement) => {
-    commit('SET_ITEM', {
-      key: 'lastAnnouncement', value: announcement
+  UPDATE_LAST_ANNOUNCEMENT: async ({ commit }, axios) => {
+    return axios.get('/api/announcement', {
+      params: {
+        orderby: 'created',
+        desc: true,
+        limit: 1
+      }
+    }).then(res => {
+      if (res.data.length) {
+        commit('SET_ITEM', {
+          key: 'lastAnnouncement', value: res.data[0]
+        })
+      }
     })
   }
 }

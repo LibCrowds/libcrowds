@@ -5,21 +5,10 @@ import isEmpty from 'lodash/isEmpty'
  * @param {Object} context
  *   The nuxt context.
  */
-export default function ({ isServer, store, app }) {
+export default function ({ store, app }) {
   const currentUser = store.state.currentUser
-  if (isEmpty(currentUser) || isServer) {
+  if (isEmpty(currentUser)) {
     return
   }
-
-  return app.$axios.get('/api/announcement', {
-    params: {
-      orderby: 'created',
-      desc: true,
-      limit: 1
-    }
-  }).then(data => {
-    if (data.length) {
-      store.dispatch('UPDATE_LAST_ANNOUNCEMENT', data[0])
-    }
-  })
+  store.dispatch('UPDATE_LAST_ANNOUNCEMENT', app.$axios)
 }
