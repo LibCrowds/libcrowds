@@ -33,13 +33,15 @@ import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 
 export default {
-  data: function () {
+  data () {
     return {
       status: null,
       file: null,
       croppie: null
     }
   },
+
+  mixins: [ notifications ],
 
   props: {
     header: {
@@ -91,7 +93,7 @@ export default {
       }).then(data => {
         this.notify({
           title: 'Success',
-          text: 'The image should be refreshed in a few minutes',
+          message: 'The image should be refreshed in a few minutes',
           type: 'success'
         })
       }).catch(err => {
@@ -135,9 +137,7 @@ export default {
         this.form.model.y2 = Math.floor(data.points[3])
       }
     })
-  },
-
-  mixins: [ notifications ]
+  }
 }
 </script>
 
