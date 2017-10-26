@@ -8,6 +8,7 @@
 
     <div class="mt-2">
       <b-form-file
+        id="avatar-form-file"
         ref="file"
         accept="image/*"
         v-model="form.model.avatar"
