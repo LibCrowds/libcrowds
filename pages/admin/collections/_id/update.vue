@@ -59,7 +59,7 @@
           <b-btn
             size="sm"
             class="mb-2 ml-auto mr-2"
-            variant="success"
+            variant="primary"
             @click="addTag">
             Add a tag
           </b-btn>
@@ -73,7 +73,7 @@
           :fields="tagTableFields">
           <template slot="actions" scope="tag">
             <b-btn
-              variant="warning"
+              variant="outline-dark"
               size="sm"
               block
               @click="removeTag(tag.item)">

@@ -30,7 +30,7 @@
         domain-object="announcement">
         <template slot="action" scope="announcement">
           <b-btn
-            variant="outline-dark"
+            variant="primary"
             size="sm"
             block
             :to="{
@@ -42,7 +42,7 @@
             Update
           </b-btn>
           <b-btn
-            variant="danger"
+            variant="outline-dark"
             size="sm"
             block
             @click="deleteAnnouncement(announcement.item.id)">

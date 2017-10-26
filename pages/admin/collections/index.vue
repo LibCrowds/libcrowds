@@ -40,7 +40,7 @@
 
           <template slot="action" scope="collection">
             <b-btn
-              variant="outline-dark"
+              variant="primary"
               size="sm"
               block
               :to="{
@@ -52,7 +52,7 @@
               Update
             </b-btn>
             <b-btn
-              variant="danger"
+              variant="outline-dark"
               size="sm"
               block
               @click="deleteCollection(collection.item.id)">
