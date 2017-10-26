@@ -168,8 +168,8 @@ export default {
           this.status = r.data.status
           this.injectErrors(r.data.form.errors)
         } else {
-          this.flash(r.data)
           this.handleSuccess(r.data)
+          this.flash(r.data)
         }
       }).catch(err => {
         this.notify({
