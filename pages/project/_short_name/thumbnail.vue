@@ -1,17 +1,20 @@
 <template>
-  <avatar-form
+  <image-upload-form
     header="Project Thumbnail"
     submit-text="Update"
+    file-field="avatar"
+    :endpoint="form.endpoint"
+    :model="form.model"
+    :method="form.method"
     :viewport-height="250"
     :viewport-width="250"
-    crop-type="square"
-    :form="form">
-  </avatar-form>
+    crop-type="square">
+  </image-upload-form>
 </template>
 
 <script>
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
-import AvatarForm from '@/components/forms/AvatarForm'
+import ImageUploadForm from '@/components/forms/ImageUpload'
 
 export default {
   layout: 'project-dashboard',
@@ -25,7 +28,8 @@ export default {
       return {
         form: {
           endpoint: `project/${params.short_name}/update`,
-          model: data.upload_form
+          model: data.upload_form,
+          method: 'POST'
         }
       }
     }).catch(err => {
@@ -40,7 +44,7 @@ export default {
   },
 
   components: {
-    AvatarForm
+    ImageUploadForm
   }
 }
 </script>

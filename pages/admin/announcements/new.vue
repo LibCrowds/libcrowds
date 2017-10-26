@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -55,7 +56,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    ImageUploadForm
   },
 
   methods: {

@@ -1,13 +1,15 @@
 <template>
-  <avatar-form
+  <image-upload-form
     header="Avatar Settings"
     submit-text="Update Avatar"
-    :form="form">
-  </avatar-form>
+    :endpoint="form.endpoint"
+    :model="form.model"
+    :method="form.method">
+  </image-upload-form>
 </template>
 
 <script>
-import AvatarForm from '@/components/forms/AvatarForm'
+import ImageUploadForm from '@/components/forms/ImageUpload'
 
 export default {
   layout: 'account-dashboard',
@@ -19,7 +21,8 @@ export default {
       return {
         form: {
           endpoint: `account/${params.username}/update`,
-          model: data.upload_form
+          model: data.upload_form,
+          method: 'POST'
         }
       }
     }).catch(err => {
@@ -34,7 +37,7 @@ export default {
   },
 
   components: {
-    AvatarForm
+    ImageUploadForm
   },
 
   computed: {

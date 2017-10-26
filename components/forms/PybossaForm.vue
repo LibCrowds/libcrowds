@@ -1,10 +1,16 @@
 <template>
-  <b-card
+  <form-base
     class="pybossa-form"
     :header="header"
-    show-footer
+    :show-footer="showFooter"
     :no-body="noBody"
-    :style="cardStyle">
+    :no-border="noBorder"
+    :show-cancel="showCancel"
+    :cancel-text="cancelText"
+    :processing="processing"
+    :submit-text="submitText"
+    @submit="submit"
+    @cancel="$emit('cancel')">
 
     <b-alert
       show
@@ -27,35 +33,11 @@
 
     <slot name="bottom"></slot>
 
-    <template slot="footer">
-      <span>
-        <slot name="footer-left"></slot>
-      </span>
-      <span>
-        <b-btn
-          v-if="showCancel"
-          variant="outline-dark"
-          class="mr-1"
-          @click="cancel">
-          {{ cancelText }}
-        </b-btn>
-        <b-btn
-          variant="success"
-          @click="submit">
-          <span v-if="!processing">{{ submitText }}</span>
-          <div v-else class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-          </div>
-        </b-btn>
-      </span>
-    </template>
-
-  </b-card>
+  </form-base>
 </template>
 
 <script>
+import FormBase from '@/components/forms/Base'
 import { notifications } from '@/mixins/notifications'
 
 export default {
@@ -100,6 +82,10 @@ export default {
       type: Boolean,
       default: false
     },
+    showFooter: {
+      type: Boolean,
+      default: true
+    },
     noSubmit: {
       type: Boolean,
       default: false
@@ -130,6 +116,10 @@ export default {
         }
       }
     }
+  },
+
+  components: {
+    FormBase
   },
 
   methods: {
@@ -200,63 +190,9 @@ export default {
         this.$router.push({ path: this.next })
       }
       this.$emit('success', data)
-    },
-
-    /**
-     * Cancel the form submission.
-     */
-    cancel () {
-      this.$emit('cancel')
     }
   },
 
   mixins: [ notifications ]
 }
 </script>
-
-<style lang="scss">
-@import '~assets/style/settings';
-@import '~spinkit/scss/spinners/7-three-bounce';
-
-.pybossa-form {
-  label {
-    font-weight: 600;
-    font-size: $font-size-sm;
-  }
-
-  .errors {
-    color: $red;
-    font-size: $font-size-sm;
-
-    span {
-      margin-top: 0.25rem;
-      display: block;
-    }
-  }
-
-  fieldset {
-    padding: 0;
-  }
-
-  .form-group {
-    margin-bottom: 2rem;
-  }
-
-  .card-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .sk-three-bounce {
-    margin: 0;
-
-    .sk-child {
-      background-color: $white;
-      width: 0.8rem;
-      height: 0.8rem;
-    }
-  }
-}
-</style>

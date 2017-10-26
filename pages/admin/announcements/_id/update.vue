@@ -1,15 +1,32 @@
 <template>
-  <pybossa-form
-    header="Update Announcement"
-    submit-text="Update"
-    show-cancel
-    :form="form"
-    @success="onSuccessOrCancel"
-    @cancel="onSuccessOrCancel">
-  </pybossa-form>
+  <b-card no-body header="Update Announcement">
+    <b-tabs ref="tabs" no-body card>
+      <b-tab title="Core Details" active>
+        <pybossa-form
+          submit-text="Update"
+          show-cancel
+          no-border
+          :form="form"
+          @success="onSuccessOrCancel"
+          @cancel="onSuccessOrCancel">
+        </pybossa-form>
+      </b-tab>
+      <b-tab title="Thumbnail">
+        <image-upload-form
+          submit-text="Update"
+          :endpoint="thumbnailForm.endpoint"
+          :model="thumbnailForm.model"
+          :method="thumbnailForm.method"
+          file-field="file"
+          method="PUT">
+        </image-upload-form>
+      </b-tab>
+    </b-tabs>
+  </b-card>
 </template>
 
 <script>
+import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
@@ -41,6 +58,17 @@ export default {
               }
             ]
           }
+        },
+        thumbnailForm: {
+          endpoint: `/api/announcement/${params.id}`,
+          method: 'PUT',
+          model: {
+            file: null,
+            x1: 0,
+            x2: 0,
+            y1: 0,
+            y2: 0
+          }
         }
       }
     }).catch(err => {
@@ -55,7 +83,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    ImageUploadForm
   },
 
   methods: {
@@ -69,3 +98,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#admin-collections-update {
+  .tab-content.card-body {
+    padding: 0;
+  }
+}
+</style>
