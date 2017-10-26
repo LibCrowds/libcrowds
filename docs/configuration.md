@@ -135,12 +135,11 @@ config.mapbox = {
 
 ### pybossa
 
-The `host` and `timeout` used for all PYBOSSA API calls.
+The `host` and used for all PYBOSSA API calls.
 
 ```js
 config.pybossa = {
-  host: 'https://pybossa.backend.com',
-  timeout: 10000
+  host: 'https://pybossa.backend.com'
 }
 ```
 

@@ -99,8 +99,9 @@ const config = {
   axios: {
     baseURL: localConfig.pybossa.host,
     requestInterceptor: (config) => {
+      console.log(config)
       config.headers['Content-Type'] = 'application/json'
-      config.timeout = localConfig.pybossa.timeout
+      config.timeout = 10000
 
       // Use form data to set CSRF token header
       if (config.data && config.data.hasOwnProperty('csrf')) {
