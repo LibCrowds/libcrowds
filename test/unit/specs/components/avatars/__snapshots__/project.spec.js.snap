@@ -6,7 +6,7 @@ exports[`Project avatar renders placeholder by default 1`] = `
      class="project-avatar"
 >
   <!---->
-  <div class="avatar-placeholder">
+  <div class="placeholder">
     <svg version="1.1"
          role="presentation"
          width="64"

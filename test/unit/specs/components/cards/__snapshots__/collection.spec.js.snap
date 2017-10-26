@@ -6,9 +6,7 @@ exports[`Collection card renders correctly 1`] = `
      data-server-rendered="true"
      class="collection-card my-3 card"
 >
-  <nuxt-link to="[object Object]"
-             class="float-right"
-  >
+  <nuxt-link to="[object Object]">
     <div class="collection-card-img"
          style="background-image:url('background.jpg');"
     >

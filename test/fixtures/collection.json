@@ -1,14 +1,17 @@
 {
+  "id": 1,
   "short_name": "playbills",
   "name": "In the Spotlight",
-  "tagline": "Bring past performances to life.",
   "description": "Help rediscover popular entertainment.",
-  "forum": "http://example.com/discuss",
-  "background": "background.jpg",
-  "presenter": "libcrowds-viewer",
-  "terminology": {
-    "project": "project",
-    "task": "task",
-    "taskRun": "contribution"
+  "info": {
+    "tagline": "Bring past performances to life.",
+    "forum": "http://example.com/discuss",
+    "background": "background.jpg",
+    "presenter": "libcrowds-viewer",
+    "terminology": {
+      "project": "project",
+      "task": "task",
+      "taskRun": "contribution"
+    }
   }
 }

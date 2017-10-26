@@ -20,20 +20,38 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
     <ul right
         class="nav navbar-nav"
     >
-      <div id="announcements">
+      <div id="announcements-list">
         <button id="announcements-toggle"
                 type="button"
-                class="d-flex btn btn-secondary"
+                class="d-flex nav-link btn btn-secondary"
         >
           <icon name="bell">
           </icon>
           <!---->
         </button>
-        <div class="card"
+        <div id="announcements-container"
+             class="dropdown-menu-right card"
              style="display:none;"
         >
-          <div class="list-group">
+          <div class="card-header">
+            <div>
+              Notifications
+            </div>
           </div>
+          <div id="announcements">
+          </div>
+          <infinite-loading distance="1000"
+                            class="infinite-loading"
+          >
+            <span slot="no-results">
+              <!---->
+            </span>
+            <span slot="no-more">
+              <span>
+                No more results
+              </span>
+            </span>
+          </infinite-loading>
         </div>
       </div>
       <li class="nav-item b-nav-dropdown dropdown">
@@ -49,14 +67,14 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
         <div role="menu"
              class="dropdown-menu dropdown-menu-right"
         >
-          <a href="#/account/JohnDoe"
+          <a href="#/account"
              role="menuitem"
              target="_self"
              class="dropdown-item"
           >
             Profile
           </a>
-          <a href="#/account/JohnDoe/settings/profile"
+          <a href="#/account/settings/profile"
              role="menuitem"
              target="_self"
              class="dropdown-item"
@@ -68,7 +86,7 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
                  class="dropdown-divider"
             >
             </div>
-            <a href="#/account/JohnDoe/projects"
+            <a href="#/account/projects"
                role="menuitem"
                target="_self"
                class="dropdown-item"
@@ -129,20 +147,38 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
     <ul right
         class="nav navbar-nav"
     >
-      <div id="announcements">
+      <div id="announcements-list">
         <button id="announcements-toggle"
                 type="button"
-                class="d-flex btn btn-secondary"
+                class="d-flex nav-link btn btn-secondary"
         >
           <icon name="bell">
           </icon>
           <!---->
         </button>
-        <div class="card"
+        <div id="announcements-container"
+             class="dropdown-menu-right card"
              style="display:none;"
         >
-          <div class="list-group">
+          <div class="card-header">
+            <div>
+              Notifications
+            </div>
           </div>
+          <div id="announcements">
+          </div>
+          <infinite-loading distance="1000"
+                            class="infinite-loading"
+          >
+            <span slot="no-results">
+              <!---->
+            </span>
+            <span slot="no-more">
+              <span>
+                No more results
+              </span>
+            </span>
+          </infinite-loading>
         </div>
       </div>
       <li class="nav-item b-nav-dropdown dropdown">
@@ -158,14 +194,14 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
         <div role="menu"
              class="dropdown-menu dropdown-menu-right"
         >
-          <a href="#/account/JohnDoe"
+          <a href="#/account"
              role="menuitem"
              target="_self"
              class="dropdown-item"
           >
             Profile
           </a>
-          <a href="#/account/JohnDoe/settings/profile"
+          <a href="#/account/settings/profile"
              role="menuitem"
              target="_self"
              class="dropdown-item"

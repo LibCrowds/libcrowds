@@ -11,10 +11,7 @@ const config = {
     host: 'http://example.com',
     timeout: 10000
   },
-  license: {
-    name: 'CC0',
-    url: 'https://creativecommons.org/publicdomain/zero/1.0/'
-  },
+  license: 'CC0',
   githubUrl: 'https://github.com/Organization/repo'
 }
 
