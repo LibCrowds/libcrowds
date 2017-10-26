@@ -122,15 +122,9 @@
                 <b-btn
                   v-if="stage !== 'results'"
                   variant="success"
+                  :disabled="processing"
                   @click="onSubmit">
-                  <span v-if="!processing">{{ stage | capitalize }}</span>
-                  <div
-                    v-else
-                    class="sk-three-bounce w-100">
-                    <div class="sk-child sk-bounce1"></div>
-                    <div class="sk-child sk-bounce2"></div>
-                    <div class="sk-child sk-bounce3"></div>
-                  </div>
+                  {{ stage | capitalize }}
                 </b-btn>
               </div>
             </div>
@@ -536,7 +530,6 @@ export default {
 
 <style lang="scss">
 @import '~assets/style/settings';
-@import '~spinkit/scss/spinners/7-three-bounce';
 
 #z3950-presenter {
   div {
@@ -556,16 +549,6 @@ export default {
   .card {
     h5 {
       font-size: 1rem;
-    }
-  }
-
-  .sk-three-bounce {
-    margin: 0;
-
-    .sk-child {
-      background-color: $white;
-      width: 0.8rem;
-      height: 0.8rem;
     }
   }
 
