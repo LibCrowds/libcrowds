@@ -18,7 +18,7 @@
     <span class="app-navbar-right border-bottom" v-if="loggedIn">
       <b-nav is-nav-bar right>
 
-        <announcements></announcements>
+        <announcements class="d-none d-lg-block"></announcements>
 
         <b-nav-item-dropdown
           right

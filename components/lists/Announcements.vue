@@ -4,10 +4,22 @@
     <b-button
       id="announcements-toggle"
       class="d-flex nav-item"
-      @click="toggle"
       v-on-clickaway="hide">
-      <icon name="bell" class="d-none d-lg-flex"></icon>
-      <span class="d-lg-none nav-link">Notifications</span>
+      <icon
+        name="bell"
+        class="d-none d-lg-flex"
+        @click="toggle">
+      </icon>
+      <nuxt-link
+        class="d-lg-none nav-link"
+        :to="{
+          name: 'account-name-announcements',
+          params: {
+            name: currentUser.name
+          }
+        }">
+        Notifications
+      </nuxt-link>
       <b-badge
         pill
         id="unread-badge"
@@ -111,24 +123,8 @@ export default {
         this.initLoad()
       }
       if (this.show && this.hasUnread) {
-        this.setLastRead()
+        this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
       }
-    },
-
-    /**
-     * Set last read announcement for the current user.
-     */
-    setLastRead () {
-      const announcements = this.currentUser.info.announcements || {}
-      announcements.last_read = this.lastAnnouncement.id
-      this.currentUser.info.announcements = announcements
-      this.$axios.$put(`/api/user/${this.currentUser.id}`, {
-        info: this.currentUser.info
-      }).then(data => {
-        this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
-      }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
-      })
     },
 
     /**

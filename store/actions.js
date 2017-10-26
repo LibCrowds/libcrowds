@@ -87,5 +87,16 @@ export default {
         })
       }
     })
+  },
+
+  UPDATE_LAST_READ: async ({ state, dispatch }, axios) => {
+    const announcements = state.currentUser.info.announcements || {}
+    announcements.last_read = state.lastAnnouncement.id
+    state.currentUser.info.announcements = announcements
+    return axios.$put(`/api/user/${state.currentUser.id}`, {
+      info: state.currentUser.info
+    }).then(data => {
+      dispatch('UPDATE_CURRENT_USER', axios)
+    })
   }
 }

@@ -25,7 +25,12 @@
 
       <div class="p-1">
         <small class="no-wrap text-muted">
-          {{ announcement.created | moment('calendar') }}
+          <span class="d-none d-md-block">
+            {{ announcement.created | moment('calendar') }}
+          </span>
+          <span class="d-md-none">
+            {{ announcement.created | moment('DD/MM/YYYY') }}
+          </span>
         </small>
       </div>
 
