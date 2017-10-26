@@ -186,6 +186,7 @@ export default {
     #announcements {
       max-height: 400px;
       overflow-y: auto;
+      border-bottom: 1px solid $gray-300;
     }
 
     .infinite-status-prompt {
