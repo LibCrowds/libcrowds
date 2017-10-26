@@ -16,19 +16,16 @@
         <b-btn
           v-if="showCancel"
           variant="outline-dark"
+          :disabled="processing"
           class="mr-1"
           @click="$emit('cancel')">
           {{ cancelText }}
         </b-btn>
         <b-btn
           variant="success"
-          @click="submit">
-          <span v-if="!showLoading">{{ submitText }}</span>
-          <div v-else class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-          </div>
+          :disabled="processing"
+          @click="$emit('submit')">
+          {{ submitText }}
         </b-btn>
       </span>
     </template>
@@ -40,12 +37,6 @@
 import 'vue-awesome/icons/circle-o-notch'
 
 export default {
-  data () {
-    return {
-      fakeLoading: false
-    }
-  },
-
   props: {
     header: {
       type: String,
@@ -82,10 +73,6 @@ export default {
   },
 
   computed: {
-    showLoading () {
-      return this.processing || this.fakeLoading
-    },
-
     cardStyle () {
       if (this.noBorder) {
         return {
@@ -93,26 +80,12 @@ export default {
         }
       }
     }
-  },
-
-  methods: {
-    /**
-     * Show the spinner for at least 500ms to avoid ugly flashes of styles.
-     */
-    submit () {
-      this.fakeLoading = true
-      setTimeout(() => {
-        this.$emit('submit')
-        this.fakeLoading = false
-      }, 500)
-    }
   }
 }
 </script>
 
 <style lang="scss">
 @import '~assets/style/settings';
-@import '~spinkit/scss/spinners/7-three-bounce';
 
 .form-base {
   label {
@@ -138,30 +111,15 @@ export default {
     margin-bottom: 2rem;
   }
 
+  .btn {
+    transition: 250ms opacity;
+  }
+
   .card-footer {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .btn {
-    min-width: 120px;
-  }
-
-  .sk-three-bounce {
-    margin: 0;
-
-    .sk-child {
-      background-color: $white;
-      width: 0.8rem;
-      height: 0.8rem;
-
-      &:nth-child(2) {
-        margin-left: 0.2rem;
-        margin-right: 0.2rem;
-      }
-    }
   }
 }
 </style>

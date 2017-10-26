@@ -162,7 +162,6 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
-        this.processing = false
         if (r.data.status === 'error') {
           this.alert = r.data.flash
           this.status = r.data.status
@@ -177,6 +176,8 @@ export default {
           title: 'Error',
           message: err.message || 'Server Error'
         })
+      }).then(() => {
+        this.processing = false
       })
     },
 

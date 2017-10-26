@@ -140,7 +140,6 @@ export default {
         },
         withCredentials: true
       }).then(data => {
-        this.processing = false
         this.notify({
           title: 'Success',
           message: 'The image should be refreshed in a few minutes',
@@ -148,6 +147,8 @@ export default {
         })
       }).catch(err => {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+      }).then(() => {
+        this.processing = false
       })
     },
 

@@ -41,7 +41,6 @@
     "raven": "^2.2.1",
     "raven-js": "^3.19.1",
     "source-map-support": "^0.4.15",
-    "spinkit": "^1.2.5",
     "sweetalert2": "^6.11.0",
     "vue-awesome": "^2.3.3",
     "vue-chartist": "^2.1.1",
