@@ -8,18 +8,33 @@
 
     <b-row>
       <b-col xl="3" class="mb-3">
-
         <project-sorting-card
           class="mb-3 d-none d-xl-block"
-          :collection="collection">
+          :collection="collection"
+          v-model="searchParams">
         </project-sorting-card>
-
       </b-col>
-      <b-col xl="9">
 
-        <project-cards-list
-          :search-params="searchParams">
-        </project-cards-list>
+      <b-col xl="9">
+        <transition-group
+          tag="ul"
+          class="list-unstyled">
+          <li v-for="project in projects" :key="project.id">
+            <project-card
+              :collection="collection"
+              :project="project">
+            </project-card>
+          </li>
+        </transition-group>
+
+        <infinite-load
+          ref="infiniteload"
+          :search-params="mergedParams"
+          domain-object="project"
+          v-model="projects">
+          <span slot="no-results"></span>
+          <span slot="no-more"></span>
+        </infinite-load>
 
       </b-col>
     </b-row>
@@ -30,12 +45,22 @@
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
-import ProjectCardsList from '@/components/lists/ProjectCards'
+import ProjectCard from '@/components/cards/Project'
+import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
   layout: 'collection-tabs',
 
   mixins: [ fetchCollectionByName ],
+
+  data () {
+    return {
+      projects: [],
+      searchParams: {
+        complete: false
+      }
+    }
+  },
 
   head () {
     return {
@@ -64,20 +89,34 @@ export default {
       return marked(this.collection.info.content.contribute)
     },
 
-    searchParams () {
-      const params = {
-        category_id: this.collection.id
-      }
+    mergedParams () {
+      this.searchParams.category_id = this.collection.id
       if (!this.currentUser.admin) {
-        params.published = true
+        this.searchParams.published = true
       }
-      return params
+      return this.searchParams
     }
   },
 
   components: {
     ProjectSortingCard,
-    ProjectCardsList
+    ProjectCard,
+    InfiniteLoad
   }
 }
 </script>
+
+<style lang="scss">
+#collection-contribute {
+  .project-card {
+    transition: all 500ms ease;
+  }
+
+  .v-enter,
+  .v-leave-to {
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+</style>

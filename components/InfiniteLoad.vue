@@ -70,8 +70,8 @@ export default {
      * Reset the loaded domain objects.
      */
     reset () {
-      this.$emit('input', [])
       this.$nextTick(() => {
+        this.$emit('input', [])
         this.$refs.loading.$emit('$InfiniteLoading:reset')
       })
     },
@@ -87,13 +87,18 @@ export default {
           this.$refs.infiniteload.stateChanger
         )
       }
+    },
+
+    mounted () {
+      this.initLoad()
+      console.log('init')
     }
   },
 
   props: {
     value: {
       type: Array,
-      require: true
+      required: true
     },
     domainObject: {
       type: String,

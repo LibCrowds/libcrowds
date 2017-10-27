@@ -15,7 +15,7 @@
           </small>
         </p>
       </span>
-      <span class="d-flex align-items-center">
+      <div class="d-flex align-items-center">
         <label class="mr-1 mb-0 toggle-label">
           <strong>Published</strong>
         </label>
@@ -26,7 +26,7 @@
           class="mb-0"
           @change="togglePublished">
         </toggle-button>
-      </span>
+      </div>
     </div>
 
     <b-tabs ref="tabs" no-body card>

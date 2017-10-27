@@ -17,15 +17,18 @@
       </multiselect>
     </div>
 
-    <!-- <div id="show-completed" class="form-group mb-0 mt-2">
-      <label>Show completed:</label>
+    <div class="d-flex align-items-center">
+      <label class="mr-1 mb-0 toggle-label">
+        <strong>Show completed:</strong>
+      </label>
       <toggle-button
-        :value="showCompleted"
+        :value="value.completed"
         :sync="true"
         :labels="true"
-        @change="onToggleCompleted">
+        class="mb-0"
+        @change="toggleCompleted">
       </toggle-button>
-    </div> -->
+    </div>
 
   </b-card>
 </template>
@@ -37,9 +40,20 @@ export default {
   mixins: [ tags ],
 
   props: {
-    collection: {
+    value: {
       type: Object,
       required: true
+    }
+  },
+
+  methods: {
+    /**
+     * Toggle completed in the search params.
+     */
+    toggleCompleted () {
+      const params = JSON.parse(JSON.stringify(this.value))
+      params.completed = !params.completed
+      this.$emit('input', params)
     }
   }
 }

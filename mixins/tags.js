@@ -1,5 +1,7 @@
 /**
  * Method to batch tags for the current collection by type.
+ *
+ * Adds a key by which the tag can later be identified.
  */
 export const tags = {
   computed: {
@@ -10,7 +12,7 @@ export const tags = {
       for (let type of uniqueTypes) {
         batches.push({
           type: type,
-          short_type: encodeURI(type.replace(/\s+/g, '_').toLowerCase()),
+          key: `tag:${encodeURI(type.replace(/\s+/g, '_').toLowerCase())}`,
           options: tags.filter(tag => {
             return tag.type === type
           })
