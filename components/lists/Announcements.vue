@@ -27,30 +27,31 @@
       Notifications
     </nuxt-link>
 
-    <b-card
-      header="Notifications"
-      id="announcements-container"
-      class="dropdown-menu-right d-none d-md-block"
-      no-body
-      v-show="show">
+    <span v-show="show">
+      <b-card
+        header="Notifications"
+        id="announcements-container"
+        class="dropdown-menu-right d-none d-md-block"
+        no-body>
 
-      <div id="announcements">
-        <announcement-card
-          v-for="announcement in announcements"
-          :key="announcement.id"
-          :announcement="announcement">
-        </announcement-card>
-      </div>
+        <div id="announcements">
+          <announcement-card
+            v-for="announcement in announcements"
+            :key="announcement.id"
+            :announcement="announcement">
+          </announcement-card>
+        </div>
 
-      <infinite-load
-        ref="infiniteload"
-        :search-params="searchParams"
-        domain-object="announcement"
-        v-model="announcements">
-        <span slot="no-results"></span>
-        <span slot="no-more"></span>
-      </infinite-load>
-    </b-card>
+        <infinite-load
+          ref="infiniteload"
+          :search-params="searchParams"
+          domain-object="announcement"
+          v-model="announcements">
+          <span slot="no-results"></span>
+          <span slot="no-more"></span>
+        </infinite-load>
+      </b-card>
+    </span>
   </div>
 </template>
 
