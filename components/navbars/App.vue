@@ -192,11 +192,14 @@ export default {
 
   .navbar-brand {
     margin: 0;
-    padding: 0 1.75rem;
     letter-spacing: 1.15px;
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 1.25rem;
+    }
   }
 
   .nav {
@@ -207,7 +210,12 @@ export default {
   }
 
   .nav-item {
+    padding: 0 0.75rem;
     color: inherit;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 1.25rem;
+    }
 
     &:not(.dropdown) {
       display: flex;
