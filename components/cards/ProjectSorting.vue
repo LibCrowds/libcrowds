@@ -19,14 +19,66 @@
       </multiselect>
     </div>
 
+    <div class="mb-2">
+      <label>Sort by</label>
+      <multiselect
+        label="name"
+        track-by="name"
+        placeholder="Sort projects by"
+        :show-labels="false"
+        :options="sortOptions"
+        @input="onSortChange">
+      </multiselect>
+    </div>
+
   </b-card>
 </template>
 
 <script>
+import merge from 'lodash/merge'
 import { computeTags } from '@/mixins/computeTags'
 
 export default {
   mixins: [ computeTags ],
+
+  data () {
+    return {
+      sortOptions: [
+        {
+          name: 'Most Tasks',
+          orderby: 'n_tasks',
+          desc: true
+        },
+        {
+          name: 'Least Tasks',
+          orderby: 'n_tasks',
+          desc: false
+        },
+        {
+          name: 'Most Popular',
+          orderby: 'n_volunteers',
+          desc: true
+        },
+        {
+          name: 'Least Popular',
+          orderby: 'n_volunteers',
+          desc: false
+        },
+        {
+          name: 'Most Complete',
+          orderby: 'overall_progress',
+          desc: true
+        },
+        {
+          name: 'Least Complete',
+          orderby: 'overall_progress',
+          desc: false
+        }
+      ],
+      sortParams: {},
+      tagParams: {}
+    }
+  },
 
   props: {
     value: {
@@ -55,7 +107,8 @@ export default {
       } else if (!params.info.length) {
         delete params.info
       }
-      this.$emit('input', params)
+      this.tagParams = params
+      this.update()
     },
 
     /**
@@ -71,6 +124,26 @@ export default {
         return param.split('::')[0] !== tagKey
       })
       return stripped.join('|')
+    },
+
+    /**
+     * Handle sort change.
+     */
+    onSortChange (value) {
+      if (!value) {
+        this.sortParams = {}
+      } else {
+        delete value.name
+        this.sortParams = value
+      }
+      this.update()
+    },
+
+    /**
+     * Emit the new params.
+     */
+    update () {
+      this.$emit('input', merge(this.tagParams, this.sortParams))
     }
   }
 }

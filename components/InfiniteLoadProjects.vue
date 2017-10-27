@@ -2,7 +2,7 @@
   <infinite-loading
     ref="infiniteload"
     class="infinite-loading"
-    @infinite="infiniteLoadDomainObjects">
+    @infinite="infiniteLoadProjects">
     <span slot="no-results">
       <span v-if="noResults">{{ noResults }}</span>
     </span>
@@ -13,54 +13,17 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
+import some from 'lodash/some'
 
 export default {
   data () {
     return {
-      defaultSearchParams: {
-        limit: 20,
-        all: 1
-      }
+      defaultOrderBy: 'created',
+      page: 1
     }
   },
 
   methods: {
-    /**
-     * Handler to infinitely load domain objects.
-     * @param {Object} $state
-     *   The vue-inifinite-loading state.
-     */
-    async infiniteLoadDomainObjects ($state) {
-      if (this.domainObject === 'project') {
-        this.infiniteLoadProjects()
-        return
-      }
-
-      // Merge search params with defaults and last ID
-      const params = merge(this.defaultSearchParams, this.searchParams, {
-        last_id: this.lastId
-      })
-
-      try {
-        // Get the data
-        let data = await this.$axios.$get(`/api/${this.domainObject}`, {
-          params: params
-        })
-
-        // Loading complete
-        if (!data.length) {
-          $state.complete()
-          return
-        }
-
-        this.$emit('input', this.value.concat(data))
-        $state.loaded()
-      } catch (err) {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
-      }
-    },
-
     /**
      * Handler to infinitely load projects.
      *
@@ -74,28 +37,39 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async infiniteLoadProjects ($state) {
-      const endpoint = `/project/category/${this.collection.short_name}`
+      const params = JSON.parse(JSON.stringify(this.searchParams))
+      let endpoint = `/project/category/${this.collection.short_name}`
+
+      if (this.page > 1) {
+        endpoint += `/page/${this.page}`
+      }
+      this.page += 1
+
+      const sortParams = {
+        orderby: params.orderby || this.defaultOrderBy,
+        desc: params.desc || true
+      }
+
+      console.log(sortParams)
+
+      delete params.orderby
+      delete params.desc
 
       try {
-        let data = await this.$axios.$get(endpoint)
+        const data = await this.$axios.$get(endpoint, { params: sortParams })
+        const projects = data.projects
 
         // Loading complete
-        if (!data.length) {
+        if (!projects.length) {
           $state.complete()
           return
         }
 
-        // Enrich projects data with stats
-        if (this.domainObject === 'project') {
-          const statsData = await this.$axios.$get('/api/projectstats', {
-            project_id: data.map(project => project.id)
-          })
-          data = data.map((project, idx) => {
-            return merge(statsData[idx], project)
-          })
-        }
+        const filtered = projects.filter(project => {
+          return some([project], params)
+        })
 
-        this.$emit('input', this.value.concat(data))
+        this.$emit('input', this.value.concat(filtered))
         $state.loaded()
       } catch (err) {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
@@ -107,6 +81,7 @@ export default {
      */
     reset () {
       this.$nextTick(() => {
+        this.page = 1
         this.$emit('input', [])
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
       })
@@ -133,26 +108,9 @@ export default {
       type: Array,
       required: true
     },
-    domainObject: {
-      type: String,
-      required: true,
-      validator: (value) => {
-        const valid = [
-          'announcement',
-          'auditlog',
-          'blogpost',
-          'category',
-          'helpingmaterial',
-          'project',
-          'projectstats',
-          'result',
-          'task',
-          'taskrun',
-          'user',
-          'webhook'
-        ]
-        return valid.indexOf(value) > -1
-      }
+    collection: {
+      type: Object,
+      required: true
     },
     searchParams: {
       type: Object,

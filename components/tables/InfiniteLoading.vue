@@ -7,7 +7,7 @@
       :items="items"
       :fields="tableFields"
       :style="cardStyle"
-      @sort-changed="reset">
+      @sort-changed="onSortChange">
 
       <template slot="overall_progress" scope="data">
         {{ data.item.overall_progress }}%
@@ -35,7 +35,7 @@
       ref="infiniteload"
       :domain-object="domainObject"
       v-model="items"
-      :search-params="searchParams"
+      :search-params="mergedParams"
       :no-results="null"
       no-more-results="No more results">
     </infinite-load>
@@ -44,12 +44,14 @@
 </template>
 
 <script>
+import merge from 'lodash/merge'
 import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
   data () {
     return {
-      items: []
+      items: [],
+      sortParams: {}
     }
   },
 
@@ -91,12 +93,23 @@ export default {
         }
       }
       return fieldsCopy
+    },
+
+    mergedParams () {
+      console.log('merged params ', merge(this.searchParams, this.sortParams))
+      return merge(this.searchParams, this.sortParams)
     }
   },
 
   methods: {
-    reset () {
-      this.$refs.infiniteload.reset()
+    /**
+     * Handle sort change.
+     */
+    onSortChange (value) {
+      this.sortParams = {
+        orderby: value.sortBy,
+        desc: value.sortDesc
+      }
     }
   }
 }
