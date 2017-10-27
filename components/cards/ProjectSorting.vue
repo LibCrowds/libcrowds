@@ -46,12 +46,15 @@ export default {
     onTagChange (tag, key) {
       const params = JSON.parse(JSON.stringify(this.value))
       params.info = params.info || ''
-
       params.info = this.stripTag(params.info, key)
-      if (params.info.length) {
-        params.info += '|'
+      if (tag) {
+        if (params.info.length) {
+          params.info += '|'
+        }
+        params.info += `${key}::${tag.name}`
+      } else if (!params.info.length) {
+        delete params.info
       }
-      params.info += `${key}::${tag.name}`
       this.$emit('input', params)
     },
 
