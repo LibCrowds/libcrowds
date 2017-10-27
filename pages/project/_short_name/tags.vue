@@ -10,22 +10,28 @@
       </p>
     </div>
 
-    <div
-      v-for="(tag, index) in tags"
-      :key="index"
-      class="mb-2">
-      <label>{{ tag.type }}</label>
-      <multiselect
-        label="name"
-        track-by="name"
-        :id="tag.key"
-        placeholder="Select one"
-        :show-labels="false"
-        v-model="currentTagsModel[tag.key]"
-        :options="tag.options"
-        @input="onTagChange">
-      </multiselect>
-    </div>
+    <span v-if="tags.length">
+      <div
+        v-for="(tag, index) in tags"
+        :key="index"
+        class="mb-2">
+        <label>{{ tag.type }}</label>
+        <multiselect
+          label="name"
+          track-by="name"
+          :id="tag.key"
+          placeholder="Select one"
+          :show-labels="false"
+          v-model="currentTagsModel[tag.key]"
+          :options="tag.options"
+          @input="onTagChange">
+        </multiselect>
+      </div>
+    </span>
+
+    <p v-else class="lead my-2 text-center">
+      No tags have been specified for this collection.
+    </p>
 
     <div slot="footer" class="d-flex flex-row">
       <b-btn
