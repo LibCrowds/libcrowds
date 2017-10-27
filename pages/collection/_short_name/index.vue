@@ -197,11 +197,11 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/star'
+import localConfig from '@/local.config'
 import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
-import 'vue-awesome/icons/star'
-import localConfig from '@/local.config'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectCard from '@/components/cards/Project'
 

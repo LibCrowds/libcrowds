@@ -13,6 +13,12 @@
           :collection="collection"
           v-model="searchParams">
         </project-sorting-card>
+
+        <social-media-buttons
+          :shareUrl="shareUrl"
+          size="sm"
+          class="text-center">
+        </social-media-buttons>
       </b-col>
 
       <b-col xl="9">
@@ -44,6 +50,8 @@
 <script>
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCard from '@/components/cards/Project'
 import InfiniteLoad from '@/components/InfiniteLoad'
@@ -51,7 +59,7 @@ import InfiniteLoad from '@/components/InfiniteLoad'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName ],
+  mixins: [ fetchCollectionByName, computeShareUrl ],
 
   data () {
     return {
@@ -99,7 +107,8 @@ export default {
   components: {
     ProjectSortingCard,
     ProjectCard,
-    InfiniteLoad
+    InfiniteLoad,
+    SocialMediaButtons
   }
 }
 </script>
