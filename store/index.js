@@ -4,7 +4,7 @@ import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 
 actions.nuxtServerInit = async ({ dispatch }, { app }) => {
-  dispatch('UPDATE_CURRENT_USER', app.$axios)
+  // UPDATE_CURRENT_USER is called from router middleware
   dispatch('UPDATE_ANNOUNCEMENTS', app.$axios)
   dispatch('UPDATE_PUBLISHED_COLLECTIONS', app.$axios)
 }
