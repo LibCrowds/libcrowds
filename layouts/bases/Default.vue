@@ -1,7 +1,7 @@
 <template>
   <div id="default-layout-base">
 
-    <app-navbar></app-navbar>
+    <app-navbar :current-user="currentUser"></app-navbar>
 
     <main>
       <slot></slot>
@@ -25,6 +25,11 @@ export default {
   computed: {
     publishedCollections () {
       return this.$store.state.publishedCollections
+    },
+
+    currentUser () {
+      console.log(this.$store.state.currentUser)
+      return this.$store.state.currentUser
     }
   }
 }

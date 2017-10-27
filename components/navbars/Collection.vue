@@ -195,6 +195,10 @@ export default {
       type: Object,
       required: true
     },
+    currentUser: {
+      type: Object,
+      required: true
+    },
     type: {
       type: String,
       default: 'dark'
@@ -222,9 +226,6 @@ export default {
     },
     loggedIn () {
       return !isEmpty(this.currentUser)
-    },
-    currentUser () {
-      return this.$store.state.currentUser
     }
   },
 

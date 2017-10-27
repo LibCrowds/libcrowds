@@ -123,6 +123,10 @@ export default {
     hideBrandBreakpoint: {
       type: String,
       defualt: null
+    },
+    currentUser: {
+      type: Object,
+      required: true
     }
   },
 
@@ -133,9 +137,6 @@ export default {
   computed: {
     loggedIn () {
       return !isEmpty(this.currentUser)
-    },
-    currentUser () {
-      return this.$store.state.currentUser
     }
   },
 

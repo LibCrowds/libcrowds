@@ -2,7 +2,10 @@
   <div id="collection-layout-base">
     <div id="collection-background" :style="bgStyle"></div>
 
-    <collection-navbar :collection="collection"></collection-navbar>
+    <collection-navbar
+      :collection="collection"
+      :current-user="currentUser">
+    </collection-navbar>
 
     <main>
       <slot></slot>
@@ -40,6 +43,10 @@ export default {
 
     publishedCollections () {
       return this.$store.state.publishedCollections
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

@@ -10,7 +10,8 @@
 
       <app-navbar
         hide-brand-breakpoint="lg"
-        :fixed="null">
+        :fixed="null"
+        :current-user="currentUser">
       </app-navbar>
 
       <dashboard-navbar
@@ -49,6 +50,12 @@ export default {
     AppNavbar,
     DashboardFooter,
     DashboardNavbar
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
   }
 }
 </script>
