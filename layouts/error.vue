@@ -1,61 +1,103 @@
 <template>
-  <main id="error-layout">
-    <div class="container text-center">
-      <icon label="Error" class="mb-2">
-        <icon name="exclamation"></icon>
-        <icon name="circle-thin" scale="2"></icon>
-      </icon>
-      <h1 class="title">
-         {{ error.message }}
-      </h1>
-      <b-btn
-        variant="dark"
-        size="lg"
-        :to="{
-          name: 'index'
-        }">
-        Home
-      </b-btn>
-    </div>
-  </main>
+  <div id="error-layout">
+
+    <app-navbar :current-user="currentUser"></app-navbar>
+
+    <main>
+      <div class="container text-center">
+
+        <div id="error-code" class="inset-text">
+          {{ error.statusCode }}
+        </div>
+
+        <div class="lead mt-1 mb-2">
+          {{ error.message }}
+        </div>
+
+        <b-btn
+          variant="success"
+          size="lg"
+          class="mt-1"
+          :to="{
+            name: 'index'
+          }">
+          Home page
+        </b-btn>
+
+      </div>
+    </main>
+
+    <app-footer :collections="publishedCollections"></app-footer>
+
+  </div>
 </template>
 
 <script>
-import 'vue-awesome/icons/circle-thin'
-import 'vue-awesome/icons/exclamation'
+import AppFooter from '@/components/footers/App'
+import AppNavbar from '@/components/navbars/App'
 
 export default {
-  props: ['error']
+  props: ['error'],
+
+  components: {
+    AppNavbar,
+    AppFooter
+  },
+
+  computed: {
+    publishedCollections () {
+      return this.$store.state.publishedCollections
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
+    }
+  }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import '~assets/style/settings';
+
 #error-layout {
   height: 100vh;
   display: flex;
+  flex-direction: column;
 
-  .container {
+  main {
+    margin-top: $app-navbar-height;
+    margin-bottom: $app-navbar-height;
+    min-height: 500px;
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  .bounce-enter-active {
-    animation: bounce-in .8s;
+  .lead {
+    color: $gray-900;
+    font-weight: 400;
   }
-  .bounce-leave-active {
-    animation: bounce-out .5s;
+
+  .inset-text {
+    background-color: $gray-600;
+    color: transparent;
+    text-shadow: 2px 2px 3px rgba($gray-300, 0.5);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
   }
-  @keyframes bounce-in {
-    0% { transform: scale(0) }
-    50% { transform: scale(1.5) }
-    100% { transform: scale(1) }
+
+  #error-code {
+    position: relative;
+    line-height: 1;
+    font-size: 10rem;
+    font-weight: 700;
   }
-  @keyframes bounce-out {
-    0% { transform: scale(1) }
-    50% { transform: scale(1.5) }
-    100% { transform: scale(0) }
+
+  .btn {
+    box-shadow: none;
   }
 }
 </style>
