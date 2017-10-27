@@ -11,13 +11,13 @@
         </div>
 
         <div class="lead mt-1 mb-2">
-          {{ error.message }}
+          {{ normalisedMessage }}
         </div>
 
         <b-btn
           variant="success"
           size="lg"
-          class="mt-1"
+          class="mt-0 mt-md-1 mb-2"
           :to="{
             name: 'index'
           }">
@@ -39,6 +39,17 @@ import AppNavbar from '@/components/navbars/App'
 export default {
   props: ['error'],
 
+  data () {
+    return {
+      messages: {
+        '403': 'You\'re not supposed to be here.',
+        '404': 'This page could not be found.',
+        '405': 'Method not allowed.',
+        '500': 'Uh oh, something\'s broken. We will fix it as soon as we can.'
+      }
+    }
+  },
+
   components: {
     AppNavbar,
     AppFooter
@@ -51,6 +62,14 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    normalisedMessage () {
+      const code = this.error.statusCode
+      if (this.messages.hasOwnProperty(code)) {
+        return this.messages[code]
+      }
+      return this.error.message
     }
   }
 }
@@ -66,8 +85,7 @@ export default {
 
   main {
     margin-top: $app-navbar-height;
-    margin-bottom: $app-navbar-height;
-    min-height: 500px;
+    min-height: 450px;
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
@@ -76,7 +94,7 @@ export default {
   }
 
   .lead {
-    color: $gray-900;
+    color: $gray-1000;
     font-weight: 400;
   }
 
@@ -92,8 +110,12 @@ export default {
   #error-code {
     position: relative;
     line-height: 1;
-    font-size: 10rem;
     font-weight: 700;
+    font-size: 4rem;
+
+    @include media-breakpoint-up(md) {
+      font-size: 10rem;
+    }
   }
 
   .btn {
