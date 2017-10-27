@@ -1,25 +1,18 @@
 <template>
-  <div id="account-announcements">
-    <b-container class="my-5">
-      <b-card no-body :header="title">
-
-        <announcement-card
-          v-for="announcement in announcements"
-          :key="announcement.id"
-          :announcement="announcement">
-        </announcement-card>
-        <infinite-load
-          ref="infiniteload"
-          :search-params="searchParams"
-          domain-object="announcement"
-          v-model="announcements">
-          <span slot="no-results"></span>
-          <span slot="no-more"></span>
-        </infinite-load>
-
-      </b-card>
-    </b-container>
-  </div>
+  <b-card id="account-announcements" no-body :header="title">
+    <announcement-card
+      v-for="announcement in announcements"
+      :key="announcement.id"
+      :announcement="announcement">
+    </announcement-card>
+    <infinite-load
+      ref="infiniteload"
+      domain-object="announcement"
+      v-model="announcements">
+      <span slot="no-results"></span>
+      <span slot="no-more"></span>
+    </infinite-load>
+  </b-card>
 </template>
 
 <script>
@@ -27,7 +20,7 @@ import AnnouncementCard from '@/components/cards/Announcement'
 import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
-  layout: 'default',
+  layout: 'container',
 
   data () {
     return {

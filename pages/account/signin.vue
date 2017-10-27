@@ -1,41 +1,36 @@
 <template>
-  <div id="account-signin">
-    <div class="container my-5">
-      <div class="col-lg-8 mx-auto">
-        <pybossa-form
-          header="Signin"
-          :lead="lead"
-          submit-text="Sign in"
-          :form="form"
-          :next="next">
+  <pybossa-form
+    id="account-signin"
+    :header="title"
+    :lead="lead"
+    submit-text="Sign in"
+    :form="form"
+    :next="next">
 
-          <div
-            slot="bottom"
-            v-if="auth.facebook || auth.twitter || auth.google">
-            <p class="lead text-center">
-              or sign in with
-            </p>
-            <oauth-buttons
-              :facebook="auth.facebook"
-              :google="auth.google"
-              :twitter="auth.twitter"
-              :next="next">
-            </oauth-buttons>
-          </div>
-
-          <div slot="footer-left">
-            <nuxt-link
-              :to="{
-                name: 'account-password-forgotten'
-              }">
-              Forgot your password?
-            </nuxt-link>
-          </div>
-
-        </pybossa-form>
-      </div>
+    <div
+      slot="bottom"
+      v-if="auth.facebook || auth.twitter || auth.google">
+      <p class="lead text-center">
+        or sign in with
+      </p>
+      <oauth-buttons
+        :facebook="auth.facebook"
+        :google="auth.google"
+        :twitter="auth.twitter"
+        :next="next">
+      </oauth-buttons>
     </div>
-  </div>
+
+    <div slot="footer-left">
+      <nuxt-link
+        :to="{
+          name: 'account-password-forgotten'
+        }">
+        Forgot your password?
+      </nuxt-link>
+    </div>
+
+  </pybossa-form>
 </template>
 
 <script>
@@ -44,10 +39,11 @@ import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 
 export default {
-  layout: 'default',
+  layout: 'container',
 
   data () {
     return {
+      title: 'Sign in',
       lead: `Enter your ${localConfig.brand} account details`
     }
   },
@@ -94,7 +90,7 @@ export default {
 
   head () {
     return {
-      title: 'Sign in',
+      title: this.title,
       meta: [
         {
           hid: 'description',

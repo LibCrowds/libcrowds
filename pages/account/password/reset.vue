@@ -1,16 +1,11 @@
 <template>
-  <div id="reset-password">
-    <div class="container my-5">
-      <div class="col-lg-8 mx-auto">
-        <pybossa-form
-          header="Reset Password"
-          submitText="Reset"
-          :form="form"
-          :next="next">
-        </pybossa-form>
-      </div>
-    </div>
-  </div>
+  <pybossa-form
+    id="reset-password"
+    :header="title"
+    submitText="Reset"
+    :form="form"
+    :next="next">
+  </pybossa-form>
 </template>
 
 <script>
@@ -18,12 +13,13 @@ import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'default',
+  layout: 'container',
 
   async asyncData ({ query, app, error }) {
     const endpoint = '/account/reset-password'
     return app.$axios.$get(endpoint).then(data => {
       return {
+        title: 'Reset Password',
         next: query.next || '/',
         form: {
           endpoint: '/account/reset-password',
@@ -57,7 +53,7 @@ export default {
 
   head () {
     return {
-      title: 'Reset Password',
+      title: this.title,
       meta: [
         {
           hid: 'description',

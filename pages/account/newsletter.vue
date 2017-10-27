@@ -1,37 +1,31 @@
 <template>
-  <div id="newsletter">
-    <div class="container my-5">
-      <div class="col-lg-8 mx-auto">
-        <b-card :header="title">
-          <p class="lead">
-            {{ lead }}
-          </p>
-          <template slot="footer">
-            <div class="text-right">
-              <b-btn
-                variant="outline-dark"
-                @click="subscribe(false)">
-                No thanks
-              </b-btn>
-              <b-btn
-                variant="success"
-                class="ml-1"
-                @click="subscribe(true)">
-                Sure, sign me up!
-              </b-btn>
-            </div>
-          </template>
-        </b-card>
+  <b-card id="newsletter" :header="title">
+    <p class="lead">
+      {{ lead }}
+    </p>
+    <template slot="footer">
+      <div class="text-right">
+        <b-btn
+          variant="outline-dark"
+          @click="subscribe(false)">
+          No thanks
+        </b-btn>
+        <b-btn
+          variant="success"
+          class="ml-1"
+          @click="subscribe(true)">
+          Sure, sign me up!
+        </b-btn>
       </div>
-    </div>
-  </div>
+    </template>
+  </b-card>
 </template>
 
 <script>
 import localConfig from '@/local.config'
 
 export default {
-  layout: 'default',
+  layout: 'container',
 
   data () {
     return {

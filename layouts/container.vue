@@ -1,6 +1,10 @@
 <template>
   <default-base>
-    <nuxt></nuxt>
+    <b-container class="my-4 my-lg-5">
+      <b-col lg="8" class="mx-auto">
+        <nuxt></nuxt>
+      </b-col>
+    </b-container>
   </default-base>
 </template>
 

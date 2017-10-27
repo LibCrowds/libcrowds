@@ -1,42 +1,37 @@
 <template>
-  <div id="account-projects">
-    <b-container class="my-5">
-      <b-card no-body header="Open Project">
-
-        <infinite-loading-table
-          domainObject="project"
-          :fields="tableFields"
-          :search-params="searchParams"
-          no-border>
-          <template slot="action" scope="project">
-            <b-btn
-              variant="success"
-              size="sm"
-              block
-              :to="{
-                name: 'project-short_name-settings',
-                params: {
-                  short_name: project.item.short_name
-                }
-              }">
-              Open
-            </b-btn>
-          </template>
-        </infinite-loading-table>
-
-      </b-card>
-    </b-container>
-  </div>
+  <b-card id="account-projects" no-body :header="title">
+    <infinite-loading-table
+      domainObject="project"
+      :fields="tableFields"
+      :search-params="searchParams"
+      no-border>
+      <template slot="action" scope="project">
+        <b-btn
+          variant="success"
+          size="sm"
+          block
+          :to="{
+            name: 'project-short_name-settings',
+            params: {
+              short_name: project.item.short_name
+            }
+          }">
+          Open
+        </b-btn>
+      </template>
+    </infinite-loading-table>
+  </b-card>
 </template>
 
 <script>
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'default',
+  layout: 'container',
 
   data () {
     return {
+      title: 'Open Project',
       tableFields: {
         name: {
           label: 'Name'
@@ -81,6 +76,12 @@ export default {
         params.owner_id = currentUser.id
       }
       return params
+    }
+  },
+
+  head () {
+    return {
+      title: this.title
     }
   }
 }
