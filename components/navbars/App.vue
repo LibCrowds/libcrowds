@@ -206,14 +206,18 @@ export default {
     height: 100%;
   }
 
-  .nav-item:not(.dropdown) {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 0rem 1.25rem;
-    border-bottom: 1px solid $gray-300;
-    height: 100%;
-    white-space: nowrap;
+  .nav-item {
+    color: inherit;
+
+    &:not(.dropdown) {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0rem 1.25rem;
+      border-bottom: 1px solid $gray-300;
+      height: 100%;
+      white-space: nowrap;
+    }
   }
 
   #sign-in-up {

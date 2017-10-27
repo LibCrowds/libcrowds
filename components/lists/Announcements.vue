@@ -144,7 +144,6 @@ export default {
   text-transform: none;
 
   #announcements-toggle {
-    color: inherit;
     cursor: pointer;
     background: transparent;
     border: none;
