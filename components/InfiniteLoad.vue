@@ -72,7 +72,7 @@ export default {
     reset () {
       this.$nextTick(() => {
         this.$emit('input', [])
-        this.$refs.loading.$emit('$InfiniteLoading:reset')
+        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
       })
     },
 
@@ -87,11 +87,6 @@ export default {
           this.$refs.infiniteload.stateChanger
         )
       }
-    },
-
-    mounted () {
-      this.initLoad()
-      console.log('init')
     }
   },
 
@@ -127,7 +122,7 @@ export default {
     },
     noResults: {
       type: String,
-      default: null
+      default: 'No results'
     },
     noMoreResults: {
       type: String,

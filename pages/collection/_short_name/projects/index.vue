@@ -56,9 +56,7 @@ export default {
   data () {
     return {
       projects: [],
-      searchParams: {
-        complete: false
-      }
+      searchParams: {}
     }
   },
 

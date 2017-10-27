@@ -1,26 +1,29 @@
 <template>
   <b-card>
     <div slot="header">
-      <h6 class="mb-1">Tags</h6>
+      <h6 class="mb-1">{{ title }}</h6>
       <p class="text-muted mb-0">
         <small>
-          Tags can be used to filter and organise projects.
+          Tags can be used to filter and organise projects (the available tags
+          for a collection are set via the Admin interface).
         </small>
       </p>
     </div>
 
     <div
-      v-for="tag in tags"
-      :key="tag.type"
+      v-for="(tag, index) in tags"
+      :key="index"
       class="mb-2">
       <label>{{ tag.type }}</label>
       <multiselect
         label="name"
         track-by="name"
-        v-model="selectedValues[`tag:${tag.short_type}`]"
+        :id="tag.key"
         placeholder="Select one"
         :show-labels="false"
-        :options="tag.options">
+        v-model="currentTagsModel[tag.key]"
+        :options="tag.options"
+        @input="onTagChange">
       </multiselect>
     </div>
 
@@ -28,6 +31,7 @@
       <b-btn
         class="ml-auto"
         variant="success"
+        :disabled="processing"
         @click="submit">
         Update
       </b-btn>
@@ -38,23 +42,25 @@
 
 <script>
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
-import { tags } from '@/mixins/tags'
+import { computeTags } from '@/mixins/computeTags'
 import { notifications } from '@/mixins/notifications'
 
 export default {
   layout: 'project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, tags, notifications ],
+  mixins: [ fetchProjectAndCollection, computeTags, notifications ],
 
   data () {
     return {
-      selectedValues: {}
+      title: 'Tags',
+      currentTagsModel: {},
+      processing: false
     }
   },
 
   head () {
     return {
-      title: 'Tags'
+      title: this.title
     }
   },
 
@@ -66,18 +72,47 @@ export default {
 
   methods: {
     /**
+     * Handle a tag being selected or removed.
+     * @param {Object} tag
+     *   The tag.
+     * @param {Object} key
+     *   The component ID (which should be the tag key).
+     */
+    onTagChange (tag, key) {
+      if (!tag) {
+        delete this.project.info[key]
+      } else {
+        this.project.info[key] = tag.name
+      }
+      this.updateCurrentTagsModel()
+    },
+
+    /**
+     * Update the current tags.
+     */
+    updateCurrentTagsModel () {
+      const updatedTags = {}
+      for (let tag of this.tags) {
+        updatedTags[tag.key] = tag.options.filter(option => {
+          return option.name === this.project.info[tag.key]
+        })[0]
+      }
+      this.currentTagsModel = updatedTags
+    },
+
+    /**
      * Update the project's tags.
      */
     async submit () {
-      for (let key in this.selectedValues) {
-        this.project.info[key] = this.selectedValues[key].name
-      }
+      this.processing = true
       try {
         await this.$axios.$put(`/api/project/${this.project.id}`, {
           info: this.project.info
         })
       } catch (err) {
         this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+      } finally {
+        this.processing = false
       }
       this.notify({
         type: 'success',
@@ -85,6 +120,10 @@ export default {
         message: 'Tags updated'
       })
     }
+  },
+
+  mounted () {
+    this.updateCurrentTagsModel()
   }
 }
 </script>

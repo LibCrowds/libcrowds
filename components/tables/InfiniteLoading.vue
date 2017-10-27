@@ -36,6 +36,7 @@
       :domain-object="domainObject"
       v-model="items"
       :search-params="searchParams"
+      :no-results="null"
       no-more-results="No more results">
     </infinite-load>
 

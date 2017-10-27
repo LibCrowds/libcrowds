@@ -3,7 +3,7 @@
  *
  * Adds a key by which the tag can later be identified.
  */
-export const tags = {
+export const computeTags = {
   computed: {
     tags () {
       const batches = []
