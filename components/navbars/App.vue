@@ -19,7 +19,7 @@
       <b-nav is-nav-bar right>
 
         <!-- Hide on small screens until the new menu is in place -->
-        <announcements class="d-none d-md-block"></announcements>
+        <announcements class="d-none d-lg-block"></announcements>
 
         <b-nav-item-dropdown
           right

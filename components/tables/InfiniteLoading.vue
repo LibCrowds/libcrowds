@@ -110,6 +110,9 @@ export default {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
+    },
+    reset () {
+      this.$refs.infiniteload.reset()
     }
   }
 }

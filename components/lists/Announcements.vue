@@ -3,7 +3,7 @@
 
     <b-btn
       id="announcements-toggle"
-      class="nav-item d-none d-lg-flex"
+      class="nav-item d-none d-lg-flex flex-row"
       v-on-clickaway="hide"
       @click="toggle">
       <icon name="bell"></icon>
@@ -46,9 +46,9 @@
           ref="infiniteload"
           :search-params="searchParams"
           domain-object="announcement"
+          no-results="No announcements have been made yet"
+          no-more-results=""
           v-model="announcements">
-          <span slot="no-results"></span>
-          <span slot="no-more"></span>
         </infinite-load>
       </b-card>
     </span>
@@ -118,18 +118,12 @@ export default {
     toggle () {
       this.show = !this.show
       if (this.show) {
-        this.initLoad()
+        // Reload each time the list is shown in case of changes
+        this.$refs.infiniteload.reset()
       }
       if (this.show && this.hasUnread) {
         this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
       }
-    },
-
-    /**
-     * Trigger initial load manually (necessary before scrolling starts).
-     */
-    initLoad () {
-      this.$refs.infiniteload.initLoad()
     }
   }
 }

@@ -110,21 +110,6 @@ export default {
         this.$emit('input', [])
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
       })
-    },
-
-    /**
-     * Start the load manually.
-     *
-     * Useful when modal first shown etc., or after a reset.
-     */
-    initLoad () {
-      if (!this.$refs.infiniteload.isComplete) {
-        this.$refs.infiniteload.isLoading = true
-        this.$refs.infiniteload.$emit(
-          'infinite',
-          this.$refs.infiniteload.stateChanger
-        )
-      }
     }
   },
 

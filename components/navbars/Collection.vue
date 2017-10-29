@@ -597,6 +597,7 @@ export default {
         display: block;
 
         .nav-item {
+          color: inherit;
           margin-left: 0;
 
           .nav-link.active:after,
