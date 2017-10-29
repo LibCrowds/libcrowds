@@ -249,6 +249,10 @@ export default {
   components: {
     SocialMediaButtons,
     ProjectCard
+  },
+
+  mounted () {
+    this.loadCollectionFeatured()
   }
 }
 </script>
