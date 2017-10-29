@@ -13,12 +13,12 @@ export default {
   layout: 'account-dashboard',
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/account/${params.username}/update`
+    const endpoint = `/account/${params.name}/update`
     return app.$axios.$get(endpoint).then(data => {
       data.form.btn = 'Password'
       return {
         form: {
-          endpoint: `account/${params.username}/update`,
+          endpoint: `account/${params.name}/update`,
           method: 'post',
           model: data.password_form,
           schema: {

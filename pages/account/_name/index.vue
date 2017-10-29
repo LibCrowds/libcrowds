@@ -66,7 +66,7 @@ export default {
   },
 
   async asyncData ({ params, app, error }) {
-    return app.$axios.$get(`/account/${params.username}`).then((data) => {
+    return app.$axios.$get(`/account/${params.name}`).then((data) => {
       return {
         user: data.user,
         projects: data.projects || data.projects_contrib
