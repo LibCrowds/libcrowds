@@ -96,7 +96,6 @@ export default {
     },
 
     mergedParams () {
-      console.log('merged params ', merge(this.searchParams, this.sortParams))
       return merge(this.searchParams, this.sortParams)
     }
   },
