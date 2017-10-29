@@ -83,11 +83,13 @@ export default {
           },
           n_projects: {
             label: 'Projects',
-            class: 'text-center d-none d-md-table-cell'
+            class: 'text-center d-none d-md-table-cell',
+            sortable: true
           },
           created: {
             label: 'Created',
-            class: 'text-center d-none d-md-table-cell'
+            class: 'text-center d-none d-md-table-cell',
+            sortable: true
           },
           action: {
             label: 'Action',
