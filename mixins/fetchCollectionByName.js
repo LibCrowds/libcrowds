@@ -5,7 +5,11 @@ import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
  */
 export const fetchCollectionByName = {
   fetch ({ params, app, error, store }) {
-    return app.$axios.$get('/api/category', { params: params }).then(data => {
+    return app.$axios.$get('/api/category', {
+      params: {
+        short_name: params.short_name
+      }
+    }).then(data => {
       if (!data || data.length !== 1) {
         error({ statusCode: 404, message: 'Page not found' })
         return

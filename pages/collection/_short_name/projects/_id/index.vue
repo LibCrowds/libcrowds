@@ -1,11 +1,13 @@
 <template>
   <div id="presenter">
+    <p class="lead text-center" v-if="!presenter">
+      No task presenter has been configured for this collection.
+    </p>
     <component
+      v-else-if="project"
       :is="presenter"
-      v-if="project && tasks.length"
       :project="project"
       :tasks="tasks"
-      :collection-config="collectionConfig"
       @submit="onSubmit"
       @taskliked="onTaskLiked">
     </component>
@@ -26,19 +28,7 @@ export default {
 
   data () {
     return {
-      tasks: [],
-      navItems: [
-        {
-          id: 'back-to-contribute',
-          text: 'Back',
-          route: {
-            name: 'collection-short_name-projects',
-            params: {
-              short_name: this.collection.short_name
-            }
-          }
-        }
-      ]
+      tasks: []
     }
   },
 
@@ -46,32 +36,25 @@ export default {
     const endpoint = `/api/project/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        project: data.project
+        project: data
       }
     }).catch(err => {
       error({ statusCode: err.statusCode, message: err.message })
     })
   },
 
-  head () {
-    return {
-      title: this.project.name,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.project.description
-        }
-      ]
-    }
-  },
-
-  props: {
-    collectionConfig: {
-      type: Object,
-      required: true
-    }
-  },
+  // head () {
+  //   return {
+  //     title: this.project.name,
+  //     meta: [
+  //       {
+  //         hid: 'description',
+  //         name: 'description',
+  //         content: this.project.description
+  //       }
+  //     ]
+  //   }
+  // },
 
   computed: {
     collection () {
@@ -83,9 +66,7 @@ export default {
         'libcrowds-viewer': LibcrowdsViewerPresenter,
         'z3950': Z3950Presenter
       }
-      return this.collectionConfig.presenter
-        ? presenters[this.collectionConfig.presenter]
-        : presenters.default
+      return presenters[this.collection.info.presenter]
     }
   },
 
@@ -108,6 +89,7 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
+      console.log(url)
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
           this.handleCompletion()
@@ -136,9 +118,9 @@ export default {
         type: 'success'
       })
       this.$router.push({
-        name: 'collection-short_name-contribute',
+        name: 'collection-short_name-projects',
         params: {
-          short_name: this.collectionConfig.key
+          short_name: this.collection.short_name
         }
       })
     },
@@ -231,8 +213,7 @@ export default {
     }
   },
 
-  created () {
-    this.$emit('navupdated', this.navItems)
+  mounted () {
     this.loadTasks()
   }
 }

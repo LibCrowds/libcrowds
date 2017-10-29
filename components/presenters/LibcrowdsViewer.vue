@@ -27,10 +27,6 @@ export default {
     tasks: {
       type: Array,
       required: true
-    },
-    collection: {
-      type: Object,
-      required: true
     }
   },
 
