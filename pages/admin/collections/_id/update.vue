@@ -89,7 +89,7 @@
           <b-btn
             size="sm"
             class="mb-2 ml-auto mr-2"
-            variant="primary"
+            variant="success"
             @click="addTag">
             Add a tag
           </b-btn>
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { fetchCollectionById } from '@/mixins/fetchCollectionById'
 import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -124,7 +124,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionById, notifications ],
 
   data () {
     return {
