@@ -1,3 +1,4 @@
+import localConfig from '@/local.config'
 import merge from 'lodash/merge'
 
 /**
@@ -18,8 +19,18 @@ export const setCollectionDefaults = function (collection) {
     license: 'CC0',
     presenter: null,
     content: {
-      about: '',
-      data: '',
+      about: `${collection.name} is part of the ${localConfig.brand} ` +
+        'crowdsourcing platform, which hosts experimental crowdsourcing ' +
+        `projects from ${localConfig.brand}.`,
+      data: 'All datasets generated from the experimental crowdsourcing ' +
+        'projects hosted on this platform are made available under a CC0 ' +
+        'license.\n\nThere are three types of dataset available, all of ' +
+        'which can be downloaded in JSON or CSV format:\n\n ' +
+        '- **Tasks:** The task data.\n' +
+        '- **Task Runs:** The contribution data.\n' +
+        '- **Results:** The final results data.\n\n' +
+        'We are keen for these datasets to be used in innovative ways, ' +
+        'perhaps to further research into new technologies.',
       contribute: ''
     },
     pubished: false,
