@@ -132,7 +132,10 @@ export default {
       this.$nextTick(() => {
         this.$emit('input', [])
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-        this.$refs.infiniteload.attemptLoad()
+        this.$refs.infiniteload.$emit(
+          '$InfiniteLoading:infinite',
+          this.$refs.stateChanger
+        )
       })
     }
   },
@@ -179,11 +182,10 @@ export default {
 
   computed: {
     lastId () {
-      let lastId = 0
       if (this.value.length) {
-        lastId = this.value[this.value.length - 1].id
+        return this.value[this.value.length - 1].id
       }
-      return lastId
+      return 0
     }
   },
 
