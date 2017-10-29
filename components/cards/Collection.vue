@@ -10,9 +10,7 @@
           short_name: collection.short_name
         }
       }">
-      <div
-        class="collection-card-img"
-        :style="{ backgroundImage: `url('${collection.info.background}')` }">
+      <div class="collection-card-img" :style="cardBgStyle">
       </div>
       <div class="card-body">
         <h4 class="card-title">
@@ -42,6 +40,17 @@ export default {
     collection: {
       type: Object,
       required: true
+    }
+  },
+
+  computed: {
+    cardBgStyle () {
+      if (!this.collection.info || !this.collection.info.background) {
+        return
+      }
+      return {
+        backgroundImage: `url(${this.collection.info.background})`
+      }
     }
   }
 }
@@ -75,6 +84,7 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: url('~/assets/img/app-background.jpg');
 
     &:after {
       content: 'Enter';
