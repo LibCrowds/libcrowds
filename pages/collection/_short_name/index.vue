@@ -3,23 +3,30 @@
     <transition appear>
       <div class="container full-height text-center">
         <div class="header-content">
-          <div>
-            <div
-              id="company-logo"
+          <div class="d-flex justify-content-center align-items-center">
+            <object
+              id="collection-logo"
+              v-if="collection.info.logo.endsWith('.svg')"
+              :data="collection.info.logo"
+              class="d-block"
+              type="image/svg+xml">
+            </object>
+            <img
+              id="collection-logo"
+              v-else-if="collection.info.logo.length"
               class="d-inline-block"
-              v-html="localConfig.logo"
-              v-if="localConfig.logo">
-            </div>
+              src="collection.info.logo">
+            </img>
             <span
               class="mr-2 d-none d-lg-inline-block"
-              v-if="localConfig.logo">
+              v-if="collection.info.logo.length">
             </span>
             <h1 class="display-3 d-none d-lg-inline-block mb-0">
               {{ collection.name }}
             </h1>
             <span
               class="mr-4 d-none d-lg-inline-block"
-              v-if="localConfig.logo">
+              v-if="collection.info.logo.length">
             </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
@@ -270,10 +277,9 @@ export default {
       opacity: 0;
     }
 
-    #company-logo {
-      svg {
-        display: block;
-      }
+    #collection-logo {
+      height: 100px;
+      width: auto;
     }
   }
 

@@ -15,9 +15,6 @@ const config = {
   githubUrl: 'https://github.com/Organization/repo'
 }
 
-// Company logo
-// config.logo = require(`./company-logo.svg`)
-
 // List of collection configurations
 // config.collections = {
 //   'default': {

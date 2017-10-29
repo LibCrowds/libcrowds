@@ -11,7 +11,7 @@
         <h6 class="mb-0">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
-            Announcements will be shown to all users.
+            Configure the collection microsite.
           </small>
         </p>
       </span>
@@ -210,6 +210,13 @@ export default {
             {
               model: 'info.background',
               label: 'Background Image',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'https://example.com/img.jpg'
+            },
+            {
+              model: 'info.logo',
+              label: 'Logo',
               type: 'input',
               inputType: 'text',
               placeholder: 'https://example.com/img.jpg'
