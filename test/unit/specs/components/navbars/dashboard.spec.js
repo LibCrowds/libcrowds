@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 
-import { routes } from '@/test/fixtures/routes'
+import { routes } from '@/test/fixtures/routes.js'
 import { mount, createLocalVue } from 'vue-test-utils'
 import DashboardNavbar from '@/components/navbars/Dashboard'
 

@@ -8,7 +8,7 @@ exports[`Collection card renders correctly 1`] = `
 >
   <nuxt-link to="[object Object]">
     <div class="collection-card-img"
-         style="background-image:url('background.jpg');"
+         style="background-image:url('http://example.com/background.jpg');"
     >
     </div>
     <div class="card-body">

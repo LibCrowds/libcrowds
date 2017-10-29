@@ -5,14 +5,9 @@ export const routes = [
     name: 'index'
   },
   {
-    path: '/admin/announcements',
+    path: '/admin/collections',
     component: jest.fn(),
-    name: 'admin-announcements'
-  },
-  {
-    path: '/account/newsletter',
-    component: jest.fn(),
-    name: 'account-newsletter'
+    name: 'admin-collections'
   },
   {
     path: '/help/privacy',
@@ -20,14 +15,9 @@ export const routes = [
     name: 'help-privacy'
   },
   {
-    path: '/admin/jobs',
+    path: '/admin/dashboard',
     component: jest.fn(),
-    name: 'admin-jobs'
-  },
-  {
-    path: '/help/tos',
-    component: jest.fn(),
-    name: 'help-tos'
+    name: 'admin-dashboard'
   },
   {
     path: '/account/signin',
@@ -35,44 +25,9 @@ export const routes = [
     name: 'account-signin'
   },
   {
-    path: '/admin/featured',
+    path: '/account/newsletter',
     component: jest.fn(),
-    name: 'admin-featured'
-  },
-  {
-    path: '/admin/dashboard',
-    component: jest.fn(),
-    name: 'admin-dashboard'
-  },
-  {
-    path: '/admin/collections',
-    component: jest.fn(),
-    name: 'admin-collections'
-  },
-  {
-    path: '/admin/collections/:id/update',
-    component: jest.fn(),
-    name: 'admin-collections-id-update'
-  },
-  {
-    path: '/admin/collections/new',
-    component: jest.fn(),
-    name: 'admin-collections-new'
-  },
-  {
-    path: '/admin/users',
-    component: jest.fn(),
-    name: 'admin-users'
-  },
-  {
-    path: '/help/api',
-    component: jest.fn(),
-    name: 'help-api'
-  },
-  {
-    path: '/help/cookies',
-    component: jest.fn(),
-    name: 'help-cookies'
+    name: 'account-newsletter'
   },
   {
     path: '/account/register',
@@ -80,14 +35,39 @@ export const routes = [
     name: 'account-register'
   },
   {
-    path: '/account/password/reset',
+    path: '/admin/featured',
     component: jest.fn(),
-    name: 'account-password-reset'
+    name: 'admin-featured'
   },
   {
-    path: '/account/password/forgotten',
+    path: '/admin/announcements',
     component: jest.fn(),
-    name: 'account-password-forgotten'
+    name: 'admin-announcements'
+  },
+  {
+    path: '/help/tos',
+    component: jest.fn(),
+    name: 'help-tos'
+  },
+  {
+    path: '/admin/jobs',
+    component: jest.fn(),
+    name: 'admin-jobs'
+  },
+  {
+    path: '/help/api',
+    component: jest.fn(),
+    name: 'help-api'
+  },
+  {
+    path: '/admin/users',
+    component: jest.fn(),
+    name: 'admin-users'
+  },
+  {
+    path: '/help/cookies',
+    component: jest.fn(),
+    name: 'help-cookies'
   },
   {
     path: '/admin/announcements/new',
@@ -95,9 +75,19 @@ export const routes = [
     name: 'admin-announcements-new'
   },
   {
+    path: '/account/password/reset',
+    component: jest.fn(),
+    name: 'account-password-reset'
+  },
+  {
     path: '/admin/collections/new',
     component: jest.fn(),
     name: 'admin-collections-new'
+  },
+  {
+    path: '/account/password/forgotten',
+    component: jest.fn(),
+    name: 'account-password-forgotten'
   },
   {
     path: '/admin/announcements/:id/update',
@@ -105,29 +95,24 @@ export const routes = [
     name: 'admin-announcements-id-update'
   },
   {
-    path: '/collection/:key?',
+    path: '/admin/collections/:id/update',
     component: jest.fn(),
-    name: 'collection-short_name'
+    name: 'admin-collections-id-update'
   },
   {
-    path: '/account/:username?',
+    path: '/account/:name?',
     component: jest.fn(),
     name: 'account-name'
   },
   {
-    path: '/collection/:name?',
+    path: '/collection/:short_name?',
     component: jest.fn(),
-    name: 'collection-name'
+    name: 'collection-short_name'
   },
   {
-    path: '/collection/:key?/presenter',
+    path: '/collection/:short_name?/projects',
     component: jest.fn(),
-    name: 'collection-short_name-presenter'
-  },
-  {
-    path: '/collection/:key?/data',
-    component: jest.fn(),
-    name: 'collection-short_name-data'
+    name: 'collection-short_name-projects'
   },
   {
     path: '/project/:short_name?/thumbnail',
@@ -135,9 +120,9 @@ export const routes = [
     name: 'project-short_name-thumbnail'
   },
   {
-    path: '/collection/:key?/contribute',
+    path: '/project/:short_name?/tags',
     component: jest.fn(),
-    name: 'collection-short_name-projects'
+    name: 'project-short_name-tags'
   },
   {
     path: '/project/:short_name?/settings',
@@ -145,43 +130,48 @@ export const routes = [
     name: 'project-short_name-settings'
   },
   {
-    path: '/collection/:name?/contribute',
-    component: jest.fn(),
-    name: 'collection-name-contribute'
-  },
-  {
-    path: '/account/:username?/projects',
+    path: '/account/:name?/projects',
     component: jest.fn(),
     name: 'account-name-projects'
   },
   {
-    path: '/collection/:name?/presenter',
+    path: '/account/:name?/announcements',
     component: jest.fn(),
-    name: 'collection-name-presenter'
+    name: 'account-name-announcements'
   },
   {
-    path: '/collection/:key?/about',
+    path: '/collection/:short_name?/about',
     component: jest.fn(),
     name: 'collection-short_name-about'
   },
   {
-    path: '/account/:username?/settings/security',
+    path: '/collection/:short_name?/data',
     component: jest.fn(),
-    name: 'account-name-settings-security'
+    name: 'collection-short_name-data'
   },
   {
-    path: '/account/:username?/settings/avatar',
+    path: '/account/:name?/settings/avatar',
     component: jest.fn(),
     name: 'account-name-settings-avatar'
   },
   {
-    path: '/account/:username?/settings/api',
+    path: '/account/:name?/settings/api',
     component: jest.fn(),
     name: 'account-name-settings-api'
   },
   {
-    path: '/account/:username?/settings/profile',
+    path: '/account/:name?/settings/profile',
     component: jest.fn(),
     name: 'account-name-settings-profile'
+  },
+  {
+    path: '/account/:name?/settings/security',
+    component: jest.fn(),
+    name: 'account-name-settings-security'
+  },
+  {
+    path: '/collection/:short_name?/projects/:id',
+    component: jest.fn(),
+    name: 'collection-short_name-projects-id'
   }
 ]

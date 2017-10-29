@@ -107,7 +107,7 @@
     ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/test/assetsTransformer.js",
-      "\\.(css|less)$": "<rootDir>/test/assetsTransformer.js",
+      "\\.(scss)$": "<rootDir>/test/assetsTransformer.js",
       "(.*)/local.config$": "<rootDir>/test/test.local.config.js"
     },
     "transform": {

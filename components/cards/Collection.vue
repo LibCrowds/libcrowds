@@ -49,7 +49,7 @@ export default {
         return
       }
       return {
-        backgroundImage: `url(${this.collection.info.background})`
+        backgroundImage: `url('${this.collection.info.background}')`
       }
     }
   }

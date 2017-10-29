@@ -2,10 +2,10 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 
-import { routes } from '@/test/fixtures/routes'
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
 import AppNavbar from '@/components/navbars/App'
+import { routes } from '@/test/fixtures/routes.js'
 
 describe('App navbar', () => {
   let localVue = null
@@ -29,11 +29,13 @@ describe('App navbar', () => {
   })
 
   it('renders correctly when signed out', () => {
-    store.state.currentUser = {}
     wrapper = mount(AppNavbar, {
       localVue,
       store,
-      router
+      router,
+      propsData: {
+        currentUser: {}
+      }
     })
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
@@ -44,11 +46,13 @@ describe('App navbar', () => {
   it('renders correctly when signed in as non-admin', () => {
     const user = pbTestResponses.getAccount.data.user
     user.admin = false
-    store.state.currentUser = JSON.parse(JSON.stringify(user))
     wrapper = mount(AppNavbar, {
       localVue,
       store,
-      router
+      router,
+      propsData: {
+        currentUser: JSON.parse(JSON.stringify(user))
+      }
     })
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
@@ -59,11 +63,13 @@ describe('App navbar', () => {
   it('renders correctly when signed in as admin', () => {
     const user = pbTestResponses.getAccount.data.user
     user.admin = true
-    store.state.currentUser = JSON.parse(JSON.stringify(user))
     wrapper = mount(AppNavbar, {
       localVue,
+      router,
       store,
-      router
+      propsData: {
+        currentUser: JSON.parse(JSON.stringify(user))
+      }
     })
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {

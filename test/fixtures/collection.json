@@ -6,7 +6,7 @@
   "info": {
     "tagline": "Bring past performances to life.",
     "forum": "http://example.com/discuss",
-    "background": "background.jpg",
+    "background": "http://example.com/background.jpg",
     "presenter": "libcrowds-viewer",
     "terminology": {
       "project": "project",
