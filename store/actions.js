@@ -6,7 +6,6 @@ export default {
     // https://github.com/Scifabric/pybossa/issues/1697
     let user = {}
     return axios.$get(`/account/profile`).then(data => {
-      console.log('is user', !data.hasOwnProperty('user'))
       if (!data.hasOwnProperty('user')) {
         commit('LOGOUT')
         return
