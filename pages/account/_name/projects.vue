@@ -36,21 +36,6 @@ export default {
         name: {
           label: 'Name'
         },
-        n_volunteers: {
-          label: 'Volunteers',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        n_tasks: {
-          label: 'Tasks',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        },
         created: {
           label: 'Created',
           class: 'text-center d-none d-xl-table-cell',

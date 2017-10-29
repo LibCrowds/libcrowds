@@ -9,8 +9,6 @@
       ref="infiniteload"
       domain-object="announcement"
       v-model="announcements">
-      <span slot="no-results"></span>
-      <span slot="no-more"></span>
     </infinite-load>
   </b-card>
 </template>

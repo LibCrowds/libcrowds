@@ -33,14 +33,12 @@
           </li>
         </transition-group>
 
-        <infinite-load-projects
+        <infinite-load
           ref="infiniteload"
-          :search-params="searchParams"
-          :collection="collection"
+          domain-object="project"
+          :search-params="mergedParams"
           v-model="projects">
-          <span slot="no-results"></span>
-          <span slot="no-more"></span>
-        </infinite-load-projects>
+        </infinite-load>
 
       </b-col>
     </b-row>
@@ -54,7 +52,7 @@ import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
+import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
   layout: 'collection-tabs',
@@ -64,7 +62,10 @@ export default {
   data () {
     return {
       projects: [],
-      searchParams: {}
+      searchParams: {},
+      noResults: 'No projects are available using the selected filters, ' +
+        'use the input fields on the left to change them.'
+
     }
   },
 
@@ -93,13 +94,21 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.contribute)
+    },
+
+    mergedParams () {
+      this.searchParams.category_id = this.collection.id
+      if (!this.currentUser.admin) {
+        this.searchParams.published = true
+      }
+      return this.searchParams
     }
   },
 
   components: {
     ProjectSortingCard,
     ProjectCard,
-    InfiniteLoadProjects,
+    InfiniteLoad,
     SocialMediaButtons
   }
 }

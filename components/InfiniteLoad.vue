@@ -4,15 +4,16 @@
     class="infinite-loading"
     @infinite="infiniteLoadDomainObjects">
     <span slot="no-results">
-      <span v-if="noResults">{{ noResults }}</span>
+      <span v-if="noResults && loadingStarted">{{ noResults }}</span>
     </span>
     <span slot="no-more">
-      <span v-if="noMoreResults">{{ noMoreResults }}</span>
+      <span v-if="noMoreResults && loadingStarted">{{ noMoreResults }}</span>
     </span>
   </infinite-loading>
 </template>
 
 <script>
+import orderBy from 'lodash/orderBy'
 import merge from 'lodash/merge'
 
 export default {
@@ -32,15 +33,15 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async infiniteLoadDomainObjects ($state) {
+      const params = {}
+      merge(params, this.defaultSearchParams, this.searchParams)
+
       if (this.domainObject === 'project') {
-        this.infiniteLoadProjects()
+        this.infiniteLoadOrderedProjects($state, params)
         return
       }
 
-      // Merge search params with defaults and last ID
-      const params = merge(this.defaultSearchParams, this.searchParams, {
-        last_id: this.lastId
-      })
+      params.last_id = this.lastId
 
       try {
         // Get the data
@@ -64,42 +65,64 @@ export default {
     /**
      * Handler to infinitely load projects.
      *
-     * We have to deal with projects slightly differently from other domain
-     * objects as the project stats are stored in a different table and we
-     * might want to filter by an attribute in the project table and order by
-     * an attribute in the stats table. So, we'll use the
-     * /project/category/<short_name>/ endpoint (where the stats are merged),
-     * orderby and then filter.
+     * We have to deal with ordered projects slightly differently from other
+     * domain objects as the project stats are stored in a different table. So,
+     * we request all filtered projects and then sort. Not as efficient but it
+     * is a solution for now.
      * @param {Object} $state
      *   The vue-inifinite-loading state.
+     * @param {Object} params
+     *   The query params.
      */
-    async infiniteLoadProjects ($state) {
-      const endpoint = `/project/category/${this.collection.short_name}`
+    async infiniteLoadOrderedProjects ($state, params) {
+      params.limit = 100
 
-      try {
-        let data = await this.$axios.$get(endpoint)
+      // Pull out order params
+      const orderby = params.orderby || 'created'
+      const order = params.desc ? 'desc' : 'asc'
+      delete params.orderby
+      delete params.desc
 
-        // Loading complete
-        if (!data.length) {
-          $state.complete()
-          return
-        }
+      let items = []
 
-        // Enrich projects data with stats
-        if (this.domainObject === 'project') {
-          const statsData = await this.$axios.$get('/api/projectstats', {
-            project_id: data.map(project => project.id)
+      // Load all items
+      while (true) {
+        try {
+          const data = await this.$axios.$get(`/api/${this.domainObject}`, {
+            params: merge(params, {
+              last_id: items.length ? items[items.length - 1].id : 0
+            })
           })
-          data = data.map((project, idx) => {
+
+          if (!data.length) {
+            break
+          }
+
+          const statsData = await this.$axios.$get('/api/projectstats', {
+            params: {
+              project_id: data.map(project => project.id).toString()
+            }
+          })
+
+          const enrichedData = data.map((project, idx) => {
             return merge(statsData[idx], project)
           })
-        }
 
-        this.$emit('input', this.value.concat(data))
-        $state.loaded()
-      } catch (err) {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+          items = items.concat(enrichedData)
+        } catch (err) {
+          this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+          break
+        }
       }
+
+      // Sort
+      const sorted = orderBy(items, [ orderby ], [ order ])
+
+      this.$emit('input', sorted)
+      if (sorted.length) {
+        $state.loaded()
+      }
+      $state.complete()
     },
 
     /**
@@ -108,7 +131,11 @@ export default {
     reset () {
       this.$nextTick(() => {
         this.$emit('input', [])
-        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+        this.$refs.infiniteload.isLoading = true
+        this.$refs.infiniteload.$emit(
+          'infinite',
+          this.$refs.infiniteload.stateChanger
+        )
       })
     }
   },
@@ -167,14 +194,6 @@ export default {
     'searchParams': {
       handler: function (val, oldVal) {
         this.reset()
-        this.initLoad()
-      },
-      deep: true
-    },
-    'searchParams.info': {
-      handler: function (val, oldVal) {
-        this.reset()
-        this.initLoad()
       },
       deep: true
     }

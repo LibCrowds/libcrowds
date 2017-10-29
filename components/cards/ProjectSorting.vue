@@ -143,7 +143,8 @@ export default {
      * Emit the new params.
      */
     update () {
-      this.$emit('input', merge(this.tagParams, this.sortParams))
+      const searchParams = merge(this.tagParams, this.sortParams)
+      this.$emit('input', searchParams)
     }
   }
 }
