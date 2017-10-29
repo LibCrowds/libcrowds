@@ -4,10 +4,10 @@
     class="infinite-loading"
     @infinite="infiniteLoadDomainObjects">
     <span slot="no-results">
-      <span v-if="noResults && loadingStarted">{{ noResults }}</span>
+      <span v-if="noResults">{{ noResults }}</span>
     </span>
     <span slot="no-more">
-      <span v-if="noMoreResults && loadingStarted">{{ noMoreResults }}</span>
+      <span v-if="noMoreResults">{{ noMoreResults }}</span>
     </span>
   </infinite-loading>
 </template>
