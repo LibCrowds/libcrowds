@@ -1,24 +1,29 @@
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
 export default {
-  UPDATE_CURRENT_USER: async ({ dispatch, commit }, axios) => {
+  UPDATE_CURRENT_USER: ({ dispatch, commit }, axios) => {
     // TODO remove multiple calls after cache properly busted
     // https://github.com/Scifabric/pybossa/issues/1697
-    const data = await axios.$get(`/account/profile`)
-    if ('user' in data) {
-      const extraInfoData = await axios.$get(`/api/user/${data.user.id}`)
-      data.user.info = extraInfoData.info
-      commit('LOGIN', data.user)
-    } else {
-      commit('LOGOUT')
-    }
+    let user = {}
+    return axios.$get(`/account/profile`).then(data => {
+      console.log('is user', !data.hasOwnProperty('user'))
+      if (!data.hasOwnProperty('user')) {
+        commit('LOGOUT')
+        return
+      }
+      user = data.user
+      return axios.$get(`/api/user/${data.user.id}`)
+    }).then(data => {
+      user.info = data.info
+      commit('LOGIN', user)
+    })
   },
 
   LOGOUT: ({ commit }) => {
     commit('LOGOUT')
   },
 
-  UPDATE_ANNOUNCEMENTS: async ({ commit, state }, axios) => {
+  UPDATE_ANNOUNCEMENTS: ({ commit, state }, axios) => {
     return axios.$get('/api/announcement', {
       params: {
         orderby: 'created',
@@ -31,7 +36,7 @@ export default {
     })
   },
 
-  UPDATE_PUBLISHED_COLLECTIONS: async ({ commit, state }, axios) => {
+  UPDATE_PUBLISHED_COLLECTIONS: ({ commit, state }, axios) => {
     return axios.$get('/api/category', {
       params: {
         limit: 100,
@@ -46,7 +51,7 @@ export default {
     })
   },
 
-  LOAD_COLLECTION: async ({ commit }, requestPromise) => {
+  LOAD_COLLECTION: ({ commit }, requestPromise) => {
     return requestPromise.then(data => {
       if (!data || !data.length === 1) {
         throw new Error({ statusCode: 404, message: 'Page not found' })
@@ -61,19 +66,19 @@ export default {
     })
   },
 
-  UPDATE_CURRENT_COLLECTION: async ({ commit }, collection) => {
+  UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
     commit('SET_ITEM', {
       key: 'currentCollection', value: collection
     })
   },
 
-  UPDATE_CURRENT_PROJECT: async ({ commit }, project) => {
+  UPDATE_CURRENT_PROJECT: ({ commit }, project) => {
     commit('SET_ITEM', {
       key: 'currentProject', value: project
     })
   },
 
-  UPDATE_LAST_ANNOUNCEMENT: async ({ commit }, axios) => {
+  UPDATE_LAST_ANNOUNCEMENT: ({ commit }, axios) => {
     return axios.get('/api/announcement', {
       params: {
         orderby: 'created',
@@ -89,7 +94,7 @@ export default {
     })
   },
 
-  UPDATE_LAST_READ: async ({ state, dispatch }, axios) => {
+  UPDATE_LAST_READ: ({ state, dispatch }, axios) => {
     const announcements = state.currentUser.info.announcements || {}
     announcements.last_read = state.lastAnnouncement.id
     state.currentUser.info.announcements = announcements

@@ -4,9 +4,10 @@ import mutations from '@/store/mutations'
 import actions from '@/store/actions'
 
 actions.nuxtServerInit = async ({ dispatch }, { app }) => {
-  // UPDATE_CURRENT_USER is called from router middleware
-  dispatch('UPDATE_ANNOUNCEMENTS', app.$axios)
-  dispatch('UPDATE_PUBLISHED_COLLECTIONS', app.$axios)
+  // Feed initial store state asynchronously
+  await dispatch('UPDATE_CURRENT_USER', app.$axios)
+  await dispatch('UPDATE_ANNOUNCEMENTS', app.$axios)
+  await dispatch('UPDATE_PUBLISHED_COLLECTIONS', app.$axios)
 }
 
 export default () => {
