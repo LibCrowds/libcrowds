@@ -3,7 +3,7 @@
 
     <b-btn
       id="announcements-toggle"
-      class="nav-item d-none d-md-flex"
+      class="nav-item d-none d-lg-flex"
       v-on-clickaway="hide"
       @click="toggle">
       <icon name="bell"></icon>
@@ -17,7 +17,7 @@
     </b-btn>
 
     <nuxt-link
-      class="d-md-none nav-link"
+      class="d-lg-none nav-link"
       :to="{
         name: 'account-name-announcements',
         params: {
@@ -139,6 +139,7 @@ export default {
 @import '~assets/style/settings';
 
 #announcements-list {
+  font-size: $font-size-sm;
   display: flex;
   padding-right: 0;
   position: relative;
