@@ -6,15 +6,15 @@ export default {
     // https://github.com/Scifabric/pybossa/issues/1697
     let user = {}
     return axios.$get(`/account/profile`).then(data => {
-      if (!data.hasOwnProperty('user')) {
+      if (data.hasOwnProperty('user')) {
+        user = data.user
+        axios.$get(`/api/user/${data.user.id}`).then(userData => {
+          user.info = userData.info
+          commit('LOGIN', user)
+        })
+      } else {
         commit('LOGOUT')
-        return
       }
-      user = data.user
-      return axios.$get(`/api/user/${data.user.id}`)
-    }).then(data => {
-      user.info = data.info
-      commit('LOGIN', user)
     })
   },
 
