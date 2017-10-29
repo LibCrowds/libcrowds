@@ -6,27 +6,27 @@
           <div class="d-flex justify-content-center align-items-center">
             <object
               id="collection-logo"
-              v-if="collection.info.logo.endsWith('.svg')"
+              v-if="hasLogo && collection.info.logo.endsWith('.svg')"
               :data="collection.info.logo"
               class="d-block"
               type="image/svg+xml">
             </object>
             <img
               id="collection-logo"
-              v-else-if="collection.info.logo.length"
+              v-else-if="hasLogo"
               class="d-inline-block"
               src="collection.info.logo">
             </img>
             <span
               class="mr-2 d-none d-lg-inline-block"
-              v-if="collection.info.logo.length">
+              v-if="hasLogo">
             </span>
             <h1 class="display-3 d-none d-lg-inline-block mb-0">
               {{ collection.name }}
             </h1>
             <span
               class="mr-4 d-none d-lg-inline-block"
-              v-if="collection.info.logo.length">
+              v-if="hasLogo">
             </span>
           </div>
           <h2 id="tagline" class="mt-2 mb-3">
@@ -230,6 +230,10 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    hasLogo () {
+      return this.collection.info.logo && this.collection.info.logo.length
     }
   },
 
