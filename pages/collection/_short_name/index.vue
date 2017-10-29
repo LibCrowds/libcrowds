@@ -320,12 +320,6 @@ export default {
     border-width: 3px;
   }
 
-  .btn-outline-light {
-    @include hover-focus {
-      background-color: transparent;
-    }
-  }
-
   .btn-black-underline  {
     color: $black;
     background: none;
