@@ -2,6 +2,7 @@
   <image-upload-form
     header="Avatar Settings"
     submit-text="Update Avatar"
+    file-field="avatar"
     :endpoint="form.endpoint"
     :model="form.model"
     :method="form.method">
@@ -17,7 +18,10 @@ export default {
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update`
     return app.$axios.$get(endpoint).then(data => {
-      data.form.btn = 'Upload'
+      // See https://github.com/LibCrowds/libcrowds/issues/100
+      delete data.upload_form.id
+
+      data.upload_form.btn = 'Upload'
       return {
         form: {
           endpoint: `account/${params.name}/update`,

@@ -24,7 +24,9 @@ export default {
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`
     return app.$axios.$get(endpoint).then(data => {
-      data.form.btn = 'Upload'
+      // See https://github.com/LibCrowds/libcrowds/issues/100
+      delete data.upload_form.id
+      data.upload_form.btn = 'Upload'
       return {
         form: {
           endpoint: `project/${params.short_name}/update`,
