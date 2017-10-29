@@ -113,15 +113,6 @@ The `githubUrl` will appear in the site footer.
 config.githubUrl = 'https://github.com/github'
 ```
 
-### logo
-
-An absolute path to the `logo`, which should be an SVG file and will be displayed on each microsite homepage.
-
-```js
-const path = require('path')
-config.logo = path.resolve(`./company-logo.svg`)
-```
-
 ### mapbox
 
 [Mapbox](https://www.mapbox.com/) is used to present any maps present on the site and can be configured via the `mapbox` property.
