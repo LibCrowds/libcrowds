@@ -74,7 +74,7 @@ export default {
     /**
      * Return the URL to load the next set of tasks
      */
-    getLoadTasksUrl () {
+    loadNewTasks () {
       const endpoint = `/api/project/${this.project.id}/newtask`
       let q = 'limit=10'
       if (this.tasks.length) {
@@ -191,7 +191,9 @@ export default {
       })
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
         this.removeTask(taskId)
-        this.loadTasks()
+        if (this.tasks.length < 10) {
+          this.loadNewTasks()
+        }
         if (hasParticipated === 'true') {
           this.notify({
             title: 'Answer saved',
