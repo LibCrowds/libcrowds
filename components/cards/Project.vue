@@ -45,11 +45,7 @@
         {{ project.description }}
       </p>
 
-      <progress-bar
-        type="line"
-        ref="progress"
-        :options="progressBarOpts">
-      </progress-bar>
+      <div class="progress-container" :id="progressBarId"></div>
 
       <div class="card-footer mt-1 px-2 py-1">
         <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
@@ -93,6 +89,7 @@
 import 'vue-awesome/icons/bar-chart'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/tasks'
+import ProgressBar from 'progressbar.js'
 import ProjectAvatar from '@/components/avatars/Project'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
@@ -100,19 +97,8 @@ import ProjectStatsModal from '@/components/modals/ProjectStats'
 export default {
   data () {
     return {
-      statsModalId: `project-stats-modal-${this.project.id}`,
-      progressBarOpts: {
-        strokeWidth: 4,
-        easing: 'easeInOut',
-        duration: 1400,
-        color: '#d0e5d0',
-        trailColor: 'rgba(0, 0, 0, 0.125)',
-        trailWidth: 0.5,
-        svgStyle: {
-          width: '100%',
-          height: '4px'
-        }
-      }
+      progressBarId: `progress-${this.project.id}`,
+      statsModalId: `project-stats-modal-${this.project.id}`
     }
   },
 
@@ -134,7 +120,19 @@ export default {
   },
 
   mounted () {
-    this.$refs.progress.animate(this.project.overall_progress / 100)
+    const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
+      strokeWidth: 4,
+      easing: 'easeInOut',
+      duration: 1400,
+      color: '#d0e5d0',
+      trailColor: 'rgba(0, 0, 0, 0.125)',
+      trailWidth: 0.5,
+      svgStyle: {
+        width: '100%',
+        height: '100%'
+      }
+    })
+    bar.animate(this.project.overall_progress / 100)
   }
 }
 </script>
@@ -269,6 +267,12 @@ export default {
     svg {
       margin-left: 0.5rem;
     }
+  }
+
+  .progress-container {
+    height: 4px;
+    position: relative;
+    margin-bottom: 0.5rem;
   }
 }
 </style>

@@ -25,6 +25,7 @@ const config = {
   build: {
     vendor: [
       'bootstrap-vue',
+      'progressbar.js',
       'vue-awesome',
       'vue-chartist',
       'vue-clickaway',
@@ -32,7 +33,6 @@ const config = {
       'vue-gravatar',
       'vue-js-toggle-button',
       'vue-notifications',
-      'vue-progress',
       'vue-scrollto',
       'vue-sweetalert'
     ],
@@ -86,7 +86,6 @@ const config = {
     { src: '~/plugins/vue-infinite-loading', ssr: false },
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
-    { src: '~/plugins/vue-progress', ssr: false },
     { src: '~/plugins/vue-scrollto', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },
     { src: '~/plugins/vue-toggle-button', ssr: false }

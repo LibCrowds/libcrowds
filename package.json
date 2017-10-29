@@ -38,6 +38,7 @@
     "moment": "^2.19.1",
     "nuxt": "1.0.0-rc11",
     "popper.js": "^1.12.5",
+    "progressbar.js": "^1.0.1",
     "raven": "^2.2.1",
     "raven-js": "^3.19.1",
     "source-map-support": "^0.4.15",
