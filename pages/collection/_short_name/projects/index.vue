@@ -37,6 +37,7 @@
           ref="infiniteload"
           domain-object="project"
           :search-params="mergedParams"
+          :no-results="noResults"
           v-model="projects">
         </infinite-load>
 

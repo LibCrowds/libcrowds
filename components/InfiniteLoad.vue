@@ -131,11 +131,8 @@ export default {
     reset () {
       this.$nextTick(() => {
         this.$emit('input', [])
-        this.$refs.infiniteload.isLoading = true
-        this.$refs.infiniteload.$emit(
-          'infinite',
-          this.$refs.infiniteload.stateChanger
-        )
+        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+        this.$refs.infiniteload.attemptLoad()
       })
     }
   },
