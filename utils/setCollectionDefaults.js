@@ -14,7 +14,7 @@ export const setCollectionDefaults = function (collection) {
     terminology: {
       project: 'project',
       task: 'task',
-      taskRun: 'task run'
+      taskrun: 'task run'
     },
     license: 'CC0',
     presenter: null,
