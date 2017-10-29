@@ -120,19 +120,21 @@ export default {
   },
 
   mounted () {
-    const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
-      strokeWidth: 4,
-      easing: 'easeInOut',
-      duration: 1400,
-      color: '#d0e5d0',
-      trailColor: 'rgba(0, 0, 0, 0.125)',
-      trailWidth: 0.5,
-      svgStyle: {
-        width: '100%',
-        height: '100%'
-      }
-    })
-    bar.animate(this.project.overall_progress / 100)
+    if (process.browser) {
+      const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
+        strokeWidth: 4,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#d0e5d0',
+        trailColor: 'rgba(0, 0, 0, 0.125)',
+        trailWidth: 0.5,
+        svgStyle: {
+          width: '100%',
+          height: '100%'
+        }
+      })
+      bar.animate(this.project.overall_progress / 100)
+    }
   }
 }
 </script>
