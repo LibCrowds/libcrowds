@@ -42,7 +42,6 @@
 
 <script>
 import ProfileCard from '@/components/cards/Profile'
-import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   layout: 'default',
@@ -83,8 +82,7 @@ export default {
   },
 
   components: {
-    ProfileCard,
-    ProjectContribButton
+    ProfileCard
   },
 
   computed: {
