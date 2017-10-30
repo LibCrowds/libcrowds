@@ -59,7 +59,8 @@
             Use the editors below to write custom content for the collection
             microsite using
             <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
-            Top level page headings will be added automatically.
+            Top level page headings will be added automatically. Click the
+            update button at the bottom of this page to save.
           </p>
           <div slot="bottom" class="mt-1">
             <label class="ml-1">
