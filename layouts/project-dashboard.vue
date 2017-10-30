@@ -27,6 +27,13 @@ export default {
           }
         },
         {
+          label: 'Collection',
+          link: {
+            name: 'project-short_name-collection',
+            params: this.$route.params
+          }
+        },
+        {
           label: 'Thumbnail',
           link: {
             name: 'project-short_name-thumbnail',

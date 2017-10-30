@@ -1,6 +1,6 @@
 <template>
   <pybossa-form
-    header="Project Settings"
+    :header="title"
     submit-text="Update"
     :form="form">
 
@@ -32,13 +32,19 @@
 </template>
 
 <script>
-import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
+import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'project-dashboard',
 
-  mixins: [ fetchProjectAndCollection ],
+  mixins: [ fetchProjectByName ],
+
+  data () {
+    return {
+      title: 'Project Settings'
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`
@@ -92,7 +98,7 @@ export default {
 
   head () {
     return {
-      title: 'Settings'
+      title: this.title
     }
   },
 

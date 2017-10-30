@@ -5,7 +5,8 @@ export const fetchProjectByName = {
   fetch ({ params, app, error, store }) {
     return app.$axios.$get('/api/project', {
       params: {
-        short_name: params.short_name
+        short_name: params.short_name,
+        all: 1
       }
     }).then(data => {
       if (!data || data.length !== 1) {
