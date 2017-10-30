@@ -37,24 +37,13 @@ export default {
     block: {
       type: Boolean,
       default: true
-    },
-    status: {
-      type: String,
-      default: 'can_contribute',
-      validator: value => {
-        const valid = [
-          'completed',
-          'can_contribute',
-          'cannot_contribute'
-        ]
-        return valid.indexOf(value) > -1
-      }
     }
   },
 
   computed: {
     disabled () {
-      return this.status !== 'can_contribute'
+      const progress = this.project.overall_progress
+      return progress && progress === 100
     }
   }
 }
