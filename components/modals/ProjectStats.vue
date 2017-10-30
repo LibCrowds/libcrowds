@@ -14,12 +14,6 @@
         for this project.
       </p>
 
-      <p class="lead d-flex">
-        <icon name="clock-o" scale="2" class="mr-1"></icon>
-        Average contribution time:
-        <strong class="ml-1">{{ avgContribTime }} seconds</strong>
-      </p>
-
       <pie-chart
         v-if="userStats.authenticated && userStats.anonymous"
         :chart-data="proportionAuthData"
@@ -65,7 +59,6 @@ import PieChart from '@/components/charts/Pie'
 export default {
   data: function () {
     return {
-      avgContribTime: 0,
       userStats: {},
       projectStats: {}
     }
@@ -102,7 +95,6 @@ export default {
           short_name: this.project.short_name
         }
       }).then(data => {
-        this.avgContribTime = data.avg_contrib_time
         this.userStats = data.userStats || {}
         this.projectStats = data.projectStats || {}
       }).catch(err => {
