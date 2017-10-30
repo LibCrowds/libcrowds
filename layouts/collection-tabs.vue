@@ -72,9 +72,12 @@ export default {
     background-color: $white;
 
     h1, h2, h3 {
+      text-align: center;
+    }
+
+    h2 {
       padding-top: 2.5rem;
       border-top: 1px solid $gray-300;
-      text-align: center;
     }
 
     transition: opacity 600ms;
