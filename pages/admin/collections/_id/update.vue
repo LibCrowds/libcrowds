@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionById } from '@/mixins/fetchCollectionById'
 import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
@@ -184,14 +185,18 @@ export default {
               model: 'name',
               label: 'Name',
               type: 'input',
-              inputType: 'text'
+              inputType: 'text',
+              required: true,
+              validator: VueFormGenerator.validators.string
             },
             {
               model: 'short_name',
               label: 'Short name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Used to form the url'
+              placeholder: 'Used to form the url',
+              required: true,
+              validator: VueFormGenerator.validators.string
             },
             {
               model: 'info.tagline',
@@ -212,21 +217,24 @@ export default {
               label: 'Background Image',
               type: 'input',
               inputType: 'text',
-              placeholder: 'https://example.com/img.jpg'
+              placeholder: 'https://example.com/img.jpg',
+              validator: VueFormGenerator.validators.url
             },
             {
               model: 'info.logo',
               label: 'Logo',
               type: 'input',
               inputType: 'text',
-              placeholder: 'https://example.com/img.jpg'
+              placeholder: 'https://example.com/img.jpg',
+              validator: VueFormGenerator.validators.url
             },
             {
               model: 'info.forum',
               label: 'Forum URL',
               type: 'input',
               inputType: 'url',
-              placeholder: 'https://community.example.com/t/collection'
+              placeholder: 'https://community.example.com/t/collection',
+              validator: VueFormGenerator.validators.url
             },
             {
               model: 'info.presenter',

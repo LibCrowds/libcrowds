@@ -1,14 +1,23 @@
 <template>
-  <div id="admin-collections-new">
+  <b-card no-body>
+    <div slot="header" class="mb-0">
+      <span>
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            The collection can be configured on the next page before publishing.
+          </small>
+        </p>
+      </span>
+    </div>
     <pybossa-form
       :form="form"
-      :header="title"
       class="mb-4"
       show-cancel
       @success="onSuccess"
       @cancel="onCancel">
     </pybossa-form>
-  </div>
+  </b-card>
 </template>
 
 <script>
@@ -67,7 +76,8 @@ export default {
                 model: 'name',
                 label: 'Name',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                placeholder: 'Choose a name for the collection microsite'
               },
               {
                 model: 'description',
