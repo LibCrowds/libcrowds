@@ -143,14 +143,31 @@ export default {
     },
 
     /**
+     * Validate the form.
+     */
+    isValid () {
+      const valid = this.$refs.form.validate()
+      if (!valid) {
+        this.alert = 'Please correct the errors'
+        this.status = 'error'
+      }
+      return valid
+    },
+
+    /**
      * Submit the form.
      */
     submit () {
-      this.processing = true
+      if (!this.isValid()) {
+        return
+      }
+
       this.$emit('submit', this.form)
       if (this.noSubmit) {
         return
       }
+
+      this.processing = true
 
       this.alert = ''
       this.$axios({
