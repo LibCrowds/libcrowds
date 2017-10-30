@@ -6,23 +6,36 @@
       <hr class="mx-0">
     </span>
 
-    <b-card no-body>
-      <infinite-loading-table
-        no-border
-        :fields="tableFields"
-        domain-object="project"
-        :search-params="searchParams">
-        <template slot="action" scope="project">
-          <b-btn
-            variant="success"
-            size="sm"
-            block
-            @click="loadDataModal(project.item)">
-            Download
-          </b-btn>
-        </template>
-      </infinite-loading-table>
-    </b-card>
+    <b-row
+      id="get-started"
+      class="collection-nav-item"
+      data-title="Get Started">
+      <b-col xl="3" class="mb-3">
+        <project-sorting-card
+          class="mb-3 d-none d-xl-block"
+          :collection="collection"
+          v-model="searchParams">
+        </project-sorting-card>
+      </b-col>
+
+      <b-col xl="9">
+        <infinite-loading-table
+          no-border
+          :fields="tableFields"
+          domain-object="project"
+          :search-params="mergedSearchParams">
+          <template slot="action" scope="project">
+            <b-btn
+              variant="success"
+              size="sm"
+              block
+              @click="loadDataModal(project.item)">
+              Download
+            </b-btn>
+          </template>
+        </infinite-loading-table>
+      </b-col>
+    </b-row>
 
     <data-modal
       v-if="activeProject"
@@ -34,10 +47,12 @@
 </template>
 
 <script>
+import merge from 'lodash/merge'
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import DataModal from '@/components/modals/Data'
+import ProjectSortingCard from '@/components/cards/ProjectSorting'
 
 export default {
   layout: 'collection-tabs',
@@ -48,15 +63,9 @@ export default {
     return {
       activeProject: null,
       showDataModal: false,
-      customSearchParams: {},
       tableFields: {
         name: {
           label: 'Name'
-        },
-        n_volunteers: {
-          label: 'Volunteers',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
         },
         n_tasks: {
           label: 'Tasks',
@@ -77,7 +86,8 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      searchParams: {}
     }
   },
 
@@ -98,23 +108,23 @@ export default {
 
   components: {
     InfiniteLoadingTable,
-    DataModal
+    DataModal,
+    ProjectSortingCard
   },
 
   computed: {
-    searchParams () {
-      return {
-        category_id: this.collection.id,
-        published: true
-      }
-    },
-
     pageContent () {
       return marked(this.collection.info.content.data)
     },
 
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    mergedSearchParams () {
+      return merge({}, this.searchParams, {
+        category_id: this.collection.id
+      })
     }
   },
 
