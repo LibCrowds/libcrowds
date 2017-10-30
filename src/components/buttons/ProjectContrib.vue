@@ -1,10 +1,9 @@
 <template>
   <b-btn
     :to="{
-      name: 'collection-short_name-projects-id',
+      name: 'collection-presenter',
       params: {
-        short_name: collection.short_name,
-        id: project.id
+        shortname: shortname
       }
     }"
     :block="block"
@@ -18,12 +17,8 @@
 <script>
 export default {
   props: {
-    collection: {
-      type: Object,
-      required: true
-    },
-    project: {
-      type: Object,
+    shortname: {
+      type: String,
       required: true
     },
     size: {
@@ -37,13 +32,26 @@ export default {
     block: {
       type: Boolean,
       default: true
+    },
+    status: {
+      type: String,
+      default: 'can_contribute',
+      validator: value => {
+        const valid = [
+          'completed',
+          'draft',
+          'publish',
+          'can_contribute',
+          'cannot_contribute'
+        ]
+        return value in valid
+      }
     }
   },
 
   computed: {
-    disabled () {
-      const progress = this.project.overall_progress
-      return progress && progress === 100
+    disabled: function () {
+      return this.status === 'cannot_contribute'
     }
   }
 }
