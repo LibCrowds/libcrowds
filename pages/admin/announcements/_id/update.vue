@@ -35,8 +35,7 @@
           show-cancel
           no-border
           :form="form"
-          @success="onSuccessOrCancel"
-          @cancel="onSuccessOrCancel">
+          @cancel="onCancel">
         </pybossa-form>
       </b-tab>
       <b-tab title="Thumbnail">
@@ -126,9 +125,9 @@ export default {
 
   methods: {
     /**
-     * Handle success or cancel.
+     * Handle cancel.
      */
-    onSuccessOrCancel () {
+    onCancel () {
       this.$router.push({ name: 'admin-announcements' })
     },
 
