@@ -36,14 +36,14 @@ export default {
      */
     async infiniteLoadDomainObjects ($state) {
       const params = {}
-      merge(params, this.defaultSearchParams, this.searchParams)
+      merge(params, this.defaultSearchParams, this.searchParams, {
+        offset: this.value.length
+      })
 
       if (this.domainObject === 'project') {
         this.infiniteLoadOrderedProjects($state, params)
         return
       }
-
-      params.last_id = this.lastId
 
       try {
         // Get the data
@@ -92,7 +92,7 @@ export default {
         try {
           const data = await this.$axios.$get(`/api/${this.domainObject}`, {
             params: merge(params, {
-              last_id: items.length ? items[items.length - 1].id : 0
+              offset: items.length ? items[items.length - 1].id : 0
             })
           })
 
@@ -179,15 +179,6 @@ export default {
     noMoreResults: {
       type: String,
       default: 'No more results'
-    }
-  },
-
-  computed: {
-    lastId () {
-      if (this.value.length) {
-        return this.value[this.value.length - 1].id
-      }
-      return 0
     }
   },
 
