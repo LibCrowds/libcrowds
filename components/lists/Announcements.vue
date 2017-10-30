@@ -1,5 +1,5 @@
 <template>
-  <div id="announcements-list" class="nav-item">
+  <div id="announcements-list">
 
     <b-btn
       id="announcements-toggle"
