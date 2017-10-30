@@ -28,7 +28,8 @@
     <vue-form-generator
       ref="form"
       :schema="form.schema"
-      :model="form.model">
+      :model="form.model"
+      @keyup.enter="submit">
     </vue-form-generator>
 
     <slot name="bottom"></slot>
@@ -41,6 +42,8 @@ import FormBase from '@/components/forms/Base'
 import { notifications } from '@/mixins/notifications'
 
 export default {
+  mixins: [ notifications ],
+
   data () {
     return {
       status: null,
@@ -208,9 +211,22 @@ export default {
         this.$router.push({ path: this.next })
       }
       this.$emit('success', data)
+    },
+
+    /**
+     * Submit the form if the enter key was pressed.
+     * @param {Object} evt
+     *   The event.
+     */
+    submitIfEnter (evt) {
+      if (evt.keyCode === 13) {
+        this.submit()
+      }
     }
   },
 
-  mixins: [ notifications ]
+  mounted () {
+    this.$refs.form.$el.addEventListener('keypress', this.submitIfEnter)
+  }
 }
 </script>
