@@ -68,6 +68,7 @@ export default {
     return axios.get('/api/announcement', {
       params: {
         orderby: 'created',
+        published: true,
         desc: true,
         limit: 1
       }
