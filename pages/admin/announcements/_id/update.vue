@@ -1,8 +1,33 @@
 <template>
   <b-card
     id="admin-announcements-update"
-    no-body
-    :header="title">
+    no-body>
+
+    <div
+      slot="header"
+      class="mb-0 d-flex align-items-center justify-content-between">
+      <span>
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            Edit and publish the announcement.
+          </small>
+        </p>
+      </span>
+      <div class="d-flex align-items-center">
+        <label class="mr-1 mb-0 toggle-label">
+          <strong>Published</strong>
+        </label>
+        <toggle-button
+          :value="form.model.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </div>
+    </div>
+
     <b-tabs ref="tabs" no-body card>
       <b-tab title="Core Details" active>
         <pybossa-form
@@ -29,11 +54,14 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-dashboard',
+
+  mixins: [ notifications ],
 
   data () {
     return {
@@ -103,6 +131,29 @@ export default {
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
       this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
+    },
+
+    /**
+     * Publish or unpublish an announcement.
+     * @param {Object} project
+     *   The project.
+     */
+    togglePublished () {
+      this.$axios.$put(`/api/announcement/${this.form.model.id}`, {
+        published: !this.form.model.published
+      }).then(data => {
+        this.form.model.published = !this.form.model.published
+        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: this.form.model.published
+            ? 'Announcement published'
+            : 'Announcement unpublished'
+        })
+      }).catch(err => {
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+      })
     }
   }
 }
