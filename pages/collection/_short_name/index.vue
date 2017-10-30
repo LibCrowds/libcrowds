@@ -239,7 +239,7 @@ export default {
 
   head () {
     return {
-      title: this.collection.info.tagline,
+      title: this.collection.info.tagline || this.collection.name,
       meta: [
         {
           hid: 'description',
