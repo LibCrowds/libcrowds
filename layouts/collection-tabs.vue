@@ -72,6 +72,8 @@ export default {
     background-color: $white;
 
     h1, h2, h3 {
+      padding-top: 2.5rem;
+      border-top: 1px solid $gray-300;
       text-align: center;
     }
 
