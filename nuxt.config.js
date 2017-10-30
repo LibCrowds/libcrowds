@@ -121,6 +121,7 @@ const config = {
     description: localConfig.description,
     theme_color: '#ba0000',
     lang: 'en-GB',
+    display: 'standalone',
     start_url: '.'
   },
   loading: {
