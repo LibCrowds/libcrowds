@@ -6,7 +6,7 @@
       show-empty
       :items="items"
       :fields="tableFields"
-      :style="cardStyle"
+      :style="tableStyle"
       @sort-changed="onSortChange">
 
       <template slot="overall_progress" scope="data">
@@ -71,11 +71,15 @@ export default {
     fields: {
       type: Object,
       default: () => ({})
+    },
+    noBorder: {
+      type: Boolean,
+      default: false
     }
   },
 
   computed: {
-    cardStyle () {
+    tableStyle () {
       if (this.noBorder) {
         return {
           borderLeft: 'none',
