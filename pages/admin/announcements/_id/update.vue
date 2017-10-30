@@ -155,11 +155,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#admin-announcements-update {
-  .tab-content.card-body {
-    padding: 0;
-  }
-}
-</style>

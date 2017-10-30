@@ -3,4 +3,8 @@
     font-family: $headings-font-family;
     background-color: $white;
   }
+
+  .tab-content.card-body {
+    padding: 0;
+  }
 }

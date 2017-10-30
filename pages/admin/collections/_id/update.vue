@@ -45,6 +45,7 @@
           @cancel="onCancel">
         </pybossa-form>
       </b-tab>
+
       <b-tab title="Content">
         <pybossa-form
           show-cancel
@@ -55,14 +56,38 @@
           @success="onSuccess"
           @cancel="onCancel">
           <p slot="top" class="mb-3 mt-2">
-            Use the text areas below to write custom content for the
-            collection microsite using
+            Use the editors below to write custom content for the collection
+            microsite using
             <a :href="gfmDocs" target="_blank">GitHub flavoured Markdown</a>.
-            Top level page headings (e.g. &lt;h1&gt;About&lt;/h1&gt;)
-            will be added automatically.
+            Top level page headings will be added automatically.
           </p>
+          <div slot="bottom" class="mt-1">
+            <label class="ml-1">
+              About page
+            </label>
+            <markdown-editor
+              v-model="collection.info.content.about">
+            </markdown-editor>
+          </div>
+          <div slot="bottom" class="mt-1">
+            <label class="ml-1">
+              Contribute page
+            </label>
+            <markdown-editor
+              v-model="collection.info.content.contribute">
+            </markdown-editor>
+          </div>
+          <div slot="bottom" class="mt-1">
+            <label class="ml-1">
+              Data page
+            </label>
+            <markdown-editor
+              v-model="collection.info.content.data">
+            </markdown-editor>
+          </div>
         </pybossa-form>
       </b-tab>
+
       <b-tab title="Terminology">
         <pybossa-form
           show-cancel
@@ -302,29 +327,7 @@ export default {
           'info'
         ),
         schema: {
-          fields: [
-            {
-              model: 'info.content.about',
-              label: 'About Page',
-              type: 'textArea',
-              rows: 15,
-              placeholder: 'Text for the about page'
-            },
-            {
-              model: 'info.content.contribute',
-              label: 'Contribute Page',
-              type: 'textArea',
-              rows: 15,
-              placeholder: 'Text for the contribute page'
-            },
-            {
-              model: 'info.content.data',
-              label: 'Data Page',
-              type: 'textArea',
-              rows: 15,
-              placeholder: 'Text for the data page'
-            }
-          ]
+          fields: [] // Markdown editors used instead (see slots)
         }
       }
     },
@@ -517,8 +520,8 @@ export default {
 
 <style lang="scss">
 #admin-collections-update {
-  .tab-content.card-body {
-    padding: 0;
+  .CodeMirror {
+    height: 300px;
   }
 }
 </style>

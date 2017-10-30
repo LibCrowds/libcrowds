@@ -20,7 +20,8 @@ const config = {
     '~/assets/style/main.scss',
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.min.css',
-    'vue-multiselect/dist/vue-multiselect.min.css'
+    'vue-multiselect/dist/vue-multiselect.min.css',
+    'simplemde/dist/simplemde.min.css'
   ],
   build: {
     vendor: [
@@ -87,6 +88,7 @@ const config = {
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
     { src: '~/plugins/vue-scrollto', ssr: false },
+    { src: '~/plugins/vue-simplemde', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },
     { src: '~/plugins/vue-toggle-button', ssr: false }
   ],
