@@ -1,9 +1,9 @@
 <template>
-  <div id="announcements-list">
+  <div id="announcements-list" class="nav-item">
 
     <b-btn
       id="announcements-toggle"
-      class="nav-item d-none d-lg-flex flex-row"
+      class="nav-link d-none d-lg-flex flex-row"
       v-on-clickaway="hide"
       @click="toggle">
       <icon name="bell"></icon>
