@@ -20,8 +20,8 @@
           variant="success"
           size="sm"
           block
-          :disabled="collection.id === project.category_id"
-          @click="setCollection(collection.item.id)">
+          :disabled="collection.item.id == project.category_id"
+          @click="setCollection(collection.item)">
           Select
         </b-btn>
       </template>
@@ -30,13 +30,14 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
   layout: 'project-dashboard',
 
-  mixins: [ fetchProjectByName ],
+  mixins: [ fetchProjectByName, notifications ],
 
   data () {
     return {
@@ -51,7 +52,9 @@ export default {
           class: 'text-center d-none d-md-table-cell',
           sortable: true
         }
-      }
+      },
+      searchParams: {},
+      updatedCollectionId: null
     }
   },
 
@@ -65,15 +68,30 @@ export default {
     InfiniteLoadingTable
   },
 
+  computed: {
+    project () {
+      return this.$store.state.currentProject
+    }
+  },
+
   methods: {
     /**
      * Set the collection for the project.
-     * @param {Number|String} id
-     *   The collection ID.
+     * @param {Object} collection
+     *   The collection.
      */
-    setCollection (id) {
+    setCollection (collection) {
       this.$axios.$put(`/api/project/${this.project.id}`, {
-        category_id: id
+        category_id: collection.id
+      }).then(data => {
+        this.notify({
+          type: 'success',
+          title: 'Success',
+          message: `Project moved to ${collection.name}`
+        })
+        this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
+      }).catch(err => {
+        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
       })
     }
   }
