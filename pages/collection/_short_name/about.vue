@@ -57,7 +57,7 @@ export default {
     },
 
     pageContent () {
-      marked(this.collection.info.content.about)
+      return marked(this.collection.info.content.about)
     }
   },
 
