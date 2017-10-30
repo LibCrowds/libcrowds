@@ -33,8 +33,7 @@ export default {
   },
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/api/project/${params.id}`
-    return app.$axios.$get(endpoint).then(data => {
+    return app.$axios.$get(`/api/project/${params.id}`).then(data => {
       return {
         project: data
       }
@@ -43,18 +42,18 @@ export default {
     })
   },
 
-  // head () {
-  //   return {
-  //     title: this.project.name,
-  //     meta: [
-  //       {
-  //         hid: 'description',
-  //         name: 'description',
-  //         content: this.project.description
-  //       }
-  //     ]
-  //   }
-  // },
+  head () {
+    return {
+      title: this.project.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.project.description
+        }
+      ]
+    }
+  },
 
   computed: {
     collection () {
@@ -74,7 +73,7 @@ export default {
     /**
      * Return the URL to load the next set of tasks
      */
-    loadNewTasks () {
+    getLoadTasksUrl () {
       const endpoint = `/api/project/${this.project.id}/newtask`
       let q = 'limit=10'
       if (this.tasks.length) {
@@ -89,7 +88,6 @@ export default {
      */
     loadTasks () {
       const url = this.getLoadTasksUrl()
-      console.log(url)
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
           this.handleCompletion()
