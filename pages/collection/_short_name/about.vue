@@ -66,6 +66,11 @@ export default {
      * Markdown processor.
      */
     marked
+  },
+
+  mounted () {
+    const nodes = document.querySelectorAll('h2')
+    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }
 </script>

@@ -217,6 +217,7 @@ export default {
 
   mounted () {
     this.loadTasks()
+    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   }
 }
 </script>

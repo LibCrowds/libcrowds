@@ -31,14 +31,14 @@
 import CollectionBase from '@/layouts/bases/Collection'
 
 export default {
-  data () {
-    return {
-      navItems: []
-    }
-  },
-
   components: {
     CollectionBase
+  },
+
+  computed: {
+    navItems () {
+      return this.$store.state.collectionNavItems
+    }
   },
 
   methods: {

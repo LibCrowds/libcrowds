@@ -6,7 +6,10 @@
       <hr class="mx-0">
     </span>
 
-    <b-row>
+    <b-row
+      id="get-started"
+      class="collection-nav-item"
+      data-title="Get Started">
       <b-col xl="3" class="mb-3">
         <project-sorting-card
           class="mb-3 d-none d-xl-block"
@@ -111,6 +114,11 @@ export default {
     ProjectCard,
     InfiniteLoad,
     SocialMediaButtons
+  },
+
+  mounted () {
+    const nodes = document.querySelectorAll('.collection-nav-item')
+    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }
 </script>

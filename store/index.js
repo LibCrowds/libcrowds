@@ -17,6 +17,7 @@ export default () => {
       announcements: [],
       publishedCollections: [],
       currentCollection: {},
+      collectionNavItems: [],
       currentProject: {},
       lastAnnouncement: {}
     },

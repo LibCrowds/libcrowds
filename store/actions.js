@@ -102,5 +102,19 @@ export default {
     }).then(data => {
       dispatch('UPDATE_CURRENT_USER', axios)
     })
+  },
+
+  UPDATE_COLLECTION_NAV_ITEMS: ({ commit }, nodes) => {
+    const navItems = []
+    console.log(nodes)
+    for (let node of nodes) {
+      navItems.push({
+        id: node.id,
+        text: node.getAttribute('data-title') || node.innerHTML
+      })
+    }
+    commit('SET_ITEM', {
+      key: 'collectionNavItems', value: navItems
+    })
   }
 }

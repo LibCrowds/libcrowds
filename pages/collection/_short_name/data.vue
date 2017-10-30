@@ -1,6 +1,5 @@
 <template>
   <div id="collection-data">
-
     <h1 class="text-center">Data</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
@@ -124,6 +123,11 @@ export default {
       this.activeProject = project
       this.showDataModal = true
     }
+  },
+
+  mounted () {
+    const nodes = document.querySelectorAll('h2')
+    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }
 </script>
