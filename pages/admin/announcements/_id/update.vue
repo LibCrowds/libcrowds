@@ -130,7 +130,6 @@ export default {
      */
     onSuccessOrCancel () {
       this.$router.push({ name: 'admin-announcements' })
-      this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
     },
 
     /**
@@ -143,7 +142,6 @@ export default {
         published: !this.form.model.published
       }).then(data => {
         this.form.model.published = !this.form.model.published
-        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
         this.notify({
           type: 'success',
           title: 'Success',

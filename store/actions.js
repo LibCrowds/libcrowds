@@ -22,19 +22,6 @@ export default {
     commit('LOGOUT')
   },
 
-  UPDATE_ANNOUNCEMENTS: ({ commit, state }, axios) => {
-    return axios.$get('/api/announcement', {
-      params: {
-        orderby: 'created',
-        desc: true
-      }
-    }).then(data => {
-      commit('SET_ITEM', {
-        key: 'announcements', value: data
-      })
-    })
-  },
-
   UPDATE_PUBLISHED_COLLECTIONS: ({ commit, state }, axios) => {
     return axios.$get('/api/category', {
       params: {

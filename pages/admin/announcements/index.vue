@@ -104,7 +104,6 @@ export default {
     deleteAnnouncement (id) {
       this.deleteDomainObject('announcement', id, () => {
         this.$refs.table.reset()
-        this.$store.dispatch('UPDATE_ANNOUNCEMENTS', this.$axios)
       })
     }
   }
