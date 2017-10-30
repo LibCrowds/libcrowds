@@ -27,6 +27,7 @@
         ref="table"
         :fields="tableFields"
         no-border
+        :search-params="searchParams"
         domain-object="announcement">
         <template slot="action" scope="announcement">
           <b-btn
@@ -81,6 +82,10 @@ export default {
           class: 'text-center d-none d-md-table-cell',
           sortable: true
         }
+      },
+      searchParams: {
+        orderby: 'created',
+        desc: true
       }
     }
   },
