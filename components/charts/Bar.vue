@@ -1,10 +1,10 @@
 <template>
   <b-card :header="header">
-    <vue-chartist
+    <chartist
       type="Bar"
       :data="chartData"
       :options="options" >
-    </vue-chartist>
+    </chartist>
   </b-card>
 </template>
 
