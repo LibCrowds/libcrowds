@@ -1,0 +1,34 @@
+.table {
+  display: table;
+  font-size: $font-size-sm;
+  margin-bottom: 0;
+  background-color: $white;
+  border: $table-border-width solid $table-border-color;
+  overflow-y: auto;
+
+  th {
+    font-weight: 400;
+    text-transform: uppercase;
+    color: $text-muted;
+    border-top: none;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  .markdown {
+    h1, h2, h3, h4, h5, h6 {
+      font-family: $font-family-base;
+      margin-bottom: 5px;
+      font-size: $font-size-sm;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0;
+      margin-bottom: 5px;
+    }
+  }
+}

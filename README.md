@@ -1,12 +1,25 @@
-# vue-pybossa-frontend
+# LibCrowds
 
-[![Build Status](https://travis-ci.org/LibCrowds/vue-pybossa-frontend.svg?branch=master)](https://travis-ci.org/LibCrowds/vue-pybossa-frontend)
+[![Build Status](https://travis-ci.org/LibCrowds/libcrowds.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds)
 [![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
-> A Vue.js frontend for PyBossa (>=2.7.2).
+> A Vue.js frontend for PyBossa (>=2.8.0).
 
-Configurable PyBossa frontend with a microsite-based structure; as used by LibCrowds:
+The LibCrowds package is a Vue.js UI that communicates with a PYBOSSA backend to present crowdsourcing projects using a microsite-based structure.
 
-[![Example of vue-pybossa-frontend](./docs/assets/site-homepage.png?raw=true "Example of vue-pybossa-frontend")](https://www.libcrowds.com)
+[![The LibCrowds website](./docs/assets/site-homepage.png?raw=true "The LibCrowds website")](https://www.libcrowds.com)
 
-[**Read the documentation**](https://libcrowds.gitbooks.io/vue-pybossa-frontend/content/)
+## Build Setup
+
+``` bash
+# install dependencies
+$ npm install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm start
+```
+
+[**Read the documentation**](https://libcrowds.gitbooks.io/libcrowds/content/)

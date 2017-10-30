@@ -6,17 +6,22 @@
         "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
       }
     }],
-    "stage-2"
+    "stage-2",
+    "backpack-core/babel"
   ],
-  "plugins": [ "transform-runtime"],
+  "plugins": ["transform-runtime"],
   "env": {
-    "test": {
-      "presets": ["env", "stage-2"],
+    "testing": {
+      "presets": [
+        "env",
+        "stage-2",
+        "backpack-core/babel"
+      ],
       "plugins": [
         ["module-resolver", {
-          "root": ["./src"],
           "alias": {
-            "@": "./src"
+            "~": "./",
+            "@": "./"
           }
         }]
       ]

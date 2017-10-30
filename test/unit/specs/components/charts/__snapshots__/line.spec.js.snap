@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line chart renders correctly 1`] = `
+
+<div data-server-rendered="true"
+     class="card"
+>
+  <div class="card-header">
+    <div>
+      My Line Chart
+    </div>
+  </div>
+  <div class="card-body">
+    <vue-chartist type="Line"
+                  data="[object Object]"
+                  options="[object Object]"
+    >
+    </vue-chartist>
+  </div>
+</div>
+
+`;

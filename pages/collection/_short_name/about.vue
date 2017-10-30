@@ -1,0 +1,82 @@
+<template>
+  <div id="collection-about">
+    <h1 class="text-center">About {{ collection.name }}</h1>
+    <span v-if="pageContent">
+      <span v-html="pageContent"></span>
+      <hr class="mx-0">
+    </span>
+
+    <div class="text-center">
+      <b-btn
+        variant="success"
+        size="lg"
+        :to="{
+          name: 'collection-short_name-projects',
+          params: {
+            short_name: collection.short_name
+          }
+        }">
+        Get Started
+      </b-btn>
+    </div>
+  </div>
+</template>
+
+<script>
+import marked from 'marked'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import localConfig from '@/local.config'
+
+export default {
+  layout: 'collection-tabs',
+
+  mixins: [ fetchCollectionByName ],
+
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
+  head () {
+    return {
+      title: 'About',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Learn more about ${this.collection.brand}`
+        }
+      ]
+    }
+  },
+
+  computed: {
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
+    pageContent () {
+      marked(this.collection.info.content.about)
+    }
+  },
+
+  methods: {
+    /**
+     * Markdown processor.
+     */
+    marked
+  }
+}
+</script>
+
+<style lang="scss">
+#collection-about {
+  img {
+    display: block;
+    margin: 2rem auto;
+    max-height: 400px;
+    max-width: 100%;
+  }
+}
+</style>

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard navbar renders correctly in side position 1`] = `
+
+<div id="dashboard-navbar"
+     data-server-rendered="true"
+>
+  <nav class="side">
+    <div class="brand-wrapper navbar-light text-center">
+      <nuxt-link to="[object Object]"
+                 class="brand navbar-brand"
+      >
+        My Brand
+      </nuxt-link>
+    </div>
+    <ul class="nav list-group">
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
+          Dashboard
+        </a>
+      </nuxt-link>
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
+          Featured Projects
+        </a>
+      </nuxt-link>
+    </ul>
+  </nav>
+</div>
+
+`;
+
+exports[`Dashboard navbar renders correctly in top position 1`] = `
+
+<div id="dashboard-navbar"
+     data-server-rendered="true"
+>
+  <nav class="top">
+    <div class="brand-wrapper navbar-light text-center">
+      <nuxt-link to="[object Object]"
+                 class="brand navbar-brand"
+      >
+        My Brand
+      </nuxt-link>
+    </div>
+    <ul class="nav list-group">
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
+          Dashboard
+        </a>
+      </nuxt-link>
+      <nuxt-link tag="li"
+                 class="list-group-item"
+      >
+        <a>
+          Featured Projects
+        </a>
+      </nuxt-link>
+    </ul>
+  </nav>
+</div>
+
+`;

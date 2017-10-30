@@ -1,13 +1,27 @@
-.DS_Store
-node_modules/
-dist/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# dependencies
+node_modules
+
+# logs
+npm-debug.log
+
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+# Backpack build
+build
+
+# Coverage
 test/unit/coverage
-test/e2e/reports
-selenium-debug.log
-src/siteConfig.js
-src/custom/*
-deploy-key
+
+# Config
+local.config.js
+
+# docs
 _book/*
+
+# PWA
+sw.*
+workbox-*

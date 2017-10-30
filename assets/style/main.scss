@@ -1,0 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Varela+Round:300,400,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,700);
+
+@import 'settings';
+
+@import
+  '~bootstrap/scss/bootstrap',
+  '~bootstrap-vue/dist/bootstrap-vue',
+  '~chartist/dist/scss/chartist',
+  'partials/cards',
+  'partials/charts',
+  'partials/images',
+  'partials/modals',
+  'partials/tables',
+  'partials/labels'
+;

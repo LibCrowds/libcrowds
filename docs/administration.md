@@ -14,19 +14,20 @@ To feature or un-feature a project locate it by category and click the **Add to 
 
 The page also provides a list of currently featured projects.
 
-## Categories
+## Collections
 
 Categories for all microsites are created via the **New Category** section and edited or deleted via the **Current Categories** section.
 
-![Admin - Categories](./assets/admin-categories.png?raw=true)
+### Tags
 
-To link a category to a particular microsite click **Edit**, then on the subsequent page select the key of the **Microsite** within which you want the category (and all associated projects) to appear.
+Tags are used to organise projects and filter projects by multiple criteria. For
+example, a project can be tagged with the location *London* and task type
+*Transcription*, allowing user's to filter all projects that contain
+transcription tasks related to London.
 
-![Admin - Edit Categories](./assets/admin-edit-categories.png?raw=true)
-
-To save any changes click **Update**.
-
-![Admin - Edit Categories Success](./assets/admin-edit-categories-success.png?raw=true)
+Each tag is given a **name** and a **type**. For each unique type, a
+multi-select sorting field will be made available alongside the lists of
+projects presented to users.
 
 ## Users
 
@@ -38,8 +39,12 @@ To download all user data click the **Export to CSV** or **Export to JSON** butt
 
 The page also provides a list of current administrators.
 
-## Background Jobs
+## Announcements
 
-All background jobs currently running on the server can be monitored via this page.
+This section can make global announcements to all users, for example, when you want to draw attention to a new project.
 
-![Admin - Background Jobs](./assets/admin-background-jobs.png?raw=true)
+## Background Tasks
+
+All background tasks currently running on the server can be monitored via this page.
+
+![Admin - Background Tasks](./assets/admin-background-jobs.png?raw=true)

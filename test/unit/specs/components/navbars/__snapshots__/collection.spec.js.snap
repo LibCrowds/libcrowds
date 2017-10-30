@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collection navbar renders correctly when signed in as admin 1`] = `
+
+<nav id="collection-navbar"
+     data-server-rendered="true"
+     class="navbar navbar-dark navbar-expand-md"
+>
+  <div class="container">
+    <a href="#/collection"
+       target="_self"
+       class="navbar-brand"
+    >
+      <span>
+        In the Spotlight
+      </span>
+    </a>
+    <button type="button"
+            data-toggle="collapse"
+            data-target="#main-nav-collapse"
+            aria-controls="main-nav-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="
+        hamburger
+        hamburger--collapse
+        navbar-toggler
+        navbar-toggler-right"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner">
+        </span>
+      </span>
+    </button>
+    <div id="main-nav-collapse"
+         class="navbar-collapse collapse"
+         style="display:none;"
+    >
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a href="#/collection/about"
+             target="_self"
+             class="nav-link"
+          >
+            About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/contribute"
+             target="_self"
+             class="nav-link"
+          >
+            Contribute
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="http://example.com/discuss"
+             target="_self"
+             aria-disabled="false"
+             class="nav-link"
+          >
+            Discuss
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/data"
+             target="_self"
+             class="nav-link"
+          >
+            Data
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <div id="announcements-list">
+          <button id="announcements-toggle"
+                  type="button"
+                  class="d-flex nav-link btn btn-secondary"
+          >
+            <icon name="bell">
+            </icon>
+            <!---->
+          </button>
+          <div id="announcements-container"
+               class="dropdown-menu-right card"
+               style="display:none;"
+          >
+            <div class="card-header">
+              <div>
+                Notifications
+              </div>
+            </div>
+            <div id="announcements">
+            </div>
+            <infinite-loading distance="1000"
+                              class="infinite-loading"
+            >
+              <span slot="no-results">
+                <!---->
+              </span>
+              <span slot="no-more">
+                <span>
+                  No more results
+                </span>
+              </span>
+            </infinite-loading>
+          </div>
+        </div>
+        <li class="nav-item b-nav-dropdown dropdown">
+          <a href="#"
+             aria-haspopup="true"
+             aria-expanded="false"
+             class="nav-link dropdown-toggle"
+          >
+            <span>
+              JohnDoe
+            </span>
+          </a>
+          <div role="menu"
+               class="dropdown-menu dropdown-menu-right"
+          >
+            <a href="#/account"
+               role="menuitem"
+               target="_self"
+               class="dropdown-item"
+            >
+              Profile
+            </a>
+            <a href="#/account/settings/profile"
+               role="menuitem"
+               target="_self"
+               class="dropdown-item"
+            >
+              Settings
+            </a>
+            <span>
+              <div role="separator"
+                   class="dropdown-divider"
+              >
+              </div>
+              <a href="#/account/projects"
+                 role="menuitem"
+                 target="_self"
+                 class="dropdown-item"
+              >
+                Open Project
+              </a>
+            </span>
+            <span>
+              <div role="separator"
+                   class="dropdown-divider"
+              >
+              </div>
+              <a href="#/admin/dashboard"
+                 role="menuitem"
+                 target="_self"
+                 class="dropdown-item"
+              >
+                Admin
+              </a>
+            </span>
+            <div role="separator"
+                 class="dropdown-divider"
+            >
+            </div>
+            <a role="menuitem"
+               href="#"
+               target="_self"
+               aria-disabled="false"
+               class="dropdown-item"
+            >
+              Sign Out
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+`;
+
+exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
+
+<nav id="collection-navbar"
+     data-server-rendered="true"
+     class="navbar navbar-dark navbar-expand-md"
+>
+  <div class="container">
+    <a href="#/collection"
+       target="_self"
+       class="navbar-brand"
+    >
+      <span>
+        In the Spotlight
+      </span>
+    </a>
+    <button type="button"
+            data-toggle="collapse"
+            data-target="#main-nav-collapse"
+            aria-controls="main-nav-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="
+        hamburger
+        hamburger--collapse
+        navbar-toggler
+        navbar-toggler-right"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner">
+        </span>
+      </span>
+    </button>
+    <div id="main-nav-collapse"
+         class="navbar-collapse collapse"
+         style="display:none;"
+    >
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a href="#/collection/about"
+             target="_self"
+             class="nav-link"
+          >
+            About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/contribute"
+             target="_self"
+             class="nav-link"
+          >
+            Contribute
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="http://example.com/discuss"
+             target="_self"
+             aria-disabled="false"
+             class="nav-link"
+          >
+            Discuss
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/data"
+             target="_self"
+             class="nav-link"
+          >
+            Data
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <div id="announcements-list">
+          <button id="announcements-toggle"
+                  type="button"
+                  class="d-flex nav-link btn btn-secondary"
+          >
+            <icon name="bell">
+            </icon>
+            <!---->
+          </button>
+          <div id="announcements-container"
+               class="dropdown-menu-right card"
+               style="display:none;"
+          >
+            <div class="card-header">
+              <div>
+                Notifications
+              </div>
+            </div>
+            <div id="announcements">
+            </div>
+            <infinite-loading distance="1000"
+                              class="infinite-loading"
+            >
+              <span slot="no-results">
+                <!---->
+              </span>
+              <span slot="no-more">
+                <span>
+                  No more results
+                </span>
+              </span>
+            </infinite-loading>
+          </div>
+        </div>
+        <li class="nav-item b-nav-dropdown dropdown">
+          <a href="#"
+             aria-haspopup="true"
+             aria-expanded="false"
+             class="nav-link dropdown-toggle"
+          >
+            <span>
+              JohnDoe
+            </span>
+          </a>
+          <div role="menu"
+               class="dropdown-menu dropdown-menu-right"
+          >
+            <a href="#/account"
+               role="menuitem"
+               target="_self"
+               class="dropdown-item"
+            >
+              Profile
+            </a>
+            <a href="#/account/settings/profile"
+               role="menuitem"
+               target="_self"
+               class="dropdown-item"
+            >
+              Settings
+            </a>
+            <!---->
+            <!---->
+            <div role="separator"
+                 class="dropdown-divider"
+            >
+            </div>
+            <a role="menuitem"
+               href="#"
+               target="_self"
+               aria-disabled="false"
+               class="dropdown-item"
+            >
+              Sign Out
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+`;
+
+exports[`Collection navbar renders correctly when signed out 1`] = `
+
+<nav id="collection-navbar"
+     data-server-rendered="true"
+     class="navbar navbar-dark navbar-expand-md"
+>
+  <div class="container">
+    <a href="#/collection"
+       target="_self"
+       class="navbar-brand"
+    >
+      <span>
+        In the Spotlight
+      </span>
+    </a>
+    <button type="button"
+            data-toggle="collapse"
+            data-target="#main-nav-collapse"
+            aria-controls="main-nav-collapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            class="
+        hamburger
+        hamburger--collapse
+        navbar-toggler
+        navbar-toggler-right"
+    >
+      <span class="hamburger-box">
+        <span class="hamburger-inner">
+        </span>
+      </span>
+    </button>
+    <div id="main-nav-collapse"
+         class="navbar-collapse collapse"
+         style="display:none;"
+    >
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a href="#/collection/about"
+             target="_self"
+             class="nav-link"
+          >
+            About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/contribute"
+             target="_self"
+             class="nav-link"
+          >
+            Contribute
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="http://example.com/discuss"
+             target="_self"
+             aria-disabled="false"
+             class="nav-link"
+          >
+            Discuss
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#/collection/data"
+             target="_self"
+             class="nav-link"
+          >
+            Data
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <a href="#/account/signin?next=%2F"
+               target="_self"
+               class="nav-link"
+            >
+              Sign in
+            </a>
+          </li>
+          <li class="nav-button nav-item">
+            <a href="#/account/register"
+               target="_self"
+               class="nav-link"
+            >
+              Sign up
+            </a>
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+`;

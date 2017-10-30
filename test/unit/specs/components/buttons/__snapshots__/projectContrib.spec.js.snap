@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectContrib button is active by default 1`] = `
+
+<a href="#"
+   target="_self"
+   aria-disabled="false"
+   data-server-rendered="true"
+   class="btn btn-success btn-block"
+>
+  Contribute
+</a>
+
+`;
+
+exports[`ProjectContrib button is disabled when status is cannot_completed 1`] = `
+
+<a tabindex="-1"
+   href="#"
+   target="_self"
+   aria-disabled="true"
+   data-server-rendered="true"
+   class="btn btn-success btn-block disabled disabled"
+>
+  Contribute
+</a>
+
+`;
+
+exports[`ProjectContrib button is disabled when status is completed 1`] = `
+
+<a tabindex="-1"
+   href="#"
+   target="_self"
+   aria-disabled="true"
+   data-server-rendered="true"
+   class="btn btn-success btn-block disabled disabled"
+>
+  Contribute
+</a>
+
+`;
