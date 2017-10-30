@@ -14,12 +14,6 @@
         for this project.
       </p>
 
-      <p class="lead d-flex">
-        <icon name="clock-o" scale="2" class="mr-1"></icon>
-        Average contribution time:
-        <strong class="ml-1">{{ avgContribTime }} seconds</strong>
-      </p>
-
       <pie-chart
         v-if="userStats.authenticated && userStats.anonymous"
         :chart-data="proportionAuthData"
@@ -30,7 +24,7 @@
         v-if="projectStats.dayStats"
         class="mt-3"
         :header="dailyContributionsHeader"
-        :unit="collection.info.terminology.taskRun"
+        :unit="collection.info.terminology.taskrun"
         :chart-data="dailyContributionsData">
       </line-chart>
 
@@ -38,7 +32,7 @@
         v-if="projectStats.hourStats"
         class="mt-3"
         :header="hourlyContributionsHeader"
-        :unit="collection.info.terminology.taskRun"
+        :unit="collection.info.terminology.taskrun"
         :chart-data="hourlyContributionsData">
       </line-chart>
 
@@ -46,7 +40,7 @@
         v-if="userStats.authenticated"
         class="mt-3"
         header="Top authenticated users over the past 2 weeks"
-        :unit="collection.info.terminology.taskRun"
+        :unit="collection.info.terminology.taskrun"
         :chart-data="topUsersData">
       </bar-chart>
 
@@ -65,7 +59,6 @@ import PieChart from '@/components/charts/Pie'
 export default {
   data: function () {
     return {
-      avgContribTime: 0,
       userStats: {},
       projectStats: {}
     }
@@ -97,12 +90,11 @@ export default {
      * Fetch the stats.
      */
     fetchData () {
-      this.$axios.$get(`/api/projectstats`, {
+      this.$axios.$get(`/project/${this.project.short_name}/stats`, {
         params: {
           short_name: this.project.short_name
         }
       }).then(data => {
-        this.avgContribTime = data.avg_contrib_time
         this.userStats = data.userStats || {}
         this.projectStats = data.projectStats || {}
       }).catch(err => {
@@ -115,7 +107,7 @@ export default {
     dailyContributionsData () {
       return {
         labels: this.projectStats.dayStats[0].values.map(value => {
-          return moment(String(new Date(value[0])).format('DD MMM'))
+          return moment(new Date(value[0])).format('DD MMM')
         }),
         series: [
           this.projectStats.dayStats[0].values.map(value => value[1])
@@ -158,11 +150,11 @@ export default {
       }
     },
     dailyContributionsHeader () {
-      const taskrun = pluralize(this.collection.info.terminology.taskRun)
+      const taskrun = pluralize(this.collection.info.terminology.taskrun)
       return `Daily ${taskrun} over the past 2 weeks`
     },
     hourlyContributionsHeader () {
-      const taskrun = pluralize(this.collection.info.terminology.taskRun)
+      const taskrun = pluralize(this.collection.info.terminology.taskrun)
       return `Hourly ${taskrun} over the past 2 weeks`
     },
     proportionAuthHeader () {
