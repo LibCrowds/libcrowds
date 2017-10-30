@@ -5,9 +5,6 @@ STAGING='dev.libcrowds.com'
 
 if [ "${TRAVIS_BRANCH}" == "master" -a "$TRAVIS_PULL_REQUEST" = "false" ] || [ "${TRAVIS_BRANCH}" == "dev" -a "$TRAVIS_PULL_REQUEST" = "false" ] ; then
 
-  # Configure
-  bin/configure.sh
-
   # Build
   npm run build
 
@@ -26,7 +23,7 @@ if [ "${TRAVIS_BRANCH}" == "master" -a "$TRAVIS_PULL_REQUEST" = "false" ] || [ "
 
   git config user.name "Alex Mendes"
   git config user.email "alexanderhmendes@gmail.com"
-  git add dist/*
+  git add .nuxt/dist/*
   git commit -m "Deployment"
 
   # Set up permissions
@@ -44,5 +41,5 @@ if [ "${TRAVIS_BRANCH}" == "master" -a "$TRAVIS_PULL_REQUEST" = "false" ] || [ "
   # Deploy
   git push -f deploy master
 else
-  echo "Not deploying as this is not the master or the development branch"
+  echo "Not deploying as this is not the master or development branch"
 fi

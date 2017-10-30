@@ -16,3 +16,6 @@ install:
 
 script:
 - npm run test
+
+after_success:
+- bash bin/deploy.sh
