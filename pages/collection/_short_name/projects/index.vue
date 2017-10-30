@@ -10,13 +10,12 @@
       id="get-started"
       class="collection-nav-item"
       data-title="Get Started">
-      <b-col xl="3" class="mb-3">
+      <b-col xl="3" class="mb-xl-3 d-none d-xl-block">
         <project-sorting-card
-          class="mb-3 d-none d-xl-block"
+          class="mb-3"
           :collection="collection"
           v-model="searchParams">
         </project-sorting-card>
-
         <social-media-buttons
           :shareUrl="shareUrl"
           size="sm"
@@ -25,9 +24,29 @@
       </b-col>
 
       <b-col xl="9">
+
+        <b-table
+          hover
+          striped
+          show-empty
+          :items="projects"
+          :fields="tableFields"
+          class="d-lg-none"
+          @sort-changed="onSortChange">
+          <template slot="overall_progress" scope="project">
+            {{ project.item.overall_progress }}%
+          </template>
+          <template slot="actions" scope="project">
+            <project-contrib-button
+              block
+              :collection="collection"
+              :project="project.item">
+            </project-contrib-button>
+          </template>
+        </b-table>
         <transition-group
           tag="ul"
-          class="list-unstyled">
+          class="list-unstyled d-none d-lg-block">
           <li v-for="project in projects" :key="project.id">
             <project-card
               :collection="collection"
@@ -35,21 +54,22 @@
             </project-card>
           </li>
         </transition-group>
-
         <infinite-load
           ref="infiniteload"
           domain-object="project"
-          :search-params="mergedParams"
+          :search-params="mergedSearchParams"
           :no-results="noResults"
           v-model="projects">
         </infinite-load>
-
       </b-col>
+
+
     </b-row>
   </div>
 </template>
 
 <script>
+import merge from 'lodash/merge'
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
@@ -57,6 +77,8 @@ import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import ProjectCard from '@/components/cards/Project'
 import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 export default {
   layout: 'collection-tabs',
@@ -68,8 +90,26 @@ export default {
       projects: [],
       searchParams: {},
       noResults: 'No projects are available using the selected filters, ' +
-        'use the input fields on the left to change them.'
-
+        'use the input fields on the left to change them.',
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        n_tasks: {
+          label: 'Tasks',
+          class: 'text-center d-none d-lg-table-cell',
+          sortable: true
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
+        actions: {
+          label: 'Action',
+          class: 'text-center'
+        }
+      }
     }
   },
 
@@ -100,12 +140,14 @@ export default {
       return marked(this.collection.info.content.contribute)
     },
 
-    mergedParams () {
-      this.searchParams.category_id = this.collection.id
-      if (!this.currentUser.admin) {
-        this.searchParams.published = true
+    mergedSearchParams () {
+      const params = {
+        category_id: this.collection.id
       }
-      return this.searchParams
+      if (!this.currentUser.admin) {
+        params.published = true
+      }
+      return merge(params, this.searchParams)
     }
   },
 
@@ -113,7 +155,19 @@ export default {
     ProjectSortingCard,
     ProjectCard,
     InfiniteLoad,
-    SocialMediaButtons
+    SocialMediaButtons,
+    InfiniteLoadingTable,
+    ProjectContribButton
+  },
+
+  methods: {
+    /**
+     * Handle sort change.
+     */
+    onSortChange (value) {
+      this.searchParams.orderby = value.sortBy
+      this.searchParams.desc = value.sortDesc
+    }
   },
 
   mounted () {
