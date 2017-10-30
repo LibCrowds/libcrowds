@@ -67,6 +67,7 @@ export default {
       show: false,
       announcements: [],
       searchParams: {
+        published: true,
         orderby: 'created',
         desc: true
       }

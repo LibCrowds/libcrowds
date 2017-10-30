@@ -8,6 +8,7 @@
     <infinite-load
       ref="infiniteload"
       domain-object="announcement"
+      :search-params="searchParams"
       v-model="announcements">
     </infinite-load>
   </b-card>
@@ -23,7 +24,12 @@ export default {
   data () {
     return {
       title: 'Announcements',
-      announcements: []
+      announcements: [],
+      searchParams: {
+        published: true,
+        orderby: 'created',
+        desc: true
+      }
     }
   },
 
