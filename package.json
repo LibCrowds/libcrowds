@@ -56,7 +56,8 @@
     "vue-progress": "^0.2.1",
     "vue-scrollto": "^2.7.8",
     "vue-simplemde": "^0.4.6",
-    "vue-sweetalert": "^0.1.18"
+    "vue-sweetalert": "^0.1.18",
+    "vue-template-compiler": "2.5.2"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.9.0",
