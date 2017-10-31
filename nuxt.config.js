@@ -61,11 +61,6 @@ const config = {
       }
 
       config.module.rules.push({
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-      })
-
-      config.module.rules.push({
         test: /\.md$/,
         use: [
           'html-loader',
