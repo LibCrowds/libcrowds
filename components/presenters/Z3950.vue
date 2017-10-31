@@ -1,6 +1,6 @@
 <template>
   <div id="z3950-presenter">
-    <div class="row p-4">
+    <div class="row">
 
       <div class="col-sm-12 col-lg-6">
         <b-card
@@ -11,7 +11,7 @@
       </div>
 
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
-        <b-card no-body>
+        <b-card id="answer-card" no-body>
 
           <div class="card-body pb-0" v-if="alerts.length">
             <b-alert
@@ -29,7 +29,7 @@
               <h6 class="mb-0">{{ header }}</h6>
               <b-btn
                 v-if="searchResults.length || selectedRecord"
-                variant="info"
+                variant="warning"
                 size="sm"
                 class="float-right"
                 @click="reset">
@@ -115,7 +115,7 @@
                 class="d-flex d-xl-block flex-column justify-content-center">
                 <b-btn
                   variant="outline-dark"
-                  class="my-1"
+                  class="my-1 my-xl-0 mr-xl-1"
                   @click="onSkip">
                   Skip / Not Found
                 </b-btn>
@@ -185,9 +185,12 @@ import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
+import { notifications } from '@/mixins/notifications'
 
 export default {
-  data: function () {
+  mixins: [ notifications ],
+
+  data () {
     return {
       processing: false,
       header: 'What is this item?',
@@ -269,14 +272,17 @@ export default {
     currentUser () {
       return this.$store.state.currentUser
     },
+
     currentTask () {
       return this.tasks[0]
     },
+
     buttons () {
       return {
         like: !isEmpty(this.currentUser)
       }
     },
+
     stage () {
       if (!this.searchResults.length && !this.selectedRecord) {
         return 'search'
@@ -286,6 +292,7 @@ export default {
         return 'submit'
       }
     },
+
     form () {
       if (!this.searchResults.length && !this.selectedRecord) {
         return this.searchForm
@@ -329,6 +336,7 @@ export default {
      *   The page number.
      */
     search (page = 1) {
+      this.flash({ status: 'info', flash: 'Performing search...'})
       this.processing = true
       const searchQuery = this.buildQuery()
       let fullQuery = `query=${searchQuery}`
@@ -556,10 +564,18 @@ export default {
     font-size: $font-size-sm;
   }
 
+  #answer-card {
+    max-height: 100vh;
+  }
+
+  .list-group {
+    overflow: auto;
+  }
+
   .list-group-item {
+    display: block;
     border-right: none;
     border-left: none;
-    display: flex;
     flex-direction: column;
     align-items: flex-start;
 
