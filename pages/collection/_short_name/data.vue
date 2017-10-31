@@ -20,7 +20,6 @@
 
       <b-col xl="9">
         <infinite-loading-table
-          no-border
           :fields="tableFields"
           domain-object="project"
           :search-params="mergedSearchParams">
