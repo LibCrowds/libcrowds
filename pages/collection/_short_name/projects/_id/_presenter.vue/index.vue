@@ -1,17 +1,12 @@
 <template>
-  <div id="presenter">
-    <p class="lead text-center" v-if="!presenter">
-      No task presenter has been configured for this collection.
-    </p>
-    <component
-      v-else-if="project"
-      :is="presenter"
-      :project="project"
-      :tasks="tasks"
-      @submit="onSubmit"
-      @taskliked="onTaskLiked">
-    </component>
-  </div>
+  <component
+    v-else-if="project"
+    :is="presenter"
+    :project="project"
+    :tasks="tasks"
+    @submit="onSubmit"
+    @taskliked="onTaskLiked">
+  </component>
 </template>
 
 <script>
@@ -22,7 +17,13 @@ import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
 import Z3950Presenter from '@/components/presenters/Z3950'
 
 export default {
-  layout: 'collection-tabs',
+  layout ({ params, store }) {
+    const layouts = {
+      'libcrowds-viewer': 'collection-fullscreen-dark',
+      'z3950': 'collection-tabs'
+    }
+    return layouts[params.presenter] || 'collection-tabs'
+  },
 
   mixins: [ notifications, fetchCollectionByName ],
 

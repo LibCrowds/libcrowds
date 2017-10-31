@@ -1,10 +1,11 @@
 <template>
   <b-btn
     :to="{
-      name: 'collection-short_name-projects-id',
+      name: 'collection-short_name-projects-id-presenter',
       params: {
         short_name: collection.short_name,
-        id: project.id
+        id: project.id,
+        presenter: collection.info.presenter
       }
     }"
     :block="block"

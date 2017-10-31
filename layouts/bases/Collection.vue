@@ -3,6 +3,7 @@
     <div id="collection-background" :style="bgStyle"></div>
 
     <collection-navbar
+      :slim="slimNavbar"
       :collection="collection"
       :current-user="currentUser">
     </collection-navbar>
@@ -11,7 +12,10 @@
       <slot></slot>
     </main>
 
-    <app-footer :collections="publishedCollections"></app-footer>
+    <app-footer
+      v-if="!hideFooter"
+      :collections="publishedCollections">
+    </app-footer>
 
   </div>
 </template>
@@ -25,6 +29,17 @@ export default {
   components: {
     CollectionNavbar,
     AppFooter
+  },
+
+  props: {
+    hideFooter: {
+      type: Boolean,
+      default: false
+    },
+    slimNavbar: {
+      type: Boolean,
+      default: false
+    }
   },
 
   computed: {

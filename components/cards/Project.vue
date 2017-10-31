@@ -4,10 +4,11 @@
     class="project-card">
     <nuxt-link
       :to="{
-        name: 'collection-short_name-projects-id',
+        name: 'collection-short_name-projects-id-presenter',
         params: {
           short_name: collection.short_name,
-          id: project.id
+          id: project.id,
+          presenter: collection.info.presenter
         }
       }">
       <div class="avatar-wrapper">
@@ -21,10 +22,11 @@
       <div class="card-title mb-0">
         <nuxt-link
           :to="{
-            name: 'collection-short_name-projects-id',
+            name: 'collection-short_name-projects-id-presenter',
             params: {
               short_name: collection.short_name,
-              id: project.id
+              id: project.id,
+              presenter: collection.info.presenter
             }
           }">
           <h4 class="card-title mb-1 px-2 pt-2">

@@ -375,16 +375,16 @@ export default {
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 #collection-navbar {
-  z-index: 200;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: $collection-navbar-height;
   font-family: $font-family-base;
   font-weight: 500;
   letter-spacing: 0.8px;
   justify-content: center;
-  align-items: baseline;
   transition: background-color 200ms;
-  padding: .75rem 1.5rem;
-  display: flex;
-  flex-direction: row;
 
   .container {
     margin: 0;
