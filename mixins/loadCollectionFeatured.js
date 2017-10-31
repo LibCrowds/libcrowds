@@ -28,7 +28,7 @@ export const loadCollectionFeatured = {
           return merge(data[idx], project)
         })
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   }

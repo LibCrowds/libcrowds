@@ -47,8 +47,6 @@ export default {
       commit('SET_ITEM', {
         key: 'collection', value: data[0]
       })
-    }).catch(err => {
-      throw new Error({ statusCode: err.statusCode, message: err.message })
     })
   },
 
@@ -83,8 +81,7 @@ export default {
 
   UPDATE_LAST_READ: ({ state, dispatch }, axios) => {
     const announcements = state.currentUser.info.announcements || {}
-    announcements.last_read = state.lastAnnouncement.id
-    state.currentUser.info.announcements = announcements
+    announcements['last_read'] = state.lastAnnouncement.created
     return axios.$put(`/api/user/${state.currentUser.id}`, {
       info: state.currentUser.info
     }).then(data => {

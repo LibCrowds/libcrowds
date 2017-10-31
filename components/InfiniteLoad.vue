@@ -60,7 +60,7 @@ export default {
         this.$emit('input', this.value.concat(data))
         $state.loaded()
       } catch (err) {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       }
     },
 
@@ -112,7 +112,7 @@ export default {
 
           items = items.concat(enrichedData)
         } catch (err) {
-          this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+          this.$nuxt.error(err)
           break
         }
       }

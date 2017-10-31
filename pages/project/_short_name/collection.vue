@@ -91,7 +91,7 @@ export default {
         })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   }

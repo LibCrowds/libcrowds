@@ -158,7 +158,7 @@ export default {
         top10Users: leaderboardData.top_users.slice(0, 10)
       }
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   },
 

@@ -93,7 +93,7 @@ export default {
         nProjects: data.n_projects_per_category
       }
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   },
 

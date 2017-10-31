@@ -108,7 +108,7 @@ export default {
         }
       }
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   },
 
@@ -148,8 +148,9 @@ export default {
             ? 'Announcement published'
             : 'Announcement unpublished'
         })
+        this.$store.dispatch('UPDATE_LAST_ANNOUNCEMENT', this.$axios)
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   }
