@@ -116,7 +116,7 @@ export default {
           info: this.project.info
         })
       } catch (err) {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       } finally {
         this.processing = false
       }

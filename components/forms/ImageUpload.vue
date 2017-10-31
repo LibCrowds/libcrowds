@@ -146,7 +146,7 @@ export default {
           type: 'success'
         })
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       }).then(() => {
         this.processing = false
       })

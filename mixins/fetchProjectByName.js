@@ -10,12 +10,12 @@ export const fetchProjectByName = {
       }
     }).then(data => {
       if (!data || data.length !== 1) {
-        error({ statusCode: 404, message: 'Page not found' })
+        error(new Error({ statusCode: 404 }))
         return
       }
       store.dispatch('UPDATE_CURRENT_PROJECT', data[0])
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   }
 }

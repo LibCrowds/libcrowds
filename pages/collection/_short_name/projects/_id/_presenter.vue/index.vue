@@ -39,7 +39,7 @@ export default {
         project: data
       }
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   },
 
@@ -97,7 +97,7 @@ export default {
           this.tasks = this.tasks.concat(loadedTasks)
         }
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     },
 
@@ -144,7 +144,7 @@ export default {
             type: 'success'
           })
         }).catch(err => {
-          this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+          this.$nuxt.error(err)
         })
       } else {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
@@ -154,7 +154,7 @@ export default {
             type: 'success'
           })
         }).catch(err => {
-          this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+          this.$nuxt.error(err)
         })
       }
     },
@@ -209,7 +209,7 @@ export default {
         }
         this.$cookie.set(cookieName, true, { expires: '1Y' })
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   },

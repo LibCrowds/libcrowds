@@ -98,7 +98,7 @@ export default {
         this.userStats = data.userStats || {}
         this.projectStats = data.projectStats || {}
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   },

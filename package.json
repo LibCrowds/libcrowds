@@ -56,7 +56,8 @@
     "vue-scrollto": "^2.7.8",
     "vue-simplemde": "^0.4.6",
     "vue-sweetalert": "^0.1.18",
-    "vue-template-compiler": "^2.5.2",
+    "vue-server-renderer": "~2.5.2",
+    "vue-template-compiler": "~2.5.2",
     "vue-template-es2015-compiler": "^1.6.0"
   },
   "devDependencies": {

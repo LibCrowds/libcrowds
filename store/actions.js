@@ -47,8 +47,6 @@ export default {
       commit('SET_ITEM', {
         key: 'collection', value: data[0]
       })
-    }).catch(err => {
-      throw new Error({ statusCode: err.statusCode, message: err.message })
     })
   },
 

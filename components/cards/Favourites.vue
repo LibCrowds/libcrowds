@@ -73,7 +73,7 @@ export default {
     this.$axios.$get('/api/favorites').then(data => {
       this.images = this.getImageData(data)
     }).catch(err => {
-      this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+      this.$nuxt.error(err)
     })
   }
 }

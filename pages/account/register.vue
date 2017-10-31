@@ -120,7 +120,7 @@ export default {
         auth: signinData.auth
       }
     }).catch(err => {
-      this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+      this.$nuxt.error(err)
     })
   },
 
