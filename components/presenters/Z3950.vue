@@ -336,7 +336,7 @@ export default {
      *   The page number.
      */
     search (page = 1) {
-      this.flash({ status: 'info', flash: 'Performing search...'})
+      this.flash({ status: 'info', flash: 'Performing search...' })
       this.processing = true
       const searchQuery = this.buildQuery()
       let fullQuery = `query=${searchQuery}`
