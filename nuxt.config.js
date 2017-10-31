@@ -67,11 +67,6 @@ const config = {
           'markdown-loader'
         ]
       })
-    },
-    postcss: {
-      plugins: {
-        'postcss-custom-properties': false
-      }
     }
   },
   plugins: [
