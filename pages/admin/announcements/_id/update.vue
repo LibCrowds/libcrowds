@@ -148,6 +148,7 @@ export default {
             ? 'Announcement published'
             : 'Announcement unpublished'
         })
+        this.$store.dispatch('UPDATE_LAST_ANNOUNCEMENT', this.$axios)
       }).catch(err => {
         this.$nuxt.error(err)
       })
