@@ -1,7 +1,7 @@
 # Deployments
 
-We're running a continuous deployment process to push vue-pybossa-frontend
-updates out to all specified LibCrowds servers.
+We're running a continuous deployment process to push LibCrowds
+updates out to all specified servers.
 
 Here are some notes to help configure a new server:
 

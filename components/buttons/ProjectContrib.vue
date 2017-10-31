@@ -1,0 +1,51 @@
+<template>
+  <b-btn
+    :to="{
+      name: 'collection-short_name-projects-id-presenter',
+      params: {
+        short_name: collection.short_name,
+        id: project.id,
+        presenter: collection.info.presenter
+      }
+    }"
+    :block="block"
+    :size="size"
+    :variant="variant"
+    :disabled="disabled">
+    Contribute
+  </b-btn>
+</template>
+
+<script>
+export default {
+  props: {
+    collection: {
+      type: Object,
+      required: true
+    },
+    project: {
+      type: Object,
+      required: true
+    },
+    size: {
+      type: String,
+      default: ''
+    },
+    variant: {
+      type: String,
+      default: 'success'
+    },
+    block: {
+      type: Boolean,
+      default: true
+    }
+  },
+
+  computed: {
+    disabled () {
+      const progress = this.project.overall_progress
+      return progress && progress === 100
+    }
+  }
+}
+</script>
