@@ -1,8 +1,10 @@
 # Configuration
 
+This section describes the core configuration settings required to run an instance of {{ book.brand }}.
+
 ## Configuring PYBOSSA
 
-You will need to change a few things in your PYBOSSA settings file for the frontend to work correctly:
+You will need to change a few things in your PYBOSSA settings file:
 
 ``` python
 # To allow requests from the frontend (modify origins according to your environment)
@@ -53,7 +55,7 @@ The settings above are all required for the application to run correctly.
 
 ## Configuring LibCrowds
 
-The configuration settings below are applied to the core interface.
+To use the settings template:
 
 ```bash
 # Copy the template
@@ -62,7 +64,7 @@ cp local.config.js.tmpl local.config.js
 
 ### analytics
 
-[Google Analytics](https://analytics.google.com) can be added to the site via the `analytics` property.
+Add [Google Analytics](https://analytics.google.com).
 
 ```js
 config.analytics = {
@@ -72,7 +74,7 @@ config.analytics = {
 
 ### brand
 
-The `brand` will appear throughout your site.
+Establish the brand.
 
 ```js
 config.brand: 'My Brand'
@@ -80,7 +82,7 @@ config.brand: 'My Brand'
 
 ### company
 
-The `company` responsible for the site.
+Specify the company responsible for the site.
 
 ```js
 config.company: 'My Company'
@@ -88,7 +90,7 @@ config.company: 'My Company'
 
 ### contact
 
-The `contact` information will appear in the site footer.
+Specify contact information.
 
 ```js
 config.contact = {
@@ -99,7 +101,7 @@ config.contact = {
 
 ### description
 
-The `description` will appear on the site homepage and form its meta description.
+Describe the overall purpose of the site.
 
 ```js
 config.description: 'My SEO optimised meta description'
@@ -107,7 +109,7 @@ config.description: 'My SEO optimised meta description'
 
 ### githubUrl
 
-The `githubUrl` will appear in the site footer.
+Provide a GitHub link that relates to the site.
 
 ```js
 config.githubUrl = 'https://github.com/github'
@@ -115,8 +117,7 @@ config.githubUrl = 'https://github.com/github'
 
 ### mapbox
 
-[Mapbox](https://www.mapbox.com/) is used to present any maps present on the site and can be configured via the `mapbox` property.
-
+Use [Mapbox](https://www.mapbox.com/) to present any maps present on the site.
 ```js
 config.mapbox = {
   id: 'mapbox.streets',
@@ -126,7 +127,7 @@ config.mapbox = {
 
 ### pybossa
 
-The `host` and used for all PYBOSSA API calls.
+Set the connection details for all PYBOSSA API calls.
 
 ```js
 config.pybossa = {
@@ -136,7 +137,7 @@ config.pybossa = {
 
 ### sentry
 
-[Sentry](https://sentry.io/) error tracking can be enabled via the `sentry` property.
+Enable [Sentry](https://sentry.io/) error tracking.
 
 ```js
 config.sentry = {
@@ -146,13 +147,9 @@ config.sentry = {
 }
 ```
 
-{% hint style='info' %}
-The LibCrowds release and commit running on the server when the error was thrown will be appended automatically.
-{% endhint %}
-
 ### tagline
 
-The `tagline` will appear on the site homepage.
+Add an inspiring tagline.
 
 ```js
 config.tagline: 'My inspiring tagline'

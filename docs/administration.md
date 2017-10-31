@@ -1,8 +1,6 @@
 # Administration
 
-Administration settings can be accessed by admin users via the main navigation bar.
-
-![Admin menu](./assets/admin-menu.png?raw=true)
+Administrators can access these settings via the main navigation bar.
 
 ## Featured Projects
 
