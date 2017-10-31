@@ -48,23 +48,18 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'account-name-projects',
+                name: 'project-open',
                 params: {
                   name: currentUser.name
                 }
               }">
-              Open Project
+              Projects Admin
             </b-dropdown-item>
-          </span>
-
-          <!-- Admin -->
-          <span v-if="currentUser.admin">
-            <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
                 name: 'admin-dashboard'
               }">
-              Admin
+              Site Admin
             </b-dropdown-item>
           </span>
 

@@ -1,7 +1,7 @@
 <template>
   <default-base>
     <b-container class="my-4 my-lg-5">
-      <b-col lg="8" class="mx-auto">
+      <b-col xl="8" class="mx-auto">
         <nuxt></nuxt>
       </b-col>
     </b-container>

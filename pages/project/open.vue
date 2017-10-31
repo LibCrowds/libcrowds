@@ -1,5 +1,5 @@
 <template>
-  <b-card id="account-projects" no-body :header="title">
+  <b-card no-body :header="title">
     <infinite-loading-table
       domainObject="project"
       :fields="tableFields"
@@ -27,7 +27,11 @@
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'container',
+  layout: 'project-dashboard',
+
+  fetch ({ store }) {
+    store.dispatch('UPDATE_CURRENT_PROJECT', {})
+  },
 
   data () {
     return {
@@ -36,8 +40,8 @@ export default {
         name: {
           label: 'Name'
         },
-        created: {
-          label: 'Created',
+        category_id: {
+          label: 'Category ID',
           class: 'text-center d-none d-xl-table-cell',
           sortable: true
         },
