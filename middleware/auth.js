@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { updateSession } from '@/utils/auth'
 
 /**
@@ -11,7 +10,6 @@ export default function ({ isServer, store, req, app }) {
   let update = false
 
   if (isServer && req) {
-    axios.defaults.headers.common.cookie = req.headers.cookie
     update = updateSession(currentUser, req.headers.cookie)
   } else {
     update = updateSession(currentUser, document.cookie)
