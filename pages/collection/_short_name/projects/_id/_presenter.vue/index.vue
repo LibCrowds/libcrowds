@@ -190,7 +190,7 @@ export default {
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
         this.removeTask(taskId)
         if (this.tasks.length < 10) {
-          this.loadNewTasks()
+          this.loadTasks()
         }
         if (hasParticipated === 'true') {
           this.notify({
