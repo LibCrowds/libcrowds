@@ -193,11 +193,7 @@ export default {
       }).href
 
       this.$axios.$get(url).then((data) => {
-<<<<<<< HEAD
         if (data.done === 5 && isEmpty(this.currentUser)) {
-=======
-        if (data.done > 5 && isEmpty(this.currentUser)) {
->>>>>>> 457d6d79ce6f146b437bc4177bcd50735cd9b1c1
           this.$swal({
             type: 'info',
             title: 'Thank you!',
