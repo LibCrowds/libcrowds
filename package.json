@@ -32,7 +32,7 @@
     "git-rev-sync": "^1.9.1",
     "hamburgers": "^0.9.1",
     "izitoast": "^1.1.5",
-    "libcrowds-viewer": "^3.3.2",
+    "libcrowds-viewer": "^3.4.0",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "nuxt": "1.0.0-rc10",
