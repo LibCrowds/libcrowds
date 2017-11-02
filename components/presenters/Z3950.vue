@@ -544,16 +544,6 @@ export default {
     transition: opacity 400ms ease;
   }
 
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 400ms ease;
-  }
-
-  .fade-enter>*,
-  .fade-leave-to>* {
-    opacity: 0;
-  }
-
   .card {
     h5 {
       font-size: 1rem;

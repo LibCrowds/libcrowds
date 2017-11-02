@@ -1,28 +1,25 @@
 <template>
   <collection-base>
-    <div id="collection-tabs-layout">
+    <div id="collection-tabs-layout" class="container mb-5">
+
+      <b-nav class="nav-unstyled">
+        <b-nav-item
+          v-for="item in navItems"
+          @click="navigate(item)"
+          :key="item.id">
+          <transition name="fade" mode="out-in" appear>
+            <span>{{ item.text }}</span>
+          </transition>
+        </b-nav-item>
+        <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+      </b-nav>
+
       <main>
-        <div class="container mb-5">
-
-          <b-nav class="nav-unstyled" key="fading-nav">
-            <b-nav-item
-              v-for="item in navItems"
-              @click="navigate(item)"
-              :key="item.id">
-              <transition name="fade" mode="out-in" appear>
-                <span>{{ item.text }}</span>
-              </transition>
-            </b-nav-item>
-            <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
-          </b-nav>
-
-          <section id="content" key="fading-content">
-            <transition name="fade" mode="out-in" appear>
-              <nuxt></nuxt>
-            </transition>
-          </section>
-        </div>
+        <transition name="fade" mode="out-in" appear>
+          <nuxt></nuxt>
+        </transition>
       </main>
+
     </div>
   </collection-base>
 </template>
@@ -68,7 +65,7 @@ export default {
   background-attachment: fixed;
   min-height: 100vh;
 
-  #content {
+  &>main {
     background-color: $white;
 
     h1, h2, h3 {
@@ -80,7 +77,6 @@ export default {
       border-top: 1px solid $gray-300;
     }
 
-    transition: opacity 600ms;
     padding: 2rem 2.5rem;
 
     @include media-breakpoint-up(md) {
@@ -118,18 +114,6 @@ export default {
         display: block;
       }
     }
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 300ms ease;
-  }
-
-  .fade-enter .nav-link,
-  .fade-enter section,
-  .fade-leave-to .nav-link,
-  .fade-leave-to section {
-    opacity: 0;
   }
 }
 </style>
