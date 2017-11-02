@@ -66,6 +66,10 @@ export default {
         'z3950': Z3950Presenter
       }
       return presenters[this.collection.info.presenter]
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 
@@ -171,6 +175,53 @@ export default {
     },
 
     /**
+     * Show notifications depending on user progress.
+     */
+    trackUserProgress () {
+      const url = `/api/project/${this.project.short_name}/userprogress`
+      const signinUrl = this.$router.resolve({
+        name: 'account-signin',
+        query: {
+          next: this.$route.path
+        }
+      }).href
+      const signupUrl = this.$router.resolve({
+        name: 'account-signup',
+        query: {
+          next: this.$route.path
+        }
+      }).href
+
+      this.$axios.$get(url).then((data) => {
+        if (data.done > 5 && isEmpty(this.currentUser)) {
+          this.$swal({
+            type: 'info',
+            title: 'Thank you!',
+            html: `Your answer has been saved.
+              <br>
+              Did you know that you can also
+              <a href="${signupUrl}">sign up</a> or
+              <a href="${signinUrl}">sign in</a>
+              to track your contributions?`
+          })
+        } else if (data.done === 1) {
+          this.$swal({
+            type: 'success',
+            title: 'Thank you!',
+            html: 'Your contribution has been saved successfully and will ' +
+                  'directly help enable future research.',
+          })
+        } else {
+          this.notify({
+            title: 'Answer saved',
+            message: 'Thank you for your contribution!',
+            type: 'success'
+          })
+        }
+      })
+    },
+
+    /**
      * Handle the submit event.
      * @param {String|Number} projectId
      *   The project ID.
@@ -180,8 +231,6 @@ export default {
      *   The answer data.
      */
     onSubmit (projectId, taskId, answer) {
-      const cookieName = `${this.project.short_name}_participated`
-      const hasParticipated = this.$cookie.get(cookieName)
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
@@ -192,21 +241,7 @@ export default {
         if (this.tasks.length < 10) {
           this.loadTasks()
         }
-        if (hasParticipated === 'true') {
-          this.notify({
-            title: 'Answer saved',
-            message: 'Thank you for your contribution!',
-            type: 'success'
-          })
-        } else {
-          this.$swal({
-            title: 'Thank you!',
-            html: 'Your contribution has been saved successfully and will ' +
-                  'directly help enable future research.',
-            type: 'success'
-          })
-        }
-        this.$cookie.set(cookieName, true, { expires: '1Y' })
+        this.trackUserProgress()
       }).catch(err => {
         this.$nuxt.error(err)
       })
