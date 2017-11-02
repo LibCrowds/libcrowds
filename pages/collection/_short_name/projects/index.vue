@@ -44,7 +44,7 @@
           </template>
         </b-table>
 
-        <transtion-group
+        <transition-group
           tag="ul"
           class="list-unstyled d-none d-lg-block"
           name="fade-up">
@@ -54,7 +54,7 @@
               :project="project">
             </project-card>
           </li>
-        </transtion-group>
+        </transition-group>
 
         <infinite-load
           ref="infiniteload"
