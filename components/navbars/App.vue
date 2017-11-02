@@ -73,6 +73,7 @@
     <span class="app-navbar-right" v-else>
       <b-nav id="sign-in-up" is-nav-bar right>
         <b-nav-item
+          exact
           :to="{
             name: 'account-signin',
             query: {
@@ -82,6 +83,7 @@
           Sign in
         </b-nav-item>
         <b-nav-item
+          exact
           id="btn-register"
           :to="{
             name: 'account-register'

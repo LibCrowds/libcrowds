@@ -42,6 +42,7 @@
         <!-- Main menu -->
         <b-nav is-nav-bar>
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-about',
               params: {
@@ -52,6 +53,7 @@
             About
           </b-nav-item>
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-projects',
               params: {
@@ -62,6 +64,7 @@
             Contribute
           </b-nav-item>
           <b-nav-item
+            exact
             :href="collection.info.forum"
             v-if="collection.info.forum">
             Discuss
@@ -77,6 +80,7 @@
             Results
           </b-nav-item> -->
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-data',
               params: {
@@ -146,6 +150,7 @@
         <b-nav is-nav-bar v-else>
           <b-nav is-nav-bar>
             <b-nav-item
+              exact
               :to="{
                 name: 'account-signin',
                 query: {
@@ -155,6 +160,7 @@
               Sign in
             </b-nav-item>
             <b-nav-item
+              exact
               class="nav-button"
               :to="{
                 name: 'account-register'
