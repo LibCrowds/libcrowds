@@ -67,7 +67,8 @@
               About page
             </label>
             <markdown-editor
-              v-model="collection.info.content.about">
+              v-model="collection.info.content.about"
+              :configs="markdownConfig">
             </markdown-editor>
           </div>
           <div slot="bottom" class="mt-1">
@@ -75,7 +76,8 @@
               Contribute page
             </label>
             <markdown-editor
-              v-model="collection.info.content.contribute">
+              v-model="collection.info.content.contribute"
+              :configs="markdownConfig">
             </markdown-editor>
           </div>
           <div slot="bottom" class="mt-1">
@@ -83,7 +85,8 @@
               Data page
             </label>
             <markdown-editor
-              v-model="collection.info.content.data">
+              v-model="collection.info.content.data"
+              :configs="markdownConfig">
             </markdown-editor>
           </div>
         </pybossa-form>
@@ -171,6 +174,9 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
+      },
+      markdownConfig: {
+        spellChecker: false
       }
     }
   },
