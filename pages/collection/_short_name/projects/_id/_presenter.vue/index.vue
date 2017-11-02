@@ -139,7 +139,7 @@ export default {
         }).then(() => {
           this.notify({
             title: 'Success',
-            text: 'Removed from favourites',
+            message: 'Removed from favourites',
             type: 'success'
           })
         }).catch(err => {
@@ -149,7 +149,7 @@ export default {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
           this.notify({
             title: 'Success',
-            text: 'Added to favourites',
+            message: 'Added to favourites',
             type: 'success'
           })
         }).catch(err => {
@@ -195,7 +195,7 @@ export default {
         if (hasParticipated === 'true') {
           this.notify({
             title: 'Answer saved',
-            text: 'Thank you for your contribution!',
+            message: 'Thank you for your contribution!',
             type: 'success'
           })
         } else {
