@@ -1,6 +1,5 @@
 <template>
   <component
-    v-else-if="project"
     :is="presenter"
     :project="project"
     :tasks="tasks"
