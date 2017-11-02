@@ -209,7 +209,7 @@ export default {
             type: 'success',
             title: 'Thank you!',
             html: 'Your contribution has been saved successfully and will ' +
-                  'directly help enable future research.',
+                  'directly help enable future research.'
           })
         } else {
           this.notify({
