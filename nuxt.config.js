@@ -21,7 +21,8 @@ const config = {
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.min.css',
     'vue-multiselect/dist/vue-multiselect.min.css',
-    'simplemde/dist/simplemde.min.css'
+    'simplemde/dist/simplemde.min.css',
+    'libcrowds-viewer/dist/scss/main.scss'
   ],
   build: {
     vendor: [
