@@ -83,7 +83,9 @@ export default {
 
   head () {
     return {
-      titleTemplate: `%s - ${this.project.name} | ${localConfig.brand}`
+      titleTemplate: isEmpty(this.project)
+        ? `%s | ${localConfig.brand}`
+        : `%s - ${this.project.name} | ${localConfig.brand}`
     }
   }
 }
