@@ -130,9 +130,9 @@ export const routes = [
     name: 'project-short_name-settings'
   },
   {
-    path: '/account/:name?/projects',
+    path: '/project/open',
     component: jest.fn(),
-    name: 'account-name-projects'
+    name: 'project-open'
   },
   {
     path: '/account/:name?/announcements',

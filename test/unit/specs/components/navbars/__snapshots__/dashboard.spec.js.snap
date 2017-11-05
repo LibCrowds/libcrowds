@@ -13,21 +13,25 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
         My Brand
       </nuxt-link>
     </div>
-    <ul class="nav list-group">
-      <nuxt-link tag="li"
-                 class="list-group-item"
-      >
-        <a>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="#"
+           target="_self"
+           aria-disabled="false"
+           class="nav-link"
+        >
           Dashboard
         </a>
-      </nuxt-link>
-      <nuxt-link tag="li"
-                 class="list-group-item"
-      >
-        <a>
+      </li>
+      <li class="nav-item">
+        <a href="#"
+           target="_self"
+           aria-disabled="false"
+           class="nav-link"
+        >
           Featured Projects
         </a>
-      </nuxt-link>
+      </li>
     </ul>
   </nav>
 </div>
@@ -47,21 +51,25 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
         My Brand
       </nuxt-link>
     </div>
-    <ul class="nav list-group">
-      <nuxt-link tag="li"
-                 class="list-group-item"
-      >
-        <a>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="#"
+           target="_self"
+           aria-disabled="false"
+           class="nav-link"
+        >
           Dashboard
         </a>
-      </nuxt-link>
-      <nuxt-link tag="li"
-                 class="list-group-item"
-      >
-        <a>
+      </li>
+      <li class="nav-item">
+        <a href="#"
+           target="_self"
+           aria-disabled="false"
+           class="nav-link"
+        >
           Featured Projects
         </a>
-      </nuxt-link>
+      </li>
     </ul>
   </nav>
 </div>

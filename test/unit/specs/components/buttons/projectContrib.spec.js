@@ -28,21 +28,12 @@ describe('ProjectContrib button', () => {
     })
   })
 
-  it('is disabled when status is completed', () => {
+  it('is disabled when project is completed', () => {
+    let completedProject = {
+      overall_progress: 100
+    }
     wrapper.setProps({
-      status: 'completed',
-      shortname: 'my_project'
-    })
-    const renderer = require('vue-server-renderer').createRenderer()
-    renderer.renderToString(wrapper.vm, (err, str) => {
-      expect(str).toMatchSnapshot()
-    })
-  })
-
-  it('is disabled when status is cannot_completed', () => {
-    wrapper.setProps({
-      status: 'cannot_contribute',
-      shortname: 'my_project'
+      project: completedProject
     })
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {

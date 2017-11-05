@@ -48,12 +48,9 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'project-open',
-                params: {
-                  name: currentUser.name
-                }
+                name: 'project-open'
               }">
-              Projects Admin
+              Project Admin
             </b-dropdown-item>
             <b-dropdown-item
               :to="{

@@ -2,7 +2,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 
-import { routes } from '@/test/fixtures/routes.js'
+import { routes } from '@/test/fixtures/routes'
 import collection from '@/test/fixtures/collection.json'
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
@@ -30,7 +30,6 @@ describe('Collection navbar', () => {
   })
 
   it('renders correctly when signed out', () => {
-    console.log(collection)
     wrapper = mount(CollectionNavbar, {
       localVue,
       router,

@@ -13,21 +13,7 @@ exports[`ProjectContrib button is active by default 1`] = `
 
 `;
 
-exports[`ProjectContrib button is disabled when status is cannot_completed 1`] = `
-
-<a tabindex="-1"
-   href="#"
-   target="_self"
-   aria-disabled="true"
-   data-server-rendered="true"
-   class="btn btn-success btn-block disabled disabled"
->
-  Contribute
-</a>
-
-`;
-
-exports[`ProjectContrib button is disabled when status is completed 1`] = `
+exports[`ProjectContrib button is disabled when project is completed 1`] = `
 
 <a tabindex="-1"
    href="#"
