@@ -9,7 +9,7 @@ export default function ({ isServer, store, req, app }) {
   const currentUser = store.state.currentUser
   let update = false
 
-  if (isServer && req) {
+  if (isServer && req && 'cookie' in req.headers) {
     update = updateSession(currentUser, req.headers.cookie)
   } else {
     update = updateSession(currentUser, document.cookie)
