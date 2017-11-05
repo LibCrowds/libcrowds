@@ -24,6 +24,16 @@ const config = {
     'simplemde/dist/simplemde.min.css',
     'libcrowds-viewer/dist/scss/main.scss'
   ],
+  postcss: {
+    plugins: {
+      'postcss-url': false,
+      'postcss-cssnext': {
+        features: {
+          customProperties: false
+        }
+      }
+    }
+  },
   build: {
     vendor: [
       'bootstrap-vue',
