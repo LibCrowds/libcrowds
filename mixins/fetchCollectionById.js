@@ -8,13 +8,13 @@ export const fetchCollectionById = {
   fetch ({ params, app, error, store }) {
     return app.$axios.$get(`/api/category/${params.id}`).then(data => {
       if (isEmpty(data)) {
-        error({ statusCode: 404, message: 'Page not found' })
+        error(new Error({ statusCode: 404 }))
         return
       }
       setCollectionDefaults(data)
       store.dispatch('UPDATE_CURRENT_COLLECTION', data)
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   }
 }

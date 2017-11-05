@@ -21,7 +21,8 @@ const config = {
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.min.css',
     'vue-multiselect/dist/vue-multiselect.min.css',
-    'simplemde/dist/simplemde.min.css'
+    'simplemde/dist/simplemde.min.css',
+    'libcrowds-viewer/dist/scss/main.scss'
   ],
   build: {
     vendor: [
@@ -30,6 +31,7 @@ const config = {
       'vue-awesome',
       'vue-chartist',
       'vue-clickaway',
+      'vue-cookie',
       'vue-form-generator',
       'vue-gravatar',
       'vue-js-toggle-button',
@@ -61,11 +63,6 @@ const config = {
       }
 
       config.module.rules.push({
-        test: /\.svg$/,
-        loader: 'svg-inline-loader'
-      })
-
-      config.module.rules.push({
         test: /\.md$/,
         use: [
           'html-loader',
@@ -82,6 +79,7 @@ const config = {
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
+    { src: '~/plugins/vue-cookie', ssr: false },
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },

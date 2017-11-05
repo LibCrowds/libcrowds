@@ -361,7 +361,7 @@ export default {
         }
         this.processing = false
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     },
 
@@ -542,16 +542,6 @@ export default {
 #z3950-presenter {
   div {
     transition: opacity 400ms ease;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 400ms ease;
-  }
-
-  .fade-enter>*,
-  .fade-leave-to>* {
-    opacity: 0;
   }
 
   .card {

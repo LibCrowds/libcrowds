@@ -20,7 +20,7 @@ export default {
         csrf: data.form.csrf
       }
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   },
 

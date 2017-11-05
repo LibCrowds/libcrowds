@@ -7,7 +7,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
      class="navbar navbar-dark navbar-expand-md"
 >
   <div class="container">
-    <a href="#/collection"
+    <a href="#/collection/playbills"
        target="_self"
        class="navbar-brand"
     >
@@ -38,7 +38,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
     >
       <ul class="nav navbar-nav">
         <li class="nav-item">
-          <a href="#/collection/about"
+          <a href="#/collection/playbills/about"
              target="_self"
              class="nav-link"
           >
@@ -46,7 +46,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/contribute"
+          <a href="#/collection/playbills/projects"
              target="_self"
              class="nav-link"
           >
@@ -63,7 +63,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/data"
+          <a href="#/collection/playbills/data"
              target="_self"
              class="nav-link"
           >
@@ -75,36 +75,42 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
         <div id="announcements-list">
           <button id="announcements-toggle"
                   type="button"
-                  class="d-flex nav-link btn btn-secondary"
+                  class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
           >
             <icon name="bell">
             </icon>
             <!---->
           </button>
-          <div id="announcements-container"
-               class="dropdown-menu-right card"
-               style="display:none;"
+          <nuxt-link to="[object Object]"
+                     class="d-lg-none nav-link"
           >
-            <div class="card-header">
-              <div>
-                Notifications
-              </div>
-            </div>
-            <div id="announcements">
-            </div>
-            <infinite-loading distance="1000"
-                              class="infinite-loading"
+            Notifications
+          </nuxt-link>
+          <span style="display:none;">
+            <div id="announcements-container"
+                 class="dropdown-menu-right d-none d-md-block card"
             >
-              <span slot="no-results">
-                <!---->
-              </span>
-              <span slot="no-more">
-                <span>
-                  No more results
-                </span>
-              </span>
-            </infinite-loading>
-          </div>
+              <div class="card-header">
+                <div>
+                  Notifications
+                </div>
+              </div>
+              <div id="announcements">
+              </div>
+              <no-ssr>
+                <infinite-loading class="infinite-loading">
+                  <span slot="no-results">
+                    <span>
+                      No announcements have been made yet
+                    </span>
+                  </span>
+                  <span slot="no-more">
+                    <!---->
+                  </span>
+                </infinite-loading>
+              </no-ssr>
+            </div>
+          </span>
         </div>
         <li class="nav-item b-nav-dropdown dropdown">
           <a href="#"
@@ -119,14 +125,14 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
           <div role="menu"
                class="dropdown-menu dropdown-menu-right"
           >
-            <a href="#/account"
+            <a href="#/account/JohnDoe"
                role="menuitem"
                target="_self"
                class="dropdown-item"
             >
               Profile
             </a>
-            <a href="#/account/settings/profile"
+            <a href="#/account/JohnDoe/settings/profile"
                role="menuitem"
                target="_self"
                class="dropdown-item"
@@ -138,25 +144,19 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
                    class="dropdown-divider"
               >
               </div>
-              <a href="#/account/projects"
+              <a href="#/project/open"
                  role="menuitem"
                  target="_self"
                  class="dropdown-item"
               >
-                Open Project
+                Project Admin
               </a>
-            </span>
-            <span>
-              <div role="separator"
-                   class="dropdown-divider"
-              >
-              </div>
               <a href="#/admin/dashboard"
                  role="menuitem"
                  target="_self"
                  class="dropdown-item"
               >
-                Admin
+                Site Admin
               </a>
             </span>
             <div role="separator"
@@ -187,7 +187,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
      class="navbar navbar-dark navbar-expand-md"
 >
   <div class="container">
-    <a href="#/collection"
+    <a href="#/collection/playbills"
        target="_self"
        class="navbar-brand"
     >
@@ -218,7 +218,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
     >
       <ul class="nav navbar-nav">
         <li class="nav-item">
-          <a href="#/collection/about"
+          <a href="#/collection/playbills/about"
              target="_self"
              class="nav-link"
           >
@@ -226,7 +226,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/contribute"
+          <a href="#/collection/playbills/projects"
              target="_self"
              class="nav-link"
           >
@@ -243,7 +243,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/data"
+          <a href="#/collection/playbills/data"
              target="_self"
              class="nav-link"
           >
@@ -255,36 +255,42 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
         <div id="announcements-list">
           <button id="announcements-toggle"
                   type="button"
-                  class="d-flex nav-link btn btn-secondary"
+                  class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
           >
             <icon name="bell">
             </icon>
             <!---->
           </button>
-          <div id="announcements-container"
-               class="dropdown-menu-right card"
-               style="display:none;"
+          <nuxt-link to="[object Object]"
+                     class="d-lg-none nav-link"
           >
-            <div class="card-header">
-              <div>
-                Notifications
-              </div>
-            </div>
-            <div id="announcements">
-            </div>
-            <infinite-loading distance="1000"
-                              class="infinite-loading"
+            Notifications
+          </nuxt-link>
+          <span style="display:none;">
+            <div id="announcements-container"
+                 class="dropdown-menu-right d-none d-md-block card"
             >
-              <span slot="no-results">
-                <!---->
-              </span>
-              <span slot="no-more">
-                <span>
-                  No more results
-                </span>
-              </span>
-            </infinite-loading>
-          </div>
+              <div class="card-header">
+                <div>
+                  Notifications
+                </div>
+              </div>
+              <div id="announcements">
+              </div>
+              <no-ssr>
+                <infinite-loading class="infinite-loading">
+                  <span slot="no-results">
+                    <span>
+                      No announcements have been made yet
+                    </span>
+                  </span>
+                  <span slot="no-more">
+                    <!---->
+                  </span>
+                </infinite-loading>
+              </no-ssr>
+            </div>
+          </span>
         </div>
         <li class="nav-item b-nav-dropdown dropdown">
           <a href="#"
@@ -299,21 +305,20 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
           <div role="menu"
                class="dropdown-menu dropdown-menu-right"
           >
-            <a href="#/account"
+            <a href="#/account/JohnDoe"
                role="menuitem"
                target="_self"
                class="dropdown-item"
             >
               Profile
             </a>
-            <a href="#/account/settings/profile"
+            <a href="#/account/JohnDoe/settings/profile"
                role="menuitem"
                target="_self"
                class="dropdown-item"
             >
               Settings
             </a>
-            <!---->
             <!---->
             <div role="separator"
                  class="dropdown-divider"
@@ -343,7 +348,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
      class="navbar navbar-dark navbar-expand-md"
 >
   <div class="container">
-    <a href="#/collection"
+    <a href="#/collection/playbills"
        target="_self"
        class="navbar-brand"
     >
@@ -374,7 +379,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
     >
       <ul class="nav navbar-nav">
         <li class="nav-item">
-          <a href="#/collection/about"
+          <a href="#/collection/playbills/about"
              target="_self"
              class="nav-link"
           >
@@ -382,7 +387,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/contribute"
+          <a href="#/collection/playbills/projects"
              target="_self"
              class="nav-link"
           >
@@ -399,7 +404,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
           </a>
         </li>
         <li class="nav-item">
-          <a href="#/collection/data"
+          <a href="#/collection/playbills/data"
              target="_self"
              class="nav-link"
           >

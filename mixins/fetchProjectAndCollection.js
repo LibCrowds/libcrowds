@@ -12,7 +12,7 @@ export const fetchProjectAndCollection = {
       }
     }).then(data => {
       if (!data || data.length !== 1) {
-        error({ statusCode: 404, message: 'Page not found' })
+        error(new Error({ statusCode: 404 }))
       } else {
         store.dispatch('UPDATE_CURRENT_PROJECT', data[0])
         return app.$axios.$get(`/api/category/${data[0].category_id}`)
@@ -21,7 +21,7 @@ export const fetchProjectAndCollection = {
       setCollectionDefaults(data)
       store.dispatch('UPDATE_CURRENT_COLLECTION', data)
     }).catch(err => {
-      error({ statusCode: err.statusCode, message: err.message })
+      error(err)
     })
   }
 }

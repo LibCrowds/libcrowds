@@ -11,11 +11,8 @@ exports[`Bar chart renders correctly 1`] = `
     </div>
   </div>
   <div class="card-body">
-    <vue-chartist type="Bar"
-                  data="[object Object]"
-                  options="[object Object]"
-    >
-    </vue-chartist>
+    <div>
+    </div>
   </div>
 </div>
 

@@ -25,7 +25,7 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
       >
         <button id="announcements-toggle"
                 type="button"
-                class="nav-item d-none d-lg-flex flex-row btn btn-secondary"
+                class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
         >
           <icon name="bell">
           </icon>
@@ -94,25 +94,19 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
                  class="dropdown-divider"
             >
             </div>
-            <a href="#/account/JohnDoe/projects"
+            <a href="#/project/open"
                role="menuitem"
                target="_self"
                class="dropdown-item"
             >
-              Open Project
+              Project Admin
             </a>
-          </span>
-          <span>
-            <div role="separator"
-                 class="dropdown-divider"
-            >
-            </div>
             <a href="#/admin/dashboard"
                role="menuitem"
                target="_self"
                class="dropdown-item"
             >
-              Admin
+              Site Admin
             </a>
           </span>
           <div role="separator"
@@ -160,7 +154,7 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
       >
         <button id="announcements-toggle"
                 type="button"
-                class="nav-item d-none d-lg-flex flex-row btn btn-secondary"
+                class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
         >
           <icon name="bell">
           </icon>
@@ -224,7 +218,6 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
           >
             Settings
           </a>
-          <!---->
           <!---->
           <div role="separator"
                class="dropdown-divider"

@@ -10,18 +10,14 @@
           {{ localConfig.brand }}
         </nuxt-link>
       </div>
-        <ul class="nav list-group">
-          <nuxt-link
-            tag="li"
-            class="list-group-item"
-            v-for="(item, index) in navItems"
-            :key="index"
-            :to="item.link">
-            <a>
-              {{ item.label }}
-            </a>
-          </nuxt-link>
-        </ul>
+      <b-nav vertical>
+        <b-nav-item
+          v-for="(item, index) in navItems"
+          :key="index"
+          :to="item.link">
+          {{ item.label }}
+        </b-nav-item>
+      </b-nav>
     </nav>
   </div>
 </template>
@@ -74,6 +70,45 @@ export default {
     font-size: $font-size-xs;
     text-transform: uppercase;
 
+    .brand-wrapper {
+      display: none;
+      height: $app-navbar-height;
+      background: transparent;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid rgba($gray-300, 0.5);
+      min-height: $app-navbar-height;
+
+      .brand {
+        margin: 0;
+        color: $white;
+
+        @include hover-focus {
+          color: $white;
+        }
+      }
+    }
+
+    .nav-item {
+      border: none;
+      background-color: transparent;
+      padding: 0rem;
+
+      .nav-link {
+        padding: 0.75rem 1.25rem;
+        width: 100%;
+        color: $white;
+        display: block;
+
+        &:hover,
+        &:focus,
+        &.active {
+          text-decoration: none;
+          background-color: rgba($blue, 0.45);
+        }
+      }
+    }
+
     &.side {
       max-height: 100%;
       height: 100%;
@@ -88,7 +123,7 @@ export default {
         display: flex;
       }
 
-      .list-group-item {
+      .nav-item {
         margin:
           calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y}) 0;
         font-weight: 400;
@@ -116,7 +151,7 @@ export default {
     }
 
     &.top {
-      .list-group-item {
+      .nav-item {
         flex-direction: row;
         margin: 0 calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y});
       }
@@ -128,48 +163,6 @@ export default {
 
       @include media-breakpoint-down(md) {
         display: flex;
-      }
-    }
-
-    .list-group-item {
-      border: none;
-      background-color: transparent;
-      padding: 0rem;
-
-      a {
-        padding: 0.75rem 1.25rem;
-        width: 100%;
-        color: $white;
-        display: block;
-      }
-
-      &:hover,
-      &:focus,
-      &.nuxt-link-active {
-        background-color: rgba($blue, 0.45);
-
-        a {
-          text-decoration: none;
-        }
-      }
-    }
-
-    .brand-wrapper {
-      display: none;
-      height: $app-navbar-height;
-      background: transparent;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid rgba($gray-300, 0.5);
-      min-height: $app-navbar-height;
-
-      .brand {
-        margin: 0;
-        color: $white;
-
-        @include hover-focus {
-          color: $white;
-        }
       }
     }
   }

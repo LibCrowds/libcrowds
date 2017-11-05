@@ -185,11 +185,17 @@ export default {
         if (r.data.status === 'error') {
           this.alert = r.data.flash
           this.status = r.data.status
+          this.notify({
+            type: 'warn',
+            title: 'Invalid form data',
+            message: r.data.flash
+          })
           this.injectErrors(r.data.form.errors)
-        } else {
+          return
+        } else if (r.data.status === 'success') {
           this.handleSuccess(r.data)
-          this.flash(r.data)
         }
+        this.flash(r.data)
       }).catch(err => {
         this.notify({
           type: 'error',

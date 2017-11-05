@@ -5,7 +5,7 @@ import BootstrapVue from 'bootstrap-vue'
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
 import AppNavbar from '@/components/navbars/App'
-import { routes } from '@/test/fixtures/routes.js'
+import { routes } from '@/test/fixtures/routes'
 
 describe('App navbar', () => {
   let localVue = null

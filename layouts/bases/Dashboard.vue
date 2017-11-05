@@ -19,12 +19,10 @@
         :nav-items="navItems">
       </dashboard-navbar>
 
-      <main>
-        <div class="container px-lg-4 py-4">
-          <transition name="fade" mode="out-in" appear>
-            <nuxt></nuxt>
-          </transition>
-        </div>
+      <main class="container px-lg-4 py-4">
+        <transition name="fade" mode="out-in" appear>
+          <nuxt></nuxt>
+        </transition>
       </main>
 
       <dashboard-footer></dashboard-footer>
@@ -84,16 +82,6 @@ export default {
       float: right;
       width: calc(100% - #{$sidebar-width});
     }
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: opacity 250ms ease-out;
-  }
-
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
   }
 }
 </style>

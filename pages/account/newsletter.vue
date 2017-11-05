@@ -63,7 +63,7 @@ export default {
       }).then(data => {
         this.$router.push({ path: next })
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   }

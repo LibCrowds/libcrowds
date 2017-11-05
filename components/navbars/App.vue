@@ -48,12 +48,9 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'project-open',
-                params: {
-                  name: currentUser.name
-                }
+                name: 'project-open'
               }">
-              Projects Admin
+              Project Admin
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
@@ -73,6 +70,7 @@
     <span class="app-navbar-right" v-else>
       <b-nav id="sign-in-up" is-nav-bar right>
         <b-nav-item
+          exact
           :to="{
             name: 'account-signin',
             query: {
@@ -82,6 +80,7 @@
           Sign in
         </b-nav-item>
         <b-nav-item
+          exact
           id="btn-register"
           :to="{
             name: 'account-register'

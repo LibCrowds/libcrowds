@@ -19,6 +19,7 @@ function sweetalert ({title, message, type, timeout, cb}) {
 const options = {
   success: toast,
   error: sweetalert,
+  danger: toast,
   info: toast,
   warn: toast
 }

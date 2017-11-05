@@ -42,6 +42,9 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
+        opts.shareText = 'Copy the link to bookmark, share on social media ' +
+          ' or [discuss this playbill on our forum]' +
+          '(https://community.libcrowds.com/d/11-spotted-on-in-the-spotlight).'
         return opts
       })
     },
@@ -82,7 +85,6 @@ export default {
 
 <style lang="scss">
 .libcrowds-viewer-presenter {
-  background-color: #000;
   width: 100%;
   height: 100%;
   display: flex;

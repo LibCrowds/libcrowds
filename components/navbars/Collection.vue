@@ -42,26 +42,29 @@
         <!-- Main menu -->
         <b-nav is-nav-bar>
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-about',
               params: {
                 short_name: collection.short_name
               }
             }"
-            @click.native="toggleCollapsibleSidebar">
+            @click="toggleCollapsibleSidebar">
             About
           </b-nav-item>
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-projects',
               params: {
                 short_name: collection.short_name
               }
             }"
-            @click.native="toggleCollapsibleSidebar">
+            @click="toggleCollapsibleSidebar">
             Contribute
           </b-nav-item>
           <b-nav-item
+            exact
             :href="collection.info.forum"
             v-if="collection.info.forum">
             Discuss
@@ -73,17 +76,18 @@
                 short_name: collection.short_name
               }
             }"
-            @click.native="toggleCollapsibleSidebar">
+            @click="toggleCollapsibleSidebar">
             Results
           </b-nav-item> -->
           <b-nav-item
+            exact
             :to="{
               name: 'collection-short_name-data',
               params: {
                 short_name: collection.short_name
               }
             }"
-            @click.native="toggleCollapsibleSidebar">
+            @click="toggleCollapsibleSidebar">
             Data
           </b-nav-item>
         </b-nav>
@@ -104,7 +108,7 @@
                   name: currentUser.name
                 }
               }"
-              @click.native="toggleCollapsibleSidebar">Profile
+              @click="toggleCollapsibleSidebar">Profile
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
@@ -113,7 +117,7 @@
                   name: currentUser.name
                 }
               }"
-              @click.native="toggleCollapsibleSidebar">Settings
+              @click="toggleCollapsibleSidebar">Settings
             </b-dropdown-item>
 
             <!-- Project management -->
@@ -121,18 +125,15 @@
               <div role="separator" class="dropdown-divider"></div>
               <b-dropdown-item
                 :to="{
-                  name: 'project-open',
-                  params: {
-                    name: currentUser.name
-                  }
+                  name: 'project-open'
                 }">
-                Projects Admin
+                Project Admin
               </b-dropdown-item>
               <b-dropdown-item
                 :to="{
                   name: 'admin-dashboard'
                 }"
-                @click.native="toggleCollapsibleSidebar">
+                @click="toggleCollapsibleSidebar">
                 Site Admin
               </b-dropdown-item>
             </span>
@@ -146,6 +147,7 @@
         <b-nav is-nav-bar v-else>
           <b-nav is-nav-bar>
             <b-nav-item
+              exact
               :to="{
                 name: 'account-signin',
                 query: {
@@ -155,6 +157,7 @@
               Sign in
             </b-nav-item>
             <b-nav-item
+              exact
               class="nav-button"
               :to="{
                 name: 'account-register'

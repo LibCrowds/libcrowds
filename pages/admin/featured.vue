@@ -103,7 +103,7 @@ export default {
             : 'Project removed from featured'
         })
       }).catch(err => {
-        this.$nuxt.error({ statusCode: err.statusCode, message: err.message })
+        this.$nuxt.error(err)
       })
     }
   },

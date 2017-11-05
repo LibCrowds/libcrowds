@@ -6,7 +6,11 @@
  *   The document cookie string.
  */
 export const updateSession = (user, cookieStr) => {
-  const allCookies = cookieStr.split(';')
+  let allCookies = []
+  if (cookieStr) {
+    allCookies = cookieStr.split(';')
+  }
+
   let hasSession = false
   let sessionName = null
 

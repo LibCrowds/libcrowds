@@ -24,7 +24,6 @@
       </b-col>
 
       <b-col xl="9">
-
         <b-table
           hover
           striped
@@ -44,16 +43,20 @@
             </project-contrib-button>
           </template>
         </b-table>
+
         <transition-group
           tag="ul"
-          class="list-unstyled d-none d-lg-block">
+          class="list-unstyled d-none d-lg-block"
+          name="fade-up">
           <li v-for="project in projects" :key="project.id">
             <project-card
+              v-if="project.overall_progress < 100"
               :collection="collection"
               :project="project">
             </project-card>
           </li>
         </transition-group>
+
         <infinite-load
           ref="infiniteload"
           domain-object="project"
@@ -62,7 +65,6 @@
           v-model="projects">
         </infinite-load>
       </b-col>
-
     </b-row>
   </div>
 </template>
@@ -180,13 +182,6 @@ export default {
 #collection-contribute {
   .project-card {
     transition: all 500ms ease;
-  }
-
-  .v-enter,
-  .v-leave-to {
-    -webkit-transform: translateY(20px);
-    transform: translateY(20px);
-    opacity: 0;
   }
 }
 </style>

@@ -92,16 +92,17 @@ export default {
       return this.$store.state.lastAnnouncement
     },
 
-    lastReadId () {
-      const userAnnouncements = this.currentUser.info.announcements || {}
-      return userAnnouncements['last_read'] || 0
+    lastRead () {
+      const annoucements = this.currentUser.info.announcements || {}
+      return annoucements.last_read
     },
 
     hasUnread () {
       if (this.noAnnouncements) {
         return false
       }
-      return this.lastReadId < this.lastAnnouncement.id
+      const last = Date.parse(this.lastAnnouncement.created)
+      return !this.lastRead || Date.parse(this.lastRead) < last
     }
   },
 
