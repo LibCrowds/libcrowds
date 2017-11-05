@@ -50,6 +50,7 @@
           name="fade-up">
           <li v-for="project in projects" :key="project.id">
             <project-card
+              v-if="project.overall_progress < 100"
               :collection="collection"
               :project="project">
             </project-card>
