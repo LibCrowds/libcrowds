@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   data () {
     return {

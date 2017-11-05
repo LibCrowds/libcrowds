@@ -17,7 +17,7 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'admin-collections-new'
+            name: 'admin-site-collections-new'
           }">
           New
         </b-btn>
@@ -44,7 +44,7 @@
               size="sm"
               block
               :to="{
-                name: 'admin-collections-id-update',
+                name: 'admin-site-collections-id-update',
                 params: {
                   id: collection.item.id
                 }
@@ -71,7 +71,7 @@ import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   data () {
     return {

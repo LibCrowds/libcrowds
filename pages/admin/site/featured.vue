@@ -36,7 +36,7 @@ import { notifications } from '@/mixins/notifications'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   mixins: [ notifications ],
 

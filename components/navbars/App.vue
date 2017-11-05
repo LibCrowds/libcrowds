@@ -48,13 +48,13 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'project-open'
+                name: 'admin-project-open'
               }">
               Project Admin
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
-                name: 'admin-dashboard'
+                name: 'admin-site-dashboard'
               }">
               Site Admin
             </b-dropdown-item>

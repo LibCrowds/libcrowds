@@ -35,7 +35,7 @@ import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'project-dashboard',
+  layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectByName, notifications ],
 

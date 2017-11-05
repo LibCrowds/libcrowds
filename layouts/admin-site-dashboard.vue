@@ -15,37 +15,37 @@ export default {
         {
           label: 'Dashboard',
           link: {
-            name: 'admin-dashboard'
+            name: 'admin-site-dashboard'
           }
         },
         {
           label: 'Featured Projects',
           link: {
-            name: 'admin-featured'
+            name: 'admin-site-featured'
           }
         },
         {
           label: 'Collections',
           link: {
-            name: 'admin-collections'
+            name: 'admin-site-collections'
           }
         },
         {
           label: 'Users',
           link: {
-            name: 'admin-users'
+            name: 'admin-site-users'
           }
         },
         {
           label: 'Announcements',
           link: {
-            name: 'admin-announcements'
+            name: 'admin-site-announcements'
           }
         },
         {
           label: 'Background Tasks',
           link: {
-            name: 'admin-jobs'
+            name: 'admin-site-jobs'
           }
         }
       ]

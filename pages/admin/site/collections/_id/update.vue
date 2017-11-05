@@ -152,7 +152,7 @@ import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   mixins: [ fetchCollectionById, notifications ],
 
@@ -389,7 +389,7 @@ export default {
      * Handle form cancel.
      */
     onCancel () {
-      this.$router.push({ name: 'admin-collections' })
+      this.$router.push({ name: 'admin-site-collections' })
     },
 
     /**

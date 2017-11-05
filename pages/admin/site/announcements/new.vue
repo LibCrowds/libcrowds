@@ -29,7 +29,7 @@ import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   mixins: [ notifications ],
 
@@ -95,7 +95,7 @@ export default {
         message: 'Announcement created'
       })
       this.$router.push({
-        name: 'admin-announcements-id-update',
+        name: 'admin-site-announcements-id-update',
         params: {
           id: data.id
         }
@@ -106,7 +106,7 @@ export default {
      * Handle cancel.
      */
     onCancel () {
-      this.$router.push({ name: 'admin-announcements' })
+      this.$router.push({ name: 'admin-site-announcements' })
     }
   }
 }

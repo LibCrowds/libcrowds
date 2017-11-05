@@ -19,8 +19,8 @@ describe('Dashboard navbar', () => {
       routes
     })
     navItems = [
-      { name: 'admin-dashboard', label: 'Dashboard' },
-      { name: 'admin-featured', label: 'Featured Projects' }
+      { name: 'admin-site-dashboard', label: 'Dashboard' },
+      { name: 'admin-site-featured', label: 'Featured Projects' }
     ]
   })
 

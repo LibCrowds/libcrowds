@@ -25,7 +25,7 @@ import { notifications } from '@/mixins/notifications'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   data () {
     return {
@@ -123,7 +123,7 @@ export default {
         message: 'Collection created'
       })
       this.$router.push({
-        name: 'admin-collections-id-update',
+        name: 'admin-site-collections-id-update',
         params: {
           id: category.id
         }
@@ -134,7 +134,7 @@ export default {
      * Handle cancel.
      */
     onCancel () {
-      this.$router.push({ name: 'admin-collections' })
+      this.$router.push({ name: 'admin-site-collections' })
     }
   },
 

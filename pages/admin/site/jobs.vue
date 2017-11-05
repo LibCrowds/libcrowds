@@ -23,7 +23,7 @@
 import localConfig from '@/local.config'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   data () {
     return {

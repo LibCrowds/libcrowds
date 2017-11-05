@@ -16,7 +16,7 @@ export default {
         {
           label: 'Open Project',
           link: {
-            name: 'project-open'
+            name: 'admin-project-open'
           }
         }
       ]
@@ -37,7 +37,7 @@ export default {
         {
           label: 'Settings',
           link: {
-            name: 'project-short_name-settings',
+            name: 'admin-project-short_name-settings',
             params: {
               short_name: this.project.short_name
             }
@@ -46,7 +46,7 @@ export default {
         {
           label: 'Tags',
           link: {
-            name: 'project-short_name-tags',
+            name: 'admin-project-short_name-tags',
             params: {
               short_name: this.project.short_name
             }
@@ -55,7 +55,7 @@ export default {
         {
           label: 'Collection',
           link: {
-            name: 'project-short_name-collection',
+            name: 'admin-project-short_name-collection',
             params: {
               short_name: this.project.short_name
             }
@@ -64,7 +64,7 @@ export default {
         {
           label: 'Thumbnail',
           link: {
-            name: 'project-short_name-thumbnail',
+            name: 'admin-project-short_name-thumbnail',
             params: {
               short_name: this.project.short_name
             }
