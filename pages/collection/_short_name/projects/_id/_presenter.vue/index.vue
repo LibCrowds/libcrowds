@@ -186,7 +186,7 @@ export default {
         }
       }).href
       const signupUrl = this.$router.resolve({
-        name: 'account-signup',
+        name: 'account-register',
         query: {
           next: this.$route.path
         }
