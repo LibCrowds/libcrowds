@@ -5,7 +5,7 @@
     :sticky="sticky"
     :fixed="fixed">
 
-    <span class="app-navbar-left">
+    <span class="app-navbar-left ml-1">
       <b-link
         :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
         :to="{
