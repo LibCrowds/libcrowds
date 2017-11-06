@@ -4,7 +4,6 @@
   * [Configuration](development.md#configuring)
   * [Building](development.md#building)
   * [Testing](development.md#testing)
-  * [Documenting](development.md#documenting)
 * [Configuration](configuration.md)
   * [PYBOSSA](configuration.md#configuring-pybossa)
   * [LibCrowds](configuration.md#configuring-libcrowds)
