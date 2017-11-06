@@ -10,20 +10,32 @@
           {{ localConfig.brand }}
         </nuxt-link>
       </div>
-      <b-nav>
+
+      <transition-group
+        appear
+        name="dashboard-slide-in"
+        class="nav"
+        tag="ul"
+        :css="false"
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @leave="leave">
         <b-nav-item
           v-for="(item, index) in navItems"
           exact
           :key="index"
+          :data-index="index"
           :to="item.link">
           {{ item.label }}
         </b-nav-item>
-      </b-nav>
+      </transition-group>
+
     </nav>
   </div>
 </template>
 
 <script>
+import Velocity from 'velocity-animate'
 import localConfig from '@/local.config'
 
 export default {
@@ -48,6 +60,32 @@ export default {
         ]
         return validPositions.indexOf(value) > -1
       }
+    }
+  },
+
+  methods: {
+    beforeEnter (el) {
+      el.style.opacity = 0
+      el.style.translateX = 0
+    },
+
+    enter (el, done) {
+      const delay = el.dataset.index * 150
+      setTimeout(() => {
+        Velocity(
+          el,
+          { opacity: 1, translateX: [0, '-100%'] },
+          { complete: done }
+        )
+      }, delay)
+    },
+
+    leave (el, done) {
+      Velocity(
+        el,
+        { opacity: 0 },
+        { complete: done }
+      )
     }
   }
 }
