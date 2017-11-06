@@ -39,6 +39,8 @@ export default {
 
   mixins: [ fetchProjectByName, notifications ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Set Collection',

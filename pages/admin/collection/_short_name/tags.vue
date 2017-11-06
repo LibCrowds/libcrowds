@@ -46,6 +46,8 @@ export default {
 
   mixins: [ fetchCollectionByName, notifications ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Tags',

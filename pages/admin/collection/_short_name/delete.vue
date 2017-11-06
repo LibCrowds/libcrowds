@@ -37,6 +37,8 @@ export default {
 
   mixins: [ fetchCollectionByName, deleteDomainObject ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Delete'

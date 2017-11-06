@@ -17,6 +17,8 @@
 export default {
   layout: 'admin-site-dashboard',
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Dashboard'

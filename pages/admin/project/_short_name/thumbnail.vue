@@ -21,6 +21,8 @@ export default {
 
   mixins: [ fetchProjectAndCollection ],
 
+  middleware: 'is-admin',
+
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`
     return app.$axios.$get(endpoint).then(data => {

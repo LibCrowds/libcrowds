@@ -25,6 +25,8 @@ import localConfig from '@/local.config'
 export default {
   layout: 'admin-site-dashboard',
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Background Tasks',

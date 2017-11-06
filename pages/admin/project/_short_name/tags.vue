@@ -56,6 +56,8 @@ export default {
 
   mixins: [ fetchProjectAndCollection, computeTags, notifications ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Tags',

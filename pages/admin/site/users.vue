@@ -108,6 +108,8 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-site-dashboard',
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Users',

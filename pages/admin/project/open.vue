@@ -29,6 +29,8 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 export default {
   layout: 'admin-project-dashboard',
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Open Project',

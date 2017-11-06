@@ -40,6 +40,8 @@ export default {
 
   mixins: [ fetchProjectByName ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Project Settings'

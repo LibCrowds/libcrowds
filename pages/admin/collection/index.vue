@@ -66,6 +66,8 @@ export default {
 
   mixins: [ deleteDomainObject ],
 
+  middleware: 'is-admin',
+
   data () {
     return {
       title: 'Open Collection',
