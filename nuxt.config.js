@@ -24,30 +24,26 @@ const config = {
     'simplemde/dist/simplemde.min.css',
     'libcrowds-viewer/dist/scss/main.scss'
   ],
-  postcss: {
-    plugins: {
-      'postcss-url': false,
-      'postcss-cssnext': {
-        features: {
-          customProperties: false
-        }
-      }
-    }
-  },
   build: {
     vendor: [
       'bootstrap-vue',
+      '~/plugins/filters.js',
+      '~/plugins/libcrowds-viewer',
+      '~/plugins/notifications',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
       'vue-clickaway',
-      'vue-cookie',
       'vue-form-generator',
       'vue-gravatar',
-      'vue-js-toggle-button',
+      'vue-infinite-loading',
+      'vue-moment',
+      'vue-multiselect',
       'vue-notifications',
       'vue-scrollto',
-      'vue-sweetalert'
+      'vue-simplemde',
+      'vue-sweetalert',
+      'vue-js-toggle-button'
     ],
     extend (config, ctx) {
       if (ctx.isClient) {
@@ -89,7 +85,6 @@ const config = {
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
-    { src: '~/plugins/vue-cookie', ssr: false },
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },
