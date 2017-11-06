@@ -3,6 +3,7 @@
     no-body
     class="project-card">
     <nuxt-link
+      :event="linkEvent"
       :to="{
         name: 'collection-short_name-projects-id-presenter',
         params: {
@@ -21,6 +22,7 @@
     <div class="card-body project-details p-0">
       <div class="card-title mb-0">
         <nuxt-link
+          :event="linkEvent"
           :to="{
             name: 'collection-short_name-projects-id-presenter',
             params: {
@@ -119,6 +121,12 @@ export default {
     ProjectStatsModal,
     ProjectContribButton,
     ProjectAvatar
+  },
+
+  computed: {
+    linkEvent () {
+      return this.project.overall_progress < 100 ? 'click' : null
+    }
   },
 
   mounted () {
