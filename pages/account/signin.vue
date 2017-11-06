@@ -5,7 +5,7 @@
     :lead="lead"
     submit-text="Sign in"
     :form="form"
-    :next="next">
+    @success="onSuccess">
 
     <div
       slot="bottom"
@@ -51,15 +51,12 @@ export default {
   async asyncData ({ query, redirect, app, error }) {
     const endpoint = '/account/signin'
     return app.$axios.$get(endpoint).then(data => {
-      const next = query.next || '/'
-
-      // Redirect if already signed in
       if (data.next === '/') {
-        redirect(next)
+        // Redirect if already signed in
+        redirect(this.next())
       }
 
       return {
-        next: next,
         auth: data.auth,
         form: {
           endpoint: '/account/signin',
@@ -104,6 +101,20 @@ export default {
   components: {
     PybossaForm,
     OauthButtons
+  },
+
+  computed: {
+    next () {
+      return this.$route.query.next || '/'
+    }
+  },
+
+  methods: {
+    onSuccess () {
+      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios).then(data => {
+        this.$router.push({ path: this.next })
+      })
+    }
   }
 }
 </script>

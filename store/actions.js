@@ -3,6 +3,7 @@ import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 export default {
   UPDATE_CURRENT_USER: ({ dispatch, commit }, axios) => {
     // TODO remove multiple calls after cache properly busted
+    // Be careful that the sign in page still works properly when done
     // https://github.com/Scifabric/pybossa/issues/1697
     let user = {}
     return axios.$get(`/account/profile`).then(data => {
