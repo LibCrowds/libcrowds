@@ -29,10 +29,6 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 export default {
   layout: 'admin-project-dashboard',
 
-  fetch ({ store }) {
-    store.dispatch('UPDATE_CURRENT_PROJECT', {})
-  },
-
   data () {
     return {
       title: 'Open Project',
@@ -53,6 +49,12 @@ export default {
     }
   },
 
+  head () {
+    return {
+      title: this.title
+    }
+  },
+
   components: {
     InfiniteLoadingTable
   },
@@ -68,10 +70,8 @@ export default {
     }
   },
 
-  head () {
-    return {
-      title: this.title
-    }
+  beforeMount () {
+    this.$store.dispatch('UPDATE_CURRENT_PROJECT', {})
   }
 }
 </script>

@@ -64,9 +64,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-collection-dashboard',
 
-  fetch ({ store }) {
-    store.dispatch('UPDATE_CURRENT_COLLECTION', {})
-  },
+  mixins: [ deleteDomainObject ],
 
   data () {
     return {
@@ -132,6 +130,8 @@ export default {
     }
   },
 
-  mixins: [ deleteDomainObject ]
+  beforeMount () {
+    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', {})
+  }
 }
 </script>

@@ -26,10 +26,6 @@ export default {
 
   mixins: [ notifications ],
 
-  fetch ({ store }) {
-    store.dispatch('UPDATE_CURRENT_COLLECTION', {})
-  },
-
   data () {
     return {
       title: 'New Collection'
@@ -99,6 +95,10 @@ export default {
         }
       })
     }
+  },
+
+  beforeMount () {
+    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', {})
   }
 }
 </script>
