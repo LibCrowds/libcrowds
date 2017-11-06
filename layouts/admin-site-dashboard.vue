@@ -19,12 +19,6 @@ export default {
           }
         },
         {
-          label: 'Featured Projects',
-          link: {
-            name: 'admin-site-featured'
-          }
-        },
-        {
           label: 'Users',
           link: {
             name: 'admin-site-users'
