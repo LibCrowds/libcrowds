@@ -105,7 +105,9 @@ export default {
 
   computed: {
     next () {
-      return this.$route.query.next || '/'
+      return typeof this.$route.query !== 'undefined'
+        ? this.$route.query.next
+        : '/'
     }
   },
 
