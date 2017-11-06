@@ -251,6 +251,10 @@ export default {
 
   .dropdown {
     padding: 0 0.75rem;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 1.75rem;
+    }
   }
 
   .dropdown-menu {
