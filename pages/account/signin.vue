@@ -105,9 +105,11 @@ export default {
 
   computed: {
     next () {
-      return typeof this.$route.query !== 'undefined'
-        ? this.$route.query.next
-        : '/'
+      const query = this.$route.query
+      if (typeof query !== 'undefined' && typeof query.next !== 'undefined') {
+        return query.next
+      }
+      return '/'
     }
   },
 
