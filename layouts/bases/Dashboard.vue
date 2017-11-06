@@ -12,6 +12,14 @@
         hide-brand-breakpoint="lg"
         :fixed="null"
         :current-user="currentUser">
+        <a
+          slot="right"
+          v-if="localConfig.docs"
+          :href="localConfig.docs"
+          target="_blank"
+          class="nav-link d-flex px-1">
+          <icon name="question-circle"></icon>
+        </a>
       </app-navbar>
 
       <dashboard-navbar
@@ -32,11 +40,19 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import AppNavbar from '@/components/navbars/App'
 import DashboardNavbar from '@/components/navbars/Dashboard'
+import 'vue-awesome/icons/question-circle'
 
 export default {
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
   props: {
     navItems: {
       type: Array,

@@ -54,6 +54,9 @@
       <section class="d-none d-lg-block">
         <h5 class="list-title">Help</h5>
         <ul class="list-unstyled">
+          <li class="list-item" v-if="localConfig.docs">
+            <a :href="localConfig.docs" target="_blank">Docs</a>
+          </li>
           <li class="list-item">
             <nuxt-link
               :to="{

@@ -18,6 +18,8 @@
     <span class="app-navbar-right border-bottom" v-if="loggedIn">
       <b-nav is-nav-bar right>
 
+        <slot name="right"></slot>
+
         <!-- Hide on small screens until the new menu is in place -->
         <announcements class="d-none d-lg-block"></announcements>
 
