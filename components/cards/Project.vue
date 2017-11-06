@@ -58,7 +58,7 @@
           {{ collection.info.terminology.task | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
-          <icon name="users"></icon> {{ project.n_volunteers | intComma }}
+          <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
         <div class="footer-buttons">
