@@ -67,7 +67,6 @@ export default {
 
   main {
     flex: 1 1 auto;
-    background-image: url('~/assets/img/geometry.png');
     overflow-y: auto;
   }
 
@@ -75,6 +74,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-image: url('~/assets/img/geometry.png');
 
     @include media-breakpoint-up(lg) {
       z-index: 2;
