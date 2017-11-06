@@ -25,12 +25,6 @@ export default {
           }
         },
         {
-          label: 'Collections',
-          link: {
-            name: 'admin-site-collections'
-          }
-        },
-        {
           label: 'Users',
           link: {
             name: 'admin-site-users'

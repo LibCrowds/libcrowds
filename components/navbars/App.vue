@@ -54,6 +54,12 @@
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
+                name: 'admin-collection'
+              }">
+              Collection Admin
+            </b-dropdown-item>
+            <b-dropdown-item
+              :to="{
                 name: 'admin-site-dashboard'
               }">
               Site Admin

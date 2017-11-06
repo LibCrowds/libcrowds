@@ -10,9 +10,10 @@
           {{ localConfig.brand }}
         </nuxt-link>
       </div>
-      <b-nav vertical>
+      <b-nav>
         <b-nav-item
           v-for="(item, index) in navItems"
+          exact
           :key="index"
           :to="item.link">
           {{ item.label }}
@@ -153,7 +154,7 @@ export default {
     &.top {
       .nav-item {
         flex-direction: row;
-        margin: 0 calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y});
+        margin: calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y});
       }
 
       ul {
