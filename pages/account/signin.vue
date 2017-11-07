@@ -51,12 +51,14 @@ export default {
   async asyncData ({ query, redirect, app, error }) {
     const endpoint = '/account/signin'
     return app.$axios.$get(endpoint).then(data => {
+      const next = query.next || '/'
       if (data.next === '/') {
         // Redirect if already signed in
-        redirect(this.next())
+        redirect(next)
       }
 
       return {
+        next: next,
         auth: data.auth,
         form: {
           endpoint: '/account/signin',
@@ -101,16 +103,6 @@ export default {
   components: {
     PybossaForm,
     OauthButtons
-  },
-
-  computed: {
-    next () {
-      const query = this.$route.query
-      if (typeof query !== 'undefined' && typeof query.next !== 'undefined') {
-        return query.next
-      }
-      return '/'
-    }
   },
 
   methods: {
