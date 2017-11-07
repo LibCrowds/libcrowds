@@ -27,7 +27,7 @@
         :nav-items="navItems">
       </dashboard-navbar>
 
-      <main class="container px-lg-4 py-4">
+      <main class="container-fluid px-lg-4 py-4">
         <transition name="fade" mode="out-in" appear>
           <nuxt></nuxt>
         </transition>
