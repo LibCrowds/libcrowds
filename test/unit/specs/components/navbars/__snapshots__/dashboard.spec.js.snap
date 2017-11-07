@@ -13,8 +13,10 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
         My Brand
       </nuxt-link>
     </div>
-    <ul class="nav flex-column">
-      <li class="nav-item">
+    <ul class="nav">
+      <li data-index="0"
+          class="nav-item"
+      >
         <a href="#"
            target="_self"
            aria-disabled="false"
@@ -23,7 +25,9 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
           Dashboard
         </a>
       </li>
-      <li class="nav-item">
+      <li data-index="1"
+          class="nav-item"
+      >
         <a href="#"
            target="_self"
            aria-disabled="false"
@@ -51,8 +55,10 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
         My Brand
       </nuxt-link>
     </div>
-    <ul class="nav flex-column">
-      <li class="nav-item">
+    <ul class="nav">
+      <li data-index="0"
+          class="nav-item"
+      >
         <a href="#"
            target="_self"
            aria-disabled="false"
@@ -61,7 +67,9 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
           Dashboard
         </a>
       </li>
-      <li class="nav-item">
+      <li data-index="1"
+          class="nav-item"
+      >
         <a href="#"
            target="_self"
            aria-disabled="false"
