@@ -357,6 +357,7 @@
 </template>
 
 <script>
+import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
 
@@ -364,6 +365,8 @@ export default {
   layout: 'admin-site-dashboard',
 
   middleware: 'is-admin',
+
+  mixins: [ notifications ],
 
   data () {
     return {
@@ -442,12 +445,13 @@ export default {
      * Refresh the dashboard.
      */
     refresh () {
-      this.$axios.get('/admin/dashboard', {
+      this.$axios.$get('/admin/dashboard', {
         params: {
           refresh: 1
         }
       }).then(data => {
-        console.log(data)
+        data.status = 'info'
+        this.flash(data)
       }).catch(err => {
         this.$nuxt.error(err)
       })
