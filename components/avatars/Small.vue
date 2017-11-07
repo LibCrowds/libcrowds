@@ -56,12 +56,16 @@ export default {
 
 .small-avatar {
   overflow: hidden;
-  width: 3rem;
-  height: 3rem;
+  max-width: 3rem;
+  max-height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
 
-  img {
-    width: 3rem;
-    height: 3rem;
+  &>* {
+    max-width: 3rem;
+    max-height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
   }
 
   .placeholder {
