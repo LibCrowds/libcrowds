@@ -1,29 +1,24 @@
 sudo: required
-
 dist: trusty
-
 language: node_js
-
 node_js:
-- '7'
-
+- '8'
 before_install:
+# Remove hte line below once node 9 moves to LTS (and so does this repo)
 - npm install -g npm@5
 - npm install -g greenkeeper-lockfile@1
+# Deploy key used to push to the server
 - openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv
   -in deploy-key.enc -out deploy-key -d
-
 install:
 - npm install
-
-before_script:
-- greenkeeper-lockfile-update
-
-script:
-- npm run test
-
 before_script:
 - greenkeeper-lockfile-upload
-
+script:
+- npm run test
 after_success:
 - bash bin/deploy.sh
+env:
+  global:
+    # GH_TOKEN used for greenkeeper-lockfile
+    secure: iMLVTgpiRtJ0OmJwJmAPEnvPCRTxM9UXxLR1HQHHhhJRLpWWUH89wmiNqpk8qnfwL+IWxkgquuY9RyQYhGINwMfswsBdP8eIVu1iWg0qwGhbdhfiV3CiMm7rxDz02WoqyOcdpm2RHRGo8Hd1YJ2avJn5TBtkqlYDhNO14wBSAmNp55KMrHqC6wAtAR2V/SASiO6zLrm0yrE/K6kkjRjpe8TY6VdTfuK3EnUDA4HjJZqcC0131214IAVcYxLplTJVrb2qBPwHOyqyQxV2S6eWIJthEQ4Qr1aTVpPAbDbLEbJdxbU3VkA0Jiz8acB3f3yN/DmHVHO4585WepJVIw+oWm4rKbfSHCyR2CENMNF/Hkyw4UtyYwsQTHlR5fF2+QyIbsO4f0fAC3poK3AIg1OanwEgaN5TWti2ed/Hy88ODRkxrH+tynhDVSMA00KdgZ82JGFQ/Rp1AdCvJWWx0eWsXg/Xxzbs2M9zIFzeu57a6onXla743tOtdcH0qu7EdOnUfg2dXiied/+xLak1dJlOHu1dhgLcRxs9aBzE0LBWswpO9v9Mi8HA067NvCy0e8bcQHWHJQ0zLHYDqIg9rLnr8lq+d1T+IwgqMx7dHvxlXM1u6o17Li3WdV7//McwzeSIl/UEKKRGICTI/D0vQOQhZhnlw0jMfd6xqyUtRJxNRoE=
