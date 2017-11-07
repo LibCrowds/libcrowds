@@ -12,6 +12,14 @@
         hide-brand-breakpoint="lg"
         :fixed="null"
         :current-user="currentUser">
+        <a
+          slot="right"
+          v-if="localConfig.docs"
+          :href="localConfig.docs"
+          target="_blank"
+          class="nav-link d-flex px-1">
+          <icon name="question-circle"></icon>
+        </a>
       </app-navbar>
 
       <dashboard-navbar
@@ -19,7 +27,7 @@
         :nav-items="navItems">
       </dashboard-navbar>
 
-      <main class="container px-lg-4 py-4">
+      <main class="container-fluid px-lg-4 py-4">
         <transition name="fade" mode="out-in" appear>
           <nuxt></nuxt>
         </transition>
@@ -32,11 +40,19 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import AppNavbar from '@/components/navbars/App'
 import DashboardNavbar from '@/components/navbars/Dashboard'
+import 'vue-awesome/icons/question-circle'
 
 export default {
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
   props: {
     navItems: {
       type: Array,
@@ -67,7 +83,6 @@ export default {
 
   main {
     flex: 1 1 auto;
-    background-image: url('~/assets/img/geometry.png');
     overflow-y: auto;
   }
 
@@ -75,6 +90,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-image: url('~/assets/img/geometry.png');
 
     @include media-breakpoint-up(lg) {
       z-index: 2;

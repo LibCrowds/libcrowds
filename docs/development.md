@@ -52,15 +52,3 @@ npm unit
 # run all tests
 npm test
 ```
-
-## Documenting
-
-To build and serve this documentation locally:
-
-``` bash
-# install dependencies
-gitbook install
-
-# serve at 127.0.0.1:4000
-gitbook serve
-```

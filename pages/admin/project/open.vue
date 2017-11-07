@@ -11,7 +11,7 @@
           size="sm"
           block
           :to="{
-            name: 'project-short_name-settings',
+            name: 'admin-project-short_name-settings',
             params: {
               short_name: project.item.short_name
             }
@@ -27,11 +27,9 @@
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'project-dashboard',
+  layout: 'admin-project-dashboard',
 
-  fetch ({ store }) {
-    store.dispatch('UPDATE_CURRENT_PROJECT', {})
-  },
+  middleware: 'is-admin',
 
   data () {
     return {
@@ -53,6 +51,12 @@ export default {
     }
   },
 
+  head () {
+    return {
+      title: this.title
+    }
+  },
+
   components: {
     InfiniteLoadingTable
   },
@@ -68,10 +72,8 @@ export default {
     }
   },
 
-  head () {
-    return {
-      title: this.title
-    }
+  beforeMount () {
+    this.$store.dispatch('UPDATE_CURRENT_PROJECT', {})
   }
 }
 </script>

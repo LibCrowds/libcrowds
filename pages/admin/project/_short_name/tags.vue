@@ -52,9 +52,11 @@ import { computeTags } from '@/mixins/computeTags'
 import { notifications } from '@/mixins/notifications'
 
 export default {
-  layout: 'project-dashboard',
+  layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectAndCollection, computeTags, notifications ],
+
+  middleware: 'is-admin',
 
   data () {
     return {

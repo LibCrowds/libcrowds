@@ -18,6 +18,8 @@
     <span class="app-navbar-right border-bottom" v-if="loggedIn">
       <b-nav is-nav-bar right>
 
+        <slot name="right"></slot>
+
         <!-- Hide on small screens until the new menu is in place -->
         <announcements class="d-none d-lg-block"></announcements>
 
@@ -48,13 +50,19 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item
               :to="{
-                name: 'project-open'
+                name: 'admin-project-open'
               }">
               Project Admin
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
-                name: 'admin-dashboard'
+                name: 'admin-collection'
+              }">
+              Collection Admin
+            </b-dropdown-item>
+            <b-dropdown-item
+              :to="{
+                name: 'admin-site-dashboard'
               }">
               Site Admin
             </b-dropdown-item>
@@ -174,6 +182,7 @@ export default {
     display: flex;
     align-items: center;
     border-bottom: 1px solid $gray-300;
+    padding: 0 0.75rem;
   }
 
   .app-navbar-right {
@@ -206,8 +215,10 @@ export default {
   .nav-item {
     padding: 0 0.75rem;
     color: inherit;
+    display: inline-block;
 
     @include media-breakpoint-up(sm) {
+      display: block;
       padding: 0 1.25rem;
     }
 
@@ -241,7 +252,11 @@ export default {
   }
 
   .dropdown {
-    padding: 0 1.75rem;
+    padding: 0 0.75rem;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 1.75rem;
+    }
   }
 
   .dropdown-menu {

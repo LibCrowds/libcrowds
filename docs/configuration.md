@@ -107,6 +107,14 @@ Describe the overall purpose of the site.
 config.description: 'My SEO optimised meta description'
 ```
 
+### docs
+
+A URL to the platform's documentation.
+
+```js
+config.docs: 'http://docs.example.com'
+```
+
 ### githubUrl
 
 Provide a GitHub link that relates to the site.

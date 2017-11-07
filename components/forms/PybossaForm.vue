@@ -153,6 +153,11 @@ export default {
       if (!valid) {
         this.alert = 'Please correct the errors'
         this.status = 'error'
+        this.notify({
+          type: 'warn',
+          title: 'Invalid form data',
+          message: this.alert
+        })
       }
       return valid
     },
@@ -194,6 +199,12 @@ export default {
           return
         } else if (r.data.status === 'success') {
           this.handleSuccess(r.data)
+        } else if (typeof r.data.status === 'undefined') {
+          this.notify({
+            type: 'success',
+            title: 'Success',
+            message: ''
+          })
         }
         this.flash(r.data)
       }).catch(err => {

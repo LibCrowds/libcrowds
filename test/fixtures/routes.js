@@ -5,9 +5,9 @@ export const routes = [
     name: 'index'
   },
   {
-    path: '/admin/collections',
+    path: '/admin/site/collections',
     component: jest.fn(),
-    name: 'admin-collections'
+    name: 'admin-site-collections'
   },
   {
     path: '/help/privacy',
@@ -15,9 +15,9 @@ export const routes = [
     name: 'help-privacy'
   },
   {
-    path: '/admin/dashboard',
+    path: '/admin/site/dashboard',
     component: jest.fn(),
-    name: 'admin-dashboard'
+    name: 'admin-site-dashboard'
   },
   {
     path: '/account/signin',
@@ -35,14 +35,14 @@ export const routes = [
     name: 'account-register'
   },
   {
-    path: '/admin/featured',
+    path: '/admin/site/featured',
     component: jest.fn(),
-    name: 'admin-featured'
+    name: 'admin-site-featured'
   },
   {
-    path: '/admin/announcements',
+    path: '/admin/site/announcements',
     component: jest.fn(),
-    name: 'admin-announcements'
+    name: 'admin-site-announcements'
   },
   {
     path: '/help/tos',
@@ -50,9 +50,9 @@ export const routes = [
     name: 'help-tos'
   },
   {
-    path: '/admin/jobs',
+    path: '/admin/site/jobs',
     component: jest.fn(),
-    name: 'admin-jobs'
+    name: 'admin-site-jobs'
   },
   {
     path: '/help/api',
@@ -60,9 +60,9 @@ export const routes = [
     name: 'help-api'
   },
   {
-    path: '/admin/users',
+    path: '/admin/site/users',
     component: jest.fn(),
-    name: 'admin-users'
+    name: 'admin-site-users'
   },
   {
     path: '/help/cookies',
@@ -70,9 +70,9 @@ export const routes = [
     name: 'help-cookies'
   },
   {
-    path: '/admin/announcements/new',
+    path: '/admin/site/announcements/new',
     component: jest.fn(),
-    name: 'admin-announcements-new'
+    name: 'admin-site-announcements-new'
   },
   {
     path: '/account/password/reset',
@@ -80,9 +80,9 @@ export const routes = [
     name: 'account-password-reset'
   },
   {
-    path: '/admin/collections/new',
+    path: '/admin/site/collections/new',
     component: jest.fn(),
-    name: 'admin-collections-new'
+    name: 'admin-site-collections-new'
   },
   {
     path: '/account/password/forgotten',
@@ -90,14 +90,14 @@ export const routes = [
     name: 'account-password-forgotten'
   },
   {
-    path: '/admin/announcements/:id/update',
+    path: '/admin/site/announcements/:id/update',
     component: jest.fn(),
-    name: 'admin-announcements-id-update'
+    name: 'admin-site-announcements-id-update'
   },
   {
-    path: '/admin/collections/:id/update',
+    path: '/admin/site/collections/:id/update',
     component: jest.fn(),
-    name: 'admin-collections-id-update'
+    name: 'admin-site-collections-id-update'
   },
   {
     path: '/account/:name?',
@@ -115,24 +115,24 @@ export const routes = [
     name: 'collection-short_name-projects'
   },
   {
-    path: '/project/:short_name?/thumbnail',
+    path: '/admin/project/:short_name?/thumbnail',
     component: jest.fn(),
-    name: 'project-short_name-thumbnail'
+    name: 'admin-project-short_name-thumbnail'
   },
   {
-    path: '/project/:short_name?/tags',
+    path: '/admin/project/:short_name?/tags',
     component: jest.fn(),
-    name: 'project-short_name-tags'
+    name: 'admin-project-short_name-tags'
   },
   {
-    path: '/project/:short_name?/settings',
+    path: '/admin/project/:short_name?/settings',
     component: jest.fn(),
-    name: 'project-short_name-settings'
+    name: 'admin-project-short_name-settings'
   },
   {
-    path: '/project/open',
+    path: '/admin/project/open',
     component: jest.fn(),
-    name: 'project-open'
+    name: 'admin-project-open'
   },
   {
     path: '/account/:name?/announcements',

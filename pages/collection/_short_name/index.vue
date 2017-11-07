@@ -234,12 +234,18 @@ export default {
 
     hasLogo () {
       return this.collection.info.logo && this.collection.info.logo.length
+    },
+
+    title () {
+      return this.collection.info && 'tagline' in this.collection.info
+        ? this.collection.info.tagline
+        : this.collection.name
     }
   },
 
   head () {
     return {
-      title: this.collection.info.tagline || this.collection.name,
+      title: this.title,
       meta: [
         {
           hid: 'description',

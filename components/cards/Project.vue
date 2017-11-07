@@ -3,6 +3,7 @@
     no-body
     class="project-card">
     <nuxt-link
+      :event="linkEvent"
       :to="{
         name: 'collection-short_name-projects-id-presenter',
         params: {
@@ -21,6 +22,7 @@
     <div class="card-body project-details p-0">
       <div class="card-title mb-0">
         <nuxt-link
+          :event="linkEvent"
           :to="{
             name: 'collection-short_name-projects-id-presenter',
             params: {
@@ -58,7 +60,7 @@
           {{ collection.info.terminology.task | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
-          <icon name="users"></icon> {{ project.n_volunteers | intComma }}
+          <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
         <div class="footer-buttons">
@@ -119,6 +121,12 @@ export default {
     ProjectStatsModal,
     ProjectContribButton,
     ProjectAvatar
+  },
+
+  computed: {
+    linkEvent () {
+      return this.project.overall_progress < 100 ? 'click' : null
+    }
   },
 
   mounted () {

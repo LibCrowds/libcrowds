@@ -17,7 +17,7 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'admin-announcements-new'
+            name: 'admin-site-announcements-new'
           }">
           New
         </b-btn>
@@ -35,7 +35,7 @@
             size="sm"
             block
             :to="{
-              name: 'admin-announcements-id-update',
+              name: 'admin-site-announcements-id-update',
               params: {
                 id: announcement.item.id
               }
@@ -60,9 +60,11 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   mixins: [ deleteDomainObject ],
+
+  middleware: 'is-admin',
 
   data () {
     return {

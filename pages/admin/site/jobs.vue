@@ -23,7 +23,9 @@
 import localConfig from '@/local.config'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
+
+  middleware: 'is-admin',
 
   data () {
     return {

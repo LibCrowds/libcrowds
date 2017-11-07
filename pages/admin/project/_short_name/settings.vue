@@ -36,9 +36,11 @@ import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'project-dashboard',
+  layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectByName ],
+
+  middleware: 'is-admin',
 
   data () {
     return {

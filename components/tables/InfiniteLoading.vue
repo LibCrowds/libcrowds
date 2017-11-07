@@ -113,6 +113,13 @@ export default {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
+    },
+
+    /**
+     * Reset the loaded items.
+     */
+    reset () {
+      this.$refs.infiniteload.reset()
     }
   }
 }

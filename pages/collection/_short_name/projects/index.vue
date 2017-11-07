@@ -28,7 +28,7 @@
           hover
           striped
           show-empty
-          :items="projects"
+          :items="incompleteProjects"
           :fields="tableFields"
           class="d-lg-none"
           @sort-changed="onSortChange">
@@ -48,9 +48,8 @@
           tag="ul"
           class="list-unstyled d-none d-lg-block"
           name="fade-up">
-          <li v-for="project in projects" :key="project.id">
+          <li v-for="project in incompleteProjects" :key="project.id">
             <project-card
-              v-if="project.overall_progress < 100"
               :collection="collection"
               :project="project">
             </project-card>
@@ -149,6 +148,12 @@ export default {
         params.published = true
       }
       return merge(params, this.searchParams)
+    },
+
+    incompleteProjects () {
+      return this.projects.filter(project => {
+        return project.overall_progress < 100
+      })
     }
   },
 

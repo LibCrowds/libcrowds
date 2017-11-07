@@ -106,7 +106,9 @@ import exportFile from '@/utils/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
+
+  middleware: 'is-admin',
 
   data () {
     return {

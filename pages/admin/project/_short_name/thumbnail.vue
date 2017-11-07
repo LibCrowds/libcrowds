@@ -17,9 +17,11 @@ import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 
 export default {
-  layout: 'project-dashboard',
+  layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectAndCollection ],
+
+  middleware: 'is-admin',
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`

@@ -1,48 +1,49 @@
 <template>
-  <div id="admin-featured">
-    <b-card no-body>
+  <b-card no-body>
 
-      <div slot="header">
-        <h6 class="mb-1">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Featured projects appear on their collection microsite homepage.
-          </small>
-        </p>
-      </div>
+    <div slot="header">
+      <h6 class="mb-1">{{ title }}</h6>
+      <p class="text-muted mb-0">
+        <small>
+          Choose the projects that appear on the collection microsite homepage.
+        </small>
+      </p>
+    </div>
 
-      <infinite-loading-table
-        domain-object="project"
-        :fields="tableFields"
-        :search-params="searchParams"
-        no-border>
-        <template slot="action" scope="project">
-          <b-btn
-            :variant="project.item.featured ? 'warning' : 'success'"
-            size="sm"
-            block
-            @click="toggleFeatured(project.item)">
-            {{ getButtonText(project.item.featured) }}
-          </b-btn>
-        </template>
-      </infinite-loading-table>
+    <infinite-loading-table
+      domain-object="project"
+      :fields="tableFields"
+      :search-params="searchParams"
+      no-border>
+      <template slot="action" scope="project">
+        <b-btn
+          :variant="project.item.featured ? 'warning' : 'success'"
+          size="sm"
+          block
+          @click="toggleFeatured(project.item)">
+          {{ getButtonText(project.item.featured) }}
+        </b-btn>
+      </template>
+    </infinite-loading-table>
 
-    </b-card>
-  </div>
+  </b-card>
 </template>
 
 <script>
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-collection-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ fetchCollectionByName, notifications ],
+
+  middleware: 'is-admin',
 
   data () {
     return {
-      title: 'Featured Projects',
+      title: 'Featured',
       tableFields: {
         name: {
           label: 'Name'
@@ -109,8 +110,14 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
     searchParams () {
-      return {}
+      return {
+        category_id: this.collection.id
+      }
     }
   }
 }

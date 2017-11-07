@@ -58,9 +58,11 @@ import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-dashboard',
+  layout: 'admin-site-dashboard',
 
   mixins: [ notifications ],
+
+  middleware: 'is-admin',
 
   data () {
     return {
