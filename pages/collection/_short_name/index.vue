@@ -4,18 +4,11 @@
       <div class="container full-height text-center">
         <div class="header-content">
           <div class="d-flex justify-content-center align-items-center">
-            <object
-              id="collection-logo"
-              v-if="hasLogo && collection.info.logo.endsWith('.svg')"
-              :data="collection.info.logo"
-              class="d-block"
-              type="image/svg+xml">
-            </object>
             <img
               id="collection-logo"
-              v-else-if="hasLogo"
+              v-if="hasLogo"
               class="d-inline-block"
-              src="collection.info.logo">
+              :src="collection.info.logo">
             </img>
             <span
               class="mr-2 d-none d-lg-inline-block"
