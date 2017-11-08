@@ -111,7 +111,7 @@ export default {
         if (mode === 'select' && nAnnotations < 2) {
           return showConfirm(
             `Each sheet usually contains at least 2 ${pluralize(tag, 2)}.<br>
-            you have outlined ${nAnnotations}.<br>
+            You have outlined ${nAnnotations}.<br>
             Are you sure you want to submit this sheet?`
           )
         } else if (mode === 'transcribe' && nAnnotations < 1) {
