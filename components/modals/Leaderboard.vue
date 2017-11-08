@@ -2,7 +2,6 @@
   <b-modal
     :id="modalId"
     title="Leaderboard"
-    hide-header-close
     ok-only>
     <b-table
       responsive
