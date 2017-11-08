@@ -109,9 +109,8 @@ export default {
       return new Promise((resolve, reject) => {
         // TODO: expand these options.
         if (mode === 'select' && nAnnotations < 2) {
-          console.log('should show')
           return showConfirm(
-            `Each sheet usually contains at least 2 ${pluralize(tag, 2)},
+            `Each sheet usually contains at least 2 ${pluralize(tag, 2)}.<br>
             you have outlined ${nAnnotations}.<br>
             Are you sure you want to submit this sheet?`
           )
