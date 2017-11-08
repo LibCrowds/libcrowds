@@ -7,6 +7,7 @@
       :task-opts="taskOpts"
       :browsable="false"
       :selections-editable="false"
+      :before-submit="checkSubmission"
       show-help-on-mount
       @submit="onSubmit"
       @taskliked="onTaskLiked">
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
 export default {
@@ -78,6 +80,50 @@ export default {
      */
     onSubmit (taskData) {
       this.$emit('submit', this.project.id, taskData.id, taskData.annotations)
+    },
+
+    /**
+     * Check the submission before processing.
+     *
+     * This can be used, for example, to make sure we have n annotations.
+     */
+    checkSubmission (taskData) {
+      const nAnnotations = taskData.annotations.length
+      const mode = taskData.mode
+      const tag = taskData.tag
+      const showConfirm = (htmlMessage) => {
+        return new Promise((resolve, reject) => {
+          this.$swal({
+            title: 'Confirm',
+            html: htmlMessage,
+            type: 'question',
+            showCancelButton: true
+          }).then(data => {
+            resolve()
+          }, (dismiss) => {
+            reject(new Error('Submission cancelled'))
+          })
+        })
+      }
+
+      return new Promise((resolve, reject) => {
+        // TODO: expand these options.
+        if (mode === 'select' && nAnnotations < 2) {
+          console.log('should show')
+          return showConfirm(
+            `Each sheet usually contains at least 2 ${pluralize(tag, 2)},
+            you have outlined ${nAnnotations}.<br>
+            Are you sure you want to submit this sheet?`
+          )
+        } else if (mode === 'transcribe' && nAnnotations < 1) {
+          return showConfirm(
+            `You have not added any transcriptions.<br>
+            Are you sure you want to submit this sheet?`
+          )
+        } else {
+          resolve()
+        }
+      })
     }
   }
 }
@@ -97,6 +143,11 @@ export default {
     margin: 2rem auto;
     max-height: 200px;
     max-width: 100%;
+  }
+
+  // Remove this when fixed in libcrowds-viewer
+  .lv-sidebar-footer {
+    width: 100%;
   }
 }
 </style>
