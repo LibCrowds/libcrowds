@@ -113,12 +113,20 @@ export default {
             `Each sheet usually contains at least 2 ${pluralize(tag, 2)}.<br>
             You have outlined ${nAnnotations}.<br>
             Are you sure you want to submit this sheet?`
-          )
+          ).then(() => {
+            resolve()
+          }).catch(err => {
+            console.info(err)
+          })
         } else if (mode === 'transcribe' && nAnnotations < 1) {
           return showConfirm(
             `You have not added any transcriptions.<br>
             Are you sure you want to submit this sheet?`
-          )
+          ).then(() => {
+            resolve()
+          }).catch(err => {
+            console.info(err)
+          })
         } else {
           resolve()
         }
