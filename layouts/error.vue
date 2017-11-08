@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       messages: {
-        '403': 'You\'re not supposed to be here.',
+        '403': 'Forbidden.',
         '404': 'This page could not be found.',
         '405': 'Method not allowed.',
         '500': 'Uh oh, something\'s broken. We will fix it as soon as we can.'
