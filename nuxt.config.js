@@ -29,6 +29,7 @@ const config = {
       '~/plugins/filters.js',
       '~/plugins/libcrowds-viewer',
       '~/plugins/notifications',
+      'bootstrap-vue',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
