@@ -26,10 +26,10 @@ const config = {
   ],
   build: {
     vendor: [
-      'bootstrap-vue',
       '~/plugins/filters.js',
       '~/plugins/libcrowds-viewer',
       '~/plugins/notifications',
+      'bootstrap-vue',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
@@ -78,7 +78,6 @@ const config = {
     }
   },
   plugins: [
-    { src: '~/plugins/bootstrap-vue' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/notifications', ssr: false },
@@ -98,7 +97,8 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
     baseURL: localConfig.pybossa.host,

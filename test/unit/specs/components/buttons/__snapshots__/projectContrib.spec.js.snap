@@ -4,7 +4,6 @@ exports[`ProjectContrib button is active by default 1`] = `
 
 <a href="#"
    target="_self"
-   aria-disabled="false"
    data-server-rendered="true"
    class="btn btn-success btn-block"
 >

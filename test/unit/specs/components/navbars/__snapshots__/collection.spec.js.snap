@@ -36,7 +36,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
          class="navbar-collapse collapse"
          style="display:none;"
     >
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a href="#/collection/playbills/about"
              target="_self"
@@ -56,7 +56,6 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
         <li class="nav-item">
           <a href="http://example.com/discuss"
              target="_self"
-             aria-disabled="false"
              class="nav-link"
           >
             Discuss
@@ -71,7 +70,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
           </a>
         </li>
       </ul>
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav">
         <div id="announcements-list">
           <button id="announcements-toggle"
                   type="button"
@@ -151,10 +150,10 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
               >
                 Project Admin
               </a>
-              <a href="#/"
+              <a href="#/admin/collection"
                  role="menuitem"
                  target="_self"
-                 class="dropdown-item active"
+                 class="dropdown-item"
               >
                 Collection Admin
               </a>
@@ -173,7 +172,6 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
             <a role="menuitem"
                href="#"
                target="_self"
-               aria-disabled="false"
                class="dropdown-item"
             >
               Sign Out
@@ -223,7 +221,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
          class="navbar-collapse collapse"
          style="display:none;"
     >
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a href="#/collection/playbills/about"
              target="_self"
@@ -243,7 +241,6 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
         <li class="nav-item">
           <a href="http://example.com/discuss"
              target="_self"
-             aria-disabled="false"
              class="nav-link"
           >
             Discuss
@@ -258,7 +255,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
           </a>
         </li>
       </ul>
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav">
         <div id="announcements-list">
           <button id="announcements-toggle"
                   type="button"
@@ -334,7 +331,6 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
             <a role="menuitem"
                href="#"
                target="_self"
-               aria-disabled="false"
                class="dropdown-item"
             >
               Sign Out
@@ -384,7 +380,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
          class="navbar-collapse collapse"
          style="display:none;"
     >
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <a href="#/collection/playbills/about"
              target="_self"
@@ -404,7 +400,6 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
         <li class="nav-item">
           <a href="http://example.com/discuss"
              target="_self"
-             aria-disabled="false"
              class="nav-link"
           >
             Discuss
@@ -419,25 +414,23 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
           </a>
         </li>
       </ul>
-      <ul class="nav navbar-nav">
-        <ul class="nav navbar-nav">
-          <li class="nav-item">
-            <a href="#/account/signin?next=%2F"
-               target="_self"
-               class="nav-link"
-            >
-              Sign in
-            </a>
-          </li>
-          <li class="nav-button nav-item">
-            <a href="#/account/register"
-               target="_self"
-               class="nav-link"
-            >
-              Sign up
-            </a>
-          </li>
-        </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#/account/signin?next=%2F"
+             target="_self"
+             class="nav-link"
+          >
+            Sign in
+          </a>
+        </li>
+        <li class="nav-button nav-item">
+          <a href="#/account/register"
+             target="_self"
+             class="nav-link"
+          >
+            Sign up
+          </a>
+        </li>
       </ul>
     </div>
   </div>

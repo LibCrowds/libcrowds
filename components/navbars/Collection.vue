@@ -40,7 +40,7 @@
       <b-collapse is-nav id="main-nav-collapse" ref="sidebar">
 
         <!-- Main menu -->
-        <b-nav is-nav-bar>
+        <b-navbar-nav>
           <b-nav-item
             exact
             :to="{
@@ -90,9 +90,9 @@
             @click="toggleCollapsibleSidebar">
             Data
           </b-nav-item>
-        </b-nav>
+        </b-navbar-nav>
 
-        <b-nav is-nav-bar v-if="loggedIn">
+        <b-navbar-nav v-if="loggedIn">
 
           <announcements></announcements>
 
@@ -147,32 +147,30 @@
             <div role="separator" class="dropdown-divider"></div>
             <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
-        </b-nav>
+        </b-navbar-nav>
 
         <!-- Sign in/sign up -->
-        <b-nav is-nav-bar v-else>
-          <b-nav is-nav-bar>
-            <b-nav-item
-              exact
-              :to="{
-                name: 'account-signin',
-                query: {
-                  next: $route.path
-                }
-              }">
-              Sign in
-            </b-nav-item>
-            <b-nav-item
-              exact
-              class="nav-button"
-              :to="{
-                name: 'account-register'
-              }">
-              Sign up
-            </b-nav-item>
-          </b-nav>
+        <b-navbar-nav v-else>
+          <b-nav-item
+            exact
+            :to="{
+              name: 'account-signin',
+              query: {
+                next: $route.path
+              }
+            }">
+            Sign in
+          </b-nav-item>
+          <b-nav-item
+            exact
+            class="nav-button"
+            :to="{
+              name: 'account-register'
+            }">
+            Sign up
+          </b-nav-item>
+        </b-navbar-nav>
 
-        </b-nav>
       </b-collapse>
     </div>
   </b-navbar>

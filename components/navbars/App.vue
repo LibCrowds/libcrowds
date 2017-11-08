@@ -16,7 +16,7 @@
     </span>
 
     <span class="app-navbar-right border-bottom" v-if="loggedIn">
-      <b-nav is-nav-bar right>
+      <b-navbar-nav right>
 
         <slot name="right"></slot>
 
@@ -71,12 +71,12 @@
           <div role="separator" class="dropdown-divider"></div>
           <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
-      </b-nav>
+      </b-navbar-nav>
 
       <!-- Sign in/sign up -->
     </span>
     <span class="app-navbar-right" v-else>
-      <b-nav id="sign-in-up" is-nav-bar right>
+      <b-navbar-nav id="sign-in-up" right>
         <b-nav-item
           exact
           :to="{
@@ -95,7 +95,7 @@
           }">
           Sign up
         </b-nav-item>
-      </b-nav>
+      </b-navbar-nav>
     </span>
   </b-navbar>
 </template>

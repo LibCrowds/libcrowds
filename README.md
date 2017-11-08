@@ -1,7 +1,6 @@
 # LibCrowds
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/LibCrowds/libcrowds.svg)](https://greenkeeper.io/)
-
 [![Build Status](https://travis-ci.org/LibCrowds/libcrowds.svg?branch=master)](https://travis-ci.org/LibCrowds/libcrowds)
 [![DOI](https://zenodo.org/badge/92406558.svg)](https://zenodo.org/badge/latestdoi/92406558)
 
