@@ -88,7 +88,9 @@ export default {
   data () {
     return {
       projects: [],
-      searchParams: {},
+      searchParams: {
+        orderby: 'overall_progress'
+      },
       noResults: 'No projects are available using the selected filters, ' +
         'use the input fields on the left to change them.',
       tableFields: {
