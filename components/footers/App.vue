@@ -25,9 +25,14 @@
             class="list-inline-item mx-1">
             <a :href="localConfig.githubUrl" class="text-muted">
               <icon name="github"></icon>
-           </a>
+            </a>
           </li>
         </ul>
+        <newsletter-form
+          v-if="localConfig.mailchimp"
+          btn-variant="dark"
+          class="mt-1">
+        </newsletter-form>
       </section>
 
       <section class="d-none d-lg-block">
@@ -105,6 +110,7 @@ import localConfig from '@/local.config'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
+import NewsletterForm from '@/components/forms/Newsletter'
 
 export default {
   data () {
@@ -121,6 +127,10 @@ export default {
       type: Array,
       required: true
     }
+  },
+
+  components: {
+    NewsletterForm
   },
 
   methods: {

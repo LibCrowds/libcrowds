@@ -123,6 +123,17 @@ Provide a GitHub link that relates to the site.
 config.githubUrl = 'https://github.com/github'
 ```
 
+### mailchimp
+
+Add a Mailchimp signup form to the main footer.
+
+```js
+config.mailchimp = {
+  apiKey: 'api-key'
+  listId: 'list-id'
+}
+```
+
 ### mapbox
 
 Use [Mapbox](https://www.mapbox.com/) to present any maps present on the site.
