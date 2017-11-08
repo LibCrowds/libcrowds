@@ -16,121 +16,119 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
       </span>
     </a>
   </span>
-  <span class="app-navbar-right border-bottom">
-    <ul right
-        class="navbar-nav"
+  <ul right
+      class="app-navbar-right border-bottom navbar-nav"
+  >
+    <div id="announcements-list"
+         class="d-none d-lg-block"
     >
-      <div id="announcements-list"
-           class="d-none d-lg-block"
+      <button id="announcements-toggle"
+              type="button"
+              class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
       >
-        <button id="announcements-toggle"
-                type="button"
-                class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
+        <icon name="bell">
+        </icon>
+        <!---->
+      </button>
+      <nuxt-link to="[object Object]"
+                 class="d-lg-none nav-link"
+      >
+        Notifications
+      </nuxt-link>
+      <span style="display:none;">
+        <div id="announcements-container"
+             class="dropdown-menu-right d-none d-md-block card"
         >
-          <icon name="bell">
-          </icon>
-          <!---->
-        </button>
-        <nuxt-link to="[object Object]"
-                   class="d-lg-none nav-link"
-        >
-          Notifications
-        </nuxt-link>
-        <span style="display:none;">
-          <div id="announcements-container"
-               class="dropdown-menu-right d-none d-md-block card"
-          >
-            <div class="card-header">
-              <div>
-                Notifications
-              </div>
+          <div class="card-header">
+            <div>
+              Notifications
             </div>
-            <div id="announcements">
-            </div>
-            <no-ssr>
-              <infinite-loading class="infinite-loading">
-                <span slot="no-results">
-                  <span>
-                    No announcements have been made yet
-                  </span>
-                </span>
-                <span slot="no-more">
-                  <!---->
-                </span>
-              </infinite-loading>
-            </no-ssr>
           </div>
+          <div id="announcements">
+          </div>
+          <no-ssr>
+            <infinite-loading class="infinite-loading">
+              <span slot="no-results">
+                <span>
+                  No announcements have been made yet
+                </span>
+              </span>
+              <span slot="no-more">
+                <!---->
+              </span>
+            </infinite-loading>
+          </no-ssr>
+        </div>
+      </span>
+    </div>
+    <li class="nav-item b-nav-dropdown dropdown">
+      <a href="#"
+         aria-haspopup="true"
+         aria-expanded="false"
+         class="nav-link dropdown-toggle"
+      >
+        <span>
+          JohnDoe
         </span>
-      </div>
-      <li class="nav-item b-nav-dropdown dropdown">
-        <a href="#"
-           aria-haspopup="true"
-           aria-expanded="false"
-           class="nav-link dropdown-toggle"
+      </a>
+      <div role="menu"
+           class="dropdown-menu dropdown-menu-right"
+      >
+        <a href="#/account/JohnDoe"
+           role="menuitem"
+           target="_self"
+           class="dropdown-item"
         >
-          <span>
-            JohnDoe
-          </span>
+          Profile
         </a>
-        <div role="menu"
-             class="dropdown-menu dropdown-menu-right"
+        <a href="#/account/JohnDoe/settings/profile"
+           role="menuitem"
+           target="_self"
+           class="dropdown-item"
         >
-          <a href="#/account/JohnDoe"
-             role="menuitem"
-             target="_self"
-             class="dropdown-item"
-          >
-            Profile
-          </a>
-          <a href="#/account/JohnDoe/settings/profile"
-             role="menuitem"
-             target="_self"
-             class="dropdown-item"
-          >
-            Settings
-          </a>
-          <span>
-            <div role="separator"
-                 class="dropdown-divider"
-            >
-            </div>
-            <a href="#/admin/project/open"
-               role="menuitem"
-               target="_self"
-               class="dropdown-item"
-            >
-              Project Admin
-            </a>
-            <a href="#/admin/collection"
-               role="menuitem"
-               target="_self"
-               class="dropdown-item"
-            >
-              Collection Admin
-            </a>
-            <a href="#/admin/site/dashboard"
-               role="menuitem"
-               target="_self"
-               class="dropdown-item"
-            >
-              Site Admin
-            </a>
-          </span>
+          Settings
+        </a>
+        <span>
           <div role="separator"
                class="dropdown-divider"
           >
           </div>
-          <a role="menuitem"
-             href="#"
+          <a href="#/admin/project/open"
+             role="menuitem"
              target="_self"
              class="dropdown-item"
           >
-            Sign Out
+            Project Admin
           </a>
+          <a href="#/admin/collection"
+             role="menuitem"
+             target="_self"
+             class="dropdown-item"
+          >
+            Collection Admin
+          </a>
+          <a href="#/admin/site/dashboard"
+             role="menuitem"
+             target="_self"
+             class="dropdown-item"
+          >
+            Site Admin
+          </a>
+        </span>
+        <div role="separator"
+             class="dropdown-divider"
+        >
         </div>
-      </li>
-    </ul>
-  </span>
+        <a role="menuitem"
+           href="#"
+           target="_self"
+           class="dropdown-item"
+        >
+          Sign Out
+        </a>
+      </div>
+    </li>
+  </ul>
 </nav>
 
 `;
@@ -151,95 +149,93 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
       </span>
     </a>
   </span>
-  <span class="app-navbar-right border-bottom">
-    <ul right
-        class="navbar-nav"
+  <ul right
+      class="app-navbar-right border-bottom navbar-nav"
+  >
+    <div id="announcements-list"
+         class="d-none d-lg-block"
     >
-      <div id="announcements-list"
-           class="d-none d-lg-block"
+      <button id="announcements-toggle"
+              type="button"
+              class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
       >
-        <button id="announcements-toggle"
-                type="button"
-                class="nav-link d-none d-lg-flex flex-row btn btn-secondary"
+        <icon name="bell">
+        </icon>
+        <!---->
+      </button>
+      <nuxt-link to="[object Object]"
+                 class="d-lg-none nav-link"
+      >
+        Notifications
+      </nuxt-link>
+      <span style="display:none;">
+        <div id="announcements-container"
+             class="dropdown-menu-right d-none d-md-block card"
         >
-          <icon name="bell">
-          </icon>
-          <!---->
-        </button>
-        <nuxt-link to="[object Object]"
-                   class="d-lg-none nav-link"
-        >
-          Notifications
-        </nuxt-link>
-        <span style="display:none;">
-          <div id="announcements-container"
-               class="dropdown-menu-right d-none d-md-block card"
-          >
-            <div class="card-header">
-              <div>
-                Notifications
-              </div>
+          <div class="card-header">
+            <div>
+              Notifications
             </div>
-            <div id="announcements">
-            </div>
-            <no-ssr>
-              <infinite-loading class="infinite-loading">
-                <span slot="no-results">
-                  <span>
-                    No announcements have been made yet
-                  </span>
-                </span>
-                <span slot="no-more">
-                  <!---->
-                </span>
-              </infinite-loading>
-            </no-ssr>
           </div>
-        </span>
-      </div>
-      <li class="nav-item b-nav-dropdown dropdown">
-        <a href="#"
-           aria-haspopup="true"
-           aria-expanded="false"
-           class="nav-link dropdown-toggle"
-        >
-          <span>
-            JohnDoe
-          </span>
-        </a>
-        <div role="menu"
-             class="dropdown-menu dropdown-menu-right"
-        >
-          <a href="#/account/JohnDoe"
-             role="menuitem"
-             target="_self"
-             class="dropdown-item"
-          >
-            Profile
-          </a>
-          <a href="#/account/JohnDoe/settings/profile"
-             role="menuitem"
-             target="_self"
-             class="dropdown-item"
-          >
-            Settings
-          </a>
-          <!---->
-          <div role="separator"
-               class="dropdown-divider"
-          >
+          <div id="announcements">
           </div>
-          <a role="menuitem"
-             href="#"
-             target="_self"
-             class="dropdown-item"
-          >
-            Sign Out
-          </a>
+          <no-ssr>
+            <infinite-loading class="infinite-loading">
+              <span slot="no-results">
+                <span>
+                  No announcements have been made yet
+                </span>
+              </span>
+              <span slot="no-more">
+                <!---->
+              </span>
+            </infinite-loading>
+          </no-ssr>
         </div>
-      </li>
-    </ul>
-  </span>
+      </span>
+    </div>
+    <li class="nav-item b-nav-dropdown dropdown">
+      <a href="#"
+         aria-haspopup="true"
+         aria-expanded="false"
+         class="nav-link dropdown-toggle"
+      >
+        <span>
+          JohnDoe
+        </span>
+      </a>
+      <div role="menu"
+           class="dropdown-menu dropdown-menu-right"
+      >
+        <a href="#/account/JohnDoe"
+           role="menuitem"
+           target="_self"
+           class="dropdown-item"
+        >
+          Profile
+        </a>
+        <a href="#/account/JohnDoe/settings/profile"
+           role="menuitem"
+           target="_self"
+           class="dropdown-item"
+        >
+          Settings
+        </a>
+        <!---->
+        <div role="separator"
+             class="dropdown-divider"
+        >
+        </div>
+        <a role="menuitem"
+           href="#"
+           target="_self"
+           class="dropdown-item"
+        >
+          Sign Out
+        </a>
+      </div>
+    </li>
+  </ul>
 </nav>
 
 `;
@@ -260,31 +256,29 @@ exports[`App navbar renders correctly when signed out 1`] = `
       </span>
     </a>
   </span>
-  <span class="app-navbar-right">
-    <ul id="sign-in-up"
-        right
-        class="navbar-nav"
-    >
-      <li class="nav-item">
-        <a href="#/account/signin?next=%2F"
-           target="_self"
-           class="nav-link"
-        >
-          Sign in
-        </a>
-      </li>
-      <li id="btn-register"
-          class="nav-item"
+  <ul id="sign-in-up"
+      right
+      class="app-navbar-right navbar-nav"
+  >
+    <li class="nav-item">
+      <a href="#/account/signin?next=%2F"
+         target="_self"
+         class="nav-link"
       >
-        <a href="#/account/register"
-           target="_self"
-           class="nav-link"
-        >
-          Sign up
-        </a>
-      </li>
-    </ul>
-  </span>
+        Sign in
+      </a>
+    </li>
+    <li id="btn-register"
+        class="nav-item"
+    >
+      <a href="#/account/register"
+         target="_self"
+         class="nav-link"
+      >
+        Sign up
+      </a>
+    </li>
+  </ul>
 </nav>
 
 `;

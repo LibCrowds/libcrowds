@@ -15,88 +15,84 @@
       </b-link>
     </span>
 
-    <span class="app-navbar-right border-bottom" v-if="loggedIn">
-      <b-navbar-nav right>
+    <b-navbar-nav right class="app-navbar-right border-bottom" v-if="loggedIn">
 
-        <slot name="right"></slot>
+      <slot name="right"></slot>
 
-        <!-- Hide on small screens until the new menu is in place -->
-        <announcements class="d-none d-lg-block"></announcements>
+      <!-- Hide on small screens until the new menu is in place -->
+      <announcements class="d-none d-lg-block"></announcements>
 
-        <b-nav-item-dropdown
-          right
-          :text="currentUser.name">
+      <b-nav-item-dropdown
+        right
+        :text="currentUser.name">
 
-          <!-- Profile/settings -->
-          <b-dropdown-item
-            :to="{
-              name: 'account-name',
-              params: {
-                name: currentUser.name
-              }
-            }">Profile
-          </b-dropdown-item>
-          <b-dropdown-item
-            :to="{
-              name: 'account-name-settings-profile',
-              params: {
-                name: currentUser.name
-              }
-            }">Settings
-          </b-dropdown-item>
-
-          <!-- Project management -->
-          <span v-if="currentUser.admin">
-            <div role="separator" class="dropdown-divider"></div>
-            <b-dropdown-item
-              :to="{
-                name: 'admin-project-open'
-              }">
-              Project Admin
-            </b-dropdown-item>
-            <b-dropdown-item
-              :to="{
-                name: 'admin-collection'
-              }">
-              Collection Admin
-            </b-dropdown-item>
-            <b-dropdown-item
-              :to="{
-                name: 'admin-site-dashboard'
-              }">
-              Site Admin
-            </b-dropdown-item>
-          </span>
-
-          <div role="separator" class="dropdown-divider"></div>
-          <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-
-      <!-- Sign in/sign up -->
-    </span>
-    <span class="app-navbar-right" v-else>
-      <b-navbar-nav id="sign-in-up" right>
-        <b-nav-item
-          exact
+        <!-- Profile/settings -->
+        <b-dropdown-item
           :to="{
-            name: 'account-signin',
-            query: {
-              next: $route.path
+            name: 'account-name',
+            params: {
+              name: currentUser.name
             }
-          }">
-          Sign in
-        </b-nav-item>
-        <b-nav-item
-          exact
-          id="btn-register"
+          }">Profile
+        </b-dropdown-item>
+        <b-dropdown-item
           :to="{
-            name: 'account-register'
-          }">
-          Sign up
-        </b-nav-item>
-      </b-navbar-nav>
-    </span>
+            name: 'account-name-settings-profile',
+            params: {
+              name: currentUser.name
+            }
+          }">Settings
+        </b-dropdown-item>
+
+        <!-- Project management -->
+        <span v-if="currentUser.admin">
+          <div role="separator" class="dropdown-divider"></div>
+          <b-dropdown-item
+            :to="{
+              name: 'admin-project-open'
+            }">
+            Project Admin
+          </b-dropdown-item>
+          <b-dropdown-item
+            :to="{
+              name: 'admin-collection'
+            }">
+            Collection Admin
+          </b-dropdown-item>
+          <b-dropdown-item
+            :to="{
+              name: 'admin-site-dashboard'
+            }">
+            Site Admin
+          </b-dropdown-item>
+        </span>
+
+        <div role="separator" class="dropdown-divider"></div>
+        <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
+
+    <!-- Sign in/sign up -->
+    <b-navbar-nav id="sign-in-up" right class="app-navbar-right" v-else>
+      <b-nav-item
+        exact
+        :to="{
+          name: 'account-signin',
+          query: {
+            next: $route.path
+          }
+        }">
+        Sign in
+      </b-nav-item>
+      <b-nav-item
+        exact
+        id="btn-register"
+        :to="{
+          name: 'account-register'
+        }">
+        Sign up
+      </b-nav-item>
+    </b-navbar-nav>
   </b-navbar>
 </template>
 
@@ -187,6 +183,9 @@ export default {
 
   .app-navbar-right {
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
     &.border-bottom {
       border-bottom: 1px solid $gray-300;

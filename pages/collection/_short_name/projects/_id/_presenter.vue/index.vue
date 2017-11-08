@@ -75,29 +75,15 @@ export default {
 
   methods: {
     /**
-     * Return the URL to load the next set of tasks
-     */
-    getLoadTasksUrl () {
-      const endpoint = `/api/project/${this.project.id}/newtask`
-      let q = 'limit=10'
-      if (this.tasks.length) {
-        const lastTask = this.tasks[this.tasks.length - 1]
-        q += `&last_id=${lastTask.id}`
-      }
-      return `${endpoint}?${q}`
-    },
-
-    /**
      * Load the next set of tasks.
      */
-    loadTasks () {
-      const url = this.getLoadTasksUrl()
+    loadTask () {
+      const url = `/api/project/${this.project.id}/newtask`
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
           this.handleCompletion()
         } else {
-          const loadedTasks = Array.isArray(data) ? data : [data]
-          this.tasks = this.tasks.concat(loadedTasks)
+          this.tasks = Array.isArray(data) ? data : [data]
         }
       }).catch(err => {
         this.$nuxt.error(err)
@@ -163,18 +149,6 @@ export default {
     },
 
     /**
-     * Remove a task from the queue by ID.
-     * @param {String|Number} taskId
-     *   The task ID.
-     */
-    removeTask (taskId) {
-      const idx = this.tasks.map((task) => { return task.id }).indexOf(taskId)
-      if (idx > -1) {
-        this.tasks.splice(idx, 1)
-      }
-    },
-
-    /**
      * Show notifications depending on user progress.
      */
     trackUserProgress () {
@@ -231,16 +205,15 @@ export default {
      *   The answer data.
      */
     onSubmit (projectId, taskId, answer) {
+      console.log('submoitted')
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
         'info': answer
       })
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
-        this.removeTask(taskId)
-        if (this.tasks.length < 10) {
-          this.loadTasks()
-        }
+        console.log('new blah')
+        this.loadTask()
         this.trackUserProgress()
       }).catch(err => {
         this.$nuxt.error(err)
@@ -249,7 +222,7 @@ export default {
   },
 
   mounted () {
-    this.loadTasks()
+    this.loadTask()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   }
 }
