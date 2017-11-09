@@ -7,7 +7,7 @@
         <h6 class="mb-0">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
-            Set the available tags for the collection.
+            Configure the collection microsite.
           </small>
         </p>
       </span>
@@ -23,13 +23,13 @@
       striped
       hover
       show-empty
-      :items="tableItems"
+      :items="collection.info.tags"
       :fields="tableFields">
       <template slot="actions" scope="tag">
         <b-btn
           variant="warning"
           size="sm"
-          @click="removeTag(tag.item.tag)">
+          @click="removeTag(tag.item)">
           Remove
         </b-btn>
       </template>
@@ -51,9 +51,14 @@ export default {
   data () {
     return {
       title: 'Tags',
+      newTag: null,
       tableFields: {
-        tag: {
-          label: 'Tag',
+        type: {
+          label: 'Type',
+          sortable: true
+        },
+        name: {
+          label: 'Name',
           sortable: true
         },
         actions: {
@@ -73,12 +78,6 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    tableItems () {
-      return this.collection.info.tags.map(tag => {
-        return { tag: tag }
-      })
     }
   },
 
@@ -98,32 +97,76 @@ export default {
      * Show the add tag alert.
      */
     addTag () {
-      this.$swal({
-        title: 'Add a tag',
+      let type = ''
+      let name = ''
+
+      this.$swal.setDefaults({
         input: 'text',
         showCancelButton: true,
-        showLoaderOnConfirm: true,
-        inputValidator: (value) => {
-          return new Promise((resolve, reject) => {
-            if (this.collection.info.tags.indexOf(value) < 0) {
-              resolve()
-            } else {
-              reject(new Error('That tag already exists!'))
-            }
-          })
+        progressSteps: ['1', '2']
+      })
+
+      const steps = [
+        {
+          title: 'Enter a type',
+          text: '(e.g. Location)',
+          confirmButtonText: 'Next',
+          inputPlaceholder: 'Short types work best',
+          inputValidator: (value) => {
+            type = value
+            return new Promise((resolve, reject) => {
+              if (value) {
+                resolve()
+              } else {
+                reject(new Error('The tag type is required'))
+              }
+            })
+          }
         },
-        preConfirm: (value) => {
-          this.collection.info.tags.push(value)
-          return this.$axios.$put(`/api/category/${this.collection.id}`, {
-            info: this.collection.info
-          })
+        {
+          title: 'Enter a name',
+          text: '(e.g. London)',
+          showLoaderOnConfirm: true,
+          inputPlaceholder: 'Short names work best',
+          inputValidator: (value) => {
+            name = value
+            return new Promise((resolve, reject) => {
+              const matches = this.collection.info.tags.filter(t => {
+                return t.type === type && t.name === name
+              })
+              if (matches.length > 0) {
+                const msg = 'A tag with that name and type already exists'
+                reject(new Error(msg))
+              } else if (!value) {
+                reject(new Error('The tag type is required'))
+              } else {
+                resolve()
+              }
+            })
+          },
+          preConfirm: (value) => {
+            this.collection.info.tags.push({
+              type: type,
+              name: name
+            })
+            return this.$axios.$put(`/api/category/${this.collection.id}`, {
+              info: this.collection.info
+            })
+          }
         }
-      }).then(value => {
+      ]
+
+      this.$swal.queue(steps).then(result => {
+        this.$swal.resetDefaults()
+      }).then(data => {
         this.notify({
           type: 'success',
           title: 'Success',
-          message: `Tag added`
+          message: 'Tag added'
         })
+      }, (dismiss) => {
+        this.$swal.resetDefaults()
+        this.$swal.close()
       })
     },
 
@@ -133,13 +176,14 @@ export default {
     removeTag (tag) {
       this.$swal({
         title: `Delete Tag`,
-        text: `Are you sure you want to delete the "${tag}" tag?`,
+        text: `Are you sure you want to delete "${tag.type} - ${tag.name}"?`,
         type: 'warning',
         showCancelButton: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const idx = this.collection.info.tags.indexOf(tag)
-          this.collection.info.tags.splice(idx, 1)
+          this.collection.info.tags = this.collection.info.tags.filter(t => {
+            return t.type !== tag.type || t.name !== tag.name
+          })
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
             info: this.collection.info
           })

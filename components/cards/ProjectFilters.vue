@@ -8,11 +8,10 @@
       <multiselect
         label="name"
         track-by="name"
-        :id="tag"
-        :placeholder="`Filter by ${tag.toLowerCase()}`"
+        :id="tag.key"
+        :placeholder="`Filter by ${tag.type.toLowerCase()}`"
         :show-labels="false"
         :options="tag.options"
-        @search-change="searchTags"
         @input="onTagChange">
       </multiselect>
     </div>
@@ -20,8 +19,11 @@
 </template>
 
 <script>
+import { computeTags } from '@/mixins/computeTags'
 
 export default {
+  mixins: [ computeTags ],
+
   data () {
     return {
       filters: {}
@@ -32,27 +34,10 @@ export default {
     projects: {
       type: Array,
       required: true
-    },
-    collection: {
-      type: Object,
-      required: true
-    }
-  },
-
-  computed: {
-    tags () {
-      return this.collection.info.tags || []
     }
   },
 
   methods: {
-    /**
-     * Search the available project tags.
-     */
-    searchTags (query) {
-
-    },
-
     /**
      * Handle a tag being selected or removed.
      * @param {Object} tag

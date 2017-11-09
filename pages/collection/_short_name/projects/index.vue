@@ -15,8 +15,7 @@
         <project-filters-card
           class="mb-3"
           :projects="projects"
-          :collection="collection"
-          @change="onFiltersChange">
+          @change="onSortChange">
         </project-filters-card>
 
         <project-sorting-card
