@@ -10,27 +10,21 @@
       </p>
     </div>
 
-    <span v-if="tags.length">
+    <span v-if="hasTags">
       <div
-        v-for="(tag, index) in tags"
-        :key="index"
+        v-for="tag in collection.info.tags"
+        :key="tag"
         class="mb-2">
-        <label>{{ tag.type }}</label>
-        <multiselect
-          label="name"
-          track-by="name"
-          :id="tag.key"
-          placeholder="Select one"
-          :show-labels="false"
-          v-model="currentTagsModel[tag.key]"
-          :options="tag.options"
-          @input="onTagChange">
-        </multiselect>
+        <label>{{ tag | capitalize }}</label>
+        <b-form-input
+          type="text"
+          v-model="project.info.tags[tag]">
+        </b-form-input>
       </div>
     </span>
 
     <p v-else class="lead my-2 text-center">
-      No tags have been specified for this collection.
+      No tags have been enabled for this collection.
     </p>
 
     <div slot="footer" class="d-flex flex-row">
@@ -48,20 +42,18 @@
 
 <script>
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
-import { computeTags } from '@/mixins/computeTags'
 import { notifications } from '@/mixins/notifications'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, computeTags, notifications ],
+  mixins: [ fetchProjectAndCollection, notifications ],
 
   middleware: 'is-admin',
 
   data () {
     return {
       title: 'Tags',
-      currentTagsModel: {},
       processing: false
     }
   },
@@ -73,41 +65,23 @@ export default {
   },
 
   computed: {
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
     project () {
+      if (!this.$store.state.currentProject.info.tags) {
+        this.$store.state.currentProject.info.tags = {}
+      }
       return this.$store.state.currentProject
+    },
+
+    hasTags () {
+      return this.collection.info.tags && this.collection.info.tags.length > 0
     }
   },
 
   methods: {
-    /**
-     * Handle a tag being selected or removed.
-     * @param {Object} tag
-     *   The tag.
-     * @param {Object} key
-     *   The component ID (which should be the tag key).
-     */
-    onTagChange (tag, key) {
-      if (!tag) {
-        delete this.project.info[key]
-      } else {
-        this.project.info[key] = tag.name
-      }
-      this.updateCurrentTagsModel()
-    },
-
-    /**
-     * Update the current tags.
-     */
-    updateCurrentTagsModel () {
-      const updatedTags = {}
-      for (let tag of this.tags) {
-        updatedTags[tag.key] = tag.options.filter(option => {
-          return option.name === this.project.info[tag.key]
-        })[0]
-      }
-      this.currentTagsModel = updatedTags
-    },
-
     /**
      * Update the project's tags.
      */
@@ -128,10 +102,6 @@ export default {
         message: 'Tags updated'
       })
     }
-  },
-
-  mounted () {
-    this.updateCurrentTagsModel()
   }
 }
 </script>
