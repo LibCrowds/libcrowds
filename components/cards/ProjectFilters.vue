@@ -1,7 +1,7 @@
 <template>
   <b-card id="project-filters-card" header="Filters">
     <div
-      v-for="(options, tag) in collection.info.tags"
+      v-for="(value, tag) in collection.info.tags"
       :key="tag"
       class="mb-2">
       <label>{{ tag }}</label>
@@ -10,7 +10,7 @@
         :id="tag"
         :placeholder="`Filter by ${tag.toLowerCase()}`"
         :show-labels="false"
-        :options="options"
+        :options="value.options"
         @input="onTagChange">
       </multiselect>
     </div>

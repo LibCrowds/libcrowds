@@ -53,24 +53,24 @@ to objective, or task run to contribution.
 
 ## Tags
 
-The tags available for projects within the collection can be specified here.
-For each tag type created a new filter will be automatically added to the
-microsite's Contribute page (among others) so that users can more easily locate
-particular types of project.
+Tags are used to help users more easily location the types of project within a
+collection that they're interested in. For each tag type created via this
+admin section a new filter will be added to the microsite's Contribute
+page (among others).
+
+![Collection Admin - Tags](../assets/admin-collection-tags.png?raw=true)
+
+To add a new tag click the 'Add tag' button at the top of the table. You
+will then be given options to choose a tag type (e.g. Location), a tag name
+(e.g. London) and a colour. Note that the colour applies to all tags of the
+same type.
 
 Once tags are created they can be added to individual projects via the
 [Project Admin](admin/project.md) section.
 
-Note that, until we find a better solution (probably implementing JSONB
-searches in the database), you will also need to modify you PYBOSSA
-configuration to make the each tag publically accessible, for example:
-
-```
-PROJECT_INFO_PUBLIC_FIELDS = [
-    'tag:location',
-    'tag:entity'
-]
-```
+Tags can be edited or removed by locating them in the table and clicking the
+corresponding buttons. If you want to edit the color for a particular tag type
+just click edit on any tags of that type.
 
 ## Featured
 

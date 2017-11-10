@@ -54,11 +54,14 @@ function convertOldTagStructure (collection) {
   const newTags = {}
   const uniqueTypes = [...new Set(collection.info.tags.map(tag => tag.type))]
   for (let type of uniqueTypes) {
-    newTags[type] = collection.info.tags.filter(tag => {
-      return tag.type === type
-    }).map(tag => {
-      return tag.name
-    })
+    newTags[type] = {
+      color: '#2589BD',
+      options: collection.info.tags.filter(tag => {
+        return tag.type === type
+      }).map(tag => {
+        return tag.name
+      })
+    }
   }
   collection.info.tags = newTags
 }

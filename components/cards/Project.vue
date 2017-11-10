@@ -55,13 +55,10 @@
         {{ project.description }}
       </p>
       <div class="mb-0 px-2 pt-1">
-        <b-badge
-          v-for="tag in tags"
-          :key="tag"
-          class="mr-1"
-          variant="primary">
-          {{ tag }}
-        </b-badge>
+        <project-tags-list
+          :project="project"
+          :collection="collection">
+        </project-tags-list>
       </div>
 
       <div class="progress-container" :id="progressBarId"></div>
@@ -112,6 +109,7 @@ import ProgressBar from 'progressbar.js'
 import ProjectAvatar from '@/components/avatars/Project'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
+import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
   data () {
@@ -135,19 +133,13 @@ export default {
   components: {
     ProjectStatsModal,
     ProjectContribButton,
-    ProjectAvatar
+    ProjectAvatar,
+    ProjectTagsList
   },
 
   computed: {
     projectIncomplete () {
       return Number(this.project.overall_progress) < 100
-    },
-
-    tags () {
-      const tags = this.project.info.tags || {}
-      return Object.keys(tags).map(key => {
-        return `${key}: ${tags[key]}`
-      })
     }
   },
 

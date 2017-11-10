@@ -4,7 +4,7 @@
       <h6 class="mb-1">{{ title }}</h6>
       <p class="text-muted mb-0">
         <small>
-          Tags can be used to filter and organise projects (the available tags
+          Tags are used to filter and organise projects (the available tags
           for a collection are set via the Admin interface).
         </small>
       </p>
@@ -12,16 +12,14 @@
 
     <span v-if="hasTags">
       <div
-        v-for="(options, tag) in collection.info.tags"
+        v-for="(value, tag) in collection.info.tags"
         :key="tag"
         class="mb-2">
         <label>{{ tag | capitalize }}</label>
         <multiselect
-          track-by="tag"
-          :id="tag"
           placeholder="Select one"
           v-model="project.info.tags[tag]"
-          :options="options">
+          :options="value.options">
         </multiselect>
       </div>
     </span>
