@@ -1,9 +1,7 @@
 <template>
-  <b-card
-    no-body
-    class="project-card">
+  <b-card no-body class="project-card">
     <nuxt-link
-      :event="linkEvent"
+      v-if="projectIncomplete"
       :to="{
         name: 'collection-short_name-projects-id-presenter',
         params: {
@@ -18,11 +16,16 @@
         </project-avatar>
       </div>
     </nuxt-link>
+    <div v-else class="avatar-wrapper">
+      <project-avatar
+        :project="project">
+      </project-avatar>
+    </div>
 
     <div class="card-body project-details p-0">
       <div class="card-title mb-0">
         <nuxt-link
-          :event="linkEvent"
+          v-if="projectIncomplete"
           :to="{
             name: 'collection-short_name-projects-id-presenter',
             params: {
@@ -35,6 +38,9 @@
             {{ project.name }}
           </h4>
         </nuxt-link>
+        <h4 v-else class="card-title mb-1 px-2 pt-2">
+          {{ project.name }}
+        </h4>
         <div>
           <b-btn
             v-b-modal="statsModalId"
@@ -124,8 +130,8 @@ export default {
   },
 
   computed: {
-    linkEvent () {
-      return this.project.overall_progress < 100 ? 'click' : null
+    projectIncomplete () {
+      return Number(this.project.overall_progress) < 100
     }
   },
 
