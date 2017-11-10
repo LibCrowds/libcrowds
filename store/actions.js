@@ -84,7 +84,6 @@ export default {
 
   UPDATE_COLLECTION_NAV_ITEMS: ({ commit }, nodes) => {
     const navItems = []
-    console.log(nodes)
     for (let node of nodes) {
       navItems.push({
         id: node.id,

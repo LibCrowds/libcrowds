@@ -12,14 +12,17 @@
 
     <span v-if="hasTags">
       <div
-        v-for="tag in collection.info.tags"
+        v-for="(options, tag) in collection.info.tags"
         :key="tag"
         class="mb-2">
         <label>{{ tag | capitalize }}</label>
-        <b-form-input
-          type="text"
-          v-model="project.info.tags[tag]">
-        </b-form-input>
+        <multiselect
+          track-by="tag"
+          :id="tag"
+          placeholder="Select one"
+          v-model="project.info.tags[tag]"
+          :options="options">
+        </multiselect>
       </div>
     </span>
 
@@ -41,6 +44,9 @@
 </template>
 
 <script>
+import isNull from 'lodash/isNull'
+import pickBy from 'lodash/pickBy'
+import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { notifications } from '@/mixins/notifications'
 
@@ -70,14 +76,13 @@ export default {
     },
 
     project () {
-      if (!this.$store.state.currentProject.info.tags) {
-        this.$store.state.currentProject.info.tags = {}
-      }
-      return this.$store.state.currentProject
+      const project = this.$store.state.currentProject
+      project.info.tags = project.info.tags || {}
+      return project
     },
 
     hasTags () {
-      return this.collection.info.tags && this.collection.info.tags.length > 0
+      return !isEmpty(this.collection.info.tags)
     }
   },
 
@@ -87,6 +92,12 @@ export default {
      */
     async submit () {
       this.processing = true
+
+      // Remove null tags
+      this.project.info.tags = pickBy(this.project.info.tags, (value, key) => {
+        return !isNull(value)
+      })
+
       try {
         await this.$axios.$put(`/api/project/${this.project.id}`, {
           info: this.project.info

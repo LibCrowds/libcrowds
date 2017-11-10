@@ -1,17 +1,16 @@
 <template>
   <b-card id="project-filters-card" header="Filters">
     <div
-      v-for="(tag, index) in tags"
-      :key="index"
+      v-for="(tag, options) in tags"
+      :key="tag"
       class="mb-2">
-      <label>{{ tag.type }}</label>
+      <label>{{ tag }}</label>
       <multiselect
-        label="name"
-        track-by="name"
-        :id="tag.key"
-        :placeholder="`Filter by ${tag.type.toLowerCase()}`"
+        track-by="tag"
+        :id="tag"
+        :placeholder="`Filter by ${tag.toLowerCase()}`"
         :show-labels="false"
-        :options="tag.options"
+        :options="options"
         @input="onTagChange">
       </multiselect>
     </div>
@@ -19,11 +18,10 @@
 </template>
 
 <script>
-import { computeTags } from '@/mixins/computeTags'
+import some from 'lodash/some'
+import isEqual from 'lodash/isEqual'
 
 export default {
-  mixins: [ computeTags ],
-
   data () {
     return {
       filters: {}
@@ -57,14 +55,9 @@ export default {
      * Get filtered projects.
      */
     getFiltered () {
-      const keys = Object.keys(this.filters)
       return this.projects.filter(project => {
-        for (let key of keys) {
-          if (project.info[key] !== this.filters[key]) {
-            return false
-          }
-        }
-        return true
+        const projectTags = project.info.tags || {}
+        return some(this.filters, val => isEqual(val, projectTags))
       })
     }
   },
@@ -88,16 +81,6 @@ export default {
     background-color: $gray-100;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
-  }
-
-  #show-completed {
-    label {
-      margin: 0 5px 0 0;
-    }
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 </style>

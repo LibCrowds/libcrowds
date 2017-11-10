@@ -19,7 +19,6 @@ describe('Index page', () => {
   it('renders correctly', async () => {
     const window = await nuxt.renderAndGetWindow('http://localhost:4000/')
     const element = window.document.querySelector('.red')
-    console.log(element)
     expect(1).toBe(2)
   })
 

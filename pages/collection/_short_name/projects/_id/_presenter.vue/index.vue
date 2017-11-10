@@ -205,14 +205,12 @@ export default {
      *   The answer data.
      */
     onSubmit (projectId, taskId, answer) {
-      console.log('submoitted')
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
         'info': answer
       })
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
-        console.log('new blah')
         this.loadTask()
         this.trackUserProgress()
       }).catch(err => {

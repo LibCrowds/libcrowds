@@ -7,7 +7,7 @@
         <h6 class="mb-0">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
-            Configure the collection microsite.
+            Set the available tags for the microsite.
           </small>
         </p>
       </span>
@@ -23,7 +23,7 @@
       striped
       hover
       show-empty
-      :items="collection.info.tags"
+      :items="tableItems"
       :fields="tableFields">
       <template slot="actions" scope="tag">
         <b-btn
@@ -78,6 +78,16 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    tableItems () {
+      const items = []
+      for (let type of Object.keys(this.collection.info.tags)) {
+        for (let name of this.collection.info.tags[type]) {
+          items.push({ type: type, name: name })
+        }
+      }
+      return items
     }
   },
 
@@ -95,6 +105,8 @@ export default {
 
     /**
      * Show the add tag alert.
+     *
+     * Comprises a page for the type followed by a page for the name.
      */
     addTag () {
       let type = ''
@@ -131,24 +143,21 @@ export default {
           inputValidator: (value) => {
             name = value
             return new Promise((resolve, reject) => {
-              const matches = this.collection.info.tags.filter(t => {
-                return t.type === type && t.name === name
-              })
-              if (matches.length > 0) {
+              let typeList = this.collection.info.tags[type] || []
+              if (typeList.indexOf(name) > -1) {
                 const msg = 'A tag with that name and type already exists'
                 reject(new Error(msg))
-              } else if (!value) {
-                reject(new Error('The tag type is required'))
+              } else if (!name) {
+                reject(new Error('The tag name is required'))
               } else {
                 resolve()
               }
             })
           },
           preConfirm: (value) => {
-            this.collection.info.tags.push({
-              type: type,
-              name: name
-            })
+            let typeList = this.collection.info.tags[type] || []
+            typeList.push(name)
+            this.collection.info.tags[type] = typeList
             return this.$axios.$put(`/api/category/${this.collection.id}`, {
               info: this.collection.info
             })
@@ -181,11 +190,14 @@ export default {
         showCancelButton: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          this.collection.info.tags = this.collection.info.tags.filter(t => {
-            return t.type !== tag.type || t.name !== tag.name
+          let infoClone = Object.assign({}, this.collection.info)
+          infoClone.tags[tag.type] = infoClone.tags[tag.type].filter(name => {
+            return tag.name !== name
           })
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
-            info: this.collection.info
+            info: infoClone
+          }).then(data => {
+            this.collection.info = infoClone
           })
         }
       }).then(data => {
