@@ -119,7 +119,8 @@ const config = {
     }
   },
   proxy: {
-    '/api': localConfig.pybossa.host
+    '/api': localConfig.pybossa.host,
+    '/mailchimp': 'http://us11.api.mailchimp.com/3.0/lists/e52e46328f/members'
   },
   manifest: {
     name: localConfig.brand,
