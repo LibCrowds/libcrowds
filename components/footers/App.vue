@@ -25,7 +25,21 @@
             class="list-inline-item mx-1">
             <a :href="localConfig.githubUrl" class="text-muted">
               <icon name="github"></icon>
-           </a>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="d-none d-lg-block" v-if="localConfig.footer">
+        <h5 class="list-title">{{ localConfig.footer.title }}</h5>
+        <ul class="list-unstyled">
+          <li
+            v-for="(item, index) in localConfig.footer.items"
+            :key="index"
+            class="list-item">
+            <a :href="item.url" target="_blank">
+              {{ item.text }}
+            </a>
           </li>
         </ul>
       </section>
@@ -95,7 +109,6 @@
           </li>
         </ul>
       </section>
-
     </div>
   </footer>
 </template>
@@ -173,10 +186,6 @@ export default {
 
   .brand-link {
     font-family: $headings-font-family;
-  }
-
-  #bg-img-attribution {
-    font-size: $font-size-xs
   }
 }
 </style>
