@@ -3,7 +3,7 @@
     <infinite-loading
       ref="infiniteload"
       class="infinite-loading"
-      @infinite="infiniteLoadDomainObjects">
+      @infinite="infiniteLoadProjects">
       <span slot="no-results">
         <span v-if="noResults">{{ noResults }}</span>
       </span>
@@ -15,43 +15,44 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
-
 export default {
   data () {
     return {
-      defaultSearchParams: {
-        limit: 20,
-        all: 1
-      }
+      page: 1
     }
   },
 
   methods: {
     /**
-     * Handler to infinitely load domain objects.
+     * Handler to infinitely load projects for a collection.
+     *
+     * We have to deal with ordered projects slightly differently from other
+     * domain objects as the project stats are stored in a different table.
      * @param {Object} $state
      *   The vue-inifinite-loading state.
      */
-    async infiniteLoadDomainObjects ($state) {
+    async infiniteLoadProjects ($state) {
       const params = {}
-      merge(params, this.defaultSearchParams, this.searchParams, {
-        offset: this.value.length
-      })
+      if (this.orderby) {
+        params.orderby = this.orderby
+        params.desc = this.desc
+      }
+
+      let endpoint = `/project/category/${this.shortName}`
+      if (this.value.length) {
+        this.page += 1
+        endpoint += `/page/${this.page}`
+      }
 
       try {
-        // Get the data
-        let data = await this.$axios.$get(`/api/${this.domainObject}`, {
-          params: params
-        })
+        let data = await this.$axios.$get(endpoint, { params: params })
 
-        // Loading complete
-        if (!data.length) {
+        if (!data.projects.length) {
           $state.complete()
           return
         }
 
-        this.$emit('input', this.value.concat(data))
+        this.$emit('input', this.value.concat(data.projects))
         $state.loaded()
       } catch (err) {
         this.$nuxt.error(err)
@@ -63,6 +64,7 @@ export default {
      */
     reset () {
       this.$nextTick(() => {
+        this.page = 1
         this.$emit('input', [])
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
         this.$refs.infiniteload.$emit(
@@ -78,30 +80,17 @@ export default {
       type: Array,
       required: true
     },
-    domainObject: {
+    shortName: {
       type: String,
-      required: true,
-      validator: (value) => {
-        const valid = [
-          'announcement',
-          'auditlog',
-          'blogpost',
-          'category',
-          'helpingmaterial',
-          'project',
-          'projectstats',
-          'result',
-          'task',
-          'taskrun',
-          'user',
-          'webhook'
-        ]
-        return valid.indexOf(value) > -1
-      }
+      required: true
     },
-    searchParams: {
-      type: Object,
-      default: () => ({})
+    orderby: {
+      type: String,
+      default: null
+    },
+    desc: {
+      type: Boolean,
+      default: false
     },
     noResults: {
       type: String,
@@ -114,11 +103,11 @@ export default {
   },
 
   watch: {
-    'searchParams': {
-      handler: function (val, oldVal) {
-        this.reset()
-      },
-      deep: true
+    orderby (val, oldVal) {
+      this.reset()
+    },
+    desc (val, oldVal) {
+      this.reset()
     }
   }
 }

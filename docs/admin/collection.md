@@ -61,6 +61,17 @@ particular types of project.
 Once tags are created they can be added to individual projects via the
 [Project Admin](admin/project.md) section.
 
+Note that, until we find a better solution (probably implementing JSONB
+searches in the database), you will also need to modify you PYBOSSA
+configuration to make the each tag publically accessible, for example:
+
+```
+PROJECT_INFO_PUBLIC_FIELDS = [
+    'tag:location',
+    'tag:entity'
+]
+```
+
 ## Featured
 
 Here you can set the projects that appear on the Featured Projects section of
