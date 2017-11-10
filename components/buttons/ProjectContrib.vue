@@ -43,8 +43,7 @@ export default {
 
   computed: {
     disabled () {
-      const progress = this.project.overall_progress
-      return progress && progress === 100
+      return Number(this.project.overall_progress) >= 100
     }
   }
 }
