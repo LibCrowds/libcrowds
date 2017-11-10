@@ -54,6 +54,15 @@
       <p class="card-text project-description mb-0 px-2 pb-1">
         {{ project.description }}
       </p>
+      <div class="mb-0 px-2 pt-1">
+        <b-badge
+          v-for="tag in tags"
+          :key="tag"
+          class="mr-1"
+          variant="primary">
+          {{ tag }}
+        </b-badge>
+      </div>
 
       <div class="progress-container" :id="progressBarId"></div>
 
@@ -132,6 +141,13 @@ export default {
   computed: {
     projectIncomplete () {
       return Number(this.project.overall_progress) < 100
+    },
+
+    tags () {
+      const tags = this.project.info.tags || {}
+      return Object.keys(tags).map(key => {
+        return `${key}: ${tags[key]}`
+      })
     }
   },
 

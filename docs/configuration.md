@@ -39,6 +39,11 @@ USER_INFO_PUBLIC_FIELDS = [
   'announcements'
 ]
 
+# Additional project fields
+PROJECT_INFO_PUBLIC_FIELDS = [
+  'tags'
+]
+
 # Avoid 404 errors when accessing URLs with or without a trailing slash
 STRICT_SLASHES = False
 
