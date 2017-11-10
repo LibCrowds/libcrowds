@@ -34,7 +34,6 @@
     "izitoast": "^1.1.5",
     "libcrowds-viewer": "^3.4.7",
     "lodash": "^4.17.4",
-    "mailchimp-api-v3": "^1.7.1",
     "moment": "^2.19.1",
     "nuxt": "1.0.0-rc11",
     "progressbar.js": "^1.0.1",
