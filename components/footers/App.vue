@@ -30,6 +30,20 @@
         </ul>
       </section>
 
+      <section class="d-none d-lg-block" v-if="localConfig.footer">
+        <h5 class="list-title">{{ localConfig.footer.title }}</h5>
+        <ul class="list-unstyled">
+          <li
+            v-for="(item, index) in localConfig.footer.items"
+            :key="index"
+            class="list-item">
+            <a :href="item.url" target="_blank">
+              {{ item.text }}
+            </a>
+          </li>
+        </ul>
+      </section>
+
       <section class="d-none d-lg-block">
         <h5 class="list-title">Collections</h5>
         <ul class="list-unstyled">

@@ -115,23 +115,25 @@ A URL to the platform's documentation.
 config.docs: 'http://docs.example.com'
 ```
 
+### footer
+
+Add an additional list menu to the main footer.
+
+```js
+config.footer = {
+  title: 'Newsletter',
+  items: [
+    { text: 'Sign up', url: 'http://mailchimp.signup.url' }
+  ]
+}
+```
+
 ### githubUrl
 
 Provide a GitHub link that relates to the site.
 
 ```js
 config.githubUrl = 'https://github.com/github'
-```
-
-### mailchimp
-
-Add a Mailchimp signup form to the main footer.
-
-```js
-config.mailchimp = {
-  apiKey: 'api-key'
-  listId: 'list-id'
-}
 ```
 
 ### mapbox
