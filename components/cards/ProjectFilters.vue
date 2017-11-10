@@ -1,7 +1,7 @@
 <template>
   <b-card id="project-filters-card" header="Filters">
     <div
-      v-for="(tag, options) in tags"
+      v-for="(options, tag) in collection.info.tags"
       :key="tag"
       class="mb-2">
       <label>{{ tag }}</label>
@@ -18,9 +18,6 @@
 </template>
 
 <script>
-import some from 'lodash/some'
-import isEqual from 'lodash/isEqual'
-
 export default {
   data () {
     return {
@@ -31,6 +28,10 @@ export default {
   props: {
     projects: {
       type: Array,
+      required: true
+    },
+    collection: {
+      type: Object,
       required: true
     }
   },
@@ -57,7 +58,15 @@ export default {
     getFiltered () {
       return this.projects.filter(project => {
         const projectTags = project.info.tags || {}
-        return some(this.filters, val => isEqual(val, projectTags))
+        for (let key of Object.keys(this.filters)) {
+          if (
+            !projectTags.hasOwnProperty(key) ||
+            projectTags[key] !== this.filters[key]
+          ) {
+            return false
+          }
+        }
+        return true
       })
     }
   },

@@ -15,7 +15,8 @@
         <project-filters-card
           class="mb-3"
           :projects="projects"
-          @change="onSortChange">
+          :collection="collection"
+          @change="onFiltersChange">
         </project-filters-card>
 
         <project-sorting-card
@@ -178,7 +179,6 @@ export default {
      *   The filtered projects.
      */
     onFiltersChange (projects) {
-      console.log(projects)
       this.filteredProjects = projects
     },
 
