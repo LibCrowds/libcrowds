@@ -59,7 +59,8 @@
           <li v-for="project in filteredProjects" :key="project.id">
             <project-card
               :collection="collection"
-              :project="project">
+              :project="project"
+              @tagclick="handleTagClick">
             </project-card>
           </li>
         </transition-group>
@@ -190,6 +191,10 @@ export default {
     onSortChange (value) {
       this.orderby = value.sortBy
       this.desc = value.sortDesc
+    },
+
+    handleTagClick (tag, value) {
+      console.log('tag click', tag, value)
     }
   },
 

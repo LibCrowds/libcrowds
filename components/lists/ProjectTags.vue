@@ -4,7 +4,9 @@
       v-for="(value, type) in project.info.tags"
       :key="type"
       class="mr-1"
-      :style="getTagStyle(type)">
+      href="#"
+      :style="getTagStyle(type)"
+      @click.prevent="$emit('tag-click', type, value)">
       {{ type }}: {{ value }}
     </b-badge>
   </div>

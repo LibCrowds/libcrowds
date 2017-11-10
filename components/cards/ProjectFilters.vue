@@ -6,8 +6,6 @@
       class="mb-2">
       <label>{{ tag }}</label>
       <multiselect
-        track-by="tag"
-        :id="tag"
         :placeholder="`Filter by ${tag.toLowerCase()}`"
         :show-labels="false"
         :options="value.options"

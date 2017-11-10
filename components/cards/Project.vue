@@ -57,7 +57,8 @@
       <div class="mb-0 px-2 pt-1">
         <project-tags-list
           :project="project"
-          :collection="collection">
+          :collection="collection"
+          @tag-click="(type, value) => $emit('tagclick', type, value)">
         </project-tags-list>
       </div>
 
