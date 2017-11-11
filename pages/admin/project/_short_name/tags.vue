@@ -1,32 +1,27 @@
 <template>
-  <b-card>
-    <div slot="header">
-      <h6 class="mb-1">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Tags are used to filter and organise projects (the available tags
-          for a collection are set via the Admin interface).
-        </small>
+  <card-base
+    :title="title"
+    help="Set the tags used to filter and organise projects">
+
+    <b-card-body>
+      <span v-if="hasTags">
+        <div
+          v-for="(value, tag) in collection.info.tags"
+          :key="tag"
+          class="mb-2">
+          <label>{{ tag | capitalize }}</label>
+          <multiselect
+            placeholder="Select one"
+            v-model="project.info.tags[tag]"
+            :options="value.options">
+          </multiselect>
+        </div>
+      </span>
+
+      <p v-else class="lead my-2 text-center">
+        No tags have been enabled for this collection.
       </p>
-    </div>
-
-    <span v-if="hasTags">
-      <div
-        v-for="(value, tag) in collection.info.tags"
-        :key="tag"
-        class="mb-2">
-        <label>{{ tag | capitalize }}</label>
-        <multiselect
-          placeholder="Select one"
-          v-model="project.info.tags[tag]"
-          :options="value.options">
-        </multiselect>
-      </div>
-    </span>
-
-    <p v-else class="lead my-2 text-center">
-      No tags have been enabled for this collection.
-    </p>
+    </b-card-body>
 
     <div slot="footer" class="d-flex flex-row">
       <b-btn
@@ -38,7 +33,7 @@
       </b-btn>
     </div>
 
-  </b-card>
+  </card-base>
 </template>
 
 <script>
@@ -47,6 +42,7 @@ import pickBy from 'lodash/pickBy'
 import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { notifications } from '@/mixins/notifications'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -66,6 +62,10 @@ export default {
     return {
       title: this.title
     }
+  },
+
+  components: {
+    CardBase
   },
 
   computed: {

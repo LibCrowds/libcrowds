@@ -1,20 +1,27 @@
 <template>
-  <image-upload-form
-    header="Project Thumbnail"
-    submit-text="Update"
-    file-field="avatar"
-    :endpoint="form.endpoint"
-    :model="form.model"
-    :method="form.method"
-    :viewport-height="250"
-    :viewport-width="250"
-    crop-type="square">
-  </image-upload-form>
+  <card-base
+    :title="title"
+    help="Set a thumbnail image for the project">
+
+    <image-upload-form
+      submit-text="Update"
+      file-field="avatar"
+      :endpoint="form.endpoint"
+      :model="form.model"
+      :method="form.method"
+      :viewport-height="250"
+      :viewport-width="250"
+      no-border
+      crop-type="square">
+    </image-upload-form>
+
+  </card-base>
 </template>
 
 <script>
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import ImageUploadForm from '@/components/forms/ImageUpload'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -22,6 +29,12 @@ export default {
   mixins: [ fetchProjectAndCollection ],
 
   middleware: 'is-admin',
+
+  data () {
+    return {
+      title: 'Thumbnail'
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/project/${params.short_name}/update`
@@ -43,12 +56,13 @@ export default {
 
   head () {
     return {
-      title: 'Thumbnail'
+      title: this.title
     }
   },
 
   components: {
-    ImageUploadForm
+    ImageUploadForm,
+    CardBase
   }
 }
 </script>
