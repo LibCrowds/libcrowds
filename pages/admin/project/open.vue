@@ -26,6 +26,9 @@
       :search-params="searchParams"
       no-border>
       <template slot="action" scope="project">
+
+      </template>
+      <template slot="action" scope="project">
         <b-btn
           variant="success"
           block
@@ -58,9 +61,19 @@ export default {
         name: {
           label: 'Name'
         },
+        nTags: {
+          label: 'Tags',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
         category_id: {
           label: 'Category ID',
           class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-lg-table-cell',
           sortable: true
         },
         actions: {
