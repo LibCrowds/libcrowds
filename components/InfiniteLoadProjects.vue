@@ -35,6 +35,10 @@ export default {
       const params = {}
       if (this.orderby) {
         params.orderby = this.orderby
+      }
+
+      // Only include if true
+      if (this.desc) {
         params.desc = this.desc
       }
 

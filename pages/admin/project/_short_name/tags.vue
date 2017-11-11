@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import isNull from 'lodash/isNull'
+import identity from 'lodash/identity'
 import pickBy from 'lodash/pickBy'
 import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
@@ -92,9 +92,7 @@ export default {
       this.processing = true
 
       // Remove null tags
-      this.project.info.tags = pickBy(this.project.info.tags, (value, key) => {
-        return !isNull(value)
-      })
+      this.project.info.tags = pickBy(this.project.info.tags, identity)
 
       try {
         await this.$axios.$put(`/api/project/${this.project.id}`, {

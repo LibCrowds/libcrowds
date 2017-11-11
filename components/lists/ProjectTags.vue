@@ -45,10 +45,9 @@ export default {
 
 <style lang="scss">
 #project-tags-list {
-  letter-spacing: 0.2px;
-  font-weight: 400;
-
   .badge {
+    letter-spacing: 0.2px;
+    font-weight: 400;
     margin-left: 0.25rem;
   }
 

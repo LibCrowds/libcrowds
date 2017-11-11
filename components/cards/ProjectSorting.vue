@@ -1,11 +1,26 @@
 <template>
-  <b-card id="project-sorting-options" header="Sorting Options">
+  <b-card id="project-filters-card" header="Sorting Options">
+
+    <div
+      v-for="(value, tag) in collection.info.tags"
+      :key="tag"
+      class="mb-2">
+      <label>{{ tag }}</label>
+      <multiselect
+        :id="tag"
+        :placeholder="`Filter by ${tag.toLowerCase()}`"
+        :show-labels="false"
+        :options="value.options"
+        @input="onFilterChange">
+      </multiselect>
+    </div>
 
     <div class="mb-2">
       <label>Sort by</label>
       <multiselect
         label="name"
         track-by="name"
+        v-model="mergedSortModel"
         placeholder="Sort projects by"
         :show-labels="false"
         :options="sortOptions"
@@ -17,52 +32,110 @@
 </template>
 
 <script>
+import merge from 'lodash/merge'
+
 export default {
   data () {
     return {
       sortOptions: [
         {
           name: 'Most Tasks',
-          orderby: 'n_tasks',
-          desc: true
+          sortBy: 'n_tasks',
+          sortDesc: true
         },
         {
           name: 'Least Tasks',
-          orderby: 'n_tasks',
-          desc: false
+          sortBy: 'n_tasks',
+          sortDesc: false
         },
         {
           name: 'Most Popular',
-          orderby: 'n_volunteers',
-          desc: true
+          sortBy: 'n_volunteers',
+          sortDesc: true
         },
         {
           name: 'Least Popular',
-          orderby: 'n_volunteers',
-          desc: false
+          sortBy: 'n_volunteers',
+          sortDesc: false
         },
         {
           name: 'Most Complete',
-          orderby: 'overall_progress',
-          desc: true
+          sortBy: 'overall_progress',
+          sortDesc: true
         },
         {
           name: 'Least Complete',
-          orderby: 'overall_progress',
-          desc: false
+          sortBy: 'overall_progress',
+          sortDesc: false
         }
-      ]
+      ],
+      initialSortModel: {
+        name: 'Least Complete',
+        sortBy: 'overall_progress',
+        sortDesc: false
+      },
+      initialFilterModel: {}
+    }
+  },
+
+  props: {
+    sortModel: {
+      type: Object,
+      default: () => ({})
+    },
+    filterModel: {
+      type: Object,
+      default: () => ({})
+    },
+    projects: {
+      type: Array,
+      required: true
+    },
+    collection: {
+      type: Object,
+      required: true
+    }
+  },
+
+  computed: {
+    mergedSortModel: {
+      get () {
+        return merge({}, this.initialSortModel, this.sortModel)
+      },
+      set (newValue) {
+        this.initialSortModel = newValue
+      }
+    },
+
+    mergedFilterModel: {
+      get () {
+        return merge({}, this.initialFilterModel, this.filterModel)
+      },
+      set (newValue) {
+        this.initialFilterModel = newValue
+      }
     }
   },
 
   methods: {
+    /**
+     * Handle a tag being selected or removed.
+     * @param {Object} name
+     *   The tag name.
+     * @param {Object} type
+     *   The tag type (which comes from the multiselect component ID).
+     */
+    onFilterChange (name, type) {
+      this.$emit('filter-change', name, type)
+    },
+
     /**
      * Handle sort change.
      * @param {Object} value
      *   The sorting option.
      */
     onSortChange (value) {
-      this.$emit('change', value)
+      this.$emit('sort-change', value)
     }
   }
 }
@@ -71,7 +144,7 @@ export default {
 <style lang="scss">
 @import '~assets/style/settings';
 
-#project-sorting-options {
+#project-filters-card {
   font-size: $font-size-sm;
   margin-top: 0;
 
@@ -79,16 +152,6 @@ export default {
     background-color: $gray-100;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
-  }
-
-  #show-completed {
-    label {
-      margin: 0 5px 0 0;
-    }
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 </style>

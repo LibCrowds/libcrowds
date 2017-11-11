@@ -12,17 +12,15 @@
       data-title="Get Started">
       <b-col xl="3" class="mb-xl-3 d-none d-xl-block">
 
-        <project-filters-card
-          class="mb-3"
-          :projects="projects"
-          :collection="collection"
-          @change="onFiltersChange">
-        </project-filters-card>
-
-        <project-sorting-card
-          class="mb-3"
-          @change="onSortChange">
-        </project-sorting-card>
+        <b-card header="Sorting Options" class="options-card mb-2">
+          <sort-projects-data
+            v-model="sortModel">
+          </sort-projects-data>
+          <filter-projects-data
+            v-model="tagModel"
+            :collection="collection">
+          </filter-projects-data>
+        </b-card>
 
         <social-media-buttons
           :shareUrl="shareUrl"
@@ -38,8 +36,9 @@
           show-empty
           :items="filteredProjects"
           :fields="tableFields"
-          class="d-lg-none"
-          @sort-changed="onSortChange">
+          :sortBy.sync="sortModel.orderby"
+          :sortDesc.sync="sortModel.desc"
+          class="d-lg-none">
           <template slot="overall_progress" scope="project">
             {{ project.item.overall_progress }}%
           </template>
@@ -60,7 +59,7 @@
             <project-card
               :collection="collection"
               :project="project"
-              @tagclick="handleTagClick">
+              @tagclick="updateTagModel">
             </project-card>
           </li>
         </transition-group>
@@ -68,8 +67,8 @@
         <infinite-load-projects
           ref="infiniteload"
           :short-name="collection.short_name"
-          :orderby="orderby"
-          :desc="desc || false"
+          :orderby="sortModel.orderby"
+          :desc="sortModel.desc"
           :no-results="noResults"
           v-model="projects">
         </infinite-load-projects>
@@ -82,9 +81,10 @@
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
+import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import ProjectSortingCard from '@/components/cards/ProjectSorting'
-import ProjectFiltersCard from '@/components/cards/ProjectFilters'
+import SortProjectsData from '@/components/data/SortProjects'
+import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
@@ -93,14 +93,15 @@ import ProjectContribButton from '@/components/buttons/ProjectContrib'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, computeShareUrl ],
+  mixins: [
+    fetchCollectionByName,
+    computeShareUrl,
+    filterProjects
+  ],
 
   data () {
     return {
       projects: [],
-      filteredProjects: [],
-      orderby: 'overall_progress',
-      desc: false,
       noResults: 'No projects are available using the selected filters, ' +
         'use the input fields on the left to change them.',
       tableFields: {
@@ -121,6 +122,10 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
+      },
+      sortModel: {
+        orderby: 'overall_progress',
+        desc: true
       }
     }
   },
@@ -150,52 +155,17 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.contribute)
-    },
-
-    searchParams () {
-      const params = {
-        collection_short_name: this.collection.short_name
-      }
-      if (!this.currentUser.admin) {
-        params.published = true
-      }
-      return params
     }
   },
 
   components: {
-    ProjectSortingCard,
-    ProjectFiltersCard,
+    SortProjectsData,
+    FilterProjectsData,
     ProjectCard,
     InfiniteLoadProjects,
     SocialMediaButtons,
     InfiniteLoadingTable,
     ProjectContribButton
-  },
-
-  methods: {
-    /**
-     * Handle filters change.
-     * @param {Object} projects
-     *   The filtered projects.
-     */
-    onFiltersChange (projects) {
-      this.filteredProjects = projects
-    },
-
-    /**
-     * Handle sort change.
-     * @param {Object} value
-     *   The sorting params.
-     */
-    onSortChange (value) {
-      this.orderby = value.sortBy
-      this.desc = value.sortDesc
-    },
-
-    handleTagClick (tag, value) {
-      console.log('tag click', tag, value)
-    }
   },
 
   mounted () {
@@ -204,11 +174,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#collection-contribute {
-  .project-card {
-    transition: all 500ms ease;
-  }
-}
-</style>
