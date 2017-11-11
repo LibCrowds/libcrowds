@@ -11,7 +11,6 @@
       class="collection-nav-item"
       data-title="Browse the Data">
       <projects-table
-        include-tags
         :collection="collection">
         <template slot="action" scope="project">
           <b-btn

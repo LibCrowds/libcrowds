@@ -102,10 +102,6 @@ export default {
     noBorder: {
       type: Boolean,
       default: false
-    },
-    includeTags: {
-      type: Boolean,
-      default: false
     }
   },
 
