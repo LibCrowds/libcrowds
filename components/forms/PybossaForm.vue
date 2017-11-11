@@ -34,6 +34,10 @@
 
     <slot name="bottom"></slot>
 
+    <template slot="footer-base-left">
+      <slot name="footer-left"></slot>
+    </template>
+
   </form-base>
 </template>
 

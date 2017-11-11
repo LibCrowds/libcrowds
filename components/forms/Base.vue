@@ -10,7 +10,7 @@
 
     <template slot="footer">
       <span>
-        <slot name="footer-left"></slot>
+        <slot name="footer-base-left"></slot>
       </span>
       <span>
         <b-btn
