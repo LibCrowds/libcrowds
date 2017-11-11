@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import pick from 'lodash/pick'
 import { notifications } from '@/mixins/notifications'
 import VueFormGenerator from 'vue-form-generator'
 import ImageUploadForm from '@/components/forms/ImageUpload'
@@ -33,31 +34,39 @@ export default {
       form: {
         endpoint: '/api/announcement',
         method: 'post',
-        model: {
-          title: null,
-          body: null,
-          published: false
-        },
+        model: pick(
+          'title',
+          'body',
+          'info'
+        ),
         schema: {
           fields: [
             {
               model: 'title',
-              label: 'Content',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Write an announcement using Markdown ' +
-                '(a couple of lines works best)',
+              label: 'Title',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'Short titles work best (e.g. New Project Added!)',
               required: true,
               validator: VueFormGenerator.validators.string
             },
             {
               model: 'body',
-              label: 'URL',
+              label: 'Content',
               type: 'input',
               inputType: 'text',
-              placeholder: 'http://example.com',
+              placeholder: 'Add some additional details',
               required: true,
               validator: VueFormGenerator.validators.string
+            },
+            {
+              model: 'info.url',
+              label: 'URL',
+              type: 'input',
+              inputType: 'url',
+              required: true,
+              placeholder: 'http://example.com',
+              validator: VueFormGenerator.validators.url
             }
           ]
         }

@@ -1,63 +1,51 @@
 <template>
-  <div id="admin-announcements">
-    <b-card
-      no-body>
-      <div
-        slot="header"
-        class="mb-0 d-flex align-items-center justify-content-between">
-        <span>
-          <h6 class="mb-0">{{ title }}</h6>
-          <p class="text-muted mb-0">
-            <small>
-              Announcements will be shown to all users.
-            </small>
-          </p>
-        </span>
+  <card-base :title="title" help="Manage global announcements">
+    <b-btn
+      variant="success"
+      size="sm"
+      class="float-right"
+      slot="controls"
+      :to="{
+        name: 'admin-site-announcements-new'
+      }">
+      New
+    </b-btn>
+
+    <infinite-loading-table
+      ref="table"
+      :fields="tableFields"
+      no-border
+      :search-params="searchParams"
+      domain-object="announcement">
+      <template slot="action" scope="announcement">
         <b-btn
           variant="success"
+          class="mr-1"
           size="sm"
           :to="{
-            name: 'admin-site-announcements-new'
+            name: 'admin-site-announcements-id-update',
+            params: {
+              id: announcement.item.id
+            }
           }">
-          New
+          Edit
         </b-btn>
-      </div>
+        <b-btn
+          variant="warning"
+          size="sm"
+          @click="deleteAnnouncement(announcement.item.id)">
+          Remove
+        </b-btn>
+      </template>
+    </infinite-loading-table>
 
-      <infinite-loading-table
-        ref="table"
-        :fields="tableFields"
-        no-border
-        :search-params="searchParams"
-        domain-object="announcement">
-        <template slot="action" scope="announcement">
-          <b-btn
-            variant="primary"
-            size="sm"
-            block
-            :to="{
-              name: 'admin-site-announcements-id-update',
-              params: {
-                id: announcement.item.id
-              }
-            }">
-            Update
-          </b-btn>
-          <b-btn
-            variant="outline-dark"
-            size="sm"
-            block
-            @click="deleteAnnouncement(announcement.item.id)">
-            Delete
-          </b-btn>
-        </template>
-      </infinite-loading-table>
-    </b-card>
-  </div>
+  </card-base>
 </template>
 
 <script>
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
@@ -71,12 +59,12 @@ export default {
       title: 'Announcements',
       tableFields: {
         title: {
-          label: 'Content',
+          label: 'Title',
           sortable: true
         },
-        body: {
+        'info.link': {
           label: 'URL',
-          class: 'd-none d-lg-table-cell',
+          class: 'd-none d-xl-table-cell',
           sortable: true
         },
         created: {
@@ -99,7 +87,8 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    CardBase
   },
 
   methods: {

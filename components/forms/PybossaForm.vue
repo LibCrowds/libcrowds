@@ -201,14 +201,8 @@ export default {
           })
           this.injectErrors(r.data.form.errors)
           return
-        } else if (r.data.status === 'success') {
+        } else if (r.data.status === 'success' || !r.data.status) {
           this.handleSuccess(r.data)
-        } else if (typeof r.data.status === 'undefined') {
-          this.notify({
-            type: 'success',
-            title: 'Success',
-            message: ''
-          })
         }
         this.flash(r.data)
       }).catch(err => {
