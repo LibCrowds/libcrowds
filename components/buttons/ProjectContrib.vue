@@ -12,7 +12,7 @@
     :size="size"
     :variant="variant"
     :disabled="disabled">
-    Contribute
+    Start
   </b-btn>
 </template>
 

@@ -24,10 +24,10 @@
       </div>
       <div slot="bottom" class="mt-1">
         <label class="ml-0">
-          Contribute page
+          Projects page
         </label>
         <markdown-editor
-          v-model="collection.info.content.contribute"
+          v-model="collection.info.content.projects"
           :configs="markdownConfig">
         </markdown-editor>
       </div>

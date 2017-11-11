@@ -31,7 +31,7 @@ export const setCollectionDefaults = function (collection) {
         '- **Results:** The final results data.\n\n' +
         'We are keen for these datasets to be used in innovative ways, ' +
         'perhaps to further research into new technologies.',
-      contribute: ''
+      projects: ''
     },
     pubished: false
   }
