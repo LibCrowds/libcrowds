@@ -58,7 +58,7 @@
         <project-tags-list
           :project="project"
           :collection="collection"
-          @tag-click="(type, value) => $emit('tagclick', type, value)">
+          @tag-click="onTagClick">
         </project-tags-list>
       </div>
 
@@ -141,6 +141,15 @@ export default {
   computed: {
     projectIncomplete () {
       return Number(this.project.overall_progress) < 100
+    }
+  },
+
+  methods: {
+    /**
+     * Handle a tag click.
+     */
+    onTagClick (type, value) {
+      this.$emit('tagclick', type, value)
     }
   },
 
