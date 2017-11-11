@@ -7,23 +7,16 @@ import identity from 'lodash/identity'
 export const filterProjects = {
   data () {
     return {
+      showCompleted: false,
       tagModel: {}
     }
   },
 
   computed: {
-    /**
-     * Return a filtered Array of projects.
-     *
-     * All key value pairs in tag model must match the project tags.
-     * @param {Object} projects
-     *   The projects.
-     * @param {Object} filterModel
-     *   The filter model.
-     */
     filteredProjects () {
+      // Check tags
       const nonNullTagKeys = Object.keys(pickBy(this.tagModel, identity))
-      return this.projects.filter(project => {
+      let filtered = this.projects.filter(project => {
         for (let key of nonNullTagKeys) {
           if (
             !project.info.tags ||
@@ -33,6 +26,15 @@ export const filterProjects = {
           }
         }
         return true
+      })
+
+      if (this.showCompleted) {
+        return filtered
+      }
+
+      // Filter completed
+      return filtered.filter(project => {
+        return project.overall_progress < 100
       })
     }
   },

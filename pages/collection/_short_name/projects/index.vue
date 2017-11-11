@@ -13,13 +13,17 @@
       <b-col xl="3" class="mb-xl-3 d-none d-xl-block">
 
         <b-card header="Sorting Options" class="options-card mb-2">
-          <sort-projects-data
-            v-model="sortModel">
-          </sort-projects-data>
           <filter-projects-data
             v-model="tagModel"
             :collection="collection">
           </filter-projects-data>
+          <sort-projects-data
+            v-model="sortModel"
+            class="mb-3">
+          </sort-projects-data>
+          <toggle-completed-data
+            v-model="showCompleted">
+          </toggle-completed-data>
         </b-card>
 
         <social-media-buttons
@@ -84,6 +88,7 @@ import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import SortProjectsData from '@/components/data/SortProjects'
+import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
@@ -161,6 +166,7 @@ export default {
   components: {
     SortProjectsData,
     FilterProjectsData,
+    ToggleCompletedData,
     ProjectCard,
     InfiniteLoadProjects,
     SocialMediaButtons,
