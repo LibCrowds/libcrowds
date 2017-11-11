@@ -50,7 +50,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
              target="_self"
              class="nav-link"
           >
-            Contribute
+            Get Started
           </a>
         </li>
         <li class="nav-item">
@@ -235,7 +235,7 @@ exports[`Collection navbar renders correctly when signed in as non-admin 1`] = `
              target="_self"
              class="nav-link"
           >
-            Contribute
+            Get Started
           </a>
         </li>
         <li class="nav-item">
@@ -394,7 +394,7 @@ exports[`Collection navbar renders correctly when signed out 1`] = `
              target="_self"
              class="nav-link"
           >
-            Contribute
+            Get Started
           </a>
         </li>
         <li class="nav-item">
