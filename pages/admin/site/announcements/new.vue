@@ -1,16 +1,7 @@
 <template>
-  <b-card no-body>
-    <div slot="header" class="mb-0">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            A thumbnail image can be added and the announcement published on
-            the next page.
-          </small>
-        </p>
-      </span>
-    </div>
+  <card-base
+    :title="title"
+    help="Make an announcement (a thumbnail can be set on the next page)">
     <pybossa-form
       id="admin-announcement-new"
       show-cancel
@@ -19,7 +10,7 @@
       @success="onSuccess"
       @cancel="onCancel">
     </pybossa-form>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
@@ -27,6 +18,7 @@ import { notifications } from '@/mixins/notifications'
 import VueFormGenerator from 'vue-form-generator'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
@@ -81,7 +73,8 @@ export default {
 
   components: {
     PybossaForm,
-    ImageUploadForm
+    ImageUploadForm,
+    CardBase
   },
 
   methods: {

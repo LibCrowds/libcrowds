@@ -18,4 +18,9 @@
       padding: $list-group-item-padding-y $list-group-item-padding-x;
     }
   }
+
+  .search-control {
+    border-radius: 100px;
+    padding: 0.5rem 0.75rem;
+  }
 }

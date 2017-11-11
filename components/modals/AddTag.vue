@@ -2,7 +2,7 @@
   <b-modal
     ref="modal"
     :id="modalId"
-    title="Add aoptions tag"
+    title="Add a tag"
     @ok="handleOk"
     @hidden="reset">
 

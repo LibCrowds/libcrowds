@@ -1,23 +1,14 @@
 <template>
-  <b-card no-body>
-    <div
-      slot="header"
-      class="mb-0 d-flex align-items-center justify-content-between">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Open and manage projects.
-          </small>
-        </p>
-      </span>
-      <b-form-input
-        v-model="filter"
-        class="table-search"
-        size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
-      </b-form-input>
-    </div>
+  <card-base :title="title" help="Manage your projects">
+
+    <b-form-input
+      slot="controls"
+      v-model="filter"
+      class="search-control"
+      size="sm"
+      :placeholder="`Type to search by ${filterBy}`">
+    </b-form-input>
+
     <infinite-loading-table
       domainObject="project"
       :fields="tableFields"
@@ -25,9 +16,6 @@
       :filter-by="filterBy"
       :search-params="searchParams"
       no-border>
-      <template slot="action" scope="project">
-
-      </template>
       <template slot="action" scope="project">
         <b-btn
           variant="success"
@@ -43,11 +31,13 @@
         </b-btn>
       </template>
     </infinite-loading-table>
-  </b-card>
+
+  </card-base>
 </template>
 
 <script>
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -93,17 +83,15 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    CardBase
   },
 
   computed: {
     searchParams () {
-      const currentUser = this.$store.state.currentUser
-      const params = {}
-      if (!currentUser.admin) {
-        params.owner_id = currentUser.id
-      }
-      return params
+      return this.$store.state.currentUser.admin
+        ? {}
+        : { owner_id: this.$store.state.currentUser.id }
     }
   },
 
@@ -112,11 +100,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.table-search {
-  max-width: 50%;
-  border-radius: 100px;
-  padding: 0.5rem 0.75rem;
-}
-</style>

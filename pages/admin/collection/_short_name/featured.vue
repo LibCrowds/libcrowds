@@ -1,14 +1,7 @@
 <template>
-  <b-card no-body>
-
-    <div slot="header">
-      <h6 class="mb-1">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Choose the projects that appear on the collection microsite homepage.
-        </small>
-      </p>
-    </div>
+  <card-base
+    :title="title"
+    help="Choose the projects that appear on the microsite's homepage">
 
     <infinite-loading-table
       domain-object="project"
@@ -26,13 +19,14 @@
       </template>
     </infinite-loading-table>
 
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -73,7 +67,8 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    CardBase
   },
 
   methods: {

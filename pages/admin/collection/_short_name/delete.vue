@@ -1,14 +1,5 @@
 <template>
-  <b-card no-body>
-    <div slot="header" class="mb-0">
-      <h6 class="mb-0">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Delete the microsite.
-        </small>
-      </p>
-    </div>
-
+  <card-base :title="title" help="Delete the microsite">
     <b-card-body>
       <b-alert show variant="danger">
         <strong>Warning:</strong> Deleting a collection microsite is final,
@@ -25,12 +16,13 @@
         </b-btn>
       </div>
     </template>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -55,6 +47,10 @@ export default {
     collection () {
       return this.$store.state.currentCollection
     }
+  },
+
+  components: {
+    CardBase
   },
 
   methods: {

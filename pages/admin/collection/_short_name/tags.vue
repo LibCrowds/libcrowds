@@ -1,27 +1,17 @@
 <template>
-  <div id="admin-tags">
-    <b-card no-body>
-      <div
-        slot="header"
-        class="mb-0 d-flex align-items-center justify-content-between">
-        <span>
-          <h6 class="mb-0">{{ title }}</h6>
-          <p class="text-muted mb-0">
-            <small>
-              Set the available tags for the microsite.
-            </small>
-          </p>
-        </span>
-        <span>
-          <b-btn
-            size="sm"
-            class="mr-1"
-            variant="success"
-            v-b-modal="addTagModalId">
-            Add a tag
-          </b-btn>
-        </span>
-      </div>
+  <div>
+    <card-base
+      :title="title"
+      help="Manage the available tags for the microsite">
+      <b-btn
+        slot="controls"
+        class="float-right"
+        size="sm"
+        variant="success"
+        v-b-modal="addTagModalId">
+        Add a tag
+      </b-btn>
+
       <b-table
         ref="table"
         responsive
@@ -57,7 +47,7 @@
           </b-btn>
         </template>
       </b-table>
-    </b-card>
+    </card-base>
 
     <add-tag-modal
       ref="addTagModal"
@@ -73,6 +63,7 @@
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import AddTagModal from '@/components/modals/AddTag'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -107,7 +98,8 @@ export default {
   },
 
   components: {
-    AddTagModal
+    AddTagModal,
+    CardBase
   },
 
   head () {

@@ -1,36 +1,29 @@
 <template>
-  <b-card no-body>
-    <div
-      slot="header"
-      class="mb-0 d-flex align-items-center justify-content-between">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Configure the collection microsite.
-          </small>
-        </p>
-      </span>
-      <div class="d-flex align-items-center">
-        <label class="mr-1 mb-0 toggle-label">
-          <strong>Published</strong>
-        </label>
-        <toggle-button
-          :value="collection.info.published"
-          :sync="true"
-          :labels="true"
-          class="mb-0"
-          @change="togglePublished">
-        </toggle-button>
-      </div>
+  <card-base
+    :title="title"
+    help="Configure the core settings for the microsite">
+
+    <div slot="controls" class="d-flex align-items-center float-right">
+      <label class="mr-1 mb-0 toggle-label">
+        <strong>Published</strong>
+      </label>
+      <toggle-button
+        :value="collection.info.published"
+        :sync="true"
+        :labels="true"
+        class="mb-0"
+        @change="togglePublished">
+      </toggle-button>
     </div>
+
     <pybossa-form
       no-border
       submit-text="Update"
       :form="form"
       @success="onSuccess">
     </pybossa-form>
-  </b-card>
+
+  </card-base>
 </template>
 
 <script>
@@ -39,6 +32,7 @@ import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -60,7 +54,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   computed: {

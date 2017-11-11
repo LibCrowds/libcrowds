@@ -1,70 +1,56 @@
 <template>
-  <b-card no-body>
-    <div
-      slot="header"
-      class="mb-0 d-flex align-items-center justify-content-between">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Manage the collection microsites.
-          </small>
-        </p>
-      </span>
-      <b-btn
-        variant="success"
-        size="sm"
-        :to="{
-          name: 'admin-collection-new'
-        }">
-        New
-      </b-btn>
-    </div>
+  <card-base :title="title" help="Manage the collection microsites">
+    <b-btn
+      slot="controls"
+      variant="success"
+      class="float-right"
+      size="sm"
+      :to="{
+        name: 'admin-collection-new'
+      }">
+      New
+    </b-btn>
 
-    <b-card-body class="p-0">
-      <b-table
-        hover
-        show-empty
-        :items="collections"
-        :fields="table.fields">
+    <b-table
+      hover
+      show-empty
+      :items="collections"
+      :fields="table.fields">
 
-        <template slot="n_projects" scope="collection">
-          {{ nProjects[collection.item.short_name] }}
-        </template>
+      <template slot="n_projects" scope="collection">
+        {{ nProjects[collection.item.short_name] }}
+      </template>
 
-        <template slot="created" scope="collection">
-          {{ collection.item.created | moment('calendar') }}
-        </template>
+      <template slot="created" scope="collection">
+        {{ collection.item.created | moment('calendar') }}
+      </template>
 
-        <template slot="action" scope="collection">
-          <b-btn
-            variant="success"
-            size="sm"
-            block
-            exact
-            :to="{
-              name: 'admin-collection-short_name-settings',
-              params: {
-                short_name: collection.item.short_name
-              }
-            }">
-            Open
-          </b-btn>
-        </template>
+      <template slot="action" scope="collection">
+        <b-btn
+          variant="success"
+          size="sm"
+          block
+          exact
+          :to="{
+            name: 'admin-collection-short_name-settings',
+            params: {
+              short_name: collection.item.short_name
+            }
+          }">
+          Open
+        </b-btn>
+      </template>
 
-      </b-table>
-    </b-card-body>
-  </b-card>
+    </b-table>
+  </card-base>
 </template>
 
 <script>
-import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
-
-  mixins: [ deleteDomainObject ],
 
   middleware: 'is-admin',
 
@@ -114,22 +100,8 @@ export default {
   },
 
   components: {
-    PybossaForm
-  },
-
-  methods: {
-    /**
-     * Delete a collection.
-     * @param {Number|String} id
-     *   The collection ID.
-     */
-    deleteCollection (id) {
-      this.deleteDomainObject('category', id, () => {
-        this.collections = this.collections.filter(collection => {
-          return collection.id !== id
-        })
-      })
-    }
+    PybossaForm,
+    CardBase
   },
 
   beforeMount () {

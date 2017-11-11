@@ -1,52 +1,40 @@
 <template>
-  <div id="admin-users">
-    <b-card no-body>
+  <div>
+    <card-base :title="title" help="Manage registered users">
+      <b-row no-gutters>
+        <b-col lg="4">
+          <pybossa-form
+            submit-text="Search"
+            header="Search"
+            :form="form"
+            @success="onSuccess">
+          </pybossa-form>
+        </b-col>
+        <b-col lg="8" class="p-2">
+          <b-table
+            hover
+            show-empty
+            :items="found"
+            :fields="tableFields">
 
-      <template slot="header">
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Manage registered users.
-          </small>
-        </p>
-      </template>
+            <template slot="created" scope="user">
+              {{ user.item.created | moment('calendar') }}
+            </template>
 
-      <b-card-body class="p-0">
-        <b-row no-gutters>
-          <b-col lg="4">
-            <pybossa-form
-              submit-text="Search"
-              header="Search"
-              :form="form"
-              @success="onSuccess">
-            </pybossa-form>
-          </b-col>
-          <b-col lg="8" class="p-2">
-            <b-table
-              hover
-              show-empty
-              :items="found"
-              :fields="tableFields">
+            <template slot="action" scope="user">
+              <b-btn
+                :variant="user.item.admin ? 'warning' : 'success'"
+                size="sm"
+                block
+                @click="toggleAdmin(user.item)">
+                {{ getButtonText(user.item) }}
+              </b-btn>
+            </template>
 
-              <template slot="created" scope="user">
-                {{ user.item.created | moment('calendar') }}
-              </template>
-
-              <template slot="action" scope="user">
-                <b-btn
-                  :variant="user.item.admin ? 'warning' : 'success'"
-                  size="sm"
-                  block
-                  @click="toggleAdmin(user.item)">
-                  {{ getButtonText(user.item) }}
-                </b-btn>
-              </template>
-
-            </b-table>
-          </b-col>
-        </b-row>
-      </b-card-body>
-    </b-card>
+          </b-table>
+        </b-col>
+      </b-row>
+    </card-base>
 
     <b-row class="mt-4">
       <b-col xl="4">
@@ -104,6 +92,7 @@
 <script>
 import exportFile from '@/utils/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
@@ -171,7 +160,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   methods: {
