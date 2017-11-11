@@ -1,19 +1,22 @@
 <template>
-  <b-card
-    no-body>
-    <div slot="header" class="mb-0">
-      <h6 class="mb-0">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Choose the collection microsite that this project should appear on.
-        </small>
-      </p>
-    </div>
+  <card-base
+    :title="title"
+    help="Choose the microsite that this project should appear on">
+
+    <b-form-input
+      slot="controls"
+      v-model="filter"
+      class="search-control"
+      size="sm"
+      :placeholder="`Type to search by ${filterBy}`">
+    </b-form-input>
 
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
       no-border
+      :filter="filter"
+      :filterBy="filterBy"
       domain-object="category">
       <template slot="action" scope="collection">
         <b-btn
@@ -26,13 +29,14 @@
         </b-btn>
       </template>
     </infinite-loading-table>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { notifications } from '@/mixins/notifications'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -56,7 +60,9 @@ export default {
         }
       },
       searchParams: {},
-      updatedCollectionId: null
+      updatedCollectionId: null,
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -67,7 +73,8 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    CardBase
   },
 
   computed: {
