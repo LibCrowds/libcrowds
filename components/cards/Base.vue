@@ -16,6 +16,11 @@
       </b-col>
     </b-row>
     <slot></slot>
+
+    <template slot="footer">
+      <slot name="card-footer"></slot>
+    </template>
+
   </b-card>
 </template>
 

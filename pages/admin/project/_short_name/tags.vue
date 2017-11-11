@@ -23,7 +23,7 @@
       </p>
     </b-card-body>
 
-    <div slot="footer" class="d-flex flex-row">
+    <div slot="card-footer" class="d-flex flex-row">
       <b-btn
         class="ml-auto"
         variant="success"
