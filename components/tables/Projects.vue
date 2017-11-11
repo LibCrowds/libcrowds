@@ -13,9 +13,7 @@
       <template slot="name" scope="project">
         {{ project.item.name }}
         <project-tags-list
-          disabled
-          :project="project.item"
-          :collection="collection">
+          :project="project.item">
         </project-tags-list>
       </template>
 

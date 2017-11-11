@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
+
 export default {
   props: {
     project: {
@@ -19,11 +21,13 @@ export default {
     },
     collection: {
       type: Object,
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
+      default: () => ({})
+    }
+  },
+
+  computed: {
+    enabled () {
+      return !isEmpty(this.collection)
     }
   },
 
@@ -34,12 +38,13 @@ export default {
      *   The tag type
      */
     getTagStyle (type) {
-      const collectionTag = this.collection.info.tags[type]
+      let color = '#909090'
+      if (!isEmpty(this.collection) && this.collection.info.tags[type]) {
+        color = this.collection.info.tags[type].color
+      }
       return {
-        backgroundColor: typeof collectionTag !== 'undefined'
-          ? collectionTag.color
-          : '#909090',
-        cursor: this.disabled ? 'default' : 'pointer'
+        backgroundColor: color,
+        cursor: this.enabled ? 'pointer' : 'default'
       }
     },
 
@@ -51,7 +56,7 @@ export default {
      *   The tag name.
      */
     handleClick (type, name) {
-      if (!this.disabled) {
+      if (this.enabled) {
         this.$emit('tag-click', type, name)
       }
     }
