@@ -42,7 +42,7 @@ export default {
         params.desc = this.desc
       }
 
-      let endpoint = `/project/category/${this.shortName}`
+      let endpoint = `/project/category/${this.collection.short_name}`
       if (this.value.length) {
         this.page += 1
         endpoint += `/page/${this.page}`
@@ -84,8 +84,8 @@ export default {
       type: Array,
       required: true
     },
-    shortName: {
-      type: String,
+    collection: {
+      type: Object,
       required: true
     },
     orderby: {

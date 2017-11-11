@@ -7,33 +7,22 @@
     </span>
 
     <b-row
-      id="get-started"
+      id="download-data"
       class="collection-nav-item"
-      data-title="Get Started">
-      <b-col xl="3" class="mb-3">
-        <project-sorting-card
-          class="mb-3 d-none d-xl-block"
-          :collection="collection"
-          v-model="searchParams">
-        </project-sorting-card>
-      </b-col>
-
-      <b-col xl="9">
-        <infinite-loading-table
-          :fields="tableFields"
-          domain-object="project"
-          :search-params="mergedSearchParams">
-          <template slot="action" scope="project">
-            <b-btn
-              variant="success"
-              size="sm"
-              block
-              @click="loadDataModal(project.item)">
-              Download
-            </b-btn>
-          </template>
-        </infinite-loading-table>
-      </b-col>
+      data-title="Browse the Data">
+      <projects-table
+        :fields="tableFields"
+        :collection="collection">
+        <template slot="action" scope="project">
+          <b-btn
+            variant="success"
+            size="sm"
+            block
+            @click="loadDataModal(project.item)">
+            Download
+          </b-btn>
+        </template>
+      </projects-table>
     </b-row>
 
     <data-modal
@@ -46,17 +35,20 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import { filterProjects } from '@/mixins/filterProjects'
+import SortProjectsData from '@/components/data/SortProjects'
+import ToggleCompletedData from '@/components/data/ToggleCompleted'
+import FilterProjectsData from '@/components/data/FilterProjects'
+import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName ],
+  mixins: [ fetchCollectionByName, filterProjects ],
 
   data () {
     return {
@@ -85,8 +77,7 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
-      },
-      searchParams: {}
+      }
     }
   },
 
@@ -106,7 +97,10 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable,
+    SortProjectsData,
+    FilterProjectsData,
+    ToggleCompletedData,
+    ProjectsTable,
     DataModal,
     ProjectSortingCard
   },
@@ -118,12 +112,6 @@ export default {
 
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    mergedSearchParams () {
-      return merge({}, this.searchParams, {
-        category_id: this.collection.id
-      })
     }
   },
 
@@ -135,7 +123,7 @@ export default {
   },
 
   mounted () {
-    const nodes = document.querySelectorAll('h2')
+    const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }

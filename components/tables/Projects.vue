@@ -4,10 +4,14 @@
       hover
       striped
       show-empty
-      :items="items"
-      :fields="tableFields"
+      :items="projects"
+      :fields="fields"
       :style="tableStyle"
       @sort-changed="onSortChange">
+
+      <template slot="overall_progress" scope="data">
+        {{ data.item.overall_progress }}%
+      </template>
 
       <template slot="created" scope="data">
         {{ data.item.created | moment('calendar') }}
@@ -27,42 +31,37 @@
 
     </b-table>
 
-    <infinite-load
+    <infinite-load-projects
       ref="infiniteload"
-      :domain-object="domainObject"
-      v-model="items"
-      :search-params="mergedParams"
-      :no-results="null"
-      no-more-results="No more results">
-    </infinite-load>
+      :collection="collection"
+      :orderby="sortModel.orderby"
+      :desc="sortModel.desc"
+      :no-results="noResults"
+      v-model="projects">
+    </infinite-load-projects>
 
   </div>
 </template>
 
 <script>
-import merge from 'lodash/merge'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 
 export default {
   data () {
     return {
-      items: [],
-      sortParams: {}
+      projects: [],
+      sortModel: {}
     }
   },
 
   components: {
-    InfiniteLoad
+    InfiniteLoadProjects
   },
 
   props: {
-    domainObject: {
+    collection: {
       type: String,
       required: true
-    },
-    searchParams: {
-      type: Object,
-      default: () => ({})
     },
     fields: {
       type: Object,
@@ -93,10 +92,6 @@ export default {
         }
       }
       return fieldsCopy
-    },
-
-    mergedParams () {
-      return merge({}, this.searchParams, this.sortParams)
     }
   },
 
@@ -105,7 +100,7 @@ export default {
      * Handle sort change.
      */
     onSortChange (value) {
-      this.sortParams = {
+      this.sortModel = {
         orderby: value.sortBy,
         desc: value.sortDesc
       }

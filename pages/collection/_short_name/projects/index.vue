@@ -70,12 +70,13 @@
 
         <infinite-load-projects
           ref="infiniteload"
-          :short-name="collection.short_name"
+          :collection="collection"
           :orderby="sortModel.orderby"
           :desc="sortModel.desc"
           :no-results="noResults"
           v-model="projects">
         </infinite-load-projects>
+
       </b-col>
     </b-row>
   </div>
