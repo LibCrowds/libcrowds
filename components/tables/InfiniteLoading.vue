@@ -4,7 +4,7 @@
       hover
       striped
       show-empty
-      :items="items"
+      :items="filteredItems"
       :fields="tableFields"
       :style="tableStyle"
       @sort-changed="onSortChange">
@@ -32,7 +32,6 @@
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
-      :no-results="null"
       no-more-results="No more results">
     </infinite-load>
 
@@ -63,6 +62,14 @@ export default {
     searchParams: {
       type: Object,
       default: () => ({})
+    },
+    filter: {
+      type: String,
+      default: null
+    },
+    filterBy: {
+      type: String,
+      default: null
     },
     fields: {
       type: Object,
@@ -97,6 +104,18 @@ export default {
 
     mergedParams () {
       return merge({}, this.searchParams, this.sortParams)
+    },
+
+    filteredItems () {
+      if (!this.filter || !this.filterBy) {
+        return this.items
+      }
+
+      return this.items.filter(item => {
+        const value = this.filter.toUpperCase()
+        const cell = item[this.filterBy]
+        return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
+      })
     }
   },
 
@@ -116,6 +135,14 @@ export default {
      */
     reset () {
       this.$refs.infiniteload.reset()
+    }
+  },
+
+  watch: {
+    filteredItems (val) {
+      if (val.length !== this.items.length) {
+        this.$refs.infiniteload.load()
+      }
     }
   }
 }

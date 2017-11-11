@@ -1,15 +1,35 @@
 <template>
-  <b-card no-body :header="title">
+  <b-card no-body>
+    <div
+      slot="header"
+      class="mb-0 d-flex align-items-center justify-content-between">
+      <span>
+        <h6 class="mb-0">{{ title }}</h6>
+        <p class="text-muted mb-0">
+          <small>
+            Open and manage projects.
+          </small>
+        </p>
+      </span>
+      <b-form-input
+        v-model="filter"
+        class="table-search"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+    </div>
     <infinite-loading-table
       domainObject="project"
       :fields="tableFields"
+      :filter="filter"
+      :filter-by="filterBy"
       :search-params="searchParams"
       no-border>
       <template slot="action" scope="project">
         <b-btn
           variant="success"
-          size="sm"
           block
+          size="sm"
           :to="{
             name: 'admin-project-short_name-settings',
             params: {
@@ -47,7 +67,9 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -77,3 +99,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.table-search {
+  max-width: 50%;
+  border-radius: 100px;
+  padding: 0.5rem 0.75rem;
+}
+</style>

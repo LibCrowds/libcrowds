@@ -70,6 +70,17 @@ export default {
           this.$refs.stateChanger
         )
       })
+    },
+
+    /**
+     * Trigger a manual load.
+     */
+    load () {
+      this.$nextTick(() => {
+        if (!this.$refs.infiniteload.isLoading) {
+          this.$refs.infiniteload.attemptLoad()
+        }
+      })
     }
   },
 
