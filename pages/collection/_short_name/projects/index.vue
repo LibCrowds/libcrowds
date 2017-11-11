@@ -1,6 +1,6 @@
 <template>
-  <div id="collection-contribute">
-    <h1 class="text-center">Contribute</h1>
+  <div id="collection-projects">
+    <h1 class="text-center">Get Started</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
@@ -138,7 +138,7 @@ export default {
 
   head () {
     return {
-      title: 'Contribute',
+      title: 'Get Started',
       meta: [
         {
           hid: 'description',
@@ -160,7 +160,7 @@ export default {
     },
 
     pageContent () {
-      return marked(this.collection.info.content.contribute)
+      return marked(this.collection.info.content.projects)
     }
   },
 

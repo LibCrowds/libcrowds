@@ -30,9 +30,9 @@
       </div>
     </div>
 
-    <section id="contribute">
+    <section id="collections">
       <div class="container py-4">
-        <h2 class="mt-4">Contribute</h2>
+        <h2 class="mt-4">Project Collections</h2>
         <p class="lead">
           {{ localConfig.description }}
         </p>
@@ -68,7 +68,7 @@
             <b-btn
               variant="success"
               size="lg"
-              v-scroll-to="'#contribute'">
+              v-scroll-to="'#collections'">
               Get Started
             </b-btn>
           </div>
@@ -254,7 +254,7 @@ export default {
     color: $gray-1000;
   }
 
-  #contribute {
+  #collections {
     background-color: $gray-100;
   }
 

@@ -61,7 +61,7 @@
               }
             }"
             @click="toggleCollapsibleSidebar">
-            Contribute
+            Get Started
           </b-nav-item>
           <b-nav-item
             exact
