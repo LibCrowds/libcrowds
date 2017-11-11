@@ -11,7 +11,7 @@
       class="collection-nav-item"
       data-title="Browse the Data">
       <projects-table
-        :fields="tableFields"
+        include-tags
         :collection="collection">
         <template slot="action" scope="project">
           <b-btn
@@ -53,31 +53,7 @@ export default {
   data () {
     return {
       activeProject: null,
-      showDataModal: false,
-      tableFields: {
-        name: {
-          label: 'Name'
-        },
-        n_tasks: {
-          label: 'Tasks',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      }
+      showDataModal: false
     }
   },
 

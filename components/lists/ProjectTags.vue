@@ -3,10 +3,8 @@
     <b-badge
       v-for="(value, type) in project.info.tags"
       :key="type"
-      class="mr-1"
-      href="#"
       :style="getTagStyle(type)"
-      @click.prevent="$emit('tag-click', type, value)">
+      @click.prevent="handleClick(type, value)">
       {{ type }}: {{ value }}
     </b-badge>
   </div>
@@ -22,6 +20,10 @@ export default {
     collection: {
       type: Object,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -36,7 +38,21 @@ export default {
       return {
         backgroundColor: typeof collectionTag !== 'undefined'
           ? collectionTag.color
-          : '#666'
+          : '#909090',
+        cursor: this.disabled ? 'default' : 'pointer'
+      }
+    },
+
+    /**
+     * Handle click.
+     * @param {String} type
+     *   The tag type.
+     * @param {String} name
+     *   The tag name.
+     */
+    handleClick (type, name) {
+      if (!this.disabled) {
+        this.$emit('tag-click', type, name)
       }
     }
   }
@@ -44,19 +60,20 @@ export default {
 </script>
 
 <style lang="scss">
-#project-tags-list {
+.project-tags-list {
   .badge {
     letter-spacing: 0.2px;
     font-weight: 400;
     margin-left: 0.25rem;
-  }
+    margin-right: 0.25rem;
 
-  &:first-child {
-    margin-left: 0;
-  }
+    &:first-child {
+      margin-left: 0;
+    }
 
-  &:last-child {
-    margin-right: 0;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
 </style>

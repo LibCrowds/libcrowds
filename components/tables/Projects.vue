@@ -1,42 +1,50 @@
 <template>
-  <div class="infinite-loading-table">
+  <div class="projects-table">
     <b-table
       hover
       striped
       show-empty
-      :items="projects"
-      :fields="fields"
+      responsive
+      :items="filteredProjects"
+      :fields="mergedFields"
       :style="tableStyle"
       @sort-changed="onSortChange">
 
-      <template slot="overall_progress" scope="data">
-        {{ data.item.overall_progress }}%
+      <template slot="name" scope="project">
+        {{ project.item.name }}
+        <project-tags-list
+          disabled
+          :project="project.item"
+          :collection="collection">
+        </project-tags-list>
       </template>
 
-      <template slot="created" scope="data">
-        {{ data.item.created | moment('calendar') }}
+      <template slot="overall_progress" scope="project">
+        {{ project.item.overall_progress }}%
       </template>
 
-      <template slot="updated" scope="data">
-        {{ data.item.updated | moment('calendar') }}
+      <template slot="created" scope="project">
+        {{ project.item.created | moment('calendar') }}
       </template>
 
-      <template slot="last_activity" scope="data">
-        {{ data.item.updated | moment('calendar') }}
+      <template slot="updated" scope="project">
+        {{ project.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="actions" scope="data">
-        <slot name="action" :item="data.item"></slot>
+      <template slot="last_activity" scope="project">
+        {{ project.item.updated | moment('calendar') }}
+      </template>
+
+      <template slot="actions" scope="project">
+        <slot name="action" :item="project.item"></slot>
       </template>
 
     </b-table>
 
     <infinite-load-projects
-      ref="infiniteload"
       :collection="collection"
       :orderby="sortModel.orderby"
       :desc="sortModel.desc"
-      :no-results="noResults"
       v-model="projects">
     </infinite-load-projects>
 
@@ -44,23 +52,49 @@
 </template>
 
 <script>
+import merge from 'lodash/merge'
+import { filterProjects } from '@/mixins/filterProjects'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
+import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
+  mixins: [ filterProjects ],
+
   data () {
     return {
       projects: [],
-      sortModel: {}
+      sortModel: {},
+      defaultFields: {
+        name: {
+          label: 'Name'
+        },
+        overall_progress: {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
+        n_tasks: {
+          label: 'Tasks',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        }
+      }
     }
   },
 
   components: {
-    InfiniteLoadProjects
+    InfiniteLoadProjects,
+    ProjectTagsList
   },
 
   props: {
     collection: {
-      type: String,
+      type: Object,
       required: true
     },
     fields: {
@@ -68,6 +102,10 @@ export default {
       default: () => ({})
     },
     noBorder: {
+      type: Boolean,
+      default: false
+    },
+    includeTags: {
       type: Boolean,
       default: false
     }
@@ -83,8 +121,8 @@ export default {
       }
     },
 
-    tableFields () {
-      const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
+    mergedFields () {
+      const fieldsCopy = merge({}, this.defaultFields, this.fields)
       if (this.$scopedSlots.action) {
         fieldsCopy.actions = {
           label: 'Actions',
@@ -104,14 +142,13 @@ export default {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
-    },
-
-    /**
-     * Reset the loaded items.
-     */
-    reset () {
-      this.$refs.infiniteload.reset()
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.projects-table {
+  width: 100%;
+}
+</style>

@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import pickBy from 'lodash/pickBy'
+import identity from 'lodash/identity'
+
 export default {
   data () {
     return {
@@ -50,12 +53,13 @@ export default {
      */
     onInput (name, type) {
       this.model[type] = name
-      this.$emit('input', this.model)
+      // Emit with null values removed
+      this.$emit('input', pickBy(this.model, identity))
     }
   },
 
   watch: {
-    value (val, oldVal) {
+    value (val) {
       this.model = val
     }
   }

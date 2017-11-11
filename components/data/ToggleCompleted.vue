@@ -29,6 +29,10 @@ export default {
     onChange (change) {
       this.$emit('input', change.value)
     }
+  },
+
+  beforeMount () {
+    this.$emit('input', false)
   }
 }
 </script>
