@@ -15,11 +15,13 @@
         <b-card header="Sorting Options" class="options-card mb-2">
           <filter-projects-data
             v-model="tagModel"
-            :collection="collection">
+            :collection="collection"
+            @input="reset">
           </filter-projects-data>
           <sort-projects-data
             v-model="sortModel"
-            class="mb-3">
+            class="mb-3"
+            @input="reset">
           </sort-projects-data>
           <toggle-completed-data
             v-model="showCompleted">
@@ -56,6 +58,7 @@
         </b-table>
 
         <transition-group
+          ref="transition"
           tag="ul"
           class="list-unstyled d-none d-lg-block"
           name="fade-up">
@@ -161,6 +164,19 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.projects)
+    }
+  },
+
+  methods: {
+    /**
+     * Reset the loaded projects, otherwise we have to scroll again to trigger.
+     * @param {Object} evt
+     *   The event.
+     */
+    reset (evt) {
+      // Change this number if the transition time changes.
+      console.log(this.$refs.transition)
+      this.$refs.infiniteload.reset(350)
     }
   },
 

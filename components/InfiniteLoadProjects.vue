@@ -64,17 +64,22 @@ export default {
     },
 
     /**
-     * Reset the loaded domain objects.
+     * Reset the loaded items.
+     *
+     * If the items are displayed using a transition the wait paramter should be
+     * used with a time longer than that transition to ensure the the reload
+     * is triggered, otherwise we might not be at the scroll distance when the
+     * reset happens.
+     * @param {Number} wait
+     *   A number of milliseconds to wait before reloading.
      */
-    reset () {
+    reset (wait = 0) {
+      this.$emit('input', [])
       this.$nextTick(() => {
-        this.page = 1
-        this.$emit('input', [])
-        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-        this.$refs.infiniteload.$emit(
-          '$InfiniteLoading:infinite',
-          this.$refs.stateChanger
-        )
+        setTimeout(() => {
+          this.page = 1
+          this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+        }, wait)
       })
     }
   },

@@ -59,16 +59,13 @@ export default {
     },
 
     /**
-     * Reset the loaded domain objects.
+     * Reset the loaded items.
      */
     reset () {
+      this.$emit('input', [])
       this.$nextTick(() => {
-        this.$emit('input', [])
+        this.page = 1
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-        this.$refs.infiniteload.$emit(
-          '$InfiniteLoading:infinite',
-          this.$refs.stateChanger
-        )
       })
     },
 
