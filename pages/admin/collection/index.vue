@@ -11,21 +11,12 @@
       New
     </b-btn>
 
-    <b-table
-      hover
-      show-empty
-      :items="collections"
-      :fields="table.fields">
-
-      <template slot="n_projects" scope="collection">
-        {{ nProjects[collection.item.short_name] }}
-      </template>
-
-      <template slot="created" scope="collection">
-        {{ collection.item.created | moment('calendar') }}
-      </template>
-
-      <template slot="action" scope="collection">
+    <infinite-loading-table
+      ref="table"
+      :fields="tableFields"
+      no-border
+      domain-object="category">
+      <template slot="action" scope="category">
         <b-btn
           variant="success"
           size="sm"
@@ -34,20 +25,21 @@
           :to="{
             name: 'admin-collection-short_name-settings',
             params: {
-              short_name: collection.item.short_name
+              short_name: category.item.short_name
             }
           }">
           Open
         </b-btn>
       </template>
+    </infinite-loading-table>
 
-    </b-table>
   </card-base>
 </template>
 
 <script>
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -57,40 +49,17 @@ export default {
   data () {
     return {
       title: 'Open Collection',
-      table: {
-        fields: {
-          name: {
-            label: 'Name'
-          },
-          n_projects: {
-            label: 'Projects',
-            class: 'text-center d-none d-md-table-cell',
-            sortable: true
-          },
-          created: {
-            label: 'Created',
-            class: 'text-center d-none d-md-table-cell',
-            sortable: true
-          },
-          action: {
-            label: 'Action',
-            class: 'text-center'
-          }
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
         }
       }
     }
-  },
-
-  async asyncData ({ app, error }) {
-    const endpoint = `/admin/categories`
-    return app.$axios.$get(endpoint).then(data => {
-      return {
-        collections: data.categories,
-        nProjects: data.n_projects_per_category
-      }
-    }).catch(err => {
-      error(err)
-    })
   },
 
   head () {
@@ -101,7 +70,8 @@ export default {
 
   components: {
     PybossaForm,
-    CardBase
+    CardBase,
+    InfiniteLoadingTable
   },
 
   beforeMount () {
