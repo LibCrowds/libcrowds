@@ -26,6 +26,7 @@ describe('Collection card', () => {
     })
     wrapper = mount(CollectionCard, {
       localVue,
+      router,
       propsData: {
         collection: collection
       }
