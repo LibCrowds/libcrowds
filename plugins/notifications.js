@@ -3,7 +3,7 @@ import VueNotifications from 'vue-notifications'
 import swal from 'sweetalert2'
 import iziToast from 'izitoast'
 
-function toast ({title, message, type, timeout, iconText, cb}) {
+function toast ({title, message, type, timeout, cb}) {
   if (type === VueNotifications.types.warn) type = 'warning'
   iziToast.settings({
     position: 'bottomLeft'

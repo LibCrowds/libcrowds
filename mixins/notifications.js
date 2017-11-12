@@ -2,9 +2,7 @@ import capitalize from 'capitalize'
 
 export const notifications = {
   notifications: {
-    notify: {
-      iconText: '\u2139'
-    },
+    notify: {},
     notifySuccess: {
       title: 'Success',
       type: 'success'
