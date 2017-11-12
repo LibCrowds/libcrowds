@@ -200,6 +200,7 @@ export default {
 
     .card-title {
       display: flex;
+      font-size: $font-size-lg;
 
       a {
         width: 100%;
