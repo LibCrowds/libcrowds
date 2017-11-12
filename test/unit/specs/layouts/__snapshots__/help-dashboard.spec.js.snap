@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Account dashboard layout renders correctly 1`] = `
+exports[`Help dashboard layout renders correctly 1`] = `
 
 <div id="dashboard-layout-base"
      data-server-rendered="true"
@@ -19,41 +19,41 @@ exports[`Account dashboard layout renders correctly 1`] = `
       <li data-index="0"
           class="nav-item"
       >
-        <a href="#/account/joebloggs/settings/profile"
-           target="_self"
-           class="nav-link"
-        >
-          Profile
-        </a>
-      </li>
-      <li data-index="1"
-          class="nav-item"
-      >
-        <a href="#/account/joebloggs/settings/api"
+        <a href="#/help/api"
            target="_self"
            class="nav-link"
         >
           API
         </a>
       </li>
-      <li data-index="2"
+      <li data-index="1"
           class="nav-item"
       >
-        <a href="#/account/joebloggs/settings/avatar"
+        <a href="#/help/cookies"
            target="_self"
            class="nav-link"
         >
-          Avatar
+          Cookies Policy
+        </a>
+      </li>
+      <li data-index="2"
+          class="nav-item"
+      >
+        <a href="#/help/privacy"
+           target="_self"
+           class="nav-link"
+        >
+          Privacy Policy
         </a>
       </li>
       <li data-index="3"
           class="nav-item"
       >
-        <a href="#/account/joebloggs/settings/security"
+        <a href="#/help/tos"
            target="_self"
            class="nav-link"
         >
-          Security
+          Terms of Service
         </a>
       </li>
     </ul>
@@ -181,41 +181,41 @@ exports[`Account dashboard layout renders correctly 1`] = `
         <li data-index="0"
             class="nav-item"
         >
-          <a href="#/account/joebloggs/settings/profile"
-             target="_self"
-             class="nav-link"
-          >
-            Profile
-          </a>
-        </li>
-        <li data-index="1"
-            class="nav-item"
-        >
-          <a href="#/account/joebloggs/settings/api"
+          <a href="#/help/api"
              target="_self"
              class="nav-link"
           >
             API
           </a>
         </li>
-        <li data-index="2"
+        <li data-index="1"
             class="nav-item"
         >
-          <a href="#/account/joebloggs/settings/avatar"
+          <a href="#/help/cookies"
              target="_self"
              class="nav-link"
           >
-            Avatar
+            Cookies Policy
+          </a>
+        </li>
+        <li data-index="2"
+            class="nav-item"
+        >
+          <a href="#/help/privacy"
+             target="_self"
+             class="nav-link"
+          >
+            Privacy Policy
           </a>
         </li>
         <li data-index="3"
             class="nav-item"
         >
-          <a href="#/account/joebloggs/settings/security"
+          <a href="#/help/tos"
              target="_self"
              class="nav-link"
           >
-            Security
+            Terms of Service
           </a>
         </li>
       </ul>

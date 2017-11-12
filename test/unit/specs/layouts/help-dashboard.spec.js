@@ -4,10 +4,10 @@ import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import AccountDashboard from '@/layouts/account-dashboard'
+import HelpDashboard from '@/layouts/help-dashboard'
 import { routes } from '@/test/fixtures/routes'
 
-describe('Account dashboard layout', () => {
+describe('Help dashboard layout', () => {
   let localVue = null
   let wrapper = null
   let store = null
@@ -29,7 +29,7 @@ describe('Account dashboard layout', () => {
     router = new VueRouter({
       routes
     })
-    wrapper = mount(AccountDashboard, {
+    wrapper = mount(HelpDashboard, {
       localVue,
       store,
       router

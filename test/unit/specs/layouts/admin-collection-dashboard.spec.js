@@ -3,11 +3,12 @@ import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
+import collection from '@/test/fixtures/collection.json'
 import { mount, createLocalVue } from 'vue-test-utils'
-import AccountDashboard from '@/layouts/account-dashboard'
+import AdminCollectionDashboard from '@/layouts/admin-collection-dashboard'
 import { routes } from '@/test/fixtures/routes'
 
-describe('Account dashboard layout', () => {
+describe('Collection admin dashboard layout', () => {
   let localVue = null
   let wrapper = null
   let store = null
@@ -21,15 +22,13 @@ describe('Account dashboard layout', () => {
     localVue.component(NuxtLink.name, NuxtLink)
     store = new Vuex.Store({
       state: {
-        currentUser: {
-          name: 'joebloggs'
-        }
+        currentCollection: collection
       }
     })
     router = new VueRouter({
       routes
     })
-    wrapper = mount(AccountDashboard, {
+    wrapper = mount(AdminCollectionDashboard, {
       localVue,
       store,
       router

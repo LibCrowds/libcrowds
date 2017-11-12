@@ -3,33 +3,35 @@ import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
+import collection from '@/test/fixtures/collection.json'
 import { mount, createLocalVue } from 'vue-test-utils'
-import AccountDashboard from '@/layouts/account-dashboard'
+import Container from '@/layouts/container'
 import { routes } from '@/test/fixtures/routes'
 
-describe('Account dashboard layout', () => {
+describe('Container layout', () => {
   let localVue = null
   let wrapper = null
-  let store = null
   let router = null
+  let store = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
-    localVue.use(Vuex)
-    localVue.use(VueRouter)
     localVue.component(NuxtLink.name, NuxtLink)
+    localVue.use(VueRouter)
+    router = new VueRouter({
+      routes
+    })
+    localVue.use(Vuex)
     store = new Vuex.Store({
       state: {
+        publishedCollections: [ collection ],
         currentUser: {
           name: 'joebloggs'
         }
       }
     })
-    router = new VueRouter({
-      routes
-    })
-    wrapper = mount(AccountDashboard, {
+    wrapper = mount(Container, {
       localVue,
       store,
       router

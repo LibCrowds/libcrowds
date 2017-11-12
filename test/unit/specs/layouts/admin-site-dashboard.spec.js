@@ -4,21 +4,24 @@ import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { mount, createLocalVue } from 'vue-test-utils'
-import AccountDashboard from '@/layouts/account-dashboard'
+import AdminSiteDashboard from '@/layouts/admin-site-dashboard'
 import { routes } from '@/test/fixtures/routes'
 
-describe('Account dashboard layout', () => {
+describe('Site admin dashboard layout', () => {
   let localVue = null
   let wrapper = null
-  let store = null
   let router = null
+  let store = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
-    localVue.use(Vuex)
-    localVue.use(VueRouter)
     localVue.component(NuxtLink.name, NuxtLink)
+    localVue.use(VueRouter)
+    router = new VueRouter({
+      routes
+    })
+    localVue.use(Vuex)
     store = new Vuex.Store({
       state: {
         currentUser: {
@@ -26,10 +29,7 @@ describe('Account dashboard layout', () => {
         }
       }
     })
-    router = new VueRouter({
-      routes
-    })
-    wrapper = mount(AccountDashboard, {
+    wrapper = mount(AdminSiteDashboard, {
       localVue,
       store,
       router
