@@ -18,14 +18,16 @@
         "backpack-core/babel"
       ],
       "plugins": [
-        ["module-resolver", {
-          "root": ["./"],
-          "extensions": [ ".json", ".js", ".vue" ],
-          "alias": {
-            "~": ".",
-            "@": "."
+        [
+          "module-resolver",
+          {
+            "root": ["./"],
+            "alias": {
+              "~": ".",
+              "@": "."
+            }
           }
-        }]
+        ]
       ]
     }
   }

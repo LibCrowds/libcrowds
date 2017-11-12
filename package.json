@@ -106,13 +106,6 @@
       "js",
       "vue"
     ],
-    "moduleDirectories": [
-      "node_modules",
-      ".nuxt",
-      "components",
-      "layouts",
-      "pages"
-    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/test/assetsTransformer.js",
       "\\.(scss)$": "<rootDir>/test/assetsTransformer.js",
