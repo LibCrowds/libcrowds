@@ -19,10 +19,11 @@
       ],
       "plugins": [
         ["module-resolver", {
-          "root": ["./"],
+          "extensions": [".js", ".vue", ".json"],
+          "root": ["."],
           "alias": {
-            "~": ".",
-            "@": "."
+            "~": "./",
+            "@": "./"
           }
         }]
       ]
