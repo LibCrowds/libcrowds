@@ -118,13 +118,13 @@
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
             All datasets generated from the experimental crowdsourcing
-            projects hosted on this platform are made available under a
+            projects hosted by {{ collection.brand }} are made available under a
             <a
-              :href="collection.info.license"
+              :href="dataLicenses[collection.info.license].url"
               target="_blank">
-              {{ collection.info.license }} license
+              {{ collection.info.license }}
             </a>
-            and can be downloaded by anyone in JSON or
+            license and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
           </p>
           <b-btn
@@ -200,6 +200,7 @@
 import find from 'lodash/find'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
+import { licenses } from '@/mixins/licenses'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -210,7 +211,8 @@ export default {
 
   mixins: [
     fetchCollectionByName,
-    computeShareUrl
+    computeShareUrl,
+    licenses
   ],
 
   data () {

@@ -30,6 +30,7 @@
 import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { licenses } from '@/mixins/licenses'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -37,7 +38,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, licenses ],
 
   middleware: 'is-admin',
 
@@ -151,36 +152,9 @@ export default {
               model: 'info.license',
               label: 'Data Reuse License',
               type: 'select',
-              values: [
-                {
-                  id: 'CC0',
-                  name: 'CC0'
-                },
-                {
-                  id: 'CC_BY',
-                  name: 'CC BY'
-                },
-                {
-                  id: 'CC_BY-SA',
-                  name: 'CC BY-SA'
-                },
-                {
-                  id: 'CC_BY-ND',
-                  name: 'CC BY-ND'
-                },
-                {
-                  id: 'CC_BY-NC',
-                  name: 'CC BY-NC'
-                },
-                {
-                  id: 'CC_BY-NC-SA',
-                  name: 'CC BY-NC-SA'
-                },
-                {
-                  id: 'CC_BY-NC-ND',
-                  name: 'CC_BY-NC-ND'
-                }
-              ],
+              values: Object.keys(this.dataLicenses).map(key => {
+                return { id: key, name: this.dataLicenses[key].name }
+              }),
               default: 'CC0'
             }
           ]
