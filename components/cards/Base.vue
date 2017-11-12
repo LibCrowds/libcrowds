@@ -15,11 +15,8 @@
         <slot name="controls"></slot>
       </b-col>
     </b-row>
-    <slot></slot>
 
-    <template slot="footer">
-      <slot name="card-footer"></slot>
-    </template>
+    <slot></slot>
 
   </b-card>
 </template>

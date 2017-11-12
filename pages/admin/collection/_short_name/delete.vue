@@ -6,7 +6,7 @@
         there is no undo!
       </b-alert>
     </b-card-body>
-    <template slot="card-footer">
+    <b-card-footer>
       <div class="d-flex">
         <b-btn
           variant="danger"
@@ -15,7 +15,7 @@
           Delete
         </b-btn>
       </div>
-    </template>
+    </b-card-footer>
   </card-base>
 </template>
 
