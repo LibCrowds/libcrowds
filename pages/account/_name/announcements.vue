@@ -21,6 +21,8 @@ import InfiniteLoad from '@/components/InfiniteLoad'
 export default {
   layout: 'container',
 
+  middleware: 'is-current-or-admin',
+
   data () {
     return {
       title: 'Announcements',
