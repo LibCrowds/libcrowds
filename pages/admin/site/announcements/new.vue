@@ -93,11 +93,7 @@ export default {
      *   The response data.
      */
     onSuccess (data) {
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Announcement created'
-      })
+      this.notifySuccess({ message: 'Announcement created' })
       this.$router.push({
         name: 'admin-site-announcements-id-update',
         params: {

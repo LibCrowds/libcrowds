@@ -102,9 +102,7 @@ export default {
         featured: !project.featured
       }).then(data => {
         project.featured = !project.featured
-        this.notify({
-          type: 'success',
-          title: 'Success',
+        this.notifySuccess({
           message: project.featured
             ? 'Project added to featured'
             : 'Project removed from featured'

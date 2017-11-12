@@ -86,11 +86,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Collection updated'
-      })
+      this.notifySuccess({ message: 'Collection updated' })
     }
   }
 }

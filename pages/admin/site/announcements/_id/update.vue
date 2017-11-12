@@ -142,9 +142,7 @@ export default {
         published: !this.form.model.published
       }).then(data => {
         this.form.model.published = !this.form.model.published
-        this.notify({
-          type: 'success',
-          title: 'Success',
+        this.notifySuccess({
           message: this.form.model.published
             ? 'Announcement published'
             : 'Announcement unpublished'

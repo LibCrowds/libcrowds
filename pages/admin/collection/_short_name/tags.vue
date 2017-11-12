@@ -154,11 +154,7 @@ export default {
           })
         }
       }).then(data => {
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: `Tag deleted`
-        })
+        this.notifySuccess({ message: `Tag deleted` })
       }, (dismiss) => {
         this.$swal.close()
       })

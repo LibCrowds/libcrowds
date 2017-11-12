@@ -194,11 +194,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Collection updated'
-      })
+      this.notifySuccess({ message: 'Collection updated' })
     },
 
     /**
@@ -212,9 +208,7 @@ export default {
         info: this.collection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
-        this.notify({
-          type: 'success',
-          title: 'Success',
+        this.notifySuccess({
           message: this.collection.info.published
             ? 'Collection microsite published'
             : 'Collection microsite unpublished'

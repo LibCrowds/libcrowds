@@ -15,11 +15,7 @@ export const deleteDomainObject = {
           return this.$axios.$delete(`/api/${type}/${id}`)
         }
       }).then(data => {
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: `${capitalize(terminology)} deleted`
-        })
+        this.notifySuccess({ message: `${capitalize(terminology)} deleted` })
         callback()
       }, (dismiss) => {
         this.$swal.close()

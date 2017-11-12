@@ -114,11 +114,7 @@ export default {
       if (isEmpty(this.errors)) {
         this.addTag()
       } else {
-        this.notify({
-          type: 'warn',
-          title: 'Invalid form data',
-          message: 'Please correct the errors'
-        })
+        this.notifyInvalidForm()
       }
     },
 
@@ -141,11 +137,7 @@ export default {
         info: this.collection.info
       }).then(data => {
         this.$refs.modal.hide()
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: 'Tag added'
-        })
+        this.notifySuccess({ message: 'Tag added' })
         this.processing = false
         this.$emit('update', this.tag)
       })

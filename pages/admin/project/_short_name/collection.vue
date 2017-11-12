@@ -93,11 +93,7 @@ export default {
       this.$axios.$put(`/api/project/${this.project.id}`, {
         category_id: collection.id
       }).then(data => {
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: `Project moved to ${collection.name}`
-        })
+        this.notifySuccess({ message: `Project moved to ${collection.name}` })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)

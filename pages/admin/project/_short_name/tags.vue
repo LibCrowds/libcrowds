@@ -103,11 +103,7 @@ export default {
       } finally {
         this.processing = false
       }
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Tags updated'
-      })
+      this.notifySuccess({ message: 'Tags updated' })
     }
   }
 }
