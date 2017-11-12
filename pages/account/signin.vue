@@ -107,9 +107,10 @@ export default {
 
   methods: {
     onSuccess () {
-      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios).then(data => {
-        this.$router.push({ path: this.next })
-      })
+      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios, this.$ga)
+        .then(data => {
+          this.$router.push({ path: this.next })
+        })
     }
   }
 }
