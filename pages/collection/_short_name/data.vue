@@ -51,6 +51,7 @@
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
+import { licenses } from '@/mixins/licenses'
 import SortProjectsData from '@/components/data/SortProjects'
 import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
@@ -62,7 +63,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, filterProjects ],
+  mixins: [ fetchCollectionByName, filterProjects, licenses ],
 
   data () {
     return {
@@ -80,9 +81,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `All datasets generated from ${this.collection.name}
-            projects are made available under a ${this.collection.license}
-            license.`
+          content: this.metaContent
         }
       ]
     }
@@ -105,6 +104,14 @@ export default {
 
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    metaContent () {
+      if (this.collection.license) {
+        return `All datasets generated from ${this.collection.name}
+          projects are made available under a
+          ${this.dataLicenses[this.collection.license].name} license.`
+      }
     }
   },
 
