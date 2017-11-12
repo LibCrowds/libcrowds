@@ -75,7 +75,8 @@
           :collection="collection"
           :orderby="sortModel.orderby"
           :desc="sortModel.desc"
-          :no-results="noResults"
+          no-results=""
+          no-more-results=""
           v-model="projects">
         </infinite-load-projects>
 
@@ -110,8 +111,7 @@ export default {
   data () {
     return {
       projects: [],
-      noResults: 'No projects are available using the selected filters, ' +
-        'use the input fields on the left to change them.',
+      noResults: '',
       tableFields: {
         name: {
           label: 'Name'
