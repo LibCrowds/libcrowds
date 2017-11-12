@@ -58,7 +58,6 @@
         </b-table>
 
         <transition-group
-          ref="transition"
           tag="ul"
           class="list-unstyled d-none d-lg-block"
           name="fade-up">
@@ -175,7 +174,6 @@ export default {
      */
     reset (evt) {
       // Change this number if the transition time changes.
-      console.log(this.$refs.transition)
       this.$refs.infiniteload.reset(350)
     }
   },
