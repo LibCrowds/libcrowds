@@ -201,6 +201,14 @@ export default {
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
         this.loadTask()
         this.trackUserProgress()
+        if (this.$ga) {
+          this.$ga.event({
+            eventCategory: 'Contributions',
+            eventAction: 'submit',
+            eventLabel: this.project.name,
+            eventValue: 1
+          })
+        }
       }).catch(err => {
         this.$nuxt.error(err)
       })

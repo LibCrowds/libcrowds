@@ -6,7 +6,7 @@
         title="Share on Facebook"
         variant="facebook"
         :size="size"
-        @click="share(facebookUrl, 980, 620)">
+        @click="share('Facebook', facebookUrl, 980, 620)">
         <icon name="facebook"></icon>
       </b-btn>
 
@@ -15,7 +15,7 @@
         title="Share on Twitter"
         variant="twitter"
         :size="size"
-        @click="share(twitterUrl, 450, 550)">
+        @click="share('Twitter', twitterUrl, 450, 550)">
         <icon name="twitter"></icon>
       </b-btn>
 
@@ -24,7 +24,7 @@
         title="Share on Google Plus"
         variant="googleplus"
         :size="size"
-        @click="share(googleplusUrl, 510, 725)">
+        @click="share('Google Plus', googleplusUrl, 510, 725)">
         <icon name="google-plus"></icon>
       </b-btn>
 
@@ -33,7 +33,7 @@
         title="Share on LinkedIn"
         variant="linkedin"
         :size="size"
-        @click="share(linkedinUrl, 510, 520)">
+        @click="share('LinkedIn', linkedinUrl, 510, 520)">
         <icon name="linkedin"></icon>
       </b-btn>
 
@@ -75,7 +75,13 @@ export default {
   },
 
   methods: {
-    share (url, width, height) {
+    /**
+     * Open a new window to share the url on the chosen platform.
+     */
+    share (platform, url, width, height) {
+      if (this.$ga) {
+        this.$ga.social(platform, 'Share', this.shareUrl)
+      }
       const specs = `scrollbars=yes,width=${width},height=${height}`
       const popup = window.open(url, 'Share', specs)
       popup.focus()

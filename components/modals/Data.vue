@@ -64,6 +64,12 @@ export default {
     }
   },
 
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
+  },
+
   methods: {
     /**
      * Download the data.
@@ -82,6 +88,14 @@ export default {
         }
       }).then(data => {
         exportFile(data, `${this.project.short_name}_${type}`, 'zip')
+        if (this.$ga) {
+          this.$ga.event({
+            eventCategory: 'Data',
+            eventAction: 'download',
+            eventLabel: this.project.name,
+            eventValue: 1
+          })
+        }
       }).catch(err => {
         this.$nuxt.error(err)
       })

@@ -14,14 +14,16 @@
 
         <b-card header="Sorting Options" class="options-card mb-2">
           <filter-projects-data
+            id="filter"
             v-model="tagModel"
             :collection="collection"
-            @input="reset">
+            @input="onSortOrFilter('filter')">
           </filter-projects-data>
           <sort-projects-data
+            id="sort"
             v-model="sortModel"
             class="mb-3"
-            @input="reset">
+            @input="onSortOrFilter('sort')">
           </sort-projects-data>
           <toggle-completed-data
             v-model="showCompleted">
@@ -176,12 +178,21 @@ export default {
 
   methods: {
     /**
-     * Reset the loaded projects, otherwise we have to scroll again to trigger.
-     * @param {Object} evt
-     *   The event.
+     * Handle sorting of filtering of projects.
+     * @param {String} action
+     *   The action.
      */
-    reset (evt) {
-      // Change this number if the transition time changes.
+    onSortOrFilter (action) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Projects',
+          eventAction: action,
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+
+      // Trigger reset (change this number if the transition time changes).
       this.$refs.infiniteload.reset(350)
     }
   },

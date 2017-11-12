@@ -69,13 +69,32 @@ cp local.config.js.tmpl local.config.js
 
 ### analytics
 
-Add [Google Analytics](https://analytics.google.com).
+Add [Google Analytics](https://analytics.google.com) to the platform by
+providing your tracking ID.
 
 ```js
 config.analytics = {
   ua: 'UA-XXX-X'
 }
 ```
+
+[Event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
+will be enabled for the following:
+
+| Category      | Action   | Label           | Description                   |
+|---------------|----------|-----------------|-------------------------------|
+| Data          | download | Project name    | A data file is downloaded     |
+| Contributions | submit   | Project name    | An answer is submitted        |
+| Statistics    | view     | Project name    | Project statistics are viewed |
+| Projects      | sort     | Collection name | Projects list sorted          |
+| Projects      | filter   | Collection name | Projects list filtered        |
+
+[Social interactions](https://developers.google.com/analytics/devguides/collection/analyticsjs/social-interactions)
+will be tracked using the social media 'Share' buttons present on the site.
+However, note that this reports button clicks and does not guarantee that the
+user actually then went ahead and shared the page.
+
+User IDs are used to track all registered and authenticated users.
 
 ### brand
 
