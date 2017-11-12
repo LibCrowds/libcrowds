@@ -14,24 +14,22 @@
 
         <b-card header="Sorting Options" class="options-card mb-2">
           <filter-projects-data
-            id="filter"
             v-model="tagModel"
             :collection="collection"
             @input="onSortOrFilter('filter')">
           </filter-projects-data>
           <sort-projects-data
-            id="sort"
             v-model="sortModel"
-            class="mb-3"
+            class="mb-2"
             @input="onSortOrFilter('sort')">
           </sort-projects-data>
           <toggle-completed-data
+            class="mb-2"
             v-model="showCompleted">
           </toggle-completed-data>
           <b-btn
             block
             size="sm"
-            class="mt-3"
             variant="primary"
             @click="clearFilters">
             Clear filters
