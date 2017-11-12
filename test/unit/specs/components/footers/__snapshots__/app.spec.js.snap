@@ -8,9 +8,11 @@ exports[`App footer renders correctly 1`] = `
 >
   <div class="container pt-3 pb-2">
     <section>
-      <nuxt-link to="[object Object]">
+      <a href="#/"
+         class="router-link-exact-active router-link-active"
+      >
         Part of the My Brand crowdsourcing platform
-      </nuxt-link>
+      </a>
       <p class="my-2">
         &copy; My Company, 2017
       </p>
@@ -91,9 +93,9 @@ exports[`App footer renders correctly 1`] = `
       </h5>
       <ul class="list-unstyled">
         <li class="list-item">
-          <nuxt-link to="[object Object]">
+          <a href="#/collection/playbills">
             In the Spotlight
-          </nuxt-link>
+          </a>
         </li>
       </ul>
     </section>
@@ -110,24 +112,24 @@ exports[`App footer renders correctly 1`] = `
           </a>
         </li>
         <li class="list-item">
-          <nuxt-link to="[object Object]">
+          <a href="#/help/tos">
             Terms
-          </nuxt-link>
+          </a>
         </li>
         <li class="list-item">
-          <nuxt-link to="[object Object]">
+          <a href="#/help/privacy">
             Privacy
-          </nuxt-link>
+          </a>
         </li>
         <li class="list-item">
-          <nuxt-link to="[object Object]">
+          <a href="#/help/cookies">
             Cookies
-          </nuxt-link>
+          </a>
         </li>
         <li class="list-item">
-          <nuxt-link to="[object Object]">
+          <a href="#/help/api">
             API
-          </nuxt-link>
+          </a>
         </li>
       </ul>
     </section>

@@ -9,11 +9,11 @@ exports[`App footer renders correctly 1`] = `
        class="side"
   >
     <div class="brand-wrapper navbar-light text-center">
-      <nuxt-link to="[object Object]"
-                 class="brand navbar-brand"
+      <a href="#/"
+         class="brand navbar-brand router-link-exact-active router-link-active"
       >
         My Brand
-      </nuxt-link>
+      </a>
     </div>
     <ul class="nav">
       <li data-index="0"
@@ -93,11 +93,11 @@ exports[`App footer renders correctly 1`] = `
             </icon>
             <!---->
           </button>
-          <nuxt-link to="[object Object]"
-                     class="d-lg-none nav-link"
+          <a href="#/account/joebloggs/announcements"
+             class="d-lg-none nav-link"
           >
             Notifications
-          </nuxt-link>
+          </a>
           <span style="display:none;">
             <div id="announcements-container"
                  class="dropdown-menu-right d-none d-md-block card"
@@ -171,11 +171,11 @@ exports[`App footer renders correctly 1`] = `
          class="top"
     >
       <div class="brand-wrapper navbar-light text-center">
-        <nuxt-link to="[object Object]"
-                   class="brand navbar-brand"
+        <a href="#/"
+           class="brand navbar-brand router-link-exact-active router-link-active"
         >
           My Brand
-        </nuxt-link>
+        </a>
       </div>
       <ul class="nav">
         <li data-index="0"

@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
+import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { mount, createLocalVue } from 'vue-test-utils'
 import AccountDashboard from '@/layouts/account-dashboard'
@@ -17,6 +18,7 @@ describe('App footer', () => {
     localVue.use(BootstrapVue)
     localVue.use(Vuex)
     localVue.use(VueRouter)
+    localVue.component(NuxtLink.name, NuxtLink)
     store = new Vuex.Store({
       state: {
         currentUser: {

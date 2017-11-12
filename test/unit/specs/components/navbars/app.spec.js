@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
+import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
@@ -18,6 +19,7 @@ describe('App navbar', () => {
     localVue.use(BootstrapVue)
     localVue.use(Vuex)
     localVue.use(VueRouter)
+    localVue.component(NuxtLink.name, NuxtLink)
     store = new Vuex.Store({
       state: {
         currentUser: {}

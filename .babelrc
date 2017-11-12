@@ -19,7 +19,8 @@
       ],
       "plugins": [
         ["module-resolver", {
-          "root": ["."],
+          "root": ["./"],
+          "extensions": [ ".json", ".js", ".vue" ],
           "alias": {
             "~": "./",
             "@": "./"
