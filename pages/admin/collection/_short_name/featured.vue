@@ -11,12 +11,11 @@
       :placeholder="`Type to search by ${filterBy}`">
     </b-form-input>
 
-    <infinite-loading-table
-      domain-object="project"
-      :fields="tableFields"
-      :search-params="searchParams"
+    <projects-table
       :filter="filter"
-      :filter-by="filterBy">
+      :filter-by="filterBy"
+      no-border
+      :collection="collection">
       <template slot="action" scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
@@ -26,7 +25,7 @@
           {{ getButtonText(project.item.featured) }}
         </b-btn>
       </template>
-    </infinite-loading-table>
+    </projects-table>
 
   </card-base>
 </template>
@@ -34,7 +33,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -47,25 +46,6 @@ export default {
   data () {
     return {
       title: 'Featured',
-      tableFields: {
-        name: {
-          label: 'Name'
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
       filter: null,
       filterBy: 'name'
     }
@@ -78,7 +58,7 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable,
+    ProjectsTable,
     CardBase
   },
 
@@ -116,12 +96,6 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    searchParams () {
-      return {
-        category_id: this.collection.id
-      }
     }
   }
 }
