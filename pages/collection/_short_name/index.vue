@@ -197,9 +197,9 @@
 </template>
 
 <script>
+import find from 'lodash/find'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
-import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -210,13 +210,44 @@ export default {
 
   mixins: [
     fetchCollectionByName,
-    loadCollectionFeatured,
     computeShareUrl
   ],
 
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      featured: []
+    }
+  },
+
+  methods: {
+    loadFeatured () {
+      let projects = []
+      this.$axios.$get('/api/project', {
+        params: {
+          category_id: this.collection.id,
+          featured: true,
+          all: 1
+        }
+      }).then(data => {
+        projects = data.map(project => {
+          project.project_id = project.id
+          return project
+        })
+        return this.$axios.$get('/api/projectstats', {
+          params: {
+            project_id: data.map(project => project.id).toString()
+          }
+        })
+      }).then(stats => {
+        this.featured = projects.map(project => {
+          return Object.assign(project, find(stats, {
+            project_id: project.id
+          }))
+        })
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
     }
   },
 
@@ -255,7 +286,7 @@ export default {
   },
 
   mounted () {
-    this.loadCollectionFeatured()
+    this.loadFeatured()
   }
 }
 </script>
