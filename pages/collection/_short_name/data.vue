@@ -6,11 +6,24 @@
       <hr class="mx-0">
     </span>
 
-    <b-row
+    <card-base
+      title="Data"
       id="download-data"
       class="collection-nav-item"
-      data-title="Browse the Data">
+      data-title="Get the Data"
+      help="Download the project data">
+
+      <b-form-input
+        slot="controls"
+        v-model="filter"
+        class="search-control"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+
       <projects-table
+        :filter="filter"
+        :filter-by="filterBy"
         :collection="collection">
         <template slot="action" scope="project">
           <b-btn
@@ -22,7 +35,7 @@
           </b-btn>
         </template>
       </projects-table>
-    </b-row>
+    </card-base>
 
     <data-modal
       v-if="activeProject"
@@ -43,6 +56,7 @@ import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'collection-tabs',
@@ -52,7 +66,9 @@ export default {
   data () {
     return {
       activeProject: null,
-      showDataModal: false
+      showDataModal: false,
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -77,7 +93,8 @@ export default {
     ToggleCompletedData,
     ProjectsTable,
     DataModal,
-    ProjectSortingCard
+    ProjectSortingCard,
+    CardBase
   },
 
   computed: {

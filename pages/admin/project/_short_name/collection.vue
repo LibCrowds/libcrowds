@@ -16,7 +16,7 @@
       :fields="tableFields"
       no-border
       :filter="filter"
-      :filterBy="filterBy"
+      :filter-by="filterBy"
       domain-object="category">
       <template slot="action" scope="collection">
         <b-btn

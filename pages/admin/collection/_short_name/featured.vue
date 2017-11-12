@@ -16,7 +16,7 @@
       :fields="tableFields"
       :search-params="searchParams"
       :filter="filter"
-      :filterBy="filterBy">
+      :filter-by="filterBy">
       <template slot="action" scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"

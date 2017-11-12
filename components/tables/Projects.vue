@@ -5,7 +5,7 @@
       striped
       show-empty
       responsive
-      :items="filteredProjects"
+      :items="filteredItems"
       :fields="mergedFields"
       :style="tableStyle"
       @sort-changed="onSortChange">
@@ -44,7 +44,7 @@
       :collection="collection"
       :orderby="sortModel.orderby"
       :desc="sortModel.desc"
-      v-model="projects">
+      v-model="items">
     </infinite-load-projects>
 
   </div>
@@ -52,16 +52,13 @@
 
 <script>
 import merge from 'lodash/merge'
-import { filterProjects } from '@/mixins/filterProjects'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
-  mixins: [ filterProjects ],
-
   data () {
     return {
-      projects: [],
+      items: [],
       sortModel: {},
       defaultFields: {
         name: {
@@ -103,6 +100,14 @@ export default {
     noBorder: {
       type: Boolean,
       default: false
+    },
+    filter: {
+      type: String,
+      default: null
+    },
+    filterBy: {
+      type: String,
+      default: null
     }
   },
 
@@ -125,6 +130,18 @@ export default {
         }
       }
       return fieldsCopy
+    },
+
+    filteredItems () {
+      if (!this.filter || !this.filterBy) {
+        return this.items
+      }
+
+      return this.items.filter(item => {
+        const value = this.filter.toUpperCase()
+        const cell = item[this.filterBy]
+        return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
+      })
     }
   },
 
