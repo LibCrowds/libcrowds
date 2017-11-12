@@ -23,7 +23,7 @@
       </p>
     </b-card-body>
 
-    <div slot="card-footer" class="d-flex flex-row">
+    <b-card-footer class="d-flex flex-row">
       <b-btn
         class="ml-auto"
         variant="success"
@@ -31,7 +31,7 @@
         @click="submit">
         Update
       </b-btn>
-    </div>
+    </b-card-footer>
 
   </card-base>
 </template>
