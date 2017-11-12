@@ -26,6 +26,14 @@
           <toggle-completed-data
             v-model="showCompleted">
           </toggle-completed-data>
+          <b-btn
+            block
+            size="sm"
+            class="mt-3"
+            variant="primary"
+            @click="clearFilters">
+            Clear filters
+          </b-btn>
         </b-card>
 
         <social-media-buttons

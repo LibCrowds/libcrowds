@@ -45,6 +45,10 @@ export const filterProjects = {
       this.tagModel[type] = value
       // Create a new object to trigger changes
       this.tagModel = Object.assign({}, this.tagModel)
+    },
+
+    clearFilters () {
+      this.tagModel = Object.assign({})
     }
   }
 }
