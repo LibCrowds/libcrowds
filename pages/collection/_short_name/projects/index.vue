@@ -1,6 +1,6 @@
 <template>
   <div id="collection-projects">
-    <h1 class="text-center">Get Started</h1>
+    <h1 class="text-center">{{ title }}</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
@@ -120,6 +120,7 @@ export default {
 
   data () {
     return {
+      title: 'Take Part',
       projects: [],
       noResults: '',
       tableFields: {
@@ -150,7 +151,7 @@ export default {
 
   head () {
     return {
-      title: 'Get Started',
+      title: this.title,
       meta: [
         {
           hid: 'description',
