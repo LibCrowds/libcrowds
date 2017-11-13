@@ -92,6 +92,12 @@
           v-model="projects">
         </infinite-load-projects>
 
+        <p class="lead text-center" v-if="allProjectsFiltered">
+          No projects are currently available using the selected filters.
+          <br>
+          You can use the input fields on the left to change them.
+        </p>
+
       </b-col>
     </b-row>
   </div>
@@ -127,7 +133,6 @@ export default {
       title: 'Take Part',
       projects: [],
       showCompleted: false,
-      noResults: '',
       filter: null,
       filterBy: 'name',
       tableFields: {
@@ -194,6 +199,10 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.projects)
+    },
+
+    allProjectsFiltered () {
+      return this.projects.length > 0 && this.filteredProjects.length === 0
     }
   },
 
