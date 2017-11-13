@@ -52,8 +52,6 @@ export default {
 
   mixins: [ deleteDomainObject ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Announcements',

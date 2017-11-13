@@ -5,10 +5,10 @@ import isEmpty from 'lodash/isEmpty'
  * @param {Object} context
  *   The nuxt context.
  */
-export default function ({ store, route, redirect, error }) {
+export default function ({ store, redirect, error }) {
   const currentUser = store.state.currentUser
-  if (isEmpty(currentUser)) {
-    redirect(`/account/signin?next=${route.path}`)
+  if (!currentUser || isEmpty(currentUser)) {
+    redirect(`/account/signin`)
   } else if (!currentUser.admin) {
     error({
       message: 'Forbidden',

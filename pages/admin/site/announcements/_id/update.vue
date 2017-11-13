@@ -49,8 +49,6 @@ export default {
 
   mixins: [ notifications ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Update Announcement'

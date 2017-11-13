@@ -42,8 +42,6 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Open Project',

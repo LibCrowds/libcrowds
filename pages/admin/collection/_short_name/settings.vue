@@ -40,8 +40,6 @@ export default {
 
   mixins: [ fetchCollectionByName, notifications, licenses ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Settings'

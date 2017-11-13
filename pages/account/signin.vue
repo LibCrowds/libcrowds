@@ -9,7 +9,7 @@
 
     <div
       slot="bottom"
-      v-if="auth.facebook || auth.twitter || auth.google">
+      v-if="auth && auth.facebook || auth.twitter || auth.google">
       <p class="lead text-center">
         or sign in with
       </p>

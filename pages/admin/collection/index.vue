@@ -44,8 +44,6 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 export default {
   layout: 'admin-collection-dashboard',
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Open Collection',

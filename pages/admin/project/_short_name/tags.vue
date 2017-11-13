@@ -49,8 +49,6 @@ export default {
 
   mixins: [ fetchProjectAndCollection, notifications ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Tags',

@@ -28,8 +28,6 @@ export default {
 
   mixins: [ fetchProjectAndCollection ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Thumbnail'

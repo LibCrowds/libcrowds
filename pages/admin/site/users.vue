@@ -97,8 +97,6 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Users',

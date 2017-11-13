@@ -12,8 +12,6 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'account-dashboard',
 
-  middleware: 'is-current-or-admin',
-
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update`
     return app.$axios.$get(endpoint).then(data => {
