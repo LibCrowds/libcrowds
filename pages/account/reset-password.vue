@@ -4,7 +4,8 @@
       id="reset-password"
       :header="title"
       submitText="Reset"
-      :form="form">
+      :form="form",
+      :next="next">
     </pybossa-form>
   </no-ssr>
 </template>
@@ -18,43 +19,42 @@ export default {
 
   data () {
     return {
-      title: 'Reset Password'
+      title: 'Reset Password',
+      model: {}
     }
   },
 
-  async asyncData ({ query, app, error, isClient }) {
-    return app.$axios.$get('/account/reset-password').then(data => {
-      console.log(data)
+  computed: {
+    form () {
       return {
-        next: query.next || '/',
-        form: {
-          endpoint: '/account/reset-password',
-          method: 'post',
-          model: data.form,
-          params: query || null,
-          schema: {
-            fields: [
-              {
-                model: 'new_password',
-                label: 'New Password',
-                type: 'input',
-                inputType: 'password',
-                placeholder: 'Choose a new password'
-              },
-              {
-                model: 'confirm',
-                label: 'Confirm Password',
-                type: 'input',
-                inputType: 'password',
-                placeholder: 'Confirm your new password'
-              }
-            ]
-          }
+        endpoint: '/account/reset-password',
+        method: 'post',
+        model: this.model,
+        params: this.$route.query.key,
+        schema: {
+          fields: [
+            {
+              model: 'new_password',
+              label: 'New Password',
+              type: 'input',
+              inputType: 'password',
+              placeholder: 'Choose a new password'
+            },
+            {
+              model: 'confirm',
+              label: 'Confirm Password',
+              type: 'input',
+              inputType: 'password',
+              placeholder: 'Confirm your new password'
+            }
+          ]
         }
       }
-    }).catch(err => {
-      error(err)
-    })
+    },
+
+    next () {
+      return this.$route.query.next || '/'
+    }
   },
 
   head () {
@@ -72,6 +72,23 @@ export default {
 
   components: {
     PybossaForm
+  },
+
+  mounted () {
+    // Get the data from the client
+    this.$axios.$get('/account/reset-password', {
+      params: {
+        key: this.$route.query.key
+      }
+    }).then(data => {
+      this.model = data.form
+    }).catch(err => {
+      this.$nuxt.error(err)
+    })
+  },
+
+  validate ({ query }) {
+    return query.hasOwnProperty('key')
   }
 }
 </script>
