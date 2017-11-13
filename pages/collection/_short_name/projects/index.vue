@@ -207,6 +207,10 @@ export default {
     ProjectContribButton
   },
 
+  created () {
+    this.showCompleted = false
+  },
+
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
