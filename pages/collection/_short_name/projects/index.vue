@@ -256,7 +256,7 @@ export default {
      * Change the number param if the transition time changes.
      */
     reset () {
-      this.$refs.infiniteload.reset(350)
+      this.$refs.infiniteload.reset(500)
     }
   },
 
