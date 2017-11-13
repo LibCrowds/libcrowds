@@ -11,7 +11,8 @@
         :placeholder="`Filter by ${key.toLowerCase()}`"
         :show-labels="false"
         :options="tag.options"
-        @input="onInput">
+        @input="onInput"
+        @select="onSelect">
       </multiselect>
     </div>
   </div>
@@ -46,15 +47,26 @@ export default {
   methods: {
     /**
      * Handle a tag being selected or removed.
-     * @param {Object} name
+     * @param {String} name
      *   The tag name.
-     * @param {Object} type
+     * @param {String} type
      *   The tag type (which comes from the multiselect component ID).
      */
     onInput (name, type) {
       this.model[type] = name
       // Emit with null values removed
       this.$emit('input', pickBy(this.model, identity))
+    },
+
+    /**
+     * Handle a tag being selected.
+     * @param {String} name
+     *   The tag name.
+     * @param {String} type
+     *   The tag type (which comes from the multiselect component ID).
+     */
+    onSelect (name, type) {
+      this.$emit('select', name, type)
     }
   },
 

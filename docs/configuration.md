@@ -81,13 +81,18 @@ config.analytics = {
 [Event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
 will be enabled for the following:
 
-| Category      | Action          | Label           | Description                   |
-|---------------|-----------------|-----------------|-------------------------------|
-| Downloads     | {type}_{format} | Project name    | A data file is downloaded     |
-| Contributions | submit          | Project name    | An answer is submitted        |
-| Statistics    | view            | Project name    | Project statistics are viewed |
-| Projects      | sort            | Collection name | Projects list sorted          |
-| Projects      | filter          | Collection name | Projects list filtered        |
+| Category      | Action          | Label           | Description                 |
+|---------------|-----------------|-----------------|-----------------------------|
+| Downloads     | {type}_{format} | Project name    | Data file is downloaded     |
+| Statistics    | view            | Project name    | Project statistics viewed   |
+| Contributions | {project name}  | Collection name | Answer submitted            |
+| Sorts         | {sort value}    | Collection name | Main projects list sorted   |
+| Filters       | {filter value}  | Collection name | Main projects list filtered |
+
+Tracking these events can help to determine the content that your users are most
+interested in. For example, monitoring the filters most used for a microsite can
+help determine the types of project that should be prioritised for release at
+any given time.
 
 [Social interactions](https://developers.google.com/analytics/devguides/collection/analyticsjs/social-interactions)
 will be tracked using the social media 'Share' buttons present on the site.

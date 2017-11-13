@@ -16,16 +16,19 @@
           <filter-projects-data
             v-model="tagModel"
             :collection="collection"
-            @input="onSortOrFilter('filter')">
+            @input="reset"
+            @select="onFilter">
           </filter-projects-data>
           <sort-projects-data
             v-model="sortModel"
             class="mb-2"
-            @input="onSortOrFilter('sort')">
+            @input="reset"
+            @select="onSort">
           </sort-projects-data>
           <toggle-completed-data
             class="mb-2"
-            v-model="showCompleted">
+            v-model="showCompleted"
+            @input="onToggleCompleted">
           </toggle-completed-data>
           <b-btn
             block
@@ -120,6 +123,7 @@ export default {
     return {
       title: 'Take Part',
       projects: [],
+      showCompleted: false,
       noResults: '',
       tableFields: {
         name: {
@@ -177,21 +181,63 @@ export default {
 
   methods: {
     /**
-     * Handle sorting of filtering of projects.
-     * @param {String} action
-     *   The action.
+     * Track filters.
+     * @param {Object} name
+     *   The tag name.
+     * @param {Object} type
+     *   The tag type.
      */
-    onSortOrFilter (action) {
+    onFilter (name, type) {
+      const nameStr = name.toLowerCase().replace(' ', '_')
+      const typeStr = type.toLowerCase().replace(' ', '_')
       if (this.$ga) {
         this.$ga.event({
-          eventCategory: 'Projects',
-          eventAction: action,
+          eventCategory: 'Filters',
+          eventAction: `${typeStr}:${nameStr}`,
           eventLabel: this.collection.name,
           eventValue: 1
         })
       }
+    },
 
-      // Trigger reset (change this number if the transition time changes).
+    /**
+     * Track sorting.
+     * @param {String} value
+     *   The sorting value.
+     */
+    onSort (value) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Sorts',
+          eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+    },
+
+    /**
+     * Track completed toggle.
+     * @param {String} value
+     *   The toggle value.
+     */
+    onToggleCompleted (value) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Filters',
+          eventAction: value ? 'show_completed' : 'hide_completed',
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+    },
+
+    /**
+     * Reset the infinite loading table.
+     *
+     * Change the number param if the transition time changes.
+     */
+    reset () {
       this.$refs.infiniteload.reset(350)
     }
   },
@@ -205,10 +251,6 @@ export default {
     SocialMediaButtons,
     InfiniteLoadingTable,
     ProjectContribButton
-  },
-
-  created () {
-    this.showCompleted = false
   },
 
   mounted () {

@@ -204,8 +204,8 @@ export default {
         if (this.$ga) {
           this.$ga.event({
             eventCategory: 'Contributions',
-            eventAction: 'submit',
-            eventLabel: this.project.name,
+            eventAction: this.project.name,
+            eventLabel: this.collection.name,
             eventValue: 1
           })
         }

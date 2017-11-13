@@ -8,7 +8,8 @@
       placeholder="Sort projects by"
       :show-labels="false"
       :options="sortOptions"
-      @input="onInput">
+      @input="onInput"
+      @select="onSelect">
     </multiselect>
   </div>
 </template>
@@ -67,11 +68,20 @@ export default {
   methods: {
     /**
      * Handle sorting change.
-     * @param {Object} value
+     * @param {String} value
      *   The sorting option.
      */
     onInput (value) {
       this.$emit('input', value)
+    },
+
+    /**
+     * Handle an option being selected.
+     * @param {String} value
+     *   The sorting option.
+     */
+    onSelect (value) {
+      this.$emit('select', value)
     }
   },
 
