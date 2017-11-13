@@ -24,7 +24,7 @@
     <div slot="footer-left">
       <nuxt-link
         :to="{
-          name: 'account-password-forgotten'
+          name: 'account-forgotten-password'
         }">
         Forgot your password?
       </nuxt-link>

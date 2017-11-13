@@ -1,8 +1,7 @@
 <template>
   <pybossa-form
-    id="reset-password"
     :header="title"
-    submitText="Reset"
+    submit-text="Reset"
     :form="form"
     :next="next">
   </pybossa-form>
@@ -16,31 +15,23 @@ export default {
   layout: 'container',
 
   async asyncData ({ query, app, error }) {
-    const endpoint = '/account/reset-password'
+    const endpoint = '/account/forgot-password'
     return app.$axios.$get(endpoint).then(data => {
       return {
-        title: 'Reset Password',
+        title: 'Forgotten Password',
         next: query.next || '/',
         form: {
-          endpoint: '/account/reset-password',
+          endpoint: '/account/forgotten-password',
           method: 'post',
           model: data.form,
-          params: query || null,
           schema: {
             fields: [
               {
-                model: 'new_password',
-                label: 'New Password',
+                model: 'email_addr',
+                label: 'Email',
                 type: 'input',
-                inputType: 'password',
-                placeholder: 'Choose a new password'
-              },
-              {
-                model: 'confirm',
-                label: 'Confirm Password',
-                type: 'input',
-                inputType: 'password',
-                placeholder: 'Confirm your new password'
+                inputType: 'email',
+                placeholder: 'you@example.com'
               }
             ]
           }
