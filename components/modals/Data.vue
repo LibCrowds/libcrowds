@@ -84,8 +84,8 @@ export default {
       const sn = this.project.short_name
       if (this.$ga) {
         this.$ga.event({
-          eventCategory: 'Data',
-          eventAction: 'download',
+          eventCategory: 'Downloads',
+          eventAction: `${type}_${format}`,
           eventLabel: this.project.name,
           eventValue: 1
         })

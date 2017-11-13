@@ -81,13 +81,13 @@ config.analytics = {
 [Event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
 will be enabled for the following:
 
-| Category      | Action   | Label           | Description                   |
-|---------------|----------|-----------------|-------------------------------|
-| Data          | download | Project name    | A data file is downloaded     |
-| Contributions | submit   | Project name    | An answer is submitted        |
-| Statistics    | view     | Project name    | Project statistics are viewed |
-| Projects      | sort     | Collection name | Projects list sorted          |
-| Projects      | filter   | Collection name | Projects list filtered        |
+| Category      | Action          | Label           | Description                   |
+|---------------|-----------------|-----------------|-------------------------------|
+| Downloads     | {type}_{format} | Project name    | A data file is downloaded     |
+| Contributions | submit          | Project name    | An answer is submitted        |
+| Statistics    | view            | Project name    | Project statistics are viewed |
+| Projects      | sort            | Collection name | Projects list sorted          |
+| Projects      | filter          | Collection name | Projects list filtered        |
 
 [Social interactions](https://developers.google.com/analytics/devguides/collection/analyticsjs/social-interactions)
 will be tracked using the social media 'Share' buttons present on the site.
