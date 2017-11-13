@@ -38,12 +38,12 @@ export const notifications = {
      *   The response data.
      */
     flash (data) {
-      if (data !== undefined && 'flash' in data) {
+      if (process.browser && data !== undefined && 'flash' in data) {
         if (data.status === 'success') {
           this.notifySuccess({ message: data.flash })
         } else if (data.status === 'warning') {
           this.notifyWarn({ message: data.flash })
-        } else if (data.status === 'info') {
+        } else if (data.status === 'info' || data.status === 'message') {
           this.notifyInfo({ message: data.flash })
         } else {
           this.notify({
