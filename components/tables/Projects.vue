@@ -12,10 +12,6 @@
 
       <template slot="name" scope="project">
         {{ project.item.name }}
-        <project-tags-list
-          class="d-none d-sm-block"
-          :project="project.item">
-        </project-tags-list>
       </template>
 
       <template slot="overall_progress" scope="project">
@@ -53,7 +49,6 @@
 <script>
 import merge from 'lodash/merge'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
-import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
   data () {
@@ -84,8 +79,7 @@ export default {
   },
 
   components: {
-    InfiniteLoadProjects,
-    ProjectTagsList
+    InfiniteLoadProjects
   },
 
   props: {
