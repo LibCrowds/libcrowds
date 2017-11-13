@@ -242,9 +242,11 @@ export default {
           }
         })
       }).then(stats => {
-        this.featured = projects.map(project => {
-          return Object.assign(project, find(stats, {
-            project_id: project.id
+        // Merge the project into the stats rather than the other way around
+        // so that project ID is given preference
+        this.featured = stats.map(projectStats => {
+          return Object.assign(projectStats, find(projects, {
+            id: projectStats.project_id
           }))
         })
       }).catch(err => {
