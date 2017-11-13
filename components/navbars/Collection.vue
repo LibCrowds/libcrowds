@@ -66,7 +66,7 @@
           <b-nav-item
             exact
             :href="collection.info.forum"
-            v-if="collection.info.forum">
+            v-if="collection.info && collection.info.forum">
             Discuss
           </b-nav-item>
           <!-- <b-nav-item
