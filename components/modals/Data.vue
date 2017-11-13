@@ -80,6 +80,14 @@ export default {
      */
     download (type, format) {
       const sn = this.project.short_name
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Data',
+          eventAction: 'download',
+          eventLabel: this.project.name,
+          eventValue: 1
+        })
+      }
       this.$axios.$get(`/project/${sn}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
@@ -88,14 +96,6 @@ export default {
         }
       }).then(data => {
         exportFile(data, `${this.project.short_name}_${type}`, 'zip')
-        if (this.$ga) {
-          this.$ga.event({
-            eventCategory: 'Data',
-            eventAction: 'download',
-            eventLabel: this.project.name,
-            eventValue: 1
-          })
-        }
       }).catch(err => {
         this.$nuxt.error(err)
       })
