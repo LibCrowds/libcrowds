@@ -43,6 +43,9 @@ For cookies to be read properly you must access the website at http://127.0.0.1:
 ## Testing
 
 ``` bash
+# build (required for testing with nuxt components)
+npm run build
+
 # run lint
 npm lint
 
