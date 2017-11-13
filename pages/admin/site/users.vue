@@ -97,7 +97,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ mixins ],
+  mixins: [ exportFile ],
 
   data () {
     return {

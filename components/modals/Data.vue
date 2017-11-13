@@ -24,7 +24,7 @@
 import exportFile from '@/mixins/exportFile'
 
 export default {
-  mixins: [ mixins ],
+  mixins: [ exportFile ],
 
   data () {
     return {
