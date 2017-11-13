@@ -90,12 +90,14 @@
 </template>
 
 <script>
-import exportFile from '@/utils/exportFile'
+import exportFile from '@/mixins/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
+
+  mixins: [ mixins ],
 
   data () {
     return {
@@ -207,7 +209,7 @@ export default {
           format: format
         }
       }).then(data => {
-        exportFile(data, 'user_data', format)
+        this.exportFile(data, 'user_data', format)
       }).catch(err => {
         this.$nuxt.error(err)
       })

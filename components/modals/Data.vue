@@ -21,9 +21,11 @@
 </template>
 
 <script>
-import exportFile from '@/utils/exportFile'
+import exportFile from '@/mixins/exportFile'
 
 export default {
+  mixins: [ mixins ],
+
   data () {
     return {
       fields: {
@@ -95,7 +97,7 @@ export default {
           format: format
         }
       }).then(data => {
-        exportFile(data, `${this.project.short_name}_${type}`, 'zip')
+        this.exportFile(data, `${this.project.short_name}_${type}`, 'zip')
       }).catch(err => {
         this.$nuxt.error(err)
       })
