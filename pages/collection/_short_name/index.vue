@@ -198,6 +198,8 @@
 
 <script>
 import find from 'lodash/find'
+import sortBy from 'lodash/sortBy'
+import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
 import { licenses } from '@/mixins/licenses'
@@ -242,9 +244,15 @@ export default {
           }
         })
       }).then(stats => {
+        // Sort by ID and deduplicate to deal with the issue of multiple
+        // project stats potentially appearing for a single project
+        // https://github.com/LibCrowds/libcrowds/issues/526
+        const sortedStats = sortBy(stats, [stat => stat.id])
+        const dedupedStats = uniqBy(sortedStats, 'project_id')
+
         // Merge the project into the stats rather than the other way around
         // so that project ID is given preference
-        this.featured = stats.map(projectStats => {
+        this.featured = dedupedStats.map(projectStats => {
           return Object.assign(projectStats, find(projects, {
             id: projectStats.project_id
           }))
