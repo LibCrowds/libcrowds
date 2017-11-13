@@ -12,6 +12,7 @@ install:
 before_script:
 - greenkeeper-lockfile-update
 script:
+- cp local.config.js.tmpl local.config.js
 - npm run build
 - npm run test
 after_script:
