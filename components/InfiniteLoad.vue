@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import orderBy from 'lodash/orderBy'
 import merge from 'lodash/merge'
 
 export default {
@@ -40,11 +39,6 @@ export default {
         offset: this.value.length
       })
 
-      if (this.domainObject === 'project') {
-        this.infiniteLoadOrderedProjects($state, params)
-        return
-      }
-
       try {
         // Get the data
         let data = await this.$axios.$get(`/api/${this.domainObject}`, {
@@ -65,79 +59,24 @@ export default {
     },
 
     /**
-     * Handler to infinitely load projects.
-     *
-     * We have to deal with ordered projects slightly differently from other
-     * domain objects as the project stats are stored in a different table. So,
-     * we request all filtered projects and then sort. Not as efficient but it
-     * is a solution for now.
-     * @param {Object} $state
-     *   The vue-inifinite-loading state.
-     * @param {Object} params
-     *   The query params.
+     * Reset the loaded items.
      */
-    async infiniteLoadOrderedProjects ($state, params) {
-      params.limit = 100
-
-      // Pull out order params
-      const orderby = params.orderby || 'created'
-      const order = params.desc ? 'desc' : 'asc'
-      delete params.orderby
-      delete params.desc
-
-      let items = []
-
-      // Load all items
-      while (true) {
-        try {
-          const data = await this.$axios.$get(`/api/${this.domainObject}`, {
-            params: merge(params, {
-              offset: items.length ? items[items.length - 1].id : 0
-            })
-          })
-
-          if (!data.length) {
-            break
-          }
-
-          const statsData = await this.$axios.$get('/api/projectstats', {
-            params: {
-              project_id: data.map(project => project.id).toString()
-            }
-          })
-
-          const enrichedData = data.map((project, idx) => {
-            return merge(statsData[idx], project)
-          })
-
-          items = items.concat(enrichedData)
-        } catch (err) {
-          this.$nuxt.error(err)
-          break
-        }
-      }
-
-      // Sort
-      const sorted = orderBy(items, [ orderby ], [ order ])
-
-      this.$emit('input', sorted)
-      if (sorted.length) {
-        $state.loaded()
-      }
-      $state.complete()
+    reset () {
+      this.$emit('input', [])
+      this.$nextTick(() => {
+        this.page = 1
+        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+      })
     },
 
     /**
-     * Reset the loaded domain objects.
+     * Trigger a manual load.
      */
-    reset () {
+    load () {
       this.$nextTick(() => {
-        this.$emit('input', [])
-        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-        this.$refs.infiniteload.$emit(
-          '$InfiniteLoading:infinite',
-          this.$refs.stateChanger
-        )
+        if (!this.$refs.infiniteload.isLoading) {
+          this.$refs.infiniteload.attemptLoad()
+        }
       })
     }
   },

@@ -61,7 +61,7 @@
               }
             }"
             @click="toggleCollapsibleSidebar">
-            Contribute
+            Take Part
           </b-nav-item>
           <b-nav-item
             exact
@@ -382,7 +382,8 @@ export default {
 @import '~hamburgers/_sass/hamburgers/hamburgers';
 
 #collection-navbar {
-  padding: 0;
+  padding-right: ($grid-gutter-width / 2);
+  padding-left: ($grid-gutter-width / 2);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -392,15 +393,6 @@ export default {
   letter-spacing: 0.8px;
   justify-content: center;
   transition: background-color 200ms;
-
-  .container {
-    margin: 0;
-
-    @include media-breakpoint-down(xs) {
-      margin: 0;
-      flex: 1 1 auto;
-    }
-  }
 
   .navbar-brand {
     font-family: $headings-font-family;

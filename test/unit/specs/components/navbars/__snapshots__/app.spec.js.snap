@@ -30,11 +30,11 @@ exports[`App navbar renders correctly when signed in as admin 1`] = `
         </icon>
         <!---->
       </button>
-      <nuxt-link to="[object Object]"
-                 class="d-lg-none nav-link"
+      <a href="#/account/announcements"
+         class="d-lg-none nav-link"
       >
         Notifications
-      </nuxt-link>
+      </a>
       <span style="display:none;">
         <div id="announcements-container"
              class="dropdown-menu-right d-none d-md-block card"
@@ -163,11 +163,11 @@ exports[`App navbar renders correctly when signed in as non-admin 1`] = `
         </icon>
         <!---->
       </button>
-      <nuxt-link to="[object Object]"
-                 class="d-lg-none nav-link"
+      <a href="#/account/announcements"
+         class="d-lg-none nav-link"
       >
         Notifications
-      </nuxt-link>
+      </a>
       <span style="display:none;">
         <div id="announcements-container"
              class="dropdown-menu-right d-none d-md-block card"

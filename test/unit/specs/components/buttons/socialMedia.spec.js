@@ -69,7 +69,7 @@ describe('SocialMedia buttons', () => {
       }
     })
     window.open = mockOpen
-    wrapper.vm.share(url, width, height)
+    wrapper.vm.share('Facebook', url, width, height)
     expect(mockOpen).toHaveBeenCalledWith(url, 'Share', specs)
     expect(mockFocus).toHaveBeenCalled()
   })

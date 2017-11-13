@@ -4,20 +4,19 @@ language: node_js
 node_js:
 - '8'
 before_install:
-# Remove hte line below once node 9 moves to LTS (and so does this repo)
+# Remove the line below once node 9 moves to LTS (and npm 5 is standard)
 - npm install -g npm@5
 - npm install -g greenkeeper-lockfile@1
-# Deploy key used to push to the server
-- openssl aes-256-cbc -K $encrypted_1cd83addbd20_key -iv $encrypted_1cd83addbd20_iv
-  -in deploy-key.enc -out deploy-key -d
 install:
 - npm install
 before_script:
-- greenkeeper-lockfile-upload
+- greenkeeper-lockfile-update
 script:
+- cp local.config.js.tmpl local.config.js
+- npm run build
 - npm run test
-after_success:
-- bash bin/deploy.sh
+after_script:
+- greenkeeper-lockfile-upload
 env:
   global:
     # GH_TOKEN used for greenkeeper-lockfile

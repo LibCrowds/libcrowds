@@ -8,12 +8,9 @@
   opacity: 0;
 }
 
-.fade-up-enter-active {
-  transition: all .3s ease;
-}
-
+.fade-up-enter-active,
 .fade-up-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .3s ease;
 }
 
 .fade-up-enter,

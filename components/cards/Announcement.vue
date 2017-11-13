@@ -20,7 +20,8 @@
       </div>
 
       <div class="p-1 flex-grow">
-        <div class="card-title mb-0" v-html="content"></div>
+        <div class="card-title mb-0" v-html="title"></div>
+        <div class="card-text mb-0" v-html="body"></div>
       </div>
 
       <div class="p-1">
@@ -47,7 +48,8 @@ export default {
   data () {
     return {
       imgSrc: localConfig.pybossa.host + this.announcement.media_url,
-      content: marked(this.announcement.title)
+      title: marked(this.announcement.title),
+      body: marked(this.announcement.body)
     }
   },
 
@@ -63,7 +65,7 @@ export default {
      * Handle navigation when the card is clicked.
      */
     onClick () {
-      const url = this.announcement.body
+      const url = this.announcement.info.url
       const parser = document.createElement('a')
       const internal = this.isInternal(url)
       if (internal) {
@@ -128,6 +130,7 @@ export default {
   }
 
   .card-title {
+    font-weight: 400;
     font-size: $font-size-sm;
   }
 

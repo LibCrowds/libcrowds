@@ -6,35 +6,37 @@
       <hr class="mx-0">
     </span>
 
-    <b-row
-      id="get-started"
+    <card-base
+      title="Data"
+      id="download-data"
       class="collection-nav-item"
-      data-title="Get Started">
-      <b-col xl="3" class="mb-3">
-        <project-sorting-card
-          class="mb-3 d-none d-xl-block"
-          :collection="collection"
-          v-model="searchParams">
-        </project-sorting-card>
-      </b-col>
+      data-title="Get the Data"
+      help="Download the project data">
 
-      <b-col xl="9">
-        <infinite-loading-table
-          :fields="tableFields"
-          domain-object="project"
-          :search-params="mergedSearchParams">
-          <template slot="action" scope="project">
-            <b-btn
-              variant="success"
-              size="sm"
-              block
-              @click="loadDataModal(project.item)">
-              Download
-            </b-btn>
-          </template>
-        </infinite-loading-table>
-      </b-col>
-    </b-row>
+      <b-form-input
+        slot="controls"
+        v-model="filter"
+        class="search-control"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+
+      <projects-table
+        :filter="filter"
+        :filter-by="filterBy"
+        no-border
+        :collection="collection">
+        <template slot="action" scope="project">
+          <b-btn
+            variant="success"
+            size="sm"
+            block
+            @click="loadDataModal(project.item)">
+            Download
+          </b-btn>
+        </template>
+      </projects-table>
+    </card-base>
 
     <data-modal
       v-if="activeProject"
@@ -46,47 +48,29 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import { filterProjects } from '@/mixins/filterProjects'
+import { licenses } from '@/mixins/licenses'
+import SortProjectsData from '@/components/data/SortProjects'
+import ToggleCompletedData from '@/components/data/ToggleCompleted'
+import FilterProjectsData from '@/components/data/FilterProjects'
+import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName ],
+  mixins: [ fetchCollectionByName, filterProjects, licenses ],
 
   data () {
     return {
       activeProject: null,
       showDataModal: false,
-      tableFields: {
-        name: {
-          label: 'Name'
-        },
-        n_tasks: {
-          label: 'Tasks',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
-      searchParams: {}
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -97,18 +81,20 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `All datasets generated from ${this.collection.name}
-            projects are made available under a ${this.collection.license}
-            license.`
+          content: this.metaContent
         }
       ]
     }
   },
 
   components: {
-    InfiniteLoadingTable,
+    SortProjectsData,
+    FilterProjectsData,
+    ToggleCompletedData,
+    ProjectsTable,
     DataModal,
-    ProjectSortingCard
+    ProjectSortingCard,
+    CardBase
   },
 
   computed: {
@@ -120,10 +106,12 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    mergedSearchParams () {
-      return merge({}, this.searchParams, {
-        category_id: this.collection.id
-      })
+    metaContent () {
+      if (this.collection.license) {
+        return `All datasets generated from ${this.collection.name}
+          projects are made available under a
+          ${this.dataLicenses[this.collection.license].name} license.`
+      }
     }
   },
 
@@ -135,7 +123,7 @@ export default {
   },
 
   mounted () {
-    const nodes = document.querySelectorAll('h2')
+    const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }

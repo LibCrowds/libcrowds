@@ -1,21 +1,17 @@
 <template>
-  <b-card
-    id="project-sorting-options"
-    header="Sorting Options">
+  <b-card id="project-filters-card" header="Sorting Options">
 
     <div
-      v-for="(tag, index) in tags"
-      :key="index"
+      v-for="(value, tag) in collection.info.tags"
+      :key="tag"
       class="mb-2">
-      <label>{{ tag.type }}</label>
+      <label>{{ tag }}</label>
       <multiselect
-        label="name"
-        track-by="name"
-        :id="tag.key"
-        :placeholder="`Filter by ${tag.type.toLowerCase()}`"
+        :id="tag"
+        :placeholder="`Filter by ${tag.toLowerCase()}`"
         :show-labels="false"
-        :options="tag.options"
-        @input="onTagChange">
+        :options="value.options"
+        @input="onFilterChange">
       </multiselect>
     </div>
 
@@ -24,6 +20,7 @@
       <multiselect
         label="name"
         track-by="name"
+        v-model="mergedSortModel"
         placeholder="Sort projects by"
         :show-labels="false"
         :options="sortOptions"
@@ -36,115 +33,109 @@
 
 <script>
 import merge from 'lodash/merge'
-import { computeTags } from '@/mixins/computeTags'
 
 export default {
-  mixins: [ computeTags ],
-
   data () {
     return {
       sortOptions: [
         {
           name: 'Most Tasks',
-          orderby: 'n_tasks',
-          desc: true
+          sortBy: 'n_tasks',
+          sortDesc: true
         },
         {
           name: 'Least Tasks',
-          orderby: 'n_tasks',
-          desc: false
+          sortBy: 'n_tasks',
+          sortDesc: false
         },
         {
           name: 'Most Popular',
-          orderby: 'n_volunteers',
-          desc: true
+          sortBy: 'n_volunteers',
+          sortDesc: true
         },
         {
           name: 'Least Popular',
-          orderby: 'n_volunteers',
-          desc: false
+          sortBy: 'n_volunteers',
+          sortDesc: false
         },
         {
           name: 'Most Complete',
-          orderby: 'overall_progress',
-          desc: true
+          sortBy: 'overall_progress',
+          sortDesc: true
         },
         {
           name: 'Least Complete',
-          orderby: 'overall_progress',
-          desc: false
+          sortBy: 'overall_progress',
+          sortDesc: false
         }
       ],
-      sortParams: {},
-      tagParams: {}
+      initialSortModel: {
+        name: 'Least Complete',
+        sortBy: 'overall_progress',
+        sortDesc: false
+      },
+      initialFilterModel: {}
     }
   },
 
   props: {
-    value: {
+    sortModel: {
+      type: Object,
+      default: () => ({})
+    },
+    filterModel: {
+      type: Object,
+      default: () => ({})
+    },
+    projects: {
+      type: Array,
+      required: true
+    },
+    collection: {
       type: Object,
       required: true
+    }
+  },
+
+  computed: {
+    mergedSortModel: {
+      get () {
+        return merge({}, this.initialSortModel, this.sortModel)
+      },
+      set (newValue) {
+        this.initialSortModel = newValue
+      }
+    },
+
+    mergedFilterModel: {
+      get () {
+        return merge({}, this.initialFilterModel, this.filterModel)
+      },
+      set (newValue) {
+        this.initialFilterModel = newValue
+      }
     }
   },
 
   methods: {
     /**
      * Handle a tag being selected or removed.
-     * @param {Object} tag
-     *   The tag.
-     * @param {Object} key
-     *   The component ID (which should be the tag key).
+     * @param {Object} name
+     *   The tag name.
+     * @param {Object} type
+     *   The tag type (which comes from the multiselect component ID).
      */
-    onTagChange (tag, key) {
-      const params = JSON.parse(JSON.stringify(this.value))
-      params.info = params.info || ''
-      params.info = this.stripTag(params.info, key)
-      if (tag) {
-        if (params.info.length) {
-          params.info += '|'
-        }
-        params.info += `${key}::${tag.name}`
-      } else if (!params.info.length) {
-        delete params.info
-      }
-      this.tagParams = params
-      this.update()
-    },
-
-    /**
-     * Strip a tag.
-     * @param {Object} info
-     *   The info data (where tags are stored).
-     * @param {String} tagKey
-     *   The tag key to be stripped.
-     */
-    stripTag (info, tagKey) {
-      const infoParams = info.split('|')
-      const stripped = infoParams.filter(param => {
-        return param.split('::')[0] !== tagKey
-      })
-      return stripped.join('|')
+    onFilterChange (name, type) {
+      this.$emit('filter-change', name, type)
     },
 
     /**
      * Handle sort change.
+     * @param {Object} value
+     *   The sorting option.
      */
     onSortChange (value) {
-      if (!value) {
-        this.sortParams = {}
-      } else {
-        delete value.name
-        this.sortParams = value
-      }
-      this.update()
-    },
-
-    /**
-     * Emit the new params.
-     */
-    update () {
-      const searchParams = merge({}, this.tagParams, this.sortParams)
-      this.$emit('input', searchParams)
+      this.$emit('sort-change', value)
     }
   }
 }
@@ -153,7 +144,7 @@ export default {
 <style lang="scss">
 @import '~assets/style/settings';
 
-#project-sorting-options {
+#project-filters-card {
   font-size: $font-size-sm;
   margin-top: 0;
 
@@ -161,16 +152,6 @@ export default {
     background-color: $gray-100;
     text-align: center;
     padding: $list-group-item-padding-y $list-group-item-padding-x;
-  }
-
-  #show-completed {
-    label {
-      margin: 0 5px 0 0;
-    }
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 </style>

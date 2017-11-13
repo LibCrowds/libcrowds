@@ -16,6 +16,6 @@ export default function ({ isClient, store, req, app }) {
   }
 
   if (update && app.hasOwnProperty('$axios')) {
-    store.dispatch('UPDATE_CURRENT_USER', app.$axios)
+    store.dispatch('UPDATE_CURRENT_USER', app.$axios, app.$ga)
   }
 }

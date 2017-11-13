@@ -1,50 +1,52 @@
 <template>
-  <pybossa-form
-    :header="title"
-    submit-text="Update"
-    :form="form">
+  <card-base
+    :title="title"
+    help="Configure the core settings for the project">
 
-    <div slot="bottom" class="d-flex form-group mt-1">
-      <toggle-button
-        :value="form.model.protect"
-        :sync="true"
-        :labels="true"
-        @change="updateModelBoolean('protect', $event)">
-      </toggle-button>
-      <label class="ml-1">
-        Require a password
-      </label>
-    </div>
+    <pybossa-form
+      no-border
+      submit-text="Update"
+      :form="form">
+      <div slot="bottom" class="d-flex form-group mt-1">
+        <toggle-button
+          :value="form.model.protect"
+          :sync="true"
+          :labels="true"
+          @change="updateModelBoolean('protect', $event)">
+        </toggle-button>
+        <label class="ml-1">
+          Require a password
+        </label>
+      </div>
+      <div slot="bottom" class="d-flex form-group mt-1">
+        <toggle-button
+          :value="form.model.allow_anonymous_contributors"
+          :sync="true"
+          :labels="true"
+          @change="updateModelBoolean('allow_anonymous_contributors', $event)">
+        </toggle-button>
+        <label class="ml-1">
+          Allow anonymous contributors
+        </label>
+      </div>
+    </pybossa-form>
 
-    <div slot="bottom" class="d-flex form-group mt-1">
-      <toggle-button
-        :value="form.model.allow_anonymous_contributors"
-        :sync="true"
-        :labels="true"
-        @change="updateModelBoolean('allow_anonymous_contributors', $event)">
-      </toggle-button>
-      <label class="ml-1">
-        Allow anonymous contributors
-      </label>
-    </div>
-
-  </pybossa-form>
+  </card-base>
 </template>
 
 <script>
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectByName ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
-      title: 'Project Settings'
+      title: 'Settings'
     }
   },
 
@@ -105,7 +107,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   methods: {

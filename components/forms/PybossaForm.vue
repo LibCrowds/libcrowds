@@ -34,6 +34,10 @@
 
     <slot name="bottom"></slot>
 
+    <template slot="footer-base-left">
+      <slot name="footer-left"></slot>
+    </template>
+
   </form-base>
 </template>
 
@@ -153,11 +157,7 @@ export default {
       if (!valid) {
         this.alert = 'Please correct the errors'
         this.status = 'error'
-        this.notify({
-          type: 'warn',
-          title: 'Invalid form data',
-          message: this.alert
-        })
+        this.notifyInvalidForm()
       }
       return valid
     },
@@ -190,29 +190,15 @@ export default {
         if (r.data.status === 'error') {
           this.alert = r.data.flash
           this.status = r.data.status
-          this.notify({
-            type: 'warn',
-            title: 'Invalid form data',
-            message: r.data.flash
-          })
+          this.notifyInvalidForm()
           this.injectErrors(r.data.form.errors)
           return
-        } else if (r.data.status === 'success') {
+        } else if (r.data.status === 'success' || !r.data.status) {
           this.handleSuccess(r.data)
-        } else if (typeof r.data.status === 'undefined') {
-          this.notify({
-            type: 'success',
-            title: 'Success',
-            message: ''
-          })
         }
         this.flash(r.data)
       }).catch(err => {
-        this.notify({
-          type: 'error',
-          title: 'Error',
-          message: err.message || 'Server Error'
-        })
+        this.notifyError({ message: err.message || 'Server Error' })
       }).then(() => {
         this.processing = false
       })

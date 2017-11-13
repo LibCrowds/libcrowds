@@ -140,10 +140,8 @@ export default {
         },
         withCredentials: true
       }).then(data => {
-        this.notify({
-          title: 'Success',
-          message: 'The image should be refreshed in a few minutes',
-          type: 'success'
+        this.notifySuccess({
+          message: 'The image should be refreshed in a few minutes'
         })
       }).catch(err => {
         this.$nuxt.error(err)

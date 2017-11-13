@@ -137,6 +137,7 @@ export default {
 #announcements-list {
   font-size: $font-size-sm;
   display: flex;
+  justify-content: center;
   padding-right: 0;
   position: relative;
   text-transform: none;

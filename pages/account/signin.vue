@@ -9,7 +9,7 @@
 
     <div
       slot="bottom"
-      v-if="auth.facebook || auth.twitter || auth.google">
+      v-if="auth && auth.facebook || auth.twitter || auth.google">
       <p class="lead text-center">
         or sign in with
       </p>
@@ -107,9 +107,10 @@ export default {
 
   methods: {
     onSuccess () {
-      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios).then(data => {
-        this.$router.push({ path: this.next })
-      })
+      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios, this.$ga)
+        .then(data => {
+          this.$router.push({ path: this.next })
+        })
     }
   }
 }

@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
+import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { routes } from '@/test/fixtures/routes'
 import { mount, createLocalVue } from 'vue-test-utils'
@@ -15,6 +16,7 @@ describe('Dashboard navbar', () => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
     localVue.use(VueRouter)
+    localVue.component(NuxtLink.name, NuxtLink)
     router = new VueRouter({
       routes
     })

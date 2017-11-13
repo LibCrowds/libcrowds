@@ -1,15 +1,26 @@
 <template>
-  <b-card no-body :header="title">
+  <card-base :title="title" help="Manage your projects">
+
+    <b-form-input
+      slot="controls"
+      v-model="filter"
+      class="search-control"
+      size="sm"
+      :placeholder="`Type to search by ${filterBy}`">
+    </b-form-input>
+
     <infinite-loading-table
       domainObject="project"
       :fields="tableFields"
+      :filter="filter"
+      :filter-by="filterBy"
       :search-params="searchParams"
       no-border>
       <template slot="action" scope="project">
         <b-btn
           variant="success"
-          size="sm"
           block
+          size="sm"
           :to="{
             name: 'admin-project-short_name-settings',
             params: {
@@ -20,16 +31,16 @@
         </b-btn>
       </template>
     </infinite-loading-table>
-  </b-card>
+
+  </card-base>
 </template>
 
 <script>
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
-
-  middleware: 'is-admin',
 
   data () {
     return {
@@ -38,16 +49,28 @@ export default {
         name: {
           label: 'Name'
         },
+        nTags: {
+          label: 'Tags',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
         category_id: {
           label: 'Category ID',
           class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-lg-table-cell',
           sortable: true
         },
         actions: {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -58,17 +81,15 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    CardBase
   },
 
   computed: {
     searchParams () {
-      const currentUser = this.$store.state.currentUser
-      const params = {}
-      if (!currentUser.admin) {
-        params.owner_id = currentUser.id
-      }
-      return params
+      return this.$store.state.currentUser.admin
+        ? {}
+        : { owner_id: this.$store.state.currentUser.id }
     }
   },
 

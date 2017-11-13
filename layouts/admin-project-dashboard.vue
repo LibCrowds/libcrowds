@@ -10,6 +10,8 @@ import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
+  middleware: 'is-admin',
+
   data () {
     return {
       rootNavItems: [
