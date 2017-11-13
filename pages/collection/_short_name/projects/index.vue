@@ -10,8 +10,8 @@
       id="get-started"
       class="collection-nav-item"
       data-title="Get Started">
-      <b-col xl="3" class="mb-xl-3 d-none d-xl-block">
 
+      <b-col xl="3" class="d-none d-xl-block">
         <b-card header="Sorting Options" class="options-card mb-2">
           <filter-projects-data
             v-model="tagModel"
@@ -47,26 +47,27 @@
       </b-col>
 
       <b-col xl="9">
-        <b-table
-          hover
-          striped
-          show-empty
-          :items="projects"
-          :fields="tableFields"
-          :sortBy.sync="sortModel.orderby"
-          :sortDesc.sync="sortModel.desc"
-          class="d-lg-none">
-          <template slot="overall_progress" scope="project">
-            {{ project.item.overall_progress }}%
-          </template>
-          <template slot="actions" scope="project">
-            <project-contrib-button
-              block
-              :collection="collection"
-              :project="project.item">
-            </project-contrib-button>
-          </template>
-        </b-table>
+        <card-base title="Projects" help="Choose a project" class="d-lg-none">
+          <b-form-input
+            slot="controls"
+            v-model="filter"
+            class="search-control"
+            size="sm"
+            :placeholder="`Type to search by ${filterBy}`">
+          </b-form-input>
+          <projects-table
+            no-border
+            :filter="filter"
+            :filter-by="filterBy"
+            :collection="collection">
+            <template slot="actions" scope="project">
+              <project-contrib-button
+                :collection="collection"
+                :project="project.item">
+              </project-contrib-button>
+            </template>
+          </projects-table>
+        </card-base>
 
         <transition-group
           tag="ul"
@@ -109,6 +110,8 @@ import ProjectCard from '@/components/cards/Project'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import ProjectsTable from '@/components/tables/Projects'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'collection-tabs',
@@ -125,6 +128,8 @@ export default {
       projects: [],
       showCompleted: false,
       noResults: '',
+      filter: null,
+      filterBy: 'name',
       tableFields: {
         name: {
           label: 'Name'
@@ -163,6 +168,19 @@ export default {
         }
       ]
     }
+  },
+
+  components: {
+    SortProjectsData,
+    FilterProjectsData,
+    ToggleCompletedData,
+    ProjectCard,
+    InfiniteLoadProjects,
+    SocialMediaButtons,
+    InfiniteLoadingTable,
+    ProjectContribButton,
+    ProjectsTable,
+    CardBase
   },
 
   computed: {
@@ -240,17 +258,6 @@ export default {
     reset () {
       this.$refs.infiniteload.reset(350)
     }
-  },
-
-  components: {
-    SortProjectsData,
-    FilterProjectsData,
-    ToggleCompletedData,
-    ProjectCard,
-    InfiniteLoadProjects,
-    SocialMediaButtons,
-    InfiniteLoadingTable,
-    ProjectContribButton
   },
 
   mounted () {
