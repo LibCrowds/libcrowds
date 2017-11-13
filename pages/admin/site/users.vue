@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import exportFile from '@/mixins/exportFile'
+import { exportFile } from '@/mixins/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 

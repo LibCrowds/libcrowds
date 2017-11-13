@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import exportFile from '@/mixins/exportFile'
+import { exportFile } from '@/mixins/exportFile'
 
 export default {
   mixins: [ exportFile ],
