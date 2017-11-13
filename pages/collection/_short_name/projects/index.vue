@@ -51,7 +51,7 @@
           hover
           striped
           show-empty
-          :items="filteredProjects"
+          :items="projects"
           :fields="tableFields"
           :sortBy.sync="sortModel.orderby"
           :sortDesc.sync="sortModel.desc"
