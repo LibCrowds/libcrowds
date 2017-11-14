@@ -89,9 +89,9 @@ export default {
     return query.hasOwnProperty('key')
   },
 
-  mounted () {
+  beforeMount () {
     if (this.hasError) {
-      this.$router.push({ path: '/account/forgotten-password' })
+      this.$router.push({ path: '/' })
       this.$swal({
         title: 'Invalid Key',
         html: `<p>The password reset URL is invalid, probably because the link
