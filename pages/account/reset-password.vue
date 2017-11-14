@@ -26,6 +26,8 @@ export default {
     const params = {
       key: query.key
     }
+
+    /* eslint-disable handle-callback-err */
     return app.$axios.$get(endpoint, { params: params }).then(data => {
       return {
         hasError: false,
@@ -57,9 +59,8 @@ export default {
       }
     }).catch(err => {
       // Failure causes a 500 error on the server where really the cause
-      // is most likely to be an incorrect/expired key, so let's set a flag and
-      // display a better feedback message for the user.
-      console.log(err)
+      // is most likely to be an incorrect/expired key, so let's set a flag
+      // and display a better feedback message for the user.
       return {
         form: null,
         hasError: true
