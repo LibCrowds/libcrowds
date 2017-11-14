@@ -1,13 +1,11 @@
 <template>
-  <no-ssr>
-    <pybossa-form
-      id="reset-password"
-      :header="title"
-      submitText="Reset"
-      :form="form",
-      :next="next">
-    </pybossa-form>
-  </no-ssr>
+  <pybossa-form
+    v-if="!hasError"
+    :header="title"
+    submitText="Reset"
+    :form="form"
+    :next="next">
+  </pybossa-form>
 </template>
 
 <script>
@@ -19,42 +17,54 @@ export default {
 
   data () {
     return {
-      title: 'Reset Password',
-      model: {}
+      title: 'Reset Password'
     }
   },
 
-  computed: {
-    form () {
+  async asyncData ({ query, app, error }) {
+    const endpoint = '/account/reset-password'
+    const params = {
+      key: query.key
+    }
+    return app.$axios.$get(endpoint, { params: params }).then(data => {
       return {
-        endpoint: '/account/reset-password',
-        method: 'post',
-        model: this.model,
-        params: this.$route.query.key,
-        schema: {
-          fields: [
-            {
-              model: 'new_password',
-              label: 'New Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Choose a new password'
-            },
-            {
-              model: 'confirm',
-              label: 'Confirm Password',
-              type: 'input',
-              inputType: 'password',
-              placeholder: 'Confirm your new password'
-            }
-          ]
+        hasError: false,
+        next: query.next || '/',
+        form: {
+          endpoint: endpoint,
+          method: 'post',
+          model: data.form,
+          params: params,
+          schema: {
+            fields: [
+              {
+                model: 'new_password',
+                label: 'New Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Choose a new password'
+              },
+              {
+                model: 'confirm',
+                label: 'Confirm Password',
+                type: 'input',
+                inputType: 'password',
+                placeholder: 'Confirm your new password'
+              }
+            ]
+          }
         }
       }
-    },
-
-    next () {
-      return this.$route.query.next || '/'
-    }
+    }).catch(err => {
+      // Failure causes a 500 error on the server where really the cause
+      // is most likely to be an incorrect/expired key, so let's set a flag and
+      // display a better feedback message for the user.
+      console.log(err)
+      return {
+        form: null,
+        hasError: true
+      }
+    })
   },
 
   head () {
@@ -74,21 +84,21 @@ export default {
     PybossaForm
   },
 
-  mounted () {
-    // Get the data from the client
-    this.$axios.$get('/account/reset-password', {
-      params: {
-        key: this.$route.query.key
-      }
-    }).then(data => {
-      this.model = data.form
-    }).catch(err => {
-      this.$nuxt.error(err)
-    })
-  },
-
   validate ({ query }) {
     return query.hasOwnProperty('key')
+  },
+
+  mounted () {
+    if (this.hasError) {
+      this.$router.push({ path: '/account/forgotten-password' })
+      this.$swal({
+        title: 'Invalid Key',
+        html: `<p>The password reset URL is invalid, probably because the link
+          has expired.</p><p>Please try submitting the password reset form
+          again.</p>`,
+        type: 'warning'
+      })
+    }
   }
 }
 </script>
