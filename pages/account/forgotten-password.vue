@@ -1,6 +1,5 @@
 <template>
   <pybossa-form
-    id="forgotten-password"
     :header="title"
     submit-text="Reset"
     :form="form"
@@ -15,14 +14,19 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'container',
 
+  data () {
+    return {
+      title: 'Forgotten Password'
+    }
+  },
+
   async asyncData ({ query, app, error }) {
     const endpoint = '/account/forgot-password'
     return app.$axios.$get(endpoint).then(data => {
       return {
-        title: 'Forgotten Password',
         next: query.next || '/',
         form: {
-          endpoint: '/account/forgot-password',
+          endpoint: endpoint,
           method: 'post',
           model: data.form,
           schema: {
