@@ -131,22 +131,6 @@ export default {
               validator: VueFormGenerator.validators.url
             },
             {
-              model: 'info.presenter',
-              label: 'Task Presenter',
-              type: 'select',
-              values: [
-                {
-                  id: 'libcrowds-viewer',
-                  name: 'LibCrowds Viewer'
-                },
-                {
-                  id: 'z3950',
-                  name: 'Z39.50'
-                }
-              ],
-              default: 'libcrowds-viewer'
-            },
-            {
               model: 'info.license',
               label: 'Data Reuse License',
               type: 'select',

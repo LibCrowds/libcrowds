@@ -3,6 +3,7 @@
     :is="presenter"
     :project="project"
     :tasks="tasks"
+    :presenterOptions="collection.info.presenter_options"
     @submit="onSubmit"
     @taskliked="onTaskLiked">
   </component>

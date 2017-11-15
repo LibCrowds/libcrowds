@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
@@ -28,6 +29,10 @@ export default {
     },
     tasks: {
       type: Array,
+      required: true
+    },
+    presenterOptions: {
+      type: Object,
       required: true
     }
   },
@@ -44,9 +49,7 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = 'Copy the link to bookmark, share on social media ' +
-          ' or [discuss this playbill on our forum]' +
-          '(https://community.libcrowds.com/d/11-spotted-on-in-the-spotlight).'
+        opts.shareText = marked(this.presenterOptions.share || '')
         return opts
       })
     },
