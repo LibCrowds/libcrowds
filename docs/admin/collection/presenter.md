@@ -14,8 +14,8 @@ further detail below.
 
 ## LibCrowds Viewer
 
-| Setting            | Description
-|--------------------|-----------------------------------------------------------------------------|
-| Share Modal Text   | Text for the share modal (to include, for example, a link to a forum topic) |
-| Note Button Text   | Text for the note button                                                    |
-| Submit Button Text | Text for the submit button                                                  |
+| Setting                | Description
+|------------------------|-----------------------------------------------------------------------------|
+| Share Modal Text       | Text for the share modal (to include, for example, a link to a forum topic) |
+| Note Button Text       | Text for the note button                                                    |
+| Submit Button Text     | Text for the submit button                                                  |
