@@ -28,8 +28,7 @@
     <vue-form-generator
       ref="form"
       :schema="form.schema"
-      :model="form.model"
-      @keyup.enter="submit">
+      :model="form.model">
     </vue-form-generator>
 
     <slot name="bottom"></slot>
@@ -217,19 +216,23 @@ export default {
     },
 
     /**
-     * Submit the form if the enter key was pressed.
+     * Submit the form the event wasn't triggered via a textarea.
      * @param {Object} evt
      *   The event.
      */
-    submitIfEnter (evt) {
-      if (evt.keyCode === 13) {
+    handleKeyup (evt) {
+      if (evt.keyCode === 13 && evt.target.type !== 'textarea') {
         this.submit()
       }
     }
   },
 
   mounted () {
-    this.$refs.form.$el.addEventListener('keypress', this.submitIfEnter)
+    this.$refs.form.$el.addEventListener('keypress', this.handleKeyup)
+  },
+
+  beforeDestroy () {
+    this.$refs.form.$el.removeEventListener('keypress', this.handleKeyup)
   }
 }
 </script>
