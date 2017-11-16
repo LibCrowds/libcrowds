@@ -127,9 +127,8 @@ export default {
             {
               model: 'info.presenter_options.libcrowdsviewer.shareText',
               label: 'Share Modal Text',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Text to add to the the share modal (use markdown)',
+              type: 'input',
+              inputType: 'text',
               visible: (model) => {
                 return model && model.info.presenter === 'libcrowdsviewer'
               }
@@ -137,9 +136,8 @@ export default {
             {
               model: 'info.presenter_options.libcrowdsviewer.noteText',
               label: 'Note Button Text',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Text for the note button (use markdown)',
+              type: 'input',
+              inputType: 'text',
               visible: (model) => {
                 return model && model.info.presenter === 'libcrowdsviewer'
               }
@@ -147,9 +145,8 @@ export default {
             {
               model: 'info.presenter_options.libcrowdsviewer.submitText',
               label: 'Submit Button Text',
-              type: 'textArea',
-              rows: 3,
-              placeholder: 'Text for the submit button (use markdown)',
+              type: 'input',
+              inputType: 'text',
               visible: (model) => {
                 return model && model.info.presenter === 'libcrowdsviewer'
               }
