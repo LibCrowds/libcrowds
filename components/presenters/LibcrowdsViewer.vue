@@ -18,7 +18,6 @@
 
 <script>
 import marked from 'marked'
-import merge from 'lodash/merge'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
@@ -32,7 +31,7 @@ export default {
       type: Array,
       required: true
     },
-    presenterOptions: {
+    options: {
       type: Object,
       required: true
     }
@@ -50,7 +49,7 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        const shareText = this.presenterOptions.libcrowdsviewer.shareText
+        const shareText = this.options.shareText
         opts.shareText = marked(shareText)
         return opts
       })
@@ -58,17 +57,13 @@ export default {
 
     buttons () {
       let buttons = {
-        note: marked(this.presenterOptions.libcrowdsviewer.noteText),
-        submit: marked(this.presenterOptions.libcrowdsviewer.submitText)
+        note: marked(this.options.noteText),
+        submit: marked(this.options.submitText)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
       }
       return buttons
-    },
-
-    mergedPresenterOptions () {
-      return merge({}, this.defaultPresenterOptions, this.presenterOptions)
     }
   },
 
@@ -100,13 +95,17 @@ export default {
       const nAnnotations = taskData.annotations.length
       const mode = taskData.mode
       const tag = taskData.tag
+      const selectRules = this.options.selectRules
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
           this.$swal({
-            title: 'Confirm',
+            title: 'Are you sure?',
             html: htmlMessage,
             type: 'question',
-            showCancelButton: true
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonText: 'Yes, save and continue',
+            cancelButtonText: 'No, go back'
           }).then(data => {
             resolve()
           }, (dismiss) => {
@@ -115,13 +114,20 @@ export default {
         })
       }
 
+      console.log(selectRules)
+
       return new Promise((resolve, reject) => {
-        // TODO: expand these options.
-        if (mode === 'select' && nAnnotations < 2) {
+        if (
+          mode === 'select' &&
+          selectRules.hasOwnProperty(tag) &&
+          nAnnotations < selectRules[tag]
+        ) {
           return showConfirm(
-            `Each sheet usually contains at least 2 ${pluralize(tag, 2)}.<br>
+            `Each image usually contains at least ${selectRules[tag]}
+            ${pluralize(tag, selectRules[tag])}.
+            <br>
             You have outlined ${nAnnotations}.<br>
-            Are you sure you want to submit this sheet?`
+            Are you sure you want to save this answer?`
           ).then(() => {
             resolve()
           }).catch(err => {
@@ -130,7 +136,7 @@ export default {
         } else if (mode === 'transcribe' && nAnnotations < 1) {
           return showConfirm(
             `You have not added any transcriptions.<br>
-            Are you sure you want to submit this sheet?`
+            Are you sure you want to submit this answer?`
           ).then(() => {
             resolve()
           }).catch(err => {

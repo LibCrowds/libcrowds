@@ -3,7 +3,7 @@
     :is="presenter"
     :project="project"
     :tasks="tasks"
-    :presenterOptions="collection.info.presenter_opts"
+    :options="presenterOptions"
     @submit="onSubmit"
     @taskliked="onTaskLiked">
   </component>
@@ -19,7 +19,7 @@ import Z3950Presenter from '@/components/presenters/Z3950'
 export default {
   layout ({ params, store }) {
     const layouts = {
-      'libcrowds-viewer': 'collection-fullscreen-dark',
+      'libcrowdsviewer': 'collection-fullscreen-dark',
       'z3950': 'collection-tabs'
     }
     return layouts[params.presenter] || 'collection-tabs'
@@ -63,7 +63,7 @@ export default {
 
     presenter () {
       const presenters = {
-        'libcrowds-viewer': LibcrowdsViewerPresenter,
+        'libcrowdsviewer': LibcrowdsViewerPresenter,
         'z3950': Z3950Presenter
       }
       return presenters[this.collection.info.presenter]
@@ -71,6 +71,16 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    presenterOptions () {
+      console.log(this.collection.info)
+      if (!this.collection.info) {
+        return {}
+      }
+      const presenter = this.collection.info.presenter
+      console.log(this.collection.info.presenter_opts[presenter])
+      return this.collection.info.presenter_opts[presenter]
     }
   },
 
