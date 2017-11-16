@@ -31,7 +31,7 @@
             variant="success"
             size="sm"
             block
-            @click="loadDataModal(project.item)">
+            @click="loadDataModal(project.item, $event)">
             Download
           </b-btn>
         </template>
@@ -40,6 +40,7 @@
 
     <data-modal
       v-if="activeProject"
+      :return-focus="modalReturnFocus"
       :show="showDataModal"
       :project="activeProject">
     </data-modal>
@@ -69,6 +70,7 @@ export default {
     return {
       activeProject: null,
       showDataModal: false,
+      modalReturnFocus: null,
       filter: null,
       filterBy: 'name'
     }
@@ -116,9 +118,18 @@ export default {
   },
 
   methods: {
-    loadDataModal (project) {
+    /**
+     * Show the data download modal for a project.
+     * @param {Object} project
+     *   The project.
+     * @param {Object} evt
+     *   The triggering event.
+     */
+    loadDataModal (project, evt) {
+      console.log(evt)
       this.activeProject = project
       this.showDataModal = true
+      this.modalReturnFocus = evt.target
     }
   },
 
