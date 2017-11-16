@@ -70,14 +70,14 @@ export const routes = [
     name: 'admin-collection-new'
   },
   {
-    path: '/account/password/reset',
+    path: '/account/reset-password',
     component: jest.fn(),
-    name: 'account-password-reset'
+    name: 'account-reset-password'
   },
   {
-    path: '/account/password/forgotten',
+    path: '/account/forgotten-password',
     component: jest.fn(),
-    name: 'account-password-forgotten'
+    name: 'account-forgotten-password'
   },
   {
     path: '/admin/site/announcements',

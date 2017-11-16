@@ -10,6 +10,7 @@
       :size="size"
       default-img="identicon"
       :alt="altTag"
+      :style="style"
       class="img-thumbnail rounded-circle">
     </v-gravatar>
 
@@ -19,6 +20,7 @@
       :triggers="tooltipTriggers"
       :title="user.name"
       :src="avatar"
+      :style="style"
       class="img-thumbnail rounded-circle">
 
   </div>
@@ -47,6 +49,14 @@ export default {
     size: {
       type: Number,
       default: 80
+    }
+  },
+
+  computed: {
+    style () {
+      return {
+        width: `${this.size}px`
+      }
     }
   },
 

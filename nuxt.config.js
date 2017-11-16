@@ -135,7 +135,7 @@ const config = {
   },
   router: {
     middleware: [
-      'auth',
+      'session',
       'announcements',
       'cookie-consent'
     ]
