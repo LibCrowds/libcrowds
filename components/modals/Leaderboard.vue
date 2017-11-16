@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    lazy
     :id="modalId"
     title="Leaderboard"
     ok-only>

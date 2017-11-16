@@ -31,7 +31,8 @@
             variant="success"
             size="sm"
             block
-            @click="loadDataModal(project.item)">
+            v-b-modal="dataModalId"
+            @click="activeProject = project.item">
             Download
           </b-btn>
         </template>
@@ -39,8 +40,8 @@
     </card-base>
 
     <data-modal
-      v-if="activeProject"
-      :show="showDataModal"
+      lazy
+      :modal-id="dataModalId"
       :project="activeProject">
     </data-modal>
 
@@ -68,7 +69,7 @@ export default {
   data () {
     return {
       activeProject: null,
-      showDataModal: false,
+      dataModalId: 'data-download-modal',
       filter: null,
       filterBy: 'name'
     }
@@ -112,13 +113,6 @@ export default {
           projects are made available under a
           ${this.dataLicenses[this.collection.license].name} license.`
       }
-    }
-  },
-
-  methods: {
-    loadDataModal (project) {
-      this.activeProject = project
-      this.showDataModal = true
     }
   },
 

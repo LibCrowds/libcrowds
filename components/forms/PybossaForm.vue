@@ -186,13 +186,17 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
-        if (r.data.status === 'error') {
+        if (r.data.status === 'error' || r.data.status === 'danger') {
           this.alert = r.data.flash
           this.status = r.data.status
           this.notifyInvalidForm()
           this.injectErrors(r.data.form.errors)
           return
-        } else if (r.data.status === 'success' || !r.data.status) {
+        } else if (
+          r.data.status === 'success' ||
+          r.data.status === 'sent' ||
+          !r.data.status
+        ) {
           this.handleSuccess(r.data)
         }
         this.flash(r.data)

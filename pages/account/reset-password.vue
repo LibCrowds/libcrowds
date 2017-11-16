@@ -1,6 +1,6 @@
 <template>
   <pybossa-form
-    id="reset-password"
+    v-if="!hasError"
     :header="title"
     submitText="Reset"
     :form="form"
@@ -15,17 +15,28 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'container',
 
+  data () {
+    return {
+      title: 'Reset Password'
+    }
+  },
+
   async asyncData ({ query, app, error }) {
     const endpoint = '/account/reset-password'
-    return app.$axios.$get(endpoint).then(data => {
+    const params = {
+      key: query.key
+    }
+
+    /* eslint-disable handle-callback-err */
+    return app.$axios.$get(endpoint, { params: params }).then(data => {
       return {
-        title: 'Reset Password',
+        hasError: false,
         next: query.next || '/',
         form: {
-          endpoint: '/account/reset-password',
+          endpoint: endpoint,
           method: 'post',
           model: data.form,
-          params: query || null,
+          params: params,
           schema: {
             fields: [
               {
@@ -47,7 +58,13 @@ export default {
         }
       }
     }).catch(err => {
-      error(err)
+      // Failure causes a 500 error on the server where really the cause
+      // is most likely to be an incorrect/expired key, so let's set a flag
+      // and display a better feedback message for the user.
+      return {
+        form: null,
+        hasError: true
+      }
     })
   },
 
@@ -66,6 +83,23 @@ export default {
 
   components: {
     PybossaForm
+  },
+
+  validate ({ query }) {
+    return query.hasOwnProperty('key')
+  },
+
+  beforeMount () {
+    if (this.hasError) {
+      this.$router.push({ path: '/' })
+      this.$swal({
+        title: 'Invalid Key',
+        html: `<p>The password reset URL is invalid, probably because the link
+          has expired.</p><p>Please try submitting the password reset form
+          again.</p>`,
+        type: 'warning'
+      })
+    }
   }
 }
 </script>

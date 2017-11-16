@@ -1,5 +1,10 @@
 <template>
-  <b-modal title="Download" v-model="show">
+  <b-modal
+    lazy
+    :id="modalId"
+    title="Download"
+    :return-focus="returnFocus"
+    v-model="show">
     <b-table
       responsive
       striped
@@ -60,9 +65,9 @@ export default {
       type: Object,
       required: true
     },
-    show: {
-      type: Boolean,
-      default: false
+    modalId: {
+      type: String,
+      required: true
     }
   },
 

@@ -170,13 +170,6 @@
       </div>
     </div>
 
-    <b-modal ref="modal" title="Full record" size="lg">
-      <pre>
-        <code ref="modalcontent">
-        </code>
-        </pre>
-    </b-modal>
-
   </div>
 </template>
 
@@ -303,16 +296,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Load a record into the modal.
-     * @param {Object} record
-     *   The record.
-     */
-    viewFullRecord (record) {
-      this.$refs.modalcontent.innerHTML = JSON.stringify(record.full, null, 2)
-      this.$refs.modal.show()
-    },
-
     /**
      * Build a query from the form data.
      */

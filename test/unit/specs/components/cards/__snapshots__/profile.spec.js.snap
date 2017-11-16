@@ -16,6 +16,7 @@ exports[`Profile card renders correctly 1`] = `
                   default-img="identicon"
                   alt="Avatar for JohnDoe"
                   class="img-thumbnail rounded-circle"
+                  style="width:200px;"
       >
       </v-gravatar>
     </div>

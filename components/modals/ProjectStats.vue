@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    lazy
     :id="modalId"
     ok-only
     title="Project Stats"
