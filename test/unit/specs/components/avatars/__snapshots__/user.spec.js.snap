@@ -11,6 +11,7 @@ exports[`User avatar renders Gravatar by default 1`] = `
        triggers
        title="JohnDoe"
        class="img-thumbnail rounded-circle"
+       style="width:80px;"
   >
 </div>
 
