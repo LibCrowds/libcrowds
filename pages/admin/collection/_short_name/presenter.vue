@@ -1,14 +1,30 @@
 <template>
-  <card-base :title="title" help="Choose the common task presenter options for the microsite">
+  <card-base
+    :title="title"
+    help="Choose the common task presenter options for the microsite">
 
-    <pybossa-form no-border submit-text="Update" :form="form" @success="onSuccess">
+    <pybossa-form
+      no-border
+      submit-text="Update"
+      :form="form"
+      @success="onSuccess">
 
       <!-- Rules input for LibCrowds Viewer -->
       <b-card v-if="presenter === 'libcrowdsviewer'" slot="bottom">
         <label>Select Mode Confirmation Rules</label>
-        <b-table hover striped show-empty empty-text="No rules have been added" class="mb-2" :items="selectRulesTableItems" :fields="selectRulesTableFields">
+        <b-table
+          hover
+          striped
+          show-empty
+          empty-text="No rules have been added"
+          class="mb-2"
+          :items="selectRulesTableItems"
+          :fields="selectRulesTableFields">
           <template slot="action" scope="rule">
-            <b-btn variant="warning" size="sm" @click="deleteSelectRule(rule.item.tag)">
+            <b-btn
+              variant="warning"
+              size="sm"
+              @click="deleteSelectRule(rule.item.tag)">
               Remove
             </b-btn>
           </template>
@@ -20,7 +36,10 @@
           <label class="mr-sm-1" for="n-required">Number Required</label>
           <b-input id="n-required" placeholder="1" class="mb-2" type="number">
           </b-input>
-          <b-button variant="success" class="form-group mb-0 float-right" @click="addSelectRule">
+          <b-button
+            variant="success"
+            class="form-group mb-0 float-right"
+            @click="addSelectRule">
             Add Rule
           </b-button>
         </b-form>
