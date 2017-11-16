@@ -43,7 +43,7 @@ export default {
 
   mixins: [fetchCollectionByName, notifications],
 
-  data() {
+  data () {
     return {
       title: 'Task Presenter',
       selectRulesTableFields: {
@@ -62,7 +62,7 @@ export default {
     }
   },
 
-  head() {
+  head () {
     return {
       title: this.title
     }
@@ -74,11 +74,11 @@ export default {
   },
 
   computed: {
-    collection() {
+    collection () {
       return this.$store.state.currentCollection
     },
 
-    form() {
+    form () {
       return {
         endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
@@ -140,13 +140,13 @@ export default {
       }
     },
 
-    presenter() {
+    presenter () {
       return this.collection.info && this.collection.info.presenter
         ? this.collection.info.presenter
         : null
     },
 
-    selectRulesTableItems() {
+    selectRulesTableItems () {
       const opts = this.collection.info.presenter_opts
       const rules = opts.libcrowdsviewer.selectRules
       const items = []
@@ -164,14 +164,14 @@ export default {
     /**
      * Handle form submission success.
      */
-    onSuccess() {
+    onSuccess () {
       this.notifySuccess({ message: 'Task presenter updated' })
     },
 
     /**
      * Save a LibCrowds Viewer select rule.
      */
-    addSelectRule(evt) {
+    addSelectRule (evt) {
       const form = evt.target.parentElement
       const tag = form.querySelector('#tag').value
       const nRequired = form.querySelector('#n-required').value
@@ -183,7 +183,7 @@ export default {
     /**
      * Delete a LibCrowds Viewer select rule.
      */
-    deleteSelectRule(tag) {
+    deleteSelectRule (tag) {
       const opts = this.collection.info.presenter_opts
       delete opts.libcrowdsviewer.selectRules[tag]
       this.collection.info.presenter_opts = Object.assign({}, opts)
