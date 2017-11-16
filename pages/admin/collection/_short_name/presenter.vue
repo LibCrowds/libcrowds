@@ -29,24 +29,24 @@
             </b-btn>
           </template>
         </b-table>
-        <b-form inline class="float-right">
+        <b-form>
           <label class="mr-sm-1" for="tag">Tag</label>
           <b-input
             id="tag"
-            class="mb-2 mr-sm-2 mb-sm-0"
             type="text"
+            class="mb-2"
             placeholder="Enter a tag">
           </b-input>
           <label class="mr-sm-1" for="n-required">Number Required</label>
           <b-input
             id="n-required"
-            class="mr-sm-2 mb-sm-0"
             placeholder="1"
+            class="mb-2"
             type="number">
           </b-input>
           <b-button
             variant="success"
-            class="form-group ml-auto mt-2 mt-sm-0"
+            class="form-group mb-0 float-right"
             @click="addSelectRule">
             Add Rule
           </b-button>
