@@ -66,36 +66,45 @@ export default {
               type: 'select',
               values: [
                 {
-                  id: 'libcrowds-viewer',
+                  id: 'libcrowdsviewer',
                   name: 'LibCrowds Viewer'
                 },
                 {
                   id: 'z3950',
                   name: 'Z39.50'
                 }
-              ],
-              default: 'libcrowds-viewer'
+              ]
             },
 
             // LibCrowds Viewer options
             {
-              model: 'info.presenter_options.shareText',
+              model: 'info.presenter_options.libcrowdsviewer.shareText',
               label: 'Share Modal Text',
               type: 'textArea',
               rows: 3,
               placeholder: 'Text to add to the the share modal (use markdown)',
               visible: (model) => {
-                return model && model.info.presenter === 'libcrowds-viewer'
+                return model && model.info.presenter === 'libcrowdsviewer'
               }
             },
             {
-              model: 'info.presenter_options.noteText',
+              model: 'info.presenter_options.libcrowdsviewer.noteText',
               label: 'Note Button Text',
               type: 'textArea',
               rows: 3,
               placeholder: 'Text for the note button (use markdown)',
               visible: (model) => {
-                return model && model.info.presenter === 'libcrowds-viewer'
+                return model && model.info.presenter === 'libcrowdsviewer'
+              }
+            },
+            {
+              model: 'info.presenter_options.libcrowdsviewer.submitText',
+              label: 'Submit Button Text',
+              type: 'textArea',
+              rows: 3,
+              placeholder: 'Text for the submit button (use markdown)',
+              visible: (model) => {
+                return model && model.info.presenter === 'libcrowdsviewer'
               }
             }
           ]

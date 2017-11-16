@@ -19,8 +19,10 @@ export const setCollectionDefaults = function (collection) {
     license: 'CC0',
     presenter: null,
     presenter_options: {
-      'libcrowds-viewer': {
-        share: 'Share a link to this image'
+      'libcrowdsviewer': {
+        shareText: 'Share a link to this image',
+        noteText: 'Add a note',
+        submitText: 'Save and continue'
       }
     },
     content: {

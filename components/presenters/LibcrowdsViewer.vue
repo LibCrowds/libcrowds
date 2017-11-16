@@ -50,15 +50,16 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = marked(this.presenterOptions.shareText || '')
+        const shareText = this.presenterOptions.libcrowdsviewer.shareText
+        opts.shareText = marked(shareText)
         return opts
       })
     },
 
     buttons () {
       let buttons = {
-        note: marked(this.presenterOptions.noteText || 'Add a note'),
-        submit: 'Save and Continue'
+        note: marked(this.presenterOptions.libcrowdsviewer.noteText),
+        submit: marked(this.presenterOptions.libcrowdsviewer.submitText)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
