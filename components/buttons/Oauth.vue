@@ -61,7 +61,7 @@ export default {
      *   The endpoint.
      */
     redirect (endpoint) {
-      const query = `next=${this.next}`
+      const query = `next=${this.next}&response_format=json`
       const url = `${localConfig.pybossa.host}/${endpoint}?${query}`
       window.location.assign(url)
     }
