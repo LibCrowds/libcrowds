@@ -5,10 +5,52 @@
 
     <pybossa-form
       no-border
-      v-if="!refreshing"
       submit-text="Update"
       :form="form"
       @success="onSuccess">
+
+      <!-- Rules input for LibCrowds Viewer -->
+      <b-card v-if="presenter === 'libcrowdsviewer'" slot="bottom">
+        <label>Select Mode Confirmation Rules</label>
+        <b-table
+          hover
+          striped
+          show-empty
+          empty-text="No rules have been added"
+          class="mb-2"
+          :items="selectRulesTableItems"
+          :fields="selectRulesTableFields">
+          <template slot="action" scope="rule">
+            <b-btn
+              variant="warning"
+              @click="deleteSelectRule(rule.item.tag)">
+              Remove
+            </b-btn>
+          </template>
+        </b-table>
+        <b-form inline class="float-right">
+          <label class="mr-sm-1" for="tag">Tag</label>
+          <b-input
+            id="tag"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            type="text"
+            placeholder="Enter a tag">
+          </b-input>
+          <label class="mr-sm-1" for="n-required">Number Required</label>
+          <b-input
+            id="n-required"
+            class="mb-2 mr-sm-2 mb-sm-0"
+            placeholder="1"
+            type="number">
+          </b-input>
+          <b-button
+            variant="success"
+            @click="addSelectRule">
+            Add Rule
+          </b-button>
+        </b-form>
+      </b-card>
+
     </pybossa-form>
 
   </card-base>
@@ -29,8 +71,19 @@ export default {
   data () {
     return {
       title: 'Task Presenter',
-      extraFields: [],
-      refreshing: false
+      selectRulesTableFields: {
+        tag: {
+          label: 'Tag'
+        },
+        nRequired: {
+          label: 'Number Required',
+          class: 'text-center'
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
+      }
     }
   },
 
@@ -110,6 +163,25 @@ export default {
           ]
         }
       }
+    },
+
+    presenter () {
+      return this.collection.info && this.collection.info.presenter
+        ? this.collection.info.presenter
+        : null
+    },
+
+    selectRulesTableItems () {
+      const opts = this.collection.info.presenter_opts
+      const rules = opts.libcrowdsviewer.selectRules
+      const items = []
+      for (let key of Object.keys(rules)) {
+        items.push({
+          tag: key,
+          nRequired: rules[key]
+        })
+      }
+      return items
     }
   },
 
@@ -119,6 +191,27 @@ export default {
      */
     onSuccess () {
       this.notifySuccess({ message: 'Task presenter updated' })
+    },
+
+    /**
+     * Save a LibCrowds Viewer select rule.
+     */
+    addSelectRule (evt) {
+      const form = evt.target.parentElement
+      const tag = form.querySelector('#tag').value
+      const nRequired = form.querySelector('#n-required').value
+      const opts = this.collection.info.presenter_opts
+      opts.libcrowdsviewer.selectRules[tag] = nRequired
+      this.collection.info.presenter_opts = Object.assign({}, opts)
+    },
+
+    /**
+     * Delete a LibCrowds Viewer select rule.
+     */
+    deleteSelectRule (tag) {
+      const opts = this.collection.info.presenter_opts
+      delete opts.libcrowdsviewer.selectRules[tag]
+      this.collection.info.presenter_opts = Object.assign({}, opts)
     }
   }
 }

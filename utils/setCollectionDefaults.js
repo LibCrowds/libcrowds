@@ -22,7 +22,8 @@ export const setCollectionDefaults = function (collection) {
       'libcrowdsviewer': {
         shareText: 'Share a link to this image',
         noteText: 'Add a note',
-        submitText: 'Save and continue'
+        submitText: 'Save and continue',
+        selectRules: {}
       }
     },
     content: {
