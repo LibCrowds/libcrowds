@@ -1,53 +1,26 @@
 <template>
-  <card-base
-    :title="title"
-    help="Choose the common task presenter options for the microsite">
+  <card-base :title="title" help="Choose the common task presenter options for the microsite">
 
-    <pybossa-form
-      no-border
-      submit-text="Update"
-      :form="form"
-      @success="onSuccess">
+    <pybossa-form no-border submit-text="Update" :form="form" @success="onSuccess">
 
       <!-- Rules input for LibCrowds Viewer -->
       <b-card v-if="presenter === 'libcrowdsviewer'" slot="bottom">
         <label>Select Mode Confirmation Rules</label>
-        <b-table
-          hover
-          striped
-          show-empty
-          empty-text="No rules have been added"
-          class="mb-2"
-          :items="selectRulesTableItems"
-          :fields="selectRulesTableFields">
+        <b-table hover striped show-empty empty-text="No rules have been added" class="mb-2" :items="selectRulesTableItems" :fields="selectRulesTableFields">
           <template slot="action" scope="rule">
-            <b-btn
-              variant="warning"
-              size="sm"
-              @click="deleteSelectRule(rule.item.tag)">
+            <b-btn variant="warning" size="sm" @click="deleteSelectRule(rule.item.tag)">
               Remove
             </b-btn>
           </template>
         </b-table>
         <b-form>
           <label class="mr-sm-1" for="tag">Tag</label>
-          <b-input
-            id="tag"
-            type="text"
-            class="mb-2"
-            placeholder="Enter a tag">
+          <b-input id="tag" type="text" class="mb-2" placeholder="Enter a tag">
           </b-input>
           <label class="mr-sm-1" for="n-required">Number Required</label>
-          <b-input
-            id="n-required"
-            placeholder="1"
-            class="mb-2"
-            type="number">
+          <b-input id="n-required" placeholder="1" class="mb-2" type="number">
           </b-input>
-          <b-button
-            variant="success"
-            class="form-group mb-0 float-right"
-            @click="addSelectRule">
+          <b-button variant="success" class="form-group mb-0 float-right" @click="addSelectRule">
             Add Rule
           </b-button>
         </b-form>
@@ -68,9 +41,9 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [fetchCollectionByName, notifications],
 
-  data () {
+  data() {
     return {
       title: 'Task Presenter',
       selectRulesTableFields: {
@@ -89,7 +62,7 @@ export default {
     }
   },
 
-  head () {
+  head() {
     return {
       title: this.title
     }
@@ -101,11 +74,11 @@ export default {
   },
 
   computed: {
-    collection () {
+    collection() {
       return this.$store.state.currentCollection
     },
 
-    form () {
+    form() {
       return {
         endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
@@ -167,13 +140,13 @@ export default {
       }
     },
 
-    presenter () {
+    presenter() {
       return this.collection.info && this.collection.info.presenter
         ? this.collection.info.presenter
         : null
     },
 
-    selectRulesTableItems () {
+    selectRulesTableItems() {
       const opts = this.collection.info.presenter_opts
       const rules = opts.libcrowdsviewer.selectRules
       const items = []
@@ -191,14 +164,14 @@ export default {
     /**
      * Handle form submission success.
      */
-    onSuccess () {
+    onSuccess() {
       this.notifySuccess({ message: 'Task presenter updated' })
     },
 
     /**
      * Save a LibCrowds Viewer select rule.
      */
-    addSelectRule (evt) {
+    addSelectRule(evt) {
       const form = evt.target.parentElement
       const tag = form.querySelector('#tag').value
       const nRequired = form.querySelector('#n-required').value
@@ -210,7 +183,7 @@ export default {
     /**
      * Delete a LibCrowds Viewer select rule.
      */
-    deleteSelectRule (tag) {
+    deleteSelectRule(tag) {
       const opts = this.collection.info.presenter_opts
       delete opts.libcrowdsviewer.selectRules[tag]
       this.collection.info.presenter_opts = Object.assign({}, opts)
