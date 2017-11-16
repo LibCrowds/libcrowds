@@ -92,7 +92,9 @@ export default {
      * This can be used, for example, to make sure we have n annotations.
      */
     checkSubmission (taskData) {
-      const nAnnotations = taskData.annotations.length
+      const nAnnotations = taskData.annotations.filter(annotation => {
+        return annotation.purpose !== 'commenting'
+      }).length
       const mode = taskData.mode
       const tag = taskData.tag
       const selectRules = this.options.selectRules
