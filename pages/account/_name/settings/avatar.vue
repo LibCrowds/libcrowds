@@ -16,7 +16,7 @@ export default {
   layout: 'account-dashboard',
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/account/${params.name}/update`
+    const endpoint = `/account/${params.name}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
       // See https://github.com/LibCrowds/libcrowds/issues/100
       delete data.upload_form.id
@@ -24,7 +24,7 @@ export default {
       data.upload_form.btn = 'Upload'
       return {
         form: {
-          endpoint: `account/${params.name}/update`,
+          endpoint: endpoint,
           model: data.upload_form,
           method: 'POST'
         }
