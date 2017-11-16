@@ -1,6 +1,6 @@
 <template>
-  <div id="collection-contribute">
-    <h1 class="text-center">Contribute</h1>
+  <div id="collection-projects">
+    <h1 class="text-center">{{ title }}</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
@@ -10,12 +10,35 @@
       id="get-started"
       class="collection-nav-item"
       data-title="Get Started">
-      <b-col xl="3" class="mb-xl-3 d-none d-xl-block">
-        <project-sorting-card
-          class="mb-3"
-          :collection="collection"
-          v-model="searchParams">
-        </project-sorting-card>
+
+      <b-col xl="3" class="d-none d-xl-block">
+        <b-card header="Sorting Options" class="options-card mb-2">
+          <filter-projects-data
+            v-model="tagModel"
+            :collection="collection"
+            @input="reset"
+            @select="onFilter">
+          </filter-projects-data>
+          <sort-projects-data
+            v-model="sortModel"
+            class="mb-2"
+            @input="reset"
+            @select="onSort">
+          </sort-projects-data>
+          <toggle-completed-data
+            class="mb-2"
+            v-model="showCompleted"
+            @input="onToggleCompleted">
+          </toggle-completed-data>
+          <b-btn
+            block
+            size="sm"
+            variant="primary"
+            @click="clearFilters">
+            Clear filters
+          </b-btn>
+        </b-card>
+
         <social-media-buttons
           :shareUrl="shareUrl"
           size="sm"
@@ -24,75 +47,94 @@
       </b-col>
 
       <b-col xl="9">
-        <b-table
-          hover
-          striped
-          show-empty
-          :items="incompleteProjects"
-          :fields="tableFields"
-          class="d-lg-none"
-          @sort-changed="onSortChange">
-          <template slot="overall_progress" scope="project">
-            {{ project.item.overall_progress }}%
-          </template>
-          <template slot="actions" scope="project">
-            <project-contrib-button
-              block
-              :collection="collection"
-              :project="project.item">
-            </project-contrib-button>
-          </template>
-        </b-table>
+        <card-base title="Projects" help="Choose a project" class="d-lg-none">
+          <b-form-input
+            slot="controls"
+            v-model="filter"
+            class="search-control"
+            size="sm"
+            :placeholder="`Type to search by ${filterBy}`">
+          </b-form-input>
+          <projects-table
+            no-border
+            :filter="filter"
+            :filter-by="filterBy"
+            :collection="collection">
+            <template slot="action" scope="project">
+              <project-contrib-button
+                :collection="collection"
+                :project="project.item">
+              </project-contrib-button>
+            </template>
+          </projects-table>
+        </card-base>
 
         <transition-group
           tag="ul"
           class="list-unstyled d-none d-lg-block"
           name="fade-up">
-          <li v-for="project in incompleteProjects" :key="project.id">
+          <li v-for="project in filteredProjects" :key="project.id">
             <project-card
               :collection="collection"
-              :project="project">
+              :project="project"
+              @tagclick="updateTagModel">
             </project-card>
           </li>
         </transition-group>
 
-        <infinite-load
+        <infinite-load-projects
           ref="infiniteload"
-          domain-object="project"
-          :search-params="mergedSearchParams"
-          :no-results="noResults"
+          :collection="collection"
+          :orderby="sortModel.orderby"
+          :desc="sortModel.desc"
+          no-results=""
+          no-more-results=""
           v-model="projects">
-        </infinite-load>
+        </infinite-load-projects>
+
+        <p class="lead text-center" v-if="allProjectsFiltered">
+          No projects are currently available using the selected filters.
+          <br>
+          You can use the input fields on the left to change them.
+        </p>
+
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
+import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import ProjectSortingCard from '@/components/cards/ProjectSorting'
+import SortProjectsData from '@/components/data/SortProjects'
+import ToggleCompletedData from '@/components/data/ToggleCompleted'
+import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
+import ProjectsTable from '@/components/tables/Projects'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, computeShareUrl ],
+  mixins: [
+    fetchCollectionByName,
+    computeShareUrl,
+    filterProjects
+  ],
 
   data () {
     return {
+      title: 'Take Part',
       projects: [],
-      searchParams: {
-        orderby: 'overall_progress'
-      },
-      noResults: 'No projects are available using the selected filters, ' +
-        'use the input fields on the left to change them.',
+      showCompleted: false,
+      filter: null,
+      filterBy: 'name',
       tableFields: {
         name: {
           label: 'Name'
@@ -111,13 +153,17 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
+      },
+      sortModel: {
+        orderby: 'overall_progress',
+        desc: true
       }
     }
   },
 
   head () {
     return {
-      title: 'Contribute',
+      title: this.title,
       meta: [
         {
           hid: 'description',
@@ -127,6 +173,19 @@ export default {
         }
       ]
     }
+  },
+
+  components: {
+    SortProjectsData,
+    FilterProjectsData,
+    ToggleCompletedData,
+    ProjectCard,
+    InfiniteLoadProjects,
+    SocialMediaButtons,
+    InfiniteLoadingTable,
+    ProjectContribButton,
+    ProjectsTable,
+    CardBase
   },
 
   computed: {
@@ -139,42 +198,74 @@ export default {
     },
 
     pageContent () {
-      return marked(this.collection.info.content.contribute)
+      return marked(this.collection.info.content.projects)
     },
 
-    mergedSearchParams () {
-      const params = {
-        category_id: this.collection.id
-      }
-      if (!this.currentUser.admin) {
-        params.published = true
-      }
-      return merge(params, this.searchParams)
-    },
-
-    incompleteProjects () {
-      return this.projects.filter(project => {
-        return project.overall_progress < 100
-      })
+    allProjectsFiltered () {
+      return this.projects.length > 0 && this.filteredProjects.length === 0
     }
-  },
-
-  components: {
-    ProjectSortingCard,
-    ProjectCard,
-    InfiniteLoad,
-    SocialMediaButtons,
-    InfiniteLoadingTable,
-    ProjectContribButton
   },
 
   methods: {
     /**
-     * Handle sort change.
+     * Track filters.
+     * @param {Object} name
+     *   The tag name.
+     * @param {Object} type
+     *   The tag type.
      */
-    onSortChange (value) {
-      this.searchParams.orderby = value.sortBy
-      this.searchParams.desc = value.sortDesc
+    onFilter (name, type) {
+      const nameStr = name.toLowerCase().replace(' ', '_')
+      const typeStr = type.toLowerCase().replace(' ', '_')
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Filters',
+          eventAction: `${typeStr}:${nameStr}`,
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+    },
+
+    /**
+     * Track sorting.
+     * @param {String} value
+     *   The sorting value.
+     */
+    onSort (value) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Sorts',
+          eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+    },
+
+    /**
+     * Track completed toggle.
+     * @param {String} value
+     *   The toggle value.
+     */
+    onToggleCompleted (value) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Filters',
+          eventAction: value ? 'show_completed' : 'hide_completed',
+          eventLabel: this.collection.name,
+          eventValue: 1
+        })
+      }
+    },
+
+    /**
+     * Reset the infinite loading table.
+     *
+     * Change the number param if the transition time changes.
+     */
+    reset () {
+      this.$refs.infiniteload.reset(500)
     }
   },
 
@@ -184,11 +275,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#collection-contribute {
-  .project-card {
-    transition: all 500ms ease;
-  }
-}
-</style>

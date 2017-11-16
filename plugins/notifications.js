@@ -8,7 +8,7 @@ function toast ({title, message, type, timeout, cb}) {
   iziToast.settings({
     position: 'bottomLeft'
   })
-  return iziToast[type]({title, message, timeout})
+  return iziToast[type]({ title, message, timeout })
 }
 
 function sweetalert ({title, message, type, timeout, cb}) {

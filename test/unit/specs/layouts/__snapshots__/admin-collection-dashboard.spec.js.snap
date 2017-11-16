@@ -1,0 +1,248 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collection admin dashboard layout renders correctly 1`] = `
+
+<div id="dashboard-layout-base"
+     data-server-rendered="true"
+>
+  <nav id="dashboard-navbar"
+       class="side"
+  >
+    <div class="brand-wrapper navbar-light text-center">
+      <a href="#/"
+         class="brand navbar-brand router-link-exact-active router-link-active"
+      >
+        My Brand
+      </a>
+    </div>
+    <ul class="nav">
+      <li data-index="0"
+          class="nav-item"
+      >
+        <a href="#/admin/collection"
+           target="_self"
+           class="nav-link"
+        >
+          Open Collection
+        </a>
+      </li>
+      <li data-index="1"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/new"
+           target="_self"
+           class="nav-link"
+        >
+          New Collection
+        </a>
+      </li>
+      <li data-index="2"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/settings"
+           target="_self"
+           class="nav-link"
+        >
+          Settings
+        </a>
+      </li>
+      <li data-index="3"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/content"
+           target="_self"
+           class="nav-link"
+        >
+          Content
+        </a>
+      </li>
+      <li data-index="4"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/terminology"
+           target="_self"
+           class="nav-link"
+        >
+          Terminology
+        </a>
+      </li>
+      <li data-index="5"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/tags"
+           target="_self"
+           class="nav-link"
+        >
+          Tags
+        </a>
+      </li>
+      <li data-index="6"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/featured"
+           target="_self"
+           class="nav-link"
+        >
+          Featured
+        </a>
+      </li>
+      <li data-index="7"
+          class="nav-item"
+      >
+        <a href="#/admin/collection/playbills/delete"
+           target="_self"
+           class="nav-link"
+        >
+          Delete
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="dashboard">
+    <nav id="app-navbar"
+         class="navbar navbar-light"
+    >
+      <span class="app-navbar-left">
+        <a href="#/"
+           target="_self"
+           class="active navbar-brand d-lg-none"
+        >
+          <span>
+            My Brand
+          </span>
+        </a>
+      </span>
+      <ul id="sign-in-up"
+          right
+          class="app-navbar-right navbar-nav"
+      >
+        <li class="nav-item">
+          <a href="#/account/signin?next=%2F"
+             target="_self"
+             class="nav-link"
+          >
+            Sign in
+          </a>
+        </li>
+        <li id="btn-register"
+            class="nav-item"
+        >
+          <a href="#/account/register"
+             target="_self"
+             class="nav-link"
+          >
+            Sign up
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <nav id="dashboard-navbar"
+         class="top"
+    >
+      <div class="brand-wrapper navbar-light text-center">
+        <a href="#/"
+           class="brand navbar-brand router-link-exact-active router-link-active"
+        >
+          My Brand
+        </a>
+      </div>
+      <ul class="nav">
+        <li data-index="0"
+            class="nav-item"
+        >
+          <a href="#/admin/collection"
+             target="_self"
+             class="nav-link"
+          >
+            Open Collection
+          </a>
+        </li>
+        <li data-index="1"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/new"
+             target="_self"
+             class="nav-link"
+          >
+            New Collection
+          </a>
+        </li>
+        <li data-index="2"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/settings"
+             target="_self"
+             class="nav-link"
+          >
+            Settings
+          </a>
+        </li>
+        <li data-index="3"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/content"
+             target="_self"
+             class="nav-link"
+          >
+            Content
+          </a>
+        </li>
+        <li data-index="4"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/terminology"
+             target="_self"
+             class="nav-link"
+          >
+            Terminology
+          </a>
+        </li>
+        <li data-index="5"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/tags"
+             target="_self"
+             class="nav-link"
+          >
+            Tags
+          </a>
+        </li>
+        <li data-index="6"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/featured"
+             target="_self"
+             class="nav-link"
+          >
+            Featured
+          </a>
+        </li>
+        <li data-index="7"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/delete"
+             target="_self"
+             class="nav-link"
+          >
+            Delete
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <main class="container-fluid px-lg-4 py-4">
+      <nuxt>
+      </nuxt>
+    </main>
+    <footer id="dashboard-footer"
+            class="footer"
+    >
+      <div class="container-fluid">
+        <p class="my-2 mx-1 float-right">
+          &copy; My Company, 2017
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+
+`;

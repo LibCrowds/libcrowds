@@ -118,13 +118,13 @@
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
             All datasets generated from the experimental crowdsourcing
-            projects hosted on this platform are made available under a
+            projects hosted by {{ collection.brand }} are made available under a
             <a
-              :href="collection.info.license"
+              :href="dataLicenses[collection.info.license].url"
               target="_blank">
-              {{ collection.info.license }} license
+              {{ collection.info.license }}
             </a>
-            and can be downloaded by anyone in JSON or
+            license and can be downloaded by anyone in JSON or
             CSV formats. Visit the data page to find out more.
           </p>
           <b-btn
@@ -197,9 +197,12 @@
 </template>
 
 <script>
+import find from 'lodash/find'
+import sortBy from 'lodash/sortBy'
+import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
-import { loadCollectionFeatured } from '@/mixins/loadCollectionFeatured'
+import { licenses } from '@/mixins/licenses'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
@@ -210,13 +213,53 @@ export default {
 
   mixins: [
     fetchCollectionByName,
-    loadCollectionFeatured,
-    computeShareUrl
+    computeShareUrl,
+    licenses
   ],
 
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      featured: []
+    }
+  },
+
+  methods: {
+    loadFeatured () {
+      let projects = []
+      this.$axios.$get('/api/project', {
+        params: {
+          category_id: this.collection.id,
+          featured: true,
+          all: 1
+        }
+      }).then(data => {
+        projects = data.map(project => {
+          project.project_id = project.id
+          return project
+        })
+        return this.$axios.$get('/api/projectstats', {
+          params: {
+            project_id: data.map(project => project.id).toString()
+          }
+        })
+      }).then(stats => {
+        // Sort by ID and deduplicate to deal with the issue of multiple
+        // project stats potentially appearing for a single project
+        // https://github.com/LibCrowds/libcrowds/issues/526
+        const sortedStats = sortBy(stats, [stat => stat.id])
+        const dedupedStats = uniqBy(sortedStats, 'project_id')
+
+        // Merge the project into the stats rather than the other way around
+        // so that project ID is given preference
+        this.featured = dedupedStats.map(projectStats => {
+          return Object.assign(projectStats, find(projects, {
+            id: projectStats.project_id
+          }))
+        })
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
     }
   },
 
@@ -255,7 +298,7 @@ export default {
   },
 
   mounted () {
-    this.loadCollectionFeatured()
+    this.loadFeatured()
   }
 }
 </script>

@@ -9,6 +9,8 @@ import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
+  middleware: 'is-current-or-admin',
+
   components: {
     DashboardBase
   },

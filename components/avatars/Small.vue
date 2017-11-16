@@ -3,9 +3,8 @@
     <img
       v-if="src"
       :src="src"
-      size
       class="img-fluid rounded-circle"
-      :onerror="info = null">
+      :onerror="hasError = true">
     </img>
     <div
       v-else
@@ -22,7 +21,7 @@ import 'vue-awesome/icons/picture-o'
 export default {
   data () {
     return {
-      info: this.domainObject.info
+      hasError: false
     }
   },
 
@@ -36,16 +35,22 @@ export default {
   computed: {
     src () {
       const host = localConfig.pybossa.host
-      if (!this.info) {
+      if (!this.domainObject.info) {
         return null
-      } else if (this.info.avatar_url) {
-        return host + this.info.avatar_url
-      } else if (this.info.thumbnail_url) {
-        return host + this.info.thumbnail_url
-      } else if (this.info.media_url) {
-        return host + this.info.media_url
+      } else if (this.domainObject.info.avatar_url) {
+        return host + this.domainObject.info.avatar_url
+      } else if (this.domainObject.info.thumbnail_url) {
+        return host + this.domainObject.info.thumbnail_url
+      } else if (this.domainObject.info.media_url) {
+        return host + this.domainObject.info.media_url
       }
       return null
+    }
+  },
+
+  watch: {
+    domainObject () {
+      this.hasError = false
     }
   }
 }

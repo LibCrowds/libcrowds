@@ -39,6 +39,11 @@ USER_INFO_PUBLIC_FIELDS = [
   'announcements'
 ]
 
+# Additional project fields
+PROJECT_INFO_PUBLIC_FIELDS = [
+  'tags'
+]
+
 # Avoid 404 errors when accessing URLs with or without a trailing slash
 STRICT_SLASHES = False
 
@@ -64,13 +69,37 @@ cp local.config.js.tmpl local.config.js
 
 ### analytics
 
-Add [Google Analytics](https://analytics.google.com).
+Add [Google Analytics](https://analytics.google.com) to the platform by
+providing your tracking ID.
 
 ```js
 config.analytics = {
   ua: 'UA-XXX-X'
 }
 ```
+
+[Event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
+will be enabled for the following:
+
+| Category      | Action          | Label           | Description                 |
+|---------------|-----------------|-----------------|-----------------------------|
+| Downloads     | {type}_{format} | Project name    | Data file is downloaded     |
+| Statistics    | view            | Project name    | Project statistics viewed   |
+| Contributions | {project name}  | Collection name | Answer submitted            |
+| Sorts         | {sort value}    | Collection name | Main projects list sorted   |
+| Filters       | {filter value}  | Collection name | Main projects list filtered |
+
+Tracking these events can help to determine the content that your users are most
+interested in. For example, monitoring the filters most used for a microsite can
+help determine the types of project that should be prioritised for release at
+any given time.
+
+[Social interactions](https://developers.google.com/analytics/devguides/collection/analyticsjs/social-interactions)
+will be tracked using the social media 'Share' buttons present on the site.
+However, note that this reports button clicks and does not guarantee that the
+user actually then went ahead and shared the page.
+
+User IDs are used to track all registered and authenticated users.
 
 ### brand
 

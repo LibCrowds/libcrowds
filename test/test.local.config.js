@@ -15,6 +15,15 @@ const config = {
   githubUrl: 'https://github.com/Organization/repo'
 }
 
+config.docs = 'http://docs.example.com'
+
+config.footer = {
+  title: 'Newsletter',
+  items: [
+    { text: 'Sign up', url: 'http://mailchimp.signup.url' }
+  ]
+}
+
 // List of collection configurations
 // config.collections = {
 //   'default': {

@@ -31,10 +31,37 @@ export const setCollectionDefaults = function (collection) {
         '- **Results:** The final results data.\n\n' +
         'We are keen for these datasets to be used in innovative ways, ' +
         'perhaps to further research into new technologies.',
-      contribute: ''
+      projects: ''
     },
-    pubished: false,
-    tags: []
+    pubished: false
   }
   collection.info = merge(defaults, collection.info)
+
+  // Handle old tag structure
+  if (Array.isArray(collection.info.tags)) {
+    convertOldTagStructure(collection)
+  } else if (!collection.info.tags) {
+    collection.info.tags = {}
+  }
+}
+
+/**
+ * Convert the pre 1.0.0 data structure for tags.
+ * @param {Object} collection
+ *   The collection.
+ */
+function convertOldTagStructure (collection) {
+  const newTags = {}
+  const uniqueTypes = [...new Set(collection.info.tags.map(tag => tag.type))]
+  for (let type of uniqueTypes) {
+    newTags[type] = {
+      color: '#2589BD',
+      options: collection.info.tags.filter(tag => {
+        return tag.type === type
+      }).map(tag => {
+        return tag.name
+      })
+    }
+  }
+  collection.info.tags = newTags
 }

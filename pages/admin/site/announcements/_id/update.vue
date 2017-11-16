@@ -1,31 +1,16 @@
 <template>
-  <b-card
-    id="admin-announcements-update"
-    no-body>
-
-    <div
-      slot="header"
-      class="mb-0 d-flex align-items-center justify-content-between">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Edit and publish the announcement.
-          </small>
-        </p>
-      </span>
-      <div class="d-flex align-items-center">
-        <label class="mr-1 mb-0 toggle-label">
-          <strong>Published</strong>
-        </label>
-        <toggle-button
-          :value="form.model.published"
-          :sync="true"
-          :labels="true"
-          class="mb-0"
-          @change="togglePublished">
-        </toggle-button>
-      </div>
+  <card-base :title="title" help="Add a thumbnail and publish the announcement">
+    <div slot="controls" class="d-flex align-items-center float-right">
+      <label class="mr-1 mb-0 toggle-label">
+        <strong>Published</strong>
+      </label>
+      <toggle-button
+        :value="form.model.published"
+        :sync="true"
+        :labels="true"
+        class="mb-0"
+        @change="togglePublished">
+      </toggle-button>
     </div>
 
     <b-tabs ref="tabs" no-body card>
@@ -49,20 +34,20 @@
         </image-upload-form>
       </b-tab>
     </b-tabs>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
+import pick from 'lodash/pick'
 import { notifications } from '@/mixins/notifications'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
 
   mixins: [ notifications ],
-
-  middleware: 'is-admin',
 
   data () {
     return {
@@ -71,28 +56,39 @@ export default {
   },
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/admin/announcement/${params.id}/update`
+    const endpoint = `/api/announcement/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
+        announcement: data,
         form: {
-          endpoint: `/admin/announcement/${params.id}/update`,
-          method: 'post',
-          model: data.form,
+          endpoint: `/api/announcement/${data.id}`,
+          method: 'PUT',
+          model: pick(
+            data,
+            'title',
+            'body',
+            'published',
+            'info'
+          ),
           schema: {
             fields: [
               {
                 model: 'title',
-                label: 'Content',
-                type: 'textArea',
-                rows: 3,
-                placeholder: 'Write an announcement (use Markdown)'
+                label: 'Title',
+                type: 'input',
+                inputType: 'text'
               },
               {
                 model: 'body',
+                label: 'Content',
+                type: 'input',
+                inputType: 'text'
+              },
+              {
+                model: 'info.url',
                 label: 'URL',
                 type: 'input',
-                inputType: 'text',
-                placeholder: 'http://example.com'
+                inputType: 'url'
               }
             ]
           }
@@ -122,7 +118,8 @@ export default {
 
   components: {
     PybossaForm,
-    ImageUploadForm
+    ImageUploadForm,
+    CardBase
   },
 
   methods: {
@@ -130,7 +127,7 @@ export default {
      * Handle cancel.
      */
     onCancel () {
-      this.$router.push({ name: 'admin-announcements' })
+      this.$router.push({ name: 'admin-site-announcements' })
     },
 
     /**
@@ -139,13 +136,11 @@ export default {
      *   The project.
      */
     togglePublished () {
-      this.$axios.$put(`/api/announcement/${this.form.model.id}`, {
+      this.$axios.$put(`/api/announcement/${this.announcement.id}`, {
         published: !this.form.model.published
       }).then(data => {
         this.form.model.published = !this.form.model.published
-        this.notify({
-          type: 'success',
-          title: 'Success',
+        this.notifySuccess({
           message: this.form.model.published
             ? 'Announcement published'
             : 'Announcement unpublished'

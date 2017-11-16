@@ -364,8 +364,6 @@ import LineChart from '@/components/charts/Line'
 export default {
   layout: 'admin-site-dashboard',
 
-  middleware: 'is-admin',
-
   mixins: [ notifications ],
 
   data () {

@@ -1,20 +1,21 @@
 <template>
-  <b-card no-body>
+  <card-base
+    :title="title"
+    help="Choose the projects that appear on the microsite's homepage">
 
-    <div slot="header">
-      <h6 class="mb-1">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Choose the projects that appear on the collection microsite homepage.
-        </small>
-      </p>
-    </div>
+    <b-form-input
+      slot="controls"
+      v-model="filter"
+      class="search-control"
+      size="sm"
+      :placeholder="`Type to search by ${filterBy}`">
+    </b-form-input>
 
-    <infinite-loading-table
-      domain-object="project"
-      :fields="tableFields"
-      :search-params="searchParams"
-      no-border>
+    <projects-table
+      :filter="filter"
+      :filter-by="filterBy"
+      no-border
+      :collection="collection">
       <template slot="action" scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
@@ -24,45 +25,27 @@
           {{ getButtonText(project.item.featured) }}
         </b-btn>
       </template>
-    </infinite-loading-table>
+    </projects-table>
 
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import ProjectsTable from '@/components/tables/Projects'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
   mixins: [ fetchCollectionByName, notifications ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Featured',
-      tableFields: {
-        name: {
-          label: 'Name'
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      }
+      filter: null,
+      filterBy: 'name'
     }
   },
 
@@ -73,7 +56,8 @@ export default {
   },
 
   components: {
-    InfiniteLoadingTable
+    ProjectsTable,
+    CardBase
   },
 
   methods: {
@@ -96,9 +80,7 @@ export default {
         featured: !project.featured
       }).then(data => {
         project.featured = !project.featured
-        this.notify({
-          type: 'success',
-          title: 'Success',
+        this.notifySuccess({
           message: project.featured
             ? 'Project added to featured'
             : 'Project removed from featured'
@@ -112,12 +94,6 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    searchParams () {
-      return {
-        category_id: this.collection.id
-      }
     }
   }
 }

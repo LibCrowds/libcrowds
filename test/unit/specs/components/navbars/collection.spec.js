@@ -1,6 +1,7 @@
 import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
+import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { routes } from '@/test/fixtures/routes'
 import collection from '@/test/fixtures/collection.json'
@@ -19,6 +20,7 @@ describe('Collection navbar', () => {
     localVue.use(BootstrapVue)
     localVue.use(Vuex)
     localVue.use(VueRouter)
+    localVue.component(NuxtLink.name, NuxtLink)
     store = new Vuex.Store({
       state: {
         currentUser: {}

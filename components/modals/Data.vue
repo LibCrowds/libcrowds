@@ -1,5 +1,10 @@
 <template>
-  <b-modal title="Download" v-model="show">
+  <b-modal
+    lazy
+    :id="modalId"
+    title="Download"
+    :return-focus="returnFocus"
+    v-model="show">
     <b-table
       responsive
       striped
@@ -21,9 +26,11 @@
 </template>
 
 <script>
-import exportFile from '@/utils/exportFile'
+import { exportFile } from '@/mixins/exportFile'
 
 export default {
+  mixins: [ exportFile ],
+
   data () {
     return {
       fields: {
@@ -58,9 +65,15 @@ export default {
       type: Object,
       required: true
     },
-    show: {
-      type: Boolean,
-      default: false
+    modalId: {
+      type: String,
+      required: true
+    }
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 
@@ -74,6 +87,14 @@ export default {
      */
     download (type, format) {
       const sn = this.project.short_name
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Downloads',
+          eventAction: `${type}_${format}`,
+          eventLabel: this.project.name,
+          eventValue: 1
+        })
+      }
       this.$axios.$get(`/project/${sn}/tasks/export`, {
         responseType: 'arraybuffer',
         params: {
@@ -81,7 +102,7 @@ export default {
           format: format
         }
       }).then(data => {
-        exportFile(data, `${this.project.short_name}_${type}`, 'zip')
+        this.exportFile(data, `${this.project.short_name}_${type}`, 'zip')
       }).catch(err => {
         this.$nuxt.error(err)
       })

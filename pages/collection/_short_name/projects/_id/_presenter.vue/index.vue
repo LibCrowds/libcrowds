@@ -127,21 +127,13 @@ export default {
             task_id: taskId
           }
         }).then(() => {
-          this.notify({
-            title: 'Success',
-            message: 'Removed from favourites',
-            type: 'success'
-          })
+          this.notifySuccess({ message: 'Removed from favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
       } else {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
-          this.notify({
-            title: 'Success',
-            message: 'Added to favourites',
-            type: 'success'
-          })
+          this.notifySuccess({ message: 'Added to favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
@@ -186,11 +178,7 @@ export default {
                   'directly help enable future research.'
           })
         } else {
-          this.notify({
-            title: 'Answer saved',
-            message: 'Thank you for your contribution!',
-            type: 'success'
-          })
+          this.notifyAnswerSaved()
         }
       })
     },
@@ -205,16 +193,22 @@ export default {
      *   The answer data.
      */
     onSubmit (projectId, taskId, answer) {
-      console.log('submoitted')
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
         'info': answer
       })
       this.$axios.$post(`/api/taskrun`, taskrun).then(data => {
-        console.log('new blah')
         this.loadTask()
         this.trackUserProgress()
+        if (this.$ga) {
+          this.$ga.event({
+            eventCategory: 'Contributions',
+            eventAction: this.project.name,
+            eventLabel: this.collection.name,
+            eventValue: 1
+          })
+        }
       }).catch(err => {
         this.$nuxt.error(err)
       })

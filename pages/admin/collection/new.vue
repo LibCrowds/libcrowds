@@ -1,32 +1,23 @@
 <template>
-  <b-card no-body>
-    <div slot="header" class="mb-0">
-      <h6 class="mb-0">{{ title }}</h6>
-      <p class="text-muted mb-0">
-        <small>
-          Create a new collection microsite.
-        </small>
-      </p>
-    </div>
+  <card-base :title="title" help="Create a new collection microsite">
     <pybossa-form
       :form="form"
       no-border
       submit-text="Create"
       @success="onSuccess">
     </pybossa-form>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { notifications } from '@/mixins/notifications'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
   mixins: [ notifications ],
-
-  middleware: 'is-admin',
 
   data () {
     return {
@@ -77,7 +68,8 @@ export default {
   },
 
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   methods: {

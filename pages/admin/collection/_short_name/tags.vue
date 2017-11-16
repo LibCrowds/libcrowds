@@ -1,57 +1,79 @@
 <template>
-  <b-card no-body>
-    <div
-      slot="header"
-      class="mb-0 d-flex align-items-center justify-content-between">
-      <span>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            Configure the collection microsite.
-          </small>
-        </p>
-      </span>
+  <div>
+    <card-base
+      :title="title"
+      help="Manage the available tags for the microsite">
       <b-btn
+        slot="controls"
+        class="float-right"
         size="sm"
         variant="success"
-        @click="addTag">
+        v-b-modal="addTagModalId">
         Add a tag
       </b-btn>
-    </div>
-    <b-table
-      responsive
-      striped
-      hover
-      show-empty
-      :items="collection.info.tags"
-      :fields="tableFields">
-      <template slot="actions" scope="tag">
-        <b-btn
-          variant="warning"
-          size="sm"
-          @click="removeTag(tag.item)">
-          Remove
-        </b-btn>
-      </template>
-    </b-table>
-  </b-card>
+
+      <b-table
+        ref="table"
+        responsive
+        striped
+        hover
+        show-empty
+        :items="tableItems"
+        :fields="tableFields">
+        <template slot="color" scope="tag">
+          <div
+            class="d-flex flex-row align-items-center justify-content-center">
+            <b-badge
+              class="mr-1"
+              :style="`background-color: ${tag.item.color}; width: 1rem;`">
+              &nbsp;
+            </b-badge>
+            {{ tag.item.color }}
+          </div>
+        </template>
+        <template slot="actions" scope="tag">
+          <b-btn
+            variant="success"
+            class="mr-1"
+            size="sm"
+            @click="editTag(tag.item)">
+            Edit
+          </b-btn>
+          <b-btn
+            variant="warning"
+            size="sm"
+            @click="removeTag(tag.item)">
+            Remove
+          </b-btn>
+        </template>
+      </b-table>
+    </card-base>
+
+    <add-tag-modal
+      ref="addTagModal"
+      :collection="collection"
+      :modal-id="addTagModalId"
+      @update="handleTagUpdate">
+    </add-tag-modal>
+
+  </div>
 </template>
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import AddTagModal from '@/components/modals/AddTag'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
   mixins: [ fetchCollectionByName, notifications ],
 
-  middleware: 'is-admin',
-
   data () {
     return {
       title: 'Tags',
-      newTag: null,
+      addTagModalId: 'add-tag-modal',
       tableFields: {
         type: {
           label: 'Type',
@@ -61,12 +83,21 @@ export default {
           label: 'Name',
           sortable: true
         },
+        color: {
+          label: 'Colour',
+          class: 'text-center d-none d-lg-block'
+        },
         actions: {
           label: 'Actions',
           class: 'text-center'
         }
       }
     }
+  },
+
+  components: {
+    AddTagModal,
+    CardBase
   },
 
   head () {
@@ -78,98 +109,21 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    tableItems () {
+      const items = []
+      for (let type of Object.keys(this.collection.info.tags)) {
+        const tagType = this.collection.info.tags[type]
+        for (let name of tagType.options) {
+          items.push({ type: type, name: name, color: tagType.color })
+        }
+      }
+      return items
     }
   },
 
   methods: {
-    /**
-     * Handle form success.
-     */
-    onSuccess () {
-      this.notify({
-        type: 'success',
-        title: 'Success',
-        message: 'Collection updated'
-      })
-    },
-
-    /**
-     * Show the add tag alert.
-     */
-    addTag () {
-      let type = ''
-      let name = ''
-
-      this.$swal.setDefaults({
-        input: 'text',
-        showCancelButton: true,
-        progressSteps: ['1', '2']
-      })
-
-      const steps = [
-        {
-          title: 'Enter a type',
-          text: '(e.g. Location)',
-          confirmButtonText: 'Next',
-          inputPlaceholder: 'Short types work best',
-          inputValidator: (value) => {
-            type = value
-            return new Promise((resolve, reject) => {
-              if (value) {
-                resolve()
-              } else {
-                reject(new Error('The tag type is required'))
-              }
-            })
-          }
-        },
-        {
-          title: 'Enter a name',
-          text: '(e.g. London)',
-          showLoaderOnConfirm: true,
-          inputPlaceholder: 'Short names work best',
-          inputValidator: (value) => {
-            name = value
-            return new Promise((resolve, reject) => {
-              const matches = this.collection.info.tags.filter(t => {
-                return t.type === type && t.name === name
-              })
-              if (matches.length > 0) {
-                const msg = 'A tag with that name and type already exists'
-                reject(new Error(msg))
-              } else if (!value) {
-                reject(new Error('The tag type is required'))
-              } else {
-                resolve()
-              }
-            })
-          },
-          preConfirm: (value) => {
-            this.collection.info.tags.push({
-              type: type,
-              name: name
-            })
-            return this.$axios.$put(`/api/category/${this.collection.id}`, {
-              info: this.collection.info
-            })
-          }
-        }
-      ]
-
-      this.$swal.queue(steps).then(result => {
-        this.$swal.resetDefaults()
-      }).then(data => {
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: 'Tag added'
-        })
-      }, (dismiss) => {
-        this.$swal.resetDefaults()
-        this.$swal.close()
-      })
-    },
-
     /**
      * Show the remove tag alert.
      */
@@ -181,22 +135,46 @@ export default {
         showCancelButton: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          this.collection.info.tags = this.collection.info.tags.filter(t => {
-            return t.type !== tag.type || t.name !== tag.name
+          let infoClone = Object.assign({}, this.collection.info)
+          let newOptions = infoClone.tags[tag.type].options
+          newOptions = newOptions.filter(name => {
+            return tag.name !== name
           })
+          if (!newOptions.length) {
+            delete infoClone.tags[tag.type]
+          } else {
+            infoClone.tags[tag.type].options = newOptions
+          }
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
-            info: this.collection.info
+            info: infoClone
+          }).then(data => {
+            this.collection.info = infoClone
           })
         }
       }).then(data => {
-        this.notify({
-          type: 'success',
-          title: 'Success',
-          message: `Tag deleted`
-        })
+        this.notifySuccess({ message: `Tag deleted` })
       }, (dismiss) => {
         this.$swal.close()
       })
+    },
+
+    /**
+     * Feed the tag modal with data from the selected tag.
+     * @param {Object} tag
+     *   The tag
+     */
+    editTag (tag) {
+      this.$refs.addTagModal.tag = tag
+      this.$refs.addTagModal.show()
+    },
+
+    /**
+     * Handle a tag being updated.
+     * @param {Object} newTag
+     *   The new tag.
+     */
+    handleTagUpdate (newTag) {
+      this.$refs.table.refresh()
     }
   }
 }

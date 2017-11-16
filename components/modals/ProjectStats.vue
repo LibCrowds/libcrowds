@@ -1,5 +1,6 @@
 <template>
   <b-modal
+    lazy
     :id="modalId"
     ok-only
     title="Project Stats"
@@ -97,6 +98,14 @@ export default {
       }).then(data => {
         this.userStats = data.userStats || {}
         this.projectStats = data.projectStats || {}
+        if (this.$ga) {
+          this.$ga.event({
+            eventCategory: 'Statistics',
+            eventAction: 'view',
+            eventLabel: this.project.name,
+            eventValue: 1
+          })
+        }
       }).catch(err => {
         this.$nuxt.error(err)
       })
@@ -104,6 +113,10 @@ export default {
   },
 
   computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
     dailyContributionsData () {
       return {
         labels: this.projectStats.dayStats[0].values.map(value => {
@@ -114,6 +127,7 @@ export default {
         ]
       }
     },
+
     hourlyContributionsData () {
       let d = {
         labels: this.projectStats.hourStats[0].values.map(value => value[0]),
@@ -123,6 +137,7 @@ export default {
       }
       return d
     },
+
     topUsersData () {
       return {
         labels: this.userStats.authenticated.top5.map(stat => stat.name),
@@ -131,6 +146,7 @@ export default {
         ]
       }
     },
+
     proportionAuthData () {
       return {
         labels: [
@@ -149,14 +165,17 @@ export default {
         ]
       }
     },
+
     dailyContributionsHeader () {
       const taskrun = pluralize(this.collection.info.terminology.taskrun)
       return `Daily ${taskrun} over the past 2 weeks`
     },
+
     hourlyContributionsHeader () {
       const taskrun = pluralize(this.collection.info.terminology.taskrun)
       return `Hourly ${taskrun} over the past 2 weeks`
     },
+
     proportionAuthHeader () {
       return 'Proportion of authenticated users over the past 2 weeks'
     }

@@ -55,16 +55,25 @@ export default {
      *   True to subscribe, false otherwise.
      */
     subscribe (subscribe) {
-      const next = this.$route.query.next || '/'
-      this.$axios.$get(`/account/newsletter`, {
-        params: {
-          subscribe: subscribe ? 'True' : 'False'
-        }
-      }).then(data => {
+      // We can't guarantee the format of the next param returned after OAuth
+      // so add an additional check that it is at least just a pathname.
+      const parser = document.createElement('a')
+      parser.href = this.$route.query.next || '/'
+      const next = parser.pathname
+
+      if (subscribe) {
+        this.$axios.$get(`/account/newsletter`, {
+          params: {
+            subscribe: 'True'
+          }
+        }).then(data => {
+          this.$router.push({ path: next })
+        }).catch(err => {
+          this.$nuxt.error(err)
+        })
+      } else {
         this.$router.push({ path: next })
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
+      }
     }
   }
 }
