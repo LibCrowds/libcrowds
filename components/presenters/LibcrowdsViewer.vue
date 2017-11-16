@@ -18,6 +18,7 @@
 
 <script>
 import marked from 'marked'
+import merge from 'lodash/merge'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
@@ -49,7 +50,7 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = marked(this.presenterOptions.share || '')
+        opts.shareText = marked(this.presenterOptions.share)
         return opts
       })
     },
@@ -63,6 +64,10 @@ export default {
         buttons.like = false
       }
       return buttons
+    },
+
+    mergedPresenterOptions () {
+      return merge({}, this.defaultPresenterOptions, this.presenterOptions)
     }
   },
 

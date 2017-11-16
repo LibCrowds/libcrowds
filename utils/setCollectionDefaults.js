@@ -18,7 +18,11 @@ export const setCollectionDefaults = function (collection) {
     },
     license: 'CC0',
     presenter: null,
-    presenter_options: {},
+    presenter_options: {
+      'libcrowds-viewer': {
+        share: 'Share a link to this image'
+      }
+    },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +
         'crowdsourcing platform, which hosts experimental crowdsourcing ' +

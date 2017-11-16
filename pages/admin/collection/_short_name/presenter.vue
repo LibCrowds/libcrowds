@@ -5,6 +5,7 @@
 
     <pybossa-form
       no-border
+      v-if="!refreshing"
       submit-text="Update"
       :form="form"
       @success="onSuccess">
@@ -27,7 +28,9 @@ export default {
 
   data () {
     return {
-      title: 'Task Presenter'
+      title: 'Task Presenter',
+      extraFields: [],
+      refreshing: false
     }
   },
 
@@ -47,7 +50,7 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    formBase () {
+    form () {
       return {
         endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
@@ -72,40 +75,29 @@ export default {
                 }
               ],
               default: 'libcrowds-viewer'
+            },
+
+            // LibCrowds Viewer options
+            {
+              model: 'info.presenter_options.share',
+              label: 'Share Modal Text',
+              type: 'textArea',
+              rows: 3,
+              placeholder: 'Add text to the share modal (use markdown)',
+              visible: (model) => {
+                return model && model.info.presenter === 'libcrowds-viewer'
+              }
             }
           ]
         }
       }
-    },
-
-    form () {
-      const formClone = Object.assign({}, this.formBase)
-      const presenter = this.collection.info.presenter
-      const extraFields = {
-        'libcrowds-viewer': [
-          {
-            model: 'info.presenter_options.shareText',
-            label: 'Share Modal Text',
-            type: 'textArea',
-            rows: 3,
-            placeholder: 'Add text to the share modal (use markdown)'
-          }
-        ],
-        z3950: [
-
-        ]
-      }
-      if (!presenter) {
-        return formClone
-      }
-      formClone.schema.fields = formClone.schema.fields.concat(
-        extraFields[presenter]
-      )
-      return formClone
     }
   },
 
   methods: {
+    /**
+     * Handle form submission success.
+     */
     onSuccess () {
       this.notifySuccess({ message: 'Task presenter updated' })
     }
