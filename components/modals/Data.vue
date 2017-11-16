@@ -1,7 +1,7 @@
 <template>
   <b-modal
     lazy
-    id="download-modal"
+    :id="modalId"
     title="Download"
     :return-focus="returnFocus"
     v-model="show">
@@ -65,12 +65,8 @@ export default {
       type: Object,
       required: true
     },
-    show: {
-      type: Boolean,
-      default: false
-    },
-    returnFocus: {
-      type: Object,
+    modalId: {
+      type: String,
       required: true
     }
   },
