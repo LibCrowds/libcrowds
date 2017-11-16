@@ -50,14 +50,14 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = marked(this.presenterOptions.share)
+        opts.shareText = marked(this.presenterOptions.shareText || '')
         return opts
       })
     },
 
     buttons () {
       let buttons = {
-        note: 'Seen something interesting?<br>Add a note',
+        note: marked(this.presenterOptions.noteText || 'Add a note'),
         submit: 'Save and Continue'
       }
       if (isEmpty(this.currentUser)) {
@@ -160,9 +160,10 @@ export default {
     max-width: 100%;
   }
 
-  // Remove this when fixed in libcrowds-viewer
   .lv-sidebar-footer {
-    width: 100%;
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

@@ -79,11 +79,21 @@ export default {
 
             // LibCrowds Viewer options
             {
-              model: 'info.presenter_options.share',
+              model: 'info.presenter_options.shareText',
               label: 'Share Modal Text',
               type: 'textArea',
               rows: 3,
-              placeholder: 'Add text to the share modal (use markdown)',
+              placeholder: 'Text to add to the the share modal (use markdown)',
+              visible: (model) => {
+                return model && model.info.presenter === 'libcrowds-viewer'
+              }
+            },
+            {
+              model: 'info.presenter_options.noteText',
+              label: 'Note Button Text',
+              type: 'textArea',
+              rows: 3,
+              placeholder: 'Text for the note button (use markdown)',
               visible: (model) => {
                 return model && model.info.presenter === 'libcrowds-viewer'
               }
