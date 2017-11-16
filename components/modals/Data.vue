@@ -1,5 +1,5 @@
 <template>
-  <b-modal lazy title="Download" v-model="show">
+  <b-modal lazy id="download-modal" title="Download" v-model="show">
     <b-table
       responsive
       striped
