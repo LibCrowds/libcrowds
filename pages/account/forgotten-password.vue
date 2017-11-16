@@ -8,11 +8,14 @@
 </template>
 
 <script>
+import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'container',
+
+  mixins: [ handleHashedFlashes ],
 
   data () {
     return {
