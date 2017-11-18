@@ -73,7 +73,14 @@
             </b-btn>
           </div>
           <div class="col-lg-5 mx-auto d-none d-lg-block">
-            <img src="~/assets/img/wreath.png" alt="Wreath" class="img-fluid">
+            <b-img-lazy
+              :src="wreathSrc"
+              :blank-src="null"
+              :blank-width="0"
+              :blank-height="0"
+              alt="Wreath"
+              class="img-fluid">
+            </b-img-lazy>
             <span id="wreath"></span>
           </div>
         </div>
@@ -195,6 +202,10 @@ export default {
 
     batchedCollections () {
       return batch(this.$store.state.publishedCollections, 2, null)
+    },
+
+    wreathSrc () {
+      return require('~/assets/img/wreath.png')
     }
   }
 }
