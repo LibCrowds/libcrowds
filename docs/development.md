@@ -1,6 +1,7 @@
 # Development
 
-{{ this.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
+{{ this.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that
+communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
 
 ## Installation
 
@@ -11,7 +12,10 @@ Install [Node.js >=8.0.0](https://nodejs.org/en/), then:
 npm install
 ```
 
-You will also need to install an instance of [PYBOSSA](http://docs.pybossa.com/).
+You will also need to install an instance of
+[PYBOSSA](http://docs.pybossa.com/), along with the following plugins:
+
+- [pybossa-Z3950](https://github.com/alexandermendes/pybossa-z3950)
 
 ## Configuration
 
@@ -21,7 +25,8 @@ To run {{ this.brand }} with default settings:
 cp local.config.js.tmpl local.config.js
 ```
 
-See the [Configuration](configuration.md) section for full details of how to edit this file.
+See the [Configuration](configuration.md) section for full details of how to
+edit this file.
 
 ## Building
 
@@ -37,7 +42,8 @@ npm run dev
 ```
 
 {% hint style='danger' %}
-For cookies to be read properly you must access the website at http://127.0.0.1:8080, rather than http://localhost:8080.
+For cookies to be read properly you must access the website at
+http://127.0.0.1:8080, rather than http://localhost:8080.
 {% endhint %}
 
 ## Testing
