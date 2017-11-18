@@ -13,7 +13,6 @@
     * [New Collection](admin/collection/new.md)
     * [Open Collection](admin/collection/open.md)
     * [Settings](admin/collection/settings.md)
-    * [Task Presenter](admin/collection/presenter.md)
     * [Content](admin/collection/content.md)
     * [Terminology](admin/collection/terminology.md)
     * [Tags](admin/collection/tags.md)
@@ -22,9 +21,10 @@
 
   * [Project Admin](admin/project/README.md)
     * [Settings](admin/project/settings.md)
+    * [Thumbnail](admin/project/thumbnail.md)
+    * [Task Presenter](admin/collection/presenter.md)
     * [Tags](admin/project/tags.md)
     * [Collection](admin/project/collection.md)
-    * [Thumbnail](admin/project/thumbnail.md)
 
   * [Site Admin](admin/site/README.md)
     * [Dashboard](admin/site/dashboard.md)
