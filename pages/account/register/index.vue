@@ -46,12 +46,15 @@
 </template>
 
 <script>
+import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 
 export default {
   layout: 'container',
+
+  mixins: [ handleHashedFlashes ],
 
   data () {
     return {

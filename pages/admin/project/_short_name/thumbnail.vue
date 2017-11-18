@@ -35,14 +35,14 @@ export default {
   },
 
   async asyncData ({ params, app, error }) {
-    const endpoint = `/project/${params.short_name}/update`
+    const endpoint = `/project/${params.short_name}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
       // See https://github.com/LibCrowds/libcrowds/issues/100
       delete data.upload_form.id
       data.upload_form.btn = 'Upload'
       return {
         form: {
-          endpoint: `project/${params.short_name}/update`,
+          endpoint: endpoint,
           model: data.upload_form,
           method: 'POST'
         }

@@ -22,10 +22,13 @@
 </template>
 
 <script>
+import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import localConfig from '@/local.config'
 
 export default {
   layout: 'container',
+
+  mixins: [ handleHashedFlashes ],
 
   data () {
     return {

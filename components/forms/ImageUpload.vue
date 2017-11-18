@@ -139,10 +139,8 @@ export default {
           'X-CSRFToken': this.model.csrf
         },
         withCredentials: true
-      }).then(data => {
-        this.notifySuccess({
-          message: 'The image should be refreshed in a few minutes'
-        })
+      }).then(response => {
+        this.flash(response.data)
       }).catch(err => {
         this.$nuxt.error(err)
       }).then(() => {
