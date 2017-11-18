@@ -17,11 +17,23 @@
 </template>
 
 <script>
+import merge from 'lodash/merge'
 import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
 export default {
+  data () {
+    return {
+      defaultOptions: {
+        shareText: 'Share a link to this image',
+        noteText: 'Seen something interesting?<br>Add a note',
+        submitText: 'Save and Continue',
+        numberRequired: 1
+      }
+    }
+  },
+
   props: {
     project: {
       type: Object,
@@ -42,6 +54,10 @@ export default {
       return this.$store.state.currentUser
     },
 
+    mergedOptions () {
+      return merge({}, this.defaultOptions, this.options)
+    },
+
     taskOpts () {
       return this.tasks.map((task) => {
         let opts = task.info
@@ -49,16 +65,15 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        const shareText = this.options.shareText
-        opts.shareText = marked(shareText)
+        opts.shareText = marked(this.mergedOptions.shareText)
         return opts
       })
     },
 
     buttons () {
       let buttons = {
-        note: marked(this.options.noteText),
-        submit: marked(this.options.submitText)
+        note: marked(this.mergedOptions.noteText),
+        submit: marked(this.mergedOptions.submitText)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
@@ -97,7 +112,8 @@ export default {
       }).length
       const mode = taskData.mode
       const tag = taskData.tag
-      const selectRules = this.options.selectRules
+      const nRequired = this.mergedOptions.numberRequired
+
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
           this.$swal({
@@ -116,17 +132,11 @@ export default {
         })
       }
 
-      console.log(selectRules)
-
       return new Promise((resolve, reject) => {
-        if (
-          mode === 'select' &&
-          selectRules.hasOwnProperty(tag) &&
-          nAnnotations < selectRules[tag]
-        ) {
+        if (mode === 'select' && nAnnotations < nRequired) {
           return showConfirm(
-            `Each image usually contains at least ${selectRules[tag]}
-            ${pluralize(tag, selectRules[tag])}.
+            `Each image usually contains at least ${nRequired}
+            ${pluralize(tag, nRequired)}.
             <br>
             You have outlined ${nAnnotations}.<br>
             Are you sure you want to save this answer?`

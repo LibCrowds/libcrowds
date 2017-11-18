@@ -52,15 +52,6 @@ export default {
           }
         },
         {
-          label: 'Task Presenter',
-          link: {
-            name: 'admin-collection-short_name-presenter',
-            params: {
-              short_name: this.collection.short_name
-            }
-          }
-        },
-        {
           label: 'Content',
           link: {
             name: 'admin-collection-short_name-content',

@@ -8,6 +8,18 @@
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
+
+        <div class="mt-3 text-center d-none d-lg-block">
+          <span
+            id="share-text"
+            class="markdown-option"
+            v-html="marked(mergedOptions.shareText)">
+          </span>
+          <social-media-buttons
+            class="mt-1"
+            :shareUrl="shareUrl">
+          </social-media-buttons>
+        </div>
       </div>
 
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
@@ -69,7 +81,7 @@
                       </small>
                     </p>
                   </div>
-                  <div class="w-25 d-flex">
+                  <div class="w-25 d-flex flex-column justify-content-center">
                     <div class="result-buttons">
                       <b-btn
                         variant="success"
@@ -104,29 +116,27 @@
           </transition>
 
           <template slot="footer">
-            <div class="d-flex justify-content-between flex-column flex-xl-row">
+            <div class="d-flex text-center flex-column">
+              <b-btn
+                v-if="stage !== 'results'"
+                variant="success"
+                class="mb-1 markdown-option"
+                :disabled="processing"
+                @click="onSubmit"
+                v-html="footerButtonText">
+              </b-btn>
+              <b-btn
+                variant="outline-dark"
+                class="mb-1"
+                @click="onSkip">
+                Skip / Not Found
+              </b-btn>
               <b-btn
                 v-b-toggle.collapsecomment
-                class="p-0"
-                variant="link">
-                Add a comment
+                class="markdown-option"
+                variant="outline-dark"
+                v-html="marked(mergedOptions.noteText)">
               </b-btn>
-              <div
-                class="d-flex d-xl-block flex-column justify-content-center">
-                <b-btn
-                  variant="outline-dark"
-                  class="my-1 my-xl-0 mr-xl-1"
-                  @click="onSkip">
-                  Skip / Not Found
-                </b-btn>
-                <b-btn
-                  v-if="stage !== 'results'"
-                  variant="success"
-                  :disabled="processing"
-                  @click="onSubmit">
-                  {{ stage | capitalize }}
-                </b-btn>
-              </div>
             </div>
             <b-collapse id="collapsecomment" class="mt-1">
               <textarea
@@ -167,6 +177,7 @@
             </small>
           </p>
         </div>
+
       </div>
     </div>
 
@@ -174,14 +185,19 @@
 </template>
 
 <script>
+import capitalize from 'capitalize'
+import marked from 'marked'
+import merge from 'lodash/merge'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { notifications } from '@/mixins/notifications'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
 
 export default {
-  mixins: [ notifications ],
+  mixins: [ notifications, computeShareUrl ],
 
   data () {
     return {
@@ -246,6 +262,12 @@ export default {
             }
           ]
         }
+      },
+      defaultOptions: {
+        shareText: 'Share this project',
+        noteText: 'Seen something interesting?<br>Add a note',
+        submitText: 'Save and Continue',
+        numberRequired: 1
       }
     }
   },
@@ -258,7 +280,15 @@ export default {
     tasks: {
       type: Array,
       required: true
+    },
+    options: {
+      type: Object,
+      required: true
     }
+  },
+
+  components: {
+    SocialMediaButtons
   },
 
   computed: {
@@ -274,6 +304,16 @@ export default {
       return {
         like: !isEmpty(this.currentUser)
       }
+    },
+
+    mergedOptions () {
+      return merge({}, this.defaultOptions)
+    },
+
+    footerButtonText () {
+      return this.stage !== 'submit'
+        ? capitalize(this.stage)
+        : marked(this.mergedOptions.submitText)
     },
 
     stage () {
@@ -514,7 +554,12 @@ export default {
       this.pagination = {}
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
-    }
+    },
+
+    /**
+     * Markdown parser.
+     */
+    marked
   }
 }
 </script>
@@ -537,8 +582,15 @@ export default {
     font-size: $font-size-sm;
   }
 
-  #answer-card {
-    max-height: 100vh;
+  #share-text {
+    text-transform: uppercase;
+    font-size: $font-size-sm;
+  }
+
+  .markdown-option{
+    p {
+      margin-bottom: 0;
+    }
   }
 
   .list-group {

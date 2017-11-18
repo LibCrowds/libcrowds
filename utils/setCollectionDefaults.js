@@ -18,14 +18,6 @@ export const setCollectionDefaults = function (collection) {
     },
     license: 'CC0',
     presenter: null,
-    presenter_opts: {
-      'libcrowdsviewer': {
-        shareText: 'Share a link to this image',
-        noteText: 'Add a note',
-        submitText: 'Save and continue',
-        selectRules: {}
-      }
-    },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +
         'crowdsourcing platform, which hosts experimental crowdsourcing ' +

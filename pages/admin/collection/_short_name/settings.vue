@@ -138,6 +138,21 @@ export default {
                 return { id: key, name: this.dataLicenses[key].name }
               }),
               default: 'CC0'
+            },
+            {
+              model: 'info.presenter',
+              label: 'Task Presenter',
+              type: 'select',
+              values: [
+                {
+                  id: 'libcrowds-viewer',
+                  name: 'LibCrowds Viewer'
+                },
+                {
+                  id: 'z3950',
+                  name: 'Z39.50'
+                }
+              ]
             }
           ]
         }
