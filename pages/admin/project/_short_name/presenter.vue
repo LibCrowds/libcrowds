@@ -92,8 +92,7 @@ export default {
               model: 'info.presenter_options.numberRequired',
               label: 'Number Required',
               type: 'input',
-              inputType: 'number',
-              default: 1
+              inputType: 'number'
             }
           ]
         }
