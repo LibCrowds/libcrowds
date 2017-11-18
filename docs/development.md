@@ -1,6 +1,6 @@
 # Development
 
-{{ book.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
+{{ this.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
 
 ## Installation
 
@@ -15,7 +15,7 @@ You will also need to install an instance of [PYBOSSA](http://docs.pybossa.com/)
 
 ## Configuration
 
-To run {{ book.brand }} with default settings:
+To run {{ this.brand }} with default settings:
 
 ``` bash
 cp local.config.js.tmpl local.config.js

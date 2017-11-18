@@ -5,7 +5,7 @@ collection that they're interested in. For each tag type created via this
 admin section a new filter will be added to the microsite's Contribute
 page (among others).
 
-![Collection Admin - Tags](../assets/admin-collection-tags.png?raw=true)
+![Collection Admin - Tags](/assets/admin-collection-tags.png?raw=true)
 
 To add a new tag click the 'Add tag' button at the top of the table. You
 will then be given options to choose a tag type (e.g. Location), a tag name
