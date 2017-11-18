@@ -133,10 +133,13 @@ export default {
             reverseButtons: true,
             confirmButtonText: 'Yes, save and continue',
             cancelButtonText: 'No, go back'
-          }).then(data => {
+          }).then(result => {
+            if (result.value) {
+              resolve()
+            } else if (result.dismiss) {
+              reject(new Error('Submission cancelled'))
+            }
             resolve()
-          }, (dismiss) => {
-            reject(new Error('Submission cancelled'))
           })
         })
       }

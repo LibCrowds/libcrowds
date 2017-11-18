@@ -497,15 +497,15 @@ export default {
         text: 'Are you sure you want to skip this task?',
         type: 'warning',
         showCancelButton: true
-      }).then(() => {
-        this.submit({
-          oclc: '',
-          shelfmark: '',
-          form: this.searchForm.model,
-          comments: this.$refs.comments.value
-        })
-      }, (dismiss) => {
-        this.$swal.close()
+      }).then(result => {
+        if (result.value) {
+          this.submit({
+            oclc: '',
+            shelfmark: '',
+            form: this.searchForm.model,
+            comments: this.$refs.comments.value
+          })
+        }
       })
     },
 

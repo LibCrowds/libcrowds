@@ -14,11 +14,13 @@ export const deleteDomainObject = {
         preConfirm: () => {
           return this.$axios.$delete(`/api/${type}/${id}`)
         }
-      }).then(data => {
-        this.notifySuccess({ message: `${capitalize(terminology)} deleted` })
-        callback()
-      }, (dismiss) => {
-        this.$swal.close()
+      }).then(result => {
+        if (result.value) {
+          this.notifySuccess({
+            message: `${capitalize(terminology)} deleted`
+          })
+          callback()
+        }
       })
     }
   },

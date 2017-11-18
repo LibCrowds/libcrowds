@@ -151,10 +151,10 @@ export default {
             this.collection.info = infoClone
           })
         }
-      }).then(data => {
-        this.notifySuccess({ message: `Tag deleted` })
-      }, (dismiss) => {
-        this.$swal.close()
+      }).then(result => {
+        if (result.value) {
+          this.notifySuccess({ message: `Tag deleted` })
+        }
       })
     },
 
