@@ -7,3 +7,57 @@
   align-items: center;
   justify-content: center;
 }
+
+.webp {
+  .main-app-bg {
+    background-image: url('~/assets/img/app-background.webp');
+  }
+
+  .dashboard-nav-bg {
+    background: linear-gradient(rgba($gray-900, 0.8),
+      rgba($gray-900, 0.8)),
+      url('~/assets/img/app-background.webp');
+  }
+
+  .profile-card-bg {
+    background: linear-gradient(to bottom, rgba($blue, 0) 0%,
+      rgba($blue, 0) calc(50% + (#{$spacer} * 1)),
+      $white calc(50% + (#{$spacer} * 1)), $white 100% ),
+      url('~/assets/img/app-background.webp');
+  }
+
+  .code-bg {
+    background-image: url('~/assets/img/code.webp');
+  }
+
+  .newton-bg {
+    background-image: url('~/assets/img/newton.webp');
+  }
+}
+
+.no-webp {
+  .main-app-bg {
+    background-image: url('~/assets/img/app-background.jpg');
+  }
+
+  .dashboard-nav-bg {
+    background: linear-gradient(rgba($gray-900, 0.8),
+      rgba($gray-900, 0.8)),
+      url('~/assets/img/app-background.jpg');
+  }
+
+  .profile-card-bg {
+    background: linear-gradient(to bottom, rgba($blue, 0) 0%,
+      rgba($blue, 0) calc(50% + (#{$spacer} * 1)),
+      $white calc(50% + (#{$spacer} * 1)), $white 100% ),
+      url('~/assets/img/app-background.jpg');
+  }
+
+  .code-bg {
+    background-image: url('~/assets/img/code.png');
+  }
+
+  .newton-bg {
+    background-image: url('~/assets/img/newton.jpg');
+  }
+}

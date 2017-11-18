@@ -10,7 +10,7 @@
           short_name: collection.short_name
         }
       }">
-      <div class="collection-card-img" :style="cardBgStyle">
+      <div class="collection-card-img main-app-bg" :style="cardBgStyle">
       </div>
       <div class="card-body">
         <h4 class="card-title">
@@ -84,7 +84,6 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('~/assets/img/app-background.jpg');
 
     &:after {
       content: 'Enter';

@@ -1,6 +1,6 @@
 <template>
   <div id="index">
-    <div id="app-hero">
+    <div id="app-hero" class="main-app-bg">
       <div class="container">
         <span class="d-none d-md-flex"></span>
         <p id="site-tagline">{{ localConfig.tagline }}</p>
@@ -73,7 +73,14 @@
             </b-btn>
           </div>
           <div class="col-lg-5 mx-auto d-none d-lg-block">
-            <img src="~/assets/img/wreath.png" alt="Wreath" class="img-fluid">
+            <b-img-lazy
+              :src="wreathSrc"
+              :blank-src="null"
+              :blank-width="0"
+              :blank-height="0"
+              alt="An image of a wreath"
+              class="img-fluid">
+            </b-img-lazy>
             <span id="wreath"></span>
           </div>
         </div>
@@ -127,6 +134,7 @@
 </template>
 
 <script>
+import Modernizr from 'modernizr'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
@@ -143,7 +151,8 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      leaderboardModalId: 'leaderboard-modal'
+      leaderboardModalId: 'leaderboard-modal',
+      wreathSrc: null
     }
   },
 
@@ -196,6 +205,16 @@ export default {
     batchedCollections () {
       return batch(this.$store.state.publishedCollections, 2, null)
     }
+  },
+
+  mounted () {
+    Modernizr.on('webp', (result) => {
+      if (result) {
+        this.wreathSrc = require('~/assets/img/wreath.webp')
+      } else {
+        this.wreathSrc = require('~/assets/img/wreath.png')
+      }
+    })
   }
 }
 </script>
@@ -221,7 +240,6 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('~/assets/img/app-background.jpg');
 
     .container {
       color: $white;

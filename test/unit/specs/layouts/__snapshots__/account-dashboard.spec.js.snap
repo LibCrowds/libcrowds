@@ -6,7 +6,7 @@ exports[`Account dashboard layout renders correctly 1`] = `
      data-server-rendered="true"
 >
   <nav id="dashboard-navbar"
-       class="side"
+       class="side dashboard-nav-bg"
   >
     <div class="brand-wrapper navbar-light text-center">
       <a href="#/"
@@ -168,7 +168,7 @@ exports[`Account dashboard layout renders correctly 1`] = `
       </ul>
     </nav>
     <nav id="dashboard-navbar"
-         class="top"
+         class="top dashboard-nav-bg"
     >
       <div class="brand-wrapper navbar-light text-center">
         <a href="#/"

@@ -113,7 +113,7 @@
     </section>
 
     <section id="data">
-      <b-jumbotron>
+      <b-jumbotron class="code-bg">
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
@@ -143,7 +143,7 @@
     </section>
 
     <!-- <section id="results" v-if="collectionConfig.resultsComponent">
-      <b-jumbotron :style="resultsStyle">
+      <b-jumbotron :style="resultsStyle" class="newton-bg">
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
@@ -234,6 +234,10 @@ export default {
           all: 1
         }
       }).then(data => {
+        if (!data.length) {
+          this.featured = []
+          return
+        }
         projects = data.map(project => {
           project.project_id = project.id
           return project
@@ -420,7 +424,6 @@ export default {
       color: $white;
       font-weight: 300;
       margin-bottom: 0;
-      background-image: url('~/assets/img/code.png');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-position: left;
@@ -436,7 +439,6 @@ export default {
       color: $white;
       font-weight: 300;
       background-repeat: no-repeat;
-      background-image: url('~/assets/img/newton.jpg');
       background-attachment: fixed;
       background-position: center;
       background-size: cover;

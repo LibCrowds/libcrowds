@@ -1,6 +1,6 @@
 <template>
   <div id="collection-layout-base">
-    <div id="collection-background" :style="bgStyle"></div>
+    <div id="collection-background" class="main-app-bg" :style="bgStyle"></div>
 
     <collection-navbar
       :slim="slimNavbar"
@@ -92,7 +92,6 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('~/assets/img/app-background.jpg');
   }
 
   main {
