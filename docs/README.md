@@ -11,6 +11,6 @@ The application comprises a set of core webpages, including a homepage and an ad
 
 To get started, you might find some of these links useful:
 
-- Need to modify a collection microsite? See the [Collection Admin](admin/collection.md) section.
-- Want to create or manage project? Check out the [Project Admin](admin/project.md) section.
+- Need to modify a collection microsite? See the [Collection Admin](admin/collection/README.md) section.
+- Want to create or manage project? Check out the [Project Admin](admin/project/README.md) section.
 - Installing LibCrowds locally? See [Development](development.md) and [Configuration](configuration.md).

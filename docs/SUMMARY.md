@@ -7,6 +7,7 @@
 * [Configuration](configuration.md)
   * [PYBOSSA](configuration.md#configuring-pybossa)
   * [LibCrowds](configuration.md#configuring-libcrowds)
+
 * [Administration](admin/README.md)
   * [Collection Admin](admin/collection/README.md)
     * [New Collection](admin/collection/new.md)
@@ -18,5 +19,15 @@
     * [Tags](admin/collection/tags.md)
     * [Featured Projects](admin/collection/featured.md)
     * [Delete](admin/collection/delete.md)
-  * [Project Admin](admin/project.md)
-  * [Site Admin](admin/site.md)
+
+  * [Project Admin](admin/project/README.md)
+    * [Settings](admin/project/settings.md)
+    * [Tags](admin/project/tags.md)
+    * [Collection](admin/project/collection.md)
+    * [Thumbnail](admin/project/thumbnail.md)
+
+  * [Site Admin](admin/site/README.md)
+    * [Dashboard](admin/site/dashboard.md)
+    * [Users](admin/site/users.md)
+    * [Announcements](admin/site/announcements.md)
+    * [Background Tasks](admin/site/background_tasks.md)
