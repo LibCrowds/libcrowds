@@ -83,6 +83,18 @@ const config = {
       })
 
       // Modernizr
+      config.module.rules = config.module.rules.concat(
+        [
+          {
+            test: /\.modernizrrc.js$/,
+            use: [ 'modernizr-loader' ]
+          },
+          {
+            test: /\.modernizrrc(\.json)?$/,
+            use: [ 'modernizr-loader', 'json-loader' ]
+          }
+        ]
+      )
       config.resolve.alias['modernizr$'] = path.resolve(__dirname, '.modernizrrc')
 
       config.module.rules.push({
