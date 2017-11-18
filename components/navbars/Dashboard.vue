@@ -1,5 +1,5 @@
 <template>
-  <nav id="dashboard-navbar" :class="`${position}`">
+  <nav id="dashboard-navbar" :class="classObj">
     <div class="brand-wrapper navbar-light text-center">
       <nuxt-link
         class="brand navbar-brand"
@@ -60,6 +60,16 @@ export default {
     }
   },
 
+  computed: {
+    classObj () {
+      return {
+        top: this.position === 'top',
+        side: this.position === 'side',
+        'dashboard-nav-bg': true
+      }
+    }
+  },
+
   methods: {
     beforeEnter (el) {
       el.style.opacity = 0
@@ -98,10 +108,6 @@ export default {
   overflow: auto;
   white-space: nowrap;
   z-index: 1;
-  background:
-    linear-gradient(rgba($gray-900, 0.8),
-    rgba($gray-900, 0.8)),
-    url('~/assets/img/app-background.jpg');
   background-size: cover;
   background-position: center center;
   display: none;

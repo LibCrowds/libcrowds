@@ -1,4 +1,5 @@
 const git = require('git-rev-sync')
+const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
   ? require('./test/test.local.config')
@@ -67,6 +68,22 @@ const config = {
           })
         ]
       }
+
+      // Image optimisation
+      config.module.rules.push({
+        test: /\.(webp)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'img/[name].[hash:7].[ext]'
+            }
+          }
+        ]
+      })
+
+      // Modernizr
+      config.resolve.alias['modernizr$'] = path.resolve(__dirname, '.modernizrrc')
 
       config.module.rules.push({
         test: /\.md$/,
