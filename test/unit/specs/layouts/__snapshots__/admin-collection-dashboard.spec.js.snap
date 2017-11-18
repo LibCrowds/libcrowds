@@ -49,16 +49,6 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       <li data-index="3"
           class="nav-item"
       >
-        <a href="#/"
-           target="_self"
-           class="nav-link active"
-        >
-          Task Presenter
-        </a>
-      </li>
-      <li data-index="4"
-          class="nav-item"
-      >
         <a href="#/admin/collection/playbills/content"
            target="_self"
            class="nav-link"
@@ -66,7 +56,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           Content
         </a>
       </li>
-      <li data-index="5"
+      <li data-index="4"
           class="nav-item"
       >
         <a href="#/admin/collection/playbills/terminology"
@@ -76,7 +66,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           Terminology
         </a>
       </li>
-      <li data-index="6"
+      <li data-index="5"
           class="nav-item"
       >
         <a href="#/admin/collection/playbills/tags"
@@ -86,7 +76,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           Tags
         </a>
       </li>
-      <li data-index="7"
+      <li data-index="6"
           class="nav-item"
       >
         <a href="#/admin/collection/playbills/featured"
@@ -96,7 +86,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           Featured Projects
         </a>
       </li>
-      <li data-index="8"
+      <li data-index="7"
           class="nav-item"
       >
         <a href="#/admin/collection/playbills/delete"
@@ -190,16 +180,6 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
         <li data-index="3"
             class="nav-item"
         >
-          <a href="#/"
-             target="_self"
-             class="nav-link active"
-          >
-            Task Presenter
-          </a>
-        </li>
-        <li data-index="4"
-            class="nav-item"
-        >
           <a href="#/admin/collection/playbills/content"
              target="_self"
              class="nav-link"
@@ -207,7 +187,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             Content
           </a>
         </li>
-        <li data-index="5"
+        <li data-index="4"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/terminology"
@@ -217,7 +197,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             Terminology
           </a>
         </li>
-        <li data-index="6"
+        <li data-index="5"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/tags"
@@ -227,7 +207,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             Tags
           </a>
         </li>
-        <li data-index="7"
+        <li data-index="6"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/featured"
@@ -237,7 +217,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             Featured Projects
           </a>
         </li>
-        <li data-index="8"
+        <li data-index="7"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/delete"
