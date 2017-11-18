@@ -26,7 +26,12 @@ export default {
   data () {
     return {
       defaultOptions: {
-        shareText: 'Share a link to this image',
+        shareText: this.collection.info.forum
+          ? marked(
+            `Copy the link to bookmark, share on social media or ` +
+            `[discuss on our forum](${this.collection.info.forum}).`
+          )
+          : 'Copy the link to bookmark or share on social media',
         noteText: 'Seen something interesting?<br>Add a note',
         submitText: 'Save and Continue',
         numberRequired: 1
@@ -36,6 +41,10 @@ export default {
 
   props: {
     project: {
+      type: Object,
+      required: true
+    },
+    collection: {
       type: Object,
       required: true
     },

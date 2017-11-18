@@ -2,6 +2,7 @@
   <component
     :is="presenter"
     :project="project"
+    :collection="collection"
     :tasks="tasks"
     :options="presenterOptions"
     @submit="onSubmit"
