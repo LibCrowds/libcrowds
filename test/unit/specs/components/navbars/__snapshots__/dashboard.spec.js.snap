@@ -4,7 +4,7 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
 
 <nav id="dashboard-navbar"
      data-server-rendered="true"
-     class="side"
+     class="side dashboard-nav-bg"
 >
   <div class="brand-wrapper navbar-light text-center">
     <a href="#/"
@@ -13,7 +13,11 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
       My Brand
     </a>
   </div>
-  <ul class="nav">
+  <span appear
+        name="dashboard-slide-in"
+        tag="ul"
+        class="nav"
+  >
     <li data-index="0"
         class="nav-item"
     >
@@ -34,7 +38,7 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
         Users
       </a>
     </li>
-  </ul>
+  </span>
 </nav>
 
 `;
@@ -43,7 +47,7 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
 
 <nav id="dashboard-navbar"
      data-server-rendered="true"
-     class="top"
+     class="top dashboard-nav-bg"
 >
   <div class="brand-wrapper navbar-light text-center">
     <a href="#/"
@@ -52,7 +56,11 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
       My Brand
     </a>
   </div>
-  <ul class="nav">
+  <span appear
+        name="dashboard-slide-in"
+        tag="ul"
+        class="nav"
+  >
     <li data-index="0"
         class="nav-item"
     >
@@ -73,7 +81,7 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
         Users
       </a>
     </li>
-  </ul>
+  </span>
 </nav>
 
 `;

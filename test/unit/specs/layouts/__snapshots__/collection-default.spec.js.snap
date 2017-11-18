@@ -6,6 +6,7 @@ exports[`Collection default layout renders correctly 1`] = `
      data-server-rendered="true"
 >
   <div id="collection-background"
+       class="main-app-bg"
        style="background-image:url(http://example.com/background.jpg);"
   >
   </div>

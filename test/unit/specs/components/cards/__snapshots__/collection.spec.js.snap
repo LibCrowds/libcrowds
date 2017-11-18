@@ -7,7 +7,7 @@ exports[`Collection card renders correctly 1`] = `
      class="collection-card my-3 card"
 >
   <a href="#/collection/playbills">
-    <div class="collection-card-img"
+    <div class="collection-card-img main-app-bg"
          style="background-image:url('http://example.com/background.jpg');"
     >
     </div>

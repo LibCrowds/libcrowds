@@ -7,6 +7,7 @@ exports[`Collection fullscreen dark layout renders correctly 1`] = `
 >
   <div id="collection-layout-base">
     <div id="collection-background"
+         class="main-app-bg"
          style="background-image:url(http://example.com/background.jpg);"
     >
     </div>

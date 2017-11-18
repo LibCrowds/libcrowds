@@ -5,7 +5,7 @@ exports[`Profile card renders correctly 1`] = `
 <div data-server-rendered="true"
      class="profile-card card"
 >
-  <div class="avatar-background">
+  <div class="avatar-background profile-card-bg">
     <div class="user-avatar mx-auto d-inline"
          style="width:200px;"
     >
