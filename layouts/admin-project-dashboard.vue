@@ -71,6 +71,15 @@ export default {
               short_name: this.project.short_name
             }
           }
+        },
+        {
+          label: 'Task Presenter',
+          link: {
+            name: 'admin-project-short_name-presenter',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
         }
       ]
     },

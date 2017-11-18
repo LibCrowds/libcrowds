@@ -19,7 +19,7 @@ import Z3950Presenter from '@/components/presenters/Z3950'
 export default {
   layout ({ params, store }) {
     const layouts = {
-      'libcrowdsviewer': 'collection-fullscreen-dark',
+      'libcrowds-viewer': 'collection-fullscreen-dark',
       'z3950': 'collection-tabs'
     }
     return layouts[params.presenter] || 'collection-tabs'
@@ -63,7 +63,7 @@ export default {
 
     presenter () {
       const presenters = {
-        'libcrowdsviewer': LibcrowdsViewerPresenter,
+        'libcrowds-viewer': LibcrowdsViewerPresenter,
         'z3950': Z3950Presenter
       }
       return presenters[this.collection.info.presenter]
@@ -74,13 +74,7 @@ export default {
     },
 
     presenterOptions () {
-      console.log(this.collection.info)
-      if (!this.collection.info) {
-        return {}
-      }
-      const presenter = this.collection.info.presenter
-      console.log(this.collection.info.presenter_opts[presenter])
-      return this.collection.info.presenter_opts[presenter]
+      return this.collection.info.presenter_options || {}
     }
   },
 

@@ -1,6 +1,6 @@
 # Configuration
 
-This section describes the core configuration settings required to run an instance of {{ book.brand }}.
+This section describes the core configuration settings required to run an instance of {{ this.brand }}.
 
 ## Configuring PYBOSSA
 
