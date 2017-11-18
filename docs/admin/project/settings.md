@@ -1,4 +1,4 @@
-# Settings
+# Details
 
 The following core settings for a project can be edited here.
 
