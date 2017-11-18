@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 
@@ -28,6 +29,10 @@ export default {
     },
     tasks: {
       type: Array,
+      required: true
+    },
+    options: {
+      type: Object,
       required: true
     }
   },
@@ -44,17 +49,16 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = 'Copy the link to bookmark, share on social media ' +
-          ' or [discuss this playbill on our forum]' +
-          '(https://community.libcrowds.com/d/11-spotted-on-in-the-spotlight).'
+        const shareText = this.options.shareText
+        opts.shareText = marked(shareText)
         return opts
       })
     },
 
     buttons () {
       let buttons = {
-        note: 'Seen something interesting?<br>Add a note',
-        submit: 'Save and Continue'
+        note: marked(this.options.noteText),
+        submit: marked(this.options.submitText)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
@@ -88,16 +92,22 @@ export default {
      * This can be used, for example, to make sure we have n annotations.
      */
     checkSubmission (taskData) {
-      const nAnnotations = taskData.annotations.length
+      const nAnnotations = taskData.annotations.filter(annotation => {
+        return annotation.purpose !== 'commenting'
+      }).length
       const mode = taskData.mode
       const tag = taskData.tag
+      const selectRules = this.options.selectRules
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
           this.$swal({
-            title: 'Confirm',
+            title: 'Are you sure?',
             html: htmlMessage,
             type: 'question',
-            showCancelButton: true
+            showCancelButton: true,
+            reverseButtons: true,
+            confirmButtonText: 'Yes, save and continue',
+            cancelButtonText: 'No, go back'
           }).then(data => {
             resolve()
           }, (dismiss) => {
@@ -106,13 +116,20 @@ export default {
         })
       }
 
+      console.log(selectRules)
+
       return new Promise((resolve, reject) => {
-        // TODO: expand these options.
-        if (mode === 'select' && nAnnotations < 2) {
+        if (
+          mode === 'select' &&
+          selectRules.hasOwnProperty(tag) &&
+          nAnnotations < selectRules[tag]
+        ) {
           return showConfirm(
-            `Each sheet usually contains at least 2 ${pluralize(tag, 2)}.<br>
+            `Each image usually contains at least ${selectRules[tag]}
+            ${pluralize(tag, selectRules[tag])}.
+            <br>
             You have outlined ${nAnnotations}.<br>
-            Are you sure you want to submit this sheet?`
+            Are you sure you want to save this answer?`
           ).then(() => {
             resolve()
           }).catch(err => {
@@ -121,7 +138,7 @@ export default {
         } else if (mode === 'transcribe' && nAnnotations < 1) {
           return showConfirm(
             `You have not added any transcriptions.<br>
-            Are you sure you want to submit this sheet?`
+            Are you sure you want to submit this answer?`
           ).then(() => {
             resolve()
           }).catch(err => {
@@ -152,9 +169,10 @@ export default {
     max-width: 100%;
   }
 
-  // Remove this when fixed in libcrowds-viewer
   .lv-sidebar-footer {
-    width: 100%;
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

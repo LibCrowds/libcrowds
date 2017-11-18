@@ -52,6 +52,15 @@ export default {
           }
         },
         {
+          label: 'Task Presenter',
+          link: {
+            name: 'admin-collection-short_name-presenter',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
           label: 'Content',
           link: {
             name: 'admin-collection-short_name-content',
@@ -79,7 +88,7 @@ export default {
           }
         },
         {
-          label: 'Featured',
+          label: 'Featured Projects',
           link: {
             name: 'admin-collection-short_name-featured',
             params: {
