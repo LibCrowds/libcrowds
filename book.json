@@ -5,7 +5,6 @@
   ],
   "variables": {
     "company": "The British Library",
-    "brand": "LibCrowds",
-    "forumUrl": "https://community.libcrowds.com/"
+    "brand": "LibCrowds"
   }
 }
