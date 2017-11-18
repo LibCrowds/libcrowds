@@ -234,6 +234,10 @@ export default {
           all: 1
         }
       }).then(data => {
+        if (!data.length) {
+          this.featured = []
+          return
+        }
         projects = data.map(project => {
           project.project_id = project.id
           return project
