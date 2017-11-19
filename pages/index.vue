@@ -73,14 +73,11 @@
             </b-btn>
           </div>
           <div class="col-lg-5 mx-auto d-none d-lg-block">
-            <b-img-lazy
+            <img
               :src="wreathSrc"
-              :blank-src="null"
-              :blank-width="0"
-              :blank-height="0"
               alt="An image of a wreath"
               class="img-fluid">
-            </b-img-lazy>
+            </img>
             <span id="wreath"></span>
           </div>
         </div>
