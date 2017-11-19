@@ -9,7 +9,7 @@
         size="sm"
         variant="success"
         v-b-modal="addTagModalId">
-        Add a tag
+        Add a tag type
       </b-btn>
 
       <b-table
@@ -18,7 +18,7 @@
         striped
         hover
         show-empty
-        :items="tableItems"
+        :items="getTableItems"
         :fields="tableFields">
         <template slot="color" scope="tag">
           <div
@@ -36,7 +36,8 @@
             variant="success"
             class="mr-1"
             size="sm"
-            @click="editTag(tag.item)">
+            @click="editedTag = tag.item"
+            v-b-modal="editTagModalId">
             Edit
           </b-btn>
           <b-btn
@@ -50,11 +51,18 @@
     </card-base>
 
     <add-tag-modal
-      ref="addTagModal"
+      lazy
       :collection="collection"
       :modal-id="addTagModalId"
-      @update="handleTagUpdate">
+      @update="refresh">
     </add-tag-modal>
+
+    <edit-tag-modal
+      :collection="collection"
+      :modal-id="editTagModalId"
+      :tag="editedTag"
+      @update="refresh">
+    </edit-tag-modal>
 
   </div>
 </template>
@@ -63,6 +71,7 @@
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import AddTagModal from '@/components/modals/AddTag'
+import EditTagModal from '@/components/modals/EditTag'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -74,29 +83,33 @@ export default {
     return {
       title: 'Tags',
       addTagModalId: 'add-tag-modal',
+      editTagModalId: 'edit-tag-modal',
       tableFields: {
         type: {
           label: 'Type',
           sortable: true
         },
-        name: {
-          label: 'Name',
-          sortable: true
+        nTags: {
+          label: 'Tags',
+          sortable: true,
+          class: 'text-center'
         },
         color: {
           label: 'Colour',
-          class: 'text-center d-none d-lg-block'
+          class: 'text-center d-none d-sm-block'
         },
         actions: {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      editedTag: {}
     }
   },
 
   components: {
     AddTagModal,
+    EditTagModal,
     CardBase
   },
 
@@ -109,42 +122,40 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    tableItems () {
-      const items = []
-      for (let type of Object.keys(this.collection.info.tags)) {
-        const tagType = this.collection.info.tags[type]
-        for (let name of tagType.options) {
-          items.push({ type: type, name: name, color: tagType.color })
-        }
-      }
-      return items
     }
   },
 
   methods: {
+    /**
+     * Return the collection's tags formatted to be used in the table.
+     */
+    getTableItems () {
+      const items = []
+      for (let type of Object.keys(this.collection.info.tags)) {
+        const tagType = this.collection.info.tags[type]
+        items.push({
+          type: type,
+          options: tagType.options,
+          nTags: tagType.options.length,
+          color: tagType.color
+        })
+      }
+      return items
+    },
+
     /**
      * Show the remove tag alert.
      */
     removeTag (tag) {
       this.$swal({
         title: `Delete Tag`,
-        text: `Are you sure you want to delete "${tag.type} - ${tag.name}"?`,
+        text: `Are you sure you want to delete the "${tag.type}" tag type?`,
         type: 'warning',
         showCancelButton: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
           let infoClone = Object.assign({}, this.collection.info)
-          let newOptions = infoClone.tags[tag.type].options
-          newOptions = newOptions.filter(name => {
-            return tag.name !== name
-          })
-          if (!newOptions.length) {
-            delete infoClone.tags[tag.type]
-          } else {
-            infoClone.tags[tag.type].options = newOptions
-          }
+          delete infoClone.tags[tag.type]
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
             info: infoClone
           }).then(data => {
@@ -152,28 +163,17 @@ export default {
           })
         }
       }).then(result => {
-        if (result.value) {
+        if (result) {
           this.notifySuccess({ message: `Tag deleted` })
+          this.refresh()
         }
       })
     },
 
     /**
-     * Feed the tag modal with data from the selected tag.
-     * @param {Object} tag
-     *   The tag
-     */
-    editTag (tag) {
-      this.$refs.addTagModal.tag = tag
-      this.$refs.addTagModal.show()
-    },
-
-    /**
      * Handle a tag being updated.
-     * @param {Object} newTag
-     *   The new tag.
      */
-    handleTagUpdate (newTag) {
+    refresh () {
       this.$refs.table.refresh()
     }
   }

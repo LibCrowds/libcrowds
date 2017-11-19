@@ -2,13 +2,12 @@
   <b-card
     class="form-base"
     :header="header"
-    :show-footer="showFooter"
     :no-body="noBody"
     :style="cardStyle">
 
     <slot></slot>
 
-    <template slot="footer">
+    <template v-if="showFooter" slot="footer">
       <span>
         <slot name="footer-base-left"></slot>
       </span>

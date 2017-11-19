@@ -2,13 +2,13 @@
   <modal-form
     :form="form"
     :modalId="modalId"
-    title="Add a tag type"
-    @submit="addTag"
-    @shown="resetModel">
+    title="Edit tag type"
+    @submit="editTag">
   </modal-form>
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import ModalForm from '@/components/forms/Modal'
 import { notifications } from '@/mixins/notifications'
 
@@ -30,10 +30,13 @@ export default {
               required: true,
               validator: (value) => {
                 const currentTags = Object.keys(this.collection.info.tags)
-                if (!value || !value.length) {
+                if (!value.length) {
                   return 'This field is required'
                 }
-                if (currentTags.indexOf(value) > -1) {
+                if (
+                  value !== this.tag.type &&
+                  currentTags.indexOf(value) > -1
+                ) {
                   return 'A tag type already exists with that name'
                 }
               }
@@ -57,10 +60,6 @@ export default {
     }
   },
 
-  components: {
-    ModalForm
-  },
-
   props: {
     modalId: {
       type: String,
@@ -69,14 +68,23 @@ export default {
     collection: {
       type: Object,
       required: true
+    },
+    tag: {
+      type: Object,
+      required: true
     }
+  },
+
+  components: {
+    ModalForm
   },
 
   methods: {
     /**
-     * Add a tag.
+     * Submit if valid.
      */
-    addTag () {
+    editTag () {
+      delete this.collection.info.tags[this.tag.type]
       const type = this.form.model.type
       const color = this.form.model.color
       const options = this.form.model.options
@@ -92,22 +100,22 @@ export default {
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
-        this.notifySuccess({ message: 'Tag type added' })
+        this.notifySuccess({ message: 'Tag type updated' })
         this.$emit('update', this.tag)
         this.processing = false
       })
-    },
+    }
+  },
 
-    /**
-     * Reset the model.
-     */
-    resetModel () {
-      this.form.model = {
-        type: '',
-        options: '',
-        color: '#2589BD'
+  watch: {
+    tag (newVal) {
+      if (isEmpty(newVal)) {
+        this.form.model = {}
+      } else {
+        const newModel = Object.assign({}, newVal)
+        newModel.options = newVal.options.join('\n')
+        this.form.model = newModel
       }
-      console.log(this.form.model)
     }
   }
 }
