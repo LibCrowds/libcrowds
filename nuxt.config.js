@@ -27,9 +27,6 @@ const config = {
   ],
   build: {
     vendor: [
-      '~/plugins/filters.js',
-      '~/plugins/libcrowds-viewer',
-      '~/plugins/notifications',
       'bootstrap-vue',
       'progressbar.js',
       'vue-awesome',
