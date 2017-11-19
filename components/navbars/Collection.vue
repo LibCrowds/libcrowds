@@ -328,16 +328,6 @@ export default {
     },
 
     /**
-     * Show a modal and toggle the sidebar.
-     * @param {String} name
-     *   The modal name.
-     */
-    showModal (name) {
-      this.toggleCollapsibleSidebar()
-      this.$root.$emit('show::modal', name)
-    },
-
-    /**
      * Restrict body content to avoid scroll bar while sidebar is open.
      */
     restrictBody (restrict = true) {
