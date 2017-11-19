@@ -41,6 +41,7 @@
 
     <data-modal
       lazy
+      v-if="activeProject"
       :modal-id="dataModalId"
       :project="activeProject">
     </data-modal>

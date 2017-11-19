@@ -2,9 +2,7 @@
   <b-modal
     lazy
     :id="modalId"
-    title="Download"
-    :return-focus="returnFocus"
-    v-model="show">
+    title="Download">
     <b-table
       responsive
       striped
