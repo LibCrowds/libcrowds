@@ -110,7 +110,7 @@ const config = {
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/notifications', ssr: false },
-    { src: '~/plugins/nuxtClientInit', ssr: false },
+    { src: '~/plugins/nuxt-client-init', ssr: false },
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
