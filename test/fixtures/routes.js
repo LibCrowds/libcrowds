@@ -75,9 +75,9 @@ export const routes = [
     name: 'account-reset-password'
   },
   {
-    path: '/account/forgotten-password',
+    path: '/account/forgot-password',
     component: jest.fn(),
-    name: 'account-forgotten-password'
+    name: 'account-forgot-password'
   },
   {
     path: '/admin/site/announcements',
