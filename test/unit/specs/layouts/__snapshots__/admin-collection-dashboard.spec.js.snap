@@ -79,9 +79,9 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       <li data-index="6"
           class="nav-item"
       >
-        <a href="#/"
+        <a href="#/admin/collection/playbills/volumes"
            target="_self"
-           class="nav-link active"
+           class="nav-link"
         >
           Volumes
         </a>
@@ -220,9 +220,9 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
         <li data-index="6"
             class="nav-item"
         >
-          <a href="#/"
+          <a href="#/admin/collection/playbills/volumes"
              target="_self"
-             class="nav-link active"
+             class="nav-link"
           >
             Volumes
           </a>
