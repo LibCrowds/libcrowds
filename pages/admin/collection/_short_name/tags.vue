@@ -81,7 +81,7 @@ export default {
   data () {
     return {
       title: 'Tags',
-      description: 'Manage the available tags for the microsite',
+      description: 'Manage the available tags for the microsite.',
       addTagModalId: 'add-tag-modal',
       editTagModalId: 'edit-tag-modal',
       tableFields: {

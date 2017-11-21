@@ -47,7 +47,7 @@ export default {
     return {
       title: 'Volumes',
       description: `Manage the volumes used to generate the microsite's
-        projects`,
+        projects.`,
       uploadCsvModalId: 'upload-csv-modal',
       fields: {
         name: {

@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       title: 'Open Collection',
-      description: 'Manage the collection microsites',
+      description: 'Manage the collection microsites.',
       tableFields: {
         name: {
           label: 'Name'

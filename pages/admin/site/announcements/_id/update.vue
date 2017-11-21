@@ -53,7 +53,7 @@ export default {
   data () {
     return {
       title: 'Update Announcement',
-      description: 'Update and publish the announcement'
+      description: 'Update and publish the announcement.'
     }
   },
 

@@ -44,7 +44,7 @@ export default {
     return {
       title: 'Featured',
       description: `Choose the projects that appear on the microsite's
-        homepage`,
+        homepage.`,
       filter: null,
       filterBy: 'name'
     }

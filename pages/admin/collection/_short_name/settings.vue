@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       title: 'Settings',
-      description: 'Configure the core settings for the microsite'
+      description: 'Configure the core settings for the microsite.'
     }
   },
 

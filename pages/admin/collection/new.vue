@@ -52,7 +52,7 @@ export default {
                 type: 'textArea',
                 rows: 3,
                 placeholder: 'This appears on the microsite homepage and as ' +
-                  'its meta description'
+                  'its meta description.'
               }
             ]
           }

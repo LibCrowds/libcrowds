@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       title: 'Forgotten Password',
-      description: `Reset your ${localConfig.brand} password`
+      description: `Reset your ${localConfig.brand} password.`
     }
   },
 

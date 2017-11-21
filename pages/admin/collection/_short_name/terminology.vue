@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       title: 'Terminology',
-      description: 'Set the terminology used throughout the microsite'
+      description: 'Set the terminology used throughout the microsite.'
     }
   },
 

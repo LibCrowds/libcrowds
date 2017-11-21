@@ -51,7 +51,7 @@ export default {
   data () {
     return {
       title: 'Sign in',
-      description: `Sign in to ${localConfig.brand}`,
+      description: `Sign in to ${localConfig.brand}.`,
       lead: `Enter your ${localConfig.brand} account details`
     }
   },

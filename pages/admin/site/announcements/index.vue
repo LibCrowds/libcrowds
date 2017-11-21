@@ -56,7 +56,7 @@ export default {
   data () {
     return {
       title: 'Announcements',
-      description: 'Manage global announcements',
+      description: 'Manage global announcements.',
       tableFields: {
         title: {
           label: 'Title',

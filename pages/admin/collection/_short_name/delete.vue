@@ -33,7 +33,7 @@ export default {
   data () {
     return {
       title: 'Delete',
-      description: 'Permanently delete the microsite'
+      description: 'Permanently delete the microsite.'
     }
   },
 

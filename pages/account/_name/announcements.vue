@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       title: 'Announcements',
-      description: 'All announcements made on the platform',
+      description: 'All announcements made on the platform.',
       announcements: [],
       searchParams: {
         published: true,

@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       title: 'New Announcement',
-      description: 'Make an announcement to all users',
+      description: 'Make an announcement to all users.',
       form: {
         endpoint: '/api/announcement',
         method: 'post',
