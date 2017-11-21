@@ -10,8 +10,12 @@ export const handleHashedFlashes = {
   mounted () {
     if (process.browser) {
       const params = queryString.parse(location.search)
-      if (params.hasOwnProperty('flash')) {
-        this.flash(params.flash)
+      const flash = params.flash
+      if (flash) {
+        const decodedFlash = decodeURIComponent(flash)
+        const jsonStr = atob(decodedFlash)
+        const json = JSON.parse(jsonStr)
+        this.flash(json)
       }
     }
   }
