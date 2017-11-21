@@ -18,7 +18,7 @@ export default {
         {
           label: 'Open Project',
           link: {
-            name: 'admin-project-open'
+            name: 'admin-project'
           }
         }
       ]

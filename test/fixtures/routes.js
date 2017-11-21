@@ -47,7 +47,7 @@ export const routes = [
   {
     path: '/admin/project/open',
     component: jest.fn(),
-    name: 'admin-project-open'
+    name: 'admin-project'
   },
   {
     path: '/admin/site/users',

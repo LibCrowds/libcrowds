@@ -49,7 +49,7 @@
           <div role="separator" class="dropdown-divider"></div>
           <b-dropdown-item
             :to="{
-              name: 'admin-project-open'
+              name: 'admin-project'
             }">
             Project Admin
           </b-dropdown-item>
