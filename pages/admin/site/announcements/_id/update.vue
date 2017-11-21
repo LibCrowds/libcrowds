@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Add a thumbnail and publish the announcement">
+  <card-base :title="title" :description="description">
     <div slot="controls" class="d-flex align-items-center float-right">
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
@@ -39,6 +39,7 @@
 
 <script>
 import pick from 'lodash/pick'
+import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -47,11 +48,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ notifications, metaTags ],
 
   data () {
     return {
-      title: 'Update Announcement'
+      title: 'Update Announcement',
+      description: 'Update and publish the announcement'
     }
   },
 
@@ -108,12 +110,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   components: {

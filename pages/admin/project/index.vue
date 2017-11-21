@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Manage your projects">
+  <card-base :title="title" :description="description">
 
     <b-form-input
       slot="controls"
@@ -36,15 +36,19 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
       title: 'Open Project',
+      description: 'Manage your projects',
       tableFields: {
         name: {
           label: 'Name'
@@ -71,12 +75,6 @@ export default {
       },
       filter: null,
       filterBy: 'name'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

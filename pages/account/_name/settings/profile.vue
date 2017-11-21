@@ -1,17 +1,30 @@
 <template>
-  <pybossa-form
-    header="Profile Settings"
-    submit-text="Update"
-    :form="form"
-    @success="updateCurrentUser">
-  </pybossa-form>
+  <card-base :title="title" :description="description">
+    <pybossa-form
+      submit-text="Update"
+      :form="form"
+      @success="updateCurrentUser">
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'account-dashboard',
+
+  mixins: [ metaTags ],
+
+  data () {
+    return {
+      title: 'Profile Settings',
+      description: `Update your ${localConfig.brand} profile settings.`
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update`
@@ -51,14 +64,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: 'Profile Settings'
-    }
-  },
-
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   computed: {

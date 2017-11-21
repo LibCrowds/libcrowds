@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Manage volume details for project generation">
+  <card-base :title="title" :description="description">
     <b-btn
       slot="controls"
       variant="success"
@@ -36,17 +34,20 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import UploadCsvModal from '@/components/modals/UploadCsv'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Volumes',
+      description: `Manage the volumes used to generate the microsite's
+        projects`,
       uploadCsvModalId: 'upload-csv-modal',
       fields: {
         name: {
@@ -56,12 +57,6 @@ export default {
           label: 'Source'
         }
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

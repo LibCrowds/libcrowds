@@ -1,133 +1,122 @@
 <template>
   <div id="admin-dashboard">
-    <b-card no-body>
-      <div
-        slot="header"
-        class="mb-0 d-flex align-items-center justify-content-between">
-        <span>
-          <h6 class="mb-0">{{ title }}</h6>
-          <p class="text-muted mb-0">
-            <small>
-              Monitor the activity on the platform for the past week.
+    <card-base :title="title" :description="description">
+      <b-btn
+        size="sm"
+        variant="success"
+        class="float-right"
+        slot="controls"
+        @click="refresh">
+        Refresh
+      </b-btn>
+
+      <ul class="list-unstyled" id="activity-list">
+        <li v-for="(item, index) in updateFeed" :key="index">
+          <p class="d-flex flex-row align-items-center">
+
+            <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+
+            <small v-if="item.action_updated == 'Project'">
+              <nuxt-link
+                :to="{
+                  name: 'admin-project-short_name-settings',
+                  params: {
+                    short_name: item.short_name
+                  }
+                }">
+                {{ item.name }}
+              </nuxt-link>
+              was created
+              {{ item.updated | moment('calendar') }}
             </small>
+
+            <small v-else-if="item.action_updated == 'Blog'">
+              A new blog post was published for
+              <nuxt-link
+                :to="{
+                  name: 'admin-project-short_name-settings',
+                  params: {
+                    short_name: item.short_name
+                  }
+                }">
+                {{ item.name }}
+              </nuxt-link>
+              {{ item.updated | moment('calendar') }}
+            </small>
+
+            <small v-else-if="item.action_updated == 'Task'">
+              New tasks were added to
+              <nuxt-link
+                :to="{
+                  name: 'admin-project-short_name-settings',
+                  params: {
+                    short_name: item.short_name
+                  }
+                }">
+                {{ item.name }}
+              </nuxt-link>
+              {{ item.updated | moment('calendar') }}
+            </small>
+
+            <small v-else-if="item.action_updated == 'TaskCompleted'">
+              A task was completed for
+              <nuxt-link
+                :to="{
+                  name: 'admin-project-short_name-settings',
+                  params: {
+                    short_name: item.short_name
+                  }
+                }">
+                {{ item.name }}
+              </nuxt-link>
+              {{ item.updated | moment('calendar') }}
+            </small>
+
+            <small v-else-if="item.action_updated == 'UserContribution'">
+              <nuxt-link
+                :to="{
+                  name: 'account-name',
+                  params: {
+                    name: item.name
+                  }
+                }">
+                {{ item.fullname }}
+              </nuxt-link>
+              contributed to
+              <nuxt-link
+                :to="{
+                  name: 'admin-project-short_name-settings',
+                  params: {
+                    short_name: item.project_short_name
+                  }
+                }">
+                {{ item.project_name }}
+              </nuxt-link>
+              {{ item.updated | moment('calendar') }}
+            </small>
+
+            <small v-else-if="item.action_updated == 'User'">
+              <nuxt-link
+                :to="{
+                  name: 'account-name',
+                  params: {
+                    name: item.name
+                  }
+                }">
+                {{ item.fullname }}
+              </nuxt-link>
+              joined
+              {{ item.updated | moment('calendar') }}
+            </small>
+
+            <small v-else>
+              Untracked event
+            </small>
+
           </p>
-        </span>
-        <b-btn
-          size="sm"
-          variant="success"
-          @click="refresh">
-          Refresh
-        </b-btn>
-      </div>
-      <div class="card-body">
-        <ul class="list-unstyled" id="activity-list">
-          <li v-for="(item, index) in updateFeed" :key="index">
-            <p class="d-flex flex-row align-items-center">
-
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
-
-              <small v-if="item.action_updated == 'Project'">
-                <nuxt-link
-                  :to="{
-                    name: 'admin-project-short_name-settings',
-                    params: {
-                      short_name: item.short_name
-                    }
-                  }">
-                  {{ item.name }}
-                </nuxt-link>
-                was created
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else-if="item.action_updated == 'Blog'">
-                A new blog post was published for
-                <nuxt-link
-                  :to="{
-                    name: 'admin-project-short_name-settings',
-                    params: {
-                      short_name: item.short_name
-                    }
-                  }">
-                  {{ item.name }}
-                </nuxt-link>
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else-if="item.action_updated == 'Task'">
-                New tasks were added to
-                <nuxt-link
-                  :to="{
-                    name: 'admin-project-short_name-settings',
-                    params: {
-                      short_name: item.short_name
-                    }
-                  }">
-                  {{ item.name }}
-                </nuxt-link>
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else-if="item.action_updated == 'TaskCompleted'">
-                A task was completed for
-                <nuxt-link
-                  :to="{
-                    name: 'admin-project-short_name-settings',
-                    params: {
-                      short_name: item.short_name
-                    }
-                  }">
-                  {{ item.name }}
-                </nuxt-link>
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else-if="item.action_updated == 'UserContribution'">
-                <nuxt-link
-                  :to="{
-                    name: 'account-name',
-                    params: {
-                      name: item.name
-                    }
-                  }">
-                  {{ item.fullname }}
-                </nuxt-link>
-                contributed to
-                <nuxt-link
-                  :to="{
-                    name: 'admin-project-short_name-settings',
-                    params: {
-                      short_name: item.project_short_name
-                    }
-                  }">
-                  {{ item.project_name }}
-                </nuxt-link>
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else-if="item.action_updated == 'User'">
-                <nuxt-link
-                  :to="{
-                    name: 'account-name',
-                    params: {
-                      name: item.name
-                    }
-                  }">
-                  {{ item.fullname }}
-                </nuxt-link>
-                joined
-                {{ item.updated | moment('calendar') }}
-              </small>
-
-              <small v-else>
-                Untracked event
-              </small>
-
-            </p>
-          </li>
-        </ul>
-      </div>
-    </b-card>
+        </li>
+      </ul>
+    </card-base>
 
     <line-chart
       class="mt-3"
@@ -357,18 +346,21 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ notifications, metaTags ],
 
   data () {
     return {
-      title: 'Dashboard'
+      title: 'Dashboard',
+      description: 'Monitor the past week\'s activity on the platform.'
     }
   },
 
@@ -397,15 +389,10 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.title
-    }
-  },
-
   components: {
     LineChart,
-    SmallAvatar
+    SmallAvatar,
+    CardBase
   },
 
   computed: {

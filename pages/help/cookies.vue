@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Cookies Policy">
+  <card-base :title="title" :description="description">
     <p>
       {{ localConfig.brand }} uses cookies to make our website easier for you
       to use and improve your overall experience, distinguish you from other
@@ -47,32 +47,29 @@
       your browser setting so that it will refuse cookies, our system will issue
       cookies as soon you visit our website.
     </p>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'help-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
+      title: 'Cookies Policy',
+      description: `The ${localConfig.brand} Cookies Policy.`,
       localConfig: localConfig
     }
   },
 
-  head () {
-    return {
-      title: 'Cookies Policy',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `The ${localConfig.brand} Cookies Policy.`
-        }
-      ]
-    }
+  components: {
+    CardBase
   }
 }
 </script>

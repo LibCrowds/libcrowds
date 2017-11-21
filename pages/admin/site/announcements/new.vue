@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Make an announcement (a thumbnail can be set on the next page)">
+  <card-base :title="title" :description="description">
     <pybossa-form
       id="admin-announcement-new"
       show-cancel
@@ -15,6 +13,7 @@
 
 <script>
 import pick from 'lodash/pick'
+import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import VueFormGenerator from 'vue-form-generator'
 import ImageUploadForm from '@/components/forms/ImageUpload'
@@ -24,11 +23,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ notifications, metaTags ],
 
   data () {
     return {
       title: 'New Announcement',
+      description: 'Make an announcement to all users',
       form: {
         endpoint: '/api/announcement',
         method: 'post',
@@ -69,12 +69,6 @@ export default {
           ]
         }
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

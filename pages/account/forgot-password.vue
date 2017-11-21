@@ -1,25 +1,29 @@
 <template>
-  <pybossa-form
-    :header="title"
-    submit-text="Reset"
-    :form="form"
-    :next="next">
-  </pybossa-form>
+  <card-base :title="title" :description="description">
+    <pybossa-form
+      submit-text="Reset"
+      :form="form"
+      :next="next">
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
+import { metaTags } from '@/mixins/metaTags'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
-  mixins: [ handleHashedFlashes ],
+  mixins: [ handleHashedFlashes, metaTags ],
 
   data () {
     return {
-      title: 'Forgotten Password'
+      title: 'Forgotten Password',
+      description: `Reset your ${localConfig.brand} password`
     }
   },
 
@@ -50,21 +54,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Reset your ${localConfig.brand} password`
-        }
-      ]
-    }
-  },
-
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   }
 }
 </script>

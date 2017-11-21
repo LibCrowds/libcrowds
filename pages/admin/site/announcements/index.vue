@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Manage global announcements">
+  <card-base :title="title" :description="description">
     <b-btn
       variant="success"
       size="sm"
@@ -44,17 +44,19 @@
 
 <script>
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import { metaTags } from '@/mixins/metaTags'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ deleteDomainObject ],
+  mixins: [ deleteDomainObject, metaTags ],
 
   data () {
     return {
       title: 'Announcements',
+      description: 'Manage global announcements',
       tableFields: {
         title: {
           label: 'Title',
@@ -75,12 +77,6 @@ export default {
         orderby: 'created',
         desc: true
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

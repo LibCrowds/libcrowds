@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Manage the collection microsites">
+  <card-base :title="title" :description="description">
     <b-btn
       slot="controls"
       variant="success"
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
@@ -44,9 +45,12 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 export default {
   layout: 'admin-collection-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
       title: 'Open Collection',
+      description: 'Manage the collection microsites',
       tableFields: {
         name: {
           label: 'Name'
@@ -57,12 +61,6 @@ export default {
           sortable: true
         }
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

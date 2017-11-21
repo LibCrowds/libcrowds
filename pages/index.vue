@@ -3,7 +3,7 @@
     <div id="app-hero" class="main-app-bg">
       <div class="container">
         <span class="d-none d-md-flex"></span>
-        <p id="site-tagline">{{ localConfig.tagline }}</p>
+        <p id="site-tagline">{{ title }}</p>
         <div class="stat-row d-none d-md-flex">
           <div class="stat-circle">
             <span class="stat">
@@ -137,6 +137,7 @@ import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
 import 'vue-awesome/icons/list'
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
 import CollectionCard from '@/components/cards/Collection'
 import LeaderboardModal from '@/components/modals/Leaderboard'
 import UserAvatar from '@/components/avatars/User'
@@ -145,8 +146,12 @@ import { batch } from '@/utils/batch'
 export default {
   layout: 'default',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
+      title: localConfig.tagline,
+      description: localConfig.description,
       localConfig: localConfig,
       leaderboardModalId: 'leaderboard-modal',
       wreathSrc: null
@@ -166,23 +171,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.localConfig.tagline,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.localConfig.description
-        },
-
-        // Facebook Open Graph Markup
-        { property: 'og:title', content: this.localConfig.brand },
-        { property: 'og:description', content: this.localConfig.tagline }
-      ]
-    }
   },
 
   components: {

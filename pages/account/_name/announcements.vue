@@ -1,5 +1,5 @@
 <template>
-  <b-card id="account-announcements" no-body :header="title">
+  <card-base :title="title" :description="description">
     <announcement-card
       v-for="announcement in announcements"
       :key="announcement.id"
@@ -11,19 +11,24 @@
       :search-params="searchParams"
       v-model="announcements">
     </infinite-load>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import AnnouncementCard from '@/components/cards/Announcement'
 import InfiniteLoad from '@/components/InfiniteLoad'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
       title: 'Announcements',
+      description: 'All announcements made on the platform',
       announcements: [],
       searchParams: {
         published: true,
@@ -35,13 +40,8 @@ export default {
 
   components: {
     InfiniteLoad,
-    AnnouncementCard
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
+    AnnouncementCard,
+    CardBase
   },
 
   mounted () {

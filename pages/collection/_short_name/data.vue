@@ -1,17 +1,17 @@
 <template>
   <div id="collection-data">
-    <h1 class="text-center">Data</h1>
+    <h1 class="text-center">{{ title }}</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
 
     <card-base
-      title="Data"
+      :title="title"
       id="download-data"
       class="collection-nav-item"
       data-title="Get the Data"
-      help="Download the project data">
+      :description="description">
 
       <b-form-input
         slot="controls"
@@ -51,6 +51,7 @@
 
 <script>
 import marked from 'marked'
+import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
@@ -65,27 +66,15 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, filterProjects, licenses ],
+  mixins: [ fetchCollectionByName, filterProjects, licenses, metaTags ],
 
   data () {
     return {
+      title: 'Data',
       activeProject: null,
       dataModalId: 'data-download-modal',
       filter: null,
       filterBy: 'name'
-    }
-  },
-
-  head () {
-    return {
-      title: 'Data',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.metaContent
-        }
-      ]
     }
   },
 
@@ -108,12 +97,13 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    metaContent () {
+    description () {
       if (this.collection.license) {
         return `All datasets generated from ${this.collection.name}
           projects are made available under a
           ${this.dataLicenses[this.collection.license].name} license.`
       }
+      return 'Download the project data.'
     }
   },
 

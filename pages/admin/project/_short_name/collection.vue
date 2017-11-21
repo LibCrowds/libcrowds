@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Choose the microsite that this project should appear on">
+  <card-base :title="title" :description="description">
 
     <b-form-input
       slot="controls"
@@ -35,17 +33,19 @@
 <script>
 import { notifications } from '@/mixins/notifications'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
+import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, notifications ],
+  mixins: [ fetchProjectByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Set Collection',
+      description: 'Choose the collection that this project belongs to',
       tableFields: {
         name: {
           label: 'Name',
@@ -61,12 +61,6 @@ export default {
       updatedCollectionId: null,
       filter: null,
       filterBy: 'name'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

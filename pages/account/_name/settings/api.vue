@@ -1,17 +1,30 @@
 <template>
-  <pybossa-form
-    header="API Settings"
-    submit-text="Reset API Key"
-    :form="form"
-    @success="updateCurrentUser">
-  </pybossa-form>
+  <card-base :title="title" :description="description">
+    <pybossa-form
+      submit-text="Reset API Key"
+      :form="form"
+      @success="updateCurrentUser">
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'account-dashboard',
+
+  mixins: [ metaTags ],
+
+  data () {
+    return {
+      title: 'API Settings',
+      description: `Reset your ${localConfig.brand} API Key.`
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/resetapikey`
@@ -24,14 +37,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: 'API Settings'
-    }
-  },
-
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   computed: {

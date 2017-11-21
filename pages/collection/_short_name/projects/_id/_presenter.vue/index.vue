@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
@@ -26,7 +27,7 @@ export default {
     return layouts[params.presenter] || 'collection-tabs'
   },
 
-  mixins: [ notifications, fetchCollectionByName ],
+  mixins: [ notifications, fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -44,22 +45,17 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.project.name,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.project.description
-        }
-      ]
-    }
-  },
-
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    title () {
+      return this.project.name
+    },
+
+    description () {
+      return this.project.description
     },
 
     presenter () {

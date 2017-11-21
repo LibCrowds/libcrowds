@@ -1,53 +1,57 @@
 <template>
-  <pybossa-form
-    id="account-signin"
-    :header="title"
-    :lead="lead"
-    submit-text="Sign in"
-    :next="next"
-    :form="form"
-    @success="onSuccess">
+  <card-base :header="title" :description="description">
+    <pybossa-form
+      id="account-signin"
+      :lead="lead"
+      submit-text="Sign in"
+      :next="next"
+      :form="form"
+      @success="onSuccess">
 
-    <div
-      slot="bottom"
-      v-if="auth && auth.facebook || auth.twitter || auth.google">
-      <p class="lead text-center">
-        or sign in with
-      </p>
-      <oauth-buttons
-        :facebook="auth.facebook"
-        :google="auth.google"
-        :twitter="auth.twitter"
-        :next="next">
-      </oauth-buttons>
-    </div>
+      <div
+        slot="bottom"
+        v-if="auth && auth.facebook || auth.twitter || auth.google">
+        <p class="lead text-center">
+          or sign in with
+        </p>
+        <oauth-buttons
+          :facebook="auth.facebook"
+          :google="auth.google"
+          :twitter="auth.twitter"
+          :next="next">
+        </oauth-buttons>
+      </div>
 
-    <div slot="footer-left">
-      <nuxt-link
-        :to="{
-          name: 'account-forgot-password'
-        }">
-        Forgot your password?
-      </nuxt-link>
-    </div>
+      <div slot="footer-left">
+        <nuxt-link
+          :to="{
+            name: 'account-forgot-password'
+          }">
+          Forgot your password?
+        </nuxt-link>
+      </div>
 
-  </pybossa-form>
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
+import { metaTags } from '@/mixins/metaTags'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
-  mixins: [ handleHashedFlashes ],
+  mixins: [ handleHashedFlashes, metaTags ],
 
   data () {
     return {
       title: 'Sign in',
+      description: `Sign in to ${localConfig.brand}`,
       lead: `Enter your ${localConfig.brand} account details`
     }
   },
@@ -91,22 +95,10 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Sign in to ${localConfig.brand}`
-        }
-      ]
-    }
-  },
-
   components: {
     PybossaForm,
-    OauthButtons
+    OauthButtons,
+    CardBase
   },
 
   methods: {

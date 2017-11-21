@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Create a new collection microsite">
+  <card-base :title="title" :description="description">
     <pybossa-form
       :form="form"
       no-border
@@ -11,17 +11,19 @@
 
 <script>
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ notifications ],
+  mixins: [ notifications, metaTags ],
 
   data () {
     return {
-      title: 'New Collection'
+      title: 'New Collection',
+      description: 'Create a new collection microsite'
     }
   },
 
@@ -59,12 +61,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   components: {

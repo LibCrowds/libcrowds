@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Terms of Service">
+  <card-base :title="title" :description="description">
     <p>
       These are the general terms and conditions on which we supply all our
       services. If you use our services, you agree to abide by these terms.
@@ -208,32 +208,29 @@
       Neither party is liable for anything which is beyond their reasonable
       control.
     </p>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'help-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
+      title: 'Terms of Service',
+      description: `The ${localConfig.brand} Terms of Service.`,
       localConfig: localConfig
     }
   },
 
-  head () {
-    return {
-      title: 'Terms of Service',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `The ${localConfig.brand} Terms of Service.`
-        }
-      ]
-    }
+  components: {
+    CardBase
   }
 }
 </script>

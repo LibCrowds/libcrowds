@@ -47,7 +47,10 @@
       </b-col>
 
       <b-col xl="9">
-        <card-base title="Projects" help="Choose a project" class="d-lg-none">
+        <card-base
+          title="Projects"
+          description="Choose a project"
+          class="d-lg-none">
           <b-form-input
             slot="controls"
             v-model="filter"
@@ -105,6 +108,7 @@
 
 <script>
 import marked from 'marked'
+import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { filterProjects } from '@/mixins/filterProjects'
@@ -125,7 +129,8 @@ export default {
   mixins: [
     fetchCollectionByName,
     computeShareUrl,
-    filterProjects
+    filterProjects,
+    metaTags
   ],
 
   data () {
@@ -161,20 +166,6 @@ export default {
     }
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Choose a ${this.collection.name} project to contribute
-            towards`
-        }
-      ]
-    }
-  },
-
   components: {
     SortProjectsData,
     FilterProjectsData,
@@ -203,6 +194,10 @@ export default {
 
     allProjectsFiltered () {
       return this.projects.length > 0 && this.filteredProjects.length === 0
+    },
+
+    description () {
+      return `Choose a ${this.collection.name} project to take part in.`
     }
   },
 

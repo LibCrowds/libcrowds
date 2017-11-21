@@ -1,5 +1,5 @@
 <template>
-  <b-card header="Privacy Policy">
+  <card-base :title="title" :description="description">
     <p>
       Please read this Privacy Policy (“Privacy Policy”) carefully.
     </p>
@@ -101,32 +101,29 @@
         download and install
       </a>.
     </p>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'help-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
+      title: 'Privacy Policy',
+      description: `The ${localConfig.brand} Privacy Policy.`,
       localConfig: localConfig
     }
   },
 
-  head () {
-    return {
-      title: 'Privacy Policy',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `The ${localConfig.brand} Privacy Policy.`
-        }
-      ]
-    }
+  components: {
+    CardBase
   }
 }
 </script>

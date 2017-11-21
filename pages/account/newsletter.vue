@@ -1,7 +1,7 @@
 <template>
-  <b-card id="newsletter" :header="title">
+  <card-base :header="title">
     <p class="lead">
-      {{ lead }}
+      {{ description }}
     </p>
     <template slot="footer">
       <div class="text-right">
@@ -18,37 +18,30 @@
         </b-btn>
       </div>
     </template>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
+import { metaTags } from '@/mixins/metaTags'
 import localConfig from '@/local.config'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
-  mixins: [ handleHashedFlashes ],
+  mixins: [ handleHashedFlashes, metaTags ],
 
   data () {
     return {
       title: 'Subscribe to our newsletter',
-      lead: `Sign up to the ${localConfig.brand} newsletter to receive
-            occasional updates about new features, projects and developments.`
+      description: `Sign up to the ${localConfig.brand} newsletter to receive
+        occasional updates about new features, projects and developments.`
     }
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.lead
-        }
-      ]
-    }
+  components: {
+    CardBase
   },
 
   methods: {

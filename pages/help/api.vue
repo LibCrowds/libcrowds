@@ -1,5 +1,5 @@
 <template>
-  <b-card header="API">
+  <card-base :title="title" :description="description">
     <p>
       {{ localConfig.brand }} provides a RESTful API that can be used for
       retreiving information about tasks, task runs, results, etc. The API
@@ -22,17 +22,23 @@
       </a>
       for details.
     </p>
-  </b-card>
+  </card-base>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'help-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
+      title: 'API',
+      description: `The ${localConfig.brand} API documentation.`,
       localConfig: localConfig
     }
   },
@@ -45,17 +51,8 @@ export default {
     }
   },
 
-  head () {
-    return {
-      title: 'API',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `The ${localConfig.brand} API documentation.`
-        }
-      ]
-    }
+  components: {
+    CardBase
   }
 }
 </script>

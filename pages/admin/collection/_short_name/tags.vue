@@ -1,8 +1,6 @@
 <template>
   <div>
-    <card-base
-      :title="title"
-      help="Manage the available tags for the microsite">
+    <card-base :title="title" :description="description">
       <b-btn
         slot="controls"
         class="float-right"
@@ -70,6 +68,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import AddTagModal from '@/components/modals/AddTag'
 import EditTagModal from '@/components/modals/EditTag'
 import CardBase from '@/components/cards/Base'
@@ -77,11 +76,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Tags',
+      description: 'Manage the available tags for the microsite',
       addTagModalId: 'add-tag-modal',
       editTagModalId: 'edit-tag-modal',
       tableFields: {
@@ -111,12 +111,6 @@ export default {
     AddTagModal,
     EditTagModal,
     CardBase
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   computed: {

@@ -1,64 +1,68 @@
 <template>
-  <pybossa-form
-    id="register"
-    :header="title"
-    submit-text="Sign up"
-    :form="form"
-    :next="next"
-    @success="onSuccess">
-    <div
-      slot="top"
-      v-if="auth.facebook || auth.twitter || auth.google">
-      <p class="lead text-center">
-        Sign up with
-      </p>
-      <oauth-buttons
-        :facebook="auth.facebook"
-        :google="auth.google"
-        :twitter="auth.twitter"
-        :next="next">
-      </oauth-buttons>
-      <p class="lead text-center mt-2 mb-1">
-        or
-      </p>
-    </div>
-    <div slot="footer-left">
-      <p class="mb-0 mr-3">
-        <small>
-          By signing up you are agreeing to the
-          <nuxt-link
-            :to="{
-              name: 'help-tos'
-            }">
-            Terms of Service
-          </nuxt-link>
-          and the
-          <nuxt-link
-            :to="{
-              name: 'help-privacy'
-            }">
-            Privacy Policy.
-          </nuxt-link>
-        </small>
-      </p>
-    </div>
-  </pybossa-form>
+  <card-base :title="title" :description="description">
+    <pybossa-form
+      id="register"
+      submit-text="Sign up"
+      :form="form"
+      :next="next"
+      @success="onSuccess">
+      <div
+        slot="top"
+        v-if="auth.facebook || auth.twitter || auth.google">
+        <p class="lead text-center">
+          Sign up with
+        </p>
+        <oauth-buttons
+          :facebook="auth.facebook"
+          :google="auth.google"
+          :twitter="auth.twitter"
+          :next="next">
+        </oauth-buttons>
+        <p class="lead text-center mt-2 mb-1">
+          or
+        </p>
+      </div>
+      <div slot="footer-left">
+        <p class="mb-0 mr-3">
+          <small>
+            By signing up you are agreeing to the
+            <nuxt-link
+              :to="{
+                name: 'help-tos'
+              }">
+              Terms of Service
+            </nuxt-link>
+            and the
+            <nuxt-link
+              :to="{
+                name: 'help-privacy'
+              }">
+              Privacy Policy.
+            </nuxt-link>
+          </small>
+        </p>
+      </div>
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
+import { metaTags } from '@/mixins/metaTags'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
-  mixins: [ handleHashedFlashes ],
+  mixins: [ handleHashedFlashes, metaTags ],
 
   data () {
     return {
-      title: 'Register'
+      title: 'Register',
+      description: `Sign up for a new ${localConfig.brand} account.`
     }
   },
 
@@ -127,22 +131,10 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Sign up for a new ${localConfig.brand} account`
-        }
-      ]
-    }
-  },
-
   components: {
     PybossaForm,
-    OauthButtons
+    OauthButtons,
+    CardBase
   },
 
   methods: {

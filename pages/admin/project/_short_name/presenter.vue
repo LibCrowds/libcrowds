@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Choose the common task presenter options for the microsite">
+  <card-base :title="title" :description="description">
 
     <pybossa-form
       no-border
@@ -17,17 +15,19 @@
 import pick from 'lodash/pick'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, notifications ],
+  mixins: [ fetchProjectByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Task Presenter',
+      description: 'Choose the common task presenter options for the microsite',
       selectRulesTableFields: {
         tag: {
           label: 'Tag'
@@ -41,12 +41,6 @@ export default {
           class: 'text-center'
         }
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 
