@@ -107,7 +107,6 @@ export default {
         options: '',
         color: '#2589BD'
       }
-      console.log(this.form.model)
     }
   }
 }
