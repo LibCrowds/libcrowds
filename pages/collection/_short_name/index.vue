@@ -221,8 +221,6 @@ export default {
 
   data () {
     return {
-      title: this.title,
-      description: this.collection.description,
       localConfig: localConfig,
       featured: []
     }
@@ -284,6 +282,10 @@ export default {
       return this.collection.info && 'tagline' in this.collection.info
         ? this.collection.info.tagline
         : this.collection.name
+    },
+
+    description () {
+      return this.collection.description
     }
   },
 
