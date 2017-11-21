@@ -8,7 +8,7 @@ $font-size-xs:                     0.75rem;
 /* Colors */
 $blue:                             #2589BD !default;
 $indigo:                           #6610f2 !default;
-$purple:                           #6f42c1 !default;
+$purple:                           #8c52a4 !default;
 $pink:                             #e83e8c !default;
 $red:                              #D00000 !default;
 $orange:                           #E38D13 !default;
@@ -16,6 +16,8 @@ $yellow:                           #ffc107 !default;
 $green:                            #408E40 !default;
 $teal:                             #20c997 !default;
 $cyan:                             #03B5AA !default;
+
+$info:                             $purple;
 
 $body-color:                       #202B35;
 
