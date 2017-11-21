@@ -4,6 +4,7 @@
     :header="title"
     :lead="lead"
     submit-text="Sign in"
+    :next="next"
     :form="form"
     @success="onSuccess">
 
