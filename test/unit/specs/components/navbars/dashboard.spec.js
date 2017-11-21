@@ -24,7 +24,7 @@ describe('Dashboard navbar', () => {
       {
         label: 'Dashboard',
         link: {
-          name: 'admin-site-dashboard'
+          name: 'admin-site'
         }
       },
       {

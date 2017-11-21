@@ -79,6 +79,16 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       <li data-index="6"
           class="nav-item"
       >
+        <a href="#/"
+           target="_self"
+           class="nav-link active"
+        >
+          Volumes
+        </a>
+      </li>
+      <li data-index="7"
+          class="nav-item"
+      >
         <a href="#/admin/collection/playbills/featured"
            target="_self"
            class="nav-link"
@@ -86,7 +96,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           Featured Projects
         </a>
       </li>
-      <li data-index="7"
+      <li data-index="8"
           class="nav-item"
       >
         <a href="#/admin/collection/playbills/delete"
@@ -210,6 +220,16 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
         <li data-index="6"
             class="nav-item"
         >
+          <a href="#/"
+             target="_self"
+             class="nav-link active"
+          >
+            Volumes
+          </a>
+        </li>
+        <li data-index="7"
+            class="nav-item"
+        >
           <a href="#/admin/collection/playbills/featured"
              target="_self"
              class="nav-link"
@@ -217,7 +237,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             Featured Projects
           </a>
         </li>
-        <li data-index="7"
+        <li data-index="8"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/delete"

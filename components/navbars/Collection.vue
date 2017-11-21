@@ -137,7 +137,7 @@
               </b-dropdown-item>
               <b-dropdown-item
                 :to="{
-                  name: 'admin-site-dashboard'
+                  name: 'admin-site'
                 }"
                 @click="toggleCollapsibleSidebar">
                 Site Admin

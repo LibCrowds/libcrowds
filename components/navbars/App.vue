@@ -61,7 +61,7 @@
           </b-dropdown-item>
           <b-dropdown-item
             :to="{
-              name: 'admin-site-dashboard'
+              name: 'admin-site'
             }">
             Site Admin
           </b-dropdown-item>
