@@ -7,9 +7,9 @@ are explained below.
 |--------------------|------------------------------------------------------------------------------------------------|
 | Published          | Once published, a microsite is added to the platform homepage and is accessible to all users.  |
 | Name               | Applies branding throughout the collection microsite.                                          |
-| Short name         | Used as an identifier and to form the microsite endpoint (e.g. `/collection/short_name`).      |
+| Short name         | Used as an identifier and to form the microsite endpoint (e.g. /collection/short_name).      |
 | Tagline            | Appears over the hero image on the microsite's homepage and forms a part of it's title.        |
-| Description        | Appearson the microsite's homepage and forms its meta description.                             |
+| Description        | Appears on the microsite's homepage and forms its meta description.                            |
 | Background Image   | The URL for an image used to provide a consistent theme for all of the microsite's core pages. |
 | Logo               | The URL for a logo to be shown alongside the name on the microsite's homepage.                 |
 | Forum URL          | The URL for the Discuss link in the microsite's main navigation bar.                           |

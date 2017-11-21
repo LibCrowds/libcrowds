@@ -4,6 +4,7 @@
     :header="title"
     :lead="lead"
     submit-text="Sign in"
+    :next="next"
     :form="form"
     @success="onSuccess">
 
@@ -24,7 +25,7 @@
     <div slot="footer-left">
       <nuxt-link
         :to="{
-          name: 'account-forgotten-password'
+          name: 'account-forgot-password'
         }">
         Forgot your password?
       </nuxt-link>
