@@ -202,6 +202,7 @@ import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
 import localConfig from '@/local.config'
+import { metaTags } from '@/mixins/metaTags'
 import { licenses } from '@/mixins/licenses'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
@@ -214,7 +215,8 @@ export default {
   mixins: [
     fetchCollectionByName,
     computeShareUrl,
-    licenses
+    licenses,
+    metaTags
   ],
 
   data () {
@@ -280,19 +282,10 @@ export default {
       return this.collection.info && 'tagline' in this.collection.info
         ? this.collection.info.tagline
         : this.collection.name
-    }
-  },
+    },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: this.collection.description
-        }
-      ]
+    description () {
+      return this.collection.description
     }
   },
 

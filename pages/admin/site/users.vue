@@ -1,6 +1,6 @@
 <template>
   <div>
-    <card-base :title="title" help="Manage registered users">
+    <card-base :title="title" :description="description">
       <b-row no-gutters>
         <b-col lg="4">
           <pybossa-form
@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import { exportFile } from '@/mixins/exportFile'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -97,11 +98,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ exportFile ],
+  mixins: [ exportFile, metaTags ],
 
   data () {
     return {
       title: 'Users',
+      description: 'Manage the platform\'s registered users.',
       tableFields: {
         id: {
           label: 'ID',
@@ -151,12 +153,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   components: {

@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Delete the microsite">
+  <card-base :title="title" :description="description">
     <b-card-body>
       <b-alert show variant="danger">
         <strong>Warning:</strong> Deleting a collection microsite is final,
@@ -22,22 +22,18 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
+import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, deleteDomainObject ],
+  mixins: [ fetchCollectionByName, deleteDomainObject, metaTags ],
 
   data () {
     return {
-      title: 'Delete'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
+      title: 'Delete',
+      description: 'Permanently delete the microsite.'
     }
   },
 

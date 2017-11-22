@@ -64,6 +64,9 @@ export default {
 
   a {
     color: $gray-800;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include hover-focus {
       text-decoration: none;

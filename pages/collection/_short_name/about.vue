@@ -24,30 +24,19 @@
 
 <script>
 import marked from 'marked'
+import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import localConfig from '@/local.config'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
-      localConfig: localConfig
-    }
-  },
-
-  head () {
-    return {
       title: 'About',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Learn more about ${this.collection.brand}`
-        }
-      ]
+      localConfig: localConfig
     }
   },
 
@@ -58,6 +47,10 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.about)
+    },
+
+    description () {
+      return `Learn more about ${this.collection.info.brand}.`
     }
   },
 

@@ -2,7 +2,7 @@
   <card-base
     id="admin-collection-content"
     :title="title"
-    help="Configure the microsite page content using Markdown">
+    :description="description">
 
     <pybossa-form
       no-border
@@ -44,6 +44,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -51,20 +52,15 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Content',
+      description: 'Configure the microsite page content using Markdown.',
       markdownConfig: {
         spellChecker: false
       }
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

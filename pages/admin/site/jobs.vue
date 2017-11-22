@@ -1,5 +1,5 @@
 <template>
-  <card-base :title="title" help="Monitor background tasks">
+  <card-base :title="title" :description="description">
     <iframe
       :src="rqSchedulerRoute"
       height="800"
@@ -10,27 +10,25 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import localConfig from '@/local.config'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-site-dashboard',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
       title: 'Background Tasks',
+      description: 'Manage the platform\'s background tasks.',
       rqSchedulerRoute: `${localConfig.pybossa.host}/admin/rq`
     }
   },
 
   components: {
     CardBase
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   }
 }
 </script>

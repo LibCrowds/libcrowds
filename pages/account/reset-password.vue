@@ -1,23 +1,29 @@
 <template>
-  <pybossa-form
-    v-if="!hasError"
-    :header="title"
-    submitText="Reset"
-    :form="form"
-    :next="next">
-  </pybossa-form>
+  <card-base :header="title" :description="description">
+    <pybossa-form
+      v-if="!hasError"
+      submitText="Reset"
+      :form="form"
+      :next="next">
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'container',
 
+  mixins: [ metaTags ],
+
   data () {
     return {
-      title: 'Reset Password'
+      title: 'Reset Password',
+      description: `Reset your ${localConfig.brand} password.`
     }
   },
 
@@ -68,21 +74,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: this.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: `Reset your ${localConfig.brand} password`
-        }
-      ]
-    }
-  },
-
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   validate ({ query }) {

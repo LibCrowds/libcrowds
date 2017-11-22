@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Set the tags used to filter and organise projects">
+  <card-base :title="title" :description="description">
 
     <b-card-body>
       <span v-if="hasTags">
@@ -42,23 +40,19 @@ import pickBy from 'lodash/pickBy'
 import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, notifications ],
+  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
 
   data () {
     return {
       title: 'Tags',
+      description: 'Set the tags used to filter and organise projects',
       processing: false
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

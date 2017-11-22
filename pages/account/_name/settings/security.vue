@@ -1,16 +1,29 @@
 <template>
-  <pybossa-form
-    header="Security Settings"
-    submit-text="Reset Password"
-    :form="form">
-  </pybossa-form>
+  <card-base :title="title" :description="description">
+    <pybossa-form
+      submit-text="Reset Password"
+      :form="form">
+    </pybossa-form>
+  </card-base>
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'account-dashboard',
+
+  mixins: [ metaTags ],
+
+  data () {
+    return {
+      title: 'Security Settings',
+      description: `Update your ${localConfig.brand} password.`
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update`
@@ -50,14 +63,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: 'Security Settings'
-    }
-  },
-
   components: {
-    PybossaForm
+    PybossaForm,
+    CardBase
   },
 
   computed: {

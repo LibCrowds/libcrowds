@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Configure the core settings for the microsite">
+  <card-base :title="title" :description="description">
 
     <div slot="controls" class="d-flex align-items-center float-right">
       <label class="mr-1 mb-0 toggle-label">
@@ -31,6 +29,7 @@ import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { licenses } from '@/mixins/licenses'
+import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -38,17 +37,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, licenses ],
+  mixins: [ fetchCollectionByName, notifications, licenses, metaTags ],
 
   data () {
     return {
-      title: 'Settings'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
+      title: 'Settings',
+      description: 'Configure the core settings for the microsite.'
     }
   },
 

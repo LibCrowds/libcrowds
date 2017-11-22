@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Set the terminology used throughout the microsite">
+  <card-base :title="title" :description="description">
     <pybossa-form
       no-border
       submit-text="Update"
@@ -14,6 +12,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -21,17 +20,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
-      title: 'Terminology'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
+      title: 'Terminology',
+      description: 'Set the terminology used throughout the microsite.'
     }
   },
 

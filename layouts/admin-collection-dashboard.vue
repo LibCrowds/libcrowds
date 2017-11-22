@@ -79,6 +79,15 @@ export default {
           }
         },
         {
+          label: 'Volumes',
+          link: {
+            name: 'admin-collection-short_name-volumes',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
           label: 'Featured Projects',
           link: {
             name: 'admin-collection-short_name-featured',

@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Choose the projects that appear on the microsite's homepage">
+  <card-base :title="title" :description="description">
 
     <b-form-input
       slot="controls"
@@ -33,25 +31,22 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
 import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications ],
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
       title: 'Featured',
+      description: `Choose the projects that appear on the microsite's
+        homepage.`,
       filter: null,
       filterBy: 'name'
-    }
-  },
-
-  head () {
-    return {
-      title: this.title
     }
   },
 

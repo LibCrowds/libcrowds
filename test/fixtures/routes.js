@@ -47,7 +47,7 @@ export const routes = [
   {
     path: '/admin/project/open',
     component: jest.fn(),
-    name: 'admin-project-open'
+    name: 'admin-project'
   },
   {
     path: '/admin/site/users',
@@ -62,7 +62,7 @@ export const routes = [
   {
     path: '/admin/site/dashboard',
     component: jest.fn(),
-    name: 'admin-site-dashboard'
+    name: 'admin-site'
   },
   {
     path: '/admin/collection/new',
@@ -115,9 +115,19 @@ export const routes = [
     name: 'admin-collection-short_name-settings'
   },
   {
+    path: '/admin/collection/:short_name/volumes',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-volumes'
+  },
+  {
     path: '/admin/project/:short_name?/thumbnail',
     component: jest.fn(),
     name: 'admin-project-short_name-thumbnail'
+  },
+  {
+    path: '/admin/project/:short_name/volume',
+    component: jest.fn(),
+    name: 'admin-project-short_name-volume'
   },
   {
     path: '/admin/collection/:short_name/content',

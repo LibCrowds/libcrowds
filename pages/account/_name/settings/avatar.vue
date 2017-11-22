@@ -1,19 +1,32 @@
 <template>
-  <image-upload-form
-    header="Avatar Settings"
-    submit-text="Update Avatar"
-    file-field="avatar"
-    :endpoint="form.endpoint"
-    :model="form.model"
-    :method="form.method">
-  </image-upload-form>
+  <card-base :title="title" :description="description">
+    <image-upload-form
+      submit-text="Update Avatar"
+      file-field="avatar"
+      :endpoint="form.endpoint"
+      :model="form.model"
+      :method="form.method">
+    </image-upload-form>
+  </card-base>
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import ImageUploadForm from '@/components/forms/ImageUpload'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'account-dashboard',
+
+  mixins: [ metaTags ],
+
+  data () {
+    return {
+      title: 'Avatar Settings',
+      description: `Update your ${localConfig.brand} avatar.`
+    }
+  },
 
   async asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update?response_format=json`
@@ -34,14 +47,9 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: 'Avatar Settings'
-    }
-  },
-
   components: {
-    ImageUploadForm
+    ImageUploadForm,
+    CardBase
   },
 
   computed: {

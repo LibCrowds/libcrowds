@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Configure the core settings for the project">
+  <card-base :title="title" :description="description">
 
     <pybossa-form
       no-border
@@ -36,17 +34,19 @@
 
 <script>
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
+import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName ],
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
-      title: 'Settings'
+      title: 'Settings',
+      description: 'Configure the core settings for the project'
     }
   },
 
@@ -98,12 +98,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   components: {

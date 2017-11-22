@@ -37,6 +37,7 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
     "nuxt": "1.0.0-rc11",
+    "papaparse": "^4.3.6",
     "progressbar.js": "^1.0.1",
     "query-string": "^5.0.1",
     "raven": "^2.2.1",

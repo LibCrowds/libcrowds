@@ -18,7 +18,7 @@ export default {
         {
           label: 'Open Project',
           link: {
-            name: 'admin-project-open'
+            name: 'admin-project'
           }
         }
       ]
@@ -58,6 +58,15 @@ export default {
           label: 'Collection',
           link: {
             name: 'admin-project-short_name-collection',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
+          label: 'Volume',
+          link: {
+            name: 'admin-project-short_name-volume',
             params: {
               short_name: this.project.short_name
             }

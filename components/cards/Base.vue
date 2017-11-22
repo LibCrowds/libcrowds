@@ -7,7 +7,7 @@
         <h6 class="mb-0">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
-            {{ help }}
+            {{ description }}
           </small>
         </p>
       </b-col>
@@ -28,7 +28,7 @@ export default {
       type: String,
       default: null
     },
-    help: {
+    description: {
       type: String,
       default: null
     }

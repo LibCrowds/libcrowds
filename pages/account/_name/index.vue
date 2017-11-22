@@ -42,9 +42,12 @@
 
 <script>
 import ProfileCard from '@/components/cards/Profile'
+import { metaTags } from '@/mixins/metaTags'
 
 export default {
   layout: 'default',
+
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -75,25 +78,29 @@ export default {
     })
   },
 
-  head () {
-    return {
-      title: `${this.user.fullname}: User Profile`
-    }
-  },
-
   components: {
     ProfileCard
   },
 
   computed: {
-    /**
-     * Return true if the profile is for the current user, false otherwise.
-     */
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
+    title () {
+      return this.user.fullname
+    },
+
+    description () {
+      return `${this.user.fullname} has contributed to ${this.projects.length}
+        projects.`
+    },
+
     isCurrentUser () {
       return (
         this.user &&
-        this.$store.state.currentUser &&
-        this.user.name === this.$store.state.currentUser.name
+        this.currentUser &&
+        this.user.name === this.currentUser.name
       )
     }
   }

@@ -1,7 +1,5 @@
 <template>
-  <card-base
-    :title="title"
-    help="Set a thumbnail image for the project">
+  <card-base :title="title" :description="description">
 
     <image-upload-form
       submit-text="Update"
@@ -19,6 +17,7 @@
 </template>
 
 <script>
+import { metaTags } from '@/mixins/metaTags'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import CardBase from '@/components/cards/Base'
@@ -26,11 +25,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
-      title: 'Thumbnail'
+      title: 'Thumbnail',
+      description: 'Set a thumbnail image for the project'
     }
   },
 
@@ -50,12 +50,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  head () {
-    return {
-      title: this.title
-    }
   },
 
   components: {
