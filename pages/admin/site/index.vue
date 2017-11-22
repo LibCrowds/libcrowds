@@ -274,7 +274,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -326,7 +326,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -378,7 +378,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -581,7 +581,7 @@ export default {
      *   The label.
      */
     formatDateLabel (label) {
-      return moment(label, 'YYYY-MM-DD').format('DD-MM-YYYY')
+      return moment(label, 'YYYY-MM-DD').format('L')
     }
   }
 }
