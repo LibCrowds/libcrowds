@@ -12,6 +12,12 @@
         hide-brand-breakpoint="lg"
         :fixed="null"
         :current-user="currentUser">
+        <div
+          slot="left"
+          class="d-none d-lg-block ml-2"
+          v-if="titleBase">
+          {{ titleBase }}
+        </div>
         <a
           slot="right"
           v-if="localConfig.docs"
@@ -57,6 +63,10 @@ export default {
     navItems: {
       type: Array,
       required: true
+    },
+    titleBase: {
+      type: String,
+      default: null
     }
   },
 

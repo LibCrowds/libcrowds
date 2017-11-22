@@ -9,7 +9,6 @@
       :method="form.method"
       :viewport-height="250"
       :viewport-width="250"
-      no-border
       crop-type="square">
     </image-upload-form>
 

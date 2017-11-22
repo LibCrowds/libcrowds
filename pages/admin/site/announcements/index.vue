@@ -14,7 +14,6 @@
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
-      no-border
       :search-params="searchParams"
       domain-object="announcement">
       <template slot="action" scope="announcement">

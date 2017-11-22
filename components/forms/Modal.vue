@@ -9,8 +9,7 @@
 
     <form-base
       class="pybossa-form"
-      :show-footer="false"
-      :no-border="true">
+      :show-footer="false">
 
       <vue-form-generator
         ref="form"

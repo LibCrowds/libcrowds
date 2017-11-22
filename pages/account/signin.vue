@@ -1,5 +1,5 @@
 <template>
-  <card-base :header="title" :description="description">
+  <card-base :title="title">
     <pybossa-form
       id="account-signin"
       :lead="lead"

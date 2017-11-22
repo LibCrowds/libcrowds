@@ -2,7 +2,6 @@
   <card-base :title="title" :description="description">
 
     <pybossa-form
-      no-border
       submit-text="Update"
       :form="form">
       <div slot="bottom" class="d-flex form-group mt-1">

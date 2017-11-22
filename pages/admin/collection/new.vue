@@ -2,7 +2,6 @@
   <card-base :title="title" :description="description">
     <pybossa-form
       :form="form"
-      no-border
       submit-text="Create"
       @success="onSuccess">
     </pybossa-form>

@@ -1,10 +1,8 @@
 <template>
   <form-base
     class="pybossa-form"
-    :header="header"
     :show-footer="showFooter"
     :no-body="noBody"
-    :no-border="noBorder"
     :show-cancel="showCancel"
     :cancel-text="cancelText"
     :processing="processing"
@@ -68,10 +66,6 @@ export default {
         )
       }
     },
-    header: {
-      type: String,
-      default: ''
-    },
     submitText: {
       type: String,
       default: 'Submit'
@@ -99,10 +93,6 @@ export default {
     next: {
       type: String,
       default: ''
-    },
-    noBorder: {
-      type: Boolean,
-      default: false
     },
     noBody: {
       type: Boolean,

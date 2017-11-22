@@ -12,7 +12,6 @@
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
-      no-border
       :filter="filter"
       :filter-by="filterBy"
       domain-object="category">
