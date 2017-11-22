@@ -1,6 +1,50 @@
 <template>
   <div id="admin-dashboard">
-    <card-base :title="title" :description="description">
+
+    <card-base :title="title" :description="description" class="mb-3">
+      <b-btn
+        size="sm"
+        variant="success"
+        class="float-right"
+        slot="controls"
+        @click="refresh">
+        Refresh
+      </b-btn>
+    </card-base>
+
+    <b-card-group
+      deck
+      class="mb-3">
+      <b-card
+        bg-variant="primary"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nNewTaskRuns }}</p>
+        <p class="card-text">
+          {{ 'Contribution' | pluralize(counts.nNewTaskRuns) }}
+        </p>
+      </b-card>
+      <b-card
+        bg-variant="success"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nNewTasks }}</p>
+        <p class="card-text">
+          {{ 'Task' | pluralize(counts.nNewTasks) }} created
+        </p>
+      </b-card>
+      <b-card
+        bg-variant="info"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nPublishedProjects }}</p>
+        <p class="card-text">
+          {{ 'Project' | pluralize(counts.nPublishedProjects) }} published
+        </p>
+      </b-card>
+    </b-card-group>
+
+    <!-- <card-base :title="title" :description="description" class="mb-3">
       <b-btn
         size="sm"
         variant="success"
@@ -30,20 +74,6 @@
               {{ item.updated | moment('calendar') }}
             </small>
 
-            <small v-else-if="item.action_updated == 'Blog'">
-              A new blog post was published for
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
             <small v-else-if="item.action_updated == 'Task'">
               New tasks were added to
               <nuxt-link
@@ -58,76 +88,53 @@
               {{ item.updated | moment('calendar') }}
             </small>
 
-            <small v-else-if="item.action_updated == 'TaskCompleted'">
-              A task was completed for
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'UserContribution'">
-              <nuxt-link
-                :to="{
-                  name: 'account-name',
-                  params: {
-                    name: item.name
-                  }
-                }">
-                {{ item.fullname }}
-              </nuxt-link>
-              contributed to
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.project_short_name
-                  }
-                }">
-                {{ item.project_name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'User'">
-              <nuxt-link
-                :to="{
-                  name: 'account-name',
-                  params: {
-                    name: item.name
-                  }
-                }">
-                {{ item.fullname }}
-              </nuxt-link>
-              joined
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else>
-              Untracked event
-            </small>
-
           </p>
         </li>
       </ul>
-    </card-base>
+    </card-base> -->
 
-    <line-chart
-      class="mt-3"
-      header="Contributions"
-      unit="contribution"
-      :chart-data="newTaskRuns">
-    </line-chart>
+    <card-base title="Contributions" class="mb-3">
+      <b-row>
+        <b-col lg="8" class="pt-1">
+          <line-chart
+            unit="contribution"
+            :chart-data="newTaskRuns">
+          </line-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul class="list-unstyled" id="activity-list">
+            <li v-for="(item, index) in updateFeed" :key="index">
+              <small v-if="item.action_updated == 'UserContribution'">
+                <nuxt-link
+                  :to="{
+                    name: 'account-name',
+                    params: {
+                      name: item.name
+                    }
+                  }">
+                  {{ item.fullname }}
+                </nuxt-link>
+                contributed to
+                <nuxt-link
+                  :to="{
+                    name: 'admin-project-short_name-settings',
+                    params: {
+                      short_name: item.project_short_name
+                    }
+                  }">
+                  {{ item.project_name }}
+                </nuxt-link>
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+        </b-col>
+      </b-row>
+    </card-base>
 
     <b-card-group
       deck
-      class="mt-3">
+      class="mb-3">
       <b-card
         bg-variant="primary"
         text-variant="white"
@@ -157,32 +164,44 @@
       </b-card>
     </b-card-group>
 
-    <line-chart
-      class="mt-3"
-      header="New users"
-      unit="user"
-      :chart-data="newUsers">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Returning Users"
-      unit="user"
-      :chart-data="returningUsers">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Active Anonymous Users"
-      unit="user"
-      :chart-data="activeAnon">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Active Authenticated Users"
-      unit="user"
-      :chart-data="activeAuth">
-    </line-chart>
+    <card-base title="New Users" class="mb-3">
+      <b-row>
+        <b-col lg="8" class="pt-1">
+          <line-chart
+            unit="user"
+            :chart-data="newUsers">
+          </line-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul class="list-unstyled" id="activity-list">
+            <li v-for="(item, index) in updateFeed" :key="index">
+              <small v-if="item.action_updated == 'User'">
+                <nuxt-link
+                  :to="{
+                    name: 'account-name',
+                    params: {
+                      name: item.name
+                    }
+                  }">
+                  {{ item.fullname }}
+                </nuxt-link>
+                joined
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+        </b-col>
+      </b-row>
+    </card-base>
 
-    <div role="tablist" class="mt-3">
+    <card-base title="Active Users" class="mb-3">
+      <bar-chart
+        unit="user"
+        :chart-data="stackedUserData">
+      </bar-chart>
+    </card-base>
+
+    <div role="tablist" class="mb-3">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
@@ -340,8 +359,6 @@
         </b-collapse>
       </b-card>
     </div>
-
-    <b-card
   </div>
 </template>
 
@@ -350,6 +367,7 @@ import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
+import BarChart from '@/components/charts/Bar'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -360,7 +378,7 @@ export default {
   data () {
     return {
       title: 'Dashboard',
-      description: 'Monitor the past week\'s activity on the platform.'
+      description: 'Monitor the past week\'s activity.'
     }
   },
 
@@ -391,6 +409,7 @@ export default {
 
   components: {
     LineChart,
+    BarChart,
     SmallAvatar,
     CardBase
   },
@@ -410,6 +429,23 @@ export default {
         nDraftProjects: this.draftProjects.length,
         nPublishedProjects: this.publishedProjects.length,
         nUpdatedProjects: this.updatedProjects.length
+      }
+    },
+
+    stackedUserData () {
+      const allLabels = this.activeAnon.labels.concat(this.activeAnon.labels)
+      const uniqueLabels = [...new Set(allLabels)]
+      const anon = uniqueLabels.map(label => {
+        const anonIdx = this.activeAnon.labels.indexOf(label)
+        return anonIdx > -1 ? this.activeAnon.series[0][anonIdx] : 0
+      })
+      const auth = uniqueLabels.map(label => {
+        const authIdx = this.activeAuth.labels.indexOf(label)
+        return authIdx > -1 ? this.activeAuth.series[0][authIdx] : 0
+      })
+      return {
+        labels: uniqueLabels,
+        series: [anon, auth]
       }
     }
   },
@@ -444,3 +480,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '~assets/style/settings';
+
+.details-column {
+  display: none;
+
+  @include media-breakpoint-up(lg) {
+    border-left: 1px solid $gray-300;
+    overflow-y: auto;
+    display: block;
+  }
+}
+</style>

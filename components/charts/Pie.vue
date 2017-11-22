@@ -1,18 +1,16 @@
 <template>
-  <b-card :header="header">
-    <chartist
-      type="Pie"
-      :data="chartData"
-      :options="options" >
-    </chartist>
-  </b-card>
+  <chartist
+    type="Pie"
+    :data="chartData"
+    :options="mergedOptions">
+  </chartist>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      options: {
+      defaultOptions: {
         height: '200px',
         plugins: [
           this.$chartist.plugins.tooltip(),
@@ -33,9 +31,16 @@ export default {
       type: Object,
       required: true
     },
-    header: {
-      type: String,
-      required: true
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+
+  computed: {
+    mergedOptions () {
+      const copiedOpts = Object.assign({}, this.defaultOptions)
+      return Object.assign(copiedOpts, this.options)
     }
   }
 }
