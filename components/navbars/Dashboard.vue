@@ -165,6 +165,11 @@ export default {
 
     .brand-wrapper {
       display: flex;
+      position: sticky;
+      width: 100%;
+      top: 0;
+      background: $gray-1000;
+      z-index: 2;
     }
 
     .nav-item {
