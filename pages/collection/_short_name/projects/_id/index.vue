@@ -2,29 +2,30 @@
 </template>
 
 <script>
-import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 
 export default {
-  mixins: [ fetchProjectAndCollection ],
+  mixins: [ fetchCollectionByName ],
 
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    project () {
-      return this.$store.state.currentProject
     }
   },
 
-  created () {
-    this.$router.push({
-      name: 'collection-short_name-projects-id-presenter',
-      params: {
-        short_name: this.collection.short_name,
-        id: this.project.id,
-        presenter: this.collection.info.presenter
-      }
+  beforeCreate () {
+    const projectId = this.$route.params.id
+    return this.$axios.$get(`/api/project/${projectId}`).then(project => {
+      this.$router.push({
+        name: 'collection-short_name-projects-id-presenter',
+        params: {
+          short_name: this.collection.short_name,
+          id: project.id,
+          presenter: this.collection.info.presenter
+        }
+      })
+    }).catch(err => {
+      this.$nuxt.error(err)
     })
   }
 }
