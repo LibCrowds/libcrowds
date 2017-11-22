@@ -14,10 +14,7 @@ export default {
       defaultOptions: {
         height: '200px',
         plugins: [
-          this.$chartist.plugins.tooltip(),
-          this.$chartist.plugins.legend({
-            position: 'bottom'
-          })
+          this.$chartist.plugins.tooltip()
         ],
         labelInterpolationFnc: (value, idx) => {
           let sum = this.chartData.series.reduce((a, b) => a.value + b.value)

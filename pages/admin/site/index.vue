@@ -235,6 +235,11 @@
       title="Active Users"
       description="The number of users that contributed to a project this week"
       class="mb-3">
+      <chart-legend
+        :items="[ 'Anonymous', 'Authenticated' ]"
+        slot="controls"
+        class="float-right">
+      </chart-legend>
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
@@ -413,6 +418,7 @@ import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
+import ChartLegend from '@/components/charts/Legend'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -457,6 +463,7 @@ export default {
     LineChart,
     BarChart,
     SmallAvatar,
+    ChartLegend,
     CardBase
   },
 

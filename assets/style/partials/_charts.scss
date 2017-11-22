@@ -13,6 +13,7 @@
   font-size: $font-size-sm;
   list-style: none;
   position: relative;
+  margin: 0;
 
   li {
     position: relative;
@@ -29,22 +30,6 @@
     border-radius: 2px;
     left: -23px;
     top: 2px;
-  }
-
-  li.inactive:before {
-    background: transparent;
-  }
-
-  &.ct-legend-inside {
-    margin-top: 1rem;
-    position: relative;
-    top: 0;
-    right: 0;
-
-    @include media-breakpoint-up(lg) {
-      margin-top: 0;
-      position: absolute;
-    }
   }
 
   @for $i from 0 to length($ct-series-colors) {

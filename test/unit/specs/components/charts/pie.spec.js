@@ -1,7 +1,6 @@
 import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
-import 'chartist-plugin-legend'
 
 import { mount, createLocalVue } from 'vue-test-utils'
 import PieChart from '@/components/charts/Pie'
