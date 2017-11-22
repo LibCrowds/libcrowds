@@ -13,6 +13,9 @@
         }">
         <span>{{ localConfig.brand }}</span>
       </b-link>
+
+      <slot name="left"></slot>
+
     </span>
 
     <b-navbar-nav right class="app-navbar-right border-bottom" v-if="loggedIn">

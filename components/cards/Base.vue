@@ -11,7 +11,7 @@
           </small>
         </p>
       </b-col>
-      <b-col class="my-1 my-md-0">
+      <b-col class="my-1 my-md-0" v-if="$slots.controls">
         <slot name="controls"></slot>
       </b-col>
     </b-row>

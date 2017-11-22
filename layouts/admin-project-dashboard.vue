@@ -1,6 +1,7 @@
 <template>
   <dashboard-base
-    :navItems="navItems">
+    :navItems="navItems"
+    :titleBase="titleBase">
   </dashboard-base>
 </template>
 
@@ -32,6 +33,10 @@ export default {
   computed: {
     project () {
       return this.$store.state.currentProject
+    },
+
+    titleBase () {
+      return this.project.name
     },
 
     projectNavItems () {
