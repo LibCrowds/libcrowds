@@ -2,7 +2,8 @@
   <chartist
     type="Line"
     :data="chartData"
-    :options="mergedOptions">
+    :options="mergedOptions"
+    class="ct-container">
   </chartist>
 </template>
 
@@ -13,7 +14,7 @@ export default {
   data () {
     return {
       defaultOptions: {
-        height: '300px',
+        height: this.height,
         plugins: [
           this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
@@ -43,6 +44,10 @@ export default {
     options: {
       type: Object,
       default: () => ({})
+    },
+    height: {
+      type: String,
+      default: '300px'
     }
   },
 

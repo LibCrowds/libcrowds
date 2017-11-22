@@ -2,7 +2,8 @@
   <chartist
     type="Pie"
     :data="chartData"
-    :options="mergedOptions">
+    :options="mergedOptions"
+    class="ct-container">
   </chartist>
 </template>
 
@@ -11,7 +12,7 @@ export default {
   data () {
     return {
       defaultOptions: {
-        height: '200px',
+        height: this.height,
         plugins: [
           this.$chartist.plugins.tooltip(),
           this.$chartist.plugins.legend({
@@ -34,6 +35,10 @@ export default {
     options: {
       type: Object,
       default: () => ({})
+    },
+    height: {
+      type: String,
+      default: '200px'
     }
   },
 

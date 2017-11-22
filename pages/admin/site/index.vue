@@ -94,17 +94,23 @@
     </card-base> -->
 
     <card-base title="Contributions" class="mb-3">
-      <b-row>
-        <b-col lg="8" class="pt-1">
+      <b-row no-gutters class="chart-row">
+        <b-col lg="8" class="pt-2">
           <line-chart
             unit="contribution"
+            height="100%"
             :chart-data="newTaskRuns">
           </line-chart>
         </b-col>
         <b-col class="details-column">
-          <ul class="list-unstyled" id="activity-list">
-            <li v-for="(item, index) in updateFeed" :key="index">
-              <small v-if="item.action_updated == 'UserContribution'">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('UserContribution')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['UserContribution']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
                 <nuxt-link
                   :to="{
                     name: 'account-name',
@@ -128,6 +134,11 @@
               </small>
             </li>
           </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
         </b-col>
       </b-row>
     </card-base>
@@ -165,17 +176,23 @@
     </b-card-group>
 
     <card-base title="New Users" class="mb-3">
-      <b-row>
+      <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-1">
           <line-chart
             unit="user"
+            height="100%"
             :chart-data="newUsers">
           </line-chart>
         </b-col>
         <b-col class="details-column">
-          <ul class="list-unstyled" id="activity-list">
-            <li v-for="(item, index) in updateFeed" :key="index">
-              <small v-if="item.action_updated == 'User'">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('User')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['User']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
                 <nuxt-link
                   :to="{
                     name: 'account-name',
@@ -190,15 +207,23 @@
               </small>
             </li>
           </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
         </b-col>
       </b-row>
     </card-base>
 
     <card-base title="Active Users" class="mb-3">
-      <bar-chart
-        unit="user"
-        :chart-data="stackedUserData">
-      </bar-chart>
+      <b-card-body class="pt-2 px-0 chart-row">
+        <bar-chart
+          unit="user"
+          height="100%"
+          :chart-data="stackedUserData">
+        </bar-chart>
+      </b-card-body>
     </card-base>
 
     <div role="tablist" class="mb-3">
@@ -341,7 +366,7 @@
                       }">
                       {{ project.p_name }}
                     </nuxt-link>
-                    updated by
+                    owned by
                     <nuxt-link
                       :to="{
                         name: 'account-name',
@@ -363,6 +388,7 @@
 </template>
 
 <script>
+import groupBy from 'lodash/groupBy'
 import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
@@ -391,13 +417,7 @@ export default {
         newUsers: data.new_users_week,
         newTaskRuns: data.new_task_runs_week,
         newTasks: data.new_tasks_week,
-        updateFeed: data.update_feed.map(item => {
-          // Convert epoch timestamp to ISO string
-          const d = new Date(0)
-          d.setUTCSeconds(item.updated)
-          item.updated = d.toISOString()
-          return item
-        }),
+        updateFeed: data.update_feed,
         draftProjects: data.draft_projects_last_week,
         publishedProjects: data.published_projects_last_week,
         updatedProjects: data.update_projects_last_week
@@ -447,6 +467,17 @@ export default {
         labels: uniqueLabels,
         series: [anon, auth]
       }
+    },
+
+    groupedFeed () {
+      // Convert epoch timestamp to ISO string
+      const feed = this.updateFeed.map(item => {
+        const d = new Date(0)
+        d.setUTCSeconds(item.updated)
+        item.updated = d.toISOString()
+        return item
+      })
+      return groupBy(feed, item => item.action_updated)
     }
   },
 
@@ -484,8 +515,21 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/style/settings';
 
+.chart-row {
+  height: 300px;
+  max-height: 300px;
+}
+
 .details-column {
   display: none;
+  padding: 0 1rem;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0;
+  }
 
   @include media-breakpoint-up(lg) {
     border-left: 1px solid $gray-300;
