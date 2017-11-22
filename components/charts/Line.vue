@@ -1,11 +1,10 @@
 <template>
-  <b-card :header="header">
-    <chartist
-      type="Line"
-      :data="chartData"
-      :options="options" >
-    </chartist>
-  </b-card>
+  <chartist
+    type="Line"
+    :data="chartData"
+    :options="mergedOptions"
+    class="ct-container">
+  </chartist>
 </template>
 
 <script>
@@ -14,7 +13,7 @@ import pluralize from 'pluralize'
 export default {
   data () {
     return {
-      options: {
+      defaultOptions: {
         height: '300px',
         plugins: [
           this.$chartist.plugins.tooltip({
@@ -26,7 +25,9 @@ export default {
         ],
         lineSmooth: this.$chartist.Interpolation.cardinal({
           fillHoles: true
-        })
+        }),
+        low: 0,
+        showArea: true
       }
     }
   },
@@ -40,9 +41,16 @@ export default {
       type: String,
       required: true
     },
-    header: {
-      type: String,
-      required: true
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+
+  computed: {
+    mergedOptions () {
+      const copiedOpts = Object.assign({}, this.defaultOptions)
+      return Object.assign(copiedOpts, this.options)
     }
   }
 }

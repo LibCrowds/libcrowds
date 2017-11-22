@@ -1,6 +1,7 @@
 <template>
   <div id="admin-dashboard">
-    <card-base :title="title" :description="description">
+
+    <card-base :title="title" :description="description" class="mb-3">
       <b-btn
         size="sm"
         variant="success"
@@ -9,125 +10,140 @@
         @click="refresh">
         Refresh
       </b-btn>
-
-      <ul class="list-unstyled" id="activity-list">
-        <li v-for="(item, index) in updateFeed" :key="index">
-          <p class="d-flex flex-row align-items-center">
-
-            <small-avatar :domain-object="item" class="mr-1"></small-avatar>
-
-            <small v-if="item.action_updated == 'Project'">
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              was created
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'Blog'">
-              A new blog post was published for
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'Task'">
-              New tasks were added to
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'TaskCompleted'">
-              A task was completed for
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'UserContribution'">
-              <nuxt-link
-                :to="{
-                  name: 'account-name',
-                  params: {
-                    name: item.name
-                  }
-                }">
-                {{ item.fullname }}
-              </nuxt-link>
-              contributed to
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.project_short_name
-                  }
-                }">
-                {{ item.project_name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'User'">
-              <nuxt-link
-                :to="{
-                  name: 'account-name',
-                  params: {
-                    name: item.name
-                  }
-                }">
-                {{ item.fullname }}
-              </nuxt-link>
-              joined
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else>
-              Untracked event
-            </small>
-
-          </p>
-        </li>
-      </ul>
     </card-base>
-
-    <line-chart
-      class="mt-3"
-      header="Contributions"
-      unit="contribution"
-      :chart-data="newTaskRuns">
-    </line-chart>
 
     <b-card-group
       deck
-      class="mt-3">
+      class="mb-3">
+      <b-card
+        bg-variant="primary"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nNewTaskRuns }}</p>
+        <p class="card-text">
+          {{ 'Contribution' | pluralize(counts.nNewTaskRuns) }}
+        </p>
+      </b-card>
+      <b-card
+        bg-variant="success"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nNewTasks }}</p>
+        <p class="card-text">
+          {{ 'Task' | pluralize(counts.nNewTasks) }} created
+        </p>
+      </b-card>
+      <b-card
+        bg-variant="info"
+        text-variant="white"
+        class="text-center">
+        <p class="display-4 mb-0">{{ counts.nPublishedProjects }}</p>
+        <p class="card-text">
+          {{ 'Project' | pluralize(counts.nPublishedProjects) }} published
+        </p>
+      </b-card>
+    </b-card-group>
+
+    <card-base
+      title="Contributions"
+      description="The number of contributions made this week"
+      class="mb-3">
+      <b-row no-gutters class="chart-row">
+        <b-col lg="8" class="pt-2">
+          <line-chart
+            unit="contribution"
+            :options="chartOptions"
+            :chart-data="sortByLabel(newTaskRuns)">
+          </line-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('UserContribution')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['UserContribution']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
+                <nuxt-link
+                  :to="{
+                    name: 'account-name',
+                    params: {
+                      name: item.name
+                    }
+                  }">
+                  {{ item.fullname }}
+                </nuxt-link>
+                contributed to
+                <nuxt-link
+                  :to="{
+                    name: 'admin-project-short_name-settings',
+                    params: {
+                      short_name: item.project_short_name
+                    }
+                  }">
+                  {{ item.project_name }}
+                </nuxt-link>
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
+        </b-col>
+      </b-row>
+    </card-base>
+
+    <card-base
+      title="New Tasks"
+      description="The number of tasks added this week"
+      class="mb-3">
+      <b-row no-gutters class="chart-row">
+        <b-col lg="8" class="pt-2">
+          <bar-chart
+            unit="task"
+            :options="chartOptions"
+            :chart-data="sortByLabel(newTasks)">
+          </bar-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('Task')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['Task']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
+                Tasks were added to
+                <nuxt-link
+                  :to="{
+                    name: 'admin-project-short_name-settings',
+                    params: {
+                      short_name: item.short_name
+                    }
+                  }">
+                  {{ item.name }}
+                </nuxt-link>
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
+        </b-col>
+      </b-row>
+    </card-base>
+
+    <b-card-group
+      deck
+      class="mb-3">
       <b-card
         bg-variant="primary"
         text-variant="white"
@@ -157,32 +173,83 @@
       </b-card>
     </b-card-group>
 
-    <line-chart
-      class="mt-3"
-      header="New users"
-      unit="user"
-      :chart-data="newUsers">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Returning Users"
-      unit="user"
-      :chart-data="returningUsers">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Active Anonymous Users"
-      unit="user"
-      :chart-data="activeAnon">
-    </line-chart>
-    <line-chart
-      class="mt-3"
-      header="Active Authenticated Users"
-      unit="user"
-      :chart-data="activeAuth">
-    </line-chart>
+    <card-base
+      title="New Users"
+      description="The number of users that signed up this week"
+      class="mb-3">
+      <b-row no-gutters class="chart-row">
+        <b-col lg="8" class="pt-1">
+          <line-chart
+            unit="user"
+            :options="chartOptions"
+            :chart-data="sortByLabel(newUsers)">
+          </line-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('User')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['User']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
+                <nuxt-link
+                  :to="{
+                    name: 'account-name',
+                    params: {
+                      name: item.name
+                    }
+                  }">
+                  {{ item.fullname }}
+                </nuxt-link>
+                joined
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
+        </b-col>
+      </b-row>
+    </card-base>
 
-    <div role="tablist" class="mt-3">
+    <card-base
+      title="Returning Users"
+      description="The number of users returning for a number days in a row
+        this week"
+      class="mb-3">
+      <b-card-body class="pt-2 px-0 chart-row">
+        <bar-chart
+          unit="user"
+          :options="chartOptions"
+          :chart-data="returningUsers">
+        </bar-chart>
+      </b-card-body>
+    </card-base>
+
+    <card-base
+      title="Active Users"
+      description="The number of users that contributed to a project this week"
+      class="mb-3">
+      <chart-legend
+        :items="[ 'Anonymous', 'Authenticated' ]"
+        slot="controls"
+        class="float-right">
+      </chart-legend>
+      <b-card-body class="pt-2 px-0 chart-row">
+        <bar-chart
+          unit="user"
+          :options="stackedChartOptions"
+          :chart-data="stackedUserData">
+        </bar-chart>
+      </b-card-body>
+    </card-base>
+
+    <div role="tablist" class="mb-3">
       <b-card no-body class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
@@ -207,7 +274,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -259,7 +326,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -311,7 +378,7 @@
                   class="mb-2">
                   <small>
                     <strong>
-                      {{ project.day | moment('DD/MM/YYYY') }}:
+                      {{ project.day | moment('L') }}:
                     </strong>
                     <nuxt-link
                       :to="{
@@ -322,7 +389,7 @@
                       }">
                       {{ project.p_name }}
                     </nuxt-link>
-                    updated by
+                    owned by
                     <nuxt-link
                       :to="{
                         name: 'account-name',
@@ -340,16 +407,18 @@
         </b-collapse>
       </b-card>
     </div>
-
-    <b-card
   </div>
 </template>
 
 <script>
+import moment from 'moment'
+import groupBy from 'lodash/groupBy'
 import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
+import BarChart from '@/components/charts/Bar'
+import ChartLegend from '@/components/charts/Legend'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -360,7 +429,14 @@ export default {
   data () {
     return {
       title: 'Dashboard',
-      description: 'Monitor the past week\'s activity on the platform.'
+      description: 'Monitor the past week\'s activity.',
+      chartOptions: {
+        height: '100%'
+      },
+      stackedChartOptions: {
+        height: '100%',
+        stackBars: true
+      }
     }
   },
 
@@ -373,13 +449,7 @@ export default {
         newUsers: data.new_users_week,
         newTaskRuns: data.new_task_runs_week,
         newTasks: data.new_tasks_week,
-        updateFeed: data.update_feed.map(item => {
-          // Convert epoch timestamp to ISO string
-          const d = new Date(0)
-          d.setUTCSeconds(item.updated)
-          item.updated = d.toISOString()
-          return item
-        }),
+        updateFeed: data.update_feed,
         draftProjects: data.draft_projects_last_week,
         publishedProjects: data.published_projects_last_week,
         updatedProjects: data.update_projects_last_week
@@ -391,7 +461,9 @@ export default {
 
   components: {
     LineChart,
+    BarChart,
     SmallAvatar,
+    ChartLegend,
     CardBase
   },
 
@@ -411,6 +483,36 @@ export default {
         nPublishedProjects: this.publishedProjects.length,
         nUpdatedProjects: this.updatedProjects.length
       }
+    },
+
+    stackedUserData () {
+      const anonData = this.sortByLabel(this.activeAnon)
+      const authData = this.sortByLabel(this.activeAuth)
+      const allLabels = anonData.labels.concat(this.activeAnon.labels)
+      const uniqueLabels = [...new Set(allLabels)]
+      const anon = uniqueLabels.map(label => {
+        const anonIdx = anonData.labels.indexOf(label)
+        return anonIdx > -1 ? anonData.series[0][anonIdx] : 0
+      })
+      const auth = uniqueLabels.map(label => {
+        const authIdx = authData.labels.indexOf(label)
+        return authIdx > -1 ? authData.series[0][authIdx] : 0
+      })
+      return {
+        labels: uniqueLabels,
+        series: [anon, auth]
+      }
+    },
+
+    groupedFeed () {
+      // Convert epoch timestamp to ISO string
+      const feed = this.updateFeed.map(item => {
+        const d = new Date(0)
+        d.setUTCSeconds(item.updated)
+        item.updated = d.toISOString()
+        return item
+      })
+      return groupBy(feed, item => item.action_updated)
     }
   },
 
@@ -440,7 +542,74 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Ensure that stats appear in date order.
+     *
+     * This should really be fixed within by PYBOSSA but for now we can do it
+     * here (and it may be useful as a backup anyway).
+     * @param {Object} data
+     *   The stats data.
+     */
+    sortByLabel (data) {
+      let combinedData = data.labels.map((label, idx) => {
+        return {
+          label: label,
+          item: data.series[0][idx]
+        }
+      })
+      combinedData.sort((a, b) => {
+        if (moment(a.label).isBefore(b.label)) {
+          return -1
+        } else if (a.label === b.label) {
+          return 0
+        } else {
+          return 1
+        }
+      })
+      for (let i = 0; i < combinedData.length; i++) {
+        data.labels[i] = this.formatDateLabel(combinedData[i].label)
+        data.series[0][i] = combinedData[i].item
+      }
+      return data
+    },
+
+    /**
+     * Format the label as an English date.
+     * @param {String} label
+     *   The label.
+     */
+    formatDateLabel (label) {
+      return moment(label, 'YYYY-MM-DD').format('L')
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '~assets/style/settings';
+
+.chart-row {
+  height: 300px;
+  max-height: 300px;
+}
+
+.details-column {
+  display: none;
+  padding: 0 1rem;
+
+  li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.5rem 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    border-left: 1px solid $gray-300;
+    overflow-y: auto;
+    display: block;
+  }
+}
+</style>

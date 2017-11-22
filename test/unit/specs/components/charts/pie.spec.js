@@ -1,7 +1,6 @@
 import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
-import 'chartist-plugin-legend'
 
 import { mount, createLocalVue } from 'vue-test-utils'
 import PieChart from '@/components/charts/Pie'
@@ -20,7 +19,6 @@ describe('Pie chart', () => {
     max = 100
     random = Math.floor(Math.random() * (max - 1 + 1)) + 1
     propsData = {
-      header: 'My Pie Chart',
       chartData: {
         labels: ['Auth', 'Anon'],
         series: [
@@ -48,7 +46,8 @@ describe('Pie chart', () => {
     const label = propsData.chartData.labels[idx]
     const value = propsData.chartData.series[idx].value
     const expected = Math.round(value / max * 100) + '%'
-    let modifiedLabel = wrapper.vm.options.labelInterpolationFnc(label, idx)
+    const defaultOpts = wrapper.vm.defaultOptions
+    let modifiedLabel = defaultOpts.labelInterpolationFnc(label, idx)
     expect(modifiedLabel).toBe(expected)
   })
 })

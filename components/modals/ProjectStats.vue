@@ -9,42 +9,71 @@
 
     <div class="p-2">
       <p
-        v-if="project.overall_progress == 0"
+        v-if="loading"
+        class="lead mb-0">
+        Loading stats...
+      </p>
+
+      <p
+        v-else-if="project.overall_progress == 0"
         class="lead mb-0">
         Sorry, not enough tasks have been completed to generate statistics
         for this project.
       </p>
 
-      <pie-chart
-        v-if="userStats.authenticated && userStats.anonymous"
-        :chart-data="proportionAuthData"
-        :header="proportionAuthHeader">
-      </pie-chart>
+      <span v-else>
+        <card-base
+          title="Proportion of Authenticated Users"
+          :description="proportionAuthDescription"
+          class="mb-3">
+          <b-card-body>
+            <pie-chart
+              v-if="userStats.authenticated && userStats.anonymous"
+              :chart-data="proportionAuthData">
+            </pie-chart>
+          </b-card-body>
+        </card-base>
 
-      <line-chart
-        v-if="projectStats.dayStats"
-        class="mt-3"
-        :header="dailyContributionsHeader"
-        :unit="collection.info.terminology.taskrun"
-        :chart-data="dailyContributionsData">
-      </line-chart>
+        <card-base
+          title="Daily Contributions"
+          :description="dailyContributionsDescriptions"
+          class="mb-3">
+          <b-card-body>
+            <line-chart
+              v-if="projectStats.dayStats"
+              :unit="collection.info.terminology.taskrun"
+              :chart-data="dailyContributionsData">
+            </line-chart>
+          </b-card-body>
+        </card-base>
 
-      <line-chart
-        v-if="projectStats.hourStats"
-        class="mt-3"
-        :header="hourlyContributionsHeader"
-        :unit="collection.info.terminology.taskrun"
-        :chart-data="hourlyContributionsData">
-      </line-chart>
+        <card-base
+          title="Hourly Contributions"
+          :description="hourlyContributionsDescription"
+          class="mb-3">
+          <b-card-body>
+            <line-chart
+              v-if="projectStats.hourStats"
+              :unit="collection.info.terminology.taskrun"
+              :chart-data="hourlyContributionsData">
+            </line-chart>
+          </b-card-body>
+        </card-base>
 
-      <bar-chart
-        v-if="userStats.authenticated"
-        class="mt-3"
-        header="Top authenticated users over the past 2 weeks"
-        :unit="collection.info.terminology.taskrun"
-        :chart-data="topUsersData">
-      </bar-chart>
+        <card-base
+          title="Top Authenticated Users"
+          :description="topUsersDescription"
+          class="mb-3">
+          <b-card-body>
+            <bar-chart
+              v-if="userStats.authenticated"
+              :unit="collection.info.terminology.taskrun"
+              :chart-data="topUsersData">
+            </bar-chart>
+          </b-card-body>
+        </card-base>
 
+      </span>
     </div>
   </b-modal>
 </template>
@@ -56,19 +85,22 @@ import 'vue-awesome/icons/clock-o'
 import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
 import PieChart from '@/components/charts/Pie'
+import CardBase from '@/components/cards/Base'
 
 export default {
-  data: function () {
+  data () {
     return {
       userStats: {},
-      projectStats: {}
+      projectStats: {},
+      loading: true
     }
   },
 
   components: {
     LineChart,
     BarChart,
-    PieChart
+    PieChart,
+    CardBase
   },
 
   props: {
@@ -106,6 +138,7 @@ export default {
             eventValue: 1
           })
         }
+        this.loading = false
       }).catch(err => {
         this.$nuxt.error(err)
       })
@@ -166,18 +199,23 @@ export default {
       }
     },
 
-    dailyContributionsHeader () {
+    dailyContributionsDescription () {
       const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Daily ${taskrun} over the past 2 weeks`
+      return `Daily ${taskrun} over the past two weeks`
     },
 
-    hourlyContributionsHeader () {
+    hourlyContributionsDescription () {
       const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Hourly ${taskrun} over the past 2 weeks`
+      return `Hourly ${taskrun} over the past two weeks`
     },
 
-    proportionAuthHeader () {
-      return 'Proportion of authenticated users over the past 2 weeks'
+    proportionAuthDescription () {
+      return `Proportion of authenticated users contributing over the past
+        two weeks`
+    },
+
+    topUsersDescription () {
+      return 'The users with the most contributions over the past two weeks'
     }
   }
 }

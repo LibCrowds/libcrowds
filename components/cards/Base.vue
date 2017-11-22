@@ -3,7 +3,7 @@
     <b-row
       slot="header"
       class="mb-0 d-flex align-items-center">
-      <b-col xs="12" md="6">
+      <b-col>
         <h6 class="mb-0">{{ title }}</h6>
         <p class="text-muted mb-0">
           <small>
@@ -11,7 +11,7 @@
           </small>
         </p>
       </b-col>
-      <b-col class="my-1 my-md-0" v-if="$slots.controls">
+      <b-col xs="12" md="6" class="my-1 my-md-0" v-if="$slots.controls">
         <slot name="controls"></slot>
       </b-col>
     </b-row>

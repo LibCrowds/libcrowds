@@ -143,7 +143,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
                    class="dropdown-divider"
               >
               </div>
-              <a href="#/admin/project/open"
+              <a href="#/admin/project"
                  role="menuitem"
                  target="_self"
                  class="dropdown-item"
@@ -157,7 +157,7 @@ exports[`Collection navbar renders correctly when signed in as admin 1`] = `
               >
                 Collection Admin
               </a>
-              <a href="#/admin/site/dashboard"
+              <a href="#/admin/site"
                  role="menuitem"
                  target="_self"
                  class="dropdown-item"

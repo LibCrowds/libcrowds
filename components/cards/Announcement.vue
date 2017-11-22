@@ -30,7 +30,7 @@
             {{ announcement.created | moment('calendar') }}
           </span>
           <span class="d-md-none">
-            {{ announcement.created | moment('DD/MM/YYYY') }}
+            {{ announcement.created | moment('L') }}
           </span>
         </small>
       </div>

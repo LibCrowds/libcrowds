@@ -121,6 +121,9 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
             My Brand
           </span>
         </a>
+        <div class="d-none d-lg-block ml-2">
+          In the Spotlight
+        </div>
       </span>
       <ul id="sign-in-up"
           right

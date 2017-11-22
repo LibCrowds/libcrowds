@@ -1,24 +1,20 @@
 <template>
-  <b-card :header="header">
-    <chartist
-      type="Pie"
-      :data="chartData"
-      :options="options" >
-    </chartist>
-  </b-card>
+  <chartist
+    type="Pie"
+    :data="chartData"
+    :options="mergedOptions"
+    class="ct-container">
+  </chartist>
 </template>
 
 <script>
 export default {
   data () {
     return {
-      options: {
+      defaultOptions: {
         height: '200px',
         plugins: [
-          this.$chartist.plugins.tooltip(),
-          this.$chartist.plugins.legend({
-            position: 'bottom'
-          })
+          this.$chartist.plugins.tooltip()
         ],
         labelInterpolationFnc: (value, idx) => {
           let sum = this.chartData.series.reduce((a, b) => a.value + b.value)
@@ -33,9 +29,16 @@ export default {
       type: Object,
       required: true
     },
-    header: {
-      type: String,
-      required: true
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+
+  computed: {
+    mergedOptions () {
+      const copiedOpts = Object.assign({}, this.defaultOptions)
+      return Object.assign(copiedOpts, this.options)
     }
   }
 }
