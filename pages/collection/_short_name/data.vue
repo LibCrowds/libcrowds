@@ -50,7 +50,7 @@
 
 <script>
 import marked from 'marked'
-import { metaTags } from '@/mixins/metaTags'
+import { collectionMetaTags } from '@/mixins/collectionMetaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
@@ -65,7 +65,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, filterProjects, licenses, metaTags ],
+  mixins: [
+    fetchCollectionByName,
+    filterProjects,
+    licenses,
+    collectionMetaTags
+  ],
 
   data () {
     return {

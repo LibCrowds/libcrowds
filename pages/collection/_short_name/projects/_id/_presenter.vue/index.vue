@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { metaTags } from '@/mixins/metaTags'
+import { collectionMetaTags } from '@/mixins/collectionMetaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
@@ -27,7 +27,7 @@ export default {
     return layouts[params.presenter] || 'collection-tabs'
   },
 
-  mixins: [ notifications, fetchCollectionByName, metaTags ],
+  mixins: [ notifications, fetchCollectionByName, collectionMetaTags ],
 
   data () {
     return {

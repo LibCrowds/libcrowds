@@ -24,14 +24,14 @@
 
 <script>
 import marked from 'marked'
-import { metaTags } from '@/mixins/metaTags'
+import { collectionMetaTags } from '@/mixins/collectionMetaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import localConfig from '@/local.config'
 
 export default {
   layout: 'collection-tabs',
 
-  mixins: [ fetchCollectionByName, metaTags ],
+  mixins: [ fetchCollectionByName, collectionMetaTags ],
 
   data () {
     return {

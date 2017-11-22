@@ -107,7 +107,7 @@
 
 <script>
 import marked from 'marked'
-import { metaTags } from '@/mixins/metaTags'
+import { collectionMetaTags } from '@/mixins/collectionMetaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { filterProjects } from '@/mixins/filterProjects'
@@ -129,7 +129,7 @@ export default {
     fetchCollectionByName,
     computeShareUrl,
     filterProjects,
-    metaTags
+    collectionMetaTags
   ],
 
   data () {
