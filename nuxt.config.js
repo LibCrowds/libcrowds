@@ -19,6 +19,7 @@ const config = {
   },
   css: [
     '~/assets/style/main.scss',
+    'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css',
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.css',
     'vue-multiselect/dist/vue-multiselect.min.css',
