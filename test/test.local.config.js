@@ -8,8 +8,7 @@ const config = {
     email: 'me@example.com'
   },
   pybossa: {
-    host: 'http://example.com',
-    timeout: 10000
+    host: 'http://example.com'
   },
   license: 'CC0',
   githubUrl: 'https://github.com/Organization/repo'
