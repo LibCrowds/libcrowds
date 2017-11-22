@@ -21,7 +21,7 @@ exports[`Dashboard navbar renders correctly in side position 1`] = `
     <li data-index="0"
         class="nav-item"
     >
-      <a href="#/admin/site/dashboard"
+      <a href="#/admin/site"
          target="_self"
          class="nav-link"
       >
@@ -64,7 +64,7 @@ exports[`Dashboard navbar renders correctly in top position 1`] = `
     <li data-index="0"
         class="nav-item"
     >
-      <a href="#/admin/site/dashboard"
+      <a href="#/admin/site"
          target="_self"
          class="nav-link"
       >

@@ -3,17 +3,8 @@
 exports[`Line chart renders correctly 1`] = `
 
 <div data-server-rendered="true"
-     class="card"
+     class="ct-container"
 >
-  <div class="card-header">
-    <div>
-      My Line Chart
-    </div>
-  </div>
-  <div class="card-body">
-    <div>
-    </div>
-  </div>
 </div>
 
 `;

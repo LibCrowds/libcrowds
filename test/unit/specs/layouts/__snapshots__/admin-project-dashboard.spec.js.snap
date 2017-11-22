@@ -19,11 +19,71 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
       <li data-index="0"
           class="nav-item"
       >
-        <a href="#/admin/project/open"
+        <a href="#/admin/project"
            target="_self"
            class="nav-link"
         >
           Open Project
+        </a>
+      </li>
+      <li data-index="1"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/settings"
+           target="_self"
+           class="nav-link"
+        >
+          Settings
+        </a>
+      </li>
+      <li data-index="2"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/tags"
+           target="_self"
+           class="nav-link"
+        >
+          Tags
+        </a>
+      </li>
+      <li data-index="3"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/collection"
+           target="_self"
+           class="nav-link"
+        >
+          Collection
+        </a>
+      </li>
+      <li data-index="4"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/volume"
+           target="_self"
+           class="nav-link"
+        >
+          Volume
+        </a>
+      </li>
+      <li data-index="5"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/thumbnail"
+           target="_self"
+           class="nav-link"
+        >
+          Thumbnail
+        </a>
+      </li>
+      <li data-index="6"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/presenter"
+           target="_self"
+           class="nav-link"
+        >
+          Task Presenter
         </a>
       </li>
     </ul>
@@ -41,6 +101,9 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
             My Brand
           </span>
         </a>
+        <div class="d-none d-lg-block ml-2">
+          Some Project
+        </div>
       </span>
       <ul right
           class="app-navbar-right border-bottom navbar-nav"
@@ -151,11 +214,71 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
         <li data-index="0"
             class="nav-item"
         >
-          <a href="#/admin/project/open"
+          <a href="#/admin/project"
              target="_self"
              class="nav-link"
           >
             Open Project
+          </a>
+        </li>
+        <li data-index="1"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/settings"
+             target="_self"
+             class="nav-link"
+          >
+            Settings
+          </a>
+        </li>
+        <li data-index="2"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/tags"
+             target="_self"
+             class="nav-link"
+          >
+            Tags
+          </a>
+        </li>
+        <li data-index="3"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/collection"
+             target="_self"
+             class="nav-link"
+          >
+            Collection
+          </a>
+        </li>
+        <li data-index="4"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/volume"
+             target="_self"
+             class="nav-link"
+          >
+            Volume
+          </a>
+        </li>
+        <li data-index="5"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/thumbnail"
+             target="_self"
+             class="nav-link"
+          >
+            Thumbnail
+          </a>
+        </li>
+        <li data-index="6"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/presenter"
+             target="_self"
+             class="nav-link"
+          >
+            Task Presenter
           </a>
         </li>
       </ul>

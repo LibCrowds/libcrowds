@@ -19,7 +19,7 @@ exports[`Site admin dashboard layout renders correctly 1`] = `
       <li data-index="0"
           class="nav-item"
       >
-        <a href="#/admin/site/dashboard"
+        <a href="#/admin/site"
            target="_self"
            class="nav-link"
         >
@@ -181,7 +181,7 @@ exports[`Site admin dashboard layout renders correctly 1`] = `
         <li data-index="0"
             class="nav-item"
         >
-          <a href="#/admin/site/dashboard"
+          <a href="#/admin/site"
              target="_self"
              class="nav-link"
           >

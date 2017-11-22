@@ -23,6 +23,10 @@ describe('Project admin dashboard layout', () => {
       state: {
         currentUser: {
           name: 'joebloggs'
+        },
+        currentProject: {
+          name: 'Some Project',
+          short_name: 'some_project'
         }
       }
     })
