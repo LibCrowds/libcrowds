@@ -64,6 +64,15 @@ export default {
           }
         },
         {
+          label: 'Volume',
+          link: {
+            name: 'admin-project-short_name-volume',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
           label: 'Thumbnail',
           link: {
             name: 'admin-project-short_name-thumbnail',

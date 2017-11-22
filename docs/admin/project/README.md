@@ -9,3 +9,4 @@ this section.
 * [Task Presenter](/admin/project/presenter.md)
 * [Tags](/admin/project/tags.md)
 * [Collection](/admin/project/collection.md)
+* [Volumes](/admin/project/volumes.md)

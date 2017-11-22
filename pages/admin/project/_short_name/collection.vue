@@ -44,8 +44,8 @@ export default {
 
   data () {
     return {
-      title: 'Set Collection',
-      description: 'Choose the collection that this project belongs to',
+      title: 'Collection',
+      description: 'Choose the collection that this project belongs to.',
       tableFields: {
         name: {
           label: 'Name',

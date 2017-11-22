@@ -9,5 +9,6 @@ manage the platform's collection microsites.
 * [Content](/admin/collection/content.md)
 * [Terminology](/admin/collection/terminology.md)
 * [Tags](/admin/collection/tags.md)
+* [Volumes](/admin/collection/volumes.md)
 * [Featured Projects](/admin/collection/featured.md)
 * [Delete](/admin/collection/delete.md)

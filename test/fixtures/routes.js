@@ -125,6 +125,11 @@ export const routes = [
     name: 'admin-project-short_name-thumbnail'
   },
   {
+    path: '/admin/project/:short_name/volume',
+    component: jest.fn(),
+    name: 'admin-project-short_name-volume'
+  },
+  {
     path: '/admin/collection/:short_name/content',
     component: jest.fn(),
     name: 'admin-collection-short_name-content'

@@ -51,10 +51,12 @@ export default {
       uploadCsvModalId: 'upload-csv-modal',
       fields: {
         name: {
-          label: 'Name'
+          label: 'Name',
+          sortable: true
         },
         source: {
-          label: 'Source'
+          label: 'Source',
+          sortable: true
         }
       }
     }
