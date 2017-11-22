@@ -133,7 +133,6 @@ const config = {
     baseURL: localConfig.pybossa.host,
     requestInterceptor: (config) => {
       config.headers['Content-Type'] = 'application/json'
-      config.timeout = 10000
 
       // Use form data to set CSRF token header
       if (config.data && config.data.hasOwnProperty('csrf')) {
