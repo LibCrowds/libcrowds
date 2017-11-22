@@ -26,7 +26,9 @@ export default {
         ],
         lineSmooth: this.$chartist.Interpolation.cardinal({
           fillHoles: true
-        })
+        }),
+        low: 0,
+        showArea: true
       }
     }
   },
