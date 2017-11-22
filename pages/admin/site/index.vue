@@ -238,7 +238,7 @@
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
-          :options="chartOptions"
+          :options="stackedChartOptions"
           :chart-data="stackedUserData">
         </bar-chart>
       </b-card-body>
@@ -426,6 +426,10 @@ export default {
       description: 'Monitor the past week\'s activity.',
       chartOptions: {
         height: '100%'
+      },
+      stackedChartOptions: {
+        height: '100%',
+        stackBars: true
       }
     }
   },
