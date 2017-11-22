@@ -1,7 +1,7 @@
 # Dashboard
 
 The dashboard provides an overview of activity on the platform over the
-preceeding week. The charts include information about:
+past week. The charts include information about:
 
 - New, returning and active users;
 - New tasks and contributions;
