@@ -4,7 +4,6 @@
       id="admin-announcement-new"
       show-cancel
       :form="form"
-      no-border
       @success="onSuccess"
       @cancel="onCancel">
     </pybossa-form>

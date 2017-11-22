@@ -1,9 +1,5 @@
 <template>
-  <b-card
-    class="form-base"
-    :header="header"
-    :no-body="noBody"
-    :style="cardStyle">
+  <b-card class="form-base" :no-body="noBody">
 
     <slot></slot>
 
@@ -37,10 +33,6 @@ import 'vue-awesome/icons/circle-o-notch'
 
 export default {
   props: {
-    header: {
-      type: String,
-      default: ''
-    },
     submitText: {
       type: String,
       default: 'Submit'
@@ -57,10 +49,6 @@ export default {
       type: Boolean,
       default: true
     },
-    noBorder: {
-      type: Boolean,
-      default: false
-    },
     noBody: {
       type: Boolean,
       default: false
@@ -68,16 +56,6 @@ export default {
     processing: {
       type: Boolean,
       default: true
-    }
-  },
-
-  computed: {
-    cardStyle () {
-      if (this.noBorder) {
-        return {
-          border: 'none'
-        }
-      }
     }
   }
 }
@@ -87,6 +65,8 @@ export default {
 @import '~assets/style/settings';
 
 .form-base {
+  border: none;
+
   label {
     font-weight: 600;
     font-size: $font-size-sm;

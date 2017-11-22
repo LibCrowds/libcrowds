@@ -24,7 +24,6 @@
       <projects-table
         :filter="filter"
         :filter-by="filterBy"
-        no-border
         :collection="collection">
         <template slot="action" scope="project">
           <b-btn

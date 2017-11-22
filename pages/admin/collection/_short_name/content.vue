@@ -5,7 +5,6 @@
     :description="description">
 
     <pybossa-form
-      no-border
       submit-text="Update"
       :form="form"
       @success="onSuccess">

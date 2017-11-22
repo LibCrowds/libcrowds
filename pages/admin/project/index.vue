@@ -14,8 +14,7 @@
       :fields="tableFields"
       :filter="filter"
       :filter-by="filterBy"
-      :search-params="searchParams"
-      no-border>
+      :search-params="searchParams">
       <template slot="action" scope="project">
         <b-btn
           variant="success"

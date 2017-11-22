@@ -14,7 +14,6 @@
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
-      no-border
       domain-object="category">
       <template slot="action" scope="category">
         <b-btn

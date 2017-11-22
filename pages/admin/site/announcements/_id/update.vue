@@ -18,7 +18,6 @@
         <pybossa-form
           submit-text="Update"
           show-cancel
-          no-border
           :form="form"
           @cancel="onCancel">
         </pybossa-form>

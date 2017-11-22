@@ -1,7 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
     <pybossa-form
-      no-border
       submit-text="Update"
       :form="form"
       @success="onSuccess">
