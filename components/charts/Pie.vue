@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       defaultOptions: {
-        height: this.height,
+        height: '200px',
         plugins: [
           this.$chartist.plugins.tooltip(),
           this.$chartist.plugins.legend({
@@ -35,10 +35,6 @@ export default {
     options: {
       type: Object,
       default: () => ({})
-    },
-    height: {
-      type: String,
-      default: '200px'
     }
   },
 

@@ -52,7 +52,7 @@
         <b-col lg="8" class="pt-2">
           <line-chart
             unit="contribution"
-            height="100%"
+            :options="chartOptions"
             :chart-data="sortByLabel(newTaskRuns)">
           </line-chart>
         </b-col>
@@ -105,7 +105,7 @@
         <b-col lg="8" class="pt-2">
           <bar-chart
             unit="task"
-            height="100%"
+            :options="chartOptions"
             :chart-data="sortByLabel(newTasks)">
           </bar-chart>
         </b-col>
@@ -181,7 +181,7 @@
         <b-col lg="8" class="pt-1">
           <line-chart
             unit="user"
-            height="100%"
+            :options="chartOptions"
             :chart-data="sortByLabel(newUsers)">
           </line-chart>
         </b-col>
@@ -225,8 +225,8 @@
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
-          height="100%"
-          :chart-data="sortByLabel(returningUsers)">
+          :options="chartOptions"
+          :chart-data="returningUsers">
         </bar-chart>
       </b-card-body>
     </card-base>
@@ -238,7 +238,7 @@
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
-          height="100%"
+          :options="chartOptions"
           :chart-data="stackedUserData">
         </bar-chart>
       </b-card-body>
@@ -423,7 +423,10 @@ export default {
   data () {
     return {
       title: 'Dashboard',
-      description: 'Monitor the past week\'s activity.'
+      description: 'Monitor the past week\'s activity.',
+      chartOptions: {
+        height: '100%'
+      }
     }
   },
 

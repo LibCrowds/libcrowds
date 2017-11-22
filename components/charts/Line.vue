@@ -14,7 +14,7 @@ export default {
   data () {
     return {
       defaultOptions: {
-        height: this.height,
+        height: '300px',
         plugins: [
           this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
@@ -44,10 +44,6 @@ export default {
     options: {
       type: Object,
       default: () => ({})
-    },
-    height: {
-      type: String,
-      default: '300px'
     }
   },
 
