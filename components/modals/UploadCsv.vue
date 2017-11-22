@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import csvParse from 'csv-parse/lib/sync'
+import Papa from 'papaparse'
 import ModalForm from '@/components/forms/Modal'
 import { notifications } from '@/mixins/notifications'
 
@@ -57,8 +57,8 @@ export default {
     onSubmit () {
       const reader = new FileReader()
       reader.onload = (evt) => {
-        const csv = csvParse(evt.target.result)
-        this.$emit('submit', csv)
+        const csv = Papa.parse(evt.target.result)
+        this.$emit('submit', csv.data)
       }
       reader.readAsText(this.form.model.file)
     }
