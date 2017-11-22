@@ -53,7 +53,8 @@ export default {
         { dataset: 'Task Runs', type: 'task_run', format: 'csv' },
         { dataset: 'Task Runs', type: 'task_run', format: 'json' },
         { dataset: 'Results', type: 'result', format: 'csv' },
-        { dataset: 'Results', type: 'result', format: 'json' }
+        { dataset: 'Results', type: 'result', format: 'json' },
+        { dataset: 'Report', type: 'project', format: 'csv' }
       ]
     }
   },
@@ -85,6 +86,11 @@ export default {
      */
     download (type, format) {
       const sn = this.project.short_name
+      let downloadEndpoint = `/project/${sn}/tasks/export`
+      if (type === 'project') {
+        downloadEndpoint = `/project/${sn}/projectreport/export`
+      }
+
       if (this.$ga) {
         this.$ga.event({
           eventCategory: 'Downloads',
@@ -93,7 +99,8 @@ export default {
           eventValue: 1
         })
       }
-      this.$axios.$get(`/project/${sn}/tasks/export`, {
+
+      this.$axios.$get(downloadEndpoint, {
         responseType: 'arraybuffer',
         params: {
           type: type,

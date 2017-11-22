@@ -29,6 +29,8 @@ export const setCollectionDefaults = function (collection) {
         '- **Tasks:** The task data.\n' +
         '- **Task Runs:** The contribution data.\n' +
         '- **Results:** The final results data.\n\n' +
+        'You can also generate a project report in CSV format that contains ' +
+        'some project and user statistics.\n\n' +
         'We are keen for these datasets to be used in innovative ways, ' +
         'perhaps to further research into new technologies.',
       projects: ''
