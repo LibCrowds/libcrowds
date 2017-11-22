@@ -569,10 +569,19 @@ export default {
         }
       })
       for (let i = 0; i < combinedData.length; i++) {
-        data.labels[i] = combinedData[i].label
+        data.labels[i] = this.formatDateLabel(combinedData[i].label)
         data.series[0][i] = combinedData[i].item
       }
       return data
+    },
+
+    /**
+     * Format the label as an English date.
+     * @param {String} label
+     *   The label.
+     */
+    formatDateLabel (label) {
+      return moment(label, 'YYYY-MM-DD').format('DD-MM-YYYY')
     }
   }
 }
