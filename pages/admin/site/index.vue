@@ -53,7 +53,7 @@
           <line-chart
             unit="contribution"
             height="100%"
-            :chart-data="newTaskRuns">
+            :chart-data="sortByLabel(newTaskRuns)">
           </line-chart>
         </b-col>
         <b-col class="details-column">
@@ -106,7 +106,7 @@
           <bar-chart
             unit="task"
             height="100%"
-            :chart-data="newTasks">
+            :chart-data="sortByLabel(newTasks)">
           </bar-chart>
         </b-col>
         <b-col class="details-column">
@@ -182,7 +182,7 @@
           <line-chart
             unit="user"
             height="100%"
-            :chart-data="newUsers">
+            :chart-data="sortByLabel(newUsers)">
           </line-chart>
         </b-col>
         <b-col class="details-column">
@@ -226,7 +226,7 @@
         <bar-chart
           unit="user"
           height="100%"
-          :chart-data="returningUsers">
+          :chart-data="sortByLabel(returningUsers)">
         </bar-chart>
       </b-card-body>
     </card-base>
@@ -406,6 +406,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import groupBy from 'lodash/groupBy'
 import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
@@ -471,15 +472,17 @@ export default {
     },
 
     stackedUserData () {
-      const allLabels = this.activeAnon.labels.concat(this.activeAnon.labels)
+      const anonData = this.sortByLabel(this.activeAnon)
+      const authData = this.sortByLabel(this.activeAuth)
+      const allLabels = anonData.labels.concat(this.activeAnon.labels)
       const uniqueLabels = [...new Set(allLabels)]
       const anon = uniqueLabels.map(label => {
-        const anonIdx = this.activeAnon.labels.indexOf(label)
-        return anonIdx > -1 ? this.activeAnon.series[0][anonIdx] : 0
+        const anonIdx = anonData.labels.indexOf(label)
+        return anonIdx > -1 ? anonData.series[0][anonIdx] : 0
       })
       const auth = uniqueLabels.map(label => {
-        const authIdx = this.activeAuth.labels.indexOf(label)
-        return authIdx > -1 ? this.activeAuth.series[0][authIdx] : 0
+        const authIdx = authData.labels.indexOf(label)
+        return authIdx > -1 ? authData.series[0][authIdx] : 0
       })
       return {
         labels: uniqueLabels,
@@ -525,6 +528,37 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Ensure that stats appear in date order.
+     *
+     * This should really be fixed within by PYBOSSA but for now we can do it
+     * here (and it may be useful as a backup anyway).
+     * @param {Object} data
+     *   The stats data.
+     */
+    sortByLabel (data) {
+      let combinedData = data.labels.map((label, idx) => {
+        return {
+          label: label,
+          item: data.series[0][idx]
+        }
+      })
+      combinedData.sort((a, b) => {
+        if (moment(a.label).isBefore(b.label)) {
+          return -1
+        } else if (a.label === b.label) {
+          return 0
+        } else {
+          return 1
+        }
+      })
+      for (let i = 0; i < combinedData.length; i++) {
+        data.labels[i] = combinedData[i].label
+        data.series[0][i] = combinedData[i].item
+      }
+      return data
     }
   }
 }
