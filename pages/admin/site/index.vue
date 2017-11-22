@@ -44,56 +44,10 @@
       </b-card>
     </b-card-group>
 
-    <!-- <card-base :title="title" :description="description" class="mb-3">
-      <b-btn
-        size="sm"
-        variant="success"
-        class="float-right"
-        slot="controls"
-        @click="refresh">
-        Refresh
-      </b-btn>
-
-      <ul class="list-unstyled" id="activity-list">
-        <li v-for="(item, index) in updateFeed" :key="index">
-          <p class="d-flex flex-row align-items-center">
-
-            <small-avatar :domain-object="item" class="mr-1"></small-avatar>
-
-            <small v-if="item.action_updated == 'Project'">
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              was created
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-            <small v-else-if="item.action_updated == 'Task'">
-              New tasks were added to
-              <nuxt-link
-                :to="{
-                  name: 'admin-project-short_name-settings',
-                  params: {
-                    short_name: item.short_name
-                  }
-                }">
-                {{ item.name }}
-              </nuxt-link>
-              {{ item.updated | moment('calendar') }}
-            </small>
-
-          </p>
-        </li>
-      </ul>
-    </card-base> -->
-
-    <card-base title="Contributions" class="mb-3">
+    <card-base
+      title="Contributions"
+      description="The number of contributions made this week"
+      class="mb-3">
       <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-2">
           <line-chart
@@ -143,6 +97,50 @@
       </b-row>
     </card-base>
 
+    <card-base
+      title="New Tasks"
+      description="The number of tasks added this week"
+      class="mb-3">
+      <b-row no-gutters class="chart-row">
+        <b-col lg="8" class="pt-2">
+          <bar-chart
+            unit="task"
+            height="100%"
+            :chart-data="newTasks">
+          </bar-chart>
+        </b-col>
+        <b-col class="details-column">
+          <ul
+            v-if="groupedFeed.hasOwnProperty('Task')"
+            class="list-unstyled">
+            <li
+              v-for="(item, index) in groupedFeed['Task']"
+              :key="index">
+              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small>
+                Tasks were added to
+                <nuxt-link
+                  :to="{
+                    name: 'admin-project-short_name-settings',
+                    params: {
+                      short_name: item.short_name
+                    }
+                  }">
+                  {{ item.name }}
+                </nuxt-link>
+                {{ item.updated | moment('calendar') }}
+              </small>
+            </li>
+          </ul>
+          <p class="text-center mt-1" v-else>
+            <small>
+              No details from the update feed
+            </small>
+          </p>
+        </b-col>
+      </b-row>
+    </card-base>
+
     <b-card-group
       deck
       class="mb-3">
@@ -175,7 +173,10 @@
       </b-card>
     </b-card-group>
 
-    <card-base title="New Users" class="mb-3">
+    <card-base
+      title="New Users"
+      description="The number of users that signed up this week"
+      class="mb-3">
       <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-1">
           <line-chart
@@ -216,7 +217,24 @@
       </b-row>
     </card-base>
 
-    <card-base title="Active Users" class="mb-3">
+    <card-base
+      title="Returning Users"
+      description="The number of users returning for a number days in a row
+        this week"
+      class="mb-3">
+      <b-card-body class="pt-2 px-0 chart-row">
+        <bar-chart
+          unit="user"
+          height="100%"
+          :chart-data="returningUsers">
+        </bar-chart>
+      </b-card-body>
+    </card-base>
+
+    <card-base
+      title="Active Users"
+      description="The number of users that contributed to a project this week"
+      class="mb-3">
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
