@@ -70,7 +70,7 @@ export const collectionMetaTags = {
 }
 
 /**
- * A mixin to add collection meta tags to the page.
+ * A mixin to add project meta tags to the page.
  */
 export const projectMetaTags = {
   head () {
@@ -78,6 +78,10 @@ export const projectMetaTags = {
     const image = project.info && project.info.thumbnail_url
       ? project.info.thumbnail_url
       : null
+
+    if (image && image.startsWith('/uploads')) {
+      image = localConfig.pybossa.host + image
+    }
 
     return {
       title: this.title,
