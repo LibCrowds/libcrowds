@@ -75,7 +75,7 @@ export const collectionMetaTags = {
 export const projectMetaTags = {
   head () {
     const project = this.$store.state.currentProject
-    const image = project.info && project.info.thumbnail_url
+    let image = project.info && project.info.thumbnail_url
       ? project.info.thumbnail_url
       : null
 
