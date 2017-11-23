@@ -13,11 +13,13 @@ export const metaTags = {
           name: 'description',
           content: this.description
         },
-        // Open Grapg
+
+        // Open Graph
         { name: 'og:title', content: localConfig.brand },
         { name: 'og:description', content: localConfig.description },
         { name: 'og:type', content: 'website' },
         // { name: 'og:image', content: 'https://i.imgur.com/PzEm5j2.png' },
+
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: localConfig.contact.twitter },
@@ -48,11 +50,13 @@ export const collectionMetaTags = {
           name: 'description',
           content: this.description
         },
-        // Open Grapg
+
+        // Open Graph
         { name: 'og:title', content: collection.name },
         { name: 'og:description', content: collection.description },
         { name: 'og:type', content: 'website' },
         { name: 'og:image', content: image },
+
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: localConfig.contact.twitter },
@@ -83,11 +87,13 @@ export const projectMetaTags = {
           name: 'description',
           content: this.description
         },
-        // Open Grapg
+
+        // Open Graph
         { name: 'og:title', content: project.name },
         { name: 'og:description', content: project.description },
         { name: 'og:type', content: 'website' },
         { name: 'og:image', content: image },
+
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: localConfig.contact.twitter },
