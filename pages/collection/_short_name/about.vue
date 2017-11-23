@@ -24,7 +24,7 @@
 
 <script>
 import marked from 'marked'
-import { collectionMetaTags } from '@/mixins/collectionMetaTags'
+import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import localConfig from '@/local.config'
 
