@@ -5,6 +5,8 @@ import localConfig from '@/local.config'
  */
 export const metaTags = {
   head () {
+    const bgImg = require('~/assets/img/app-background.jpg')
+
     return {
       title: this.title,
       meta: [
@@ -18,15 +20,15 @@ export const metaTags = {
         { name: 'og:title', content: localConfig.brand },
         { name: 'og:description', content: localConfig.description },
         { name: 'og:type', content: 'website' },
-        // { name: 'og:image', content: 'https://i.imgur.com/PzEm5j2.png' },
+        { name: 'og:image', content: bgImg },
 
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: localConfig.contact.twitter },
         { name: 'twitter:title', content: localConfig.brand },
-        { name: 'twitter:description', content: localConfig.description }
-        // { name: 'twitter:image', content: 'https://i.imgur.com/PzEm5j2.png' },
-        // { name: 'twitter:image:alt', content: 'Nuxt.js Logo' }
+        { name: 'twitter:description', content: localConfig.description },
+        { name: 'twitter:image', content: bgImg },
+        { name: 'twitter:image:alt', content: `${localConfig.brand} image` }
       ]
     }
   }
