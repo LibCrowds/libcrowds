@@ -50,7 +50,7 @@
 
 <script>
 import marked from 'marked'
-import { collectionMetaTags } from '@/mixins/collectionMetaTags'
+import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
