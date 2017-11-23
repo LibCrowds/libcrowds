@@ -35,8 +35,9 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
+  async asyncData ({ params, app, error, store }) {
     return app.$axios.$get(`/api/project/${params.id}`).then(data => {
+      store.dispatch('UPDATE_CURRENT_PROJECT', data)
       return {
         project: data
       }
