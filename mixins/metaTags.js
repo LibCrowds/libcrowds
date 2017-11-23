@@ -17,7 +17,6 @@ export const metaTags = {
         { name: 'og:title', content: localConfig.brand },
         { name: 'og:description', content: localConfig.description },
         { name: 'og:type', content: 'website' },
-        { name: 'og:url', content: this.$router.resolve({ path: '/' }).route },
         // { name: 'og:image', content: 'https://i.imgur.com/PzEm5j2.png' },
         // Twitter Card
         { name: 'twitter:card', content: 'summary' },
