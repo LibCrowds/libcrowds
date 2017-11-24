@@ -27,8 +27,7 @@
           </sort-projects-data>
           <toggle-completed-data
             class="mb-2"
-            v-model="showCompleted"
-            @input="onToggleCompleted">
+            v-model="showCompleted">
           </toggle-completed-data>
           <b-btn
             block
@@ -231,22 +230,6 @@ export default {
         this.$ga.event({
           eventCategory: 'Sorts',
           eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
-          eventLabel: this.collection.name,
-          eventValue: 1
-        })
-      }
-    },
-
-    /**
-     * Track completed toggle.
-     * @param {String} value
-     *   The toggle value.
-     */
-    onToggleCompleted (value) {
-      if (this.$ga) {
-        this.$ga.event({
-          eventCategory: 'Filters',
-          eventAction: value ? 'show_completed' : 'hide_completed',
           eventLabel: this.collection.name,
           eventValue: 1
         })
