@@ -147,7 +147,8 @@ const config = {
     }
   },
   proxy: {
-    '/api': localConfig.pybossa.host
+    '/api': localConfig.pybossa.host,
+    '/z3950': localConfig.pybossa.host
   },
   manifest: {
     name: localConfig.brand,
