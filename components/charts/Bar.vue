@@ -1,12 +1,10 @@
 <template>
-  <no-ssr>
-    <chartist
-      type="Bar"
-      :data="chartData"
-      :options="mergedOptions"
-      class="ct-container">
-    </chartist>
-  </no-ssr>
+  <chartist
+    type="Bar"
+    :data="chartData"
+    :options="mergedOptions"
+    class="ct-container">
+  </chartist>
 </template>
 
 <script>
