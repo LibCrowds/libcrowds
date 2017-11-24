@@ -8,7 +8,8 @@ const localConfig = process.env.NODE_ENV === 'testing'
 const config = {
   mode: 'universal',
   head: {
-    titleTemplate: `%s | ${localConfig.brand}`
+    titleTemplate: `%s | ${localConfig.brand}`,
+    meta: [] // Options pushed below depending on configuration
   },
   css: [
     '~/assets/style/main.scss',
@@ -172,6 +173,13 @@ const config = {
 
 if (localConfig.hasOwnProperty('analytics')) {
   config.modules.push([ '@nuxtjs/google-analytics', localConfig.analytics ])
+}
+
+if (localConfig.hasOwnProperty('facebook')) {
+  config.head.meta.push({
+    property: 'fb:app_id',
+    content: localConfig.facebook.appId
+  })
 }
 
 if (localConfig.hasOwnProperty('sentry')) {

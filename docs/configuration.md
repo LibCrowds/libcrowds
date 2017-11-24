@@ -144,6 +144,18 @@ A URL to the platform's documentation.
 config.docs: 'http://docs.example.com'
 ```
 
+### facebook
+
+Add a [Facebook app ID](https://developers.facebook.com/docs/apps/register) to
+enable [Open Graph](https://developers.facebook.com/docs/sharing/opengraph)
+integration.
+
+```js
+config.facebook = {
+  appId: '1234567890'
+}
+```
+
 ### footer
 
 Add an additional list menu to the main footer.
