@@ -6,9 +6,9 @@
   * [Building](development.md#building)
   * [Testing](development.md#testing)
 
-* [Configuration](configuration.md)
-  * [PYBOSSA](configuration.md#configuring-pybossa)
-  * [LibCrowds](configuration.md#configuring-libcrowds)
+* [Configuration](configuration/README.md)
+  * [PYBOSSA](configuration/pybossa.md)
+  * [LibCrowds](configuration/libcrowds.md)
 
 * [Administration](admin/README.md)
   * [Collection Admin](admin/collection/README.md)

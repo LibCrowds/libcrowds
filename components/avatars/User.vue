@@ -75,7 +75,7 @@ export default {
 
       // Prepend the pybossa host if a standard upload
       if (avatarUrl.indexOf('/uploads') > -1) {
-        this.avatar = localConfig.pybossa.host + avatarUrl
+        this.avatar = localConfig.pybossaHost + avatarUrl
         return
       }
       this.avatar = avatarUrl

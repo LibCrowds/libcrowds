@@ -1,6 +1,6 @@
 # Development
 
-{{ this.brand }} is fundamentally a Vue.js Server-Side Rendered (SSR) UI that
+LibCrowds is fundamentally a Vue.js Server-Side Rendered (SSR) UI that
 communicates with a [PYBOSSA](https://github.com/Scifabric/pybossa) backend.
 
 ## Installation
@@ -13,20 +13,12 @@ npm install
 ```
 
 You will also need to install an instance of
-[PYBOSSA](http://docs.pybossa.com/), along with the following plugins:
-
-- [pybossa-Z3950](https://github.com/alexandermendes/pybossa-z3950)
+[PYBOSSA](http://docs.pybossa.com/).
 
 ## Configuration
 
-To run {{ this.brand }} with default settings:
-
-``` bash
-cp local.config.js.tmpl local.config.js
-```
-
-See the [Configuration](configuration.md) section for full details of how to
-edit this file.
+See the [Configuration](configuration/README.md) section for full details of how
+to setup LibCrowds and PYBOSSA.
 
 ## Building
 

@@ -5,8 +5,8 @@ import localConfig from '@/local.config'
  * @param {Object} metadata
  *   The required metadata.
  */
-function socialCards ({ siteName, title, description, image, imageAlt }) {
-  return [
+function socialCards ({ url, siteName, title, description, image, imageAlt }) {
+  const tags = [
     // Open Graph
     {
       hid: 'og:site_name',
@@ -38,17 +38,17 @@ function socialCards ({ siteName, title, description, image, imageAlt }) {
       property: 'og:image:alt',
       content: imageAlt
     },
+    {
+      hid: 'og:url',
+      property: 'og:url',
+      content: url
+    },
 
     // Twitter
     {
       hid: 'twitter:card',
       name: 'twitter:card',
       content: 'summary'
-    },
-    {
-      hid: 'twitter:site',
-      name: 'twitter:site',
-      content: localConfig.contact.twitter
     },
     {
       hid: 'twitter:title',
@@ -71,6 +71,16 @@ function socialCards ({ siteName, title, description, image, imageAlt }) {
       content: imageAlt
     }
   ]
+
+  if (localConfig.hasOwnProperty('twitter')) {
+    tags.push({
+      hid: 'twitter:site',
+      name: 'twitter:site',
+      content: localConfig.twitter
+    })
+  }
+
+  return tags
 }
 
 /**
@@ -79,6 +89,8 @@ function socialCards ({ siteName, title, description, image, imageAlt }) {
 export const metaTags = {
   head () {
     const bgImg = require('~/assets/img/app-background.jpg')
+    const image = localConfig.libcrowdsHost + bgImg
+    const url = localConfig.libcrowdsHost
 
     return {
       title: this.title,
@@ -89,10 +101,11 @@ export const metaTags = {
           content: this.description
         },
         ...socialCards({
+          url: url,
           siteName: localConfig.brand,
           title: localConfig.brand,
           description: localConfig.description,
-          image: bgImg,
+          image: image,
           imageAlt: `${localConfig.brand} image`
         })
       ]
@@ -109,6 +122,13 @@ export const collectionMetaTags = {
     const image = collection.info && collection.info.background
       ? collection.info.background
       : null
+    const collectionRoute = this.$router.resolve({
+      name: 'collection-short_name',
+      params: {
+        short_name: collection.short_name
+      }
+    })
+    const url = localConfig.libcrowdsHost + collectionRoute.href
 
     return {
       title: this.title,
@@ -119,6 +139,7 @@ export const collectionMetaTags = {
           content: this.description
         },
         ...socialCards({
+          url: url,
           siteName: localConfig.brand,
           title: collection.name,
           description: collection.description,
@@ -135,13 +156,23 @@ export const collectionMetaTags = {
  */
 export const projectMetaTags = {
   head () {
+    const collection = this.$store.state.currentProject
     const project = this.$store.state.currentProject
     let image = project.info && project.info.thumbnail_url
       ? project.info.thumbnail_url
       : null
+    const projectRoute = this.$router.resolve({
+      name: 'collection-short_name-projects-id-presenter',
+      params: {
+        short_name: collection.short_name,
+        id: project.id,
+        presenter: collection.info.presenter
+      }
+    })
+    const url = localConfig.libcrowdsHost + projectRoute.href
 
     if (image && image.startsWith('/uploads')) {
-      image = localConfig.pybossa.host + image
+      image = localConfig.pybossaHost + image
     }
 
     return {
@@ -153,6 +184,7 @@ export const projectMetaTags = {
           content: this.description
         },
         ...socialCards({
+          url: url,
           siteName: localConfig.brand,
           title: project.name,
           description: project.description,

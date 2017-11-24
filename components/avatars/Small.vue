@@ -34,7 +34,7 @@ export default {
 
   computed: {
     src () {
-      const host = localConfig.pybossa.host
+      const host = localConfig.pybossaHost
       if (!this.domainObject.info) {
         return null
       } else if (this.domainObject.info.avatar_url) {

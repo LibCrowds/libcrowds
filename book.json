@@ -2,9 +2,5 @@
   "root": "/docs",
   "plugins": [
     "hints"
-  ],
-  "variables": {
-    "company": "The British Library",
-    "brand": "LibCrowds"
-  }
+  ]
 }

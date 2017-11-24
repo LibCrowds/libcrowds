@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "optimise": "node bin/convertToWebp.js",
-    "dev": "npm run optimise && backpack dev",
-    "build": "npm run optimise && backpack build && nuxt build",
+    "dev": "backpack dev",
+    "build": "backpack build && nuxt build",
     "start": "cross-env NODE_ENV=production node build/main.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "unit": "cross-env NODE_ENV=testing jest --coverage",

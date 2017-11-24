@@ -47,7 +47,7 @@ import localConfig from '@/local.config'
 export default {
   data () {
     return {
-      imgSrc: localConfig.pybossa.host + this.announcement.media_url,
+      imgSrc: localConfig.pybossaHost + this.announcement.media_url,
       title: marked(this.announcement.title),
       body: marked(this.announcement.body)
     }

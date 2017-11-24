@@ -3,17 +3,22 @@ const config = {
   brand: 'My Brand',
   tagline: 'My inspiring tagline',
   description: 'My SEO optimised meta description',
-  contact: {
-    twitter: 'mytwitterhandle',
-    email: 'me@example.com'
-  },
-  githubUrl: 'https://github.com/LibCrowds/libcrowds',
-  pybossa: {
-    host: process.env.NODE_ENV === 'development'
-      ? 'http://127.0.0.1:5000'
-      : 'http://xxxx.com'
-  }
+  pybossaHost: process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:5000'
+    : 'http://xxxx.com',
+  libcrowdsHost: process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:8080'
+    : 'http://xxxx.com'
 }
+
+// Twitter
+// config.twitter = 'mytwitterhandle'
+
+// Contact email address
+// config.email = 'me@example.com'
+
+// GitHub account
+// config.github = 'https://github.com/LibCrowds/libcrowds'
 
 // Additional footer menu
 // config.footer = {

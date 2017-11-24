@@ -121,7 +121,7 @@ export default {
       }
 
       axios({
-        baseURL: localConfig.pybossa.host,
+        baseURL: localConfig.pybossaHost,
         url: this.endpoint,
         method: this.method,
         data: formData,

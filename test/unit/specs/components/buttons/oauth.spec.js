@@ -39,7 +39,7 @@ describe('Oauth buttons', () => {
 
   it('redirect to the correct oauth endpoint', () => {
     const endpoint = 'twitter'
-    const host = testLocalConfig.pybossa.host
+    const host = testLocalConfig.pybossaHost
     const expectedUrl = `${host}/${endpoint}?next=${next}&response_format=json`
     const mockAssign = jest.fn()
     window.location.assign = mockAssign

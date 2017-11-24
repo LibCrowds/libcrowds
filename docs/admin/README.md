@@ -1,6 +1,7 @@
 # Administration
 
-The {{ this.brand }} platform is administered via the following set of dashboards that can be reached via the main navigation bar:
+The LibCrowds platform is administered via the following set of dashboards
+that can be reached via the main navigation bar:
 
 - [Site Admin](admin/site/README.md)
 - [Collection Admin](admin/collection/README.md)
