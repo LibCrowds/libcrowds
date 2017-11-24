@@ -9,17 +9,14 @@
 
 <script>
 export default {
-  data () {
+  asyncData ({ isServer }) {
+    if (isServer) {
+      return {}
+    }
     return {
       defaultOptions: {
         height: '200px',
-        plugins: [
-          this.$chartist.plugins.tooltip()
-        ],
-        labelInterpolationFnc: (value, idx) => {
-          let sum = this.chartData.series.reduce((a, b) => a.value + b.value)
-          return Math.round(this.chartData.series[idx].value / sum * 100) + '%'
-        }
+        plugins: [ this.$chartist.plugins.tooltip() ]
       }
     }
   },
@@ -35,9 +32,17 @@ export default {
     }
   },
 
+  methods: {
+    labelInterpolationFnc (value, idx) {
+      let sum = this.chartData.series.reduce((a, b) => a.value + b.value)
+      return Math.round(this.chartData.series[idx].value / sum * 100) + '%'
+    }
+  },
+
   computed: {
     mergedOptions () {
       const copiedOpts = Object.assign({}, this.defaultOptions)
+      copiedOpts.labelInterpolationFnc = this.labelInterpolationFnc
       return Object.assign(copiedOpts, this.options)
     }
   }

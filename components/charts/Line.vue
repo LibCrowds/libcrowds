@@ -11,7 +11,10 @@
 import pluralize from 'pluralize'
 
 export default {
-  data () {
+  asyncData ({ isServer }) {
+    if (isServer) {
+      return {}
+    }
     return {
       defaultOptions: {
         height: '300px',

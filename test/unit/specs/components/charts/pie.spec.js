@@ -46,8 +46,7 @@ describe('Pie chart', () => {
     const label = propsData.chartData.labels[idx]
     const value = propsData.chartData.series[idx].value
     const expected = Math.round(value / max * 100) + '%'
-    const defaultOpts = wrapper.vm.defaultOptions
-    let modifiedLabel = defaultOpts.labelInterpolationFnc(label, idx)
-    expect(modifiedLabel).toBe(expected)
+    const result = wrapper.vm.labelInterpolationFnc(label, idx)
+    expect(result).toBe(expected)
   })
 })
