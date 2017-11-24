@@ -9,6 +9,7 @@ actions.nuxtServerInit = async ({ dispatch }, { app }) => {
 
 actions.nuxtClientInit = async ({ dispatch }, { app }) => {
   await dispatch('UPDATE_CURRENT_USER', app.$axios)
+  await dispatch('UPDATE_LAST_ANNOUNCEMENT', app.$axios)
 }
 
 export default () => {

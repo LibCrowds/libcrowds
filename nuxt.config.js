@@ -165,8 +165,7 @@ const config = {
   },
   router: {
     middleware: [
-      'session',
-      'announcements'
+      'session'
     ]
   }
 }
