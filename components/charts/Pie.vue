@@ -6,7 +6,7 @@
       :options="mergedOptions"
       class="ct-container">
     </chartist>
-  <no-ssr>
+  </no-ssr>
 </template>
 
 <script>
