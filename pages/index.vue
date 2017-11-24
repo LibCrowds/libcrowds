@@ -131,7 +131,6 @@
 </template>
 
 <script>
-import Modernizr from 'modernizr'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/eye'
 import 'vue-awesome/icons/television'
@@ -193,7 +192,7 @@ export default {
   },
 
   mounted () {
-    Modernizr.on('webp', (result) => {
+    this.$modernizr.on('webp', (result) => {
       if (result) {
         this.wreathSrc = require('~/assets/img/wreath.webp')
       } else {
