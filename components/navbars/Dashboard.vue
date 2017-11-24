@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import Velocity from 'velocity-animate'
 import localConfig from '@/local.config'
 
 export default {
@@ -82,7 +81,7 @@ export default {
       }
       const delay = el.dataset.index * 150
       setTimeout(() => {
-        Velocity(
+        this.$velocity(
           el,
           { opacity: 1, translateX: [0, '-100%'] },
           { complete: done }
@@ -91,7 +90,7 @@ export default {
     },
 
     leave (el, done) {
-      Velocity(
+      this.$velocity(
         el,
         { opacity: 0 },
         { complete: done }
