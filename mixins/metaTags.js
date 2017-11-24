@@ -156,7 +156,7 @@ export const collectionMetaTags = {
  */
 export const projectMetaTags = {
   head () {
-    const collection = this.$store.state.currentProject
+    const collection = this.$store.state.currentCollection
     const project = this.$store.state.currentProject
     let image = project.info && project.info.thumbnail_url
       ? project.info.thumbnail_url
