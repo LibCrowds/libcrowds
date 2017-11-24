@@ -63,3 +63,8 @@ served from the same domain.
 
 Subdomains are fine too, so you can still run your applications on different
 servers, for example, at http://pybossa.myapp.com and http://libcrowds.myapp.com.
+
+If you don't do this, the application will still run but as it will not be
+possible to fully render certain pages on the server, so you will see some
+strange behaviour to do with users appearing to not be signed in when the
+application first loads.
