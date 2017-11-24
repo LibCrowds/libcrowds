@@ -53,3 +53,13 @@ npm unit
 # run all tests
 npm test
 ```
+
+## Deployment
+
+It is important that the PYBOSSA instance is served from the same domain as
+the LibCrowds instance. This is because the PYBOSSA session cookie needs to
+be shared with LibCrowds and this will only work if both applications are
+served from the same domain.
+
+Subdomains are fine too, so you can still run your applications on different
+servers, for example, at http://pybossa.myapp.com and http://libcrowds.myapp.com.
