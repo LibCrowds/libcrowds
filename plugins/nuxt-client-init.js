@@ -4,8 +4,8 @@
  * This is used to that we can asynchronously perform actions that are only
  * available on the client, before rendering.
  */
-export default (ctx) => {
+export default async (ctx) => {
   if (ctx.isClient) {
-    ctx.store.dispatch('nuxtClientInit', ctx)
+    await ctx.store.dispatch('nuxtClientInit', ctx)
   }
 }
