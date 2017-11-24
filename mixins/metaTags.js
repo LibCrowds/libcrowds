@@ -5,9 +5,14 @@ import localConfig from '@/local.config'
  * @param {Object} metadata
  *   The required metadata.
  */
-function socialCards ({ title, description, image, imageAlt }) {
+function socialCards ({ siteName, title, description, image, imageAlt }) {
   return [
     // Open Graph
+    {
+      hid: 'og:site_name',
+      property: 'og:site_name',
+      content: siteName
+    },
     {
       hid: 'og:title',
       property: 'og:title',
@@ -84,6 +89,7 @@ export const metaTags = {
           content: this.description
         },
         ...socialCards({
+          siteName: localConfig.brand,
           title: localConfig.brand,
           description: localConfig.description,
           image: bgImg,
@@ -113,6 +119,7 @@ export const collectionMetaTags = {
           content: this.description
         },
         ...socialCards({
+          siteName: localConfig.brand,
           title: collection.name,
           description: collection.description,
           image: image,
@@ -146,6 +153,7 @@ export const projectMetaTags = {
           content: this.description
         },
         ...socialCards({
+          siteName: localConfig.brand,
           title: project.name,
           description: project.description,
           image: image,
