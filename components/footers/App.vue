@@ -10,20 +10,26 @@
         </nuxt-link>
         <p v-html="copyright" class="my-2"></p>
         <ul class="list-inline mt-2 mb-0">
-          <li class="list-inline-item mx-1">
-            <a :href="twitterUrl" class="text-muted">
+          <li
+            v-if="localConfig.twitter"
+            class="list-inline-item mx-1">
+            <a
+              :href="`https://twitter.com/${localConfig.twitter}`"
+              class="text-muted">
               <icon name="twitter"></icon>
             </a>
           </li>
-          <li class="list-inline-item mx-1">
-            <a :href="mailto" class="text-muted">
+          <li
+            v-if="localConfig.email"
+            class="list-inline-item mx-1">
+            <a :href="`mailto:${localConfig.email}`" class="text-muted">
               <icon name="envelope"></icon>
            </a>
           </li>
           <li
-            v-if="localConfig.githubUrl"
+            v-if="localConfig.github"
             class="list-inline-item mx-1">
-            <a :href="localConfig.githubUrl" class="text-muted">
+            <a :href="localConfig.github" class="text-muted">
               <icon name="github"></icon>
             </a>
           </li>
@@ -123,8 +129,6 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      twitterUrl: `https://twitter.com/${localConfig.contact.twitter}`,
-      mailto: `mailto:${localConfig.contact.email}`,
       copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
     }
   },

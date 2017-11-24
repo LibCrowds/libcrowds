@@ -45,7 +45,7 @@ describe('User avatar', () => {
 
   it('loads uploaded avatar', () => {
     const avatarUrl = '/uploads/user_1/img.jpg'
-    const expectedUrl = testLocalConfig.pybossa.host + avatarUrl
+    const expectedUrl = testLocalConfig.pybossaHost + avatarUrl
     wrapper.vm.loadAvatar(avatarUrl)
     expect(wrapper.vm.avatar).toBe(expectedUrl)
   })

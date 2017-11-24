@@ -67,6 +67,24 @@ To use the settings template:
 cp local.config.js.tmpl local.config.js
 ```
 
+### Required Settings
+
+The following settings are defined at the top of the template and are all
+required for the application to run correctly.
+
+| Setting     | Description                                                    |
+|-------------|----------------------------------------------------------------|
+| company     | The company responsible for the platform.                      |
+| brand       | The name of the platform.                                      |
+| tagline     | An inspiring tagline.                                          |
+| description | An SEO optimised description of the platform.                  |
+| pybossaHost | The host for all PYBOSSA API calls.                            |
+
+### Optional Settings
+
+The following settings, which are commented out in the template, can be added
+to enable additional functionality on the platform.
+
 ### analytics
 
 Add [Google Analytics](https://analytics.google.com) to the platform by
@@ -101,47 +119,21 @@ user actually then went ahead and shared the page.
 
 User IDs are used to track all registered and authenticated users.
 
-### brand
-
-Establish the brand.
-
-```js
-config.brand: 'My Brand'
-```
-
-### company
-
-Specify the company responsible for the site.
-
-```js
-config.company: 'My Company'
-```
-
-### contact
-
-Specify contact information.
-
-```js
-config.contact = {
-  email: 'me@example.com',
-  twitter: 'mytwitterhandle'
-}
-```
-
-### description
-
-Describe the overall purpose of the site.
-
-```js
-config.description: 'My SEO optimised meta description'
-```
-
 ### docs
 
-A URL to the platform's documentation.
+Provide a URL to the platform's documentation that will be linked to from the
+main footer and all admin dashboard pages.
 
 ```js
 config.docs: 'http://docs.example.com'
+```
+
+# email
+
+Add a contact email address to the main footer.
+
+```js
+config.email = 'me@example.com'
 ```
 
 ### facebook
@@ -169,9 +161,9 @@ config.footer = {
 }
 ```
 
-### githubUrl
+### github
 
-Provide a GitHub link that relates to the site.
+Add a GitHub link to the main footer.
 
 ```js
 config.githubUrl = 'https://github.com/github'
@@ -187,16 +179,6 @@ config.mapbox = {
 }
 ```
 
-### pybossa
-
-Set the connection details for all PYBOSSA API calls.
-
-```js
-config.pybossa = {
-  host: 'https://pybossa.backend.com'
-}
-```
-
 ### sentry
 
 Enable [Sentry](https://sentry.io/) error tracking.
@@ -209,10 +191,11 @@ config.sentry = {
 }
 ```
 
-### tagline
+# twitter
 
-Add an inspiring tagline.
+Adds a twitter link to the main footer and enhances the platforms Twitter cards
+with `twitter:site` meta tag.
 
 ```js
-config.tagline: 'My inspiring tagline'
+config.twitter = 'mytwitterhandle'
 ```

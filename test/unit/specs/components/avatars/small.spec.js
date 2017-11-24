@@ -37,7 +37,7 @@ describe('User avatar', () => {
         }
       }
     })
-    expect(wrapper.vm.src).toBe(testLocalConfig.pybossa.host + imgUrl)
+    expect(wrapper.vm.src).toBe(testLocalConfig.pybossaHost + imgUrl)
   })
 
   it('returns image source from thumbnail_url', () => {
@@ -49,7 +49,7 @@ describe('User avatar', () => {
         }
       }
     })
-    expect(wrapper.vm.src).toBe(testLocalConfig.pybossa.host + imgUrl)
+    expect(wrapper.vm.src).toBe(testLocalConfig.pybossaHost + imgUrl)
   })
 
   it('returns image source from media_url', () => {
@@ -61,6 +61,6 @@ describe('User avatar', () => {
         }
       }
     })
-    expect(wrapper.vm.src).toBe(testLocalConfig.pybossa.host + imgUrl)
+    expect(wrapper.vm.src).toBe(testLocalConfig.pybossaHost + imgUrl)
   })
 })

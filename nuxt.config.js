@@ -124,7 +124,7 @@ const config = {
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
-    baseURL: localConfig.pybossa.host,
+    baseURL: localConfig.pybossaHost,
     requestInterceptor: (config) => {
       config.headers['Content-Type'] = 'application/json'
 
@@ -141,8 +141,8 @@ const config = {
     }
   },
   proxy: {
-    '/api': localConfig.pybossa.host,
-    '/z3950': localConfig.pybossa.host
+    '/api': localConfig.pybossaHost,
+    '/z3950': localConfig.pybossaHost
   },
   manifest: {
     name: localConfig.brand,
@@ -160,7 +160,7 @@ const config = {
   },
   loading: {
     color: '#2589BD',
-    duration: localConfig.pybossa.timeout || 5000
+    duration: 10000
   },
   router: {
     middleware: [

@@ -23,7 +23,7 @@ export default {
     return {
       title: 'Background Tasks',
       description: 'Manage the platform\'s background tasks.',
-      rqSchedulerRoute: `${localConfig.pybossa.host}/admin/rq`
+      rqSchedulerRoute: `${localConfig.pybossaHost}/admin/rq`
     }
   },
 

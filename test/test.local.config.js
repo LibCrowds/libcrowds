@@ -3,16 +3,17 @@ const config = {
   brand: 'My Brand',
   tagline: 'My inspiring tagline',
   description: 'My SEO optimised meta description',
-  contact: {
-    twitter: 'mytwitterhandle',
-    email: 'me@example.com'
-  },
-  pybossa: {
-    host: 'http://example.com'
-  },
-  license: 'CC0',
-  githubUrl: 'https://github.com/Organization/repo'
+  pybossaHost: 'http://example.com'
 }
+
+// Twitter
+config.twitter = 'mytwitterhandle'
+
+// Contact email address
+config.email = 'me@example.com'
+
+// GitHub account
+config.github = 'https://github.com/LibCrowds/libcrowds'
 
 config.docs = 'http://docs.example.com'
 

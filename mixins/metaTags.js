@@ -6,7 +6,7 @@ import localConfig from '@/local.config'
  *   The required metadata.
  */
 function socialCards ({ siteName, title, description, image, imageAlt }) {
-  return [
+  const tags = [
     // Open Graph
     {
       hid: 'og:site_name',
@@ -46,11 +46,6 @@ function socialCards ({ siteName, title, description, image, imageAlt }) {
       content: 'summary'
     },
     {
-      hid: 'twitter:site',
-      name: 'twitter:site',
-      content: localConfig.contact.twitter
-    },
-    {
       hid: 'twitter:title',
       name: 'twitter:title',
       content: title
@@ -71,6 +66,16 @@ function socialCards ({ siteName, title, description, image, imageAlt }) {
       content: imageAlt
     }
   ]
+
+  if (localConfig.hasOwnProperty('twitter')) {
+    tags.push({
+      hid: 'twitter:site',
+      name: 'twitter:site',
+      content: localConfig.twitter
+    })
+  }
+
+  return tags
 }
 
 /**
@@ -141,7 +146,7 @@ export const projectMetaTags = {
       : null
 
     if (image && image.startsWith('/uploads')) {
-      image = localConfig.pybossa.host + image
+      image = localConfig.pybossaHost + image
     }
 
     return {
