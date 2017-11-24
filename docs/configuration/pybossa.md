@@ -49,6 +49,9 @@ SPA_SERVER_NAME = 'http://127.0.0.1:8080'
 
 # Allow projects to be published with no traditional task presenter
 DISABLE_TASK_PRESENTER = True
+
+# Allow the session cookie to be shared with any subdomain of mydomain.com
+SESSION_COOKIE_DOMAIN = 'mydomain.com'
 ```
 
 {% hint style='danger' %}

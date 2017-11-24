@@ -68,3 +68,9 @@ If you don't do this, the application will still run but as it will not be
 possible to fully render certain pages on the server, so you will see some
 strange behaviour to do with users appearing to not be signed in when the
 application first loads.
+
+{% hint style='info' %}
+For this to work you will also need to add
+`SESSION_COOKIE_DOMAIN = mydomain.com` to your PYBOSSA settings file
+(see [Configuring PYBOSSA](configuration/pybossa.md)).
+{% endhint %}
