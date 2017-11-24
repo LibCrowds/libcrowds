@@ -8,5 +8,11 @@ module.exports = {
   twitter: 'mytwitterhandle',
   email: 'me@example.com',
   github: 'https://github.com/Organization/repo',
-  docs: 'http://docs.example.com'
+  docs: 'http://docs.example.com',
+  footer: {
+    title: 'Newsletter',
+    items: [
+      { text: 'Sign up', url: 'http://mailchimp.signup.url' }
+    ]
+  }
 }
