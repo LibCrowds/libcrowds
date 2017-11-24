@@ -3,7 +3,8 @@ const config = {
   brand: 'My Brand',
   tagline: 'My inspiring tagline',
   description: 'My SEO optimised meta description',
-  pybossaHost: 'http://example.com'
+  pybossaHost: 'http://example.com',
+  libcrowdsHost: 'http://mylibcrowds.com'
 }
 
 // Twitter

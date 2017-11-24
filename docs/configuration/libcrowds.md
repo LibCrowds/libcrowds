@@ -13,13 +13,14 @@ All of the available settings are described below.
 
 The following are required for the application to run correctly.
 
-| Setting     | Description                                                    |
-|-------------|----------------------------------------------------------------|
-| company     | The company responsible for the platform.                      |
-| brand       | The name of the platform.                                      |
-| tagline     | An inspiring tagline.                                          |
-| description | An SEO optimised description of the platform.                  |
-| pybossaHost | The host for all PYBOSSA API calls.                            |
+| Setting       | Description                                                  |
+|---------------|--------------------------------------------------------------|
+| company       | The company responsible for the platform.                    |
+| brand         | The name of the platform.                                    |
+| tagline       | An inspiring tagline.                                        |
+| description   | An SEO optimised description of the platform.                |
+| pybossaHost   | The host for all PYBOSSA API calls.                          |
+| libcrowdsHost | The host where this application will be deployed             |
 
 ### Optional Settings
 

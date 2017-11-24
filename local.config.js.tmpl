@@ -5,6 +5,9 @@ const config = {
   description: 'My SEO optimised meta description',
   pybossaHost: process.env.NODE_ENV === 'development'
     ? 'http://127.0.0.1:5000'
+    : 'http://xxxx.com',
+  libcrowdsHost: process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:8080'
     : 'http://xxxx.com'
 }
 
