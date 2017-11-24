@@ -1,19 +1,18 @@
 /**
- * Show cookie consent on the client.
- * @param {Object} context
- *   The nuxt context.
+ * Dispatch the nuxt client init event.
+ *
+ * This is used to that we can asynchronously perform actions that are only
+ * available on the client, before rendering.
  */
-export default function ({ isClient }) {
+export default ({ isClient, app }) => {
   if (isClient) {
     require('cookieconsent')
-
-    const cookiesPolicyPath = '/help/cookies'
-    const url = window.location.origin + cookiesPolicyPath
+    const cookiesPolicy = app.router.resolve({ name: 'help-cookies' }).href
     window.cookieconsent.initialise({
       content: {
         message: 'This website uses cookies to ensure you get the best ' +
                   'experience (mmm...cookies).',
-        href: url
+        href: window.location.origin + cookiesPolicy
       },
       palette: {
         popup: {

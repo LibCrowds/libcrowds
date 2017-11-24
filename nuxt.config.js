@@ -100,6 +100,7 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/cookie-consent', ssr: false },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/notifications', ssr: false },
@@ -165,8 +166,7 @@ const config = {
   router: {
     middleware: [
       'session',
-      'announcements',
-      'cookie-consent'
+      'announcements'
     ]
   }
 }
