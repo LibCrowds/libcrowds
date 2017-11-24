@@ -16,9 +16,7 @@ export default {
     return {
       defaultOptions: {
         height: '200px',
-        plugins: this.$chartist // Only add plugins on the client
-          ? [ this.$chartist.plugins.tooltip() ]
-          : [],
+        plugins: [ this.$chartist.plugins.tooltip() ],
         labelInterpolationFnc: (value, idx) => {
           let sum = this.chartData.series.reduce((a, b) => a.value + b.value)
           return Math.round(this.chartData.series[idx].value / sum * 100) + '%'
