@@ -25,13 +25,12 @@
       <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
         <b-card id="answer-card" no-body>
 
-          <div class="card-body pb-0" v-if="alerts.length">
+          <div class="card-body pb-0" v-if="alert">
             <b-alert
               show
-              v-for="alert in alerts"
               :variant="alert.type"
               :key="alert.msg"
-              class="mb-1">
+              class="mb-0">
               {{ alert.msg }}
             </b-alert>
           </div>
@@ -205,7 +204,7 @@ export default {
       header: 'What is this item?',
       searchResults: [],
       selectedRecord: null,
-      alerts: [],
+      alert: null,
       pagination: {},
       searchForm: {
         model: {
@@ -369,11 +368,10 @@ export default {
       const url = `/z3950/search/oclc/json?${fullQuery}`
       this.$axios.$get(url).then(data => {
         if (data.n_records === 0) {
-          this.alerts.push({ msg: 'No results', type: 'info' })
+          this.alert = { msg: 'No results', type: 'info' }
         } else if (data.status !== 'success') {
-          this.alerts.push({ msg: data.message, type: data.status })
+          this.alert = { msg: data.message, type: data.status }
         } else {
-          this.alerts = []
           this.searchResults = this.processResults(data.data)
           this.pagination = {
             page: Math.ceil(data.position / data.size),
@@ -513,6 +511,7 @@ export default {
      * Handle the submit button click.
      */
     onSubmit () {
+      this.alert = null
       if (this.stage === 'search') {
         this.search()
       } else if (this.stage === 'submit') {
@@ -550,7 +549,7 @@ export default {
     reset () {
       this.searchResults = []
       this.selectedRecord = null
-      this.alerts = []
+      this.alert = null
       this.pagination = {}
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
