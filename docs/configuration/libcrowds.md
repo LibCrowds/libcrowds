@@ -1,18 +1,17 @@
-## LibCrowds Configuration
+## Configurating LibCrowds
 
-After [configuring PYBOSSA](configuration/pybossa.md), it is possible to get
-LibCrowds up and running by making a copy of the settings template, which
-is described further below.
+After [configuring PYBOSSA](configuration/pybossa.md), you can get LibCrowds up
+and running by making a copy of the settings template:
 
 ```bash
-# Copy the template
 cp local.config.js.tmpl local.config.js
 ```
 
+All of the available settings are described below.
+
 ### Required Settings
 
-The following settings are defined at the top of the template and are all
-required for the application to run correctly.
+The following are required for the application to run correctly.
 
 | Setting     | Description                                                    |
 |-------------|----------------------------------------------------------------|
@@ -24,8 +23,7 @@ required for the application to run correctly.
 
 ### Optional Settings
 
-The following settings, which are commented out in the template, can be added
-to enable additional functionality on the platform.
+The following can be added to enable additional functionality.
 
 ### analytics
 
@@ -38,8 +36,9 @@ config.analytics = {
 }
 ```
 
-[Event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
-will be enabled for the following:
+This will enable
+[event tracking](https://developers.google.com/analytics/devguides/collection/analyticsjs/events)
+for the following events:
 
 | Category      | Action          | Label           | Description                 |
 |---------------|-----------------|-----------------|-----------------------------|
@@ -52,7 +51,7 @@ will be enabled for the following:
 Tracking these events can help to determine the content that your users are most
 interested in. For example, monitoring the filters most used for a microsite can
 help determine the types of project that should be prioritised for release at
-any given time.
+a given time.
 
 [Social interactions](https://developers.google.com/analytics/devguides/collection/analyticsjs/social-interactions)
 will be tracked using the social media 'Share' buttons present on the site.
@@ -70,7 +69,7 @@ main footer and all admin dashboard pages.
 config.docs: 'http://docs.example.com'
 ```
 
-# email
+### email
 
 Add a contact email address to the main footer.
 
@@ -133,7 +132,7 @@ config.sentry = {
 }
 ```
 
-# twitter
+### twitter
 
 Adds a twitter link to the main footer and enhances the platforms Twitter cards
 with `twitter:site` meta tag.

@@ -1,4 +1,4 @@
-## PYBOSSA Configuration
+## Configuring PYBOSSA
 
 LibCrowds relies on a PYBOSSA backend with a settings file that contains the
 following:
@@ -51,6 +51,6 @@ SPA_SERVER_NAME = 'http://127.0.0.1:8080'
 DISABLE_TASK_PRESENTER = True
 ```
 
-{% hint style='warning' %}
-The settings shown here are all required for the application to run correctly.
+{% hint style='danger' %}
+These settings are all required for the application to run correctly.
 {% endhint %}

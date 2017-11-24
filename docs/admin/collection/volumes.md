@@ -17,7 +17,7 @@ file should not contain any heading row.
 To upload a new list of volumes click the 'Upload CSV' button at the top right
 of the table.
 
-{% hint style='warning' %}
+{% hint style='danger' %}
 Uploading a CSV file will overwrite the current list of volumes for the
 collection.
 {% endhint %}
