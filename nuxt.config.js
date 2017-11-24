@@ -8,14 +8,7 @@ const localConfig = process.env.NODE_ENV === 'testing'
 const config = {
   mode: 'universal',
   head: {
-    titleTemplate: `%s | ${localConfig.brand}`,
-    meta: [
-      {
-        hid: 'description',
-        name: 'description',
-        content: localConfig.description
-      }
-    ]
+    titleTemplate: `%s | ${localConfig.brand}`
   },
   css: [
     '~/assets/style/main.scss',
@@ -157,6 +150,10 @@ const config = {
     lang: 'en-GB',
     display: 'standalone',
     start_url: '.'
+  },
+  meta: {
+    ogTitle: false, // Set from each page instead
+    ogDescription: false
   },
   loading: {
     color: '#2589BD',

@@ -1,6 +1,74 @@
 import localConfig from '@/local.config'
 
 /**
+ * Return the metadata for social media cards.
+ * @param {Object} metadata
+ *   The required metadata.
+ */
+function socialCards ({ title, description, image, imageAlt }) {
+  return [
+    // Open Graph
+    {
+      hid: 'og:title',
+      property: 'og:title',
+      content: title
+    },
+    {
+      hid: 'og:description',
+      property: 'og:description',
+      content: description
+    },
+    {
+      hid: 'og:type',
+      property: 'og:type',
+      content: 'website'
+    },
+    {
+      hid: 'og:image',
+      property: 'og:image',
+      content: image
+    },
+    {
+      hid: 'og:image:alt',
+      property: 'og:image:alt',
+      content: imageAlt
+    },
+
+    // Twitter
+    {
+      hid: 'twitter:card',
+      name: 'twitter:card',
+      content: 'summary'
+    },
+    {
+      hid: 'twitter:site',
+      name: 'twitter:site',
+      content: localConfig.contact.twitter
+    },
+    {
+      hid: 'twitter:title',
+      name: 'twitter:title',
+      content: title
+    },
+    {
+      hid: 'twitter:description',
+      name: 'twitter:description',
+      content: description
+    },
+    {
+      hid: 'twitter:image',
+      name: 'twitter:image',
+      content: image
+    },
+    {
+      hid: 'twitter:image:alt',
+      name: 'twitter:image:alt',
+      content: imageAlt
+    }
+  ]
+}
+
+/**
  * A mixin to add basic metadata to the page.
  */
 export const metaTags = {
@@ -15,20 +83,12 @@ export const metaTags = {
           name: 'description',
           content: this.description
         },
-
-        // Open Graph
-        { name: 'og:title', content: localConfig.brand },
-        { name: 'og:description', content: localConfig.description },
-        { name: 'og:type', content: 'website' },
-        { name: 'og:image', content: bgImg },
-
-        // Twitter Card
-        { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:site', content: localConfig.contact.twitter },
-        { name: 'twitter:title', content: localConfig.brand },
-        { name: 'twitter:description', content: localConfig.description },
-        { name: 'twitter:image', content: bgImg },
-        { name: 'twitter:image:alt', content: `${localConfig.brand} image` }
+        ...socialCards({
+          title: localConfig.brand,
+          description: localConfig.description,
+          image: bgImg,
+          imageAlt: `${localConfig.brand} image`
+        })
       ]
     }
   }
@@ -52,20 +112,12 @@ export const collectionMetaTags = {
           name: 'description',
           content: this.description
         },
-
-        // Open Graph
-        { name: 'og:title', content: collection.name },
-        { name: 'og:description', content: collection.description },
-        { name: 'og:type', content: 'website' },
-        { name: 'og:image', content: image },
-
-        // Twitter Card
-        { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:site', content: localConfig.contact.twitter },
-        { name: 'twitter:title', content: collection.name },
-        { name: 'twitter:description', content: collection.description },
-        { name: 'twitter:image', content: image },
-        { name: 'twitter:image:alt', content: `${collection.name} image` }
+        ...socialCards({
+          title: collection.name,
+          description: collection.description,
+          image: image,
+          imageAlt: `${collection.name} image`
+        })
       ]
     }
   }
@@ -93,20 +145,12 @@ export const projectMetaTags = {
           name: 'description',
           content: this.description
         },
-
-        // Open Graph
-        { name: 'og:title', content: project.name },
-        { name: 'og:description', content: project.description },
-        { name: 'og:type', content: 'website' },
-        { name: 'og:image', content: image },
-
-        // Twitter Card
-        { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:site', content: localConfig.contact.twitter },
-        { name: 'twitter:title', content: project.name },
-        { name: 'twitter:description', content: project.description },
-        { name: 'twitter:image', content: image },
-        { name: 'twitter:image:alt', content: `${project.name} image` }
+        ...socialCards({
+          title: project.name,
+          description: project.description,
+          image: image,
+          imageAlt: `${project.name} image`
+        })
       ]
     }
   }
