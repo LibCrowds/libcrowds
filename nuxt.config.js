@@ -152,7 +152,9 @@ const config = {
     start_url: '.'
   },
   meta: {
-    ogTitle: false, // Set from each page instead
+    // Open Graph info is set from each page instead
+    ogType: false,
+    ogTitle: false,
     ogDescription: false
   },
   loading: {
