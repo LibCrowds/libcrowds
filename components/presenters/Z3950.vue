@@ -1,18 +1,19 @@
 <template>
   <div id="z3950-presenter">
-    <div class="row">
+    <b-row>
+      <b-col lg="6">
 
-      <div class="col-sm-12 col-lg-6">
+        <!-- Image -->
         <b-card
           no-body
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
 
+        <!-- Share Buttons -->
         <div class="mt-3 text-center d-none d-lg-block">
           <span
             id="share-text"
-            class="markdown-option"
             v-html="marked(mergedOptions.shareText)">
           </span>
           <social-media-buttons
@@ -20,12 +21,13 @@
             :shareUrl="shareUrl">
           </social-media-buttons>
         </div>
-      </div>
 
-      <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
+      </b-col>
+      <b-col lg="6" class="mt-3 mt-lg-0">
         <b-card id="answer-card" no-body>
 
-          <div class="card-body pb-0" v-if="alert">
+          <!-- Alert -->
+          <b-card-body class="pb-0" v-if="alert">
             <b-alert
               show
               :variant="alert.type"
@@ -33,13 +35,14 @@
               class="mb-0">
               {{ alert.msg }}
             </b-alert>
-          </div>
+          </b-card-body>
 
+          <!-- Header -->
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
               <b-btn
-                v-if="searchResults.length || selectedRecord"
+                v-if="searchQuery || selectedRecord"
                 variant="warning"
                 size="sm"
                 class="float-right"
@@ -49,87 +52,84 @@
             </div>
           </template>
 
-          <transition-group name="fade" mode="out-in" appear>
-            <!-- Search Form -->
-            <div key="search" v-show="stage == 'search'" class="card-body">
-              <vue-form-generator
-                ref="searchform"
-                :schema="form.schema"
-                :model="form.model">
-              </vue-form-generator>
-            </div>
+          <!-- Search Form -->
+          <b-card-body v-show="stage == 'search'">
+            <vue-form-generator
+              ref="searchform"
+              class="form-container"
+              :schema="form.schema"
+              :model="form.model">
+            </vue-form-generator>
+          </b-card-body>
 
-            <!-- Search Results -->
-            <div
-              id="search-results"
-              key="results"
-              v-if="stage == 'results'">
-              <b-list-group>
-                <b-list-group-item
-                  v-for="(record, index) in searchResults"
-                  :key="`result-${index}`"
-                  class="p-2">
-                  <div class="d-flex flex-row w-100">
-                    <div class="w-75">
-                      <h5 class="mb-0">
-                        <a :href="record.externalLink" target="_blank">
-                          {{ record.title }}
-                        </a>
-                      </h5>
-                      <p class="mb-0">{{ record.author }}</p>
-                      <p class="mb-0">
-                        <small>{{ record.physdesc }}</small>
-                      </p>
-                      <p class="mb-0">
-                        <small>
-                          {{ record.publisher }}{{ record.pubyear }}
-                        </small>
-                      </p>
-                    </div>
-                    <div class="w-25 d-flex flex-column justify-content-center">
-                      <div class="result-buttons">
-                        <b-btn
-                          variant="success"
-                          size="sm"
-                          @click="selectedRecord = record">
-                          Select
-                        </b-btn>
-                      </div>
+          <!-- Search Results -->
+          <div id="search-results" v-if="stage == 'results'">
+            <b-list-group>
+              <b-list-group-item
+                v-for="(record, index) in searchResults"
+                :key="`result-${index}`"
+                class="p-2">
+                <div class="d-flex flex-row w-100">
+                  <div class="w-75">
+                    <h5 class="mb-0">
+                      <a :href="record.externalLink" target="_blank">
+                        {{ record.title }}
+                      </a>
+                    </h5>
+                    <p class="mb-0">{{ record.author }}</p>
+                    <p class="mb-0">
+                      <small>{{ record.physdesc }}</small>
+                    </p>
+                    <p class="mb-0">
+                      <small>
+                        {{ record.publisher }}{{ record.pubyear }}
+                      </small>
+                    </p>
+                  </div>
+                  <div class="w-25 d-flex flex-column justify-content-center">
+                    <div class="result-buttons">
+                      <b-btn
+                        variant="success"
+                        size="sm"
+                        @click="selectedRecord = record">
+                        Select
+                      </b-btn>
                     </div>
                   </div>
-                </b-list-group-item>
-              </b-list-group>
-              <no-ssr>
-                <infinite-loading
-                  ref="infiniteload"
-                  @infinite="onInfiniteLoad">
-                  <span slot="no-results">No results</span>
-                  <span slot="no-more">No more results</span>
-                </infinite-loading>
-              </no-ssr>
-            </div>
+                </div>
+              </b-list-group-item>
+            </b-list-group>
+            <no-ssr>
+              <infinite-loading
+                ref="infiniteload"
+                @infinite="onInfiniteLoad">
+                <span slot="no-results">No results</span>
+                <span slot="no-more">No more results</span>
+              </infinite-loading>
+            </no-ssr>
+          </div>
 
-            <!-- Shelfmark Form -->
-            <div key="submit" v-show="selectedRecord" class="card-body">
-              <div v-if="selectedRecord">
-                <h5 class="mb-1">{{ selectedRecord.title }}</h5>
-                <p class="mb-0">{{ selectedRecord.author }}</p>
-                <p class="mb-0">
-                  <small>{{ selectedRecord.physdesc }}</small>
-                </p>
-                <p class="mb-2">
-                  <small>
-                    {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
-                  </small>
-                </p>
-              </div>
-              <vue-form-generator
-                ref="smform"
-                :schema="shelfmarkForm.schema"
-                :model="shelfmarkForm.model">
-              </vue-form-generator>
+          <!-- Shelfmark Form -->
+          <b-card-body v-show="stage == 'submit'">
+            <div v-if="selectedRecord">
+              <h5 class="mb-1">{{ selectedRecord.title }}</h5>
+              <p class="mb-0">{{ selectedRecord.author }}</p>
+              <p class="mb-0">
+                <small>{{ selectedRecord.physdesc }}</small>
+              </p>
+              <p class="mb-2">
+                <small>
+                  {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
+                </small>
+              </p>
             </div>
-          </transition-group>
+            <vue-form-generator
+              ref="smform"
+              class="form-container"
+              :schema="shelfmarkForm.schema"
+              :model="shelfmarkForm.model">
+            </vue-form-generator>
+          </b-card-body>
 
           <!-- Footer -->
           <template slot="footer">
@@ -162,8 +162,8 @@
           </template>
 
         </b-card>
-      </div>
-    </div>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -178,6 +178,7 @@ import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { notifications } from '@/mixins/notifications'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import VueFormGenerator from 'vue-form-generator'
 
 export default {
   mixins: [ notifications, computeShareUrl ],
@@ -240,7 +241,9 @@ export default {
               label: 'Shelfmark',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Enter the shelfmark'
+              placeholder: 'Enter the shelfmark',
+              required: true,
+              validator: VueFormGenerator.validators.string
             }
           ]
         }
@@ -286,8 +289,16 @@ export default {
       }
     },
 
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
+    presenterOptions () {
+      return this.collection.info.presenter_options || {}
+    },
+
     mergedOptions () {
-      return merge({}, this.defaultOptions)
+      return merge({}, this.defaultOptions, this.presenterOptions)
     },
 
     submitButtonText () {
@@ -305,7 +316,7 @@ export default {
     },
 
     form () {
-      if (!this.searchResults.length && !this.selectedRecord) {
+      if (!this.searchQuery && !this.selectedRecord) {
         return this.searchForm
       } else {
         return this.shelfmarkForm
@@ -477,7 +488,7 @@ export default {
       this.alert = null
       if (this.stage === 'search') {
         this.buildQuery()
-      } else if (this.stage === 'submit') {
+      } else if (this.stage === 'submit' && this.$refs.smform.validate()) {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
           shelfmark: this.shelfmarkForm.model.shelfmark,
@@ -526,6 +537,7 @@ export default {
       this.selectedRecord = null
       this.alert = null
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
+      this.shelfmarkForm.model.shelfmark = null
       this.$refs.comments.value = ''
     },
 
@@ -536,7 +548,6 @@ export default {
   },
 
   mounted () {
-    console.log(this.$refs)
     this.$refs.searchform.$el.addEventListener('keypress', this.handleKeyup)
     this.$refs.smform.$el.addEventListener('keypress', this.handleKeyup)
   },
@@ -569,12 +580,6 @@ export default {
   #share-text {
     text-transform: uppercase;
     font-size: $font-size-sm;
-  }
-
-  .markdown-option{
-    p {
-      margin-bottom: 0;
-    }
   }
 
   .list-group {

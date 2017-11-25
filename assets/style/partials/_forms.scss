@@ -1,0 +1,26 @@
+.form-container {
+  border: none;
+
+  label {
+    font-weight: 600;
+    font-size: $font-size-sm;
+  }
+
+  .errors {
+    color: $red;
+    font-size: $font-size-sm;
+
+    span {
+      margin-top: 0.25rem;
+      display: block;
+    }
+  }
+
+  fieldset {
+    padding: 0;
+  }
+
+  .form-group {
+    margin-bottom: 2rem;
+  }
+}
