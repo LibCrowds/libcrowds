@@ -99,7 +99,7 @@
               <no-ssr>
                 <infinite-loading
                   ref="infiniteload"
-                  :distance="200"
+                  :distance="500"
                   @infinite="onInfiniteLoad">
                   <span slot="no-results">No results</span>
                   <span slot="no-more">No more results</span>
@@ -128,26 +128,24 @@
             </div>
           </transition-group>
 
+          <!-- Footer -->
           <template slot="footer">
-            <div class="d-flex text-center flex-column">
+            <div id="footer-buttons">
               <b-btn
-                v-if="stage !== 'results'"
-                variant="success"
-                class="mb-1 markdown-option"
-                @click="onSubmit"
-                v-html="footerButtonText">
+                v-b-toggle.collapsecomment
+                variant="dark">
+                Add a note
               </b-btn>
               <b-btn
-                variant="outline-dark"
-                class="mb-1"
+                variant="dark"
                 @click="onSkip">
                 Skip / Not Found
               </b-btn>
               <b-btn
-                v-b-toggle.collapsecomment
-                class="markdown-option"
-                variant="outline-dark"
-                v-html="marked(mergedOptions.noteText)">
+                v-if="stage !== 'results'"
+                variant="success"
+                @click="onSubmit"
+                v-html="submitButtonText">
               </b-btn>
             </div>
             <b-collapse id="collapsecomment" class="mt-1">
@@ -159,11 +157,10 @@
               </textarea>
             </b-collapse>
           </template>
-        </b-card>
 
+        </b-card>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -247,8 +244,6 @@ export default {
       },
       defaultOptions: {
         shareText: 'Share this project',
-        noteText: 'Seen something interesting?<br>Add a note',
-        submitText: 'Save and Continue',
         numberRequired: 1
       }
     }
@@ -292,10 +287,8 @@ export default {
       return merge({}, this.defaultOptions)
     },
 
-    footerButtonText () {
-      return this.stage !== 'submit'
-        ? capitalize(this.stage)
-        : marked(this.mergedOptions.submitText)
+    submitButtonText () {
+      return capitalize(this.stage)
     },
 
     stage () {
@@ -581,6 +574,24 @@ export default {
     .result-buttons {
       align-self: flex-end;
       margin-left: auto;
+    }
+  }
+
+  #footer-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .btn {
+      margin: 0.5rem 0 ;
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+      justify-content: space-between;
+
+      .btn {
+        margin: 0;
+      }
     }
   }
 
