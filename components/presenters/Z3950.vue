@@ -51,8 +51,11 @@
 
           <transition-group name="fade" mode="out-in" appear>
             <!-- Search Form -->
-            <div key="search" v-if="stage == 'search'" class="card-body">
-              <vue-form-generator :schema="form.schema" :model="form.model">
+            <div key="search" v-show="stage == 'search'" class="card-body">
+              <vue-form-generator
+                ref="searchform"
+                :schema="form.schema"
+                :model="form.model">
               </vue-form-generator>
             </div>
 
@@ -99,7 +102,6 @@
               <no-ssr>
                 <infinite-loading
                   ref="infiniteload"
-                  :distance="500"
                   @infinite="onInfiniteLoad">
                   <span slot="no-results">No results</span>
                   <span slot="no-more">No more results</span>
@@ -108,7 +110,7 @@
             </div>
 
             <!-- Shelfmark Form -->
-            <div key="submit" v-if="selectedRecord" class="card-body">
+            <div key="submit" v-show="selectedRecord" class="card-body">
               <div v-if="selectedRecord">
                 <h5 class="mb-1">{{ selectedRecord.title }}</h5>
                 <p class="mb-0">{{ selectedRecord.author }}</p>
@@ -122,6 +124,7 @@
                 </p>
               </div>
               <vue-form-generator
+                ref="smform"
                 :schema="shelfmarkForm.schema"
                 :model="shelfmarkForm.model">
               </vue-form-generator>
@@ -504,6 +507,17 @@ export default {
     },
 
     /**
+     * Handle key up.
+     * @param {Object} evt
+     *   The event.
+     */
+    handleKeyup (evt) {
+      if (evt.keyCode === 13) {
+        this.onSubmit()
+      }
+    },
+
+    /**
      * Reset the task.
      */
     reset () {
@@ -519,6 +533,17 @@ export default {
      * Markdown parser.
      */
     marked
+  },
+
+  mounted () {
+    console.log(this.$refs)
+    this.$refs.searchform.$el.addEventListener('keypress', this.handleKeyup)
+    this.$refs.smform.$el.addEventListener('keypress', this.handleKeyup)
+  },
+
+  beforeDestroy () {
+    this.$refs.searchform.$el.removeEventListener('keypress', this.handleKeyup)
+    this.$refs.smform.$el.addEventListener('keypress', this.handleKeyup)
   }
 }
 </script>
