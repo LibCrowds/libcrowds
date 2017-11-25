@@ -1,18 +1,19 @@
 <template>
   <div id="z3950-presenter">
-    <div class="row">
+    <b-row>
+      <b-col lg="6">
 
-      <div class="col-sm-12 col-lg-6">
+        <!-- Image -->
         <b-card
           no-body
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
 
+        <!-- Share Buttons -->
         <div class="mt-3 text-center d-none d-lg-block">
           <span
             id="share-text"
-            class="markdown-option"
             v-html="marked(mergedOptions.shareText)">
           </span>
           <social-media-buttons
@@ -20,27 +21,28 @@
             :shareUrl="shareUrl">
           </social-media-buttons>
         </div>
-      </div>
 
-      <div class="col-sm-12 col-lg-6 mt-3 mt-lg-0">
+      </b-col>
+      <b-col lg="6" class="mt-3 mt-lg-0">
         <b-card id="answer-card" no-body>
 
-          <div class="card-body pb-0" v-if="alerts.length">
+          <!-- Alert -->
+          <b-card-body class="pb-0" v-if="alert">
             <b-alert
               show
-              v-for="alert in alerts"
               :variant="alert.type"
               :key="alert.msg"
-              class="mb-1">
+              class="mb-0">
               {{ alert.msg }}
             </b-alert>
-          </div>
+          </b-card-body>
 
+          <!-- Header -->
           <template slot="header">
             <div class="d-flex justify-content-between align-items-center">
               <h6 class="mb-0">{{ header }}</h6>
               <b-btn
-                v-if="searchResults.length || selectedRecord"
+                v-if="searchQuery || selectedRecord"
                 variant="warning"
                 size="sm"
                 class="float-right"
@@ -50,16 +52,19 @@
             </div>
           </template>
 
-          <transition name="fade" mode="out-in" appear>
-            <div key="search" v-if="stage == 'search'" class="card-body">
-              <vue-form-generator :schema="form.schema" :model="form.model">
-              </vue-form-generator>
-            </div>
+          <!-- Search Form -->
+          <b-card-body v-show="stage == 'search'">
+            <vue-form-generator
+              ref="searchform"
+              class="form-container"
+              :schema="form.schema"
+              :model="form.model">
+            </vue-form-generator>
+          </b-card-body>
 
-            <div
-              key="results"
-              v-if="stage == 'results' && !processing"
-              class="list-group">
+          <!-- Search Results -->
+          <div id="search-results" v-if="stage == 'results'">
+            <b-list-group>
               <b-list-group-item
                 v-for="(record, index) in searchResults"
                 :key="`result-${index}`"
@@ -93,49 +98,57 @@
                   </div>
                 </div>
               </b-list-group-item>
-            </div>
+            </b-list-group>
+            <no-ssr>
+              <infinite-loading
+                ref="infiniteload"
+                @infinite="onInfiniteLoad">
+                <span slot="no-results">No results</span>
+                <span slot="no-more">No more results</span>
+              </infinite-loading>
+            </no-ssr>
+          </div>
 
-            <div key="submit" v-if="selectedRecord" class="card-body">
-              <div v-if="selectedRecord">
-                <h5 class="mb-1">{{ selectedRecord.title }}</h5>
-                <p class="mb-0">{{ selectedRecord.author }}</p>
-                <p class="mb-0">
-                  <small>{{ selectedRecord.physdesc }}</small>
-                </p>
-                <p class="mb-2">
-                  <small>
-                    {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
-                  </small>
-                </p>
-              </div>
-              <vue-form-generator
-                :schema="shelfmarkForm.schema"
-                :model="shelfmarkForm.model">
-              </vue-form-generator>
+          <!-- Shelfmark Form -->
+          <b-card-body v-show="stage == 'submit'">
+            <div v-if="selectedRecord">
+              <h5 class="mb-1">{{ selectedRecord.title }}</h5>
+              <p class="mb-0">{{ selectedRecord.author }}</p>
+              <p class="mb-0">
+                <small>{{ selectedRecord.physdesc }}</small>
+              </p>
+              <p class="mb-2">
+                <small>
+                  {{ selectedRecord.publisher }}{{ selectedRecord.pubyear }}
+                </small>
+              </p>
             </div>
-          </transition>
+            <vue-form-generator
+              ref="smform"
+              class="form-container"
+              :schema="shelfmarkForm.schema"
+              :model="shelfmarkForm.model">
+            </vue-form-generator>
+          </b-card-body>
 
+          <!-- Footer -->
           <template slot="footer">
-            <div class="d-flex text-center flex-column">
+            <div id="footer-buttons">
               <b-btn
-                v-if="stage !== 'results'"
-                variant="success"
-                class="mb-1 markdown-option"
-                :disabled="processing"
-                @click="onSubmit"
-                v-html="footerButtonText">
+                v-b-toggle.collapsecomment
+                variant="dark">
+                Add a note
               </b-btn>
               <b-btn
-                variant="outline-dark"
-                class="mb-1"
+                variant="dark"
                 @click="onSkip">
                 Skip / Not Found
               </b-btn>
               <b-btn
-                v-b-toggle.collapsecomment
-                class="markdown-option"
-                variant="outline-dark"
-                v-html="marked(mergedOptions.noteText)">
+                v-if="stage !== 'results'"
+                variant="success"
+                @click="onSubmit"
+                v-html="submitButtonText">
               </b-btn>
             </div>
             <b-collapse id="collapsecomment" class="mt-1">
@@ -147,40 +160,10 @@
               </textarea>
             </b-collapse>
           </template>
+
         </b-card>
-
-        <div
-          v-if="stage == 'results'"
-          class="d-flex align-items-center mt-2 mb-0 d-flex flex-column">
-          <b-pagination
-            variant="info"
-            size="sm"
-            :disabled="processing"
-            :total-rows="pagination.total"
-            :per-page="pagination.perPage"
-            v-model="pagination.page"
-            @change="onPageChange">
-          </b-pagination>
-          <p>
-            <small>
-              Showing
-              {{ (pagination.page - 1) * pagination.perPage + 1 }}
-              to
-              {{
-                Math.min(
-                  pagination.page * pagination.perPage + 1,
-                  pagination.total
-                )
-              }}
-              of
-              {{ pagination.total }}
-            </small>
-          </p>
-        </div>
-
-      </div>
-    </div>
-
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -195,18 +178,18 @@ import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { notifications } from '@/mixins/notifications'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import VueFormGenerator from 'vue-form-generator'
 
 export default {
   mixins: [ notifications, computeShareUrl ],
 
   data () {
     return {
-      processing: false,
       header: 'What is this item?',
+      searchQuery: null,
       searchResults: [],
       selectedRecord: null,
-      alerts: [],
-      pagination: {},
+      alert: null,
       searchForm: {
         model: {
           'title': '',
@@ -258,15 +241,15 @@ export default {
               label: 'Shelfmark',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Enter the shelfmark'
+              placeholder: 'Enter the shelfmark',
+              required: true,
+              validator: VueFormGenerator.validators.string
             }
           ]
         }
       },
       defaultOptions: {
         shareText: 'Share this project',
-        noteText: 'Seen something interesting?<br>Add a note',
-        submitText: 'Save and Continue',
         numberRequired: 1
       }
     }
@@ -306,20 +289,26 @@ export default {
       }
     },
 
-    mergedOptions () {
-      return merge({}, this.defaultOptions)
+    collection () {
+      return this.$store.state.currentCollection
     },
 
-    footerButtonText () {
-      return this.stage !== 'submit'
-        ? capitalize(this.stage)
-        : marked(this.mergedOptions.submitText)
+    presenterOptions () {
+      return this.collection.info.presenter_options || {}
+    },
+
+    mergedOptions () {
+      return merge({}, this.defaultOptions, this.presenterOptions)
+    },
+
+    submitButtonText () {
+      return capitalize(this.stage)
     },
 
     stage () {
-      if (!this.searchResults.length && !this.selectedRecord) {
+      if (!this.searchQuery && !this.selectedRecord) {
         return 'search'
-      } else if (this.searchResults.length && !this.selectedRecord) {
+      } else if (this.searchQuery && !this.selectedRecord) {
         return 'results'
       } else if (this.selectedRecord) {
         return 'submit'
@@ -327,7 +316,7 @@ export default {
     },
 
     form () {
-      if (!this.searchResults.length && !this.selectedRecord) {
+      if (!this.searchQuery && !this.selectedRecord) {
         return this.searchForm
       } else {
         return this.shelfmarkForm
@@ -336,6 +325,33 @@ export default {
   },
 
   methods: {
+    /**
+     * Handler to infinitely load results.
+     * @param {Object} $state
+     *   The vue-inifinite-loading state.
+     */
+    async onInfiniteLoad ($state) {
+      try {
+        const results = await this.$axios.$get('/z3950/search/oclc/json', {
+          params: {
+            query: this.searchQuery,
+            position: this.searchResults.length + 1
+          }
+        })
+
+        if (!results.data.length) {
+          $state.complete()
+          return
+        }
+
+        const processedResults = this.processResults(results.data)
+        this.searchResults = this.searchResults.concat(processedResults)
+        $state.loaded()
+      } catch (err) {
+        this.$nuxt.error(err)
+      }
+    },
+
     /**
      * Build a query from the form data.
      */
@@ -346,46 +362,11 @@ export default {
         'CGU', 'COO', 'AMH', 'AUT', 'NSL', 'SLY', 'L2U', 'OCLCA',
         'OCLCQ', 'OCLCF', 'OCLCO', 'BLSTP'
       ].join(' or ')
-      return `(1,1183)="eng"and(1,6119)="(${trusted})"` +
+      this.searchQuery = `(1,1183)="eng"and(1,6119)="(${trusted})"` +
         `and(1,4)="${model.title}"` +
         `and(1,1003)="${model.author}"` +
         `and(1,31)="${model.year}"` +
         `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
-    },
-
-    /**
-     * Perform a search.
-     * @param {Number} page
-     *   The page number.
-     */
-    search (page = 1) {
-      this.flash({ status: 'info', flash: 'Performing search...' })
-      this.processing = true
-      const searchQuery = this.buildQuery()
-      let fullQuery = `query=${searchQuery}`
-      if (page > 1 && this.pagination.perPage) {
-        fullQuery += `&position=${(page - 1) * this.pagination.perPage + 1}`
-      }
-      const url = `/z3950/search/oclc/json?${fullQuery}`
-      this.$axios.$get(url).then(data => {
-        if (data.n_records === 0) {
-          this.alerts.push({ msg: 'No results', type: 'info' })
-        } else if (data.status !== 'success') {
-          this.alerts.push({ msg: data.message, type: data.status })
-        } else {
-          this.alerts = []
-          this.searchResults = this.processResults(data.data)
-          this.pagination = {
-            page: Math.ceil(data.position / data.size),
-            perPage: data.size,
-            total: data.total,
-            summary: ''
-          }
-        }
-        this.processing = false
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
     },
 
     /**
@@ -480,15 +461,6 @@ export default {
     },
 
     /**
-     * Handle the page change event.
-     * @param {Number} n
-     *   The page number.
-     */
-    onPageChange (n) {
-      this.search(n)
-    },
-
-    /**
      * Handle the skip button click.
      */
     onSkip () {
@@ -498,7 +470,7 @@ export default {
         type: 'warning',
         showCancelButton: true
       }).then(result => {
-        if (result.value) {
+        if (result) {
           this.submit({
             oclc: '',
             shelfmark: '',
@@ -513,9 +485,10 @@ export default {
      * Handle the submit button click.
      */
     onSubmit () {
+      this.alert = null
       if (this.stage === 'search') {
-        this.search()
-      } else if (this.stage === 'submit') {
+        this.buildQuery()
+      } else if (this.stage === 'submit' && this.$refs.smform.validate()) {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
           shelfmark: this.shelfmarkForm.model.shelfmark,
@@ -545,14 +518,26 @@ export default {
     },
 
     /**
+     * Handle key up.
+     * @param {Object} evt
+     *   The event.
+     */
+    handleKeyup (evt) {
+      if (evt.keyCode === 13) {
+        this.onSubmit()
+      }
+    },
+
+    /**
      * Reset the task.
      */
     reset () {
+      this.searchQuery = null
       this.searchResults = []
       this.selectedRecord = null
-      this.alerts = []
-      this.pagination = {}
+      this.alert = null
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
+      this.shelfmarkForm.model.shelfmark = null
       this.$refs.comments.value = ''
     },
 
@@ -560,6 +545,16 @@ export default {
      * Markdown parser.
      */
     marked
+  },
+
+  mounted () {
+    this.$refs.searchform.$el.addEventListener('keypress', this.handleKeyup)
+    this.$refs.smform.$el.addEventListener('keypress', this.handleKeyup)
+  },
+
+  beforeDestroy () {
+    this.$refs.searchform.$el.removeEventListener('keypress', this.handleKeyup)
+    this.$refs.smform.$el.addEventListener('keypress', this.handleKeyup)
   }
 }
 </script>
@@ -587,12 +582,6 @@ export default {
     font-size: $font-size-sm;
   }
 
-  .markdown-option{
-    p {
-      margin-bottom: 0;
-    }
-  }
-
   .list-group {
     overflow: auto;
   }
@@ -603,10 +592,6 @@ export default {
     border-left: none;
     flex-direction: column;
     align-items: flex-start;
-
-    &:last-child {
-      border-bottom: none;
-    }
 
     .remove {
       align-self: flex-end;
@@ -620,6 +605,29 @@ export default {
       align-self: flex-end;
       margin-left: auto;
     }
+  }
+
+  #footer-buttons {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .btn {
+      margin: 0.5rem 0 ;
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-direction: row;
+      justify-content: space-between;
+
+      .btn {
+        margin: 0;
+      }
+    }
+  }
+
+  #search-results {
+    max-height: 60vh;
+    overflow-y: auto;
   }
 }
 </style>

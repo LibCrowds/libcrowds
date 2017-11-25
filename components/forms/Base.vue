@@ -1,5 +1,5 @@
 <template>
-  <b-card class="form-base" :no-body="noBody">
+  <b-card class="form-container form-base" :no-body="noBody">
 
     <slot></slot>
 
@@ -63,33 +63,7 @@ export default {
 
 <style lang="scss">
 @import '~assets/style/settings';
-
 .form-base {
-  border: none;
-
-  label {
-    font-weight: 600;
-    font-size: $font-size-sm;
-  }
-
-  .errors {
-    color: $red;
-    font-size: $font-size-sm;
-
-    span {
-      margin-top: 0.25rem;
-      display: block;
-    }
-  }
-
-  fieldset {
-    padding: 0;
-  }
-
-  .form-group {
-    margin-bottom: 2rem;
-  }
-
   .btn {
     transition: 250ms opacity;
   }
