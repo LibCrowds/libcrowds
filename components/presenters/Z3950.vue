@@ -470,7 +470,7 @@ export default {
         type: 'warning',
         showCancelButton: true
       }).then(result => {
-        if (result.value) {
+        if (result) {
           this.submit({
             oclc: '',
             shelfmark: '',
