@@ -49,51 +49,65 @@
             </div>
           </template>
 
-          <transition name="fade" mode="out-in" appear>
+          <transition-group name="fade" mode="out-in" appear>
+            <!-- Search Form -->
             <div key="search" v-if="stage == 'search'" class="card-body">
               <vue-form-generator :schema="form.schema" :model="form.model">
               </vue-form-generator>
             </div>
 
+            <!-- Search Results -->
             <div
+              id="search-results"
               key="results"
-              v-if="stage == 'results' && !processing"
-              class="list-group">
-              <b-list-group-item
-                v-for="(record, index) in searchResults"
-                :key="`result-${index}`"
-                class="p-2">
-                <div class="d-flex flex-row w-100">
-                  <div class="w-75">
-                    <h5 class="mb-0">
-                      <a :href="record.externalLink" target="_blank">
-                        {{ record.title }}
-                      </a>
-                    </h5>
-                    <p class="mb-0">{{ record.author }}</p>
-                    <p class="mb-0">
-                      <small>{{ record.physdesc }}</small>
-                    </p>
-                    <p class="mb-0">
-                      <small>
-                        {{ record.publisher }}{{ record.pubyear }}
-                      </small>
-                    </p>
-                  </div>
-                  <div class="w-25 d-flex flex-column justify-content-center">
-                    <div class="result-buttons">
-                      <b-btn
-                        variant="success"
-                        size="sm"
-                        @click="selectedRecord = record">
-                        Select
-                      </b-btn>
+              v-if="stage == 'results'">
+              <b-list-group>
+                <b-list-group-item
+                  v-for="(record, index) in searchResults"
+                  :key="`result-${index}`"
+                  class="p-2">
+                  <div class="d-flex flex-row w-100">
+                    <div class="w-75">
+                      <h5 class="mb-0">
+                        <a :href="record.externalLink" target="_blank">
+                          {{ record.title }}
+                        </a>
+                      </h5>
+                      <p class="mb-0">{{ record.author }}</p>
+                      <p class="mb-0">
+                        <small>{{ record.physdesc }}</small>
+                      </p>
+                      <p class="mb-0">
+                        <small>
+                          {{ record.publisher }}{{ record.pubyear }}
+                        </small>
+                      </p>
+                    </div>
+                    <div class="w-25 d-flex flex-column justify-content-center">
+                      <div class="result-buttons">
+                        <b-btn
+                          variant="success"
+                          size="sm"
+                          @click="selectedRecord = record">
+                          Select
+                        </b-btn>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </b-list-group-item>
+                </b-list-group-item>
+              </b-list-group>
+              <no-ssr>
+                <infinite-loading
+                  ref="infiniteload"
+                  :distance="200"
+                  @infinite="onInfiniteLoad">
+                  <span slot="no-results">No results</span>
+                  <span slot="no-more">No more results</span>
+                </infinite-loading>
+              </no-ssr>
             </div>
 
+            <!-- Shelfmark Form -->
             <div key="submit" v-if="selectedRecord" class="card-body">
               <div v-if="selectedRecord">
                 <h5 class="mb-1">{{ selectedRecord.title }}</h5>
@@ -112,7 +126,7 @@
                 :model="shelfmarkForm.model">
               </vue-form-generator>
             </div>
-          </transition>
+          </transition-group>
 
           <template slot="footer">
             <div class="d-flex text-center flex-column">
@@ -120,7 +134,6 @@
                 v-if="stage !== 'results'"
                 variant="success"
                 class="mb-1 markdown-option"
-                :disabled="processing"
                 @click="onSubmit"
                 v-html="footerButtonText">
               </b-btn>
@@ -148,35 +161,6 @@
           </template>
         </b-card>
 
-        <div
-          v-if="stage == 'results'"
-          class="d-flex align-items-center mt-2 mb-0 d-flex flex-column">
-          <b-pagination
-            variant="info"
-            size="sm"
-            :disabled="processing"
-            :total-rows="pagination.total"
-            :per-page="pagination.perPage"
-            v-model="pagination.page"
-            @change="onPageChange">
-          </b-pagination>
-          <p>
-            <small>
-              Showing
-              {{ (pagination.page - 1) * pagination.perPage + 1 }}
-              to
-              {{
-                Math.min(
-                  pagination.page * pagination.perPage + 1,
-                  pagination.total
-                )
-              }}
-              of
-              {{ pagination.total }}
-            </small>
-          </p>
-        </div>
-
       </div>
     </div>
 
@@ -200,12 +184,11 @@ export default {
 
   data () {
     return {
-      processing: false,
       header: 'What is this item?',
+      searchQuery: null,
       searchResults: [],
       selectedRecord: null,
       alert: null,
-      pagination: {},
       searchForm: {
         model: {
           'title': '',
@@ -316,9 +299,9 @@ export default {
     },
 
     stage () {
-      if (!this.searchResults.length && !this.selectedRecord) {
+      if (!this.searchQuery && !this.selectedRecord) {
         return 'search'
-      } else if (this.searchResults.length && !this.selectedRecord) {
+      } else if (this.searchQuery && !this.selectedRecord) {
         return 'results'
       } else if (this.selectedRecord) {
         return 'submit'
@@ -336,6 +319,33 @@ export default {
 
   methods: {
     /**
+     * Handler to infinitely load results.
+     * @param {Object} $state
+     *   The vue-inifinite-loading state.
+     */
+    async onInfiniteLoad ($state) {
+      try {
+        const results = await this.$axios.$get('/z3950/search/oclc/json', {
+          params: {
+            query: this.searchQuery,
+            position: this.searchResults.length + 1
+          }
+        })
+
+        if (!results.data.length) {
+          $state.complete()
+          return
+        }
+
+        const processedResults = this.processResults(results.data)
+        this.searchResults = this.searchResults.concat(processedResults)
+        $state.loaded()
+      } catch (err) {
+        this.$nuxt.error(err)
+      }
+    },
+
+    /**
      * Build a query from the form data.
      */
     buildQuery () {
@@ -345,45 +355,11 @@ export default {
         'CGU', 'COO', 'AMH', 'AUT', 'NSL', 'SLY', 'L2U', 'OCLCA',
         'OCLCQ', 'OCLCF', 'OCLCO', 'BLSTP'
       ].join(' or ')
-      return `(1,1183)="eng"and(1,6119)="(${trusted})"` +
+      this.searchQuery = `(1,1183)="eng"and(1,6119)="(${trusted})"` +
         `and(1,4)="${model.title}"` +
         `and(1,1003)="${model.author}"` +
         `and(1,31)="${model.year}"` +
         `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
-    },
-
-    /**
-     * Perform a search.
-     * @param {Number} page
-     *   The page number.
-     */
-    search (page = 1) {
-      this.flash({ status: 'info', flash: 'Performing search...' })
-      this.processing = true
-      const searchQuery = this.buildQuery()
-      let fullQuery = `query=${searchQuery}`
-      if (page > 1 && this.pagination.perPage) {
-        fullQuery += `&position=${(page - 1) * this.pagination.perPage + 1}`
-      }
-      const url = `/z3950/search/oclc/json?${fullQuery}`
-      this.$axios.$get(url).then(data => {
-        if (data.n_records === 0) {
-          this.alert = { msg: 'No results', type: 'info' }
-        } else if (data.status !== 'success') {
-          this.alert = { msg: data.message, type: data.status }
-        } else {
-          this.searchResults = this.processResults(data.data)
-          this.pagination = {
-            page: Math.ceil(data.position / data.size),
-            perPage: data.size,
-            total: data.total,
-            summary: ''
-          }
-        }
-        this.processing = false
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
     },
 
     /**
@@ -478,15 +454,6 @@ export default {
     },
 
     /**
-     * Handle the page change event.
-     * @param {Number} n
-     *   The page number.
-     */
-    onPageChange (n) {
-      this.search(n)
-    },
-
-    /**
      * Handle the skip button click.
      */
     onSkip () {
@@ -513,7 +480,7 @@ export default {
     onSubmit () {
       this.alert = null
       if (this.stage === 'search') {
-        this.search()
+        this.buildQuery()
       } else if (this.stage === 'submit') {
         this.submit({
           oclc: this.selectedRecord.controlNumber,
@@ -547,10 +514,10 @@ export default {
      * Reset the task.
      */
     reset () {
+      this.searchQuery = null
       this.searchResults = []
       this.selectedRecord = null
       this.alert = null
-      this.pagination = {}
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
       this.$refs.comments.value = ''
     },
@@ -603,10 +570,6 @@ export default {
     flex-direction: column;
     align-items: flex-start;
 
-    &:last-child {
-      border-bottom: none;
-    }
-
     .remove {
       align-self: flex-end;
       background: transparent;
@@ -619,6 +582,11 @@ export default {
       align-self: flex-end;
       margin-left: auto;
     }
+  }
+
+  #search-results {
+    max-height: 60vh;
+    overflow-y: auto;
   }
 }
 </style>
