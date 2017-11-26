@@ -45,6 +45,7 @@
 
 <script>
 import marked from 'marked'
+import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
@@ -105,6 +106,14 @@ export default {
                   name: 'Heart'
                 }
               ]
+            },
+            {
+              model: 'info.celebration.title',
+              label: 'Title',
+              type: 'input',
+              inputType: 'text',
+              required: true,
+              validator: VueFormGenerator.validators.string
             }
           ]
         }
