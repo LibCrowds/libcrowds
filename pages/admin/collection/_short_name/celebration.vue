@@ -5,7 +5,7 @@
       variant="success"
       class="float-right ml-1"
       size="sm"
-      @click="testCelebration(collection.info.celebration.user)">
+      @click="testCelebration(form.model.info.celebration.user)">
       Test user
     </b-btn>
     <b-btn
@@ -13,7 +13,7 @@
       variant="success"
       class="float-right"
       size="sm"
-      @click="testCelebration(collection.info.celebration.project)">
+      @click="testCelebration(form.model.info.celebration.project)">
       Test project
     </b-btn>
 
@@ -45,7 +45,6 @@
 
 <script>
 import marked from 'marked'
-import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
@@ -106,14 +105,6 @@ export default {
                   name: 'Heart'
                 }
               ]
-            },
-            {
-              model: 'info.celebration.title',
-              label: 'Title',
-              type: 'input',
-              inputType: 'text',
-              required: true,
-              validator: VueFormGenerator.validators.string
             }
           ]
         }
@@ -136,10 +127,9 @@ export default {
      */
     testCelebration (msg) {
       this.$confetti.start({
-        shape: this.collection.info.celebration.confetti
+        shape: this.form.model.info.celebration.confetti
       })
       this.$swal({
-        title: this.collection.info.celebration.title,
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
