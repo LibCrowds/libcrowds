@@ -106,8 +106,7 @@ export default {
       })
       this.$swal({
         title: this.collection.info.celebration.title,
-        html: marked(msg),
-        type: 'info'
+        html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
       })
