@@ -35,7 +35,17 @@ export const setCollectionDefaults = function (collection) {
         'perhaps to further research into new technologies.',
       projects: ''
     },
-    pubished: false
+    pubished: false,
+    celebration: {
+      confetti: 'heart',
+      title: 'Horay!',
+      user: 'You have completed all available tasks for this project.\n\n' +
+        'As we are asking for more than one person to complete each task, ' +
+        'we still need more contributions before the project is marked as ' +
+        'complete, so please spread the word!',
+      project: 'This project is now complete.\n\n The data will be processed ' +
+        'and used to directly enabled future research.'
+    }
   }
   collection.info = merge(defaults, collection.info)
 

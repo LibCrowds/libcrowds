@@ -1,8 +1,5 @@
 <template>
-  <card-base
-    id="admin-collection-content"
-    :title="title"
-    :description="description">
+  <card-base :title="title" :description="description">
 
     <pybossa-form
       submit-text="Update"
@@ -98,11 +95,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#admin-collection-content {
-  .CodeMirror {
-    height: 300px;
-  }
-}
-</style>

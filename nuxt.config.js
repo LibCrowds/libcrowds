@@ -109,6 +109,7 @@ const config = {
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
+    { src: '~/plugins/vue-confetti', ssr: false },
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },

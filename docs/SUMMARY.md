@@ -16,6 +16,7 @@
     * [Open Collection](admin/collection/open.md)
     * [Settings](admin/collection/settings.md)
     * [Content](admin/collection/content.md)
+    * [Celebration](admin/collection/celebration.md)
     * [Terminology](admin/collection/terminology.md)
     * [Tags](admin/collection/tags.md)
     * [Volumes](/admin/collection/volumes.md)
