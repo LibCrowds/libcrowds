@@ -109,6 +109,9 @@ export default {
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
+      }).catch(err => {
+        console.debug(err)
+        this.$confetti.stop()
       })
       this.$router.push({
         name: 'collection-short_name-projects',

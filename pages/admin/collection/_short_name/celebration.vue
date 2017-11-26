@@ -133,6 +133,9 @@ export default {
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
+      }).catch(err => {
+        console.debug(err)
+        this.$confetti.stop()
       })
     }
   }
