@@ -79,11 +79,11 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
       <li data-index="6"
           class="nav-item"
       >
-        <a href="#/admin/project/some_project/presenter"
+        <a href="#/admin/project/some_project/help"
            target="_self"
            class="nav-link"
         >
-          Task Presenter
+          Help
         </a>
       </li>
     </ul>
@@ -274,11 +274,11 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
         <li data-index="6"
             class="nav-item"
         >
-          <a href="#/admin/project/some_project/presenter"
+          <a href="#/admin/project/some_project/help"
              target="_self"
              class="nav-link"
           >
-            Task Presenter
+            Help
           </a>
         </li>
       </ul>

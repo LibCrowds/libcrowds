@@ -109,6 +109,16 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       <li data-index="9"
           class="nav-item"
       >
+        <a href="#/admin/collection/playbills/presenter"
+           target="_self"
+           class="nav-link"
+        >
+          Task Presenter
+        </a>
+      </li>
+      <li data-index="10"
+          class="nav-item"
+      >
         <a href="#/admin/collection/playbills/delete"
            target="_self"
            class="nav-link"
@@ -261,6 +271,16 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
           </a>
         </li>
         <li data-index="9"
+            class="nav-item"
+        >
+          <a href="#/admin/collection/playbills/presenter"
+             target="_self"
+             class="nav-link"
+          >
+            Task Presenter
+          </a>
+        </li>
+        <li data-index="10"
             class="nav-item"
         >
           <a href="#/admin/collection/playbills/delete"
