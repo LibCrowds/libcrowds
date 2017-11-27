@@ -5,15 +5,6 @@
       submit-text="Update"
       :form="form"
       @success="onSuccess">
-      <div slot="bottom">
-        <label class="ml-0">
-          Help content
-        </label>
-        <markdown-editor
-          v-model="project.info.help"
-          :configs="markdownConfig">
-        </markdown-editor>
-      </div>
     </pybossa-form>
 
   </card-base>
