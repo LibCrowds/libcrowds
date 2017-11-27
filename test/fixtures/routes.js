@@ -100,6 +100,11 @@ export const routes = [
     name: 'admin-site-announcements-id-update'
   },
   {
+    path: '/admin/project/:short_name/help',
+    component: jest.fn(),
+    name: 'admin-project-short_name-help'
+  },
+  {
     path: '/admin/project/:short_name/thumbnail',
     component: jest.fn(),
     name: 'admin-project-short_name-thumbnail'

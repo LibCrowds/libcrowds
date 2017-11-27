@@ -7,6 +7,7 @@ this section.
 * [Settings](/admin/project/settings.md)
 * [Thumbnail](/admin/project/thumbnail.md)
 * [Task Presenter](/admin/project/presenter.md)
+* [Help](admin/project/help.md)
 * [Tags](/admin/project/tags.md)
 * [Collection](/admin/project/collection.md)
 * [Volumes](/admin/project/volumes.md)

@@ -118,6 +118,10 @@ export default {
         buttons.like = false
       }
       return buttons
+    },
+
+    help () {
+      return marked(this.project.info.help)
     }
   },
 

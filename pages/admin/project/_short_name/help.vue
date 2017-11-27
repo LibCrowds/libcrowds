@@ -34,8 +34,8 @@ export default {
 
   data () {
     return {
-      title: 'Task Presenter',
-      description: 'Set task presenter options for the project',
+      title: 'Help',
+      description: 'Set the help content for the task presenter',
       markdownConfig: {
         spellChecker: false
       }
@@ -61,32 +61,7 @@ export default {
           'info'
         ),
         schema: {
-          fields: [
-            {
-              model: 'info.presenter_options.share_text',
-              label: 'Share Text',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'info.presenter_options.noteText',
-              label: 'Note Text',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'info.presenter_options.submitText',
-              label: 'Submit Text',
-              type: 'input',
-              inputType: 'text'
-            },
-            {
-              model: 'info.presenter_options.numberRequired',
-              label: 'Number Required',
-              type: 'input',
-              inputType: 'number'
-            }
-          ]
+          fields: []
         }
       }
     }
@@ -97,7 +72,7 @@ export default {
      * Handle form submission success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Task presenter updated' })
+      this.notifySuccess({ message: 'Help updated' })
     }
   }
 }
