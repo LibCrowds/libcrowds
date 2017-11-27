@@ -18,6 +18,11 @@ export const setCollectionDefaults = function (collection) {
     },
     license: 'CC0',
     presenter: null,
+    presenter_options: {
+      note_button: 'Add a note',
+      submit_button: 'Save',
+      share_text: ''
+    },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +
         'crowdsourcing platform, which hosts experimental crowdsourcing ' +

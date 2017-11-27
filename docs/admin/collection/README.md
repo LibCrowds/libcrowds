@@ -12,4 +12,5 @@ manage the platform's collection microsites.
 * [Tags](/admin/collection/tags.md)
 * [Volumes](/admin/collection/volumes.md)
 * [Featured Projects](/admin/collection/featured.md)
+* [Task Presenter](/admin/project/presenter.md)
 * [Delete](/admin/collection/delete.md)

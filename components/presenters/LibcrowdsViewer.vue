@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
@@ -46,22 +45,6 @@ export default {
   mixins: [
     computeShareUrl
   ],
-
-  data () {
-    return {
-      defaultOptions: {
-        shareText: this.collection.info.forum
-          ? marked(
-            `Copy the link to bookmark, share on social media or ` +
-            `[discuss on our forum](${this.collection.info.forum}).`
-          )
-          : 'Copy the link to bookmark or share on social media',
-        noteText: 'Seen something interesting?<br>Add a note',
-        submitText: 'Save and Continue',
-        numberRequired: 1
-      }
-    }
-  },
 
   props: {
     project: {
@@ -75,10 +58,6 @@ export default {
     tasks: {
       type: Array,
       required: true
-    },
-    options: {
-      type: Object,
-      required: true
     }
   },
 
@@ -87,12 +66,8 @@ export default {
       return this.$store.state.currentUser
     },
 
-    mergedOptions () {
-      return merge({}, this.defaultOptions, this.options)
-    },
-
     shareText () {
-      return marked(this.mergedOptions.shareText)
+      return marked(this.collection.info.presenter_options.share_text)
     },
 
     taskOpts () {
@@ -111,8 +86,8 @@ export default {
 
     buttons () {
       let buttons = {
-        note: marked(this.mergedOptions.noteText),
-        submit: marked(this.mergedOptions.submitText)
+        note: marked(this.collection.info.presenter_options.note_button),
+        submit: marked(this.collection.info.presenter_options.submit_button)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
@@ -121,7 +96,8 @@ export default {
     },
 
     help () {
-      return marked(this.project.info.help)
+      const help = this.project.info.help || ''
+      return marked(help)
     }
   },
 
@@ -159,7 +135,7 @@ export default {
       }).length
       const mode = taskData.mode
       const tag = taskData.tag
-      const nRequired = this.mergedOptions.numberRequired
+      const nRequired = this.project.info.annotations_required || 1
 
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
