@@ -4,7 +4,6 @@
     :project="project"
     :collection="collection"
     :tasks="tasks"
-    :options="presenterOptions"
     @submit="onSubmit"
     @taskliked="onTaskLiked">
   </component>
@@ -70,10 +69,6 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    presenterOptions () {
-      return this.collection.info.presenter_options || {}
     }
   },
 

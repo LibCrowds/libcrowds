@@ -2,6 +2,7 @@
   <div class="libcrowds-viewer-presenter">
 
     <libcrowds-viewer
+      v-if="taskOpts.length"
       :confirm-on-submit="false"
       :buttons="buttons"
       :task-opts="taskOpts"
@@ -10,32 +11,55 @@
       :before-submit="checkSubmission"
       show-help-on-mount
       @submit="onSubmit"
-      @taskliked="onTaskLiked">
-    </libcrowds-viewer>
+      @taskliked="onTaskLiked"
+      @taskchange="onTaskChange">
 
+      <div slot="share">
+        <span v-html="shareText"></span>
+        <b-input-group-button class="mb-2" slot="right">
+          <b-form-input
+            id="share-input"
+            v-if="viewerShareUrl"
+            readonly
+            :value="viewerShareUrl">
+          </b-form-input>
+          <clipboard-button :content="viewerShareUrl"></clipboard-button>
+        </b-input-group-button>
+        <p class="mb-1 text-uppercase text-center">
+          <small>
+            <span v-if="viewerShareUrl">
+              Or
+            </span>
+            share this project
+          </small>
+        </p>
+        <social-media-buttons
+          class="text-center"
+          :tweet="project.description"
+          :shareUrl="shareUrl">
+        </social-media-buttons>
+      </div>
+
+      <span slot="help" v-html="help"></span>
+
+    </libcrowds-viewer>
   </div>
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
+import ClipboardButton from '@/components/buttons/Clipboard'
 
 export default {
+  mixins: [ computeShareUrl ],
+
   data () {
     return {
-      defaultOptions: {
-        shareText: this.collection.info.forum
-          ? marked(
-            `Copy the link to bookmark, share on social media or ` +
-            `[discuss on our forum](${this.collection.info.forum}).`
-          )
-          : 'Copy the link to bookmark or share on social media',
-        noteText: 'Seen something interesting?<br>Add a note',
-        submitText: 'Save and Continue',
-        numberRequired: 1
-      }
+      viewerShareUrl: null
     }
   },
 
@@ -51,11 +75,12 @@ export default {
     tasks: {
       type: Array,
       required: true
-    },
-    options: {
-      type: Object,
-      required: true
     }
+  },
+
+  components: {
+    SocialMediaButtons,
+    ClipboardButton
   },
 
   computed: {
@@ -63,31 +88,38 @@ export default {
       return this.$store.state.currentUser
     },
 
-    mergedOptions () {
-      return merge({}, this.defaultOptions, this.options)
+    shareText () {
+      return marked(this.collection.info.presenter_options.share_text)
     },
 
     taskOpts () {
       return this.tasks.map((task) => {
         let opts = task.info
         opts.id = task.id
+        opts.manifest = opts.info // Fix for LibCrowds Viewer < 4.0.0
+
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = marked(this.mergedOptions.shareText)
+
         return opts
       })
     },
 
     buttons () {
       let buttons = {
-        note: marked(this.mergedOptions.noteText),
-        submit: marked(this.mergedOptions.submitText)
+        note: marked(this.collection.info.presenter_options.note_button),
+        submit: marked(this.collection.info.presenter_options.submit_button)
       }
       if (isEmpty(this.currentUser)) {
         buttons.like = false
       }
       return buttons
+    },
+
+    help () {
+      const help = this.project.info.help || ''
+      return marked(help)
     }
   },
 
@@ -99,6 +131,25 @@ export default {
      */
     onTaskLiked (taskData) {
       this.$emit('taskliked', taskData.id, taskData.liked)
+    },
+
+    /**
+     * Handle the task changed event.
+     * @param {Object} oldTask
+     *   The old task.
+     * @param {Object} newTask
+     *   The new task.
+     */
+    onTaskChange (oldTask, newTask) {
+      const tasks = this.tasks.filter(task => {
+        return task.id === newTask.id
+      })
+      if (tasks.length === 1 && tasks[0].info.shareUrl) {
+        this.viewerShareUrl = tasks[0].info.shareUrl
+      } else {
+        this.viewerShareUrl = null
+      }
+      console.log('share url', this.viewerShareUrl)
     },
 
     /**
@@ -121,7 +172,7 @@ export default {
       }).length
       const mode = taskData.mode
       const tag = taskData.tag
-      const nRequired = this.mergedOptions.numberRequired
+      const nRequired = this.project.info.annotations_required || 1
 
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
@@ -184,17 +235,15 @@ export default {
   align-items: center;
   justify-content: center;
 
-  img {
-    display: block;
-    margin: 2rem auto;
-    max-height: 200px;
-    max-width: 100%;
-  }
-
   .lv-sidebar-footer {
     p {
       margin-bottom: 0;
     }
+  }
+
+  // Remove after https://github.com/LibCrowds/libcrowds-viewer/issues/284
+  .lv-modal .lv-modal-body svg {
+    margin: 0;
   }
 }
 </style>

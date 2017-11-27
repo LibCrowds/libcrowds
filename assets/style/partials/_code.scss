@@ -1,3 +1,11 @@
-.CodeMirror {
-  height: 300px;
+.markdown-editor{
+  .CodeMirror {
+    height: 300px;
+  }
+
+  &[data-size="sm"] {
+    .CodeMirror {
+      height: 100px;
+    }
+  }
 }

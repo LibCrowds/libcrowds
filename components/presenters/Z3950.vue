@@ -12,12 +12,11 @@
 
         <!-- Share Buttons -->
         <div class="mt-3 text-center d-none d-lg-block">
-          <span
-            id="share-text"
-            v-html="marked(mergedOptions.shareText)">
+          <span id="share-text" v-html="shareText">
           </span>
           <social-media-buttons
             class="mt-1"
+            :tweet="project.description"
             :shareUrl="shareUrl">
           </social-media-buttons>
         </div>
@@ -136,8 +135,7 @@
             <div id="footer-buttons">
               <b-btn
                 v-b-toggle.collapsecomment
-                variant="dark">
-                Add a note
+                variant="dark" v-html="noteButtonText">
               </b-btn>
               <b-btn
                 variant="dark"
@@ -168,9 +166,8 @@
 </template>
 
 <script>
-import capitalize from 'capitalize'
 import marked from 'marked'
-import merge from 'lodash/merge'
+import capitalize from 'capitalize'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
@@ -247,10 +244,6 @@ export default {
             }
           ]
         }
-      },
-      defaultOptions: {
-        shareText: 'Share this project',
-        numberRequired: 1
       }
     }
   },
@@ -262,10 +255,6 @@ export default {
     },
     tasks: {
       type: Array,
-      required: true
-    },
-    options: {
-      type: Object,
       required: true
     }
   },
@@ -293,15 +282,18 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    presenterOptions () {
-      return this.collection.info.presenter_options || {}
+    shareText () {
+      return marked(this.collection.info.presenter_options.share_text)
     },
 
-    mergedOptions () {
-      return merge({}, this.defaultOptions, this.presenterOptions)
+    noteButtonText () {
+      return marked(this.collection.info.presenter_options.note_button)
     },
 
     submitButtonText () {
+      if (this.stage === 'submit') {
+        return marked(this.collection.info.presenter_options.submit_button)
+      }
       return capitalize(this.stage)
     },
 
@@ -610,6 +602,10 @@ export default {
   #footer-buttons {
     display: flex;
     flex-direction: column-reverse;
+
+    p {
+      margin-bottom: 0;
+    }
 
     .btn {
       margin: 0.5rem 0 ;

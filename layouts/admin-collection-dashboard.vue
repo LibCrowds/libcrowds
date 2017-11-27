@@ -111,6 +111,15 @@ export default {
           }
         },
         {
+          label: 'Task Presenter',
+          link: {
+            name: 'admin-collection-short_name-presenter',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
           label: 'Delete',
           link: {
             name: 'admin-collection-short_name-delete',
