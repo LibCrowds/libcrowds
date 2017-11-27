@@ -23,7 +23,7 @@
             readonly
             :value="viewerShareUrl">
           </b-form-input>
-          <b-btn variant="primary">Copy to Clipboard</b-btn>
+          <clipboard-button :content="viewerShareUrl"></clipboard-button>
         </b-input-group-button>
         <p class="mb-1 text-uppercase text-center">
           <small>
@@ -52,11 +52,10 @@ import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
+import ClipboardButton from '@/components/buttons/Clipboard'
 
 export default {
-  mixins: [
-    computeShareUrl
-  ],
+  mixins: [ computeShareUrl ],
 
   data () {
     return {
@@ -77,6 +76,11 @@ export default {
       type: Array,
       required: true
     }
+  },
+
+  components: {
+    SocialMediaButtons,
+    ClipboardButton
   },
 
   computed: {
@@ -117,10 +121,6 @@ export default {
       const help = this.project.info.help || ''
       return marked(help)
     }
-  },
-
-  components: {
-    SocialMediaButtons
   },
 
   methods: {
