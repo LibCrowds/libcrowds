@@ -40,6 +40,7 @@
 
         <social-media-buttons
           :shareUrl="shareUrl"
+          :tweet="tweet"
           size="sm"
           class="text-center">
         </social-media-buttons>
@@ -196,6 +197,11 @@ export default {
 
     description () {
       return `Choose a ${this.collection.name} project to take part in.`
+    },
+
+    tweet () {
+      return `Choose and play ${this.collection.name} and help enable future` +
+        `research.`
     }
   },
 

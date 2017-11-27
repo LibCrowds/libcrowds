@@ -189,6 +189,7 @@
       <div class="container pb-4 text-center">
         <hr class="mt-0 mb-3">
         <social-media-buttons
+          :tweet="tweet"
           :shareUrl="shareUrl">
         </social-media-buttons>
       </div>
@@ -286,6 +287,11 @@ export default {
 
     description () {
       return this.collection.description
+    },
+
+    tweet () {
+      return `Come and play ${this.collection.name} and help enable future ` +
+        `research.`
     }
   },
 
