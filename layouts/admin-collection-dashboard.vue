@@ -66,6 +66,15 @@ export default {
           }
         },
         {
+          label: 'Celebration',
+          link: {
+            name: 'admin-collection-short_name-celebration',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
           label: 'Terminology',
           link: {
             name: 'admin-collection-short_name-terminology',

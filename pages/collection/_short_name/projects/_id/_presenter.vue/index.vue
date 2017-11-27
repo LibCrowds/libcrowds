@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import marked from 'marked'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
@@ -97,16 +98,20 @@ export default {
      * Handle no tasks remaining.
      */
     handleCompletion () {
-      const projectComplete = this.project.overall_progress === 100
-      let html = `You have contributed to all available tasks for ` +
-                 `<em>${this.project.name}</em>`
-      if (projectComplete) {
-        html = `<em>${this.project.name}</em> is now complete`
-      }
+      const msg = this.project.overall_progress === 100
+        ? this.collection.info.celebration.project
+        : this.collection.info.celebration.user
+      this.$confetti.start({
+        shape: this.collection.info.celebration.confetti
+      })
       this.$swal({
-        title: 'Thank you!',
-        html: html,
-        type: 'success'
+        title: this.collection.info.celebration.title,
+        html: marked(msg)
+      }).then(() => {
+        this.$confetti.stop()
+      }).catch(err => {
+        console.debug(err)
+        this.$confetti.stop()
       })
       this.$router.push({
         name: 'collection-short_name-projects',
