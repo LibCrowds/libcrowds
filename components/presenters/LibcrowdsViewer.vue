@@ -11,8 +11,26 @@
       show-help-on-mount
       @submit="onSubmit"
       @taskliked="onTaskLiked">
-    </libcrowds-viewer>
 
+      <div slot="share">
+        <span v-html="shareText"></span>
+        <b-input-group-button class="mb-2" slot="right">
+          <b-form-input id="share-input"></b-form-input>
+          <b-btn variant="primary">Copy to Clipboard</b-btn>
+        </b-input-group-button>
+        <p class="mb-1 text-uppercase text-center">
+          <small>Or share this project</small>
+        </p>
+        <social-media-buttons
+          class="text-center"
+          :tweet="project.description"
+          :shareUrl="shareUrl">
+        </social-media-buttons>
+      </div>
+
+      <span slot="help" v-html="help"></span>
+
+    </libcrowds-viewer>
   </div>
 </template>
 
@@ -21,8 +39,14 @@ import merge from 'lodash/merge'
 import marked from 'marked'
 import pluralize from 'pluralize'
 import isEmpty from 'lodash/isEmpty'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
 
 export default {
+  mixins: [
+    computeShareUrl
+  ],
+
   data () {
     return {
       defaultOptions: {
@@ -67,14 +91,20 @@ export default {
       return merge({}, this.defaultOptions, this.options)
     },
 
+    shareText () {
+      return marked(this.mergedOptions.shareText)
+    },
+
     taskOpts () {
       return this.tasks.map((task) => {
         let opts = task.info
         opts.id = task.id
+        opts.manifest = opts.info // Fix for LibCrowds Viewer < 4.0.0
+
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-        opts.shareText = marked(this.mergedOptions.shareText)
+
         return opts
       })
     },
@@ -89,6 +119,10 @@ export default {
       }
       return buttons
     }
+  },
+
+  components: {
+    SocialMediaButtons
   },
 
   methods: {
@@ -184,17 +218,15 @@ export default {
   align-items: center;
   justify-content: center;
 
-  img {
-    display: block;
-    margin: 2rem auto;
-    max-height: 200px;
-    max-width: 100%;
-  }
-
   .lv-sidebar-footer {
     p {
       margin-bottom: 0;
     }
+  }
+
+  // Remove after https://github.com/LibCrowds/libcrowds-viewer/issues/284
+  .lv-modal .lv-modal-body svg {
+    margin: 0;
   }
 }
 </style>

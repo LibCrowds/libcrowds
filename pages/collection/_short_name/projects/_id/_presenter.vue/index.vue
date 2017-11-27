@@ -73,7 +73,7 @@ export default {
     },
 
     presenterOptions () {
-      return this.collection.info.presenter_options || {}
+      return this.project.info.presenter_options || {}
     }
   },
 

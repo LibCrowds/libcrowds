@@ -18,6 +18,7 @@
           </span>
           <social-media-buttons
             class="mt-1"
+            :tweet="project.description"
             :shareUrl="shareUrl">
           </social-media-buttons>
         </div>
@@ -294,7 +295,7 @@ export default {
     },
 
     presenterOptions () {
-      return this.collection.info.presenter_options || {}
+      return this.project.info.presenter_options || {}
     },
 
     mergedOptions () {
