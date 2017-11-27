@@ -2,6 +2,7 @@
   <div class="libcrowds-viewer-presenter">
 
     <libcrowds-viewer
+      v-if="taskOpts.length"
       :confirm-on-submit="false"
       :buttons="buttons"
       :task-opts="taskOpts"
@@ -10,16 +11,27 @@
       :before-submit="checkSubmission"
       show-help-on-mount
       @submit="onSubmit"
-      @taskliked="onTaskLiked">
+      @taskliked="onTaskLiked"
+      @taskchange="onTaskChange">
 
       <div slot="share">
         <span v-html="shareText"></span>
         <b-input-group-button class="mb-2" slot="right">
-          <b-form-input id="share-input"></b-form-input>
+          <b-form-input
+            id="share-input"
+            v-if="viewerShareUrl"
+            readonly
+            :value="viewerShareUrl">
+          </b-form-input>
           <b-btn variant="primary">Copy to Clipboard</b-btn>
         </b-input-group-button>
         <p class="mb-1 text-uppercase text-center">
-          <small>Or share this project</small>
+          <small>
+            <span v-if="viewerShareUrl">
+              Or
+            </span>
+            share this project
+          </small>
         </p>
         <social-media-buttons
           class="text-center"
@@ -45,6 +57,12 @@ export default {
   mixins: [
     computeShareUrl
   ],
+
+  data () {
+    return {
+      viewerShareUrl: null
+    }
+  },
 
   props: {
     project: {
@@ -113,6 +131,25 @@ export default {
      */
     onTaskLiked (taskData) {
       this.$emit('taskliked', taskData.id, taskData.liked)
+    },
+
+    /**
+     * Handle the task changed event.
+     * @param {Object} oldTask
+     *   The old task.
+     * @param {Object} newTask
+     *   The new task.
+     */
+    onTaskChange (oldTask, newTask) {
+      const tasks = this.tasks.filter(task => {
+        return task.id === newTask.id
+      })
+      if (tasks.length === 1 && tasks[0].info.shareUrl) {
+        this.viewerShareUrl = tasks[0].info.shareUrl
+      } else {
+        this.viewerShareUrl = null
+      }
+      console.log('share url', this.viewerShareUrl)
     },
 
     /**
