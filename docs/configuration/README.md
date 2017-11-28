@@ -12,3 +12,4 @@ You will also need to install and configure the following PYBOSSA plugins
 (see the documentation for each):
 
 - [pybossa-Z3950](https://github.com/alexandermendes/pybossa-z3950)
+- [pybossa-lc](https://github.com/LibCrowds/pybossa-lc)

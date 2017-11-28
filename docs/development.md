@@ -13,7 +13,10 @@ npm install
 ```
 
 You will also need to install an instance of
-[PYBOSSA](http://docs.pybossa.com/).
+[PYBOSSA](http://docs.pybossa.com/), along with the following plugins:
+
+- [pybossa-Z3950](https://github.com/alexandermendes/pybossa-z3950)
+- [pybossa-lc](https://github.com/LibCrowds/pybossa-lc)
 
 ## Configuration
 
