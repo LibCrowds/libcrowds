@@ -5,20 +5,27 @@
       variant="success"
       class="float-right"
       size="sm"
-      @click="reanalyse">
-      Reanalyse
+      @click="analyseAll">
+      Analyse All
     </b-btn>
 
     <results-table
       no-border
       :project="project">
       <template slot="action" scope="result">
-      <b-btn
-        variant="info"
-        size="sm"
-        @click="showDetails(result.item)">
-        {{ result.item._showDetails ? 'Hide Details' : 'Show Details' }}
-      </b-btn>
+        <b-btn
+          variant="info"
+          size="sm"
+          class="mr-1"
+          @click="showDetails(result.item)">
+          {{ result.item._showDetails ? 'Hide Details' : 'Show Details' }}
+        </b-btn>
+        <b-btn
+          variant="success"
+          size="sm"
+          @click="analyse(result.item, $event)">
+          Analyse
+        </b-btn>
       </template>
     </results-table>
   </card-base>
@@ -60,12 +67,12 @@ export default {
 
   methods: {
     /**
-     * Reanalyse all results.
+     * Analyse all results.
      */
-    reanalyse () {
+    analyseAll () {
       this.$swal({
         title: `Reanalyse`,
-        html: 'Running the reanalysis will overwrite all current ' +
+        html: 'Running this analysis will overwrite all current ' +
           'results.<br>Are you sure you want to continue?',
         type: 'warning',
         showCancelButton: true,
@@ -82,6 +89,25 @@ export default {
         if (result) {
           this.notifySuccess({ message: result.message })
         }
+      })
+    },
+
+    /**
+     * Analyse a result.
+     * @param {Object} result
+     *   The result.
+     * @param {Object} evt
+     *   The event.
+     */
+    analyse (result, evt) {
+      evt.target.disabled = true
+      const presenter = this.collection.info.presenter
+      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+        project_short_name: this.project.short_name,
+        result_id: result.id,
+        event: 'task_completed'
+      }).then(() => {
+        evt.target.disabled = false
       })
     },
 

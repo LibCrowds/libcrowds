@@ -12,10 +12,13 @@ To view the full details for a result locate it in the table and click the
 
 ## Updating
 
-To update all results for the project click the 'Reanalyse' button at the
+To update a single result locate it in the table and click the 'Analyse'
+button.
+
+To update all results for the project click the 'Analyse all' button at the
 top of the page.
 
 {% hint style="danger" %}
-This feature should be used with caution. It will overwrite all of the
+These updates should be used with caution. It will overwrite all of the
 current results for a project according to the current analysis function.
 {% endhint %}
