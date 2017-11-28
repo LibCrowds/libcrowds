@@ -86,9 +86,9 @@ export default {
           })
         }
       }).then(result => {
-        if (result) {
-          this.notifySuccess({ message: result.message })
-        }
+        this.notifySuccess({ message: result.message })
+      }).catch(err => {
+        this.$nuxt.error(err)
       })
     },
 
@@ -106,8 +106,11 @@ export default {
         project_short_name: this.project.short_name,
         result_id: result.id,
         event: 'task_completed'
-      }).then(() => {
+      }).then(result => {
         evt.target.disabled = false
+        this.notifySuccess({ message: result.message })
+      }).catch(err => {
+        this.$nuxt.error(err)
       })
     },
 
