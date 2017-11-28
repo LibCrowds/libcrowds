@@ -5,7 +5,7 @@ and the result updated with the outcome. This section provides
 a way to check all results for a project, or trigger reanalysis of all
 completed tasks.
 
-
+![Project results admin image](/assets/admin-project-results.png?raw=true)
 
 To view the full details for a result locate it in the table and click the
 'Details' button.
