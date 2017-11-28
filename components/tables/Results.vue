@@ -43,7 +43,7 @@
     <infinite-load
       domain-object="result"
       v-model="items"
-      :search-params="searchParams"
+      :search-params="mergedParams"
       no-more-results="No more results">
     </infinite-load>
 
@@ -52,14 +52,13 @@
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import merge from 'lodash/merge'
 import InfiniteLoad from '@/components/InfiniteLoad'
 
 export default {
   data () {
     return {
       items: [],
-      sortModel: {},
+      sortParams: {},
       defaultFields: {
         id: {
           label: 'ID'
@@ -123,8 +122,14 @@ export default {
       }
     },
 
+    mergedParams () {
+      const mergedParams = Object.assign({}, this.searchParams)
+      return Object.assign(mergedParams, this.sortParams)
+    },
+
     mergedFields () {
-      const fieldsCopy = merge({}, this.defaultFields, this.fields)
+      let fieldsCopy = Object.assign({}, this.defaultFields)
+      fieldsCopy = Object.assign(fieldsCopy, this.fields)
       if (this.$scopedSlots.action) {
         fieldsCopy.actions = {
           label: 'Actions',
@@ -154,7 +159,7 @@ export default {
      *   The sort value.
      */
     onSortChange (value) {
-      this.sortModel = {
+      this.sortParams = {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
