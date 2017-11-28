@@ -94,6 +94,15 @@ export default {
               short_name: this.project.short_name
             }
           }
+        },
+        {
+          label: 'Results',
+          link: {
+            name: 'admin-project-short_name-results',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
         }
       ]
     },

@@ -4,38 +4,42 @@
       hover
       striped
       show-empty
+      responsive
       :items="filteredItems"
-      :fields="tableFields"
+      :fields="mergedFields"
       :style="tableStyle"
       @sort-changed="onSortChange">
 
-      <template slot="nTags" scope="data">
-        {{ Object.keys(data.item.info.tags || {}).length }}
+
+      <template slot="created" scope="result">
+        {{ result.item.created | moment('calendar') }}
       </template>
 
-      <template slot="created" scope="data">
-        {{ data.item.created | moment('calendar') }}
+      <template slot="isempty" scope="result">
+        {{ isResultEmpty(result.item) }}
       </template>
 
-      <template slot="updated" scope="data">
-        {{ data.item.updated | moment('calendar') }}
+      <template slot="actions" scope="result">
+        <slot name="action" :item="result.item"></slot>
       </template>
 
-      <template slot="last_activity" scope="data">
-        {{ data.item.updated | moment('calendar') }}
-      </template>
-
-      <template slot="actions" scope="data">
-        <slot name="action" :item="data.item"></slot>
+      <template slot="row-details" scope="result">
+        <b-card>
+          <pre class=".pre-scrollable mb-0">
+            <code>
+<!-- No indentation to force correct indentation in code block -->
+{{ JSON.stringify(result.item.info, null, 2) }}
+            </code>
+          </pre>
+        </b-card>
       </template>
 
     </b-table>
 
     <infinite-load
-      ref="infiniteload"
-      :domain-object="domainObject"
-      v-model="itemsitems"
-      :search-params="mergedParams"
+      domain-object="result"
+      v-model="items"
+      :search-params="searchParams"
       no-more-results="No more results">
     </infinite-load>
 
@@ -43,6 +47,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import merge from 'lodash/merge'
 import InfiniteLoad from '@/components/InfiniteLoad'
 
@@ -50,7 +55,25 @@ export default {
   data () {
     return {
       items: [],
-      sortParams: {}
+      sortModel: {},
+      defaultFields: {
+        id: {
+          label: 'ID'
+        },
+        created: {
+          label: 'created',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        },
+        isempty: {
+          label: 'Empty',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        }
+      },
+      searchParams: {
+        project_id: this.project.id
+      }
     }
   },
 
@@ -59,21 +82,9 @@ export default {
   },
 
   props: {
-    domainObject: {
-      type: String,
-      required: true
-    },
-    searchParams: {
+    project: {
       type: Object,
-      default: () => ({})
-    },
-    filter: {
-      type: String,
-      default: null
-    },
-    filterBy: {
-      type: String,
-      default: null
+      required: true
     },
     fields: {
       type: Object,
@@ -82,6 +93,14 @@ export default {
     noBorder: {
       type: Boolean,
       default: false
+    },
+    filter: {
+      type: String,
+      default: null
+    },
+    filterBy: {
+      type: String,
+      default: null
     }
   },
 
@@ -95,8 +114,8 @@ export default {
       }
     },
 
-    tableFields () {
-      const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
+    mergedFields () {
+      const fieldsCopy = merge({}, this.defaultFields, this.fields)
       if (this.$scopedSlots.action) {
         fieldsCopy.actions = {
           label: 'Actions',
@@ -104,10 +123,6 @@ export default {
         }
       }
       return fieldsCopy
-    },
-
-    mergedParams () {
-      return merge({}, this.searchParams, this.sortParams)
     },
 
     filteredItems () {
@@ -126,27 +141,23 @@ export default {
   methods: {
     /**
      * Handle sort change.
+     * @param {Object} value
+     *   The sort value.
      */
     onSortChange (value) {
-      this.sortParams = {
+      this.sortModel = {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
     },
 
     /**
-     * Reset the loaded items.
+     * Check if a result is empty.
+     * @param {Object} result
+     *   The result.
      */
-    reset () {
-      this.$refs.infiniteload.reset()
-    }
-  },
-
-  watch: {
-    filteredItems (val) {
-      if (val.length !== this.items.length) {
-        this.$refs.infiniteload.load()
-      }
+    isResultEmpty (result) {
+      return isEmpty(result.info)
     }
   }
 }
