@@ -34,7 +34,7 @@
     <infinite-load
       ref="infiniteload"
       :domain-object="domainObject"
-      v-model="itemsitems"
+      v-model="items"
       :search-params="mergedParams"
       no-more-results="No more results">
     </infinite-load>
