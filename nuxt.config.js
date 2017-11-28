@@ -23,7 +23,6 @@ const config = {
   build: {
     vendor: [
       'bootstrap-vue',
-      'highlight.js',
       'papaparse',
       'progressbar.js',
       'vue-awesome',
