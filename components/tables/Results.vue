@@ -19,6 +19,10 @@
         {{ isResultEmpty(result.item) }}
       </template>
 
+      <template slot="task_run_ids" scope="result">
+        {{ result.item.task_run_ids.length }}
+      </template>
+
       <template slot="actions" scope="result">
         <slot name="action" :item="result.item"></slot>
       </template>
@@ -67,6 +71,11 @@ export default {
         },
         isempty: {
           label: 'Empty',
+          class: 'text-center d-none d-xl-table-cell',
+          sortable: true
+        },
+        task_run_ids: {
+          label: 'Answers',
           class: 'text-center d-none d-xl-table-cell',
           sortable: true
         }
