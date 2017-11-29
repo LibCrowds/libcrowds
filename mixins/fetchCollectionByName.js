@@ -1,5 +1,3 @@
-import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
-
 /**
  * Fetch a collection by the short_name param and update the store.
  */
@@ -14,7 +12,6 @@ export const fetchCollectionByName = {
         error(new Error({ statusCode: 404 }))
         return
       }
-      setCollectionDefaults(data[0])
       store.dispatch('UPDATE_CURRENT_COLLECTION', data[0])
     }).catch(err => {
       error(err)
