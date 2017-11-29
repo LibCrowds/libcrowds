@@ -41,6 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Forward port
+  config.vm.network :forwarded_port, host: 2200, guest: 22
   config.vm.network :forwarded_port, host: 8080, guest: 8080
 
   # turn off warning message `stdin: is not a tty error`
