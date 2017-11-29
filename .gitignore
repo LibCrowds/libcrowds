@@ -22,3 +22,7 @@ local.config.js
 # PWA
 sw.*
 workbox-*
+
+# Vagrant
+.vagrant/
+nodesource_setup.sh
