@@ -1,0 +1,30 @@
+---
+# Installation steps
+- hosts: all
+  sudo: yes
+  vars:
+    apt_cache_valid_time: 86400
+    nodejs_ppa: "ppa:chris-lea/node.js"
+    bl_user: "vagrant"
+    bl_path: "/vagrant"
+    vagrant_home: "/home/vagrant"
+  tasks:
+    - name: check that Ubuntu is running
+      assert:
+        that:
+          - ansible_distribution == 'Ubuntu'
+
+    - name: ensure ansible's apt_repository dependency is installed
+      apt: pkg=python-apt state=latest update_cache=true cache_valid_time={{ apt_cache_valid_time }}
+
+    - name: install git
+      apt: name=git-core state=latest
+
+    - name: ensure nodejs apt repository is up to date
+      apt_repository: repo={{ nodejs_ppa }}
+
+    - name: install Node.js
+      apt: name=nodejs state=latest
+
+    - name: install npm@latest
+      apt: name=npm state=latest
