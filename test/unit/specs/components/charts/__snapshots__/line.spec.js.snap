@@ -2,9 +2,9 @@
 
 exports[`Line chart renders correctly 1`] = `
 
-<div data-server-rendered="true"
-     class="ct-container"
->
-</div>
+<no-ssr data-server-rendered="true">
+  <div class="ct-container">
+  </div>
+</no-ssr>
 
 `;
