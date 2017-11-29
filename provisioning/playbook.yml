@@ -39,3 +39,6 @@
     - name: install LibCrowds dependencies, this may take a while...
       sudo_user: "{{ libcrowds_user }}"
       command: npm install {{ libcrowds_path }}
+
+    - name: install bindings for node-sass
+      command: npm rebuild node-sass {{ libcrowds_path }}
