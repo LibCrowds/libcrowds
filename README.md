@@ -8,6 +8,8 @@
 
 The LibCrowds package is a Vue.js UI that communicates with a PYBOSSA backend to present crowdsourcing projects using a microsite-based structure.
 
+[**Read the documentation**](https://docs.libcrowds.com)
+
 [![The LibCrowds website](./docs/assets/site-homepage.png?raw=true "The LibCrowds website")](https://www.libcrowds.com)
 
 ## Build Setup
@@ -24,4 +26,4 @@ $ npm run build
 $ npm start
 ```
 
-[**Read the documentation**](https://libcrowds.gitbooks.io/libcrowds/content/)
+[**Read the documentation**](https://docs.libcrowds.com)

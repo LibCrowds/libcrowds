@@ -19,9 +19,6 @@ test/unit/coverage
 # Config
 local.config.js
 
-# docs
-_book/*
-
 # PWA
 sw.*
 workbox-*
