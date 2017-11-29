@@ -42,7 +42,7 @@ export default {
     },
 
     titleBase () {
-      return this.collection.name
+      return this.collection ? this.collection.name : ''
     },
 
     collectionNavItems () {

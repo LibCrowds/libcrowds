@@ -47,6 +47,9 @@ export default {
   },
 
   UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
+    if (collection) {
+      setCollectionDefaults(collection)
+    }
     commit('SET_ITEM', {
       key: 'currentCollection', value: collection
     })
