@@ -35,6 +35,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.memory = 1024
   end
 
+  # Disable proxy for localhost (if plugin installed)
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.no_proxy = "localhost,127.0.0.1"
+  end
+
   # Forward port
   config.vm.network :forwarded_port, host: 8080, guest: 8080
 
