@@ -1,26 +1,16 @@
 <template>
-  <chartist
-    type="Pie"
-    :data="chartData"
-    :options="mergedOptions"
-    class="ct-container">
-  </chartist>
+  <no-ssr>
+    <chartist
+      type="Pie"
+      :data="chartData"
+      :options="mergedOptions"
+      class="ct-container">
+    </chartist>
+  </no-ssr>
 </template>
 
 <script>
 export default {
-  asyncData ({ isServer }) {
-    if (isServer) {
-      return {}
-    }
-    return {
-      defaultOptions: {
-        height: '200px',
-        plugins: [ this.$chartist.plugins.tooltip() ]
-      }
-    }
-  },
-
   props: {
     chartData: {
       type: Object,
@@ -41,9 +31,12 @@ export default {
 
   computed: {
     mergedOptions () {
-      const copiedOpts = Object.assign({}, this.defaultOptions)
-      copiedOpts.labelInterpolationFnc = this.labelInterpolationFnc
-      return Object.assign(copiedOpts, this.options)
+      const defaults = {
+        height: '200px',
+        plugins: [ this.$chartist.plugins.tooltip() ],
+        labelInterpolationFnc: this.labelInterpolationFnc
+      }
+      return Object.assign(defaults, this.options)
     }
   }
 }

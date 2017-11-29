@@ -21,7 +21,7 @@
         [
           "module-resolver",
           {
-            "root": ["./"],
+            "root": ["."],
             "alias": {
               "@": "."
             }

@@ -47,7 +47,7 @@
     <card-base
       title="Contributions"
       description="The number of contributions made this week"
-      class="mb-3">
+      class="mb-3 card-overflow">
       <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-2">
           <line-chart
@@ -100,7 +100,7 @@
     <card-base
       title="New Tasks"
       description="The number of tasks added this week"
-      class="mb-3">
+      class="mb-3 card-overflow">
       <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-2">
           <bar-chart
@@ -143,7 +143,7 @@
 
     <b-card-group
       deck
-      class="mb-3">
+      class="mb-3 card-overflow">
       <b-card
         bg-variant="primary"
         text-variant="white"
@@ -176,7 +176,7 @@
     <card-base
       title="New Users"
       description="The number of users that signed up this week"
-      class="mb-3">
+      class="mb-3 card-overflow">
       <b-row no-gutters class="chart-row">
         <b-col lg="8" class="pt-1">
           <line-chart
@@ -221,7 +221,7 @@
       title="Returning Users"
       description="The number of users returning for a number days in a row
         this week"
-      class="mb-3">
+      class="mb-3 card-overflow">
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
           unit="user"
@@ -234,7 +234,7 @@
     <card-base
       title="Active Users"
       description="The number of users that contributed to a project this week"
-      class="mb-3">
+      class="mb-3 card-overflow">
       <chart-legend
         :items="[ 'Anonymous', 'Authenticated' ]"
         slot="controls"

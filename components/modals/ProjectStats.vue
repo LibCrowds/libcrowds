@@ -25,7 +25,7 @@
         <card-base
           title="Proportion of Authenticated Users"
           :description="proportionAuthDescription"
-          class="mb-3">
+          class="mb-3 card-overflow">
           <b-card-body>
             <pie-chart
               v-if="userStats.authenticated && userStats.anonymous"
@@ -37,7 +37,7 @@
         <card-base
           title="Daily Contributions"
           :description="dailyContributionsDescriptions"
-          class="mb-3">
+          class="mb-3 card-overflow">
           <b-card-body>
             <line-chart
               v-if="projectStats.dayStats"
@@ -50,7 +50,7 @@
         <card-base
           title="Hourly Contributions"
           :description="hourlyContributionsDescription"
-          class="mb-3">
+          class="mb-3 card-overflow">
           <b-card-body>
             <line-chart
               v-if="projectStats.hourStats"
@@ -63,7 +63,7 @@
         <card-base
           title="Top Authenticated Users"
           :description="topUsersDescription"
-          class="mb-3">
+          class="mb-3 card-overflow">
           <b-card-body>
             <bar-chart
               v-if="userStats.authenticated"
