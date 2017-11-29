@@ -6,6 +6,7 @@
     apt_cache_valid_time: 86400
     libcrowds_user: "vagrant"
     libcrowds_path: "/vagrant"
+    vagrant_home: "/home/vagrant"
   tasks:
     - name: check that Ubuntu is running
       assert:
@@ -42,3 +43,11 @@
 
     - name: install bindings for node-sass
       command: npm rebuild node-sass {{ libcrowds_path }}
+
+    - name: go to /vagrant directory on bash login
+      lineinfile:
+        dest={{ vagrant_home }}/.bashrc
+        line="cd {{ libcrowds_path }}"
+        owner=vagrant
+        state=present
+        insertafter=EOF
