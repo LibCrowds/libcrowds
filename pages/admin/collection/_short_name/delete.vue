@@ -19,6 +19,7 @@
           class="ml-auto"
           :disabled="collection.nProjects === 0"
           @click="deleteCollection">
+          Delete
         </b-btn>
       </div>
     </b-card-footer>
