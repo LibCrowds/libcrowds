@@ -5,14 +5,14 @@
   vars:
     apt_cache_valid_time: 86400
     nodejs_ppa: "ppa:chris-lea/node.js"
-    bl_user: "vagrant"
-    bl_path: "/vagrant"
-    vagrant_home: "/home/vagrant"
+    libcrowds_user: "vagrant"
+    libcrowds_path: "/vagrant"
   tasks:
     - name: check that Ubuntu is running
       assert:
         that:
           - ansible_distribution == 'Ubuntu'
+          - ansible_distribution_release == 'trusty'
 
     - name: ensure ansible's apt_repository dependency is installed
       apt: pkg=python-apt state=latest update_cache=true cache_valid_time={{ apt_cache_valid_time }}
@@ -28,3 +28,15 @@
 
     - name: install npm@latest
       apt: name=npm state=latest
+
+    - name: check if local.config.js exists
+      stat: path={{ libcrowds_path }}/local.config.js
+      register: check_settings
+
+    - name: copy default configuration template
+      command: cp -p {{ libcrowds_path }}/local.config.js.tmpl {{ libcrowds_path }}/local.config.js
+      when: not check_settings.stat.exists
+
+    - name: install LibCrowds dependencies, this may take a while...
+      sudo_user: "{{ libcrowds_user }}"
+      command: npm install {{ libcrowds_path }}
