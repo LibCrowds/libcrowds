@@ -25,3 +25,4 @@ workbox-*
 
 # Vagrant
 .vagrant/
+nodesource_setup.sh

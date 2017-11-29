@@ -4,7 +4,6 @@
   sudo: yes
   vars:
     apt_cache_valid_time: 86400
-    nodejs_ppa: "ppa:chris-lea/node.js"
     libcrowds_user: "vagrant"
     libcrowds_path: "/vagrant"
   tasks:
@@ -14,20 +13,20 @@
           - ansible_distribution == 'Ubuntu'
           - ansible_distribution_release == 'trusty'
 
-    - name: ensure ansible's apt_repository dependency is installed
-      apt: pkg=python-apt state=latest update_cache=true cache_valid_time={{ apt_cache_valid_time }}
-
     - name: install git
       apt: name=git-core state=latest
 
-    - name: ensure nodejs apt repository is up to date
-      apt_repository: repo={{ nodejs_ppa }}
+    - name: install node 8 setup script
+      command: curl -sL https://deb.nodesource.com/setup_8.x -o {{ libcrowds_path }}/nodesource_setup.sh
+
+    - name: run node 8 setup script
+      command: bash {{ libcrowds_path }}/nodesource_setup.sh
 
     - name: install Node.js
       apt: name=nodejs state=latest
 
-    - name: install npm@latest
-      apt: name=npm state=latest
+    - name: install build-essential
+      apt: name=build-essential state=latest
 
     - name: check if local.config.js exists
       stat: path={{ libcrowds_path }}/local.config.js
