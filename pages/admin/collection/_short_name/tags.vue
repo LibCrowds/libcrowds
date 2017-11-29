@@ -146,6 +146,7 @@ export default {
         text: `Are you sure you want to delete the "${tag.type}" tag type?`,
         type: 'warning',
         showCancelButton: true,
+        reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
           let infoClone = Object.assign({}, this.collection.info)

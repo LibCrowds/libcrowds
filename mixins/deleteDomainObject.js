@@ -10,6 +10,7 @@ export const deleteDomainObject = {
         text: `Are you sure you want to delete this ${terminology}?`,
         type: 'warning',
         showCancelButton: true,
+        reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return this.$axios.$delete(`/api/${type}/${id}`)

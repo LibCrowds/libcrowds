@@ -17,3 +17,12 @@
     vertical-align: middle;
   }
 }
+
+// To stop tables loading before the user scrolls to the bottom
+// As the bottom is flexible and no max-height is set
+.dashboard {
+  .infinite-loading-table {
+    max-height: 65vh;
+    overflow: auto;
+  }
+}

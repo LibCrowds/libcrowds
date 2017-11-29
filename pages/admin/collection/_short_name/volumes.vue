@@ -92,6 +92,7 @@ export default {
         text: 'Are you sure you want to overwrite the current list of volumes?',
         type: 'warning',
         showCancelButton: true,
+        reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
           return this.$axios.$put(`/api/category/${this.collection.id}`, {

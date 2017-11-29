@@ -86,6 +86,16 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
           Help
         </a>
       </li>
+      <li data-index="7"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/results"
+           target="_self"
+           class="nav-link"
+        >
+          Results
+        </a>
+      </li>
     </ul>
   </nav>
   <div class="dashboard">
@@ -279,6 +289,16 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
              class="nav-link"
           >
             Help
+          </a>
+        </li>
+        <li data-index="7"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/results"
+             target="_self"
+             class="nav-link"
+          >
+            Results
           </a>
         </li>
       </ul>

@@ -15,3 +15,7 @@ are explained below.
 | Forum URL          | The URL for the Discuss link in the microsite's main navigation bar.                           |
 | Task Presenter     | The module used to present tasks for all of the microsite's projects.                          |
 | Data Reuse License | The license by which all data collected via the microsite is made available.                   |
+
+{% hint style="danger" %}
+Be especially careful when updating the short name. If updated this will change all URLs for the collection microsite.
+{% endhint %}

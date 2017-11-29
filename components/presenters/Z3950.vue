@@ -460,6 +460,7 @@ export default {
         title: 'Skip Task',
         text: 'Are you sure you want to skip this task?',
         type: 'warning',
+        reverseButtons: true,
         showCancelButton: true
       }).then(result => {
         if (result) {

@@ -31,6 +31,7 @@
     * [Tags](admin/project/tags.md)
     * [Collection](admin/project/collection.md)
     * [Volumes](/admin/project/volumes.md)
+    * [Results](admin/project/results.md)
   * [Site Admin](admin/site/README.md)
     * [Dashboard](admin/site/dashboard.md)
     * [Users](admin/site/users.md)

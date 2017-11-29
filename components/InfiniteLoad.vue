@@ -51,6 +51,12 @@ export default {
           return
         }
 
+        // Add the _showDetails flag
+        data = data.map(item => {
+          item._showDetails = false
+          return item
+        })
+
         this.$emit('input', this.value.concat(data))
         $state.loaded()
       } catch (err) {

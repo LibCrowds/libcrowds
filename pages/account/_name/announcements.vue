@@ -6,7 +6,6 @@
       :announcement="announcement">
     </announcement-card>
     <infinite-load
-      ref="infiniteload"
       domain-object="announcement"
       :search-params="searchParams"
       v-model="announcements">
