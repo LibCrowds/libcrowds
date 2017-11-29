@@ -85,7 +85,7 @@ export default {
      */
     deleteCollection () {
       const id = this.collection.id
-      if (collection.nProjects > 0) {
+      if (this.collection.nProjects > 0) {
         return
       }
       this.deleteDomainObject('category', id, () => {
