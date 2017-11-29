@@ -10,7 +10,7 @@ The LibCrowds package is a Vue.js UI that communicates with a PYBOSSA backend to
 
 [**Read the documentation**](https://docs.libcrowds.com)
 
-[![The LibCrowds website](./docs/assets/site-homepage.png?raw=true "The LibCrowds website")](https://www.libcrowds.com)
+[![The LibCrowds website](./assets/img/site-homepage.png?raw=true "The LibCrowds website")](https://www.libcrowds.com)
 
 ## Build Setup
 
