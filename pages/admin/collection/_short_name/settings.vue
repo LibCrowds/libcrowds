@@ -138,8 +138,8 @@ export default {
               type: 'select',
               values: [
                 {
-                  id: 'libcrowds-viewer',
-                  name: 'LibCrowds Viewer'
+                  id: 'iiif-annotation',
+                  name: 'IIIF Annotation'
                 },
                 {
                   id: 'z3950',
