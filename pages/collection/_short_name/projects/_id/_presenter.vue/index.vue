@@ -15,13 +15,13 @@ import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
-import LibcrowdsViewerPresenter from '@/components/presenters/LibcrowdsViewer'
+import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
 
 export default {
   layout ({ params, store }) {
     const layouts = {
-      'libcrowds-viewer': 'collection-fullscreen-dark',
+      'iiif-annotation': 'collection-fullscreen-dark',
       'z3950': 'collection-tabs'
     }
     return layouts[params.presenter] || 'collection-tabs'
@@ -61,7 +61,7 @@ export default {
 
     presenter () {
       const presenters = {
-        'libcrowds-viewer': LibcrowdsViewerPresenter,
+        'iiif-annotation': IIIFAnnotationPresenter,
         'z3950': Z3950Presenter
       }
       return presenters[this.collection.info.presenter]

@@ -1,5 +1,5 @@
 <template>
-  <div class="libcrowds-viewer-presenter">
+  <div class="iiif-annotation-presenter">
 
     <libcrowds-viewer
       v-if="taskOpts.length"
@@ -227,7 +227,7 @@ export default {
 </script>
 
 <style lang="scss">
-.libcrowds-viewer-presenter {
+.iiif-annotation-presenter {
   width: 100%;
   height: 100%;
   display: flex;
