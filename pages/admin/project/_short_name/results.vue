@@ -1,13 +1,20 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right"
-      size="sm"
-      @click="analyseAll">
-      Analyse All
-    </b-btn>
+    <div slot="controls" class="float-right">
+      <b-btn
+        variant="success"
+        class="mr-1"
+        size="sm"
+        @click="analyseEmpty">
+        Analyse Empty
+      </b-btn>
+      <b-btn
+        variant="success"
+        size="sm"
+        @click="analyseAll">
+        Analyse All
+      </b-btn>
+    </div>
 
     <results-table
       no-border
@@ -85,6 +92,21 @@ export default {
             project_short_name: this.project.short_name
           })
         }
+      }).then(result => {
+        this.notifySuccess({ message: result.message })
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Analyse empty results.
+     */
+    analyseEmpty () {
+      const presenter = this.collection.info.presenter
+      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+        empty: 1,
+        project_short_name: this.project.short_name
       }).then(result => {
         this.notifySuccess({ message: result.message })
       }).catch(err => {
