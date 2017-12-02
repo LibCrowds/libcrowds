@@ -149,7 +149,6 @@ export default {
       } else {
         this.viewerShareUrl = null
       }
-      console.log('share url', this.viewerShareUrl)
     },
 
     /**
