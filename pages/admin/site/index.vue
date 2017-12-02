@@ -11,17 +11,22 @@
         Refresh
       </b-btn>
 
-      <b-card-body v-if="emptyResults">
-        <b-alert
-          show
-          dismissible
-          variant="danger"
-          class="mb-1">
-          <h4>Unanalysed Results Detected</h4>
-          <p>
-            The following projects have results that have remained Unanalysed
-            for over a day. This usually indicates some issue with the
-            automated results analysis process.
+      <no-ssr>
+        <b-card-body v-if="emptyResults">
+          <b-alert
+            show
+            dismissible
+            variant="danger"
+            class="mb-1">
+            <h4>Unanalysed Results Detected</h4>
+            <p>
+              The following projects have results that have remained Unanalysed
+              for over a day. This usually indicates some issue with the
+              automated results analysis process.
+            </p>
+            <p>
+              Follow the links to check the results admin page for each project.
+            </p>
             <hr>
             <ul class="list-unstyled">
               <li v-for="project in emptyResults" :key="project.short_name">
@@ -31,13 +36,15 @@
                       short_name: project.short_name
                     }
                   }">
-                  {{ project.short_name }}
+                  {{ project.name }}
                 </nuxt-link>
+                ({{ project.n_empty_results }}
+                  empty {{ 'results' | pluralize(project.n_empty_results) }})
               </li>
             </ul>
-          </p>
-        </b-alert>
-      </b-card-body>
+          </b-alert>
+        </b-card-body>
+      </no-ssr>
     </card-base>
 
     <b-card-group
