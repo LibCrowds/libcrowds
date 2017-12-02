@@ -227,9 +227,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import '~assets/style/settings';
+
 .iiif-annotation-presenter {
   width: 100%;
   height: 100%;
+  background-color: $black;
   display: flex;
   flex-direction: column;
   align-items: center;
