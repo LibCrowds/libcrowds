@@ -93,7 +93,9 @@ export default {
           })
         }
       }).then(result => {
-        this.notifySuccess({ message: result.message })
+        if (result) {
+          this.notifySuccess({ message: result.message })
+        }
       }).catch(err => {
         this.$nuxt.error(err)
       })
