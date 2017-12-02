@@ -70,13 +70,11 @@ export default {
         },
         isempty: {
           label: 'Empty',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
+          class: 'text-center d-none d-xl-table-cell'
         },
         task_run_ids: {
           label: 'Answers',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
+          class: 'text-center d-none d-xl-table-cell'
         }
       },
       searchParams: {
