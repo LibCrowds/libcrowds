@@ -10,6 +10,41 @@
         @click="refresh">
         Refresh
       </b-btn>
+
+      <no-ssr>
+        <b-card-body v-if="emptyResults">
+          <b-alert
+            show
+            dismissible
+            variant="danger"
+            class="mb-1">
+            <h4>Unanalysed Results Detected</h4>
+            <p>
+              The following projects have results that have remained Unanalysed
+              for over a day. This usually indicates some issue with the
+              automated results analysis process.
+            </p>
+            <p>
+              Follow the links to check the results admin page for each project.
+            </p>
+            <hr>
+            <ul class="list-unstyled">
+              <li v-for="project in emptyResults" :key="project.short_name">
+                <nuxt-link :to="{
+                    name: 'admin-project-short_name-results',
+                    params: {
+                      short_name: project.short_name
+                    }
+                  }">
+                  {{ project.name }}
+                </nuxt-link>
+                ({{ project.n_empty_results }}
+                  empty {{ 'results' | pluralize(project.n_empty_results) }})
+              </li>
+            </ul>
+          </b-alert>
+        </b-card-body>
+      </no-ssr>
     </card-base>
 
     <b-card-group
@@ -436,23 +471,29 @@ export default {
       stackedChartOptions: {
         height: '100%',
         stackBars: true
-      }
+      },
+      alerts: []
     }
   },
 
-  async asyncData ({ app, error }) {
-    return app.$axios.$get('/admin/dashboard').then(data => {
+  asyncData ({ app, error, router }) {
+    let stats = {}
+    return app.$axios.$get('/admin/dashboard').then(statsData => {
+      stats = statsData
+      return app.$axios.$get('/libcrowds/results/empty')
+    }).then(emptyResultsData => {
       return {
-        activeAnon: data.active_anon_last_week,
-        activeAuth: data.active_users_last_week,
-        returningUsers: data.returning_users_week,
-        newUsers: data.new_users_week,
-        newTaskRuns: data.new_task_runs_week,
-        newTasks: data.new_tasks_week,
-        updateFeed: data.update_feed,
-        draftProjects: data.draft_projects_last_week,
-        publishedProjects: data.published_projects_last_week,
-        updatedProjects: data.update_projects_last_week
+        activeAnon: stats.active_anon_last_week,
+        activeAuth: stats.active_users_last_week,
+        returningUsers: stats.returning_users_week,
+        newUsers: stats.new_users_week,
+        newTaskRuns: stats.new_task_runs_week,
+        newTasks: stats.new_tasks_week,
+        updateFeed: stats.update_feed,
+        draftProjects: stats.draft_projects_last_week,
+        publishedProjects: stats.published_projects_last_week,
+        updatedProjects: stats.update_projects_last_week,
+        emptyResults: emptyResultsData
       }
     }).catch(err => {
       error(err)
