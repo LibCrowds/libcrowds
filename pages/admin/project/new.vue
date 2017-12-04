@@ -5,14 +5,14 @@
       variant="success"
       class="float-right ml-1"
       size="sm">
-      Request a Template
+      Update Templates
     </b-btn>
     <b-btn
       slot="controls"
       variant="success"
       class="float-right"
       size="sm">
-      Request a Volume
+      Update Volumes
     </b-btn>
 
     <b-tabs small card v-model="tabIndex">
@@ -29,17 +29,17 @@
             The templates are maintained by {{ localConfig.brand }}
             administrators. This is partly for quality control and partly so
             that it's easier for future projects to be generated and organised.
-            If you can't find a suitable template for your chosen collection
-            please get in touch by clicking the
-            <strong>Request a Template</strong> button.
+            If you can't find a suitable template click the
+            <strong>Update Templates</strong> to request a new template, or an
+            update to an existing one.
           </p>
           <p>
-            Similarly, you will also be asked to choose the volume that
-            contains the input source for the project (e.g. the images). The
-            volumes for each collection are also maintained by
-            {{ localConfig.brand }} administrators, for the reasons outlined
-            above. If you want to add a new volume, or set of volumes, please
-            click the <strong>Request a Volume</strong> button.
+            Similarly, you will be asked to choose the volume that contains
+            the input for the project (e.g. the images). The volumes for each
+            collection are also maintained by {{ localConfig.brand }}
+            administrators for the reasons outlined above. If you want to add
+            a new volume, or set of volumes, please click the
+            <strong>Update Volumes</strong> button.
           </p>
           <p>
             When you're ready to begin click the <strong>Next</strong> button
@@ -84,7 +84,7 @@
           <p>
             If you can't find a suitable template for the type of project
             that you want to create, click the
-            <strong>Request a Template</strong> button at the top of this
+            <strong>Update Templates</strong> button at the top of this
             page.
           </p>
         </b-card-body>
@@ -111,8 +111,7 @@
           <b-alert
             show
             variant="primary">
-              To see the available templates please start by choosing a
-              collection.
+              To see the available templates start by choosing a collection.
           </b-alert>
         </b-card-body>
       </b-tab>
@@ -123,10 +122,9 @@
             Choose the source volume
           </p>
           <p>
-            If you can't find a suitable template for the type of project
-            that you want to create, click the
-            <strong>Request a Volume</strong> button at the top of this
-            page.
+            If the volume that you want to create your project from is not
+            listed click the <strong>Update Volumes</strong> button at the top
+            of this page.
           </p>
         </b-card-body>
         <b-table
@@ -152,8 +150,7 @@
           <b-alert
             show
             variant="primary">
-              To see the available volumes please start by choosing a
-              collection.
+              To see the available volumes start by choosing a collection.
           </b-alert>
         </b-card-body>
       </b-tab>
