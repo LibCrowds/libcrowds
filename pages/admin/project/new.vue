@@ -42,6 +42,11 @@
             <strong>Update Volumes</strong> button.
           </p>
           <p>
+            Once the project has been created you will be given access to
+            additional options including those to tweak help text or add tags
+            to make the project easier to find.
+          </p>
+          <p>
             When you're ready to begin click the <strong>Next</strong> button
             at the bottom of this page.
           </p>
