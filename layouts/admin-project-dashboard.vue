@@ -21,6 +21,12 @@ export default {
           link: {
             name: 'admin-project'
           }
+        },
+        {
+          label: 'New Project',
+          link: {
+            name: 'admin-project-new'
+          }
         }
       ]
     }
