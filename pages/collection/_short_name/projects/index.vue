@@ -59,6 +59,7 @@
             :placeholder="`Type to search by ${filterBy}`">
           </b-form-input>
           <projects-table
+            no-border
             :filter="filter"
             :filter-by="filterBy"
             :collection="collection">

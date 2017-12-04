@@ -14,6 +14,7 @@
       striped
       hover
       show-empty
+      class="border-left-0 border-right-0 border-bottom-0"
       :items="filteredVolumes"
       :fields="fields">
       <template slot="action" scope="volume">
