@@ -1,17 +1,46 @@
 <template>
   <footer id="dashboard-footer" class="footer">
     <div class="container-fluid">
-      <p v-html="copyright" class="my-2 mx-1 float-right"></p>
+      <ul class="list-inline mt-2 mb-0">
+        <li
+          v-if="localConfig.twitter"
+          class="list-inline-item mx-1">
+          <a
+            :href="`https://twitter.com/${localConfig.twitter}`"
+            class="text-muted">
+            <icon name="twitter"></icon>
+          </a>
+        </li>
+        <li
+          v-if="localConfig.email"
+          class="list-inline-item mx-1">
+          <a :href="`mailto:${localConfig.email}`" class="text-muted">
+            <icon name="envelope"></icon>
+          </a>
+        </li>
+        <li
+          v-if="localConfig.github"
+          class="list-inline-item mx-1">
+          <a :href="localConfig.github" class="text-muted">
+            <icon name="github"></icon>
+          </a>
+        </li>
+      </ul>
+      <p v-html="copyright" class="my-2 mx-1 float-right text-muted"></p>
     </div>
   </footer>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import 'vue-awesome/icons/twitter'
+import 'vue-awesome/icons/github'
+import 'vue-awesome/icons/envelope'
 
 export default {
   data () {
     return {
+      localConfig: localConfig,
       copyright: `&copy; ${localConfig.company}, ${new Date().getFullYear()}`
     }
   }
@@ -22,9 +51,13 @@ export default {
 @import '~assets/style/settings';
 
 #dashboard-footer {
-  color: $gray-600;
   background: $white;
   font-size: $font-size-sm;
   border-top: 1px solid $gray-300;
+
+  .container-fluid {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 </style>
