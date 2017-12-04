@@ -1,7 +1,7 @@
 <template>
   <footer id="dashboard-footer" class="footer">
     <div class="container-fluid">
-      <ul class="list-inline mt-2 mb-0">
+      <ul class="list-inline my-2 d-flex flex-row align-items-center">
         <li
           v-if="localConfig.twitter"
           class="list-inline-item mx-1">
@@ -58,6 +58,10 @@ export default {
   .container-fluid {
     display: flex;
     justify-content: space-between;
+
+    ul > li > a {
+      display: flex;
+    }
   }
 }
 </style>
