@@ -122,7 +122,7 @@ export default {
 
   methods: {
     /**
-     * Return the collection's tags formatted to be used in the table.
+     * Return the collection's tags, formatted to be used in the table.
      */
     getTableItems () {
       const items = []

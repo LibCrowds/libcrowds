@@ -66,9 +66,18 @@ export default {
           }
         },
         {
-          label: 'Celebration',
+          label: 'Project Templates',
           link: {
-            name: 'admin-collection-short_name-celebration',
+            name: 'admin-collection-short_name-templates',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
+          label: 'Celebrations',
+          link: {
+            name: 'admin-collection-short_name-celebrations',
             params: {
               short_name: this.collection.short_name
             }

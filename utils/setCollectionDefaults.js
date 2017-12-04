@@ -41,7 +41,7 @@ export const setCollectionDefaults = function (collection) {
       projects: ''
     },
     pubished: false,
-    celebration: {
+    celebrations: {
       confetti: 'heart',
       user: '# Horay!\n\n' +
         'You have completed all available tasks for this project.\n\n' +
@@ -53,7 +53,7 @@ export const setCollectionDefaults = function (collection) {
         'and used to directly enabled future research.'
     },
     volumes: [],
-    templates: []
+    templates: {}
   }
   collection.info = merge(defaults, collection.info)
 

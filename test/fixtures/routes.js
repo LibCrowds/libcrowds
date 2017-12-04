@@ -105,9 +105,9 @@ export const routes = [
     name: 'admin-collection-short_name-featured'
   },
   {
-    path: '/admin/collection/:short_name/celebration',
+    path: '/admin/collection/:short_name/celebrations',
     component: jest.fn(),
-    name: 'admin-collection-short_name-celebration'
+    name: 'admin-collection-short_name-celebrations'
   },
   {
     path: '/admin/collection/:short_name/delete',

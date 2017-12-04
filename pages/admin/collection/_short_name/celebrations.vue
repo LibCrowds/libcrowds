@@ -5,7 +5,7 @@
       variant="success"
       class="float-right ml-1"
       size="sm"
-      @click="testCelebration(form.model.info.celebration.user)">
+      @click="testCelebration(form.model.info.celebrations.user)">
       Test user
     </b-btn>
     <b-btn
@@ -13,7 +13,7 @@
       variant="success"
       class="float-right"
       size="sm"
-      @click="testCelebration(form.model.info.celebration.project)">
+      @click="testCelebration(form.model.info.celebrations.project)">
       Test project
     </b-btn>
 
@@ -26,7 +26,7 @@
           User completion
         </label>
         <markdown-editor
-          v-model="collection.info.celebration.user"
+          v-model="collection.info.celebrations.user"
           :configs="markdownConfig">
         </markdown-editor>
       </div>
@@ -35,7 +35,7 @@
           Project completion
         </label>
         <markdown-editor
-          v-model="collection.info.celebration.project"
+          v-model="collection.info.celebrations.project"
           :configs="markdownConfig">
         </markdown-editor>
       </div>
@@ -59,7 +59,7 @@ export default {
 
   data () {
     return {
-      title: 'Celebration',
+      title: 'Celebrations',
       description: 'Configure the celebrations shown on project completion.',
       markdownConfig: {
         spellChecker: false
@@ -88,7 +88,7 @@ export default {
         schema: {
           fields: [
             {
-              model: 'info.celebration.confetti',
+              model: 'info.celebrations.confetti',
               label: 'Confetti type',
               type: 'select',
               values: [
@@ -127,7 +127,7 @@ export default {
      */
     testCelebration (msg) {
       this.$confetti.start({
-        shape: this.form.model.info.celebration.confetti
+        shape: this.form.model.info.celebrations.confetti
       })
       this.$swal({
         html: marked(msg)

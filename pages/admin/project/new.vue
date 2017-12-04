@@ -228,6 +228,16 @@ export default {
           label: 'Action',
           sortable: true
         }
+      },
+      templateTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        action: {
+          label: 'Action',
+          sortable: true
+        }
       }
     }
   },

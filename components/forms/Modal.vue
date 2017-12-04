@@ -3,6 +3,7 @@
     ref="modal"
     :id="modalId"
     :title="title"
+    :size="size"
     @ok="submit"
     @hidden="$emit('hidden')"
     @shown="onShown">
@@ -46,6 +47,10 @@ export default {
     modalId: {
       type: String,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'md'
     }
   },
 

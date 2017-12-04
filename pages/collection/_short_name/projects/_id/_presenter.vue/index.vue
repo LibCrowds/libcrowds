@@ -94,13 +94,13 @@ export default {
      */
     handleCompletion () {
       const msg = this.project.overall_progress === 100
-        ? this.collection.info.celebration.project
-        : this.collection.info.celebration.user
+        ? this.collection.info.celebrations.project
+        : this.collection.info.celebrations.user
       this.$confetti.start({
-        shape: this.collection.info.celebration.confetti
+        shape: this.collection.info.celebrations.confetti
       })
       this.$swal({
-        title: this.collection.info.celebration.title,
+        title: this.collection.info.celebrations.title,
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()

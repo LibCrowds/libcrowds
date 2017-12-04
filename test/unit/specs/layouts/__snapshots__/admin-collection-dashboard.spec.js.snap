@@ -59,11 +59,11 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       <li data-index="4"
           class="nav-item"
       >
-        <a href="#/admin/collection/playbills/celebration"
+        <a href="#/admin/collection/playbills/celebrations"
            target="_self"
            class="nav-link"
         >
-          Celebration
+          Celebrations
         </a>
       </li>
       <li data-index="5"
@@ -223,11 +223,11 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
         <li data-index="4"
             class="nav-item"
         >
-          <a href="#/admin/collection/playbills/celebration"
+          <a href="#/admin/collection/playbills/celebrations"
              target="_self"
              class="nav-link"
           >
-            Celebration
+            Celebrations
           </a>
         </li>
         <li data-index="5"
