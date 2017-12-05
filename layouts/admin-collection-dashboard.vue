@@ -18,6 +18,7 @@ export default {
       rootNavItems: [
         {
           label: 'Open Collection',
+          exact: true,
           link: {
             name: 'admin-collection'
           }

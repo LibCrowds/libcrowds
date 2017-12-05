@@ -16,6 +16,7 @@ export default {
       navItems: [
         {
           label: 'Dashboard',
+          exact: true,
           link: {
             name: 'admin-site'
           }

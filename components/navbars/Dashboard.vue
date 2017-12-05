@@ -21,7 +21,7 @@
       @leave="leave">
       <b-nav-item
         v-for="(item, index) in navItems"
-        exact
+        :exact="item.exact"
         :key="index"
         :data-index="index"
         :to="item.link">
