@@ -19,7 +19,6 @@
         <b-btn
           variant="success"
           size="sm"
-          block
           exact
           :to="{
             name: 'admin-collection-short_name-settings',
