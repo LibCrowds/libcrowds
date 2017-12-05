@@ -6,7 +6,7 @@
     <template slot="footer">
       <div class="text-right">
         <b-btn
-          variant="outline-dark"
+          variant="dark"
           @click="subscribe(false)">
           No thanks
         </b-btn>

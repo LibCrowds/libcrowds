@@ -5,7 +5,12 @@
       class="float-right"
       size="sm"
       variant="success"
-      v-b-modal="addTemplateModalId">
+      :to="{
+        name: 'admin-collection-short_name-templates-new',
+        params: {
+          short_name: this.collection.short_name
+        }
+      }">
       New
     </b-btn>
 
@@ -36,20 +41,6 @@
       </template>
     </b-table>
 
-    <add-template-modal
-      lazy
-      :collection="collection"
-      :modal-id="addTemplateModalId"
-      @update="refresh">
-    </add-template-modal>
-
-    <edit-template-modal
-      :collection="collection"
-      :modal-id="editTemplateModalId"
-      :tag="editedTemplate"
-      @update="refresh">
-    </edit-template-modal>
-
   </card-base>
 </template>
 
@@ -57,8 +48,6 @@
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
-import AddTemplateModal from '@/components/modals/AddTemplate'
-import EditTemplateModal from '@/components/modals/EditTemplate'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -81,6 +70,10 @@ export default {
           label: 'Mode',
           sortable: true
         },
+        field: {
+          label: 'Field',
+          sortable: true
+        },
         actions: {
           label: 'Actions',
           class: 'text-center'
@@ -91,9 +84,7 @@ export default {
   },
 
   components: {
-    CardBase,
-    AddTemplateModal,
-    EditTemplateModal
+    CardBase
   },
 
   computed: {
@@ -112,8 +103,8 @@ export default {
         const template = this.collection.info.templates[shortName]
         items.push({
           name: template.name,
-          short_name: shortName,
-          mode: template.mode
+          mode: template.mode,
+          field: template.field
         })
       }
       return items
@@ -132,7 +123,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           let infoClone = Object.assign({}, this.collection.info)
-          delete infoClone.templates[template.short_name]
+          delete infoClone.templates[template.name]
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
             info: infoClone
           }).then(data => {

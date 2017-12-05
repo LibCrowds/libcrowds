@@ -1,26 +1,65 @@
 <template>
-  <modal-form
-    :form="form"
-    :modalId="modalId"
-    size="lg"
-    title="Add a template"
-    @submit="addTemplate"
-    @shown="resetModel">
-  </modal-form>
+  <card-base :title="title" :description="description">
+    <form-base
+      class="pybossa-form"
+      show-cancel
+      submit-text="Create"
+      :processing="processing"
+      @submit="addTemplate"
+      @cancel="goBack">
+
+      <vue-form-generator
+        ref="form"
+        :schema="form.schema"
+        :model="form.model">
+      </vue-form-generator>
+
+    </form-base>
+  </card-base>
 </template>
 
 <script>
-import ModalForm from '@/components/forms/Modal'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
+import { metaTags } from '@/mixins/metaTags'
+import CardBase from '@/components/cards/Base'
+import FormBase from '@/components/forms/Base'
 import VueFormGenerator from 'vue-form-generator'
 
 export default {
-  mixins: [ notifications ],
+  layout: 'admin-collection-dashboard',
+
+  mixins: [ fetchCollectionByName, notifications, metaTags ],
 
   data () {
     return {
-      form: {
-        model: {},
+      title: 'New Project Template',
+      description: 'Create a project template.',
+      processing: false
+    }
+  },
+
+  components: {
+    CardBase,
+    FormBase
+  },
+
+  computed: {
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
+    form () {
+      return {
+        model: {
+          'name': '',
+          'description': '',
+          'objective': '',
+          'guidance': '',
+          'field': '',
+          'parent': null,
+          'mode': null
+        },
         schema: {
           fields: [
             {
@@ -69,6 +108,28 @@ export default {
               validator: VueFormGenerator.validators.string
             },
             {
+              model: 'field',
+              label: 'Field',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'The field being annotated (e.g. title) ',
+              required: true,
+              validator: VueFormGenerator.validators.string,
+              visible: () => {
+                return this.collection.info.presenter === 'iiif-annotation'
+              }
+            },
+            {
+              model: 'parent',
+              label: 'Parent',
+              type: 'select',
+              values: Object.keys(this.collection.info.templates),
+              default: 'select',
+              visible: () => {
+                return this.collection.info.presenter === 'iiif-annotation'
+              }
+            },
+            {
               model: 'mode',
               label: 'Mode',
               type: 'select',
@@ -88,35 +149,10 @@ export default {
                 return this.collection.info.presenter === 'iiif-annotation'
               },
               validator: VueFormGenerator.validators.required
-            },
-            {
-              model: 'parent',
-              label: 'Parent',
-              type: 'select',
-              values: Object.keys(this.collection.info.templates),
-              default: 'select',
-              visible: () => {
-                return this.collection.info.presenter === 'iiif-annotation'
-              }
             }
           ]
         }
       }
-    }
-  },
-
-  components: {
-    ModalForm
-  },
-
-  props: {
-    modalId: {
-      type: String,
-      required: true
-    },
-    collection: {
-      type: Object,
-      required: true
     }
   },
 
@@ -125,34 +161,30 @@ export default {
      * Add a template.
      */
     addTemplate () {
-      const modelClone = Object.assign({}, this.form.model)
-      modelClone.short_name = modelClone.name
-        .toLowerCase()
-        .replace(/[^\w\s]/gi, '')
-      this.collection.info.templates[modelClone.short_name] = modelClone
-      console.log(this.collection.info.templates)
+      if (!this.$refs.form.validate()) {
+        this.notifyInvalidForm()
+        return
+      }
+
+      this.collection.info.templates[this.form.model.name] = this.form.model
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
         this.notifySuccess({ message: 'Template added' })
-        this.$emit('update', this.template)
-        this.processing = false
+        this.goBack()
       })
     },
 
     /**
-     * Reset the model.
+     * Go back.
      */
-    resetModel () {
-      this.form.model = {
-        name: '',
-        description: '',
-        objective: '',
-        guidance: '',
-        mode: null,
-        parent: null,
-        help: ''
-      }
+    goBack () {
+      this.$router.push({
+        name: 'admin-collection-short_name-templates',
+        params: {
+          short_name: this.collection.short_name
+        }
+      })
     }
   }
 }

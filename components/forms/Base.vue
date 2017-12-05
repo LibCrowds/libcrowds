@@ -10,7 +10,7 @@
       <span>
         <b-btn
           v-if="showCancel"
-          variant="outline-dark"
+          variant="dark"
           :disabled="processing"
           class="mr-1"
           @click="$emit('cancel')">
@@ -55,7 +55,7 @@ export default {
     },
     processing: {
       type: Boolean,
-      default: true
+      default: false
     }
   }
 }
