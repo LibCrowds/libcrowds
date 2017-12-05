@@ -28,9 +28,9 @@
       </b-btn>
 
       <b-card-body>
-        <div v-if="form.model.schema.length">
+        <div v-if="form.model.fields.length">
           <vue-form-generator
-            :schema="readOnlySchema"
+            :schema="{ fields: readOnlyFields }"
             :model="{}">
           </vue-form-generator>
         </div>
@@ -42,6 +42,7 @@
 
       <add-form-field-modal
         lazy
+        :current-fields="form.model.fields"
         :modal-id="addFormFieldModalId"
         @submit="addFormField">
       </add-form-field-modal>
@@ -81,10 +82,10 @@ export default {
           'description',
           'objective',
           'guidance',
-          'field',
+          'tag',
           'parent',
           'mode',
-          'schema'
+          'fields'
         ]
         return required.every(key => {
           return value.hasOwnProperty(key)
@@ -165,11 +166,11 @@ export default {
               validator: VueFormGenerator.validators.string
             },
             {
-              model: 'field',
-              label: 'Field',
+              model: 'tag',
+              label: 'Tag',
               type: 'input',
               inputType: 'text',
-              placeholder: 'The field being annotated (e.g. title) ',
+              placeholder: 'A tag for the field being annotated (e.g. title) ',
               required: true,
               validator: VueFormGenerator.validators.string,
               visible: () => {
@@ -212,8 +213,8 @@ export default {
       }
     },
 
-    readOnlySchema () {
-      return this.form.model.schema.map(item => {
+    readOnlyFields () {
+      return this.form.model.fields.map(item => {
         item.readonly = true
         return item
       })
@@ -238,7 +239,8 @@ export default {
      *   The form field data.
      */
     addFormField (data) {
-      this.form.model.schema.push(data)
+      console.log(data)
+      this.form.model.fields.push(data)
     }
   }
 }

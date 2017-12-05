@@ -27,6 +27,7 @@ export default {
               inputType: 'text',
               label: 'Label',
               model: 'label',
+              placeholder: 'A label for the form field',
               maxlength: 50,
               required: true,
               validator: VueFormGenerator.validators.string
@@ -35,6 +36,7 @@ export default {
               type: 'select',
               label: 'Type',
               model: 'type',
+              required: true,
               values: () => {
                 return [
                   { id: 'input', name: 'Input' },
@@ -57,6 +59,7 @@ export default {
                   { id: 'url', name: 'URL' }
                 ]
               },
+              default: 'text',
               visible: model => {
                 return model.type === 'input'
               }
@@ -66,7 +69,25 @@ export default {
               inputType: 'text',
               label: 'Placeholder',
               model: 'placeholder',
+              placeholder: 'Placeholder text for the form field',
               validator: VueFormGenerator.validators.string
+            },
+            {
+              type: 'input',
+              inputType: 'text',
+              label: 'Model',
+              model: 'model',
+              placeholder: 'A key used to tag the annotation (e.g. prefix)',
+              required: true,
+              validator: (value) => {
+                const models = this.currentFields.map(field => field.model)
+                if (!value || !value.length) {
+                  return 'This field is required!'
+                }
+                if (models.indexOf(value) > -1) {
+                  return 'The model already contains this key'
+                }
+              }
             }
           ]
         }
@@ -81,6 +102,10 @@ export default {
   props: {
     modalId: {
       type: String,
+      required: true
+    },
+    currentFields: {
+      type: Array,
       required: true
     }
   },
