@@ -2,7 +2,9 @@
   <card-base :title="title" :description="description">
     <template-form
       submit-text="Create"
+      show-cancel
       :processing="processing"
+      :form-model="formModel"
       @submit="addTemplate"
       @cancel="goBack">
     </template-form>
@@ -26,14 +28,15 @@ export default {
       title: 'New Project Template',
       description: 'Create a project template.',
       processing: false,
-      model: {
+      formModel: {
         'name': '',
         'description': '',
         'objective': '',
         'guidance': '',
-        'field': '',
+        'tag': '',
         'parent': null,
-        'mode': null
+        'mode': null,
+        'fields': []
       }
     }
   },

@@ -14,6 +14,38 @@
       :model="form.model">
     </vue-form-generator>
 
+    <card-base
+      title="Form"
+      class="my-2"
+      v-if="form.model.mode === 'transcribe'">
+      <b-btn
+        slot="controls"
+        variant="success"
+        class="float-right"
+        size="sm"
+        v-b-modal="addFormFieldModalId">
+        Add field
+      </b-btn>
+
+      <b-card-body>
+        <div v-if="form.model.schema.length">
+          <vue-form-generator
+            :schema="readOnlySchema"
+            :model="{}">
+          </vue-form-generator>
+        </div>
+        <p v-else class="mb-0">
+          Transcription tasks require at least one form field. Click the
+          <strong>Add field</strong> button above.
+        </p>
+      </b-card-body>
+
+      <add-form-field-modal
+        lazy
+        :modal-id="addFormFieldModalId"
+        @submit="addFormField">
+      </add-form-field-modal>
+    </card-base>
   </form-base>
 </template>
 
@@ -21,26 +53,43 @@
 import { notifications } from '@/mixins/notifications'
 import FormBase from '@/components/forms/Base'
 import VueFormGenerator from 'vue-form-generator'
+import CardBase from '@/components/cards/Base'
+import AddFormFieldModal from '@/components/modals/AddFormField'
 
 export default {
   mixins: [ notifications ],
 
+  data () {
+    return {
+      addFormFieldModalId: 'add-form-field-modal'
+    }
+  },
+
   components: {
-    FormBase
+    FormBase,
+    CardBase,
+    AddFormFieldModal
   },
 
   props: {
     formModel: {
       type: Object,
-      default: () => ({
-        'name': '',
-        'description': '',
-        'objective': '',
-        'guidance': '',
-        'field': '',
-        'parent': null,
-        'mode': null
-      })
+      required: true,
+      validator: value => {
+        const required = [
+          'name',
+          'description',
+          'objective',
+          'guidance',
+          'field',
+          'parent',
+          'mode',
+          'schema'
+        ]
+        return required.every(key => {
+          return value.hasOwnProperty(key)
+        })
+      }
     },
     submitText: {
       type: String,
@@ -161,6 +210,13 @@ export default {
           ]
         }
       }
+    },
+
+    readOnlySchema () {
+      return this.form.model.schema.map(item => {
+        item.readonly = true
+        return item
+      })
     }
   },
 
@@ -174,6 +230,15 @@ export default {
         return
       }
       this.$emit('submit', this.form.model)
+    },
+
+    /**
+     * Add a form field to the project template schema.
+     * @param {Object} data
+     *   The form field data.
+     */
+    addFormField (data) {
+      this.form.model.schema.push(data)
     }
   }
 }
