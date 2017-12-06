@@ -35,8 +35,8 @@ export default {
         'objective': '',
         'guidance': '',
         'tag': '',
-        'parent': null,
         'mode': null,
+        'tutorial': '',
         'fields': []
       }
     }

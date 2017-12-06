@@ -8,6 +8,8 @@
     @hidden="$emit('hidden')"
     @shown="onShown">
 
+    <slot></slot>
+
     <form-base
       class="pybossa-form"
       :show-footer="false">

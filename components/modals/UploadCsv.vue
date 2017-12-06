@@ -4,6 +4,7 @@
     :modalId="modalId"
     title="Upload CSV"
     @submit="onSubmit">
+    <slot></slot>
   </modal-form>
 </template>
 

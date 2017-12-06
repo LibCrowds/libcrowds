@@ -361,7 +361,8 @@ export default {
       return this.$axios.$post('/libcrowds/projects/create', {
         category_id: this.selectedCollection.id,
         template: this.selectedTemplate,
-        volume: this.selectedVolume
+        volume: this.selectedVolume,
+        presenter: this.selectedCollection.presenter
       }).then(data => {
         this.$swal({
           title: capitalize(data.status),

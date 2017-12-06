@@ -47,6 +47,17 @@
         @submit="addFormField">
       </add-form-field-modal>
     </card-base>
+
+    <div>
+      <label class="ml-0">
+        Tutorial
+      </label>
+      <markdown-editor
+        v-model="form.model.help"
+        :configs="markdownConfig">
+      </markdown-editor>
+    </div>
+
   </form-base>
 </template>
 
@@ -62,7 +73,10 @@ export default {
 
   data () {
     return {
-      addFormFieldModalId: 'add-form-field-modal'
+      addFormFieldModalId: 'add-form-field-modal',
+      markdownConfig: {
+        spellChecker: false
+      }
     }
   },
 
@@ -83,8 +97,8 @@ export default {
           'objective',
           'guidance',
           'tag',
-          'parent',
           'mode',
+          'tutorial',
           'fields'
         ]
         return required.every(key => {
@@ -178,16 +192,6 @@ export default {
               }
             },
             {
-              model: 'parent',
-              label: 'Parent',
-              type: 'select',
-              values: Object.keys(this.collection.info.templates),
-              default: 'select',
-              visible: () => {
-                return this.collection.info.presenter === 'iiif-annotation'
-              }
-            },
-            {
               model: 'mode',
               label: 'Mode',
               type: 'select',
@@ -240,6 +244,17 @@ export default {
      */
     addFormField (data) {
       this.form.model.fields.push(data)
+    },
+
+    /**
+     * Update model boolean.
+     * @param {String} key
+     *   The model key.
+     * @param {Object} evt
+     *   The event.
+     */
+    updateModelBoolean (key, evt) {
+      this.model[key] = evt.value
     }
   }
 }

@@ -106,7 +106,7 @@ export default {
 
   methods: {
     /**
-     * Redirect the user on form submit success.
+     * Update model boolean.
      * @param {String} key
      *   The model key.
      * @param {Object} evt
