@@ -1,20 +1,5 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right ml-1"
-      size="sm">
-      Update Templates
-    </b-btn>
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right"
-      size="sm">
-      Update Volumes
-    </b-btn>
-
     <b-tabs small card v-model="tabIndex">
       <b-tab title="Introduction">
         <b-card-body>
@@ -26,25 +11,21 @@
             new project from a template.
           </p>
           <p>
-            The templates are maintained by {{ localConfig.brand }}
-            administrators. This is partly for quality control and partly so
-            that it's easier for future projects to be generated and organised.
-            If you can't find a suitable template click the
-            <strong>Update Templates</strong> to request a new template, or an
-            update to an existing one.
-          </p>
-          <p>
-            Similarly, you will be asked to choose the volume that contains
-            the input for the project (e.g. the images). The volumes for each
-            collection are also maintained by {{ localConfig.brand }}
-            administrators for the reasons outlined above. If you want to add
-            a new volume, or set of volumes, please click the
-            <strong>Update Volumes</strong> button.
-          </p>
-          <p>
             Once the project has been created you will be given access to
             additional options including those to tweak help text or add tags
             to make the project easier to find.
+          </p>
+          <p>
+            The templates are maintained by {{ localConfig.brand }}
+            administrators. This is partly for quality control and partly so
+            that it's easier for future projects to be generated and organised.
+            Similarly, you will be asked to choose the volume that contains
+            the input for the project (e.g. the images). These volumes are also
+            maintained by {{ localConfig.brand }} administrators. If you can't
+            find a suitable template or volume for the type of project that
+            you would like to create please get in touch by clicking the email
+            icon below. We can then help you to locate the items you're after
+            or to design the required templates.
           </p>
           <p>
             When you're ready to begin click the <strong>Next</strong> button
