@@ -239,7 +239,6 @@ export default {
      *   The form field data.
      */
     addFormField (data) {
-      console.log(data)
       this.form.model.fields.push(data)
     }
   }

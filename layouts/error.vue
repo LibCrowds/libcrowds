@@ -71,10 +71,6 @@ export default {
       }
       return this.error.message
     }
-  },
-
-  mounted () {
-    console.log(this.error)
   }
 }
 </script>

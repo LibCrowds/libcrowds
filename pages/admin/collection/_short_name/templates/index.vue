@@ -28,8 +28,13 @@
           variant="success"
           class="mr-1"
           size="sm"
-          @click="editedTemplate = template.item"
-          v-b-modal="editTemplateModalId">
+          :to="{
+            name: 'admin-collection-short_name-templates-key',
+            params: {
+              short_name: collection.short_name,
+              key: template.item.key
+            }
+          }">
           Edit
         </b-btn>
         <b-btn
@@ -59,8 +64,6 @@ export default {
     return {
       title: 'Project Templates',
       description: 'Configure the project templates for the microsite.',
-      addTemplateModalId: 'add-template-modal',
-      editTemplateModalId: 'edit-template-modal',
       tableFields: {
         name: {
           label: 'Name',
@@ -70,16 +73,15 @@ export default {
           label: 'Mode',
           sortable: true
         },
-        field: {
-          label: 'Field',
+        tag: {
+          label: 'Tag',
           sortable: true
         },
         actions: {
           label: 'Actions',
           class: 'text-center'
         }
-      },
-      editedTemplate: {}
+      }
     }
   },
 
@@ -98,16 +100,11 @@ export default {
      * Return the templates, formatted to be used in the table.
      */
     getTableItems () {
-      const items = []
-      for (let shortName of Object.keys(this.collection.info.templates)) {
-        const template = this.collection.info.templates[shortName]
-        items.push({
-          name: template.name,
-          mode: template.mode,
-          field: template.field
-        })
-      }
-      return items
+      return Object.keys(this.collection.info.templates).map(key => {
+        const template = this.collection.info.templates[key]
+        template.key = key
+        return template
+      })
     },
 
     /**
@@ -123,7 +120,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           let infoClone = Object.assign({}, this.collection.info)
-          delete infoClone.templates[template.name]
+          delete infoClone.templates[template.key]
           return this.$axios.$put(`/api/category/${this.collection.id}`, {
             info: infoClone
           }).then(data => {

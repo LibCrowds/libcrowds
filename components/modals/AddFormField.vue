@@ -45,7 +45,8 @@ export default {
                   { id: 'radios', name: 'Radio' },
                   { id: 'select', name: 'Select' }
                 ]
-              }
+              },
+              default: 'input'
             },
             {
               type: 'select',
@@ -60,8 +61,8 @@ export default {
                 ]
               },
               default: 'text',
-              visible: model => {
-                return model.type === 'input'
+              disabled: model => {
+                return model.type !== 'input'
               }
             },
             {
@@ -77,7 +78,7 @@ export default {
               inputType: 'text',
               label: 'Model',
               model: 'model',
-              placeholder: 'A key used to tag the annotation (e.g. prefix)',
+              placeholder: 'A key used as an identifier for the field',
               required: true,
               validator: (value) => {
                 const models = this.currentFields.map(field => field.model)

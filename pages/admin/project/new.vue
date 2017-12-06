@@ -100,13 +100,13 @@
           hover
           show-empty
           class="border-left-0 border-right-0 border-bottom-0"
-          :items="selectedCollection.info.templates"
+          :items="projectTemplates"
           :fields="templateTableFields">
           <template slot="action" scope="template">
             <b-btn
               variant="success"
               size="sm"
-              :disabled="selectedTemplates.name == template.item.name"
+              :disabled="selectedTemplate.name == template.item.name"
               @click="selectTemplate(template.item)">
               Select
             </b-btn>
@@ -161,7 +161,29 @@
       </b-tab>
 
       <b-tab title="Confirm">
-        Sibzamini!
+        <b-card-body>
+          <ul class="list-unstyled" v-if="selectionsComplete">
+            <li>
+              <strong>Collection:</strong>
+              {{ selectedCollection.name }}
+            </li>
+            <li>
+              <strong>Volume:</strong>
+              {{ selectedVolume.name }}
+            </li>
+            <li>
+              <strong>Template:</strong>
+              {{ selectedTemplate.name }}
+            </li>
+          </ul>
+          <b-alert
+            v-else
+            show
+            variant="primary">
+              To confirm project creation select a collection, volume and
+              template.
+          </b-alert>
+        </b-card-body>
       </b-tab>
 
     </b-tabs>
@@ -184,7 +206,8 @@
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="tabIndex !== 3">
+          :disabled="tabIndex !== 4"
+          @click="createProject">
           Create
         </b-btn>
       </span>
@@ -194,6 +217,8 @@
 </template>
 
 <script>
+import capitalize from 'capitalize'
+import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config.js'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
@@ -214,6 +239,7 @@ export default {
       localConfig: localConfig,
       selectedCollection: {},
       selectedVolume: {},
+      selectedTemplate: {},
       collectionTableFields: {
         name: {
           label: 'Name'
@@ -230,8 +256,7 @@ export default {
           sortable: true
         },
         action: {
-          label: 'Action',
-          sortable: true
+          label: 'Action'
         }
       },
       templateTableFields: {
@@ -239,9 +264,18 @@ export default {
           label: 'Name',
           sortable: true
         },
+        mode: {
+          label: 'Mode',
+          sortable: true,
+          class: 'text-center'
+        },
+        tag: {
+          label: 'Tag',
+          sortable: true,
+          class: 'text-center'
+        },
         action: {
-          label: 'Action',
-          sortable: true
+          label: 'Action'
         }
       }
     }
@@ -253,6 +287,16 @@ export default {
     InfiniteLoadingTable
   },
 
+  computed: {
+    selectionsComplete () {
+      return (
+        !isEmpty(this.selectedCollection) &&
+        !isEmpty(this.selectedTemplate) &&
+        !isEmpty(this.selectedVolume)
+      )
+    }
+  },
+
   methods: {
     /**
      * Handle success.
@@ -260,14 +304,12 @@ export default {
      *   The response data.
      */
     onSuccess (data) {
-      const category = data.categories.filter(category => {
-        return category.name === data.form.name
-      })[0]
-      this.$router.push({
-        name: 'admin-collection-short_name-settings',
-        params: {
-          short_name: category.short_name
-        }
+      this.tabIndex = 0
+      this.$swal({
+        title: 'Success',
+        text: `Your project is now being generated, you will recieve an email
+          when it's complete.`,
+        type: 'success'
       })
     },
 
@@ -279,7 +321,6 @@ export default {
     selectCollection (collection) {
       this.selectedCollection = collection
       this.tabIndex++
-      console.log(this.tabIndex)
     },
 
     /**
@@ -288,9 +329,48 @@ export default {
      *   The volume.
      */
     selectVolume (volume) {
-      this.selectedColume = volume
+      this.selectedVolume = volume
       this.tabIndex++
-      console.log(this.tabIndex)
+    },
+
+    /**
+     * Handle selection of a template.
+     * @param {Object} template
+     *   The template.
+     */
+    selectTemplate (template) {
+      this.selectedTemplate = template
+      this.tabIndex++
+    },
+
+    /**
+     * Return the project templates.
+     */
+    projectTemplates () {
+      console.log(this.selectedCollection)
+      if (!this.selectedCollection) {
+        return []
+      }
+      return Object.values(this.selectedCollection.info.templates)
+    },
+
+    /**
+     * Create a project.
+     */
+    createProject () {
+      return this.$axios.$post('/libcrowds/projects/create', {
+        category_id: this.selectedCollection.id,
+        template: this.selectedTemplate,
+        volume: this.selectedVolume
+      }).then(data => {
+        this.$swal({
+          title: capitalize(data.status),
+          text: data.message,
+          type: data.status
+        })
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
     }
   },
 
