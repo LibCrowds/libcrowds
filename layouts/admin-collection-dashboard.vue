@@ -49,9 +49,9 @@ export default {
     collectionNavItems () {
       return [
         {
-          label: 'Settings',
+          label: 'Details',
           link: {
-            name: 'admin-collection-short_name-settings',
+            name: 'admin-collection-short_name-details',
             params: {
               short_name: this.collection.short_name
             }

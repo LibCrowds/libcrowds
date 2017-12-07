@@ -78,7 +78,7 @@ export default {
         return category.name === data.form.name
       })[0]
       this.$router.push({
-        name: 'admin-collection-short_name-settings',
+        name: 'admin-collection-short_name-details',
         params: {
           short_name: category.short_name
         }

@@ -145,9 +145,9 @@ export const routes = [
     name: 'admin-collection-short_name-terminology'
   },
   {
-    path: '/admin/collection/:short_name/settings',
+    path: '/admin/collection/:short_name/details',
     component: jest.fn(),
-    name: 'admin-collection-short_name-settings'
+    name: 'admin-collection-short_name-details'
   },
   {
     path: '/admin/project/:short_name/help',
@@ -155,9 +155,9 @@ export const routes = [
     name: 'admin-project-short_name-help'
   },
   {
-    path: '/admin/project/:short_name/settings',
+    path: '/admin/project/:short_name/details',
     component: jest.fn(),
-    name: 'admin-project-short_name-settings'
+    name: 'admin-project-short_name-details'
   },
   {
     path: '/admin/collection/:short_name/content',

@@ -21,7 +21,7 @@
           block
           size="sm"
           :to="{
-            name: 'admin-project-short_name-settings',
+            name: 'admin-project-short_name-details',
             params: {
               short_name: project.item.short_name
             }

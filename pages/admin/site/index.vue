@@ -112,7 +112,7 @@
                 contributed to
                 <nuxt-link
                   :to="{
-                    name: 'admin-project-short_name-settings',
+                    name: 'admin-project-short_name-details',
                     params: {
                       short_name: item.project_short_name
                     }
@@ -156,7 +156,7 @@
                 Tasks were added to
                 <nuxt-link
                   :to="{
-                    name: 'admin-project-short_name-settings',
+                    name: 'admin-project-short_name-details',
                     params: {
                       short_name: item.short_name
                     }
@@ -313,7 +313,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }
@@ -365,7 +365,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }
@@ -417,7 +417,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }

@@ -49,9 +49,9 @@ export default {
     projectNavItems () {
       return [
         {
-          label: 'Settings',
+          label: 'Details',
           link: {
-            name: 'admin-project-short_name-settings',
+            name: 'admin-project-short_name-details',
             params: {
               short_name: this.project.short_name
             }

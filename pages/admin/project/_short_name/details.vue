@@ -44,8 +44,8 @@ export default {
 
   data () {
     return {
-      title: 'Settings',
-      description: 'Configure the core settings for the project'
+      title: 'Details',
+      description: 'Configure the core details for the project'
     }
   },
 

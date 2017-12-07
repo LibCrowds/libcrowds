@@ -21,7 +21,7 @@
           size="sm"
           exact
           :to="{
-            name: 'admin-collection-short_name-settings',
+            name: 'admin-collection-short_name-details',
             params: {
               short_name: category.item.short_name
             }
