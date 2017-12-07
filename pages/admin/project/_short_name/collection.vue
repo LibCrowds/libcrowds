@@ -19,7 +19,6 @@
         <b-btn
           variant="success"
           size="sm"
-          block
           :disabled="collection.item.id == project.category_id"
           @click="setCollection(collection.item)">
           Select

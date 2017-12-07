@@ -18,7 +18,6 @@
       <template slot="action" scope="project">
         <b-btn
           variant="success"
-          block
           size="sm"
           :to="{
             name: 'admin-project-short_name-details',

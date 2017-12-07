@@ -21,7 +21,6 @@
         <b-btn
           variant="success"
           size="sm"
-          block
           :disabled="volume.item.name == project.info.volume"
           @click="setVolume(volume.item.name)">
           Select
