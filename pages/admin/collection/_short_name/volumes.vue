@@ -105,7 +105,7 @@ export default {
      */
     deleteAllVolumes (data) {
       let infoClone = Object.assign({}, this.collection.info)
-      infoClone.volumes = []
+      infoClone.volumes = {}
       this.$swal({
         title: 'Delete Volumes',
         text: 'Are you sure you want to delete the current list of volumes?',
@@ -198,6 +198,7 @@ export default {
         return
       }
 
+      infoClone.volumes = {}
       for (let vol of newVolumes) {
         infoClone.volumes[shorthash.unique(vol.source)] = vol
       }
