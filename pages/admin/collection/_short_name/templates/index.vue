@@ -141,6 +141,10 @@ export default {
     refresh () {
       this.$refs.table.refresh()
     }
+  },
+
+  mounted () {
+    console.log(this.collection.info)
   }
 }
 </script>
