@@ -1,5 +1,15 @@
 <template>
   <card-base :title="title" :description="description">
+    <div slot="controls">
+      <b-btn
+        v-if="!project.published"
+        variant="success"
+        class="float-right"
+        size="sm"
+        @click="publish">
+        Publish
+      </b-btn>
+    </div>
 
     <pybossa-form
       submit-text="Update"
@@ -104,6 +114,12 @@ export default {
     CardBase
   },
 
+  computed: {
+    project () {
+      return this.$store.state.currentProject
+    }
+  },
+
   methods: {
     /**
      * Update model boolean.
@@ -114,6 +130,34 @@ export default {
      */
     updateModelBoolean (key, evt) {
       this.model[key] = evt.value
+    },
+
+    /**
+     * Publish the project.
+     */
+    publish () {
+      this.$swal({
+        title: `Publishing the project`,
+        html: `
+          Once published, the project will appear publically and volunteers
+          will be able to contribute. Projects cannot be unpublished, so you
+          should make sure that you're happy with everything before continuing.
+          <br><br>
+          Are you sure you want to publish this project?`,
+        type: 'question',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const endpoint = `/project/${this.project.short_name}/publish`
+          return this.$axios.$post(endpoint)
+        }
+      }).then(result => {
+        if (result) {
+          this.flash(result)
+          this.project.published = true
+        }
+      })
     }
   }
 }
