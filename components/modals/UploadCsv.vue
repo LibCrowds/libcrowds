@@ -61,7 +61,9 @@ export default {
         const csv = Papa.parse(evt.target.result)
         this.$emit('submit', csv.data)
       }
-      reader.readAsText(this.form.model.file)
+      if (this.form.model.file) {
+        reader.readAsText(this.form.model.file)
+      }
     }
   }
 }
