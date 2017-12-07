@@ -129,7 +129,7 @@ export default {
      *   The event.
      */
     updateModelBoolean (key, evt) {
-      this.model[key] = evt.value
+      this.form.model[key] = evt.value
     },
 
     /**
