@@ -3,9 +3,6 @@
     <b-tabs small card v-model="tabIndex">
       <b-tab title="Introduction">
         <b-card-body>
-          <p class="lead">
-            How to create a project
-          </p>
           <p>
             The following pages contain a series of options for generating a
             new project from a template.
@@ -48,14 +45,14 @@
         <infinite-loading-table
           v-if="tabIndex === 1"
           no-border
-          :fields="collectionTableFields"
+          :fields="tableFields"
           domain-object="category">
           <template slot="action" scope="collection">
             <b-btn
               variant="success"
               size="sm"
-              @click="selectCollection(collection.item)"
-              :disabled="selectedCollection.id == collection.item.id">
+              @click="selectItem('collection', collection.item)"
+              :disabled="selected['collection'].id == collection.item.id">
               Select
             </b-btn>
           </template>
@@ -69,35 +66,32 @@
           </p>
           <p>
             If you can't find a suitable template for the type of project
-            that you want to create, click the
-            <strong>Update Templates</strong> button at the top of this
-            page.
+            that you want to create please get in touch by clicking the email
+            button at the bottom of this page.
           </p>
         </b-card-body>
         <b-table
-          v-if="selectedCollection.id"
+          v-if="selected['collection'].id"
           responsive
           striped
           hover
           show-empty
           class="border-left-0 border-right-0 border-bottom-0"
-          :items="projectTemplates"
-          :fields="templateTableFields">
-          <template slot="action" scope="template">
+          :items="availableCollectionItems('templates')"
+          :fields="tableFields">
+          <template slot="actions" scope="template">
             <b-btn
               variant="success"
               size="sm"
-              :disabled="selectedTemplate.name == template.item.name"
-              @click="selectTemplate(template.item)">
+              :disabled="selected['template'].name == template.item.name"
+              @click="selectItem('template', template.item)">
               Select
             </b-btn>
           </template>
         </b-table>
         <b-card-body class="pt-0" v-else>
-          <b-alert
-            show
-            variant="primary">
-              To see the available templates start by choosing a collection.
+          <b-alert show variant="primary">
+            Choose a collection to see the available templates.
           </b-alert>
         </b-card-body>
       </b-tab>
@@ -109,34 +103,32 @@
           </p>
           <p>
             If the volume that you want to create your project from is not
-            listed click the <strong>Update Volumes</strong> button at the top
-            of this page.
+            listed please get in touch by clicking the email button at the
+            bottom of this page.
           </p>
         </b-card-body>
         <b-table
-          v-if="selectedCollection.id"
+          v-if="selected['collection'].id"
           responsive
           striped
           hover
           show-empty
           class="border-left-0 border-right-0 border-bottom-0"
-          :items="selectedCollection.info.volumes"
-          :fields="volumeTableFields">
-          <template slot="action" scope="volume">
+          :items="availableCollectionItems('volumes')"
+          :fields="tableFields">
+          <template slot="actions" scope="volume">
             <b-btn
               variant="success"
               size="sm"
-              :disabled="selectedVolume.name == volume.item.name"
-              @click="selectVolume(volume.item)">
+              :disabled="selected['volume'].source == volume.item.source"
+              @click="selectItem('volume', volume.item)">
               Select
             </b-btn>
           </template>
         </b-table>
         <b-card-body class="pt-0" v-else>
-          <b-alert
-            show
-            variant="primary">
-              To see the available volumes start by choosing a collection.
+          <b-alert show variant="primary">
+            Choose a collection to see the available volumes.
           </b-alert>
         </b-card-body>
       </b-tab>
@@ -146,23 +138,20 @@
           <ul class="list-unstyled" v-if="selectionsComplete">
             <li>
               <strong>Collection:</strong>
-              {{ selectedCollection.name }}
-            </li>
-            <li>
-              <strong>Volume:</strong>
-              {{ selectedVolume.name }}
+              {{ selected['collection'].name }}
             </li>
             <li>
               <strong>Template:</strong>
-              {{ selectedTemplate.name }}
+              {{ selected['template'].name }}
+            </li>
+            <li>
+              <strong>Volume:</strong>
+              {{ selected['volume'].name }}
             </li>
           </ul>
-          <b-alert
-            v-else
-            show
-            variant="primary">
-              To confirm project creation select a collection, volume and
-              template.
+          <b-alert v-else show variant="primary">
+            To confirm project creation select a collection, volume and
+            template.
           </b-alert>
         </b-card-body>
       </b-tab>
@@ -218,45 +207,19 @@ export default {
       description: 'Create a new project',
       tabIndex: 0,
       localConfig: localConfig,
-      selectedCollection: {},
-      selectedVolume: {},
-      selectedTemplate: {},
-      collectionTableFields: {
-        name: {
-          label: 'Name'
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        }
+      selected: {
+        'collection': {},
+        'template': {},
+        'volume': {}
       },
-      volumeTableFields: {
+      tableFields: {
         name: {
           label: 'Name',
           sortable: true
         },
-        action: {
-          label: 'Action'
-        }
-      },
-      templateTableFields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        mode: {
-          label: 'Mode',
-          sortable: true,
+        actions: {
+          label: 'Actions',
           class: 'text-center'
-        },
-        tag: {
-          label: 'Tag',
-          sortable: true,
-          class: 'text-center'
-        },
-        action: {
-          label: 'Action'
         }
       }
     }
@@ -270,11 +233,9 @@ export default {
 
   computed: {
     selectionsComplete () {
-      return (
-        !isEmpty(this.selectedCollection) &&
-        !isEmpty(this.selectedTemplate) &&
-        !isEmpty(this.selectedVolume)
-      )
+      return Object.keys(this.selected).every(key => {
+        return !isEmpty(this.selected[key])
+      })
     }
   },
 
@@ -295,56 +256,35 @@ export default {
     },
 
     /**
-     * Handle selection of a collection.
-     * @param {Object} collection
-     *   The collection.
+     * Handle selection of an item.
+     * @param {String} key
+     *   The item key.
+     * @param {Object} item
+     *   The item.
      */
-    selectCollection (collection) {
-      this.selectedCollection = collection
+    selectItem (key, item) {
+      this.selected[key] = item
       this.tabIndex++
     },
 
     /**
-     * Handle selection of a volume.
-     * @param {Object} volume
-     *   The volume.
+     * List the available templates or volumes.
+     * @param {String} key
+     *   The item key.
      */
-    selectVolume (volume) {
-      this.selectedVolume = volume
-      this.tabIndex++
-    },
-
-    /**
-     * Handle selection of a template.
-     * @param {Object} template
-     *   The template.
-     */
-    selectTemplate (template) {
-      this.selectedTemplate = template
-      this.tabIndex++
-    },
-
-    /**
-     * Return the project templates.
-     */
-    projectTemplates () {
-      console.log(this.selectedCollection)
-      if (!this.selectedCollection) {
-        return []
-      }
-      return Object.values(this.selectedCollection.info.templates)
+    availableCollectionItems (key) {
+      console.log(this.selected['collection'])
+      return isEmpty(this.selected['collection'])
+        ? []
+        : Object.values(this.selected['collection'].info[key])
     },
 
     /**
      * Create a project.
      */
     createProject () {
-      return this.$axios.$post('/libcrowds/projects/create', {
-        category_id: this.selectedCollection.id,
-        template: this.selectedTemplate,
-        volume: this.selectedVolume,
-        presenter: this.selectedCollection.presenter
-      }).then(data => {
+      const endpoint = '/libcrowds/projects/create'
+      return this.$axios.$post(endpoint, this.selected).then(data => {
         this.$swal({
           title: capitalize(data.status),
           text: data.message,
