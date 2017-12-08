@@ -273,8 +273,8 @@ export default {
      *   The item key.
      */
     availableCollectionItems (key) {
-      console.log(this.selected['collection'])
-      return isEmpty(this.selected['collection'])
+      const collection = this.selected['collection']
+      return isEmpty(collection) || !collection.info[key]
         ? []
         : Object.values(this.selected['collection'].info[key])
     },
