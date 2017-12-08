@@ -1,6 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body v-if="collection.nProjects.length">
+    <b-card-body v-if="collection.nProjects === 0">
       <b-alert show variant="danger">
         <strong>Danger:</strong> Deleting a collection microsite is final,
         there is no undo!
@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { deleteDomainObject } from '@/mixins/deleteDomainObject'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
@@ -35,7 +34,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, deleteDomainObject, metaTags ],
+  mixins: [ deleteDomainObject, metaTags ],
 
   data () {
     return {
@@ -44,21 +43,23 @@ export default {
     }
   },
 
-  // Fetch the category and check if it has any projects
   fetch ({ params, app, error, store }) {
+    // Fetch the category and check if it has any projects
     let category = null
     return app.$axios.$get('/api/category', {
       params: {
+        all: 1,
         short_name: params.short_name
       }
     }).then(categoriesData => {
       if (!categoriesData || categoriesData.length !== 1) {
-        error(new Error({ statusCode: 404 }))
+        error({ statusCode: 404 })
         return
       }
       category = categoriesData[0]
       return app.$axios.$get('/api/project', {
         params: {
+          all: 1,
           category_id: category.id
         }
       })

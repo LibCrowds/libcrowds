@@ -110,6 +110,15 @@ export default {
               short_name: this.project.short_name
             }
           }
+        },
+        {
+          label: 'Delete',
+          link: {
+            name: 'admin-project-short_name-delete',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
         }
       ]
     },
