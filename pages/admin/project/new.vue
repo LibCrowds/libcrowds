@@ -234,7 +234,7 @@
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="!canCreate"
+          :disabled="!canCreate || processing"
           @click="createProject">
           Create
         </b-btn>
@@ -283,7 +283,8 @@ export default {
         }
       },
       existingProjectDetails: {},
-      shortnameValid: false
+      shortnameValid: false,
+      processing: false
     }
   },
 
@@ -339,8 +340,11 @@ export default {
      * Create a project.
      */
     createProject () {
+      this.notifyInfo({ message: 'Generating project, please wait...' })
+      this.processing = true
       const endpoint = '/libcrowds/projects/create'
       return this.$axios.$post(endpoint, this.selected).then(data => {
+        this.processing = false
         this.$swal({
           title: capitalize(data.status),
           text: data.flash,
