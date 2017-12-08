@@ -69,7 +69,7 @@ export default {
   },
 
   beforeMount () {
-    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', null)
+    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', {})
   }
 }
 </script>

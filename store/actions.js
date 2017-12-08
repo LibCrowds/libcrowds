@@ -1,3 +1,4 @@
+import isEmpty from 'lodash/isEmpty'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
 export default {
@@ -47,7 +48,7 @@ export default {
   },
 
   UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
-    if (collection) {
+    if (collection && !isEmpty(collection)) {
       setCollectionDefaults(collection)
     }
     commit('SET_ITEM', {
