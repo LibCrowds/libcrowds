@@ -342,7 +342,7 @@ export default {
       const endpoint = '/libcrowds/projects/check-shortname'
       this.shortnameValid = false
       if (this.selectionsComplete) {
-        this.$axios.$get(endpoint, this.selected).then(data => {
+        this.$axios.$post(endpoint, this.selected).then(data => {
           this.shortnameValid = data.project_exists
         })
       }
