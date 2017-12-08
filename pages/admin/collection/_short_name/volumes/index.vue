@@ -1,26 +1,26 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      slot="controls"
-      variant="warning"
-      class="float-right ml-1"
-      size="sm"
-      @click="deleteAllVolumes">
-      Delete All
-    </b-btn>
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right"
-      size="sm"
-      :to="{
-        name: 'admin-collection-short_name-volumes-new',
-        params: {
-          short_name: this.collection.short_name
-        }
-      }">
-      Upload CSV
-    </b-btn>
+    <div class="float-md-right" slot="controls">
+      <b-btn
+        variant="warning"
+        class="mr-1 my-1"
+        size="sm"
+        @click="deleteAllVolumes">
+        Delete All
+      </b-btn>
+      <b-btn
+        variant="success"
+        class="my-1"
+        size="sm"
+        :to="{
+          name: 'admin-collection-short_name-volumes-new',
+          params: {
+            short_name: this.collection.short_name
+          }
+        }">
+        Upload CSV
+      </b-btn>
+    </div>
 
     <b-table
       responsive

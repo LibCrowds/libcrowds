@@ -3,7 +3,7 @@
     <b-btn
       slot="controls"
       variant="success"
-      class="float-right"
+      class="float-md-right"
       size="sm"
       :to="{
         name: 'admin-collection-new'

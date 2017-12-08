@@ -3,7 +3,7 @@
     <card-base :title="title" :description="description">
       <b-btn
         slot="controls"
-        class="float-right"
+        class="float-md-right"
         size="sm"
         variant="success"
         v-b-modal="addTagModalId">

@@ -21,7 +21,7 @@
       <b-btn
         slot="controls"
         variant="success"
-        class="float-right"
+        class="float-md-right"
         size="sm"
         v-b-modal="addFormFieldModalId">
         Add field

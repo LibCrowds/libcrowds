@@ -1,21 +1,22 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right ml-1"
-      size="sm"
-      @click="testCelebration(form.model.info.celebrations.user)">
-      Test user
-    </b-btn>
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right"
-      size="sm"
-      @click="testCelebration(form.model.info.celebrations.project)">
-      Test project
-    </b-btn>
+    <div class="float-md-right" slot="controls">
+      <b-btn
+        variant="success"
+        class="mr-1 my-1"
+        size="sm"
+        @click="testCelebration(form.model.info.celebrations.user)">
+        Test user
+      </b-btn>
+      <b-btn
+        slot="controls"
+        variant="success"
+        class="my-1"
+        size="sm"
+        @click="testCelebration(form.model.info.celebrations.project)">
+        Test project
+      </b-btn>
+    </div>
 
     <pybossa-form
       submit-text="Update"

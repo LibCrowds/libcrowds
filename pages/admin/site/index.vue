@@ -1,11 +1,10 @@
 <template>
   <div id="admin-dashboard">
-
     <card-base :title="title" :description="description" class="mb-3">
       <b-btn
         size="sm"
         variant="success"
-        class="float-right"
+        class="float-md-right"
         slot="controls"
         @click="refresh">
         Refresh
@@ -273,7 +272,7 @@
       <chart-legend
         :items="[ 'Anonymous', 'Authenticated' ]"
         slot="controls"
-        class="float-right">
+        class="float-md-right">
       </chart-legend>
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart

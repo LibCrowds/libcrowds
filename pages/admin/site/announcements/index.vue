@@ -3,7 +3,7 @@
     <b-btn
       variant="success"
       size="sm"
-      class="float-right"
+      class="float-md-right"
       slot="controls"
       :to="{
         name: 'admin-site-announcements-new'

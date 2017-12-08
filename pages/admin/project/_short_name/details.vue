@@ -1,15 +1,14 @@
 <template>
   <card-base :title="title" :description="description">
-    <div slot="controls">
-      <b-btn
-        v-if="!project.published"
-        variant="success"
-        class="float-right"
-        size="sm"
-        @click="publish">
-        Publish
-      </b-btn>
-    </div>
+    <b-btn
+      v-if="!project.published"
+      slot="controls"
+      variant="success"
+      class="float-md-right"
+      size="sm"
+      @click="publish">
+      Publish
+    </b-btn>
 
     <pybossa-form
       submit-text="Update"

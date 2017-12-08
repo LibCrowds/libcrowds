@@ -1,9 +1,9 @@
 <template>
   <card-base :title="title" :description="description">
-    <div slot="controls" class="float-right">
+    <div slot="controls" class="float-md-right">
       <b-btn
         variant="success"
-        class="mr-1"
+        class="mr-1 my-1"
         size="sm"
         @click="analyseEmpty">
         Analyse Empty
@@ -11,6 +11,7 @@
       <b-btn
         variant="success"
         size="sm"
+        class="my-1"
         @click="analyseAll">
         Analyse All
       </b-btn>

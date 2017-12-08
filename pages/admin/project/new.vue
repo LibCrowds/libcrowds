@@ -345,9 +345,19 @@ export default {
       const endpoint = '/libcrowds/projects/create'
       return this.$axios.$post(endpoint, this.selected).then(data => {
         this.processing = false
+        const link = this.$router.resolve({
+          name: 'admin-project-short_name-thumbnail',
+          params: {
+            short_name: data.short_name
+          }
+        })
+        let text = data.flash
+        if (data.status === 'success') {
+          text += `<br><br><a href="${link}">Click here to add a thumbnail</a>`
+        }
         this.$swal({
           title: capitalize(data.status),
-          text: data.flash,
+          html: text,
           type: data.status
         })
       }).catch(err => {
