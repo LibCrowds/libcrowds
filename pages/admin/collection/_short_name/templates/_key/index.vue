@@ -43,7 +43,7 @@ export default {
         data.length !== 1 ||
         !data[0].info.templates.hasOwnProperty(params.key)
       ) {
-        error(new Error({ statusCode: 404 }))
+        error({ statusCode: 404 })
         return
       }
       return {
