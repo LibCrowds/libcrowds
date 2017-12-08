@@ -165,7 +165,7 @@
 
       <b-tab title="Confirm">
         <b-card-body>
-          <ul class="list-unstyled" v-if="selectionsComplete">
+          <ul class="list-unstyled" v-if="canCreate">
             <li class="mb-1">
               <strong>Collection:</strong>
               {{ selected['collection'].name }}
@@ -187,8 +187,13 @@
               </project-tags-list>
             </li>
           </ul>
-          <b-alert v-else show variant="primary">
+          <b-alert v-else-if="selectionsComplete" show variant="primary">
             To confirm project creation select a collection, volume and
+            template.
+          </b-alert>
+          <b-alert v-else show variant="primary">
+            A similar project already exists, which usually means that a
+            project has previously been generated from the same volume and
             template.
           </b-alert>
         </b-card-body>
@@ -214,7 +219,7 @@
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="!selectionsComplete"
+          :disabled="!canCreate"
           @click="createProject">
           Create
         </b-btn>
@@ -261,7 +266,8 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      shortnameValid: false
     }
   },
 
@@ -280,25 +286,14 @@ export default {
         }
         return !isEmpty(this.selected[key])
       })
+    },
+
+    canCreate () {
+      return this.selectionsComplete && this.shortnameValid
     }
   },
 
   methods: {
-    /**
-     * Handle success.
-     * @param {Object} data
-     *   The response data.
-     */
-    onSuccess (data) {
-      this.tabIndex = 0
-      this.$swal({
-        title: 'Success',
-        text: `Your project is now being generated, you will recieve an email
-          when it's complete.`,
-        type: 'success'
-      })
-    },
-
     /**
      * Handle selection of an item.
      * @param {String} key
@@ -309,6 +304,7 @@ export default {
     selectItem (key, item) {
       this.selected[key] = item
       this.tabIndex++
+      this.checkShortname()
     },
 
     /**
@@ -318,7 +314,6 @@ export default {
      */
     availableCollectionItems (key) {
       const collection = this.selected['collection']
-      console.log(collection)
       return isEmpty(collection) || !collection.info[key]
         ? []
         : Object.values(this.selected['collection'].info[key])
@@ -338,6 +333,19 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Check a project with this template and volume hasn't been created.
+     */
+    checkShortname () {
+      const endpoint = '/libcrowds/projects/check-shortname'
+      this.shortnameValid = false
+      if (this.selectionsComplete) {
+        this.$axios.$get(endpoint, this.selected).then(data => {
+          this.shortnameValid = data.project_exists
+        })
+      }
     }
   },
 
