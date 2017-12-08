@@ -332,7 +332,7 @@ export default {
       return this.$axios.$post(endpoint, this.selected).then(data => {
         this.$swal({
           title: capitalize(data.status),
-          text: data.message,
+          text: data.flash,
           type: data.status
         })
       }).catch(err => {
