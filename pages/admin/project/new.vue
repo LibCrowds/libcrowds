@@ -147,7 +147,7 @@
           <div
             v-for="(value, tag) in selected['collection'].info.tags"
             :key="tag"
-            class="mb-2">
+            zclass="mb-2">
             <label>{{ tag | capitalize }}</label>
             <multiselect
               placeholder="Select one"
@@ -187,14 +187,29 @@
               </project-tags-list>
             </li>
           </ul>
-          <b-alert v-else-if="selectionsComplete" show variant="primary">
+          <b-alert v-else-if="!selectionsComplete" show variant="primary">
             To confirm project creation select a collection, volume and
             template.
           </b-alert>
           <b-alert v-else show variant="primary">
-            A similar project already exists, which usually means that a
-            project has previously been generated from the same volume and
-            template.
+            <p>
+              A similar project was detected, which usually means that a
+              project has previously been generated from the same volume and
+              template.
+            </p>
+            <p>
+              Please check the project linked to below and either delete it,
+              update it's short name, or generate your new project from a
+              different volume or template (recommended).
+            </p>
+            <nuxt-link :to="{
+              name: 'admin-project-short_name-details',
+              params: {
+                short_name: existingProjectDetails.short_name
+              }
+            }">
+            {{ existingProjectDetails.name }}
+            </nuxt-link>
           </b-alert>
         </b-card-body>
       </b-tab>
@@ -267,6 +282,7 @@ export default {
           class: 'text-center'
         }
       },
+      existingProjectDetails: {},
       shortnameValid: false
     }
   },
@@ -341,9 +357,17 @@ export default {
     checkShortname () {
       const endpoint = '/libcrowds/projects/check-shortname'
       this.shortnameValid = false
+      this.existingProjectDetails = {}
       if (this.selectionsComplete) {
         this.$axios.$post(endpoint, this.selected).then(data => {
-          this.shortnameValid = data.project_exists
+          if (data.status !== 'error') {
+            this.shortnameValid = true
+          } else {
+            this.existingProjectDetails = {
+              name: data.name,
+              short_name: data.short_name
+            }
+          }
         })
       }
     }
