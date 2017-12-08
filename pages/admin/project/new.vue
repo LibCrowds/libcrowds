@@ -133,20 +133,58 @@
         </b-card-body>
       </b-tab>
 
+      <b-tab title="Tags">
+        <b-card-body>
+          <p class="lead">
+            Choose the project tags
+          </p>
+          <p>
+            If the tags that you want to add aren't listed please get in touch
+            by clicking the email button at the bottom of this page.
+          </p>
+        </b-card-body>
+        <b-card-body v-if="selected['collection'].id" class="pt-0">
+          <div
+            v-for="(value, tag) in selected['collection'].info.tags"
+            :key="tag"
+            class="mb-2">
+            <label>{{ tag | capitalize }}</label>
+            <multiselect
+              placeholder="Select one"
+              v-model="selected['tags'][tag]"
+              :options="value.options">
+            </multiselect>
+          </div>
+        </b-card-body>
+        <b-card-body class="pt-0" v-else>
+          <b-alert show variant="primary">
+            Choose a collection to see the available tags.
+          </b-alert>
+        </b-card-body>
+      </b-tab>
+
       <b-tab title="Confirm">
         <b-card-body>
           <ul class="list-unstyled" v-if="selectionsComplete">
-            <li>
+            <li class="mb-1">
               <strong>Collection:</strong>
               {{ selected['collection'].name }}
             </li>
-            <li>
+            <li class="mb-1">
               <strong>Template:</strong>
               {{ selected['template'].name }}
             </li>
-            <li>
+            <li class="mb-1">
               <strong>Volume:</strong>
               {{ selected['volume'].name }}
+            </li>
+            <li class="d-inline-flex mb-1">
+              <strong class="mr-1">Tags:</strong>
+              <project-tags-list
+                disabled
+                :tags="selected['tags']"
+                :collection="selected['collection']">
+              </project-tags-list>
             </li>
           </ul>
           <b-alert v-else show variant="primary">
@@ -169,14 +207,14 @@
         </b-btn>
         <b-btn
           variant="dark"
-          :disabled="tabIndex >= 3"
+          :disabled="tabIndex >= 5"
           class="mr-1"
           @click="tabIndex++">
           Next
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="tabIndex !== 4"
+          :disabled="!selectionsComplete"
           @click="createProject">
           Create
         </b-btn>
@@ -195,6 +233,7 @@ import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -210,7 +249,8 @@ export default {
       selected: {
         'collection': {},
         'template': {},
-        'volume': {}
+        'volume': {},
+        'tags': {}
       },
       tableFields: {
         name: {
@@ -228,12 +268,16 @@ export default {
   components: {
     PybossaForm,
     CardBase,
-    InfiniteLoadingTable
+    InfiniteLoadingTable,
+    ProjectTagsList
   },
 
   computed: {
     selectionsComplete () {
       return Object.keys(this.selected).every(key => {
+        if (key === 'tags') {
+          return true
+        }
         return !isEmpty(this.selected[key])
       })
     }
@@ -274,6 +318,7 @@ export default {
      */
     availableCollectionItems (key) {
       const collection = this.selected['collection']
+      console.log(collection)
       return isEmpty(collection) || !collection.info[key]
         ? []
         : Object.values(this.selected['collection'].info[key])

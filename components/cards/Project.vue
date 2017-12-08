@@ -56,7 +56,7 @@
       </p>
       <div class="mb-0 px-2 pt-1">
         <project-tags-list
-          :project="project"
+          :tags="project.info.tags"
           :collection="collection"
           @tag-click="onTagClick">
         </project-tags-list>
