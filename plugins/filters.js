@@ -12,3 +12,7 @@ Vue.filter('intComma', (n) => {
   }
   return 0
 })
+
+Vue.filter('truncate', (str, n = 30) => {
+  return `${str.slice(0, n)}...`
+})

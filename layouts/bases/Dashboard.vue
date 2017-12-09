@@ -16,7 +16,7 @@
           slot="left"
           class="d-none d-lg-block ml-2"
           v-if="titleBase">
-          {{ titleBase }}
+          {{ titleBase | truncate(50) }}
         </div>
         <a
           slot="right"
