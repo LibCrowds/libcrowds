@@ -545,14 +545,7 @@ export default {
     },
 
     groupedFeed () {
-      // Convert epoch timestamp to ISO string
-      const feed = this.updateFeed.map(item => {
-        const d = new Date(0)
-        d.setUTCSeconds(item.updated)
-        item.updated = d.toISOString()
-        return item
-      })
-      return groupBy(feed, item => item.action_updated)
+      return groupBy(this.updateFeed, item => item.action_updated)
     }
   },
 
