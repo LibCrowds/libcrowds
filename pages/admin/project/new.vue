@@ -285,7 +285,8 @@ export default {
         }
       },
       existingProjectDetails: {},
-      shortnameValid: false
+      shortnameValid: false,
+      generating: false
     }
   },
 
@@ -307,7 +308,7 @@ export default {
     },
 
     canCreate () {
-      return this.selectionsComplete && this.shortnameValid
+      return this.selectionsComplete && this.shortnameValid && !this.generating
     }
   },
 
@@ -351,10 +352,11 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          this.canCreate = false
+          this.generating = true
           return this.$axios.$post('/libcrowds/projects/create', this.selected)
         }
       }).then(data => {
+        this.generating = false
         const route = this.$router.resolve({
           name: 'admin-project-short_name-thumbnail',
           params: {
