@@ -50,7 +50,7 @@
         <card-base
           title="Projects"
           description="Choose a project"
-          class="d-lg-none">
+          class="d-xl-none">
           <b-form-input
             slot="controls"
             v-model="filter"
@@ -59,6 +59,7 @@
             :placeholder="`Type to search by ${filterBy}`">
           </b-form-input>
           <projects-table
+            v-if="showProjectsTable"
             no-border
             :filter="filter"
             :filter-by="filterBy"
@@ -74,7 +75,7 @@
 
         <transition-group
           tag="ul"
-          class="list-unstyled d-none d-lg-block"
+          class="list-unstyled d-none d-xl-block"
           name="fade-up">
           <li v-for="project in filteredProjects" :key="project.id">
             <project-card
@@ -162,7 +163,8 @@ export default {
       sortModel: {
         orderby: 'overall_progress',
         desc: true
-      }
+      },
+      showProjectsTable: false
     }
   },
 
@@ -250,12 +252,27 @@ export default {
      */
     reset () {
       this.$refs.infiniteload.reset(500)
+    },
+
+    /**
+     * Remove the table on large screens.
+     */
+    setTableVisiblity () {
+      this.showProjectsTable = window.innerWidth < 1200
     }
   },
 
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
+
+    // The table won't load while hidden so listen for window size
+    window.addEventListener('resize', this.setTableVisiblity)
+    this.setTableVisiblity()
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.setTableVisiblity)
   }
 }
 </script>
