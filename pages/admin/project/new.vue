@@ -147,7 +147,7 @@
           <div
             v-for="(value, tag) in selected['collection'].info.tags"
             :key="tag"
-            zclass="mb-2">
+            class="mb-2">
             <label>{{ tag | capitalize }}</label>
             <multiselect
               placeholder="Select one"
@@ -202,13 +202,15 @@
               update it's short name, or generate your new project from a
               different volume or template (recommended).
             </p>
-            <nuxt-link :to="{
-              name: 'admin-project-short_name-details',
-              params: {
-                short_name: existingProjectDetails.short_name
-              }
-            }">
-            {{ existingProjectDetails.name }}
+            <nuxt-link
+              v-if="existingProjectDetails.short_name"
+              :to="{
+                name: 'admin-project-short_name-details',
+                params: {
+                  short_name: existingProjectDetails.short_name
+                }
+              }">
+              {{ existingProjectDetails.name }}
             </nuxt-link>
           </b-alert>
         </b-card-body>
@@ -234,7 +236,7 @@
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="!canCreate || processing"
+          :disabled="!canCreate"
           @click="createProject">
           Create
         </b-btn>
@@ -283,8 +285,7 @@ export default {
         }
       },
       existingProjectDetails: {},
-      shortnameValid: false,
-      processing: false
+      shortnameValid: false
     }
   },
 
@@ -340,12 +341,21 @@ export default {
      * Create a project.
      */
     createProject () {
-      this.notifyInfo({ message: 'Generating project, please wait...' })
-      this.processing = true
-      const endpoint = '/libcrowds/projects/create'
-      return this.$axios.$post(endpoint, this.selected).then(data => {
-        this.processing = false
-        const link = this.$router.resolve({
+      this.$swal({
+        title: `Confirm`,
+        html: `You're about to create a project and publish it to
+          ${this.selected['collection'].name}.
+          <br><br>Click OK to continue.`,
+        type: 'question',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          this.canCreate = false
+          return this.$axios.$post('/libcrowds/projects/create', this.selected)
+        }
+      }).then(data => {
+        const route = this.$router.resolve({
           name: 'admin-project-short_name-thumbnail',
           params: {
             short_name: data.short_name
@@ -353,15 +363,15 @@ export default {
         })
         let text = data.flash
         if (data.status === 'success') {
-          text += `<br><br><a href="${link}">Click here to add a thumbnail</a>`
+          text += `<br><br><a href="${route.href}">
+            Click here to add a thumbnail
+          </a>`
         }
         this.$swal({
           title: capitalize(data.status),
           html: text,
           type: data.status
         })
-      }).catch(err => {
-        this.$nuxt.error(err)
       })
     },
 
