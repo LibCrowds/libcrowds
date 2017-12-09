@@ -29,44 +29,24 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
       <li data-index="1"
           class="nav-item"
       >
-        <a href="#/admin/project/some_project/settings"
+        <a href="#/admin/project/new"
            target="_self"
            class="nav-link"
         >
-          Settings
+          New Project
         </a>
       </li>
       <li data-index="2"
           class="nav-item"
       >
-        <a href="#/admin/project/some_project/tags"
+        <a href="#/admin/project/some_project/details"
            target="_self"
            class="nav-link"
         >
-          Tags
+          Details
         </a>
       </li>
       <li data-index="3"
-          class="nav-item"
-      >
-        <a href="#/admin/project/some_project/collection"
-           target="_self"
-           class="nav-link"
-        >
-          Collection
-        </a>
-      </li>
-      <li data-index="4"
-          class="nav-item"
-      >
-        <a href="#/admin/project/some_project/volume"
-           target="_self"
-           class="nav-link"
-        >
-          Volume
-        </a>
-      </li>
-      <li data-index="5"
           class="nav-item"
       >
         <a href="#/admin/project/some_project/thumbnail"
@@ -76,7 +56,37 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
           Thumbnail
         </a>
       </li>
+      <li data-index="4"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/tags"
+           target="_self"
+           class="nav-link"
+        >
+          Tags
+        </a>
+      </li>
+      <li data-index="5"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/collection"
+           target="_self"
+           class="nav-link"
+        >
+          Collection
+        </a>
+      </li>
       <li data-index="6"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/volume"
+           target="_self"
+           class="nav-link"
+        >
+          Volume
+        </a>
+      </li>
+      <li data-index="7"
           class="nav-item"
       >
         <a href="#/admin/project/some_project/help"
@@ -86,7 +96,7 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
           Help
         </a>
       </li>
-      <li data-index="7"
+      <li data-index="8"
           class="nav-item"
       >
         <a href="#/admin/project/some_project/results"
@@ -94,6 +104,16 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
            class="nav-link"
         >
           Results
+        </a>
+      </li>
+      <li data-index="9"
+          class="nav-item"
+      >
+        <a href="#/admin/project/some_project/delete"
+           target="_self"
+           class="nav-link"
+        >
+          Delete
         </a>
       </li>
     </ul>
@@ -234,44 +254,24 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
         <li data-index="1"
             class="nav-item"
         >
-          <a href="#/admin/project/some_project/settings"
+          <a href="#/admin/project/new"
              target="_self"
              class="nav-link"
           >
-            Settings
+            New Project
           </a>
         </li>
         <li data-index="2"
             class="nav-item"
         >
-          <a href="#/admin/project/some_project/tags"
+          <a href="#/admin/project/some_project/details"
              target="_self"
              class="nav-link"
           >
-            Tags
+            Details
           </a>
         </li>
         <li data-index="3"
-            class="nav-item"
-        >
-          <a href="#/admin/project/some_project/collection"
-             target="_self"
-             class="nav-link"
-          >
-            Collection
-          </a>
-        </li>
-        <li data-index="4"
-            class="nav-item"
-        >
-          <a href="#/admin/project/some_project/volume"
-             target="_self"
-             class="nav-link"
-          >
-            Volume
-          </a>
-        </li>
-        <li data-index="5"
             class="nav-item"
         >
           <a href="#/admin/project/some_project/thumbnail"
@@ -281,7 +281,37 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
             Thumbnail
           </a>
         </li>
+        <li data-index="4"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/tags"
+             target="_self"
+             class="nav-link"
+          >
+            Tags
+          </a>
+        </li>
+        <li data-index="5"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/collection"
+             target="_self"
+             class="nav-link"
+          >
+            Collection
+          </a>
+        </li>
         <li data-index="6"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/volume"
+             target="_self"
+             class="nav-link"
+          >
+            Volume
+          </a>
+        </li>
+        <li data-index="7"
             class="nav-item"
         >
           <a href="#/admin/project/some_project/help"
@@ -291,7 +321,7 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
             Help
           </a>
         </li>
-        <li data-index="7"
+        <li data-index="8"
             class="nav-item"
         >
           <a href="#/admin/project/some_project/results"
@@ -299,6 +329,16 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
              class="nav-link"
           >
             Results
+          </a>
+        </li>
+        <li data-index="9"
+            class="nav-item"
+        >
+          <a href="#/admin/project/some_project/delete"
+             target="_self"
+             class="nav-link"
+          >
+            Delete
           </a>
         </li>
       </ul>
@@ -311,7 +351,33 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
             class="footer"
     >
       <div class="container-fluid">
-        <p class="my-2 mx-1 float-right">
+        <ul class="list-inline my-2 d-flex flex-row align-items-center">
+          <li class="list-inline-item mx-1">
+            <a href="https://twitter.com/mytwitterhandle"
+               class="text-muted"
+            >
+              <icon name="twitter">
+              </icon>
+            </a>
+          </li>
+          <li class="list-inline-item mx-1">
+            <a href="mailto:me@example.com"
+               class="text-muted"
+            >
+              <icon name="envelope">
+              </icon>
+            </a>
+          </li>
+          <li class="list-inline-item mx-1">
+            <a href="https://github.com/Organization/repo"
+               class="text-muted"
+            >
+              <icon name="github">
+              </icon>
+            </a>
+          </li>
+        </ul>
+        <p class="my-2 mx-1 float-right text-muted">
           &copy; My Company, 2017
         </p>
       </div>
