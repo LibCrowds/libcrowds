@@ -5,7 +5,7 @@
         <strong>Danger:</strong> Deleting a project is final, there is no undo!
       </b-alert>
     </b-card-body>
-    <b-card-body v-else>
+    <b-card-body v-else-if="!loading">
       <b-alert show variant="warning">
         You cannot delete this project as tasks have already been completed
         and final results generated.
@@ -40,7 +40,8 @@ export default {
     return {
       title: 'Delete',
       description: 'Permanently delete the project.',
-      canDelete: false
+      canDelete: false,
+      loading: true
     }
   },
 
@@ -77,6 +78,7 @@ export default {
       }
     }).then(data => {
       this.canDelete = data.length < 1
+      this.loading = false
     })
   }
 }
