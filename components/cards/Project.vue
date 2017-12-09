@@ -56,6 +56,7 @@
       </p>
       <div class="mb-0 px-2 pt-1">
         <project-tags-list
+          v-if="project.info.tags"
           :tags="project.info.tags"
           :collection="collection"
           @tag-click="onTagClick">
