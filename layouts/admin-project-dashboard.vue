@@ -2,6 +2,25 @@
   <dashboard-base
     :navItems="navItems"
     :titleBase="titleBase">
+
+    <b-alert
+      show
+      variant="secondary"
+      slot="message"
+      class="text-center"
+      v-if="notPublished">
+      This project is still in draft mode,
+      <nuxt-link
+        :to="{
+          name: 'admin-project-short_name-publish',
+          params: {
+            short_name: this.project.short_name
+          }
+          }">
+        click here to publish it.
+      </nuxt-link>
+    </b-alert>
+
   </dashboard-base>
 </template>
 
@@ -40,6 +59,10 @@ export default {
   computed: {
     project () {
       return this.$store.state.currentProject
+    },
+
+    notPublished () {
+      return !isEmpty(this.project) && !this.project.published
     },
 
     titleBase () {
@@ -126,6 +149,18 @@ export default {
     navItems () {
       if (isEmpty(this.project)) {
         return this.rootNavItems
+      } else if (this.notPublished) {
+        return this.rootNavItems.concat(this.projectNavItems, [
+          {
+            label: 'Publish',
+            link: {
+              name: 'admin-project-short_name-publish',
+              params: {
+                short_name: this.project.short_name
+              }
+            }
+          }
+        ])
       }
       return this.rootNavItems.concat(this.projectNavItems)
     }

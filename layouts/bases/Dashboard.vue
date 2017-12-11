@@ -28,6 +28,8 @@
         </a>
       </app-navbar>
 
+      <slot name="message"></slot>
+
       <dashboard-navbar
         position="top"
         :nav-items="navItems">

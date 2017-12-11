@@ -1,15 +1,5 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      v-if="!project.published"
-      slot="controls"
-      variant="success"
-      class="float-md-right"
-      size="sm"
-      @click="publish">
-      Publish
-    </b-btn>
-
     <pybossa-form
       submit-text="Update"
       :form="form">
@@ -43,14 +33,13 @@
 <script>
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, metaTags, notifications ],
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
@@ -64,7 +53,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         form: {
-          endpoint: `project/${params.short_name}/update`,
+          endpoint: endpoint,
           method: 'post',
           model: data.form,
           schema: {
@@ -130,38 +119,6 @@ export default {
      */
     updateModelBoolean (key, evt) {
       this.form.model[key] = evt.value
-    },
-
-    /**
-     * Publish the project.
-     */
-    publish () {
-      this.$swal({
-        title: `Publishing the project`,
-        html: `
-          Once published, the project will appear publically and volunteers
-          will be able to contribute. Projects cannot be unpublished, so you
-          should make sure that you're happy with everything before continuing.
-          <br><br>
-          Are you sure you want to publish this project?`,
-        type: 'question',
-        showCancelButton: true,
-        reverseButtons: true,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          const endpoint = `/project/${this.project.short_name}/publish`
-          return this.$axios.$get(endpoint).then(data => {
-            return this.$axios.$post(endpoint, {
-              csrf: data.csrf
-            })
-          })
-        }
-      }).then(result => {
-        if (result) {
-          this.flash(result)
-          this.project.published = true
-        }
-      })
     }
   }
 }
