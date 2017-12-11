@@ -32,7 +32,7 @@ import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
-  layout: 'admin-collection-dashboard',
+  layout: 'admin-project-dashboard',
 
   mixins: [ fetchProjectByName, deleteDomainObject, metaTags ],
 
