@@ -182,9 +182,11 @@
               <strong class="mr-1">Tags:</strong>
               <project-tags-list
                 disabled
+                v-if="Object.keys(selected['tags']).length"
                 :tags="selected['tags']"
                 :collection="selected['collection']">
               </project-tags-list>
+              <span v-else>None</span>
             </li>
           </ul>
           <b-alert v-else-if="!selectionsComplete" show variant="primary">
