@@ -56,13 +56,8 @@ export default {
           class: 'text-center d-none d-xl-table-cell',
           sortable: true
         },
-        category_id: {
-          label: 'Category ID',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
+        published: {
+          label: 'Published',
           class: 'text-center d-none d-lg-table-cell',
           sortable: true
         },
