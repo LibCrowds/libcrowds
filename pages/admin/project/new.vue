@@ -163,6 +163,39 @@
         </b-card-body>
       </b-tab>
 
+      <b-tab title="Parent">
+        <b-card-body>
+          <p class="lead">
+            Choose a parent project
+          </p>
+          <p>
+            Choose a parent project that should be used to generate the tasks
+            for the new project. For example, you may want to generate a
+            transcription project from a the results of a previous marking
+            project.
+          </p>
+        </b-card-body>
+        <projects-table
+          no-border
+          v-if="selected['collection'].id && tabIndex === 5"
+          :collection="selected['collection']">
+          <template slot="action" scope="project">
+            <b-btn
+              variant="success"
+              size="sm"
+              @click="selectItem('parent', project.item)"
+              :disabled="selected['parent'].id == project.item.id">
+              Select
+            </b-btn>
+          </template>
+        </projects-table>
+        <b-card-body class="pt-0" v-else>
+          <b-alert show variant="primary">
+            Choose a collection to see the available parent projects.
+          </b-alert>
+        </b-card-body>
+      </b-tab>
+
       <b-tab title="Confirm">
         <b-card-body>
           <ul class="list-unstyled" v-if="canCreate">
@@ -187,6 +220,10 @@
                 :collection="selected['collection']">
               </project-tags-list>
               <span v-else>None</span>
+            </li>
+            <li class="mb-1">
+              <strong>Parent:</strong>
+              {{ selected['parent'].name }}
             </li>
           </ul>
           <b-alert v-else-if="!selectionsComplete" show variant="primary">
@@ -231,7 +268,7 @@
         </b-btn>
         <b-btn
           variant="dark"
-          :disabled="tabIndex >= 5"
+          :disabled="tabIndex >= 6"
           class="mr-1"
           @click="tabIndex++">
           Next
@@ -257,6 +294,7 @@ import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import ProjectsTable from '@/components/tables/Projects'
 import ProjectTagsList from '@/components/lists/ProjectTags'
 
 export default {
@@ -274,7 +312,8 @@ export default {
         'collection': {},
         'template': {},
         'volume': {},
-        'tags': {}
+        'tags': {},
+        'parent': {}
       },
       tableFields: {
         name: {
@@ -296,6 +335,7 @@ export default {
     PybossaForm,
     CardBase,
     InfiniteLoadingTable,
+    ProjectsTable,
     ProjectTagsList
   },
 
