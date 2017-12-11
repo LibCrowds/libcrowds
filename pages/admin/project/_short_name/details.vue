@@ -43,13 +43,14 @@
 <script>
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
+import { notifications } from '@/mixins/notifications'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, metaTags ],
+  mixins: [ fetchProjectByName, metaTags, notifications ],
 
   data () {
     return {
@@ -149,7 +150,11 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           const endpoint = `/project/${this.project.short_name}/publish`
-          return this.$axios.$post(endpoint)
+          return this.$axios.$get(endpoint).then(data => {
+            return this.$axios.$post(endpoint, {
+              csrf: data.csrf
+            })
+          })
         }
       }).then(result => {
         if (result) {
