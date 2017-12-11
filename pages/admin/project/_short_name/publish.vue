@@ -1,6 +1,11 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body v-if="canPublish">
+    <b-card-body v-if="project && project.published">
+      <b-alert show variant="success">
+        This project is already published!
+      </b-alert>
+    </b-card-body>
+    <b-card-body v-else-if="canPublish">
       <p>
         Once a project is published it will appear publically and volunteers
         will be able to contribute.
@@ -36,6 +41,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
 import { notifications } from '@/mixins/notifications'
@@ -54,9 +60,8 @@ export default {
   },
 
   asyncData ({ params, app, error }) {
-    const endpoint = `/project/${params.short_name}/publish`
+    const endpoint = `/project/${params.short_name}`
     return app.$axios.$get(endpoint).then(data => {
-      console.log(data.n_tasks)
       return {
         nTasks: data.project.n_tasks
       }
@@ -71,7 +76,11 @@ export default {
     },
 
     canPublish () {
-      return this.nTasks > 0
+      return (
+        !isEmpty(this.project) &&
+        !this.project.published &&
+        this.nTasks > 0
+      )
     }
   },
 
@@ -102,7 +111,12 @@ export default {
       }).then(result => {
         if (result) {
           this.flash(result)
-          this.project.published = true
+          this.$router.push({
+            name: 'admin-project-short_name-details',
+            params: {
+              short_name: this.project.short_name
+            }
+          })
         }
       })
     }
