@@ -162,6 +162,13 @@ export default {
       app.$axios.$get('/stats'),
       app.$axios.$get('/leaderboard')
     ]).then(([statsData, leaderboardData, categoryData]) => {
+      if (typeof stats === 'undefined') {
+        return {
+          stats: {},
+          topUsers: [],
+          top10Users: []
+        }
+      }
       return {
         stats: statsData.stats,
         topUsers: leaderboardData.top_users,
