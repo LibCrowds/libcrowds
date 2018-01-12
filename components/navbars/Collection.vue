@@ -121,25 +121,43 @@
             </b-dropdown-item>
 
             <!-- Project management -->
-            <span v-if="currentUser.admin">
+            <span v-if="loggedIn">
               <div role="separator" class="dropdown-divider"></div>
+              <b-dropdown-item
+                :to="{
+                  name: 'admin-project-new'
+                }">
+                New Project
+              </b-dropdown-item>
               <b-dropdown-item
                 :to="{
                   name: 'admin-project'
                 }">
-                Project Admin
+                Open Project
               </b-dropdown-item>
               <b-dropdown-item
-              :to="{
-                name: 'admin-collection'
-              }">
-              Collection Admin
+                :to="{
+                  name: 'account-name-templates',
+                  params: {
+                    name: currentUser.name
+                  }
+                }">Templates
+              </b-dropdown-item>
+            </span>
+
+            <!-- Collection/site admin -->
+            <span v-if="currentUser.admin">
+              <div role="separator" class="dropdown-divider"></div>
+              <b-dropdown-item
+                :to="{
+                  name: 'admin-collection'
+                }">
+                Collection Admin
               </b-dropdown-item>
               <b-dropdown-item
                 :to="{
                   name: 'admin-site'
-                }"
-                @click="toggleCollapsibleSidebar">
+                }">
                 Site Admin
               </b-dropdown-item>
             </span>

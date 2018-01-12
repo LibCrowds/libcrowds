@@ -62,6 +62,12 @@ export default {
     })
   },
 
+  UPDATE_CURRENT_TEMPLATE: ({ commit }, template) => {
+    commit('SET_ITEM', {
+      key: 'currentTemplate', value: template
+    })
+  },
+
   UPDATE_LAST_ANNOUNCEMENT: ({ commit }, axios) => {
     return axios.get('/api/announcement', {
       params: {
