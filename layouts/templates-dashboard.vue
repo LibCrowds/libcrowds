@@ -69,9 +69,9 @@ export default {
         {
           label: 'Task Details',
           link: {
-            name: 'account-name-templates-task',
+            name: 'account-name-templates-id-task',
             params: {
-              short_name: this.project.short_name,
+              name: this.currentUser.name,
               id: this.currentTemplate.id
             }
           }
@@ -81,7 +81,7 @@ export default {
           link: {
             name: 'account-name-templates-id-rules',
             params: {
-              short_name: this.project.short_name,
+              name: this.currentUser.name,
               id: this.currentTemplate.id
             }
           }

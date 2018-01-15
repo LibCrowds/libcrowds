@@ -6,17 +6,16 @@
         Use the form below to generate a new project template.
       </p>
       <p>
-        These templates can then be used by anyone to generate new projects
-        for a collection microsite. For example, if you wanted to discover all
+        Templates can be used by anyone to generate new projects for a
+        collection microsite. For example, if you wanted to discover all
         song titles in a particular set of volumes you could create two
-        templates, one two mark out those song titles and one to transcribe
-        them.
+        templates, one to mark out those song titles followed by one to
+        transcribe them.
       </p>
       <p>
-        After creating your template using the core details below you will be
-        given futher options to design your task, add tags to help people
-        discover your project and (depending on the type of task) set the
-        rules for results analysis.
+        After entering the core details below click 'Create' to be shown
+        futher options to design your task, add tags, a tutorial and set
+        the rules for results analysis.
       </p>
       <p>
         See the
@@ -57,7 +56,11 @@ export default {
   asyncData ({ app, params, error }) {
     const tmplEndpoint = `/libcrowds/users/${params.name}/templates`
     return Promise.all([
-      app.$axios.$get('/api/category', { params: { limit: 100 } }),
+      app.$axios.$get('/api/category', {
+        params: {
+          limit: 100
+        }
+      }),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
       return {
@@ -71,9 +74,12 @@ export default {
                 model: 'category_id',
                 label: 'Collection',
                 type: 'select',
-                values: categoriesData.map(category => {
-                  return { id: category.id, name: category.name }
-                })
+                values: tmplData.category_choices.map(choice => {
+                  return {id: choice[0], name: choice[1]}
+                }),
+                selectOptions: {
+                  hideNoneSelectedText: true
+                }
               },
               {
                 model: 'name',
@@ -104,13 +110,32 @@ export default {
     PybossaForm
   },
 
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    }
+  },
+
   methods: {
     /**
      * Handle success.
      */
     onSuccess (data) {
-      console.log(data)
+      if (typeof data.next !== 'undefined') {
+        const tmplId = data.next.split('templates/')[1]
+        this.$router.push({
+          name: 'account-name-templates-id-task',
+          params: {
+            name: this.currentUser.name,
+            id: tmplId
+          }
+        })
+      }
     }
+  },
+
+  beforeMount () {
+    this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', {})
   }
 }
 </script>

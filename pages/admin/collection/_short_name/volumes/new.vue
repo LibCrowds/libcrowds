@@ -42,7 +42,6 @@ import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import FormBase from '@/components/forms/Base'
-import TemplateForm from '@/components/forms/Template'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -69,8 +68,7 @@ export default {
 
   components: {
     CardBase,
-    FormBase,
-    TemplateForm
+    FormBase
   },
 
   computed: {

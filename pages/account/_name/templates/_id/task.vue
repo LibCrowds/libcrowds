@@ -21,15 +21,17 @@ export default {
 
   data () {
     return {
-      title: 'Update Project Template',
-      description: `Edit the project template's core details.`,
+      title: 'Update Task Template',
+      description: `Edit the project template's task details.`,
       processing: false
     }
   },
 
   asyncData ({ app, params, error }) {
-    const endpoint = `/libcrowds/users/${params.name}/templates/${params.id}`
+    const name = params.name
+    const endpoint = `/libcrowds/users/${name}/templates/${params.id}/task`
     return app.$axios.$get(endpoint).then(data => {
+      console.log(data)
       return {
         form: {
           endpoint: endpoint,
@@ -37,14 +39,6 @@ export default {
           model: data.form,
           schema: {
             fields: [
-              {
-                model: 'category_id',
-                label: 'Collection',
-                type: 'select',
-                values: data.category_choices.map(choice => {
-                  return {id: choice[0], name: choice[1]}
-                })
-              },
               {
                 model: 'name',
                 label: 'Name',

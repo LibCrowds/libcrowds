@@ -63,6 +63,7 @@ export default {
   },
 
   UPDATE_CURRENT_TEMPLATE: ({ commit }, template) => {
+    console.log(template)
     commit('SET_ITEM', {
       key: 'currentTemplate', value: template
     })

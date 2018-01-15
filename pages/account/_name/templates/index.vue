@@ -14,31 +14,36 @@
       New
     </b-btn>
 
-    <b-table
-      ref="table"
-      responsive
-      striped
-      hover
-      show-empty
-      class="border-left-0 border-right-0 border-bottom-0"
-      :items="templates"
-      :fields="tableFields">
-      <template slot="actions" scope="template">
-        <b-btn
-          variant="success"
-          size="sm"
-          :to="{
-            name: 'account-name-templates-id',
-            params: {
-              name: currentUser.name,
-              id: template.id
-            }
-          }">
-          Open
-        </b-btn>
-      </template>
-    </b-table>
-
+    <b-tabs ref="tabs" no-body card>
+      <b-tab
+        v-for="collection in collections"
+        :title="collection.name"
+        :key="collection.id">
+        <b-table
+          responsive
+          striped
+          hover
+          show-empty
+          class="border-left-0 border-right-0 border-bottom-0"
+          :items="getCollectionTemplates(collection.id)"
+          :fields="tableFields">
+          <template slot="actions" scope="template">
+            <b-btn
+              variant="success"
+              size="sm"
+              :to="{
+                name: 'account-name-templates-id',
+                params: {
+                  name: currentUser.name,
+                  id: template.item.id
+                }
+              }">
+              Open
+            </b-btn>
+          </template>
+        </b-table>
+      </b-tab>
+    </b-tabs>
   </card-base>
 </template>
 
@@ -61,12 +66,8 @@ export default {
           label: 'Name',
           sortable: true
         },
-        mode: {
-          label: 'Mode',
-          sortable: true
-        },
-        tag: {
-          label: 'Tag',
+        description: {
+          label: 'Description',
           sortable: true
         },
         actions: {
@@ -75,6 +76,16 @@ export default {
         }
       }
     }
+  },
+
+  asyncData ({ app, params, error }) {
+    const endpoint = `/libcrowds/users/${params.name}/templates`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        templates: data.templates,
+        category_choices: data.category_choices
+      }
+    })
   },
 
   components: {
@@ -86,11 +97,27 @@ export default {
       return this.$store.state.currentUser
     },
 
-    templates () {
-      if (typeof this.currentUser.info.templates === 'undefined') {
-        return []
-      }
-      return this.currentUser.info.templates
+    collections () {
+      return this.category_choices.map(choice => {
+        return {id: choice[0], name: choice[1]}
+      })
+    }
+  },
+
+  methods: {
+    /**
+     * Get the templates for a collection.
+     * @param {Number} id
+     *   The category ID.
+     */
+    getCollectionTemplates (id) {
+      return this.templates.map(template => {
+        template.project.id = template.id
+        return template.project
+      }).filter(template => {
+        console.log(template)
+        return template.category_id === id
+      })
     }
   },
 
