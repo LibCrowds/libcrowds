@@ -2,13 +2,6 @@
   <card-base :title="title" :description="description">
     <div class="float-md-right" slot="controls">
       <b-btn
-        variant="warning"
-        class="mr-1 my-1"
-        size="sm"
-        @click="deleteAllVolumes">
-        Delete All
-      </b-btn>
-      <b-btn
         variant="success"
         class="my-1"
         size="sm"
@@ -18,7 +11,7 @@
             short_name: this.collection.short_name
           }
         }">
-        Upload CSV
+        New
       </b-btn>
     </div>
 
@@ -28,12 +21,20 @@
       hover
       show-empty
       class="border-left-0 border-right-0 border-bottom-0"
-      :items="Object.values(collection.info.volumes)"
+      :items="collection.info.volumes"
       :fields="fields">
       <template slot="source" scope="volume">
         <a :href="volume.item.source" target="_blank">
           {{ volume.item.source }}
         </a>
+      </template>
+      <template slot="actions" scope="volume">
+        <b-btn
+          variant="warning"
+          size="sm"
+          @click="deleteVolume(volume.item.id)">
+          Remove
+        </b-btn>
       </template>
     </b-table>
 
@@ -63,6 +64,10 @@ export default {
         source: {
           label: 'Source',
           sortable: true
+        },
+        actions: {
+          label: 'Actions',
+          class: 'text-center'
         }
       }
     }
@@ -80,27 +85,33 @@ export default {
 
   methods: {
     /**
-     * Delete the current list of volumes.
+     * Delete a volume.
+     * @param {String} id
+     *   The volume ID.
      */
-    deleteAllVolumes (data) {
-      let infoClone = Object.assign({}, this.collection.info)
-      infoClone.volumes = {}
+    deleteVolume (id) {
+      const endpoint = `/api/category/${this.collection.id}`
+      const infoClone = JSON.parse(JSON.stringify(this.collection.info))
+      infoClone.volumes = this.collection.info.volumes.filter(vol => {
+        return vol.id !== id
+      })
       this.$swal({
-        title: 'Delete Volumes',
-        text: 'Are you sure you want to delete the current list of volumes?',
+        title: `Delete Volume`,
+        text: `Are you sure you want to delete this volume?`,
         type: 'warning',
         showCancelButton: true,
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.$axios.$put(`/api/category/${this.collection.id}`, {
-            info: infoClone
-          })
+          return this.$axios.$put(endpoint, { info: infoClone })
         }
       }).then(result => {
         if (result) {
-          this.collection.info = infoClone
-          this.notifySuccess({ message: `All volumes delete` })
+          this.notifySuccess({
+            message: 'Volume deleted'
+          })
+          console.log(result)
+          this.$store.dispatch('UPDATE_CURRENT_COLLECTION', result)
         }
       })
     }

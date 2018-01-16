@@ -1,74 +1,91 @@
 <template>
   <card-base :title="title" :description="description">
-    <form-base
-      show-cancel
-      class="pybossa-form"
-      :processing="processing"
-      @submit="uploadCsv">
+    <b-card-body class="pb-0">
       <p>
-        Each volume is tracked as a name against a URI that will provide the
-        resources for a project (or multiple projects). This makes project
-        generation easier and helps with the aggregation of results. Volumes
-        details can be uploaded in bulk using the CSV file selector below.
+        Volumes provide the input used to build tasks for projects. Each
+        volume is tracked as a name against a source URI, where the format
+        of that source URI depends on the task presenter chosen for the
+        collection.
+      <p>
+        As this collection is currently set to use the
+        <strong>{{ collection.info.presenter }}</strong> task presenter the
+        source field should be a URI for {{ sourceType }}.
       </p>
       <p>
-        This collection is currently set to use the
-        <strong>{{ collection.info.presenter }}</strong> task presenter.
-        The CSV file should have no header row and must contain the following
-        columns (in this order):
+        After adding a volume you will also be able to upload a thumbnail for
+        all projects subsequently created using the volume.
       </p>
-      <ol v-if="collection.info">
-        <li
-          v-for="(item, index) in importerFields[collection.info.presenter]"
-          :key="index">
-          {{ item }}
-        </li>
-      </ol>
-      <vue-form-generator
-        ref="form"
-        :schema="form.schema"
-        :model="form.model">
-      </vue-form-generator>
-    </form-base>
+      <p>
+        See the
+        <a :href="localConfig.docs" target="_blank">full documentation</a>
+        for further guidance.
+      </p>
+      <hr class="mt-3">
+    </b-card-body>
+    <pybossa-form
+      submit-text="Add Volume"
+      :form="form"
+      @success="onSuccess">
+    </pybossa-form>
   </card-base>
 </template>
 
 <script>
-import shorthash from 'shorthash'
-import Papa from 'papaparse'
-import uniq from 'lodash/uniq'
+import localConfig from '@/local.config'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
-import FormBase from '@/components/forms/Base'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
-      title: 'Upload Volumes',
-      description: 'Upload a CSV containing volumes for the collection.',
-      processing: false,
-      importerFields: {
-        z3950: [
-          'Name',
-          'Flickr Album URI'
-        ],
-        'iiif-annotation': [
-          'Name',
-          'Manifest URI'
-        ]
-      }
+      title: 'Add a volume',
+      description: 'Add a volume to the collection.',
+      localConfig: localConfig
     }
+  },
+
+  asyncData ({ app, params, error }) {
+    const endpoint = `/libcrowds/categories/${params.short_name}/volumes/new`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        form: {
+          endpoint: endpoint,
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                model: 'name',
+                label: 'Name',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'A name for the volume'
+              },
+              {
+                model: 'source',
+                label: 'Source',
+                type: 'input',
+                inputType: 'url',
+                placeholder: `The input source URI`
+              }
+            ]
+          }
+        }
+      }
+    }).catch(err => {
+      error(err)
+    })
   },
 
   components: {
     CardBase,
-    FormBase
+    PybossaForm
   },
 
   computed: {
@@ -76,125 +93,20 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    form () {
-      return {
-        model: {
-          'file': null
-        },
-        schema: {
-          fields: [
-            {
-              model: 'file',
-              label: 'CSV File',
-              type: 'upload',
-              placeholder: 'Choose a CSV file...',
-              accept: 'text/csv',
-              required: true,
-              onChanged: (model, schema, event) => {
-                model.file = event.target.files[0]
-              },
-              validator: value => {
-                if (!value) {
-                  return 'The CSV file is required'
-                }
-              }
-            }
-          ]
-        }
+    sourceType () {
+      if (this.collection.info.presenter === 'iiif-annotation') {
+        return 'a IIIF manifest'
+      } else if (this.collection.info.presenter === 'z3950') {
+        return 'a Flickr album'
       }
     }
   },
 
   methods: {
     /**
-     * Upload a CSV.
+     * Handle success.
      */
-    uploadCsv () {
-      if (!this.$refs.form.validate()) {
-        this.notifyInvalidForm()
-        return
-      }
-
-      const reader = new FileReader()
-      reader.onload = (evt) => {
-        const csv = Papa.parse(evt.target.result)
-        this.processCsv(csv.data)
-      }
-      if (this.form.model.file) {
-        reader.readAsText(this.form.model.file)
-      }
-    },
-
-    /**
-     * Process the CSV.
-     * @param {Object} data
-     *   The data.
-     */
-    processCsv (data) {
-      this.processing = true
-      const infoClone = Object.assign({}, this.collection.info)
-      const newVolumes = data.map(row => {
-        return {
-          name: row[0],
-          source: row[1]
-        }
-      })
-
-      if (!this.validateSources(newVolumes)) {
-        this.processing = false
-        return
-      }
-
-      infoClone.volumes = {}
-      for (let vol of newVolumes) {
-        infoClone.volumes[shorthash.unique(vol.source)] = vol
-      }
-
-      return this.$axios.$put(`/api/category/${this.collection.id}`, {
-        info: infoClone
-      }).then(result => {
-        if (result) {
-          this.goBack()
-          this.collection.info = infoClone
-          this.notifySuccess({ message: `Volumes updated` })
-        }
-        this.processing = false
-      })
-    },
-
-    /**
-     * Check for duplicate sources.
-     * @param {Array} volumes
-     *   The list of volumes.
-     */
-    validateSources (volumes) {
-      const sources = volumes.map(vol => vol.source)
-      console.log(sources)
-      if (uniq(sources).length !== sources.length) {
-        this.$swal({
-          title: 'Duplicate Sources',
-          text: `The CSV file contains duplicate sources, please correct
-            these before resubmitting.`,
-          type: 'warning'
-        })
-        return false
-      } else if (!sources.every(s => /^(|http|https):\/\/[^ "]+$/.test(s))) {
-        this.$swal({
-          title: 'Invalid Sources',
-          text: `The CSV file seems to contain invalid URI sources. This could
-            indicate a file that contains empty rows. Please confirm that all
-            values in the second column are valid URIs before resubmitting.`,
-          type: 'warning'
-        })
-        return false
-      }
-      return true
-    },
-
-    /**
-     * Go back.
-     */
-    goBack () {
+    onSuccess () {
       this.$router.push({
         name: 'admin-collection-short_name-volumes',
         params: {
