@@ -16,7 +16,7 @@
 
     <b-tabs ref="tabs" no-body card>
       <b-tab
-        v-for="collection in collections"
+        v-for="collection in publishedCollections"
         :title="collection.name"
         :key="collection.id">
         <b-table
@@ -48,14 +48,13 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -82,8 +81,7 @@ export default {
     const endpoint = `/libcrowds/users/${params.name}/templates`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        templates: data.templates,
-        category_choices: data.category_choices
+        templates: data.templates
       }
     })
   },
@@ -97,10 +95,8 @@ export default {
       return this.$store.state.currentUser
     },
 
-    collections () {
-      return this.category_choices.map(choice => {
-        return {id: choice[0], name: choice[1]}
-      })
+    publishedCollections () {
+      return this.$store.state.publishedCollections
     }
   },
 
@@ -115,7 +111,6 @@ export default {
         template.project.id = template.id
         return template.project
       }).filter(template => {
-        console.log(template)
         return template.category_id === id
       })
     }

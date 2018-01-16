@@ -25,9 +25,26 @@ export default {
             {
               type: 'input',
               inputType: 'text',
+              label: 'Model',
+              model: 'model',
+              placeholder: 'A key used to identify the field (e.g. title)',
+              required: true,
+              validator: (value) => {
+                const keys = this.model.map(field => field.model)
+                if (!value || !value.length) {
+                  return 'This field is required!'
+                }
+                if (keys.indexOf(value) > -1) {
+                  return 'The model already contains this key'
+                }
+              }
+            },
+            {
+              type: 'input',
+              inputType: 'text',
               label: 'Label',
               model: 'label',
-              placeholder: 'A label for the form field',
+              placeholder: 'A label for the form field (e.g. Title)',
               maxlength: 50,
               required: true,
               validator: VueFormGenerator.validators.string
@@ -41,12 +58,17 @@ export default {
                 return [
                   { id: 'input', name: 'Input' },
                   { id: 'textArea', name: 'TextArea' },
-                  { id: 'checkbox', name: 'Checkbox' },
-                  { id: 'radios', name: 'Radio' },
-                  { id: 'select', name: 'Select' }
+                  { id: 'checkbox', name: 'Checkbox' }
                 ]
               },
-              default: 'input'
+              selectOptions: {
+                hideNoneSelected: true
+              },
+              validator: (value) => {
+                if (!value || !value.length) {
+                  return 'This field is required!'
+                }
+              }
             },
             {
               type: 'select',
@@ -60,9 +82,16 @@ export default {
                   { id: 'url', name: 'URL' }
                 ]
               },
-              default: 'text',
               disabled: model => {
                 return model.type !== 'input'
+              },
+              selectOptions: {
+                hideNoneSelected: true
+              },
+              validator: (value, field, model) => {
+                if ((!value || !value.length) && model.type === 'input') {
+                  return 'This field is required when the type is "input"'
+                }
               }
             },
             {
@@ -72,23 +101,6 @@ export default {
               model: 'placeholder',
               placeholder: 'Placeholder text for the form field',
               validator: VueFormGenerator.validators.string
-            },
-            {
-              type: 'input',
-              inputType: 'text',
-              label: 'Model',
-              model: 'model',
-              placeholder: 'A key used as an identifier for the field',
-              required: true,
-              validator: (value) => {
-                const models = this.currentFields.map(field => field.model)
-                if (!value || !value.length) {
-                  return 'This field is required!'
-                }
-                if (models.indexOf(value) > -1) {
-                  return 'The model already contains this key'
-                }
-              }
             }
           ]
         }
@@ -105,7 +117,7 @@ export default {
       type: String,
       required: true
     },
-    currentFields: {
+    model: {
       type: Array,
       required: true
     }

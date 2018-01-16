@@ -35,7 +35,6 @@
 
 <script>
 import localConfig from '@/local.config'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -43,7 +42,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -53,7 +52,7 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error }) {
+  asyncData ({ app, params, error, store }) {
     const tmplEndpoint = `/libcrowds/users/${params.name}/templates`
     return Promise.all([
       app.$axios.$get('/api/category', {
@@ -74,9 +73,7 @@ export default {
                 model: 'category_id',
                 label: 'Collection',
                 type: 'select',
-                values: tmplData.category_choices.map(choice => {
-                  return {id: choice[0], name: choice[1]}
-                }),
+                values: store.state.publishedCollections,
                 selectOptions: {
                   hideNoneSelectedText: true
                 }

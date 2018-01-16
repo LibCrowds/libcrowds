@@ -2,6 +2,26 @@
   <dashboard-base
     :navItems="navItems"
     :titleBase="titleBase">
+
+    <b-alert
+      show
+      variant="secondary"
+      slot="message"
+      class="text-center"
+      v-if="taskNotConfigured">
+      This template is incomplete,
+      <nuxt-link
+        :to="{
+          name: 'account-name-templates-id-task',
+          params: {
+            name: currentUser.name,
+            id: currentTemplate.id
+          }
+        }">
+        click here to configure the task.
+      </nuxt-link>
+    </b-alert>
+
   </dashboard-base>
 </template>
 
@@ -22,11 +42,23 @@ export default {
       return this.$store.state.currentTemplate
     },
 
+    taskNotConfigured () {
+      const isTaskPage = this.$route.name === 'account-name-templates-id-task'
+      return (
+        !isEmpty(this.currentTemplate) &&
+        !this.currentTemplate.task &&
+        !isTaskPage
+      )
+    },
+
     currentUser () {
       return this.$store.state.currentUser
     },
 
     titleBase () {
+      if (typeof this.currentTemplate === 'undefined') {
+        return ''
+      }
       return this.currentTemplate.name
     },
 
@@ -58,6 +90,7 @@ export default {
       return [
         {
           label: 'Core Details',
+          exact: true,
           link: {
             name: 'account-name-templates-id',
             params: {
@@ -80,6 +113,16 @@ export default {
           label: 'Analysis Rules',
           link: {
             name: 'account-name-templates-id-rules',
+            params: {
+              name: this.currentUser.name,
+              id: this.currentTemplate.id
+            }
+          }
+        },
+        {
+          label: 'Delete',
+          link: {
+            name: 'account-name-templates-id-delete',
             params: {
               name: this.currentUser.name,
               id: this.currentTemplate.id

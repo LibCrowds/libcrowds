@@ -27,7 +27,7 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error }) {
+  asyncData ({ app, params, error, store }) {
     const endpoint = `/libcrowds/users/${params.name}/templates/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
@@ -37,14 +37,6 @@ export default {
           model: data.form,
           schema: {
             fields: [
-              {
-                model: 'category_id',
-                label: 'Collection',
-                type: 'select',
-                values: data.category_choices.map(choice => {
-                  return {id: choice[0], name: choice[1]}
-                })
-              },
               {
                 model: 'name',
                 label: 'Name',
