@@ -1,38 +1,33 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body class="pb-0">
-      <p>
-        Volumes provide the input used to build tasks for projects. The
-        format of the volume's source URI depends on the task presenter
-        chosen for the collection. As this collection uses the
-        <strong>{{ collection.info.presenter }}</strong> task presenter, the
-        source field should be a URI for {{ sourceType }}.
-      </p>
-      <p>
-        After adding a volume you will be able to upload a thumbnail image that
-        will be used by all projects built from the volume.
-      </p>
-      <p>
-        See the
-        <a :href="localConfig.docs" target="_blank">full documentation</a>
-        for further guidance.
-      </p>
-      <hr class="mt-3">
-    </b-card-body>
-    <pybossa-form
-      submit-text="Add Volume"
-      :form="form"
-      @success="onSuccess">
-    </pybossa-form>
+    <b-tabs ref="tabs" no-body card>
+      <b-tab title="Details" active>
+        <pybossa-form
+          submit-text="Update Details"
+          show-cancel
+          :form="form"
+          @cancel="onCancel">
+        </pybossa-form>
+      </b-tab>
+      <b-tab title="Thumbnail">
+        <image-upload-form
+          submit-text="Update Thumbnail"
+          file-field="avatar"
+          :endpoint="thumbnailForm.endpoint"
+          :model="thumbnailForm.model"
+          :method="thumbnailForm.method">
+        </image-upload-form>
+      </b-tab>
+    </b-tabs>
   </card-base>
 </template>
 
 <script>
-import localConfig from '@/local.config'
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
-import CardBase from '@/components/cards/Base'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -41,19 +36,21 @@ export default {
 
   data () {
     return {
-      title: 'Add a volume',
-      description: 'Add a volume to the collection.',
-      localConfig: localConfig
+      title: 'Update Volume',
+      description: 'Update the volume details and thumbnail.'
     }
   },
 
-  asyncData ({ app, params, error }) {
-    const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
+  async asyncData ({ params, app, error }) {
+    const endpoint = `/libcrowds/categories/${params.short_name}/volumes` +
+      `/${params.id}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
+      data.upload_form.btn = 'Upload'
+      delete data.upload_form.id
       return {
         form: {
           endpoint: endpoint,
-          method: 'post',
+          method: 'POST',
           model: data.form,
           schema: {
             fields: [
@@ -88,6 +85,11 @@ export default {
               }
             ]
           }
+        },
+        thumbnailForm: {
+          endpoint: endpoint,
+          method: 'POST',
+          model: data.upload_form
         }
       }
     }).catch(err => {
@@ -95,30 +97,23 @@ export default {
     })
   },
 
-  components: {
-    CardBase,
-    PybossaForm
-  },
-
   computed: {
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    sourceType () {
-      if (this.collection.info.presenter === 'iiif-annotation') {
-        return 'a IIIF manifest'
-      } else if (this.collection.info.presenter === 'z3950') {
-        return 'a Flickr album'
-      }
     }
+  },
+
+  components: {
+    PybossaForm,
+    ImageUploadForm,
+    CardBase
   },
 
   methods: {
     /**
-     * Handle success.
+     * Handle cancel.
      */
-    onSuccess () {
+    onCancel () {
       this.$router.push({
         name: 'admin-collection-short_name-volumes',
         params: {

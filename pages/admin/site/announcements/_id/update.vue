@@ -28,8 +28,7 @@
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
-          file-field="file"
-          method="PUT">
+          file-field="file">
         </image-upload-form>
       </b-tab>
     </b-tabs>

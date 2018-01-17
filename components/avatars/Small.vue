@@ -26,7 +26,7 @@ export default {
   },
 
   props: {
-    domainObject: {
+    info: {
       type: Object,
       required: true
     }
@@ -34,15 +34,18 @@ export default {
 
   computed: {
     src () {
-      const host = localConfig.pybossaHost
-      if (!this.domainObject.info) {
-        return null
-      } else if (this.domainObject.info.avatar_url) {
-        return host + this.domainObject.info.avatar_url
-      } else if (this.domainObject.info.thumbnail_url) {
-        return host + this.domainObject.info.thumbnail_url
-      } else if (this.domainObject.info.media_url) {
-        return host + this.domainObject.info.media_url
+      let url = null
+      if (this.info.avatar_url) {
+        url = this.info.avatar_url
+      } else if (this.info.thumbnail_url) {
+        url = this.info.thumbnail_url
+      } else if (this.info.media_url) {
+        url = this.info.media_url
+      }
+      if (url && url.startsWith('/uploads')) {
+        return localConfig.pybossaHost + url
+      } else if (url) {
+        return url
       }
       return null
     }

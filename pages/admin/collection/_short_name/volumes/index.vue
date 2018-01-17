@@ -23,6 +23,12 @@
       class="border-left-0 border-right-0 border-bottom-0"
       :items="collection.info.volumes"
       :fields="fields">
+      <template slot="thumbnail" scope="volume">
+        <small-avatar
+          class="mx-auto"
+          :info="volume.item">
+        </small-avatar>
+      </template>
       <template slot="source" scope="volume">
         <a :href="volume.item.source" target="_blank">
           {{ volume.item.source }}
@@ -31,9 +37,23 @@
       <template slot="actions" scope="volume">
         <b-btn
           variant="warning"
+          class="m-1"
           size="sm"
           @click="deleteVolume(volume.item.id)">
           Remove
+        </b-btn>
+        <b-btn
+          variant="success"
+          class="m-1"
+          size="sm"
+          :to="{
+            name: 'admin-collection-short_name-volumes-id',
+            params: {
+              short_name: collection.short_name,
+              id: volume.item.id
+            }
+          }">
+          Update
         </b-btn>
       </template>
     </b-table>
@@ -42,6 +62,7 @@
 </template>
 
 <script>
+import SmallAvatar from '@/components/avatars/Small'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
@@ -57,6 +78,10 @@ export default {
       title: 'Volumes',
       description: `Manage the volumes that provide the input for projects.`,
       fields: {
+        thumbnail: {
+          label: 'Thumbnail',
+          class: 'text-center'
+        },
         name: {
           label: 'Name',
           sortable: true
@@ -74,7 +99,8 @@ export default {
   },
 
   components: {
-    CardBase
+    CardBase,
+    SmallAvatar
   },
 
   computed: {

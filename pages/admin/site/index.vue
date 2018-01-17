@@ -97,7 +97,10 @@
             <li
               v-for="(item, index) in groupedFeed['UserContribution']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 <nuxt-link
                   :to="{
@@ -150,7 +153,10 @@
             <li
               v-for="(item, index) in groupedFeed['Task']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 Tasks were added to
                 <nuxt-link
@@ -226,7 +232,10 @@
             <li
               v-for="(item, index) in groupedFeed['User']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 <nuxt-link
                   :to="{
