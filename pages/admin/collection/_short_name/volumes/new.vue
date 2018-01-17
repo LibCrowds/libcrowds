@@ -72,7 +72,22 @@ export default {
                 label: 'Source',
                 type: 'input',
                 inputType: 'url',
-                placeholder: `The input source URI`
+                placeholder: `The input source URI`,
+                validator: (value) => {
+                  const presenter = data.category.info['presenter']
+                  const source = value.trim()
+                  if (
+                    presenter === 'iiif-annotation' &&
+                    !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
+                  ) {
+                    return 'Not a valid IIIF manifest URI'
+                  } else if (
+                    presenter === 'z3950' &&
+                    !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
+                  ) {
+                    return 'Not a valid Flickr album URI'
+                  }
+                }
               }
             ]
           }
