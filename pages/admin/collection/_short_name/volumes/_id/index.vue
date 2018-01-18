@@ -13,6 +13,7 @@
         <image-upload-form
           submit-text="Update Thumbnail"
           file-field="avatar"
+          crop-type="square"
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
           :method="thumbnailForm.method">
