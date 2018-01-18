@@ -1,7 +1,7 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-tabs ref="tabs" no-body card>
-      <b-tab title="Details" active>
+    <b-tabs ref="tabs" card>
+      <b-tab title="Details" active no-body>
         <pybossa-form
           submit-text="Update Details"
           show-cancel
@@ -9,7 +9,7 @@
           @cancel="onCancel">
         </pybossa-form>
       </b-tab>
-      <b-tab title="Thumbnail">
+      <b-tab title="Thumbnail" no-body>
         <image-upload-form
           submit-text="Update Thumbnail"
           file-field="avatar"

@@ -13,8 +13,8 @@
       </toggle-button>
     </div>
 
-    <b-tabs ref="tabs" no-body card>
-      <b-tab title="Core Details" active>
+    <b-tabs ref="tabs"  card>
+      <b-tab title="Core Details" active no-body>
         <pybossa-form
           submit-text="Update"
           show-cancel
@@ -22,7 +22,7 @@
           @cancel="onCancel">
         </pybossa-form>
       </b-tab>
-      <b-tab title="Thumbnail">
+      <b-tab title="Thumbnail" no-body>
         <image-upload-form
           submit-text="Update"
           :endpoint="thumbnailForm.endpoint"

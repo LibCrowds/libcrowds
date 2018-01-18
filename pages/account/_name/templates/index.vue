@@ -14,8 +14,9 @@
       New
     </b-btn>
 
-    <b-tabs ref="tabs" no-body card>
+    <b-tabs ref="tabs" card>
       <b-tab
+        no-body
         v-for="collection in publishedCollections"
         :title="collection.name"
         :key="collection.id">
