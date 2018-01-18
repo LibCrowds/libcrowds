@@ -14,6 +14,12 @@
       New
     </b-btn>
 
+    <p slot="guidance">
+      Click the <strong>New</strong> button above to create a new template, or
+      edit one of your current templates by locating it in the table below and
+      clicking <strong>Open</strong>.
+    </p>
+
     <b-tabs ref="tabs" card>
       <b-tab
         no-body

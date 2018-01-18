@@ -1,35 +1,26 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-card-body class="pb-0">
-      <p>
-        Use the form below to generate a new project template.
-      </p>
-      <p>
-        Templates can be used by anyone to generate new projects for a
-        collection microsite. For example, if you wanted to discover all
-        song titles in a particular set of volumes you could create two
-        templates, one to mark out those song titles followed by one to
-        transcribe them.
-      </p>
-      <p>
-        After entering the core details below click 'Create' to be shown
-        futher options to design your task, add tags, a tutorial and set
-        the rules for results analysis.
-      </p>
-      <p>
-        See the
-        <a :href="localConfig.docs" target="_blank">full documentation</a>
-        for further guidance.
-      </p>
-      <hr class="mt-3">
-    </b-card-body>
+    <p slot="guidance">
+      Project templates can be used by anyone to generate new projects for a
+      collection microsite. For example, if you wanted to collect
+      transcriptions of all song titles mentioned in a particular set of
+      volumes you could create two templates, one to mark out those song
+      titles followed by one to transcribe them.
+    </p>
+    <p slot="guidance">
+      After entering the core details below and clicking
+      <strong>Create</strong>, you will be given access to futher options to
+      design your task, add tags, a tutorial and set the rules for results
+      analysis.
+    </p>
 
     <pybossa-form
       submit-text="Create"
       :form="form"
       @success="onSuccess">
     </pybossa-form>
+
   </card-base>
 </template>
 
@@ -90,8 +81,8 @@ export default {
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'This appears on the project cards that are ' +
-                  'shown on the main projects page'
+                placeholder: 'The description appears on the project cards ' +
+                  'displayed on the main projects page'
               }
             ]
           }

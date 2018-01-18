@@ -16,13 +16,33 @@
       </b-col>
     </b-row>
 
+    <template v-if="$slots.guidance">
+      <b-card-body>
+        <slot name="guidance"></slot>
+        <p v-if="localConfig.docs" class="mb-0">
+          See the
+          <a :href="localConfig.docs" target="_blank">full documentation</a>
+          for further guidance.
+        </p>
+      </b-card-body>
+      <hr>
+    </template>
+
     <slot></slot>
 
   </b-card>
 </template>
 
 <script>
+import localConfig from '@/local.config'
+
 export default {
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
   props: {
     title: {
       type: String,

@@ -1,6 +1,29 @@
 <template>
   <card-base :title="title" :description="description">
 
+    <p slot="guidance">
+      Use the form below to configure a task for the collection's
+      <strong>{{ presenter }}</strong> task presenter.
+    </p>
+
+    <p slot="guidance" v-if="presenter === 'iiif-annotation'">
+
+    </p>
+
+    <p slot="guidance" v-if="presenter === 'z3950'">
+      <ol>
+        <li>
+          Select the Z39.50 <strong>Database</strong> that you want to search.
+        </li>
+        <li>
+          Enter the <strong>Institution Codes</strong> that you trust to
+          have created or transcribed the records. The search results will be
+          limited to those with one of the given institution codes in MARC
+          fields 040$a or 040$c.
+        </li>
+      </ol>
+    </p>
+
     <pybossa-form
       submit-text="Update"
       :form="form">
@@ -73,7 +96,10 @@
         </b-table>
 
         <b-input-group class="mt-1">
-          <b-form-input ref="institution-code-input"></b-form-input>
+          <b-form-input
+            ref="institution-code-input"
+            placeholder="Enter a MARC institution code">
+          </b-form-input>
           <b-input-group-button slot="right">
             <b-btn
               variant="success"
@@ -114,7 +140,7 @@ export default {
 
   data () {
     return {
-      title: 'Update Task Template',
+      title: 'Update Template Task Details',
       description: `Edit the project template's task details.`,
       addFormFieldModalId: 'add-form-field-modal',
       schemaTableFields: {
