@@ -67,6 +67,7 @@ export default {
       }
       this.deleteDomainObject('category', id, () => {
         this.$router.push({ name: 'admin-collection' })
+        this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
       })
     }
   },
