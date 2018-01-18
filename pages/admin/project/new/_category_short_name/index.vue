@@ -186,11 +186,11 @@
             </li>
             <li class="mb-1">
               <strong>Template:</strong>
-              {{ getSelectedItem(templates, form.model.template_id) }}
+              {{ selectedTemplateName }}
             </li>
             <li class="mb-1">
               <strong>Volume:</strong>
-              {{ getSelectedItem(volumes, form.model.volume_id) }}
+              {{ selectedVolumeName }}
             </li>
             <li class="mb-1">
               <strong>Parent:</strong>
@@ -366,6 +366,24 @@ export default {
 
     description () {
       return `Create a new ${this.collection.name} project`
+    },
+
+    selectedTemplateName () {
+      const filtered = this.templates.filter(tmpl => {
+        return tmpl.id === this.form.model.template_id
+      })
+      if (filtered.length) {
+        return filtered[0]['project']['name']
+      }
+    },
+
+    selectedVolumeName () {
+      const filtered = this.volumes.filter(vol => {
+        return vol.id === this.form.model.volume_id
+      })
+      if (filtered.length) {
+        return filtered[0].name
+      }
     }
   },
 
@@ -424,22 +442,6 @@ export default {
     },
 
     /**
-     * Return item in an array selected by ID.
-     * @param {Array} arr
-     *   The array.
-     * @param {Array} id
-     *   The ID.
-     */
-    getSelectedItem (arr, id) {
-      const filtered = arr.filter(item => {
-        return item.id === id
-      })
-      if (filtered.length) {
-        return filtered[0]
-      }
-    },
-
-    /**
      * List the available templates.
      */
     availableTemplates () {
@@ -462,8 +464,9 @@ export default {
     createProject () {
       this.$swal({
         title: `Confirm`,
-        html: `You're about to create and publish a ${this.collection.name}
-          project.
+        html: `You're about to create and publish a project for
+          ${this.collection.name}. Once published, volunteers will be able
+          to contribute to the project.
           <br><br>Click OK to continue.`,
         type: 'question',
         showCancelButton: true,
