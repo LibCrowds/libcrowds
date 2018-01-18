@@ -1,6 +1,6 @@
 <template>
   <dashboard-base
-    :navItems="navItems"
+    :nav-items="navItems"
     :titleBase="titleBase">
 
     <b-alert
@@ -65,21 +65,16 @@ export default {
       return !isEmpty(this.project) && !this.project.published
     },
 
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
     titleBase () {
       return this.project.name
     },
 
     projectNavItems () {
       return [
-        {
-          label: 'Details',
-          link: {
-            name: 'admin-project-short_name-details',
-            params: {
-              short_name: this.project.short_name
-            }
-          }
-        },
         {
           label: 'Thumbnail',
           link: {
@@ -93,24 +88,6 @@ export default {
           label: 'Tags',
           link: {
             name: 'admin-project-short_name-tags',
-            params: {
-              short_name: this.project.short_name
-            }
-          }
-        },
-        {
-          label: 'Collection',
-          link: {
-            name: 'admin-project-short_name-collection',
-            params: {
-              short_name: this.project.short_name
-            }
-          }
-        },
-        {
-          label: 'Volume',
-          link: {
-            name: 'admin-project-short_name-volume',
             params: {
               short_name: this.project.short_name
             }
@@ -146,11 +123,51 @@ export default {
       ]
     },
 
+    restrictedNavItems () {
+      return [
+        {
+          seperator: true
+        },
+        {
+          label: 'Details',
+          link: {
+            name: 'admin-project-short_name-details',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
+          label: 'Collection',
+          link: {
+            name: 'admin-project-short_name-collection',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
+          label: 'Volume',
+          link: {
+            name: 'admin-project-short_name-volume',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        }
+      ]
+    },
+
     navItems () {
+      let navItems = JSON.parse(JSON.stringify(this.rootNavItems))
       if (isEmpty(this.project)) {
-        return this.rootNavItems
-      } else if (this.notPublished) {
-        return this.rootNavItems.concat(this.projectNavItems, [
+        return navItems
+      } else {
+        navItems = navItems.concat(this.projectNavItems)
+      }
+
+      if (this.notPublished) {
+        navItems = navItems.concat([
           {
             label: 'Publish',
             link: {
@@ -162,7 +179,11 @@ export default {
           }
         ])
       }
-      return this.rootNavItems.concat(this.projectNavItems)
+
+      if (this.currentUser.admin) {
+        navItems = navItems.concat(this.restrictedNavItems)
+      }
+      return navItems
     }
   },
 

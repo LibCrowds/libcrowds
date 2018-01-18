@@ -1,6 +1,6 @@
 <template>
   <dashboard-base
-    :navItems="navItems"
+    :nav-items="navItems"
     :titleBase="titleBase">
 
     <b-alert

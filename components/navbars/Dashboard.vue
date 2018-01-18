@@ -19,14 +19,17 @@
       @before-enter="beforeEnter"
       @enter="enter"
       @leave="leave">
-      <b-nav-item
-        v-for="(item, index) in navItems"
-        :exact="item.exact"
-        :key="index"
-        :data-index="index"
-        :to="item.link">
-        {{ item.label }}
-      </b-nav-item>
+      <template v-for="(item, index) in navItems">
+        <li v-if="item.seperator" role="seperator" class="divider" :key="index"></li>
+        <b-nav-item
+          v-else
+          :exact="item.exact"
+          :key="index"
+          :data-index="index"
+          :to="item.link">
+          {{ item.label }}
+        </b-nav-item>
+      </template>
     </transition-group>
   </nav>
 </template>
@@ -212,6 +215,14 @@ export default {
     @include media-breakpoint-down(md) {
       display: flex;
     }
+  }
+
+  .divider {
+    height: 0;
+    margin: 20px 0;
+    margin: 1.25rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba($gray-300, 0.5);
   }
 }
 </style>
