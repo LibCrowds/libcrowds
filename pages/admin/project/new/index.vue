@@ -1,25 +1,15 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body>
-      <p class="lead">
-        Welcome to the project builder
-      </p>
-      <p>
-        The following pages contain a series of options for generating a
-        new project from a chosen volume and template.
-      </p>
-      <p>
-        Volumes provide the input source for a project (e.g. the images)
-        and templates provide the configuration details for the task.
-        The available volumes for a collection are maintained by
-        administrators, whereas templates can be created and used by
-        anyone. Only one project can be created for each combination of
-        a volume and template.
-      </p>
-      <p>
-        To get started, select a collection from the table below.
-      </p>
-    </b-card-body>
+    <p slot="guidance" class="lead">
+      Welcome to the project builder
+    </p>
+    <p slot="guidance">
+      The following pages contain a series of options for generating a
+      new project from a chosen volume and template.
+    </p>
+    <p slot="guidance">
+      To get started, select a collection from the table below.
+    </p>
 
     <infinite-loading-table
       ref="table"

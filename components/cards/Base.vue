@@ -20,9 +20,11 @@
       <b-card-body>
         <slot name="guidance"></slot>
         <p v-if="localConfig.docs" class="mb-0">
-          See the
-          <a :href="localConfig.docs" target="_blank">full documentation</a>
-          for further guidance.
+          <small>
+            See the
+            <a :href="localConfig.docs" target="_blank">full documentation</a>
+            for further guidance.
+          </small>
         </p>
       </b-card-body>
       <hr>

@@ -6,7 +6,14 @@
       <b-tab title="Template" no-body>
         <b-card-body>
           <p class="lead mb-1">
-            Choose the project template
+            Choose a project template
+          </p>
+          <p>
+            Project templates provide the configuration details for a
+            particular task. For example, a template might be created to
+            transcribe all of the titles shown in an image. Each template can
+            be used to generate a similar project for multiple volumes (the
+            volume is chosen in the next section).
           </p>
           <p>
             If you can't find a suitable template you can create your own by
@@ -20,7 +27,12 @@
               }">
               New Template
             </nuxt-link>
-            section.
+            section, or
+            <a :href="`mailto:${localConfig.email}`">get in touch</a> and let
+            us know how we can help.
+          </p>
+          <p>
+            Choose a template from the list below.
           </p>
         </b-card-body>
         <b-table
@@ -111,12 +123,18 @@
       <b-tab title="Volume" no-body>
         <b-card-body>
           <p class="lead">
-            Choose the volume
+            Choose a volume
           </p>
           <p>
-            If the volume that you want to create your project from is not
-            listed, please get in touch by clicking the email button at the
-            bottom of this page.
+            Volumes provide the input for a project (e.g. the images). The
+            available volumes for a collection are maintained by
+            administrators. If the volume that you want to create your project
+            from is not listed here, please
+            <a :href="`mailto:${localConfig.email}`">get in touch</a> and we
+            will see if it can be made available.
+          </p>
+          <p>
+            Choose a volume from the list below.
           </p>
         </b-card-body>
         <b-table
