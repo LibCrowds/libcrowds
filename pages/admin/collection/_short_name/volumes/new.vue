@@ -72,8 +72,10 @@ export default {
                 placeholder: `The input source URI`,
                 validator: (value) => {
                   const presenter = data.category.info['presenter']
-                  const source = value.trim()
-                  if (
+                  const source = value ? value.trim() : null
+                  if (!source) {
+                    return 'This field is required!'
+                  } else if (
                     presenter === 'iiif-annotation' &&
                     !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
                   ) {

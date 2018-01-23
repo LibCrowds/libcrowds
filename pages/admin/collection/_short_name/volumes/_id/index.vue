@@ -4,6 +4,7 @@
       <b-tab title="Details" active no-body>
         <pybossa-form
           submit-text="Update Details"
+          cancel-text="Back"
           show-cancel
           :form="form"
           @cancel="onCancel">
@@ -12,11 +13,14 @@
       <b-tab title="Thumbnail" no-body>
         <image-upload-form
           submit-text="Update Thumbnail"
+          cancel-text="Back"
+          show-cancel
           file-field="avatar"
           crop-type="square"
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
-          :method="thumbnailForm.method">
+          :method="thumbnailForm.method"
+          @cancel="onCancel">
         </image-upload-form>
       </b-tab>
     </b-tabs>
@@ -70,8 +74,10 @@ export default {
                 placeholder: `The input source URI`,
                 validator: (value) => {
                   const presenter = data.category.info['presenter']
-                  const source = value.trim()
-                  if (
+                  const source = value ? value.trim() : null
+                  if (!source) {
+                    return 'This field is required!'
+                  } else if (
                     presenter === 'iiif-annotation' &&
                     !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
                   ) {
