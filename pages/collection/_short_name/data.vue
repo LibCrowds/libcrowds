@@ -22,26 +22,7 @@
       </b-form-input>
 
       <b-tabs ref="tabs" card @input="filter = null">
-        <b-tab title="Projects" active no-body>
-          <projects-table
-            no-border
-            :filter="filter"
-            :filter-by="filterBy"
-            :collection="collection">
-            <template slot="action" scope="project">
-              <b-btn
-                variant="success"
-                size="sm"
-                block
-                v-b-modal="dataModalId"
-                @click="activeProject = project.item">
-                Download
-              </b-btn>
-            </template>
-          </projects-table>
-        </b-tab>
-
-        <b-tab title="Volumes" no-body>
+        <b-tab title="Volumes" no-body active>
           <b-alert
             v-if="unknownProjects.length"
             show
@@ -78,6 +59,26 @@
             :filter-by="filterBy">
           </volumes-table>
         </b-tab>
+
+        <b-tab title="Projects" no-body>
+          <projects-table
+            no-border
+            :filter="filter"
+            :filter-by="filterBy"
+            :collection="collection">
+            <template slot="action" scope="project">
+              <b-btn
+                variant="success"
+                size="sm"
+                block
+                v-b-modal="dataModalId"
+                @click="activeProject = project.item">
+                Download
+              </b-btn>
+            </template>
+          </projects-table>
+        </b-tab>
+
       </b-tabs>
     </card-base>
 
