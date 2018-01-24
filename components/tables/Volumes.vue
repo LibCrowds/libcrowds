@@ -26,7 +26,7 @@
         variant="info"
         size="sm"
         class="mr-1"
-        @click="toggleProjectDetails(volume.item)">
+        @click="volume.toggleDetails">
         {{ volume.item._showDetails ? 'Hide' : 'Show' }} Projects
       </b-btn>
       <slot name="action" :item="volume.item"></slot>

@@ -21,7 +21,7 @@
     "@nuxtjs/proxy": "^1.1.2",
     "@nuxtjs/pwa": "^2.0.2",
     "bootstrap": "4.0.0-beta.2",
-    "bootstrap-vue": "^1.4.1",
+    "bootstrap-vue": "^2.0.0-rc.0",
     "capitalize": "^1.0.0",
     "chartist-plugin-tooltips": "0.0.17",
     "clipboard": "^1.7.1",
