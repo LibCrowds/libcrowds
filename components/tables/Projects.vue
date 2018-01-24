@@ -37,6 +37,7 @@
     </b-table>
 
     <infinite-load-projects
+      ref="loading"
       :collection="collection"
       :orderby="sortModel.orderby"
       :desc="sortModel.desc"
@@ -139,6 +140,13 @@ export default {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
+    },
+
+    /**
+     * Reset the loaded table data.
+     */
+    reset () {
+      this.$refs.loading.reset()
     }
   }
 }

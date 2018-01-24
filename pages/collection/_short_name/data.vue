@@ -21,7 +21,7 @@
         :placeholder="`Type to search by ${filterBy}`">
       </b-form-input>
 
-      <b-tabs ref="tabs" card @input="filter = null">
+      <b-tabs ref="tabs" card @input="onTabsChange">
         <b-tab title="Volumes" no-body active>
           <b-alert
             v-if="unknownProjects.length"
@@ -64,7 +64,8 @@
           <projects-table
             :filter="filter"
             :filter-by="filterBy"
-            :collection="collection">
+            :collection="collection"
+            ref="projects-table">
             <template slot="action" scope="project">
               <b-btn
                 variant="success"
@@ -169,6 +170,19 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    }
+  },
+
+  methods: {
+    /**
+     * Handle tabs being changed.
+     */
+    onTabsChange () {
+      this.filter = null
+      const table = this.$refs['projects-table']
+      if (typeof table !== 'undefined') {
+        table.reset()
+      }
     }
   },
 
