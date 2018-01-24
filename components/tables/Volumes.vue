@@ -27,7 +27,7 @@
         size="sm"
         class="mr-1"
         @click="volume.toggleDetails">
-        {{ volume.item._showDetails ? 'Hide' : 'Show' }} Projects
+        {{ volume.detailsShowing ? 'Hide' : 'Show' }} Projects
       </b-btn>
       <slot name="action" :item="volume.item"></slot>
     </template>
@@ -145,17 +145,6 @@ export default {
         const cell = item[this.filterBy]
         return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
       })
-    }
-  },
-
-  methods: {
-    /**
-     * Show the project details for a volume.
-     * @param {Object} volume
-     *   The volume.
-     */
-    toggleProjectDetails (volume) {
-      volume._showDetails = !volume._showDetails
     }
   }
 }
