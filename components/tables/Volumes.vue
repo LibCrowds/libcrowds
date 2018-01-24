@@ -22,6 +22,7 @@
 
     <template slot="actions" scope="volume">
       <b-btn
+        v-if="showDetails"
         variant="info"
         size="sm"
         class="mr-1"
