@@ -133,7 +133,10 @@ export default {
     const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        volumes: data.volumes,
+        volumes: data.volumes.map(volume => {
+          volume._showDetails = false
+          return volume
+        }),
         unknownProjects: data.unknown_projects
       }
     })
