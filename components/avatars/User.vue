@@ -2,7 +2,7 @@
   <div class="user-avatar mx-auto d-inline" :style="`width: ${size}px;`">
 
     <v-gravatar
-      v-if="avatar === 'gravatar'"
+      v-if="avatar === 'gravatar' || hasError"
       v-b-tooltip
       :triggers="tooltipTriggers"
       :title="user.name"
@@ -21,8 +21,9 @@
       :title="user.name"
       :src="avatar"
       :style="style"
-      class="img-thumbnail rounded-circle">
-
+      class="img-thumbnail rounded-circle"
+      :onerror="hasError = true">
+    </img>
   </div>
 </template>
 
@@ -33,7 +34,8 @@ export default {
   data () {
     return {
       altTag: `Avatar for ${this.user.name}`,
-      avatar: null
+      avatar: null,
+      hasError: false
     }
   },
 

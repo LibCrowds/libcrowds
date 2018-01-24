@@ -1,7 +1,12 @@
 <template>
   <div class="project-avatar">
-    <img v-if="avatar" :src="avatar" :class="imgClass">
-    <div class="placeholder">
+    <img
+      v-if="avatar && !hasError"
+      :src="avatar"
+      :class="imgClass"
+      :onerror="hasError = true">
+    </img>
+    <div v-else class="placeholder">
       <icon name="picture-o" scale="4"></icon>
     </div>
   </div>
@@ -12,11 +17,12 @@ import localConfig from '@/local.config'
 import 'vue-awesome/icons/picture-o'
 
 export default {
-  data: function () {
+  data () {
     return {
       altTag: `Avatar for ${this.project.name}`,
       avatar: null,
-      imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
+      imgClass: `hoizontal-${this.horizontalBreakpoint}-up`,
+      hasError: false
     }
   },
 

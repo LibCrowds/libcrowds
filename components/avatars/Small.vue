@@ -1,7 +1,7 @@
 <template>
   <div class="small-avatar">
     <img
-      v-if="src"
+      v-if="src && !hasError"
       :src="src"
       class="img-fluid rounded-circle"
       :onerror="hasError = true">
