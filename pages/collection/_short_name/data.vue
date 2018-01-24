@@ -45,7 +45,8 @@
 
         <b-tab title="Volumes" no-body>
           <b-alert
-            :show="unknownProjects.length"
+            v-if="unknownProjects.length"
+            show
             variant="warning"
             class="mb-0">
             <p class="mb-0">
