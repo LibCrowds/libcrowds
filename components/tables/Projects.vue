@@ -5,9 +5,9 @@
       striped
       show-empty
       responsive
+      :outlined="outlined"
       :items="filteredItems"
       :fields="mergedFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
       <template slot="name" scope="project">
@@ -91,7 +91,7 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -106,15 +106,6 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedFields () {
       const fieldsCopy = merge({}, this.defaultFields, this.fields)
       if (this.$scopedSlots.action) {

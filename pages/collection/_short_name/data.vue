@@ -62,7 +62,6 @@
 
         <b-tab title="Projects" no-body>
           <projects-table
-            no-border
             :filter="filter"
             :filter-by="filterBy"
             :collection="collection">

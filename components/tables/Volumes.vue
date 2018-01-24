@@ -4,7 +4,7 @@
     striped
     hover
     show-empty
-    class="border-left-0 border-right-0 border-bottom-0"
+    :outlined="outlined"
     :items="filteredItems"
     :fields="mergedFields">
 
@@ -81,7 +81,7 @@ export default {
       type: Boolean,
       default: false
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -100,15 +100,6 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedFields () {
       const fields = merge({}, this.defaultFields, this.extraFields)
       if (this.showDetails) {

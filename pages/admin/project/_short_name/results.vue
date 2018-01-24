@@ -18,7 +18,6 @@
     </div>
 
     <results-table
-      no-border
       :project="project">
       <template slot="action" scope="result">
         <b-btn

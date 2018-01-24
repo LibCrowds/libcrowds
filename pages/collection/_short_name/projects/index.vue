@@ -60,7 +60,6 @@
           </b-form-input>
           <projects-table
             v-if="showProjectsTable"
-            no-border
             :filter="filter"
             :filter-by="filterBy"
             :collection="collection">

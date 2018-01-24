@@ -4,9 +4,9 @@
       hover
       striped
       show-empty
+      :outlined="outlined"
       :items="filteredItems"
       :fields="tableFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
       <template slot="nTags" scope="data">
@@ -79,22 +79,13 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     }
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     tableFields () {
       const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {

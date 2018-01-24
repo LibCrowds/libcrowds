@@ -194,7 +194,6 @@
           </p>
         </b-card-body>
         <projects-table
-          no-border
           :collection="collection">
           <template slot="action" scope="project">
             <b-btn

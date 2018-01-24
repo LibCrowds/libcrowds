@@ -5,9 +5,9 @@
       striped
       show-empty
       responsive
+      :outlined="outlined"
       :items="filteredItems"
       :fields="mergedFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
 
@@ -96,7 +96,7 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -111,15 +111,6 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedParams () {
       const mergedParams = Object.assign({}, this.searchParams)
       return Object.assign(mergedParams, this.sortParams)
