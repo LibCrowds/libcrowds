@@ -29,15 +29,21 @@ export const setCollectionDefaults = function (collection) {
         `projects from ${localConfig.brand}.`,
       data: 'All datasets generated from the experimental crowdsourcing ' +
         'projects hosted on this platform are made available under a CC0 ' +
-        'license.\n\nThere are three types of dataset available, all of ' +
-        'which can be downloaded in JSON or CSV format:\n\n ' +
-        '- **Tasks:** The task data.\n' +
-        '- **Task Runs:** The contribution data.\n' +
-        '- **Results:** The final results data.\n\n' +
-        'You can also generate a project report in CSV format that contains ' +
-        'some project and user statistics.\n\n' +
+        'license.\n\n' +
+        'The datasets are grouped by volume or project, further details' +
+        'of the contents of each can be found below.\n\n' +
         'We are keen for these datasets to be used in innovative ways, ' +
-        'perhaps to further research into new technologies.',
+        'perhaps to further research into new technologies.' +
+        '## Projects' +
+        'There are three types of project dataset available, all of ' +
+        'which can be downloaded in JSON or CSV format:\n\n ' +
+        '- **Tasks:** The input data for all tasks.\n' +
+        '- **Contributions:** The contribution data.\n' +
+        '- **Results:** The final results.\n\n' +
+        '## Volumes' +
+        'Volume datasets comprise the results data for all projects ' +
+        'associated with each volume. These are available in JSON and CSV ' +
+        'formats.',
       projects: ''
     },
     pubished: false,
