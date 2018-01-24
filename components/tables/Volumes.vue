@@ -114,11 +114,13 @@ export default {
       if (this.showDetails) {
         fields.n_ongoing_projects = {
           label: 'Ongoing Projects',
-          class: 'text-center'
+          class: 'text-center',
+          sortable: true
         }
         fields.n_completed_projects = {
           label: 'Completed Projects',
-          class: 'text-center'
+          class: 'text-center',
+          sortable: true
         }
       }
       if (this.showDetails || this.$scopedSlots.action) {
