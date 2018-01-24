@@ -22,7 +22,7 @@
           class="m-1"
           size="sm"
           @click="deleteVolume(volume.item.id)">
-          Remove
+          Delete
         </b-btn>
         <b-btn
           variant="success"
