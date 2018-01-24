@@ -41,6 +41,7 @@
           hover
           show-empty
           class="border-left-0 border-right-0 border-bottom-0"
+          empty-text="The are no available templates"
           :items="availableTemplates"
           :fields="templateTableFields">
           <template slot="actions" scope="tmpl">
@@ -143,6 +144,7 @@
           hover
           show-empty
           class="border-left-0 border-right-0 border-bottom-0"
+          empty-text="The are no available volumes"
           :items="availableVolumes"
           :fields="volumeTableFields">
           <template slot="thumbnail" scope="volume">
@@ -169,15 +171,26 @@
       </b-tab>
 
       <b-tab title="Parent" no-body>
-        <b-card-body>
+        <b-card-body v-if="selectedTemplate">
           <p class="lead">
             Choose a parent project
           </p>
           <p>
-            Choose a parent project that should be used to generate the tasks
-            for the new project. For example, you may want to generate a
-            transcription project from a the results of a previous marking
-            project.
+            The chosen template, {{ selectedTemplate['project']['name'] }}, specifies that it
+            must be built from a parent project. A task will be generated
+            for each result that was produced by the chosen parent. For
+            example, the parent project might contain tasks to mark up all
+            titles in a volume, with the child project containing tasks to
+            transcribe all of those titles.
+          </p>
+          <p>
+            If you are unsure about this stage,
+            please <a :href="`mailto:${localConfig.email}`">get in touch</a>
+            and we will be happy to help.
+          </p>
+          <p>
+            Choose a parent project from the list below. Only completed
+            projects are shown.
           </p>
         </b-card-body>
         <projects-table
@@ -204,7 +217,9 @@
             </li>
             <li class="mb-1">
               <strong>Template:</strong>
-              {{ selectedTemplateName }}
+              <template v-if="selectedTemplate">
+                {{ selectedTemplate['project']['name'] }}
+              </template>
             </li>
             <li class="mb-1">
               <strong>Volume:</strong>
@@ -386,12 +401,12 @@ export default {
       return `Create a new ${this.collection.name} project`
     },
 
-    selectedTemplateName () {
+    selectedTemplate () {
       const filtered = this.templates.filter(tmpl => {
         return tmpl.id === this.form.model.template_id
       })
       if (filtered.length) {
-        return filtered[0]['project']['name']
+        return filtered[0]
       }
     },
 

@@ -48,7 +48,7 @@ export default {
   },
 
   asyncData ({ app, params, error }) {
-    const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
+    const endpoint = `/libcrowds/categories/${params.short_name}/volumes/new`
     return app.$axios.$get(endpoint).then(data => {
       return {
         form: {

@@ -9,24 +9,16 @@
       :placeholder="`Type to search by ${filterBy}`">
     </b-form-input>
 
-    <b-table
-      responsive
-      striped
-      hover
-      show-empty
-      class="border-left-0 border-right-0 border-bottom-0"
-      :items="filteredVolumes"
-      :fields="fields">
-      <template slot="action" scope="volume">
+    <volumes-table :volumes="volumes">
+      <template slot="action" scope="vol">
         <b-btn
-          variant="success"
+          :variant="vol.item.id !== currentVolumeId ? 'success' : 'warning'"
           size="sm"
-          :disabled="volume.item.name == project.info.volume"
-          @click="setVolume(volume.item.name)">
-          Select
+          @click="updateVolume(vol.item)">
+          {{ vol.item.id !== currentVolumeId ? 'Select' : 'Deselect' }}
         </b-btn>
       </template>
-    </b-table>
+    </volumes-table>
   </card-base>
 </template>
 
@@ -35,6 +27,7 @@ import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
+import VolumesTable from '@/components/tables/Volumes'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -44,24 +37,15 @@ export default {
   data () {
     return {
       title: 'Volume',
-      description: 'Choose the volume that this project belongs to.',
-      fields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        action: {
-          label: 'Action',
-          class: 'text-center'
-        }
-      },
+      description: 'Choose the volume associated with this project.',
       filter: null,
       filterBy: 'name'
     }
   },
 
   components: {
-    CardBase
+    CardBase,
+    VolumesTable
   },
 
   computed: {
@@ -71,6 +55,10 @@ export default {
 
     volumes () {
       return this.$store.state.currentCollection.info.volumes
+    },
+
+    currentVolumeId () {
+      return this.project.info.volume_id
     },
 
     /**
@@ -91,17 +79,23 @@ export default {
 
   methods: {
     /**
-     * Set the volume for the project.
+     * Update the volume for the project.
      * @param {String} volume
      *   The volume.
      */
-    setVolume (volume) {
+    updateVolume (volume) {
       let infoClone = Object.assign({}, this.project.info)
-      infoClone.volume = volume
+
+      if (this.currentVolumeId === volume.id) {
+        infoClone.volume_id = null
+      } else {
+        infoClone.volume_id = volume.id
+      }
+
       this.$axios.$put(`/api/project/${this.project.id}`, {
         info: infoClone
       }).then(data => {
-        this.notifySuccess({ message: `Project moved to ${volume}` })
+        this.notifySuccess({ message: 'Volume updated' })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)

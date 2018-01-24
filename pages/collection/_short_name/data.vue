@@ -6,6 +6,8 @@
       <hr class="mx-0">
     </span>
 
+
+
     <card-base
       :title="title"
       id="download-data"
@@ -21,22 +23,63 @@
         :placeholder="`Type to search by ${filterBy}`">
       </b-form-input>
 
-      <projects-table
-        no-border
-        :filter="filter"
-        :filter-by="filterBy"
-        :collection="collection">
-        <template slot="action" scope="project">
-          <b-btn
-            variant="success"
-            size="sm"
-            block
-            v-b-modal="dataModalId"
-            @click="activeProject = project.item">
-            Download
-          </b-btn>
-        </template>
-      </projects-table>
+      <b-tabs ref="tabs" card>
+        <b-tab title="Projects" active no-body>
+          <projects-table
+            no-border
+            :filter="filter"
+            :filter-by="filterBy"
+            :collection="collection">
+            <template slot="action" scope="project">
+              <b-btn
+                variant="success"
+                size="sm"
+                block
+                v-b-modal="dataModalId"
+                @click="activeProject = project.item">
+                Download
+              </b-btn>
+            </template>
+          </projects-table>
+        </b-tab>
+
+        <b-tab title="Volumes" no-body>
+          <b-alert
+            :show="unknownProjects.length"
+            variant="warning"
+            class="mb-0">
+            <p class="mb-0">
+              The data below is incomplete as the collection contains projects
+              associated with a unknown volumes. This will need be fixed
+              by a {{ localConfig.name }} administrator.
+            </p>
+            <template v-if="currentUser.admin">
+              <p class="mb-2">
+                Please correct the volumes for the following projects:
+              </p>
+              <ul>
+                <li v-for="project in unknownProjects" :key="project.id">
+                  <nuxt-link
+                    :to="{
+                      name: 'admin-project-short_name-volume',
+                      params: {
+                        short_name: project.short_name
+                      }
+                    }">
+                    {{ project.name }}
+                  </nuxt-link>
+                </li>
+              </ul>
+            </template>
+          </b-alert>
+          <volumes-table
+            show-details
+            :volumes="volumes"
+            :filter="filter"
+            :filter-by="filterBy">
+          </volumes-table>
+        </b-tab>
+      </b-tabs>
     </card-base>
 
     <data-modal
@@ -51,6 +94,7 @@
 
 <script>
 import marked from 'marked'
+import localConfig from '@/local.config'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
@@ -62,6 +106,7 @@ import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import CardBase from '@/components/cards/Base'
+import VolumesTable from '@/components/tables/Volumes'
 
 export default {
   layout: 'collection-tabs',
@@ -75,12 +120,23 @@ export default {
 
   data () {
     return {
+      localConfig: localConfig,
       title: 'Data',
       activeProject: null,
       dataModalId: 'data-download-modal',
       filter: null,
       filterBy: 'name'
     }
+  },
+
+  asyncData ({ params, app, error }) {
+    const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        volumes: data.volumes,
+        unknownProjects: data.unknown_projects
+      }
+    })
   },
 
   components: {
@@ -90,7 +146,8 @@ export default {
     ProjectsTable,
     DataModal,
     ProjectSortingCard,
-    CardBase
+    CardBase,
+    VolumesTable
   },
 
   computed: {
@@ -109,6 +166,10 @@ export default {
           ${this.dataLicenses[this.collection.license].name} license.`
       }
       return 'Download the project data.'
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 

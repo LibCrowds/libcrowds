@@ -46,7 +46,7 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
+  asyncData ({ params, app, error }) {
     const endpoint = `/libcrowds/categories/${params.short_name}/volumes` +
       `/${params.id}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {

@@ -15,26 +15,8 @@
       </b-btn>
     </div>
 
-    <b-table
-      responsive
-      striped
-      hover
-      show-empty
-      class="border-left-0 border-right-0 border-bottom-0"
-      :items="collection.info.volumes"
-      :fields="fields">
-      <template slot="thumbnail" scope="volume">
-        <small-avatar
-          class="mx-auto"
-          :info="volume.item">
-        </small-avatar>
-      </template>
-      <template slot="source" scope="volume">
-        <a :href="volume.item.source" target="_blank">
-          {{ volume.item.source }}
-        </a>
-      </template>
-      <template slot="actions" scope="volume">
+    <volumes-table :volumes="volumes">
+      <template slot="action" scope="volume">
         <b-btn
           variant="warning"
           class="m-1"
@@ -56,16 +38,16 @@
           Update
         </b-btn>
       </template>
-    </b-table>
+    </volumes-table>
 
   </card-base>
 </template>
 
 <script>
-import SmallAvatar from '@/components/avatars/Small'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
+import VolumesTable from '@/components/tables/Volumes'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -76,31 +58,22 @@ export default {
   data () {
     return {
       title: 'Volumes',
-      description: `Manage the volumes that provide the input for projects.`,
-      fields: {
-        thumbnail: {
-          label: 'Thumbnail',
-          class: 'text-center'
-        },
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        source: {
-          label: 'Source',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      }
+      description: `Manage the volumes for the collection.`
     }
+  },
+
+  asyncData ({ params, app, error }) {
+    const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
+    return app.$axios.$get(endpoint).then(data => {
+      return {
+        volumes: data.volumes
+      }
+    })
   },
 
   components: {
     CardBase,
-    SmallAvatar
+    VolumesTable
   },
 
   computed: {
