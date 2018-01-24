@@ -124,16 +124,11 @@ export default {
     },
 
     filteredItems () {
-      const items = this.volumes.map(volume => {
-        volume._showDetails = false
-        return volume
-      })
-
       if (!this.filter || !this.filterBy) {
-        return items
+        return this.volumes
       }
 
-      return items.filter(item => {
+      return this.volumes.filter(item => {
         const value = this.filter.toUpperCase()
         const cell = item[this.filterBy]
         return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
