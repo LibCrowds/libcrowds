@@ -6,8 +6,6 @@
       <hr class="mx-0">
     </span>
 
-
-
     <card-base
       :title="title"
       id="download-data"
@@ -23,7 +21,7 @@
         :placeholder="`Type to search by ${filterBy}`">
       </b-form-input>
 
-      <b-tabs ref="tabs" card>
+      <b-tabs ref="tabs" card @input="filter = null">
         <b-tab title="Projects" active no-body>
           <projects-table
             no-border
