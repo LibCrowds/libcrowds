@@ -35,16 +35,10 @@
             Choose a template from the list below.
           </p>
         </b-card-body>
-        <b-table
-          responsive
-          striped
-          hover
-          show-empty
-          class="border-left-0 border-right-0 border-bottom-0"
-          empty-text="The are no available templates"
-          :items="availableTemplates"
-          :fields="templateTableFields">
-          <template slot="actions" scope="tmpl">
+        <templates-table
+          show-details
+          :templates="templates">
+          <template slot="action" scope="tmpl">
             <b-btn
               variant="success"
               class="m-1"
@@ -53,71 +47,8 @@
               @click="selectTemplate(tmpl.item.id)">
               Select
             </b-btn>
-            <b-btn
-              variant="info"
-              class="m-1"
-              size="sm"
-              @click.stop="tmpl.toggleDetails">
-              {{ tmpl.detailsShowing ? 'Hide' : 'Show' }} Details
-            </b-btn>
           </template>
-          <template slot="row-details" scope="tmpl">
-            <b-card>
-              <h5>Project Details</h5>
-              <ul class="list-unstyled">
-                <li v-for="key in Object.keys(tmpl.item.project)" :key="key">
-                  <strong>{{ key }}:</strong>
-                  {{ tmpl.item.project[key] }}
-                </li>
-                <h5 class="mt-3">Task Details</h5>
-                <li v-for="key in Object.keys(tmpl.item.task)" :key="key">
-                  <strong>{{ key }}:</strong>
-                  <template v-if="key === 'fields_schema'">
-                    <ul>
-                      <li
-                        v-for="field in tmpl.item.task[key]"
-                        :key="field">
-                        <strong>{{ field.model }}:</strong>
-                        <ul>
-                          <li
-                            v-for="fieldKey in Object.keys(field)"
-                            :key="fieldKey">
-                            <strong>{{ fieldKey }}:</strong>
-                            {{ field[fieldKey] }}
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </template>
-                  <template v-else-if="key === 'institutions'">
-                    <ul>
-                      <li
-                        v-for="code in tmpl.item.task[key]"
-                        :key="code">
-                        {{ code }}
-                      </li>
-                    </ul>
-                  </template>
-                  <template v-else>
-                    {{ tmpl.item.task[key] }}
-                  </template>
-                </li>
-                <h5 class="mt-3">Analysis Details</h5>
-                <template v-if="tmpl.item.rules">
-                  <li
-                    v-for="key in Object.keys(tmpl.item.rules)"
-                    :key="key">
-                    <strong>{{ key }}:</strong>
-                    {{ tmpl.item.rules[key] }}
-                  </li>
-                </template>
-                <template v-else>
-                  <li>None</li>
-                </template>
-              </ul>
-            </b-card>
-          </template>
-        </b-table>
+        </templates-table>
       </b-tab>
 
       <!-- Volume selection tab -->
@@ -138,27 +69,8 @@
             Choose a volume from the list below.
           </p>
         </b-card-body>
-        <b-table
-          responsive
-          striped
-          hover
-          show-empty
-          class="border-left-0 border-right-0 border-bottom-0"
-          empty-text="The are no available volumes"
-          :items="availableVolumes"
-          :fields="volumeTableFields">
-          <template slot="thumbnail" scope="volume">
-            <small-avatar
-              class="mx-auto"
-              :info="volume.item">
-            </small-avatar>
-          </template>
-          <template slot="source" scope="volume">
-            <a :href="volume.item.source" target="_blank">
-              {{ volume.item.source }}
-            </a>
-          </template>
-          <template slot="actions" scope="volume">
+        <volumes-table :volumes="volumes">
+          <template slot="action" scope="volume">
             <b-btn
               variant="success"
               size="sm"
@@ -167,7 +79,7 @@
               Select
             </b-btn>
           </template>
-        </b-table>
+        </volumes-table>
       </b-tab>
 
       <b-tab title="Parent" no-body>
@@ -285,6 +197,8 @@ import CardBase from '@/components/cards/Base'
 import SmallAvatar from '@/components/avatars/Small'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectsTable from '@/components/tables/Projects'
+import TemplatesTable from '@/components/tables/Templates'
+import VolumesTable from '@/components/tables/Volumes'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -295,16 +209,6 @@ export default {
     return {
       tabIndex: 0,
       localConfig: localConfig,
-      templateTableFields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
       volumeTableFields: {
         thumbnail: {
           label: 'Thumbnail',
@@ -350,8 +254,14 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         endpoint: endpoint,
-        templates: data.templates,
-        volumes: data.volumes,
+        templates: data.templates.map(tmpl => {
+          tmpl._showDetails = false
+          return tmpl
+        }),
+        volumes: data.volumes.map(vol => {
+          vol._showDetails = false
+          return vol
+        }),
         form: {
           endpoint: endpoint,
           method: 'post',
@@ -371,7 +281,9 @@ export default {
     CardBase,
     InfiniteLoadingTable,
     ProjectsTable,
-    SmallAvatar
+    SmallAvatar,
+    TemplatesTable,
+    VolumesTable
   },
 
   computed: {
@@ -470,16 +382,6 @@ export default {
           vol._rowVariant = 'success'
         }
         return vol
-      })
-    },
-
-    /**
-     * List the available templates.
-     */
-    availableTemplates () {
-      return this.templates.map(tmpl => {
-        tmpl.name = tmpl.project.name
-        return tmpl
       })
     },
 

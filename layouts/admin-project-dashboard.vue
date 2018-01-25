@@ -154,6 +154,15 @@ export default {
               short_name: this.project.short_name
             }
           }
+        },
+        {
+          label: 'Template',
+          link: {
+            name: 'admin-project-short_name-template',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
         }
       ]
     },

@@ -80,7 +80,7 @@ export default {
   methods: {
     /**
      * Update the volume for the project.
-     * @param {String} volume
+     * @param {Object} volume
      *   The volume.
      */
     updateVolume (volume) {

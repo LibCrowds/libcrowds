@@ -26,15 +26,11 @@
         v-for="collection in publishedCollections"
         :title="collection.name"
         :key="collection.id">
-        <b-table
-          responsive
-          striped
-          hover
-          show-empty
-          class="border-left-0 border-right-0 border-bottom-0"
-          :items="getCollectionTemplates(collection.id)"
-          :fields="tableFields">
-          <template slot="actions" scope="template">
+        <templates-table
+          show-details
+          :collection-id="collection.id"
+          :templates="templates">
+          <template slot="action" scope="template">
             <b-btn
               variant="success"
               size="sm"
@@ -48,7 +44,7 @@
               Open
             </b-btn>
           </template>
-        </b-table>
+        </templates-table>
       </b-tab>
     </b-tabs>
   </card-base>
@@ -57,6 +53,7 @@
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
+import TemplatesTable from '@/components/tables/Templates'
 
 export default {
   layout: 'templates-dashboard',
@@ -66,21 +63,7 @@ export default {
   data () {
     return {
       title: 'Project Templates',
-      description: 'Create and manage your project templates.',
-      tableFields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        description: {
-          label: 'Description',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      }
+      description: 'Create and manage your project templates.'
     }
   },
 
@@ -88,13 +71,17 @@ export default {
     const endpoint = `/libcrowds/users/${params.name}/templates`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        templates: data.templates
+        templates: data.templates.map(tmpl => {
+          tmpl._showDetails = false
+          return tmpl
+        })
       }
     })
   },
 
   components: {
-    CardBase
+    CardBase,
+    TemplatesTable
   },
 
   computed: {
@@ -104,22 +91,6 @@ export default {
 
     publishedCollections () {
       return this.$store.state.publishedCollections
-    }
-  },
-
-  methods: {
-    /**
-     * Get the templates for a collection.
-     * @param {Number} id
-     *   The category ID.
-     */
-    getCollectionTemplates (id) {
-      return this.templates.map(template => {
-        template.project.id = template.id
-        return template.project
-      }).filter(template => {
-        return template.category_id === id
-      })
     }
   },
 
