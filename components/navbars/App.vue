@@ -62,13 +62,24 @@
             }">
             Open Project
           </b-dropdown-item>
+          <div role="separator" class="dropdown-divider"></div>
+          <b-dropdown-item
+            :to="{
+              name: 'account-name-templates-new',
+              params: {
+                name: currentUser.name
+              }
+            }">
+            New Template
+          </b-dropdown-item>
           <b-dropdown-item
             :to="{
               name: 'account-name-templates',
               params: {
                 name: currentUser.name
               }
-            }">Templates
+            }">
+            Open Template
           </b-dropdown-item>
         </span>
 
