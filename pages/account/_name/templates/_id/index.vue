@@ -1,5 +1,10 @@
 <template>
   <card-base :title="title" :description="description">
+    <p slot="guidance">
+      Update the core details for the template below. Note that these changes
+      will not apply to projects that have already been created from this
+      template.
+    </p>
     <pybossa-form
       submit-text="Update"
       :form="form">
