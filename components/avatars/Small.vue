@@ -1,30 +1,24 @@
 <template>
   <div class="small-avatar">
-    <img
-      v-if="src && !hasError"
+    <base-avatar
       :src="src"
-      class="img-fluid rounded-circle"
-      :onerror="hasError = true">
-    </img>
-    <div
-      v-else
-      class="img-fluid rounded-circle placeholder">
-      <icon name="question"></icon>
-    </div>
+      img-class="img-fluid rounded-circle"
+      alt-tag="Small thumbnail image">
+      <div
+        slot="placeholder"
+        class="img-fluid rounded-circle placeholder">
+        <icon name="question"></icon>
+      </div>
+    </base-avatar>
   </div>
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import 'vue-awesome/icons/picture-o'
+import localConfig from '@/local.config'
+import BaseAvatar from '@/components/avatars/Base'
 
 export default {
-  data () {
-    return {
-      hasError: false
-    }
-  },
-
   props: {
     info: {
       type: Object,
@@ -32,8 +26,13 @@ export default {
     }
   },
 
+  components: {
+    BaseAvatar
+  },
+
   computed: {
     src () {
+      this.hasError = false
       let url = null
       if (this.info.avatar_url) {
         url = this.info.avatar_url
@@ -49,12 +48,6 @@ export default {
       }
       return null
     }
-  },
-
-  watch: {
-    domainObject () {
-      this.hasError = false
-    }
   }
 }
 </script>
@@ -69,7 +62,8 @@ export default {
   min-width: 3rem;
   min-height: 3rem;
 
-  &>* {
+  .base-avatar,
+  .placeholder {
     max-width: 3rem;
     max-height: 3rem;
     min-width: 3rem;

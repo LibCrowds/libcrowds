@@ -1,41 +1,36 @@
 <template>
   <div class="user-avatar mx-auto d-inline" :style="`width: ${size}px;`">
-
-    <v-gravatar
-      v-if="avatar === 'gravatar' || hasError"
-      v-b-tooltip
-      :triggers="tooltipTriggers"
-      :title="user.name"
-      :email="user.name"
-      :size="size"
-      default-img="identicon"
-      :alt="altTag"
-      :style="style"
-      class="img-thumbnail rounded-circle">
-    </v-gravatar>
-
-    <img
-      v-else
-      v-b-tooltip
-      :triggers="tooltipTriggers"
-      :title="user.name"
-      :src="avatar"
-      :style="style"
-      class="img-thumbnail rounded-circle"
-      :onerror="hasError = true">
-    </img>
+    <base-avatar
+      :src="src"
+      img-class="img-thumbnail rounded-circle"
+      :img-style="style"
+      :alt-tag="altTag"
+      :tooltip="user.name"
+      :tooltip-triggers="tooltipTriggers">
+      <v-gravatar
+        slot="placeholder"
+        v-b-tooltip
+        :triggers="tooltipTriggers"
+        :title="user.name"
+        :email="user.name"
+        :size="size"
+        default-img="identicon"
+        :alt="altTag"
+        :style="style"
+        class="img-thumbnail rounded-circle">
+      </v-gravatar>
+    </base-avatar>
   </div>
 </template>
 
 <script>
 import localConfig from '@/local.config'
+import BaseAvatar from '@/components/avatars/Base'
 
 export default {
   data () {
     return {
-      altTag: `Avatar for ${this.user.name}`,
-      avatar: null,
-      hasError: false
+      altTag: `Avatar for ${this.user.name}`
     }
   },
 
@@ -54,38 +49,31 @@ export default {
     }
   },
 
-  computed: {
-    style () {
-      return {
-        width: `${this.size}px`
-      }
-    }
+  components: {
+    BaseAvatar
   },
 
-  methods: {
-    /**
-     * Load an avatar.
-     * @param {String} avatarUrl
-     *   The avatar URL.
-     */
-    loadAvatar (avatarUrl) {
-      // Use Gravatar if no custom avatar is available
+  computed: {
+    src () {
+      this.hasError = false
+      const avatarUrl = this.user.info.avatar_url
+
+      // Will use Gravatar if no custom avatar is available
       if (avatarUrl === undefined || avatarUrl === null) {
-        this.avatar = 'gravatar'
-        return
+        return null
       }
 
       // Prepend the pybossa host if a standard upload
       if (avatarUrl.indexOf('/uploads') > -1) {
-        this.avatar = localConfig.pybossaHost + avatarUrl
-        return
+        return localConfig.pybossaHost + avatarUrl
       }
-      this.avatar = avatarUrl
-    }
-  },
 
-  created () {
-    this.loadAvatar(this.user.info.avatar_url)
+      return avatarUrl
+    },
+
+    style () {
+      return `width: ${this.size}px;`
+    }
   }
 }
 </script>
