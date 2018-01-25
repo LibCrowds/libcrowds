@@ -69,7 +69,7 @@
     <b-card-body v-else>
       <b-alert show variant="warning" class="mb-0">
         Analysis rules are currently only available for IIIF transcribe
-        templates.
+        templates (those with transcribe mode chosen in the task details).
       </b-alert>
     </b-card-body>
   </card-base>
