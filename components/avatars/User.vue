@@ -55,12 +55,11 @@ export default {
 
   computed: {
     src () {
-      this.hasError = false
       const avatarUrl = this.user.info.avatar_url
 
       // Will use Gravatar if no custom avatar is available
       if (avatarUrl === undefined || avatarUrl === null) {
-        return
+        return ''
       }
 
       // Prepend the pybossa host if a standard upload

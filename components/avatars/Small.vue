@@ -32,7 +32,6 @@ export default {
 
   computed: {
     src () {
-      this.hasError = false
       let url = null
       if (this.info.avatar_url) {
         url = this.info.avatar_url
@@ -46,6 +45,7 @@ export default {
       } else if (url) {
         return url
       }
+      return ''
     }
   }
 }

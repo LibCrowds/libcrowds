@@ -33,15 +33,15 @@ export default {
     },
     imgClass: {
       type: String,
-      default: null
+      default: ''
     },
     imgStyle: {
       type: String,
-      default: null
+      default: ''
     },
     tooltip: {
       type: String,
-      default: null
+      default: ''
     },
     tooltipTriggers: {
       type: [Boolean, String, Array],
