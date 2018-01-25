@@ -9,13 +9,14 @@
       :placeholder="`Type to search by ${filterBy}`">
     </b-form-input>
 
-    <b-tabs ref="tabs" card @input="filter = null">
+    <b-tabs card @input="onTabChange">
       <b-tab
         no-body
-        v-for="collection in publishedCollections"
+        v-for="(collection, index) in publishedCollections"
         :title="collection.name"
         :key="collection.id">
         <projects-table
+          :ref="`table-${index}`"
           :filter="filter"
           :filter-by="filterBy"
           :collection="collection">
@@ -74,6 +75,21 @@ export default {
 
     publishedCollections () {
       return this.$store.state.publishedCollections
+    }
+  },
+
+  methods: {
+    /**
+     * Handle tab change.
+     * @param {Number} index
+     *   The tab index.
+     */
+    onTabChange (index) {
+      this.filter = null
+      const table = this.$refs[`table-${index}`][0]
+      if (typeof table !== 'undefined') {
+        table.reset()
+      }
     }
   },
 
