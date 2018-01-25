@@ -16,7 +16,7 @@
 
       <div slot="share">
         <span v-html="shareText"></span>
-        <b-input-group-button class="mb-2" slot="right">
+        <b-input-group-append class="mb-2">
           <b-form-input
             id="share-input"
             v-if="viewerShareUrl"
@@ -24,7 +24,7 @@
             :value="viewerShareUrl">
           </b-form-input>
           <clipboard-button :content="viewerShareUrl"></clipboard-button>
-        </b-input-group-button>
+        </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
             <span v-if="viewerShareUrl">
