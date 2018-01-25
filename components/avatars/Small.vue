@@ -46,7 +46,6 @@ export default {
       } else if (url) {
         return url
       }
-      return null
     }
   }
 }

@@ -60,7 +60,7 @@ export default {
 
       // Will use Gravatar if no custom avatar is available
       if (avatarUrl === undefined || avatarUrl === null) {
-        return null
+        return
       }
 
       // Prepend the pybossa host if a standard upload

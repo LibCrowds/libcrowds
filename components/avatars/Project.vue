@@ -40,7 +40,7 @@ export default {
       const thumbnailUrl = this.project.info.thumbnail_url
 
       if (thumbnailUrl === undefined || thumbnailUrl === null) {
-        return null
+        return
       }
 
       if (thumbnailUrl.indexOf('/uploads') > -1) {
