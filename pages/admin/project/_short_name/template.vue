@@ -1,26 +1,18 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-tabs ref="tabs" card>
-      <b-tab
-        no-body
-        v-for="collection in publishedCollections"
-        :title="collection.name"
-        :key="collection.id">
-        <templates-table
-          show-details
-          :collection-id="collection.id"
-          :templates="templates">
-          <template slot="action" scope="tmpl">
-            <b-btn
-              :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
-              size="sm"
-              @click="updateTemplate(tmpl.item)">
-              {{ tmpl.item.id !== currentTmplId ? 'Select' : 'Deselect' }}
-            </b-btn>
-          </template>
-        </templates-table>
-      </b-tab>
-    </b-tabs>
+    <templates-table
+      show-details
+      :collection-id="project.category_id"
+      :templates="templates">
+      <template slot="action" scope="tmpl">
+        <b-btn
+          :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
+          size="sm"
+          @click="updateTemplate(tmpl.item)">
+          {{ tmpl.item.id !== currentTmplId ? 'Select' : 'Deselect' }}
+        </b-btn>
+      </template>
+    </templates-table>
   </card-base>
 </template>
 
