@@ -9,26 +9,32 @@
       :placeholder="`Type to search by ${filterBy}`">
     </b-form-input>
 
-    <infinite-loading-table
-      domainObject="project"
-      :fields="tableFields"
-      :filter="filter"
-      :filter-by="filterBy"
-      :search-params="searchParams">
-      <template slot="action" scope="project">
-        <b-btn
-          variant="success"
-          size="sm"
-          :to="{
-            name: 'admin-project-short_name-details',
-            params: {
-              short_name: project.item.short_name
-            }
-          }">
-          Open
-        </b-btn>
-      </template>
-    </infinite-loading-table>
+    <b-tabs ref="tabs" card @input="filter = null">
+      <b-tab
+        no-body
+        v-for="collection in publishedCollections"
+        :title="collection.name"
+        :key="collection.id">
+        <projects-table
+          :filter="filter"
+          :filter-by="filterBy"
+          :collection="collection">
+          <template slot="action" scope="project">
+            <b-btn
+              variant="success"
+              size="sm"
+              :to="{
+                name: 'admin-project-short_name-details',
+                params: {
+                  short_name: project.item.short_name
+                }
+              }">
+              Open
+            </b-btn>
+          </template>
+        </projects-table>
+      </b-tab>
+    </b-tabs>
 
   </card-base>
 </template>
@@ -37,6 +43,7 @@
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
+import ProjectsTable from '@/components/tables/Projects'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -47,25 +54,6 @@ export default {
     return {
       title: 'Open Project',
       description: 'Manage your projects',
-      tableFields: {
-        name: {
-          label: 'Name'
-        },
-        nTags: {
-          label: 'Tags',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        published: {
-          label: 'Published',
-          class: 'text-center d-none d-lg-table-cell',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
       filter: null,
       filterBy: 'name'
     }
@@ -73,7 +61,8 @@ export default {
 
   components: {
     InfiniteLoadingTable,
-    CardBase
+    CardBase,
+    ProjectsTable
   },
 
   computed: {
@@ -81,6 +70,10 @@ export default {
       return this.$store.state.currentUser.admin
         ? {}
         : { owner_id: this.$store.state.currentUser.id }
+    },
+
+    publishedCollections () {
+      return this.$store.state.publishedCollections
     }
   },
 
