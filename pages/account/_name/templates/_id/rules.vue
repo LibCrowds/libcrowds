@@ -53,6 +53,18 @@
         </label>
       </div>
 
+      <div slot="bottom" class="d-flex form-group mt-1">
+        <toggle-button
+          :value="form.model.target_from_select_parent"
+          :sync="true"
+          :labels="true"
+          @change="updateModelBoolean('target_from_select_parent', $event)">
+        </toggle-button>
+        <label class="ml-1">
+          Set annotation target from parent project selection
+        </label>
+      </div>
+
     </pybossa-form>
     <b-card-body v-else>
       <b-alert show variant="warning" class="mb-0">
