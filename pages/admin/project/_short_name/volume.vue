@@ -32,6 +32,8 @@ import VolumesTable from '@/components/tables/Volumes'
 export default {
   layout: 'admin-project-dashboard',
 
+  middleware: 'is-admin',
+
   mixins: [ fetchProjectAndCollection, notifications, metaTags ],
 
   data () {

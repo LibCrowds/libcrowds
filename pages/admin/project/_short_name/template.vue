@@ -34,6 +34,8 @@ import TemplatesTable from '@/components/tables/Templates'
 export default {
   layout: 'admin-project-dashboard',
 
+  middleware: 'is-admin',
+
   mixins: [ fetchProjectAndCollection, notifications, metaTags ],
 
   data () {
