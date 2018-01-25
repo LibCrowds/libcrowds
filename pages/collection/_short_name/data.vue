@@ -31,7 +31,7 @@
             <p class="mb-0">
               The data below is incomplete as the collection contains projects
               associated with a unknown volumes. This will need be fixed
-              by a {{ localConfig.name }} administrator.
+              by a {{ localConfig.brand }} administrator.
             </p>
             <template v-if="currentUser.admin">
               <p class="mb-2">
