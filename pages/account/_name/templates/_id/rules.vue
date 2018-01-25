@@ -61,7 +61,7 @@
           @change="updateModelBoolean('target_from_select_parent', $event)">
         </toggle-button>
         <label class="ml-1">
-          Set annotation target from parent project selection
+          Set annotation target from parent selection task
         </label>
       </div>
 
