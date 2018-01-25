@@ -1,6 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-tabs ref="tabs" card>
+    <b-tabs card>
       <b-tab title="Details" active no-body>
         <pybossa-form
           submit-text="Update Details"

@@ -21,7 +21,7 @@
         :placeholder="`Type to search by ${filterBy}`">
       </b-form-input>
 
-      <b-tabs ref="tabs" card @input="onTabsChange">
+      <b-tabs card @input="onTabsChange">
         <b-tab title="Volumes" no-body active>
           <b-alert
             v-if="unknownProjects.length"

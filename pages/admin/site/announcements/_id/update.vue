@@ -13,7 +13,7 @@
       </toggle-button>
     </div>
 
-    <b-tabs ref="tabs"  card>
+    <b-tabs card>
       <b-tab title="Core Details" active no-body>
         <pybossa-form
           submit-text="Update"

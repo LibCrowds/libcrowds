@@ -20,7 +20,7 @@
       clicking <strong>Open</strong>.
     </p>
 
-    <b-tabs ref="tabs" card>
+    <b-tabs card>
       <b-tab
         no-body
         v-for="collection in publishedCollections"
