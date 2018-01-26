@@ -31,10 +31,10 @@
 
       <div slot="bottom" class="d-flex form-group mt-1">
         <toggle-button
-          :value="form.model.trimpunctuation"
+          :value="form.model.trim_punctuation"
           :sync="true"
           :labels="true"
-          @change="updateModelBoolean('trimpunctuation', $event)">
+          @change="updateModelBoolean('trim_punctuation', $event)">
         </toggle-button>
         <label class="ml-1">
           Trim punctuation from the begining and end of transcribed text

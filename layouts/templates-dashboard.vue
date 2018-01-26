@@ -56,10 +56,11 @@ export default {
     },
 
     titleBase () {
-      if (typeof this.currentTemplate === 'undefined') {
+      try {
+        return this.currentTemplate.project.name
+      } catch (err) {
         return ''
       }
-      return this.currentTemplate.name
     },
 
     rootNavItems () {
