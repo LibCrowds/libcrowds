@@ -8,8 +8,22 @@
         <b-btn
           :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
           size="sm"
+          class="m-1"
           @click="updateTemplate(tmpl.item)">
           {{ tmpl.item.id !== currentTmplId ? 'Select' : 'Deselect' }}
+        </b-btn>
+        <b-btn
+          variant="success"
+          size="sm"
+          class="m-1"
+          :to="{
+            name: 'account-name-templates-id',
+            params: {
+              name: currentUser.name,
+              id: tmpl.item.id
+            }
+          }">
+          Edit
         </b-btn>
       </template>
     </templates-table>
@@ -66,6 +80,10 @@ export default {
 
     publishedCollections () {
       return this.$store.state.publishedCollections
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 
