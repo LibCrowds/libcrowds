@@ -1,33 +1,16 @@
 <template>
   <card-base :title="title" :description="description">
+
+    <b-card-body v-if="!currentTemplate.task">
+      <b-alert show variant="warning" class="mb-0">
+        You must configure the task before setting the analysis rules.
+      </b-alert>
+    </b-card-body>
+
     <pybossa-form
-      v-if="hasAnalysisRules"
+      v-else
       submit-text="Update"
       :form="form">
-
-      <div slot="bottom" class="d-flex form-group mt-1">
-        <toggle-button
-          :value="form.model.titlecase"
-          :sync="true"
-          :labels="true"
-          @change="updateModelBoolean('titlecase', $event)">
-        </toggle-button>
-        <label class="ml-1">
-          Convert to titlecase
-        </label>
-      </div>
-
-      <div slot="bottom" class="d-flex form-group mt-1">
-        <toggle-button
-          :value="form.model.whitespace"
-          :sync="true"
-          :labels="true"
-          @change="updateModelBoolean('whitespace', $event)">
-        </toggle-button>
-        <label class="ml-1">
-          Normalise whitespace, removing any multiple spaces between words
-        </label>
-      </div>
 
       <div slot="bottom" class="d-flex form-group mt-1">
         <toggle-button
@@ -41,7 +24,10 @@
         </label>
       </div>
 
-      <div slot="bottom" class="d-flex form-group mt-1">
+      <div
+        v-if="presenter == 'iiif-annotation'"
+        slot="bottom"
+        class="d-flex form-group mt-1">
         <toggle-button
           :value="form.model.concatenate"
           :sync="true"
@@ -53,7 +39,10 @@
         </label>
       </div>
 
-      <div slot="bottom" class="d-flex form-group mt-1">
+      <div
+        v-if="presenter == 'iiif-annotation'"
+        slot="bottom"
+        class="d-flex form-group mt-1">
         <toggle-button
           :value="form.model.target_from_select_parent"
           :sync="true"
@@ -66,12 +55,6 @@
       </div>
 
     </pybossa-form>
-    <b-card-body v-else>
-      <b-alert show variant="warning" class="mb-0">
-        Analysis rules are currently only available for IIIF transcribe
-        templates (those with transcribe mode chosen in the task details).
-      </b-alert>
-    </b-card-body>
   </card-base>
 </template>
 
@@ -105,7 +88,60 @@ export default {
           method: 'post',
           model: data.form,
           schema: {
-            fields: [] // toggles used for all fields instead
+            fields: [
+              {
+                model: 'case',
+                label: 'Convert Case',
+                type: 'select',
+                values: [
+                  {
+                    id: '',
+                    name: 'Do not convert'
+                  },
+                  {
+                    id: 'title',
+                    name: 'Titlecase'
+                  },
+                  {
+                    id: 'lower',
+                    name: 'Lowercase'
+                  },
+                  {
+                    id: 'upper',
+                    name: 'Uppercase'
+                  }
+                ],
+                selectOptions: {
+                  hideNoneSelectedText: true
+                }
+              },
+              {
+                model: 'whitespace',
+                label: 'Whitespace handling',
+                type: 'select',
+                values: [
+                  {
+                    id: '',
+                    name: 'Do not modify'
+                  },
+                  {
+                    id: 'normalise',
+                    name: 'Normalise'
+                  },
+                  {
+                    id: 'underscore',
+                    name: 'Replace with underscores'
+                  },
+                  {
+                    id: 'full_stop',
+                    name: 'Replace with full stops'
+                  }
+                ],
+                selectOptions: {
+                  hideNoneSelectedText: true
+                }
+              }
+            ]
           }
         }
       }
@@ -117,14 +153,6 @@ export default {
   computed: {
     currentTemplate () {
       return this.$store.state.currentTemplate
-    },
-
-    hasAnalysisRules () {
-      const task = this.currentTemplate.task
-      if (typeof task !== 'object') {
-        return false
-      }
-      return this.presenter === 'iiif-annotation' && task.mode === 'transcribe'
     }
   },
 
