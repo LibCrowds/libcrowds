@@ -32,7 +32,7 @@
           <pre class=".pre-scrollable mb-0">
             <code>
 <!-- No indentation to force correct indentation in code block -->
-{{ JSON.stringify(result.item.info, null, 2) }}
+{{ JSON.stringify(result.item, null, 2) }}
             </code>
           </pre>
         </b-card>
