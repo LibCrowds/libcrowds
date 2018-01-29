@@ -121,6 +121,16 @@ export default {
           }
         },
         {
+          label: 'Tutorial',
+          link: {
+            name: 'account-name-templates-id-tutorial',
+            params: {
+              name: this.currentUser.name,
+              id: this.currentTemplate.id
+            }
+          }
+        },
+        {
           label: 'Delete',
           link: {
             name: 'account-name-templates-id-delete',
