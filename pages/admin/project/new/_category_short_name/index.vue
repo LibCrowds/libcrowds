@@ -183,7 +183,7 @@
         </b-btn>
         <b-btn
           variant="success"
-          :disabled="!canCreate"
+          :disabled="!canCreate && !generating"
           @click="createProject">
           Create
         </b-btn>
@@ -195,7 +195,6 @@
 
 <script>
 import capitalize from 'capitalize'
-import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config.js'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
@@ -304,11 +303,9 @@ export default {
     },
 
     canCreate () {
-      console.log(this.form.model, this.generating)
       return (
-        !isEmpty(this.form.model.template_id) &&
-        !isEmpty(this.form.model.volume_id) &&
-        !this.generating
+        this.form.model.template_id !== 'None' &&
+        this.form.model.volume_id !== 'None'
       )
     },
 
