@@ -31,11 +31,16 @@ export default {
               required: true,
               validator: (value) => {
                 const keys = this.model.map(field => field.model)
+                const re = /^[A-Za-z0-9_]*$/;
                 if (!value || !value.length) {
                   return 'This field is required!'
                 }
                 if (keys.indexOf(value) > -1) {
                   return 'The model already contains this key'
+                }
+                if (!re.test(value)) {
+                  return 'Can only contain Latin characters, numbers ' +
+                    'or underscores'
                 }
               }
             },
