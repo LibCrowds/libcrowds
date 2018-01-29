@@ -31,7 +31,7 @@ export default {
               required: true,
               validator: (value) => {
                 const keys = this.model.map(field => field.model)
-                const re = /^[A-Za-z0-9_]*$/;
+                const re = /^[A-Za-z0-9_]*$/
                 if (!value || !value.length) {
                   return 'This field is required!'
                 }
