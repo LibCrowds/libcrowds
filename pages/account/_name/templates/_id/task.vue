@@ -42,16 +42,6 @@
           selected, you will be given additional options to configure the
           form that is shown to volunteers.
         </li>
-        <li>
-          <strong>
-            Choose to build from the results of a selection parent project:
-          </strong>
-          When a project is built from the results of a selection parent
-          project a task is generated for each selection made in that parent
-          project. In this way projects can be chained to mark up partiular
-          regions of an image in a parent project and transcribe them in a
-          child project.
-        </li>
       </ol>
     </p>
 
@@ -156,21 +146,6 @@
             </b-btn>
           </b-input-group-append>
         </b-input-group>
-      </div>
-
-      <div
-        v-if="showBuildFromParentInput"
-        slot="bottom"
-        class="d-flex form-group mt-3">
-        <toggle-button
-          :value="form.model.build_from_parent"
-          :sync="true"
-          :labels="true"
-          @change="form.model.build_from_parent = !form.model.build_from_parent">
-        </toggle-button>
-        <label class="ml-1">
-          Build from the results of a selection parent project
-        </label>
       </div>
     </pybossa-form>
 
@@ -315,10 +290,6 @@ export default {
 
     showInstitutionCodesInput () {
       return this.presenter === 'z3950'
-    },
-
-    showBuildFromParentInput () {
-      return this.presenter === 'iiif-annotation'
     },
 
     institutionCodeTableItems () {
