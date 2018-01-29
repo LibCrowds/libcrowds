@@ -1,6 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-tabs small card v-model="tabIndex">
+    <b-tabs small card v-model="tabIndex" @input="onTabsChange">
 
       <!-- Template selection tab -->
       <b-tab title="Template" no-body>
@@ -66,10 +66,14 @@
             will see if it can be made available.
           </p>
           <p>
+            Note that volumes for which a project has already been built from
+            the selected template are excluded from this list.
+          </p>
+          <p>
             Choose a volume from the list below.
           </p>
         </b-card-body>
-        <volumes-table :volumes="volumes">
+        <volumes-table :volumes="availableVolumes">
           <template slot="action" scope="volume">
             <b-btn
               variant="success"
@@ -83,16 +87,16 @@
       </b-tab>
 
       <b-tab title="Parent" no-body>
-        <b-card-body v-if="selectedTemplate">
+        <b-card-body v-if="collection.info.presenter === 'iiif-annotation'">
           <p class="lead">
             Choose a parent project
           </p>
           <p>
-            The chosen template, {{ selectedTemplate['project']['name'] }}, specifies that it
-            must be built from a parent project. A task will be generated
-            for each result that was produced by the chosen parent. For
-            example, the parent project might contain tasks to mark up all
-            titles in a volume, with the child project containing tasks to
+            IIIF Annotation projects can be built from an optional parent
+            project. When a project is built from a parent, a task will be
+            generated for each result that was produced by that parent.
+            For example, the parent project might contain tasks to mark up all
+            titles in a volume. The  child project containing tasks to
             transcribe all of those titles.
           </p>
           <p>
@@ -106,6 +110,9 @@
           </p>
         </b-card-body>
         <projects-table
+          ref="projects-table"
+          filter="100"
+          filter-by="overall_progress"
           :collection="collection">
           <template slot="action" scope="project">
             <b-btn
@@ -269,7 +276,8 @@ export default {
           schema: {
             fields: [] // Tables used instead
           }
-        }
+        },
+        built_templates: data.built_templates
       }
     }).catch(err => {
       error(err)
@@ -328,6 +336,18 @@ export default {
       if (filtered.length) {
         return filtered[0].name
       }
+    },
+
+    availableVolumes () {
+      const tmplId = this.form.model.template_id
+      const built = tmplId in this.built_templates
+        ? this.built_templates[tmplId]
+        : []
+
+      // List the available volumes for the selected template.
+      return this.volumes.filter(vol => {
+        return built.indexOf(vol.id) < 0
+      })
     }
   },
 
@@ -339,6 +359,7 @@ export default {
      */
     selectTemplate (id) {
       this.form.model.template_id = id
+      this.form.model.volume_id = null
       this.tabIndex++
       this.highlightSelectedRows()
     },
@@ -386,13 +407,6 @@ export default {
     },
 
     /**
-     * List the available volumes.
-     */
-    availableVolumes () {
-      return this.volumes
-    },
-
-    /**
      * Create a project.
      */
     createProject () {
@@ -419,6 +433,17 @@ export default {
           type: data.status
         })
       })
+    },
+
+    /**
+     * Handle tabs being changed.
+     */
+    onTabsChange () {
+      this.filter = null
+      const table = this.$refs['projects-table']
+      if (typeof table !== 'undefined') {
+        table.reset()
+      }
     }
   },
 
