@@ -165,6 +165,7 @@ import 'vue-awesome/icons/arrow-down'
 import localConfig from '@/local.config'
 import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import { metaTags } from '@/mixins/metaTags'
+import { notifications } from '@/mixins/notifications'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 import AddFormFieldModal from '@/components/modals/AddFormField'
@@ -172,7 +173,7 @@ import AddFormFieldModal from '@/components/modals/AddFormField'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ metaTags, fetchTemplateById ],
+  mixins: [ metaTags, fetchTemplateById, notifications ],
 
   data () {
     return {
@@ -385,18 +386,26 @@ export default {
      */
     removeInstitutionCode (code) {
       const clone = JSON.parse(JSON.stringify(this.form.model.institutions))
-      const idx = clone.indexOf(code)
-      this.form.model.institutions = clone.splice(idx, 1)
+      this.form.model.institutions = clone.filter(inst => {
+        return code !== inst
+      })
     },
 
     /**
      * Add an institution code.
      */
     addInstitutionCode () {
-      const val = this.$refs['institution-code-input'].$el.value
-      if (val.length) {
-        this.form.model.institutions.push(val)
-        this.$refs['institution-code-input'].$el.value = ''
+      const elem = this.$refs['institution-code-input'].$el
+      const codes = this.form.model.institutions
+      if (elem.value.length && codes.indexOf(elem.value) < 0) {
+        this.form.model.institutions.push(elem.value)
+        elem.value = ''
+        elem.focus()
+      } else if (codes.indexOf(elem.value) > -1) {
+        this.flash({
+          'status': 'warning',
+          'flash': 'That code already exists'
+        })
       }
     }
   },
