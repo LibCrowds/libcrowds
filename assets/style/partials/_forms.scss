@@ -22,6 +22,12 @@
 
   .form-group {
     margin-bottom: 2rem;
+
+    .hint {
+      margin-top: 0.5rem;
+      font-size: $font-size-sm;
+      color: $text-muted;
+    }
   }
 }
 

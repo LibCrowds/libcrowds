@@ -45,6 +45,14 @@ export default {
     }
   },
 
+  asyncData ({ app }) {
+    return app.$axios.$get(`/libcrowds/templates/`).then(data => {
+      return {
+        templates: data.templates
+      }
+    })
+  },
+
   components: {
     PybossaForm,
     CardBase
@@ -53,6 +61,16 @@ export default {
   computed: {
     collection () {
       return this.$store.state.currentCollection
+    },
+
+    volumes () {
+      return this.$store.state.currentCollection.info.volumes
+    },
+
+    taskPresenterDisabled () {
+      const hasVols = (this.volumes !== 'undefined' && this.volumes.length > 0)
+      const hasTemplates = this.templates.length > 0
+      return hasTemplates && hasVols
     },
 
     form () {
@@ -136,6 +154,11 @@ export default {
               model: 'info.presenter',
               label: 'Task Presenter',
               type: 'select',
+              disabled: () => this.taskPresenterDisabled,
+              hint: this.taskPresenterDisabled
+                ? 'The task presenter cannot be updated while the ' +
+                  'collection contains templates or volumes'
+                : '',
               values: [
                 {
                   id: 'iiif-annotation',
