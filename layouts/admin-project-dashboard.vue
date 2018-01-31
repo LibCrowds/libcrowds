@@ -76,6 +76,15 @@ export default {
     projectNavItems () {
       return [
         {
+          label: 'Details',
+          link: {
+            name: 'admin-project-short_name-details',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
           label: 'Thumbnail',
           link: {
             name: 'admin-project-short_name-thumbnail',
@@ -129,15 +138,6 @@ export default {
           seperator: true
         },
         {
-          label: 'Details',
-          link: {
-            name: 'admin-project-short_name-details',
-            params: {
-              short_name: this.project.short_name
-            }
-          }
-        },
-        {
           label: 'Collection',
           link: {
             name: 'admin-project-short_name-collection',
@@ -159,6 +159,15 @@ export default {
           label: 'Template',
           link: {
             name: 'admin-project-short_name-template',
+            params: {
+              short_name: this.project.short_name
+            }
+          }
+        },
+        {
+          label: 'Webhooks',
+          link: {
+            name: 'admin-project-short_name-webhooks',
             params: {
               short_name: this.project.short_name
             }

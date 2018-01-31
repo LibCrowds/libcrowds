@@ -26,7 +26,6 @@
         </label>
       </div>
     </pybossa-form>
-
   </card-base>
 </template>
 
@@ -76,12 +75,6 @@ export default {
                 type: 'textArea',
                 rows: 2,
                 placeholder: 'Short description shown on the project cards'
-              },
-              {
-                model: 'webhook',
-                label: 'Webhook URL',
-                type: 'input',
-                inputType: 'text'
               },
               {
                 model: 'pasword',
