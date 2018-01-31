@@ -409,9 +409,10 @@ export default {
     createProject () {
       this.$swal({
         title: `Confirm`,
-        html: `You're about to create and publish a project for
-          ${this.collection.name}. Once published, volunteers will be able
-          to contribute to the project.
+        html: `You're about to create a project for ${this.collection.name}.
+          <br><br>The project will be created in draft mode and will be
+          published once approved by a LibCrowds administrator. You will
+          recieve an email once this process is complete.
           <br><br>Click OK to continue.`,
         type: 'question',
         showCancelButton: true,
