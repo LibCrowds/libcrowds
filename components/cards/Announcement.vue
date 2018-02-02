@@ -33,6 +33,9 @@
             {{ announcement.created | moment('L') }}
           </span>
         </small>
+        <small :v-if="announcement.info.admin" class="text-danger float-right">
+          Admin
+        </small>
       </div>
 
     </div>
@@ -130,7 +133,7 @@ export default {
   }
 
   .card-title {
-    font-weight: 400;
+    font-weight: 700;
     font-size: $font-size-sm;
   }
 
