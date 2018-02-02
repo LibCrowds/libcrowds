@@ -57,12 +57,16 @@
           </announcement-card>
           <div class="m-1 text-center">
             <b-btn
+              v-if="announcements.length"
               size="sm"
               variant="primary"
               :disabled="noMore"
               @click.stop="loadMore">
               Load More
             </b-btn>
+            <small v-else>
+              There are no notifications yet.
+            </small>
           </div>
         </div>
       </b-card>
