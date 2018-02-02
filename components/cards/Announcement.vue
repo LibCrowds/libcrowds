@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    class="announcement-card"
+    :class="styleClass"
     @click="onClick">
     <div class="d-flex flex-row">
 
@@ -33,7 +33,9 @@
             {{ announcement.created | moment('L') }}
           </span>
         </small>
-        <small :v-if="announcement.info.admin" class="text-danger float-right">
+        <small
+          :v-if="announcement.info.admin"
+          class="text-primary float-right">
           Admin
         </small>
       </div>
@@ -63,11 +65,36 @@ export default {
     }
   },
 
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
+    userAnnouncements () {
+      return this.currentUser.info.announcements || {}
+    },
+
+    styleClass () {
+      return {
+        'announcement-card': true,
+        unread: !this.announcement._read
+      }
+    }
+  },
+
   methods: {
     /**
-     * Handle navigation when the card is clicked.
+     * Handle announcement clicked.
      */
     onClick () {
+      this.markAsRead()
+      this.goToUrl()
+    },
+
+    /**
+     * Handle navigation.
+     */
+    goToUrl () {
       const url = this.announcement.info.url
       const parser = document.createElement('a')
       const internal = this.isInternal(url)
@@ -87,6 +114,26 @@ export default {
     isInternal (url) {
       const origin = window.location.origin
       return url && (url.startsWith(origin) || url.startsWith('/'))
+    },
+
+    /**
+     * Mark the announcement as read.
+     */
+    markAsRead () {
+      const infoClone = JSON.parse(JSON.stringify(this.currentUser.info))
+      const userAnnouncements = infoClone.announcements || {}
+      const readIds = userAnnouncements.read_ids || []
+      const readSet = new Set(readIds)
+      readSet.add(this.announcement.id)
+      const newReadIds = Array.from(readSet)
+      newReadIds.sort()
+      userAnnouncements['read_ids'] = newReadIds
+      infoClone.announcements = userAnnouncements
+      this.$axios.$put(`/api/user/${this.currentUser.id}`, {
+        info: infoClone
+      }).then(data => {
+        this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
+      })
     }
   }
 }
@@ -104,6 +151,14 @@ export default {
 
   @include hover-focus {
     background-color: $gray-100;
+  }
+
+  &.unread {
+    background-color: rgba($blue, 0.1);
+
+    @include hover-focus {
+      background-color: rgba($blue, 0.15);
+    }
   }
 
   a {

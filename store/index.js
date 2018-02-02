@@ -17,8 +17,7 @@ export default () => {
       currentCollection: {},
       collectionNavItems: [],
       currentProject: {},
-      currentTemplate: {},
-      lastAnnouncement: {}
+      currentTemplate: {}
     },
 
     mutations,

@@ -29,54 +29,62 @@
 
     <span v-show="show">
       <b-card
-        header="Notifications"
         id="announcements-container"
         class="dropdown-menu-right d-none d-md-block"
         no-body>
 
+        <div
+          slot="header"
+          class="d-flex align-items-center justify-content-between">
+          <h6 class="mb-0">
+            Notifications
+          </h6>
+          <b-btn
+            size="sm"
+            variant="link"
+            @click="markAllAsRead">
+            <small>
+              Mark all as read
+            </small>
+          </b-btn>
+        </div>
+
         <div id="announcements">
           <announcement-card
-            v-for="announcement in announcements"
+            v-for="announcement in enhancedAnnouncements"
             :key="announcement.id"
             :announcement="announcement">
           </announcement-card>
+          <div class="m-1 text-center">
+            <b-btn
+              size="sm"
+              variant="primary"
+              :disabled="noMore"
+              @click.stop="loadMore">
+              Load More
+            </b-btn>
+          </div>
         </div>
-
-        <infinite-load
-          ref="infiniteload"
-          :search-params="searchParams"
-          domain-object="announcement"
-          no-results="No announcements have been made yet"
-          no-more-results=""
-          v-model="announcements">
-        </infinite-load>
       </b-card>
     </span>
   </div>
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import 'vue-awesome/icons/bell'
-import InfiniteLoad from '@/components/InfiniteLoad'
 import AnnouncementCard from '@/components/cards/Announcement'
 
 export default {
   data () {
     return {
       show: false,
-      announcements: [],
-      searchParams: {
-        published: true,
-        orderby: 'created',
-        desc: true
-      }
+      noMore: false,
+      announcements: []
     }
   },
 
   components: {
-    AnnouncementCard,
-    InfiniteLoad
+    AnnouncementCard
   },
 
   computed: {
@@ -84,25 +92,34 @@ export default {
       return this.$store.state.currentUser
     },
 
-    noAnnouncements () {
-      return isEmpty(this.lastAnnouncement)
-    },
-
-    lastAnnouncement () {
-      return this.$store.state.lastAnnouncement
-    },
-
-    lastRead () {
-      const annoucements = this.currentUser.info.announcements || {}
-      return annoucements.last_read
+    userAnnouncements () {
+      return this.currentUser.info.announcements || {}
     },
 
     hasUnread () {
-      if (this.noAnnouncements) {
+      if (!this.announcements.length) {
         return false
       }
-      const last = Date.parse(this.lastAnnouncement.created)
-      return !this.lastRead || Date.parse(this.lastRead) < last
+      const lastRead = this.userAnnouncements.last_read
+      if (!lastRead) {
+        return true
+      }
+      const lastAnnouncement = this.announcements[0]
+      const lastCreated = Date.parse(lastAnnouncement.created)
+      return !lastRead || Date.parse(lastRead) < lastCreated
+    },
+
+    enhancedAnnouncements () {
+      const readIds = this.userAnnouncements.read_ids || []
+      const allRead = this.userAnnouncements.all_read
+      return this.announcements.map(ann => {
+        if (allRead && Date.parse(allRead) > Date.parse(ann.created)) {
+          ann._read = true
+        } else {
+          ann._read = readIds.indexOf(ann.id) > -1
+        }
+        return ann
+      })
     }
   },
 
@@ -120,13 +137,47 @@ export default {
     toggle () {
       this.show = !this.show
       if (this.show) {
-        // Reload each time the list is shown in case of changes
-        this.$refs.infiniteload.reset()
-      }
-      if (this.show && this.hasUnread) {
         this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
       }
+    },
+
+    /**
+     * Load the next batch of announcements.
+     */
+    loadMore () {
+      const limit = 50
+      this.$axios.get('/api/announcement', {
+        params: {
+          published: true,
+          orderby: 'created',
+          desc: true,
+          limit: limit,
+          offset: this.announcements.length
+        }
+      }).then(response => {
+        if (response.data.length) {
+          this.announcements = this.announcements.concat(response.data)
+          if (response.data.length < limit) {
+            this.noMore = true
+          }
+        } else {
+          this.noMore = true
+        }
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Mark all announcements as read.
+     */
+    markAllAsRead () {
+      this.$store.dispatch('UPDATE_ALL_READ', this.$axios)
     }
+  },
+
+  created () {
+    this.loadMore()
   }
 }
 </script>

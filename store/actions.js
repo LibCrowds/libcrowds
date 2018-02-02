@@ -68,28 +68,25 @@ export default {
     })
   },
 
-  UPDATE_LAST_ANNOUNCEMENT: ({ commit }, axios) => {
-    return axios.get('/api/announcement', {
-      params: {
-        orderby: 'created',
-        published: true,
-        desc: true,
-        limit: 1
-      }
-    }).then(res => {
-      if (res.data.length) {
-        commit('SET_ITEM', {
-          key: 'lastAnnouncement', value: res.data[0]
-        })
-      }
+  UPDATE_LAST_READ: ({ state, dispatch }, axios) => {
+    const infoClone = JSON.parse(JSON.stringify(state.currentUser.info))
+    const userAnnouncements = infoClone.announcements || {}
+    userAnnouncements['last_read'] = new Date().toISOString()
+    infoClone.announcements = userAnnouncements
+    return axios.$put(`/api/user/${state.currentUser.id}`, {
+      info: infoClone
+    }).then(data => {
+      dispatch('UPDATE_CURRENT_USER', axios)
     })
   },
 
-  UPDATE_LAST_READ: ({ state, dispatch }, axios) => {
-    const announcements = state.currentUser.info.announcements || {}
-    announcements['last_read'] = state.lastAnnouncement.created
+  UPDATE_ALL_READ: ({ state, dispatch }, axios) => {
+    const infoClone = JSON.parse(JSON.stringify(state.currentUser.info))
+    const userAnnouncements = infoClone.announcements || {}
+    userAnnouncements['all_read'] = new Date().toISOString()
+    infoClone.announcements = userAnnouncements
     return axios.$put(`/api/user/${state.currentUser.id}`, {
-      info: state.currentUser.info
+      info: infoClone
     }).then(data => {
       dispatch('UPDATE_CURRENT_USER', axios)
     })
