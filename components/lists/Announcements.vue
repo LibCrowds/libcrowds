@@ -125,7 +125,7 @@ export default {
         return ann
       }).filter(ann => {
         // Only show admin announcements to admin users
-        return !ann.info.admin || currentUser.admin
+        return !ann.info.admin || this.currentUser.admin
       })
     }
   },

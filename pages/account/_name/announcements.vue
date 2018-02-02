@@ -1,7 +1,7 @@
 <template>
   <card-base :title="title" :description="description">
     <announcement-card
-      v-for="announcement in announcements"
+      v-for="announcement in enhancedAnnouncements"
       :key="announcement.id"
       :announcement="announcement">
     </announcement-card>
@@ -41,6 +41,32 @@ export default {
     InfiniteLoad,
     AnnouncementCard,
     CardBase
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
+    userAnnouncements () {
+      return this.currentUser.info.announcements || {}
+    },
+
+    enhancedAnnouncements () {
+      const readIds = this.userAnnouncements.read_ids || []
+      const allRead = this.userAnnouncements.all_read
+      return this.announcements.map(ann => {
+        if (allRead && Date.parse(allRead) > Date.parse(ann.created)) {
+          ann._read = true
+        } else {
+          ann._read = readIds.indexOf(ann.id) > -1
+        }
+        return ann
+      }).filter(ann => {
+        // Only show admin announcements to admin users
+        return !ann.info.admin || this.currentUser.admin
+      })
+    }
   },
 
   mounted () {

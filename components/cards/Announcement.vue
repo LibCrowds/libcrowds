@@ -54,7 +54,8 @@ export default {
     return {
       imgSrc: localConfig.pybossaHost + this.announcement.media_url,
       title: marked(this.announcement.title),
-      body: marked(this.announcement.body)
+      body: marked(this.announcement.body),
+      unread: !this.announcement._read
     }
   },
 
@@ -77,7 +78,7 @@ export default {
     styleClass () {
       return {
         'announcement-card': true,
-        unread: !this.announcement._read
+        unread: this.unread
       }
     }
   },
@@ -87,6 +88,7 @@ export default {
      * Handle announcement clicked.
      */
     onClick () {
+      this.$emit('click')
       this.markAsRead()
       this.goToUrl()
     },
@@ -120,6 +122,7 @@ export default {
      * Mark the announcement as read.
      */
     markAsRead () {
+      this.unread = false
       const infoClone = JSON.parse(JSON.stringify(this.currentUser.info))
       const userAnnouncements = infoClone.announcements || {}
       const readIds = userAnnouncements.read_ids || []
