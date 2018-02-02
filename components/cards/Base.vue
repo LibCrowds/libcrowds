@@ -27,7 +27,6 @@
           </small>
         </p>
       </b-card-body>
-      <hr>
     </template>
 
     <slot></slot>

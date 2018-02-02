@@ -97,6 +97,10 @@ export default {
     noBody: {
       type: Boolean,
       default: false
+    },
+    confirmation: {
+      type: String,
+      required: false
     }
   },
 
@@ -152,22 +156,12 @@ export default {
     },
 
     /**
-     * Submit the form.
+     * Process and submit the form.
      */
-    submit () {
-      if (!this.isValid()) {
-        return
-      }
-
-      this.$emit('submit', this.form)
-      if (this.noSubmit) {
-        return
-      }
-
+    process () {
       this.processing = true
-
       this.alert = ''
-      this.$axios({
+      return this.$axios({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
@@ -194,6 +188,37 @@ export default {
         this.notifyError({ message: err.message || 'Server Error' })
       }).then(() => {
         this.processing = false
+      })
+    },
+
+    /**
+     * Submit the form.
+     */
+    submit () {
+      if (!this.isValid()) {
+        return
+      }
+
+      if (this.noSubmit) {
+        return
+      }
+
+      this.$emit('submit', this.form)
+
+      if (!this.confirmation) {
+        this.process()
+      }
+
+      this.$swal({
+        title: `Confirm`,
+        html: this.confirmation,
+        type: 'question',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return this.process()
+        }
       })
     },
 

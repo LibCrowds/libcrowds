@@ -32,7 +32,8 @@
             us know how we can help.
           </p>
           <p>
-            Choose a template from the list below.
+            Choose a template by locating it in the list below and clicking
+            <strong>Select</strong>.
           </p>
         </b-card-body>
         <templates-table
@@ -44,7 +45,7 @@
               class="m-1"
               size="sm"
               :disabled="form.model.template_id == tmpl.item.id"
-              @click="selectTemplate(tmpl.item.id)">
+              @click="selectTemplate(tmpl.item)">
               Select
             </b-btn>
           </template>
@@ -70,7 +71,8 @@
             the selected template are excluded from this list.
           </p>
           <p>
-            Choose a volume from the list below.
+            Choose a volume by locating it in the list below and clicking
+            <strong>Select</strong>.
           </p>
         </b-card-body>
         <volumes-table :volumes="availableVolumes">
@@ -79,13 +81,14 @@
               variant="success"
               size="sm"
               :disabled="form.model.volume_id == volume.item.id"
-              @click="selectVolume(volume.item.id)">
+              @click="selectVolume(volume.item)">
               Select
             </b-btn>
           </template>
         </volumes-table>
       </b-tab>
 
+      <!-- Parent selection tab -->
       <b-tab title="Parent" no-body>
         <b-card-body v-if="collection.info.presenter === 'iiif-annotation'">
           <p class="lead">
@@ -105,8 +108,9 @@
             and we will be happy to help.
           </p>
           <p>
-            Choose a parent project from the list below. Only completed
-            projects are shown.
+            Choose a parent project by locating it in the list below and
+            clicking <strong>Select</strong>. Note that only completed projects
+            are shown.
           </p>
         </b-card-body>
         <projects-table
@@ -118,7 +122,7 @@
             <b-btn
               variant="success"
               size="sm"
-              @click="selectParent(project.item.id)"
+              @click="selectParent(project.item)"
               :disabled="form.model.parent_id == project.item.id">
               Select
             </b-btn>
@@ -126,85 +130,46 @@
         </projects-table>
       </b-tab>
 
+      <!-- Confirmation tab -->
       <b-tab title="Confirm" no-body>
         <b-card-body>
-          <ul class="list-unstyled" v-if="canCreate">
-            <li class="mb-1">
-              <strong>Collection:</strong>
-              {{ collection.name }}
-            </li>
-            <li class="mb-1">
-              <strong>Template:</strong>
-              <template v-if="selectedTemplate">
-                {{ selectedTemplate['project']['name'] }}
-              </template>
-            </li>
-            <li class="mb-1">
-              <strong>Volume:</strong>
-              {{ selectedVolumeName }}
-            </li>
-            <li class="mb-1">
-              <strong>Parent:</strong>
-              {{ form.model.parent_id }}
-            </li>
-          </ul>
-          <b-alert v-else show variant="primary">
-            To confirm project creation please select a volume and template.
-          </b-alert>
+          <p class="lead">
+            Confirm
+          </p>
+          <p>
+            The final stage is to select a name and short name for your
+            project. These will be prefilled according to the template and
+            volume that you have selected. If you have not selected a template
+            or volume, please navigate back to the relevant tables using the
+            tabs above.
+          </p>
+          <p class="mb-0">
+            Please review the details below, then click
+            <strong>Create</strong>.
+          </p>
         </b-card-body>
+        <pybossa-form
+          :confirmation="confirmation"
+          submit-text="Create"
+          :form="form">
+        </pybossa-form>
       </b-tab>
-
     </b-tabs>
-
-    <b-card-footer>
-      <span class="float-right">
-        <b-btn
-          variant="dark"
-          class="mr-1"
-          :exact="true"
-          :to="{
-            name: 'admin-project-new'
-          }">
-          Cancel
-        </b-btn>
-        <b-btn
-          variant="dark"
-          :disabled="tabIndex === 0"
-          class="mr-1"
-          @click="tabIndex--">
-          Previous
-        </b-btn>
-        <b-btn
-          variant="dark"
-          :disabled="tabIndex >= 3"
-          class="mr-1"
-          @click="tabIndex++">
-          Next
-        </b-btn>
-        <b-btn
-          variant="success"
-          :disabled="!canCreate && !generating"
-          @click="createProject">
-          Create
-        </b-btn>
-      </span>
-    </b-card-footer>
 
   </card-base>
 </template>
 
 <script>
-import capitalize from 'capitalize'
 import localConfig from '@/local.config.js'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
-import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 import SmallAvatar from '@/components/avatars/Small'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectsTable from '@/components/tables/Projects'
 import TemplatesTable from '@/components/tables/Templates'
 import VolumesTable from '@/components/tables/Volumes'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -234,8 +199,7 @@ export default {
         }
       },
       existingProjectDetails: {},
-      shortnameValid: false,
-      generating: false
+      shortnameValid: false
     }
   },
 
@@ -261,6 +225,7 @@ export default {
       return {
         endpoint: endpoint,
         templates: data.templates.map(tmpl => {
+          tmpl.name = tmpl.project.name
           tmpl._showDetails = false
           return tmpl
         }),
@@ -273,7 +238,53 @@ export default {
           method: 'post',
           model: data.form,
           schema: {
-            fields: [] // Tables used instead
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name',
+                model: 'name',
+                placeholder: 'Your Project Name',
+                hint: 'The project name is used in any tables project cards ' +
+                  'presented to users.'
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Short name',
+                model: 'short_name',
+                placeholder: 'your_project_name',
+                hint: 'The short name is used to form some URLs and the ' +
+                  'names of any downloadable files.'
+              },
+              {
+                type: 'select',
+                label: 'Template',
+                model: 'template_id',
+                disabled: true,
+                values: [], // Add dynamically
+                hint: 'Templates provide the task configuration details,' +
+                  ' click the Template tab to update.'
+              },
+              {
+                type: 'select',
+                label: 'Volume',
+                model: 'volume_id',
+                disabled: true,
+                values: [], // Add dynamically
+                hint: 'Volumes provide the input for a project, click the ' +
+                  'Volume tab to update.'
+              },
+              {
+                type: 'select',
+                label: 'Parent Project',
+                model: 'parent_id',
+                disabled: true,
+                values: [], // Add dynamically
+                hint: 'Parent projects influence how tasks are generated,' +
+                  ' click the Parent tab to update.'
+              }
+            ]
           }
         },
         built_templates: data.built_templates
@@ -302,13 +313,6 @@ export default {
       return this.$store.state.currentUser
     },
 
-    canCreate () {
-      return (
-        this.form.model.template_id !== 'None' &&
-        this.form.model.volume_id !== 'None'
-      )
-    },
-
     title () {
       return `New ${this.collection.name} Project`
     },
@@ -317,22 +321,12 @@ export default {
       return `Create a new ${this.collection.name} project`
     },
 
-    selectedTemplate () {
-      const filtered = this.templates.filter(tmpl => {
-        return tmpl.id === this.form.model.template_id
-      })
-      if (filtered.length) {
-        return filtered[0]
-      }
-    },
-
-    selectedVolumeName () {
-      const filtered = this.volumes.filter(vol => {
-        return vol.id === this.form.model.volume_id
-      })
-      if (filtered.length) {
-        return filtered[0].name
-      }
+    confirmation () {
+      return `You're about to create a project for ${this.collection.name}.
+        <br><br>The project will be created in draft mode and will be
+        published once approved by a LibCrowds administrator. You will recieve
+        an email once this process is complete.
+        <br><br>Click OK to continue.`
     },
 
     availableVolumes () {
@@ -351,34 +345,59 @@ export default {
   methods: {
     /**
      * Select a template.
-     * @param {String} id
-     *   The template ID.
+     * @param {Object} template
+     *   The template.
      */
-    selectTemplate (id) {
-      this.form.model.template_id = id
+    selectTemplate (template) {
+      const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
+      this.form.schema.fields = fieldsClone.map(field => {
+        if (field.model === 'template_id') {
+          field.values = [{ id: template.id, name: template.project.name }]
+        } else if (field.model === 'volume_id') {
+          field.values = []
+        }
+        return field
+      })
+      this.form.model.template_id = template.id
       this.form.model.volume_id = null
       this.tabIndex++
+      this.setNameAndShortName()
       this.highlightSelectedRows()
     },
 
     /**
      * Select a volume.
-     * @param {String} id
-     *   The volume ID.
+     * @param {Object} volume
+     *   The volume.
      */
-    selectVolume (id) {
-      this.form.model.volume_id = id
+    selectVolume (volume) {
+      const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
+      this.form.schema.fields = fieldsClone.map(field => {
+        if (field.model === 'volume_id') {
+          field.values = [{ id: volume.id, name: volume.name }]
+        }
+        return field
+      })
+      this.form.model.volume_id = volume.id
       this.tabIndex++
+      this.setNameAndShortName()
       this.highlightSelectedRows()
     },
 
     /**
-     * Select a parent.
-     * @param {String} id
-     *   The project ID.
+     * Select a parent project
+     * @param {Object} project
+     *   The project.
      */
-    selectParent (id) {
-      this.form.model.parent_id = id
+    selectParent (project) {
+      const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
+      this.form.schema.fields = fieldsClone.map(field => {
+        if (field.model === 'parent_id') {
+          field.values = [{ id: parent.id, name: parent.name }]
+        }
+        return field
+      })
+      this.form.model.parent_id = project.id
       this.tabIndex++
       this.highlightSelectedRows()
     },
@@ -404,33 +423,22 @@ export default {
     },
 
     /**
-     * Create a project.
+     * Pre-fill the name and short name.
      */
-    createProject () {
-      this.$swal({
-        title: `Confirm`,
-        html: `You're about to create a project for ${this.collection.name}.
-          <br><br>The project will be created in draft mode and will be
-          published once approved by a LibCrowds administrator. You will
-          recieve an email once this process is complete.
-          <br><br>Click OK to continue.`,
-        type: 'question',
-        showCancelButton: true,
-        reverseButtons: true,
-        showLoaderOnConfirm: true,
-        preConfirm: () => {
-          this.generating = true
-          return this.$axios.$post(this.endpoint, this.form.model)
-        }
-      }).then(data => {
-        this.generating = false
-        let text = data.flash
-        this.$swal({
-          title: capitalize(data.status),
-          html: text,
-          type: data.status
-        })
-      })
+    setNameAndShortName () {
+      const tmplField = this.form.schema.fields.filter(field => {
+        return field.model === 'template_id'
+      })[0]
+      const volField = this.form.schema.fields.filter(field => {
+        return field.model === 'volume_id'
+      })[0]
+      const tmplName = tmplField.values.length ? tmplField.values[0].name : ''
+      const volName = volField.values.length ? volField.values[0].name : ''
+      const name = `${tmplName}: ${volName}`
+      const re = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
+      const sn = name.replace(re, '').toLowerCase().trim().replace(' ', '_')
+      this.form.model.name = name
+      this.form.model.short_name = sn
     },
 
     /**
