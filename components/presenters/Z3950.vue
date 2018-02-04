@@ -168,8 +168,6 @@
 <script>
 import marked from 'marked'
 import capitalize from 'capitalize'
-import 'vue-awesome/icons/times'
-import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
