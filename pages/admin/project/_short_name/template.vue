@@ -74,6 +74,10 @@ export default {
       return this.$store.state.currentProject
     },
 
+    collection () {
+      return this.$store.state.currentCollection
+    },
+
     currentTmplId () {
       return this.project.info.template_id
     },
@@ -95,20 +99,66 @@ export default {
      */
     updateTemplate (template) {
       let infoClone = Object.assign({}, this.project.info)
-
       if (!template || this.currentTmplId === template.id) {
         infoClone.template_id = null
       } else {
         infoClone.template_id = template.id
       }
 
-      this.$axios.$put(`/api/project/${this.project.id}`, {
-        info: infoClone
+      this.$swal({
+        title: `Update Template`,
+        html: `Updating the a project's template is dangerous and should
+          not normally be necessary. The option is only included here to help
+          with cases such as migration to the project template system.<br><br>
+          If you're sure you want to do this, click OK to continue.`,
+        type: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return this.$axios.$put(`/api/project/${this.project.id}`, {
+            info: infoClone
+          })
+        }
       }).then(data => {
-        this.notifySuccess({ message: 'Template updated' })
-        this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
+        if (data) {
+          this.notifySuccess({
+            message: 'Template deleted'
+          })
+          this.notifySuccess({ message: 'Template updated' })
+          this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
+          this.analyseAllResults()
+        }
       }).catch(err => {
         this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Analyse all results.
+     */
+    analyseAllResults () {
+      this.$swal({
+        title: `Reanalyse Results`,
+        html: `As the analysis rules specified in the new template may be
+          different it is recommended to rerun the analysis for all of the
+          project's results.<br><br>
+          Click OK to trigger this process.`,
+        type: 'warning',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          const presenter = this.collection.info.presenter
+          return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+            all: 1,
+            project_short_name: this.project.short_name
+          })
+        }
+      }).then(result => {
+        if (result) {
+          this.notifySuccess({ message: result.message })
+        }
       })
     }
   }
