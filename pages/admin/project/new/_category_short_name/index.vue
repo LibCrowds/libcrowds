@@ -435,8 +435,12 @@ export default {
       const tmplName = tmplField.values.length ? tmplField.values[0].name : ''
       const volName = volField.values.length ? volField.values[0].name : ''
       const name = `${tmplName}: ${volName}`
-      const re = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
-      const sn = name.replace(re, '').toLowerCase().trim().replace(' ', '_')
+      const badchars = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
+      const whitespace = /\s+/g
+      const sn = name.replace(badchars, '')
+        .toLowerCase()
+        .trim()
+        .replace(whitespace, '_')
       this.form.model.name = name
       this.form.model.short_name = sn
     },
