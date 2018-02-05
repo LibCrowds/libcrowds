@@ -61,7 +61,7 @@ export default {
 
   methods: {
     /**
-     * Delete the project.
+     * Delete the template.
      */
     deleteTemplate () {
       const endpoint = `/api/user/${this.currentUser.id}`
