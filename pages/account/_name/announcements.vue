@@ -67,10 +67,6 @@ export default {
         return !ann.info.admin || this.currentUser.admin
       })
     }
-  },
-
-  mounted () {
-    this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
   }
 }
 </script>

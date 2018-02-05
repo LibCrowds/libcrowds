@@ -6,7 +6,6 @@ import actions from '@/store/actions'
 actions.nuxtServerInit = async ({ dispatch }, { app }) => {
   await dispatch('UPDATE_CURRENT_USER', app.$axios)
   await dispatch('UPDATE_PUBLISHED_COLLECTIONS', app.$axios)
-  await dispatch('UPDATE_LAST_ANNOUNCEMENT', app.$axios)
 }
 
 export default () => {
