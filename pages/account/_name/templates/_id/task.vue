@@ -81,7 +81,6 @@
           hover
           outlined
           show-empty
-          empty-text="Add form fields by clicking the Add Form button above"
           :items="form.model.fields_schema"
           :fields="schemaTableFields">
           <template slot="actions" scope="field">

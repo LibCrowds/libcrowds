@@ -103,6 +103,15 @@ export default {
           }
         },
         {
+          label: 'Export Formats',
+          link: {
+            name: 'admin-collection-short_name-exports',
+            params: {
+              short_name: this.collection.short_name
+            }
+          }
+        },
+        {
           label: 'Featured Projects',
           link: {
             name: 'admin-collection-short_name-featured',

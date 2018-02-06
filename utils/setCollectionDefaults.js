@@ -59,7 +59,7 @@ export const setCollectionDefaults = function (collection) {
         'and used to directly enabled future research.'
     },
     volumes: {},
-    templates: {}
+    export_formats: []
   }
   collection.info = merge(defaults, collection.info)
 
