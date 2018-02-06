@@ -207,6 +207,7 @@ export default {
 
       if (!this.confirmation) {
         this.process()
+        return
       }
 
       this.$swal({
