@@ -77,7 +77,8 @@ export default {
           sortable: true
         },
         actions: {
-          label: 'Actions'
+          label: 'Actions',
+          class: 'text-center'
         }
       }
     }
