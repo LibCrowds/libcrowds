@@ -25,6 +25,7 @@
         v-if="showDetails"
         variant="info"
         size="sm"
+        block
         @click="volume.toggleDetails">
         {{ volume.detailsShowing ? 'Hide' : 'Show' }} Projects
       </b-btn>

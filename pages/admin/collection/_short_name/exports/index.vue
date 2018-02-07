@@ -26,6 +26,17 @@
       :fields="tableFields">
       <template slot="actions" scope="exportFormat">
         <b-btn
+          variant="success"
+          size="sm"
+          :to="{
+            name: 'admin-collection-short_name-exports-id',
+            params: {
+              id: exportFormat.item.id
+            }
+          }">
+          Edit
+        </b-btn>
+        <b-btn
           variant="warning"
           size="sm"
           @click="deleteExport(exportFormat.item.id)">
@@ -55,6 +66,11 @@ export default {
       tableFields: {
         name: {
           label: 'Name',
+          sortable: true
+        },
+        fields: {
+          label: 'Exported Fields',
+          class: 'text-center',
           sortable: true
         },
         actions: {

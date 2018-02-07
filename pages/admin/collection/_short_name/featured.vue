@@ -17,7 +17,6 @@
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
           size="sm"
-          block
           @click="toggleFeatured(project.item)">
           {{ getButtonText(project.item.featured) }}
         </b-btn>

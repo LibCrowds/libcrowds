@@ -162,6 +162,7 @@
 import localConfig from '@/local.config.js'
 import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
+import { getShortname } from '@/mixins/getShortname'
 import CardBase from '@/components/cards/Base'
 import SmallAvatar from '@/components/avatars/Small'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
@@ -173,7 +174,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ notifications, metaTags, getShortname ],
 
   data () {
     return {
@@ -434,14 +435,8 @@ export default {
       const tmplName = tmplField.values.length ? tmplField.values[0].name : ''
       const volName = volField.values.length ? volField.values[0].name : ''
       const name = `${tmplName}: ${volName}`
-      const badchars = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
-      const whitespace = /\s+/g
-      const sn = name.replace(badchars, '')
-        .toLowerCase()
-        .trim()
-        .replace(whitespace, '_')
       this.form.model.name = name
-      this.form.model.short_name = sn
+      this.form.model.short_name = this.getShortname(name)
     },
 
     /**

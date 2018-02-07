@@ -1,19 +1,7 @@
 <template>
   <card-base :title="title" :description="description">
-    <p slot="guidance">
-      Use the form below to add a custom, volume-level export to the
-      collection's data page. Such exports can be used to collate
-      transcriptions for all projects associated with each volume.
-    </p>
-    <p slot="guidance">
-      A reference will always be included as the first column, with the header
-      entered below. This reference is how the transcriptions from the
-      different projects will be grouped. For example, for IIIF transcription
-      projects this will be the annotation target.
-    </p>
-    <hr>
     <pybossa-form
-      submit-text="Add Export Format"
+      submit-text="Update"
       :form="form"
       @success="onSuccess">
 
@@ -34,7 +22,7 @@
           hover
           outlined
           show-empty
-          :items="form.model.export_fields"
+          :items="form.model.fields"
           :fields="tableFields">
           <template slot="template_id" scope="field">
             {{ getTemplateName(field.item.template_id) }}
@@ -75,8 +63,8 @@ export default {
 
   data () {
     return {
-      title: 'Edit Export Format',
-      description: 'Edit an export format.',
+      title: 'Add Export Format',
+      description: 'Add an export format.',
       addExportFieldModalId: 'add-export-field-modal',
       tableFields: {
         header: {
@@ -87,13 +75,17 @@ export default {
         },
         template_id: {
           label: 'Template'
+        },
+        actions: {
+          label: 'Actions'
         }
       }
     }
   },
 
   asyncData ({ app, params, error }) {
-    const endpoint = `/libcrowds/categories/${params.short_name}/exports`
+    const id = params.id
+    const endpoint = `/libcrowds/categories/${params.short_name}/exports/${id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
         templates: data.templates,
@@ -157,7 +149,7 @@ export default {
      *  The data returned from a AddExportField modal.
      */
     addExportField (data) {
-      this.form.model.export_fields.push(data)
+      this.form.model.fields.push(data)
     },
 
     /**
@@ -166,8 +158,8 @@ export default {
      *  The index of the field to remove.
      */
     removeFormField (index) {
-      const clone = JSON.parse(JSON.stringify(this.form.model.export_fields))
-      this.form.model.export_fields = clone.splice(index, 1)
+      const clone = JSON.parse(JSON.stringify(this.form.model.fields))
+      this.form.model.fields = clone.splice(index, 1)
     },
 
     /**

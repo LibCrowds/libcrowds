@@ -34,7 +34,7 @@
           hover
           outlined
           show-empty
-          :items="form.model.export_fields"
+          :items="form.model.fields"
           :fields="tableFields">
           <template slot="template_id" scope="field">
             {{ getTemplateName(field.item.template_id) }}
@@ -87,6 +87,9 @@ export default {
         },
         template_id: {
           label: 'Template'
+        },
+        actions: {
+          label: 'Actions'
         }
       }
     }
@@ -157,7 +160,7 @@ export default {
      *  The data returned from a AddExportField modal.
      */
     addExportField (data) {
-      this.form.model.export_fields.push(data)
+      this.form.model.fields.push(data)
     },
 
     /**
@@ -166,8 +169,8 @@ export default {
      *  The index of the field to remove.
      */
     removeFormField (index) {
-      const clone = JSON.parse(JSON.stringify(this.form.model.export_fields))
-      this.form.model.export_fields = clone.splice(index, 1)
+      const clone = JSON.parse(JSON.stringify(this.form.model.fields))
+      this.form.model.fields = clone.splice(index, 1)
     },
 
     /**
