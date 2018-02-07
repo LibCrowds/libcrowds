@@ -65,6 +65,15 @@ export default {
                 placeholder: 'A name for the volume'
               },
               {
+                model: 'short_name',
+                label: 'Short Name',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'A short name for the volume',
+                hint: 'The short name is used in the file names of any ' +
+                  'custom, volume-level downloads.'
+              },
+              {
                 model: 'source',
                 label: 'Source',
                 type: 'input',
@@ -85,6 +94,14 @@ export default {
                     !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
                   ) {
                     return 'Not a valid Flickr album URI'
+                  }
+                },
+                hint: () => {
+                  const presenter = data.category.info['presenter']
+                  if (presenter === 'iiif-annotation') {
+                    return 'This should be a valid IIIF manifest URI.'
+                  } else if (presenter === 'z3950') {
+                    return 'This should be a valid Flickr album URI.'
                   }
                 }
               }

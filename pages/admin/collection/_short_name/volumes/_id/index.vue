@@ -67,6 +67,13 @@ export default {
                 placeholder: 'A name for the volume'
               },
               {
+                model: 'short_name',
+                label: 'Short Name',
+                type: 'input',
+                inputType: 'text',
+                placeholder: 'A short name for the volume'
+              },
+              {
                 model: 'source',
                 label: 'Source',
                 type: 'input',
