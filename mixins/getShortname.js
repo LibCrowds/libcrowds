@@ -8,7 +8,7 @@ export const getShortname = {
     getShortname (text) {
       const badchars = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
       const whitespace = /\s+/g
-      return name.replace(badchars, '')
+      return text.replace(badchars, '')
         .toLowerCase()
         .trim()
         .replace(whitespace, '_')
