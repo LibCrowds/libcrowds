@@ -12,7 +12,6 @@
       <b-btn
         v-if="showDetails"
         variant="info"
-        class="m-1"
         size="sm"
         @click.stop="tmpl.toggleDetails">
         {{ tmpl.detailsShowing ? 'Hide' : 'Show' }} Details

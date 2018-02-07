@@ -15,6 +15,17 @@
   td {
     vertical-align: middle;
   }
+
+  .btn {
+    margin: 0.25rem;
+    display: block;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+      display: initial;
+      width: auto;
+    }
+  }
 }
 
 // To stop tables loading before the user scrolls to the bottom

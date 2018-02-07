@@ -42,7 +42,6 @@
           <template slot="action" scope="tmpl">
             <b-btn
               variant="success"
-              class="m-1"
               size="sm"
               :disabled="form.model.template_id == tmpl.item.id"
               @click="selectTemplate(tmpl.item)">

@@ -33,7 +33,6 @@
         <template slot="actions" scope="tag">
           <b-btn
             variant="success"
-            class="mr-1"
             size="sm"
             @click="editedTag = tag.item"
             v-b-modal="editTagModalId">

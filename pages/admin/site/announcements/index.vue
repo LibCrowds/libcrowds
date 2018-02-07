@@ -19,7 +19,6 @@
       <template slot="action" scope="announcement">
         <b-btn
           variant="success"
-          class="mr-1"
           size="sm"
           :to="{
             name: 'admin-site-announcements-id-update',

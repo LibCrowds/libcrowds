@@ -23,7 +23,6 @@
         <b-btn
           variant="info"
           size="sm"
-          class="mr-1"
           @click="showDetails(result.item)">
           {{ result.item._showDetails ? 'Hide Details' : 'Show Details' }}
         </b-btn>

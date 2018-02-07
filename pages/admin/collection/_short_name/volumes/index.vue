@@ -19,14 +19,12 @@
       <template slot="action" scope="volume">
         <b-btn
           variant="warning"
-          class="m-1"
           size="sm"
           @click="deleteVolume(volume.item.id)">
           Delete
         </b-btn>
         <b-btn
           variant="success"
-          class="m-1"
           size="sm"
           :to="{
             name: 'admin-collection-short_name-volumes-id',
