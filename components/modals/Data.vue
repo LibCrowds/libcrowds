@@ -46,25 +46,28 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
-      },
-      items: [
-        { dataset: 'Tasks', type: 'task', format: 'csv' },
-        { dataset: 'Tasks', type: 'task', format: 'json' },
-        { dataset: 'Task Runs', type: 'task_run', format: 'csv' },
-        { dataset: 'Task Runs', type: 'task_run', format: 'json' },
-        { dataset: 'Results', type: 'result', format: 'csv' },
-        { dataset: 'Results', type: 'result', format: 'json' },
-        { dataset: 'Report', type: 'project', format: 'csv' }
-      ]
+      }
     }
   },
 
   props: {
-    project: {
-      type: Object,
+    modalId: {
+      type: String,
       required: true
     },
-    modalId: {
+    items: {
+      type: Array,
+      required: true
+    },
+    endpoint: {
+      type: String,
+      required: true
+    },
+    eventLabel: {
+      type: String,
+      required: true
+    },
+    filenamePrefix: {
       type: String,
       required: true
     }
@@ -85,29 +88,23 @@ export default {
      *   The download format.
      */
     download (type, format) {
-      const sn = this.project.short_name
-      let downloadEndpoint = `/project/${sn}/tasks/export`
-      if (type === 'project') {
-        downloadEndpoint = `/project/${sn}/projectreport/export`
-      }
-
       if (this.$ga) {
         this.$ga.event({
           eventCategory: 'Downloads',
           eventAction: `${type}_${format}`,
-          eventLabel: this.project.name,
+          eventLabel: this.eventLabel,
           eventValue: 1
         })
       }
 
-      this.$axios.$get(downloadEndpoint, {
+      this.$axios.$get(this.endpoint, {
         responseType: 'arraybuffer',
         params: {
           type: type,
           format: format
         }
       }).then(data => {
-        this.exportFile(data, `${this.project.short_name}_${type}`, 'zip')
+        this.exportFile(data, `${this.filenamePrefix}_${type}`, 'zip')
       }).catch(err => {
         this.$nuxt.error(err)
       })
