@@ -120,7 +120,7 @@
       v-if="downloadVolume"
       :items="volumeDownloadItems"
       :endpoint="downloadVolumeEndpoint"
-      :filename-prefix="getShortname(downloadVolume.short_name)"
+      :filename-prefix="downloadVolume.short_name"
       :event-label="downloadVolume.name"
       :modal-id="volumeDataModalId"
       :project="downloadVolume">
