@@ -6,6 +6,9 @@ export const getShortname = {
      *   The text to convert.
      */
     getShortname (text) {
+      if (!text) {
+        return ''
+      }
       const badchars = /([$#%·:,.~!¡?"¿'=)(!&/|]+)/g
       const whitespace = /\s+/g
       return text.replace(badchars, '')

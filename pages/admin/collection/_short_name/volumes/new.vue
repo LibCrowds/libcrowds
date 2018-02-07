@@ -23,6 +23,7 @@
 <script>
 import localConfig from '@/local.config'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { getShortname } from '@/mixins/getShortname'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -30,7 +31,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags, getShortname ],
 
   data () {
     return {
@@ -44,63 +45,8 @@ export default {
     const endpoint = `/libcrowds/categories/${params.short_name}/volumes/new`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: {
-            fields: [
-              {
-                model: 'name',
-                label: 'Name',
-                type: 'input',
-                inputType: 'text',
-                placeholder: 'A name for the volume'
-              },
-              {
-                model: 'short_name',
-                label: 'Short Name',
-                type: 'input',
-                inputType: 'text',
-                placeholder: 'A short name for the volume',
-                hint: 'The short name is used in the file names of any ' +
-                  'custom, volume-level downloads.'
-              },
-              {
-                model: 'source',
-                label: 'Source',
-                type: 'input',
-                inputType: 'url',
-                placeholder: `The input source URI`,
-                validator: (value) => {
-                  const presenter = data.category.info['presenter']
-                  const source = value ? value.trim() : null
-                  if (!source) {
-                    return 'This field is required!'
-                  } else if (
-                    presenter === 'iiif-annotation' &&
-                    !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
-                  ) {
-                    return 'Not a valid IIIF manifest URI'
-                  } else if (
-                    presenter === 'z3950' &&
-                    !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
-                  ) {
-                    return 'Not a valid Flickr album URI'
-                  }
-                },
-                hint: () => {
-                  const presenter = data.category.info['presenter']
-                  if (presenter === 'iiif-annotation') {
-                    return 'This should be a valid IIIF manifest URI.'
-                  } else if (presenter === 'z3950') {
-                    return 'This should be a valid Flickr album URI.'
-                  }
-                }
-              }
-            ]
-          }
-        }
+        endpoint: endpoint,
+        formData: data.form
       }
     }).catch(err => {
       error(err)
@@ -122,6 +68,73 @@ export default {
         return 'a IIIF manifest'
       } else if (this.collection.info.presenter === 'z3950') {
         return 'a Flickr album'
+      }
+    },
+
+    form () {
+      return {
+        endpoint: this.endpoint,
+        method: 'post',
+        model: this.formData,
+        schema: {
+          fields: [
+            {
+              model: 'name',
+              label: 'Name',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'A name for the volume',
+              onChanged: (model, newVal, oldVal, field) => {
+                const newSn = this.getShortname(newVal)
+                const oldSn = this.getShortname(oldVal)
+                if (!model.short_name || model.short_name === oldSn) {
+                  model.short_name = newSn
+                }
+              }
+            },
+            {
+              model: 'short_name',
+              label: 'Short Name',
+              type: 'input',
+              inputType: 'text',
+              placeholder: 'A short name for the volume',
+              hint: 'The short name is used in the file names of any ' +
+                'custom, volume-level downloads.'
+            },
+            {
+              model: 'source',
+              label: 'Source',
+              type: 'input',
+              inputType: 'url',
+              placeholder: `The input source URI`,
+              validator: (value) => {
+                const presenter = this.collection.info['presenter']
+                const source = value ? value.trim() : null
+                if (!source) {
+                  return 'This field is required!'
+                } else if (
+                  presenter === 'iiif-annotation' &&
+                  !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
+                ) {
+                  return 'Not a valid IIIF manifest URI'
+                } else if (
+                  presenter === 'z3950' &&
+                  !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
+                ) {
+                  return 'Not a valid Flickr album URI'
+                }
+              },
+              hint: () => {
+                const presenter = this.collection.info['presenter']
+                if (presenter === 'iiif-annotation') {
+                  return 'This should be a valid IIIF manifest URI.'
+                } else if (presenter === 'z3950') {
+                  return 'This should be a valid Flickr album URI.'
+                }
+              }
+            }
+          ]
+        }
       }
     }
   },
