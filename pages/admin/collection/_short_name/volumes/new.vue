@@ -1,24 +1,17 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body class="pb-0">
-      <p>
-        Volumes provide the input used to build tasks for projects. The
-        format of the volume's source URI depends on the task presenter
-        chosen for the collection. As this collection uses the
-        <strong>{{ collection.info.presenter }}</strong> task presenter, the
-        source field should be a URI for {{ sourceType }}.
-      </p>
-      <p>
-        After adding a volume you will be able to upload a thumbnail image that
-        will be used by all projects built from the volume.
-      </p>
-      <p>
-        See the
-        <a :href="localConfig.docs" target="_blank">full documentation</a>
-        for further guidance.
-      </p>
-      <hr class="mt-3">
-    </b-card-body>
+    <p slot="guidance">
+      Volumes provide the input used to build tasks for projects (e.g. the
+      images). The format of the volume's source URI depends on the task
+      presenter chosen for the collection. As this collection uses the
+      <strong>{{ collection.info.presenter }}</strong> task presenter, the
+      source field should be a URI for {{ sourceType }}.
+    </p>
+    <p slot="guidance">
+      After adding a volume you will be able to upload a thumbnail image that
+      will be used by all projects built from the volume.
+    </p>
+    <hr>
     <pybossa-form
       submit-text="Add Volume"
       :form="form"
