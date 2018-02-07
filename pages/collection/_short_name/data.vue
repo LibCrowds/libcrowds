@@ -52,11 +52,33 @@
               </ul>
             </template>
           </b-alert>
+          <b-alert
+            v-if="collection && !collection.info.export_formats.length"
+            show
+            variant="info"
+            class="mb-0">
+            <p class="mb-0">
+              No volume-level exports have been setup for this collection.
+              Click the Projects tab above to download the raw, project-level
+              data.
+            </p>
+          </b-alert>
           <volumes-table
             show-details
             :volumes="volumes"
             :filter="filter"
             :filter-by="filterBy">
+            <template slot="action" scope="volume">
+              <b-btn
+                v-if="collection.info.export_formats.length"
+                variant="success"
+                size="sm"
+                block
+                v-b-modal="volumeDataModalId"
+                @click="downloadVolume = volume.item">
+                Download
+              </b-btn>
+            </template>
           </volumes-table>
         </b-tab>
 
@@ -71,8 +93,8 @@
                 variant="success"
                 size="sm"
                 block
-                v-b-modal="dataModalId"
-                @click="activeProject = project.item">
+                v-b-modal="projectDataModalId"
+                @click="downloadProject = project.item">
                 Download
               </b-btn>
             </template>
@@ -84,9 +106,24 @@
 
     <data-modal
       lazy
-      v-if="activeProject"
+      v-if="downloadProject"
+      :items="projectDownloadItems"
+      :endpoint="`/project/${downloadProject.short_name}/tasks/export`"
+      :filename-prefix="downloadProject.short_name"
+      :event-label="downloadProject.name"
       :modal-id="dataModalId"
-      :project="activeProject">
+      :project="downloadProject">
+    </data-modal>
+
+    <data-modal
+      lazy
+      v-if="downloadVolume"
+      :items="volumeDownloadItems"
+      :endpoint="downloadVolumeEndpoint"
+      :filename-prefix="getShortname(downloadVolume.short_name)"
+      :event-label="downloadVolume.name"
+      :modal-id="volumeDataModalId"
+      :project="downloadVolume">
     </data-modal>
 
   </div>
@@ -99,6 +136,7 @@ import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
+import { getShortname } from '@/mixins/getShortname'
 import SortProjectsData from '@/components/data/SortProjects'
 import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
@@ -115,17 +153,28 @@ export default {
     fetchCollectionByName,
     filterProjects,
     licenses,
-    collectionMetaTags
+    collectionMetaTags,
+    getShortname
   ],
 
   data () {
     return {
       localConfig: localConfig,
       title: 'Data',
-      activeProject: null,
-      dataModalId: 'data-download-modal',
       filter: null,
-      filterBy: 'name'
+      filterBy: 'name',
+      downloadProject: null,
+      downloadVolume: null,
+      projectDataModalId: 'project-data-download-modal',
+      volumeDataModalId: 'volume-data-download-modal',
+      projectDownloadItems: [
+        { dataset: 'Tasks', type: 'task', format: 'csv' },
+        { dataset: 'Tasks', type: 'task', format: 'json' },
+        { dataset: 'Task Runs', type: 'task_run', format: 'csv' },
+        { dataset: 'Task Runs', type: 'task_run', format: 'json' },
+        { dataset: 'Results', type: 'result', format: 'csv' },
+        { dataset: 'Results', type: 'result', format: 'json' }
+      ]
     }
   },
 
@@ -162,6 +211,12 @@ export default {
       return this.$store.state.currentCollection
     },
 
+    volumeDownloadItems () {
+      return this.collection.info.export_formats.map(fmt => {
+        return { dataset: fmt.name, type: fmt.id, format: 'csv' }
+      })
+    },
+
     description () {
       if (this.collection.license) {
         return `All datasets generated from ${this.collection.name}
@@ -173,6 +228,13 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    downloadVolumeEndpoint () {
+      if (this.downloadVolume) {
+        return `/libcrowds/categories/${this.collection.short_name}/volumes/` +
+          `${this.downloadVolume.id}/export`
+      }
     }
   },
 
