@@ -25,14 +25,14 @@
       <slot name="left"></slot>
 
       <!-- Main menu -->
-      <b-navbar-nav>
+      <b-navbar-nav id="main-nav-menu">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
           exact
           :to="item.link"
           @click="$emit('menuclick')">
-          {{ item.text }}
+          {{ item.label }}
         </b-nav-item>
       </b-navbar-nav>
     </span>
@@ -231,7 +231,7 @@ export default {
     height: 100%;
   }
 
-  .nav-item {
+  #user-menu {
     padding: 0 0.75rem;
     color: inherit;
     display: inline-block;
@@ -249,6 +249,98 @@ export default {
       border-bottom: 1px solid $gray-300;
       height: 100%;
       white-space: nowrap;
+    }
+  }
+
+  #main-nav-menu {
+    display: flex;
+    flex-direction: row;
+
+    &:first-child {
+      margin-right: auto;
+    }
+
+    .nav-item {
+      font-size: $font-size-sm;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      border-bottom: none;
+      position: relative;
+      text-transform: none;
+      padding: 0;
+
+      &:not(.dropdown):not(.nav-button) .nav-link:after {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        content: '';
+        background-color: $red;
+        opacity: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        letter-spacing: 0.8px;
+        transition: color 250ms;
+
+        &:after {
+          content: none;
+        }
+
+        &:focus,
+        &:hover,
+        &.active {
+          color: $red;
+        }
+      }
+
+      &.nav-button {
+        padding: 0 0.5rem;
+        transition: background-color 250ms;
+        margin-left: 1rem;
+
+        @include media-breakpoint-up(lg) {
+          border: 1px solid $white;
+          border-radius: 2.5rem;
+        }
+      }
+
+      .nav-link {
+        transition: color 200ms;
+        padding: .35rem 0;
+
+        &:not(.dropdown-toggle) {
+          &:after {
+            transition: opacity 200ms, transform 200ms;
+            transform: translateY(10px);
+          }
+
+          &.active:after,
+          &:hover:after,
+          &:focus:after {
+            opacity: 1;
+            transform: none;
+          }
+        }
+      }
+    }
+
+    .dropdown-menu {
+      font-size: $font-size-sm;
+      right: 0;
+
+      .dropdown-divider {
+        width: 100%;
+        margin: 0.75em 0;
+      }
+
+      .dropdown-item {
+        @include hover-focus {
+          color: $link-hover-color;
+        }
+      }
     }
   }
 
