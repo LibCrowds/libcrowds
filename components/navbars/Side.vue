@@ -1,5 +1,5 @@
 <template>
-  <nav :class="sideNavClass" v-prevent-parent-scroll>
+  <nav ref="sidebar" :class="sideNavClass" v-prevent-parent-scroll>
     <div class="header">
       <b-btn
         variant="link"
@@ -127,36 +127,44 @@ export default {
 
   methods: {
     /**
-     * Restrict body content to avoid scroll bar while sidebar is open.
-     * @param {Boolean} restrict
-     *   True to restrict, false otherwise.
-     */
-    restrictBody (restrict) {
-      if (restrict) {
-        document.querySelector('body').style.height = '100vh'
-        document.querySelector('body').style.overflow = 'hidden'
-      } else {
-        document.querySelector('body').style.height = '100%'
-        document.querySelector('body').style.overflow = 'initial'
-      }
-    },
-
-    /**
      * Toggle dark mode.
      */
     toggleDarkMode () {
       this.$store.commit('SET_ITEM', {
         key: 'darkMode', value: !this.darkMode
       })
+    },
+
+    /**
+     * Restrict body content to avoid multiple scroll bars.
+     */
+    restrictBody () {
+      const sidebar = this.$refs.sidebar
+      let height = '100%'
+      let overflow = 'initial'
+      if (sidebar.classList.contains('show') && window.innerWidth < 576) {
+        height = '100vh'
+        overflow = 'hidden'
+      }
+      document.querySelector('body').style.height = height
+      document.querySelector('body').style.overflow = overflow
     }
   },
 
   watch: {
     value () {
       setTimeout(() => {
-        this.restrictBody(this.value)
+        this.restrictBody()
       }, 350)
     }
+  },
+
+  mounted () {
+    window.addEventListener('resize', this.restrictBody)
+  },
+
+  destroyed () {
+    window.removeEventListener('resize', this.restrictBody)
   }
 }
 </script>
