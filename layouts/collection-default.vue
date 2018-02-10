@@ -1,5 +1,5 @@
 <template>
-  <default-base :collection="currentCollection">
+  <default-base fixed="top" :collection="currentCollection">
     <nuxt></nuxt>
   </default-base>
 </template>

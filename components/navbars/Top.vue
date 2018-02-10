@@ -4,6 +4,7 @@
     :type="darkMode ? 'dark' : 'light'"
     class="border-0"
     :sticky="sticky"
+    :variant="variant"
     :fixed="fixed">
 
     <b-btn
@@ -25,7 +26,7 @@
       <slot name="left"></slot>
 
       <!-- Main menu -->
-      <b-navbar-nav id="main-nav-menu">
+      <b-navbar-nav id="main-nav-menu" class="d-none d-lg-flex">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
@@ -105,6 +106,7 @@
 
 <script>
 import 'vue-awesome/icons/bars'
+import throttle from 'lodash/throttle'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import SmallAvatar from '@/components/avatars/Small'
 import { notifications } from '@/mixins/notifications'
@@ -146,6 +148,10 @@ export default {
       return !isEmpty(this.currentUser)
     },
 
+    variant () {
+      return 'light'
+    },
+
     darkMode () {
       return this.$store.state.darkMode
     }
@@ -161,7 +167,47 @@ export default {
         this.$router.push({ name: 'index' })
         this.flash(data)
       })
-    }
+    },
+
+    /**
+     * Style the navbar, switching colors if over an invert-navbar element.
+     */
+    styleNavbar: throttle(
+      function () {
+        let ieScrollTop = document.documentElement.scrollTop
+        let scrollTop = document.body.scrollTop === 0
+          ? ieScrollTop
+          : document.body.scrollTop
+
+        let bounds = []
+        let nodes = document.getElementsByClassName('invert-navbar')
+        for (let i = 0; i < nodes.length; i++) {
+          bounds.push({
+            top: nodes[i].offsetTop,
+            bottom: nodes[i].offsetTop + nodes[i].offsetHeight
+          })
+        }
+
+        for (let b of bounds) {
+          if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
+            document.querySelector('.navbar').classList.add('navbar-light')
+            document.querySelector('.navbar').classList.remove('navbar-dark')
+            return
+          }
+        }
+        document.querySelector('.navbar').classList.remove('navbar-light')
+        document.querySelector('.navbar').classList.add('navbar-dark')
+      },
+      10
+    )
+  },
+
+  mounted () {
+    window.addEventListener('scroll', this.styleNavbar)
+  },
+
+  destroyed () {
+    window.removeEventListener('scroll', this.styleNavbar)
   }
 }
 </script>
@@ -183,6 +229,24 @@ export default {
   height: $top-navbar-height;
   width: 100%;
   z-index: $zindex-fixed;
+
+  &.navbar-dark {
+    background-color: transparent;
+
+    .dropdown-menu {
+      background-color: rgba($black, 0.75);
+      color: $white;
+
+      .dropdown-divider {
+        background-color: rgba($white, 0.35);
+      }
+
+      .dropdown-item {
+        color: $white;
+        background: transparent;
+      }
+    }
+  }
 
   .btn {
     height: 100%;
