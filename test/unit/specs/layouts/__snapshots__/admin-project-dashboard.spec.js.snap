@@ -99,10 +99,10 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
     </ul>
   </nav>
   <div class="dashboard">
-    <nav id="app-navbar"
+    <nav id="top-navbar"
          class="navbar navbar-light"
     >
-      <span class="app-navbar-left">
+      <span class="top-navbar-left">
         <a href="#/"
            target="_self"
            class="active navbar-brand d-lg-none"
@@ -116,7 +116,7 @@ exports[`Project admin dashboard layout renders correctly 1`] = `
         </div>
       </span>
       <ul right
-          class="app-navbar-right border-bottom navbar-nav"
+          class="top-navbar-right border-bottom navbar-nav"
       >
         <a href="http://docs.example.com"
            target="_blank"

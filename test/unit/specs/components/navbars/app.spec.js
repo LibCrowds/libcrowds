@@ -5,7 +5,7 @@ import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from 'vue-test-utils'
-import AppNavbar from '@/components/navbars/App'
+import TopNavbar from '@/components/navbars/Top'
 import { routes } from '@/test/fixtures/routes'
 
 describe('App navbar', () => {
@@ -31,7 +31,7 @@ describe('App navbar', () => {
   })
 
   it('renders correctly when signed out', () => {
-    wrapper = mount(AppNavbar, {
+    wrapper = mount(TopNavbar, {
       localVue,
       store,
       router,
@@ -48,7 +48,7 @@ describe('App navbar', () => {
   it('renders correctly when signed in as non-admin', () => {
     const user = pbTestResponses.getAccount.data.user
     user.admin = false
-    wrapper = mount(AppNavbar, {
+    wrapper = mount(TopNavbar, {
       localVue,
       store,
       router,
@@ -65,7 +65,7 @@ describe('App navbar', () => {
   it('renders correctly when signed in as admin', () => {
     const user = pbTestResponses.getAccount.data.user
     user.admin = true
-    wrapper = mount(AppNavbar, {
+    wrapper = mount(TopNavbar, {
       localVue,
       router,
       store,

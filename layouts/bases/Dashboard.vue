@@ -8,8 +8,7 @@
 
     <div class="dashboard">
 
-      <app-navbar
-        hide-brand-breakpoint="lg"
+      <top-navbar
         :fixed="null"
         :current-user="currentUser">
         <div
@@ -26,7 +25,7 @@
           class="nav-link d-flex px-1">
           <icon name="question-circle"></icon>
         </a>
-      </app-navbar>
+      </top-navbar>
 
       <dashboard-navbar
         position="top"
@@ -48,7 +47,7 @@
 <script>
 import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
-import AppNavbar from '@/components/navbars/App'
+import TopNavbar from '@/components/navbars/Top'
 import DashboardNavbar from '@/components/navbars/Dashboard'
 import 'vue-awesome/icons/question-circle'
 
@@ -71,7 +70,7 @@ export default {
   },
 
   components: {
-    AppNavbar,
+    TopNavbar,
     DashboardFooter,
     DashboardNavbar
   },

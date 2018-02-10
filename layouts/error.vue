@@ -1,7 +1,7 @@
 <template>
   <div id="error-layout">
 
-    <app-navbar :current-user="currentUser"></app-navbar>
+    <top-navbar :current-user="currentUser"></top-navbar>
 
     <main>
       <div class="container text-center">
@@ -34,7 +34,7 @@
 
 <script>
 import AppFooter from '@/components/footers/App'
-import AppNavbar from '@/components/navbars/App'
+import TopNavbar from '@/components/navbars/Top'
 
 export default {
   props: ['error'],
@@ -51,7 +51,7 @@ export default {
   },
 
   components: {
-    AppNavbar,
+    TopNavbar,
     AppFooter
   },
 
@@ -88,7 +88,7 @@ export default {
   flex-direction: column;
 
   main {
-    margin-top: $app-navbar-height;
+    margin-top: $top-navbar-height;
     min-height: 450px;
     display: flex;
     flex: 1 1 auto;

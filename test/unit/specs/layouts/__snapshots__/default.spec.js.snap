@@ -5,10 +5,10 @@ exports[`Default layout renders correctly 1`] = `
 <div id="default-layout-base"
      data-server-rendered="true"
 >
-  <nav id="app-navbar"
+  <nav id="top-navbar"
        class="navbar navbar-light fixed-top"
   >
-    <span class="app-navbar-left">
+    <span class="top-navbar-left">
       <a href="#/"
          target="_self"
          class="active navbar-brand d-undefined-none"
@@ -19,7 +19,7 @@ exports[`Default layout renders correctly 1`] = `
       </a>
     </span>
     <ul right
-        class="app-navbar-right border-bottom navbar-nav"
+        class="top-navbar-right border-bottom navbar-nav"
     >
       <div id="announcements-list"
            class="d-none d-lg-block"

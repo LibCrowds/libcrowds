@@ -1,15 +1,21 @@
 <template>
-  <collection-base>
+  <default-base :collection="currentCollection">
     <nuxt></nuxt>
-  </collection-base>
+  </default-base>
 </template>
 
 <script>
-import CollectionBase from '@/layouts/bases/Collection'
+import DefaultBase from '@/layouts/bases/Default'
 
 export default {
   components: {
-    CollectionBase
+    DefaultBase
+  },
+
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    }
   }
 }
 </script>

@@ -1,0 +1,250 @@
+<template>
+  <nav :class="sideNavClass" v-prevent-parent-scroll>
+    <div class="header">
+      <b-btn
+        variant="link"
+        class="d-flex align-items-center float-right"
+        @click="$emit('menuclick')">
+        Close<icon name="times" class="ml-1"></icon>
+      </b-btn>
+    </div>
+
+    <span v-for="(items, key, index) in navItems" :key="key">
+      <h4>{{ key }}</h4>
+      <b-nav-item
+        v-for="(item, index) in items"
+        exact
+        :key="index"
+        :to="item.link">
+        {{ item.label }}
+      </b-nav-item>
+      <li
+        v-if="index !== navItems.length"
+        role="seperator"
+        class="divider">
+      </li>
+    </span>
+
+    <!-- <li role="seperator" class="divider"></li>
+    <toggle-button
+      :value="darkMode"
+      class="mb-0"
+      @change="toggleDarkMode">
+    </toggle-button>
+    <li role="seperator" class="divider"></li> -->
+
+  </nav>
+</template>
+
+<script>
+import 'vue-awesome/icons/times'
+import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
+import localConfig from '@/local.config'
+
+export default {
+  mixins: [ currentMicrositeNavItems ],
+
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    }
+  },
+
+  computed: {
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
+    publishedCollections () {
+      return this.$store.state.publishedCollections
+    },
+
+    darkMode () {
+      return this.$store.state.darkMode
+    },
+
+    sideNavClass () {
+      return {
+        'side-nav': true,
+        'show': this.value
+      }
+    },
+
+    navItems () {
+      const items = {}
+
+      // Microsite nav items
+      if (this.currentMicrositeNavItems.length) {
+        items[''] = this.currentMicrositeNavItems
+      }
+
+      // Collection hompage nav items
+      items['Collections'] = this.publishedCollections.map(coll => {
+        return {
+          label: coll.name,
+          link: {
+            name: 'collection-short_name',
+            params: {
+              short_name: coll.short_name
+            }
+          }
+        }
+      })
+
+      // Admin nav items
+      if (this.currentUser.admin) {
+        items['Admin'] = [
+          {
+            label: 'Collection Admin',
+            link: {
+              name: 'admin-collection'
+            }
+          },
+          {
+            label: 'Project Admin',
+            link: {
+              name: 'admin-project'
+            }
+          },
+          {
+            label: 'Site Admin',
+            link: {
+              name: 'admin-site'
+            }
+          }
+        ]
+      }
+      return items
+    }
+  },
+
+  methods: {
+    /**
+     * Restrict body content to avoid scroll bar while sidebar is open.
+     * @param {Boolean} restrict
+     *   True to restrict, false otherwise.
+     */
+    restrictBody (restrict) {
+      if (restrict) {
+        document.querySelector('body').style.height = '100vh'
+        document.querySelector('body').style.overflow = 'hidden'
+      } else {
+        document.querySelector('body').style.height = '100%'
+        document.querySelector('body').style.overflow = 'initial'
+      }
+    },
+
+    /**
+     * Toggle dark mode.
+     */
+    toggleDarkMode () {
+      this.$store.commit('SET_ITEM', {
+        key: 'darkMode', value: !this.darkMode
+      })
+    }
+  },
+
+  watch: {
+    value () {
+      setTimeout(() => {
+        this.restrictBody(this.value)
+      }, 350)
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+@import '~assets/style/settings';
+
+.side-nav {
+  overflow: auto;
+  white-space: nowrap;
+  background-size: cover;
+  background-position: center center;
+  background: $gray-100;
+  max-height: 100%;
+  height: 100%;
+  flex-direction: column;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-modal;
+  border-right: 1px solid $gray-300;
+  transform: translateX(-100%);
+  transition: transform 350ms;
+
+  @include media-breakpoint-up(sm) {
+    width: $sidebar-width;
+  }
+
+  &.show {
+    transform: translateX(0);
+  }
+
+  h4 {
+    color: $gray-600;
+    text-transform: uppercase;
+    margin: 0;
+    padding: .75rem 1.25rem;
+    font-size: $font-size-sm;
+    font-family: inherit;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    background: $gray-100;
+    height: $top-navbar-height;
+    min-height: $top-navbar-height;
+    border-bottom: 1px solid $gray-300;
+  }
+
+  .nav-item {
+    font-size: $font-size-sm;
+    display: flex;
+    margin: 0;
+    letter-spacing: 0.8px;
+    border: none;
+    background-color: transparent;
+    padding: 0rem;
+
+    .nav-link {
+      padding: 0.5rem 1.25rem;
+      width: 100%;
+      color: inherit;
+      display: block;
+
+      @include hover-focus {
+        text-decoration: none;
+        background-color: $gray-200;
+      }
+    }
+  }
+
+  ul {
+    display: block;
+  }
+
+  .divider {
+    height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba($gray-300, 0.5);
+  }
+}
+</style>

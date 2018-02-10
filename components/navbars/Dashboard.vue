@@ -115,12 +115,12 @@ export default {
 
   .brand-wrapper {
     display: none;
-    height: $app-navbar-height;
+    height: $top-navbar-height;
     background: transparent;
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid rgba($gray-300, 0.5);
-    min-height: $app-navbar-height;
+    min-height: $top-navbar-height;
 
     .brand {
       margin: 0;

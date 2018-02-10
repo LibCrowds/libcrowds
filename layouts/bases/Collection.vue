@@ -1,12 +1,12 @@
 <template>
   <div id="collection-layout-base">
-    <div id="collection-background" class="main-app-bg" :style="bgStyle"></div>
+    <div id="collection-background" :style="bgStyle"></div>
 
-    <collection-navbar
+    <top-navbar
       :slim="slimNavbar"
       :collection="collection"
       :current-user="currentUser">
-    </collection-navbar>
+    </top-navbar>
 
     <main>
       <slot></slot>

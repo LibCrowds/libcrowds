@@ -217,7 +217,6 @@ export default {
 
   #app-hero {
     height: 500px;
-    top: $app-navbar-height;
     width: auto;
     overflow: hidden;
     position: relative;

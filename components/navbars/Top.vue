@@ -1,32 +1,59 @@
 <template>
   <b-navbar
-    id="app-navbar"
-    type="light"
+    id="top-navbar"
+    :type="darkMode ? 'dark' : 'light'"
+    class="border-0"
     :sticky="sticky"
     :fixed="fixed">
 
-    <span class="app-navbar-left">
+    <b-btn
+      variant="outline-dark"
+      class="px-2 border-top-0 border-left-0"
+      @click="$emit('menuclick')">
+      <icon name="bars" class="mr-1"></icon>
+      <p class="mb-0">Menu</p>
+    </b-btn>
+
+    <span class="top-navbar-left">
       <b-link
-        :class="`navbar-brand d-${hideBrandBreakpoint}-none`"
+        class="navbar-brand d-none d-lg-block"
         :to="{
           name: 'index'
         }">
         <span>{{ localConfig.brand }}</span>
       </b-link>
-
       <slot name="left"></slot>
 
+      <!-- Main menu -->
+      <b-navbar-nav>
+        <b-nav-item
+          v-for="(item, index) in currentMicrositeNavItems"
+          :key="index"
+          exact
+          :to="item.link"
+          @click="$emit('menuclick')">
+          {{ item.text }}
+        </b-nav-item>
+      </b-navbar-nav>
     </span>
 
-    <b-navbar-nav right class="app-navbar-right border-bottom" v-if="loggedIn">
+    <b-navbar-nav right class="top-navbar-right" v-if="loggedIn">
 
       <slot name="right"></slot>
 
       <!-- Hide on small screens until the new menu is in place -->
       <announcements class="d-none d-lg-block"></announcements>
 
+      <small-avatar
+        extra-small
+        :gravatar="currentUser.name"
+        :domain-object="currentUser">
+      </small-avatar>
+
       <b-nav-item-dropdown
         right
+        id="user-menu"
+        class="px-2"
         :text="currentUser.name">
 
         <!-- Profile/settings -->
@@ -47,36 +74,13 @@
           }">Settings
         </b-dropdown-item>
 
-        <!-- Project management -->
-        <span v-if="currentUser.admin">
-          <div role="separator" class="dropdown-divider"></div>
-          <b-dropdown-item
-            :to="{
-              name: 'admin-project'
-            }">
-            Project Admin
-          </b-dropdown-item>
-          <b-dropdown-item
-            :to="{
-              name: 'admin-collection'
-            }">
-            Collection Admin
-          </b-dropdown-item>
-          <b-dropdown-item
-            :to="{
-              name: 'admin-site'
-            }">
-            Site Admin
-          </b-dropdown-item>
-        </span>
-
         <div role="separator" class="dropdown-divider"></div>
         <b-dropdown-item v-on:click="signout">Sign Out</b-dropdown-item>
       </b-nav-item-dropdown>
     </b-navbar-nav>
 
     <!-- Sign in/sign up -->
-    <b-navbar-nav id="sign-in-up" right class="app-navbar-right" v-else>
+    <b-navbar-nav id="sign-in-up" right class="top-navbar-right" v-else>
       <b-nav-item
         exact
         :to="{
@@ -100,12 +104,17 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/bars'
+import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
+import SmallAvatar from '@/components/avatars/Small'
 import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
 import Announcements from '@/components/lists/Announcements'
 
 export default {
+  mixins: [ notifications, currentMicrositeNavItems ],
+
   data () {
     return {
       localConfig: localConfig
@@ -121,10 +130,6 @@ export default {
       type: Boolean,
       default: false
     },
-    hideBrandBreakpoint: {
-      type: String,
-      defualt: null
-    },
     currentUser: {
       type: Object,
       required: true
@@ -132,12 +137,17 @@ export default {
   },
 
   components: {
-    Announcements
+    Announcements,
+    SmallAvatar
   },
 
   computed: {
     loggedIn () {
       return !isEmpty(this.currentUser)
+    },
+
+    darkMode () {
+      return this.$store.state.darkMode
     }
   },
 
@@ -152,16 +162,14 @@ export default {
         this.flash(data)
       })
     }
-  },
-
-  mixins: [ notifications ]
+  }
 }
 </script>
 
 <style lang="scss">
 @import '~assets/style/settings';
 
-#app-navbar {
+#top-navbar {
   background-color: $white;
   padding: 0;
   display: flex;
@@ -169,30 +177,39 @@ export default {
   align-self: center;
   justify-content: space-between;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: $font-size-sm;
   text-transform: uppercase;
-  min-height: $app-navbar-height;
-  height: $app-navbar-height;
+  min-height: $top-navbar-height;
+  height: $top-navbar-height;
   width: 100%;
+  z-index: $zindex-fixed;
 
-  .app-navbar-left {
+  .btn {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-color: $gray-300;
+  }
+
+  .top-navbar-left {
     height: 100%;
     flex: 1 1 auto;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $gray-300;
     padding: 0 0.75rem;
+    border-bottom: 1px solid $gray-300;
   }
 
-  .app-navbar-right {
+  .top-navbar-right {
     height: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-
-    &.border-bottom {
-      border-bottom: 1px solid $gray-300;
-    }
+    border-bottom: 1px solid $gray-300;
   }
 
   .navbar-brand {
@@ -250,14 +267,6 @@ export default {
 
     a {
       color: $white;
-    }
-  }
-
-  .dropdown {
-    padding: 0 0.75rem;
-
-    @include media-breakpoint-up(sm) {
-      padding: 0 1.75rem;
     }
   }
 
