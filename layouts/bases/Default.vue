@@ -141,7 +141,6 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url('~/assets/img/geometry.png');
 
   main {
     flex: 1 1 auto;
@@ -155,7 +154,6 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-    background-image: url('~/assets/img/geometry.png');
   }
 
   .fixed {
@@ -183,6 +181,7 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
+    background-image: url('~/assets/img/app-background.jpg');
   }
 }
 </style>
