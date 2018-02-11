@@ -21,7 +21,6 @@
         }">
         <span>{{ navbarBrand || localConfig.brand }}</span>
       </b-link>
-      <slot name="left"></slot>
 
       <!-- Main menu -->
       <b-navbar-nav id="main-nav-menu" class="d-none d-lg-flex">

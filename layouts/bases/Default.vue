@@ -13,12 +13,6 @@
         :navbar-brand="navbarBrand"
         :class="navbarClass"
         @menuclick="showSideNav = !showSideNav">
-        <div
-          slot="left"
-          class="d-none d-lg-block ml-2"
-          v-if="titleBase">
-          {{ titleBase }}
-        </div>
       </top-navbar>
 
       <main :class="containerClass">
