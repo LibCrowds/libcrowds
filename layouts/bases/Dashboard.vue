@@ -1,34 +1,21 @@
 <template>
   <div id="dashboard-layout-base">
 
+    <side-nav
+      v-model="showSideNav"
+      @menuclick="showSideNav = false">
+    </side-nav>
+
     <dashboard-navbar
-      position="side"
       :nav-items="navItems">
     </dashboard-navbar>
 
     <div class="dashboard">
 
-      <top-navbar>
-        <div
-          slot="left"
-          class="d-none d-lg-block ml-2"
-          v-if="titleBase">
-          {{ titleBase }}
-        </div>
-        <a
-          slot="right"
-          v-if="localConfig.docs"
-          :href="localConfig.docs"
-          target="_blank"
-          class="nav-link d-flex px-1">
-          <icon name="question-circle"></icon>
-        </a>
+      <top-navbar
+        show-help
+        @menuclick="showSideNav = !showSideNav">
       </top-navbar>
-
-      <dashboard-navbar
-        position="top"
-        :nav-items="navItems">
-      </dashboard-navbar>
 
       <main class="container-fluid px-lg-4 py-4">
         <transition name="fade" mode="out-in" appear>
@@ -46,13 +33,14 @@
 import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
+import SideNav from '@/components/navbars/Side'
 import DashboardNavbar from '@/components/navbars/Dashboard'
-import 'vue-awesome/icons/question-circle'
 
 export default {
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      showSideNav: false
     }
   },
 
@@ -69,6 +57,7 @@ export default {
 
   components: {
     TopNavbar,
+    SideNav,
     DashboardFooter,
     DashboardNavbar
   },

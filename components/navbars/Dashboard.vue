@@ -1,5 +1,5 @@
 <template>
-  <nav id="dashboard-navbar" :class="classObj">
+  <nav id="dashboard-navbar" class="dashboard-nav-bg">
     <div class="brand-wrapper navbar-light text-center">
       <nuxt-link
         class="brand navbar-brand"
@@ -45,27 +45,6 @@ export default {
     navItems: {
       type: Array,
       required: true
-    },
-    position: {
-      type: String,
-      default: 'top',
-      validator: value => {
-        const validPositions = [
-          'top',
-          'side'
-        ]
-        return validPositions.indexOf(value) > -1
-      }
-    }
-  },
-
-  computed: {
-    classObj () {
-      return {
-        top: this.position === 'top',
-        side: this.position === 'side',
-        'dashboard-nav-bg': true
-      }
     }
   },
 
@@ -152,7 +131,7 @@ export default {
     }
   }
 
-  &.side {
+  @include media-breakpoint-up(lg) {
     max-height: 100%;
     height: 100%;
     flex-direction: column;
@@ -195,22 +174,6 @@ export default {
         float: right;
         width: calc(100% - #{$sidebar-width});
       }
-    }
-  }
-
-  &.top {
-    .nav-item {
-      flex-direction: row;
-      margin: calc(#{$list-group-item-padding-x} - #{$list-group-item-padding-y});
-    }
-
-    ul {
-      padding: 0.5rem 1rem;
-      flex-direction: row;
-    }
-
-    @include media-breakpoint-down(md) {
-      display: flex;
     }
   }
 }
