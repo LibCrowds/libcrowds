@@ -142,7 +142,11 @@ export default {
       const sidebar = this.$refs.sidebar
       let height = '100%'
       let overflow = 'initial'
-      if (sidebar.classList.contains('show') && window.innerWidth < 576) {
+      if (
+        typeof sidebar !== 'undefined' &&
+        sidebar.classList.contains('show') &&
+        window.innerWidth < 576
+      ) {
         height = '100vh'
         overflow = 'hidden'
       }

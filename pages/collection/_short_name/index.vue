@@ -42,7 +42,7 @@
       </div>
     </transition>
 
-    <section id="intro" class="bg-white invert-navbar">
+    <section id="intro" class="bg-white transparent-navbar">
       <div class="container py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
           {{ collection.description }}
@@ -70,7 +70,7 @@
 
     <section
       id="featured-projects"
-      class="invert-navbar"
+      class="transparent-navbar"
       v-if="featured.length">
       <div class="container w-75 text-center pb-4">
         <div class="row text-lg-left">
@@ -164,7 +164,7 @@
       </b-jumbotron>
     </section> -->
 
-    <section id="final-cta" class="bg-white invert-navbar">
+    <section id="final-cta" class="bg-white transparent-navbar">
       <div class="container pt-4 pb-3 text-center">
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
@@ -185,7 +185,7 @@
       </div>
     </section>
 
-    <section id="social-media" class="bg-white invert-navbar">
+    <section id="social-media" class="bg-white transparent-navbar">
       <div class="container pb-4 text-center">
         <hr class="mt-0 mb-3">
         <social-media-buttons

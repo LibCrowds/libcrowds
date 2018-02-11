@@ -8,9 +8,7 @@
 
     <div class="dashboard">
 
-      <top-navbar
-        :fixed="null"
-        :current-user="currentUser">
+      <top-navbar>
         <div
           slot="left"
           class="d-none d-lg-block ml-2"

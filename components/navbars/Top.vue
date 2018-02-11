@@ -2,10 +2,8 @@
   <b-navbar
     id="top-navbar"
     :type="darkMode ? 'dark' : 'light'"
-    class="border-0"
     :sticky="sticky"
-    :variant="variant"
-    :fixed="fixed">
+    :fixed="fixedTop ? 'top': null">
 
     <b-btn
       variant="outline-dark"
@@ -17,11 +15,11 @@
 
     <span class="top-navbar-left">
       <b-link
-        class="navbar-brand d-none d-lg-block"
+        class="navbar-brand ml-1 mr-2"
         :to="{
           name: 'index'
         }">
-        <span>{{ localConfig.brand }}</span>
+        <span>{{ navbarBrand || localConfig.brand }}</span>
       </b-link>
       <slot name="left"></slot>
 
@@ -107,10 +105,10 @@
 <script>
 import 'vue-awesome/icons/bars'
 import throttle from 'lodash/throttle'
+import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import SmallAvatar from '@/components/avatars/Small'
 import { notifications } from '@/mixins/notifications'
-import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config'
 import Announcements from '@/components/lists/Announcements'
 
@@ -124,17 +122,17 @@ export default {
   },
 
   props: {
-    fixed: {
-      type: String,
-      default: 'top'
+    fixedTop: {
+      type: Boolean,
+      default: false
     },
     sticky: {
       type: Boolean,
       default: false
     },
-    currentUser: {
-      type: Object,
-      required: true
+    navbarBrand: {
+      type: String,
+      required: false
     }
   },
 
@@ -144,12 +142,12 @@ export default {
   },
 
   computed: {
-    loggedIn () {
-      return !isEmpty(this.currentUser)
+    currentUser () {
+      return this.$store.state.currentUser
     },
 
-    variant () {
-      return 'light'
+    loggedIn () {
+      return !isEmpty(this.currentUser)
     },
 
     darkMode () {
@@ -170,7 +168,7 @@ export default {
     },
 
     /**
-     * Style the navbar, switching colors if over an invert-navbar element.
+     * Make navbar transparent if over a transparent-navbar element.
      */
     styleNavbar: throttle(
       function () {
@@ -180,7 +178,7 @@ export default {
           : document.body.scrollTop
 
         let bounds = []
-        let nodes = document.getElementsByClassName('invert-navbar')
+        let nodes = document.getElementsByClassName('transparent-navbar')
         for (let i = 0; i < nodes.length; i++) {
           bounds.push({
             top: nodes[i].offsetTop,
@@ -192,11 +190,13 @@ export default {
           if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
             document.querySelector('.navbar').classList.add('navbar-light')
             document.querySelector('.navbar').classList.remove('navbar-dark')
+            document.querySelector('.navbar').classList.remove('transparent')
             return
           }
         }
         document.querySelector('.navbar').classList.remove('navbar-light')
         document.querySelector('.navbar').classList.add('navbar-dark')
+        document.querySelector('.navbar').classList.add('transparent')
       },
       10
     )
@@ -216,7 +216,6 @@ export default {
 @import '~assets/style/settings';
 
 #top-navbar {
-  background-color: $white;
   padding: 0;
   display: flex;
   flex-direction: row;
@@ -229,8 +228,13 @@ export default {
   height: $top-navbar-height;
   width: 100%;
   z-index: $zindex-fixed;
+  transition: background-color 200ms;
 
-  &.navbar-dark {
+  &:not(.transparent) {
+    background-color: $white;
+  }
+
+  &.transparent {
     background-color: transparent;
 
     .dropdown-menu {
@@ -242,6 +246,23 @@ export default {
       }
 
       .dropdown-item {
+        color: $white;
+        background: transparent;
+      }
+    }
+
+    .top-navbar-left,
+    .top-navbar-right {
+      border-bottom: none;
+    }
+
+    .btn {
+      cursor: pointer;
+      border-color: transparent;
+      color: $white;
+
+      @include hover-focus {
+        border-color: transparent;
         color: $white;
         background: transparent;
       }
@@ -259,15 +280,7 @@ export default {
     border-color: $gray-300;
   }
 
-  .top-navbar-left {
-    height: 100%;
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
-    padding: 0 0.75rem;
-    border-bottom: 1px solid $gray-300;
-  }
-
+  .top-navbar-left,
   .top-navbar-right {
     height: 100%;
     display: flex;
@@ -276,15 +289,21 @@ export default {
     border-bottom: 1px solid $gray-300;
   }
 
+  .top-navbar-left {
+    flex: 1 1 auto;
+    padding: 0 0.75rem;
+  }
+
   .navbar-brand {
     margin: 0;
     letter-spacing: 1.15px;
     font-family: $font-family-base;
     font-weight: 600;
     text-transform: uppercase;
+    display: none;
 
     @include media-breakpoint-up(sm) {
-      padding: 0 1.25rem;
+      display: block;
     }
   }
 
@@ -299,6 +318,10 @@ export default {
     padding: 0 0.75rem;
     color: inherit;
     display: inline-block;
+
+    .nav-link {
+      letter-spacing: 0.4px;
+    }
 
     @include media-breakpoint-up(sm) {
       display: block;
@@ -348,6 +371,7 @@ export default {
         font-weight: 500;
         letter-spacing: 0.8px;
         transition: color 250ms;
+        padding: .25rem 0;
 
         &:after {
           content: none;
@@ -387,22 +411,6 @@ export default {
             opacity: 1;
             transform: none;
           }
-        }
-      }
-    }
-
-    .dropdown-menu {
-      font-size: $font-size-sm;
-      right: 0;
-
-      .dropdown-divider {
-        width: 100%;
-        margin: 0.75em 0;
-      }
-
-      .dropdown-item {
-        @include hover-focus {
-          color: $link-hover-color;
         }
       }
     }

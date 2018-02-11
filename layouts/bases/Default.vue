@@ -9,8 +9,9 @@
 
     <div id="app-right">
       <top-navbar
-        :fixed="fixed"
-        :current-user="currentUser"
+        fixed-top
+        :navbar-brand="navbarBrand"
+        :class="navbarClass"
         @menuclick="showSideNav = !showSideNav">
         <div
           slot="left"
@@ -21,19 +22,13 @@
       </top-navbar>
 
       <main :class="containerClass">
-        <transition name="fade" mode="out-in" appear>
-          <nuxt></nuxt>
-        </transition>
+        <slot></slot>
       </main>
-
-      <dashboard-footer
-        v-if="slimFooter">
-      </dashboard-footer>
 
     </div>
 
     <app-footer
-      v-if="!slimFooter"
+      v-if="!hideFooter"
       :collections="publishedCollections">
     </app-footer>
 
@@ -70,9 +65,13 @@ export default {
       type: Boolean,
       default: false
     },
-    slimFooter: {
+    hideFooter: {
       type: Boolean,
       default: false
+    },
+    navbarClass: {
+      type: String,
+      required: false
     },
     contained: {
       type: Boolean,
@@ -82,13 +81,13 @@ export default {
       type: String,
       required: false
     },
-    fixed: {
-      type: String,
-      default: null
-    },
     collection: {
       type: Object,
       default: () => ({})
+    },
+    navbarBrand: {
+      type: String,
+      required: false
     }
   },
 

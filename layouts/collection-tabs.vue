@@ -1,6 +1,10 @@
 <template>
-  <collection-base>
-    <div id="collection-tabs-layout" class="container mb-5">
+  <default-base
+    :navbar-brand="currentCollection.name"
+    :collection="currentCollection"
+    navbar-class="transparent navbar-dark">
+
+    <div id="collection-tabs-layout" class="container mt-2 mb-5">
 
       <b-nav class="nav-unstyled">
         <b-nav-item
@@ -21,20 +25,24 @@
       </main>
 
     </div>
-  </collection-base>
+  </default-base>
 </template>
 
 <script>
-import CollectionBase from '@/layouts/bases/Collection'
+import DefaultBase from '@/layouts/bases/Default'
 
 export default {
   components: {
-    CollectionBase
+    DefaultBase
   },
 
   computed: {
     navItems () {
       return this.$store.state.collectionNavItems
+    },
+
+    currentCollection () {
+      return this.$store.state.currentCollection
     }
   },
 

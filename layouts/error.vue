@@ -1,7 +1,7 @@
 <template>
   <div id="error-layout">
 
-    <top-navbar :current-user="currentUser"></top-navbar>
+    <top-navbar></top-navbar>
 
     <main>
       <div class="container text-center">

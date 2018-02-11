@@ -1,19 +1,21 @@
 <template>
   <div id="collection-fullscreen-dark-layout">
-    <collection-base hide-footer>
+    <default-base
+      :navbar-brand="currentCollection.name"
+      hide-footer>
       <div class="content">
         <nuxt></nuxt>
       </div>
-    </collection-base>
+    </default-base>
   </div>
 </template>
 
 <script>
-import CollectionBase from '@/layouts/bases/Collection'
+import DefaultBase from '@/layouts/bases/Default'
 
 export default {
   components: {
-    CollectionBase
+    DefaultBase
   }
 }
 </script>
@@ -23,7 +25,7 @@ export default {
 
 #collection-fullscreen-dark-layout {
   .content {
-    height: calc(100vh - #{$collection-navbar-height});
+    height: calc(100vh - #{$top-navbar-height});
   }
 
   #collection-navbar {
