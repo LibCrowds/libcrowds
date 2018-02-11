@@ -15,11 +15,12 @@
 
     <span class="top-navbar-left">
       <b-link
+        v-if="navbarBrand"
         class="navbar-brand ml-1 mr-2"
         :to="{
           name: 'index'
         }">
-        <span>{{ navbarBrand || localConfig.brand }}</span>
+        <span>{{ navbarBrand }}</span>
       </b-link>
 
       <!-- Main menu -->
@@ -38,6 +39,14 @@
     <b-navbar-nav right class="top-navbar-right" v-if="loggedIn">
 
       <slot name="right"></slot>
+
+      <a
+        v-if="showHelp && localConfig.docs"
+        :href="localConfig.docs"
+        target="_blank"
+        class="nav-link d-flex px-1">
+        <icon name="question-circle"></icon>
+      </a>
 
       <!-- Hide on small screens until the new menu is in place -->
       <announcements class="d-none d-lg-block"></announcements>
@@ -102,6 +111,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/bars'
 import throttle from 'lodash/throttle'
 import isEmpty from 'lodash/isEmpty'
@@ -131,6 +141,10 @@ export default {
       required: false
     },
     transparent: {
+      type: Boolean,
+      default: false
+    },
+    showHelp: {
       type: Boolean,
       default: false
     }

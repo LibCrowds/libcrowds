@@ -34,7 +34,6 @@
 
 <script>
 import 'vue-awesome/icons/question-circle'
-import localConfig from '@/local.config'
 import AppFooter from '@/components/footers/App'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
@@ -43,7 +42,6 @@ import SideNav from '@/components/navbars/Side'
 export default {
   data () {
     return {
-      localConfig: localConfig,
       showSideNav: false
     }
   },

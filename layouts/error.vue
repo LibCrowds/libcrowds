@@ -1,7 +1,9 @@
 <template>
   <div id="error-layout">
 
-    <top-navbar></top-navbar>
+    <top-navbar
+      :navbar-brand="navbarBrand">
+    </top-navbar>
 
     <main>
       <div class="container text-center">
@@ -33,6 +35,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import AppFooter from '@/components/footers/App'
 import TopNavbar from '@/components/navbars/Top'
 
@@ -62,6 +65,10 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    navbarBrand () {
+      return localConfig.brand
     },
 
     normalisedMessage () {
