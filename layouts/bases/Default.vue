@@ -9,7 +9,8 @@
 
     <div id="app-right">
       <top-navbar
-        fixed-top
+        :transparent="transparent"
+        :fixed-top="fixedTop"
         :navbar-brand="navbarBrand"
         :class="navbarClass"
         @menuclick="showSideNav = !showSideNav">
@@ -75,13 +76,21 @@ export default {
       type: String,
       required: false
     },
-    collection: {
-      type: Object,
-      default: () => ({})
-    },
     navbarBrand: {
       type: String,
       required: false
+    },
+    backgroundImageUrl: {
+      type: String,
+      required: false
+    },
+    fixedTop: {
+      type: Boolean,
+      default: false
+    },
+    transparent: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -115,11 +124,14 @@ export default {
     },
 
     bgStyle () {
-      if (!this.collection.info || !this.collection.info.background) {
+      if (
+        typeof this.backgroundImageUrl === 'undefined' ||
+        !this.backgroundImageUrl.length
+      ) {
         return
       }
       return {
-        backgroundImage: `url(${this.collection.info.background})`
+        backgroundImage: `url(${this.backgroundImageUrl})`
       }
     }
   }

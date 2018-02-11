@@ -1,8 +1,8 @@
 <template>
   <b-navbar
     id="top-navbar"
-    :type="darkMode ? 'dark' : 'light'"
-    :sticky="sticky"
+    :variant="navbarVariant"
+    :type="navbarType"
     :fixed="fixedTop ? 'top': null">
 
     <b-btn
@@ -116,7 +116,8 @@ export default {
 
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      navbarVariant: this.transparent ? 'transparent' : null
     }
   },
 
@@ -125,13 +126,13 @@ export default {
       type: Boolean,
       default: false
     },
-    sticky: {
-      type: Boolean,
-      default: false
-    },
     navbarBrand: {
       type: String,
       required: false
+    },
+    transparent: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -147,6 +148,10 @@ export default {
 
     loggedIn () {
       return !isEmpty(this.currentUser)
+    },
+
+    navbarType () {
+      return this.darkMode ? 'dark' : 'light'
     },
 
     darkMode () {
@@ -167,17 +172,16 @@ export default {
     },
 
     /**
-     * Make navbar transparent if over a transparent-navbar element.
+     * Remove navbar transparency if over an opaque-navbar element.
      */
     styleNavbar: throttle(
       function () {
-        let ieScrollTop = document.documentElement.scrollTop
-        let scrollTop = document.body.scrollTop === 0
+        const ieScrollTop = document.documentElement.scrollTop
+        const scrollTop = document.body.scrollTop === 0
           ? ieScrollTop
           : document.body.scrollTop
-
-        let bounds = []
-        let nodes = document.getElementsByClassName('transparent-navbar')
+        const bounds = []
+        const nodes = document.getElementsByClassName('opaque-navbar')
         for (let i = 0; i < nodes.length; i++) {
           bounds.push({
             top: nodes[i].offsetTop,
@@ -186,16 +190,18 @@ export default {
         }
 
         for (let b of bounds) {
-          if (scrollTop >= b.top - 25 && scrollTop <= b.bottom) {
-            document.querySelector('.navbar').classList.add('navbar-light')
-            document.querySelector('.navbar').classList.remove('navbar-dark')
-            document.querySelector('.navbar').classList.remove('transparent')
+          if (
+            scrollTop >= b.top - 25 &&
+            scrollTop <= b.bottom &&
+            this.transparent
+          ) {
+            this.navbarVariant = null
             return
           }
         }
-        document.querySelector('.navbar').classList.remove('navbar-light')
-        document.querySelector('.navbar').classList.add('navbar-dark')
-        document.querySelector('.navbar').classList.add('transparent')
+        if (this.transparent) {
+          this.navbarVariant = 'transparent'
+        }
       },
       10
     )
@@ -233,7 +239,7 @@ export default {
     background-color: $white;
   }
 
-  &.transparent {
+  &.bg-transparent {
     background-color: transparent;
 
     .dropdown-menu {
@@ -253,6 +259,11 @@ export default {
     .top-navbar-left,
     .top-navbar-right {
       border-bottom: none;
+    }
+
+    .navbar-brand,
+    .nav-link {
+      color: $white;
     }
 
     .btn {

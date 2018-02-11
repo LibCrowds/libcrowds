@@ -1,9 +1,9 @@
 <template>
   <default-base
-    fixed
+    fixed-top
+    transparent
     :navbar-brand="currentCollection.name"
-    :collection="currentCollection"
-    navbar-class="transparent navbar-dark">
+    :background-image-url="currentCollection.info.background">
     <nuxt></nuxt>
   </default-base>
 </template>

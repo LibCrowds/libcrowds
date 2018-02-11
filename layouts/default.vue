@@ -1,5 +1,5 @@
 <template>
-  <default-base fixed>
+  <default-base fixed-top>
     <nuxt></nuxt>
   </default-base>
 </template>

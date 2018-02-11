@@ -1,8 +1,8 @@
 <template>
   <default-base
+    transparent
     :navbar-brand="currentCollection.name"
-    :collection="currentCollection"
-    navbar-class="transparent navbar-dark">
+    :background-image-url="currentCollection.info.background">
 
     <div id="collection-tabs-layout" class="container mt-2 mb-5">
 
