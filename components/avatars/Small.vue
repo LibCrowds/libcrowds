@@ -4,7 +4,17 @@
       :src="src"
       img-class="img-fluid rounded-circle"
       alt-tag="Small thumbnail image">
+      <v-gravatar
+        v-if="gravatar"
+        slot="placeholder"
+        :email="gravatar"
+        size="100"
+        default-img="identicon"
+        alt-tag="Small thumbnail placeholder"
+        :class="placeholderClassObj">
+      </v-gravatar>
       <div
+       v-else
         slot="placeholder"
         :class="placeholderClassObj">
         <icon name="question"></icon>
@@ -23,6 +33,10 @@ export default {
     info: {
       type: Object,
       required: true
+    },
+    gravatar: {
+      type: String,
+      required: false
     },
     extraSmall: {
       type: Boolean,
