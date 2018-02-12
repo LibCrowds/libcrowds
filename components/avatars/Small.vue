@@ -92,7 +92,7 @@ export default {
     max-width: 2rem;
     max-height: 2rem;
 
-    &>* {
+    .placeholder {
       width: 2rem;
       height: 2rem;
       max-width: 2rem;
