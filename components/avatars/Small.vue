@@ -111,6 +111,10 @@ export default {
 
   .placeholder {
     border: 1px solid $gray-300;
+
+    &.placeholder-dark {
+      border-color: $gray-600;
+    }
   }
 }
 </style>
