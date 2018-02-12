@@ -3,7 +3,10 @@
     lazy
     :id="modalId"
     title="Leaderboard"
-    ok-only>
+    ok-only
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null">
     <b-table
       responsive
       striped

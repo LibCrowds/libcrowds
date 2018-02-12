@@ -3,6 +3,9 @@
     lazy
     :id="modalId"
     ok-only
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
     title="Project Stats"
     size="lg"
     @shown="fetchData">
