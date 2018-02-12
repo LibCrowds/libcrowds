@@ -16,7 +16,7 @@
         </img>
         <div
           v-else
-          class="img-fluid img-announcement rounded-circle placeholder">
+          class="placeholderClassObj">
           <icon name="question" scale="2"></icon>
         </div>
       </div>
@@ -81,6 +81,16 @@ export default {
       return {
         'announcement-card': true,
         unread: this.unread
+      }
+    },
+
+    placeholderClassObj () {
+      return {
+        'img-fluid': true,
+        'img-announcement': true,
+        'rounded-circle': true,
+        'placeholder': true,
+        'placeholder-dark': this.darkMode
       }
     }
   },

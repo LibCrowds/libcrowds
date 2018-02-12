@@ -4,7 +4,9 @@
       :src="src"
       :img-class="imgClass"
       :alt-tag="altTag">
-      <div slot="placeholder" class="placeholder">
+      <div
+        slot="placeholder"
+        :class="darkMode ? 'placeholder placeholder-dark' : 'placeholder'">
         <icon name="picture-o" scale="4"></icon>
       </div>
     </base-avatar>

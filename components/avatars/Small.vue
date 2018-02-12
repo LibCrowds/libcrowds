@@ -6,7 +6,7 @@
       alt-tag="Small thumbnail image">
       <div
         slot="placeholder"
-        class="img-fluid rounded-circle placeholder">
+        :class="placeholderClassObj">
         <icon name="question"></icon>
       </div>
     </base-avatar>
@@ -56,6 +56,15 @@ export default {
       return {
         'small-avatar': true,
         'xs': this.extraSmall
+      }
+    },
+
+    placeholderClassObj () {
+      return {
+        'img-fluid': true,
+        'rounded-circle': true,
+        'placeholder': true,
+        'placeholder-dark': this.darkMode
       }
     }
   },

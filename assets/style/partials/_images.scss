@@ -6,6 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.placeholder-dark {
+    background-color: $gray-800;
+    color: $gray-300;
+    border-color: $gray-600;
+  }
 }
 
 .dashboard-nav-bg {
