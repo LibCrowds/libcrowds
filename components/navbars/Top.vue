@@ -54,7 +54,7 @@
       <small-avatar
         extra-small
         :gravatar="currentUser.name"
-        :domain-object="currentUser">
+        :info="currentUser.info">
       </small-avatar>
 
       <b-nav-item-dropdown
