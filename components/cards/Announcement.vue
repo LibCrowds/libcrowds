@@ -1,6 +1,8 @@
 <template>
   <b-card
     no-body
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null"
     class="announcement-card"
     @click="onClick">
     <div class="d-flex flex-row">

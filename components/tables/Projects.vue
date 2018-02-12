@@ -5,6 +5,7 @@
       striped
       show-empty
       responsive
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
       :style="tableStyle"

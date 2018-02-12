@@ -1,11 +1,10 @@
 <template>
-  <div class="small-avatar">
+  <div :class="classObj">
     <img
       v-if="src"
       :src="src"
       class="img-fluid rounded-circle"
       :onerror="hasError = true">
-    </img>
     <div
       v-else
       class="img-fluid rounded-circle placeholder">
@@ -29,6 +28,10 @@ export default {
     domainObject: {
       type: Object,
       required: true
+    },
+    extraSmall: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -45,6 +48,13 @@ export default {
         return host + this.domainObject.info.media_url
       }
       return null
+    },
+
+    classObj () {
+      return {
+        'small-avatar': true,
+        'xs': this.extraSmall
+      }
     }
   },
 
@@ -61,16 +71,30 @@ export default {
 
 .small-avatar {
   overflow: hidden;
+  width: 3rem;
+  height: 3rem;
   max-width: 3rem;
   max-height: 3rem;
-  min-width: 3rem;
-  min-height: 3rem;
 
   &>* {
+    width: 3rem;
+    height: 3rem;
     max-width: 3rem;
     max-height: 3rem;
-    min-width: 3rem;
-    min-height: 3rem;
+  }
+
+  &.xs {
+    width: 2rem;
+    height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
+
+    &>* {
+      width: 2rem;
+      height: 2rem;
+      max-width: 2rem;
+      max-height: 2rem;
+    }
   }
 
   .placeholder {

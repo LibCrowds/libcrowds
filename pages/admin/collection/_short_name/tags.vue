@@ -16,6 +16,7 @@
         striped
         hover
         show-empty
+        :dark="darkMode"
         :items="getTableItems"
         :fields="tableFields">
         <template slot="color" scope="tag">

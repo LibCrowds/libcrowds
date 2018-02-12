@@ -12,6 +12,7 @@ actions.nuxtServerInit = async ({ dispatch }, { app }) => {
 export default () => {
   return new Vuex.Store({
     state: {
+      darkMode: false,
       currentUser: {},
       publishedCollections: [],
       currentCollection: {},

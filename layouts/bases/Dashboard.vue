@@ -1,37 +1,21 @@
 <template>
-  <div id="dashboard-layout-base">
+  <div id="dashboard-layout-base" :class="darkMode ? 'dark-mode' : null">
+
+    <side-nav
+      v-model="showSideNav"
+      @menuclick="showSideNav = false">
+    </side-nav>
 
     <dashboard-navbar
-      position="side"
       :nav-items="navItems">
     </dashboard-navbar>
 
-    <div class="dashboard">
+    <div :class="darkMode ? 'dashboard dashboard-dark' : 'dashboard'">
 
-      <app-navbar
-        hide-brand-breakpoint="lg"
-        :fixed="null"
-        :current-user="currentUser">
-        <div
-          slot="left"
-          class="d-none d-lg-block ml-2"
-          v-if="titleBase">
-          {{ titleBase }}
-        </div>
-        <a
-          slot="right"
-          v-if="localConfig.docs"
-          :href="localConfig.docs"
-          target="_blank"
-          class="nav-link d-flex px-1">
-          <icon name="question-circle"></icon>
-        </a>
-      </app-navbar>
-
-      <dashboard-navbar
-        position="top"
-        :nav-items="navItems">
-      </dashboard-navbar>
+      <top-navbar
+        show-help
+        @menuclick="showSideNav = !showSideNav">
+      </top-navbar>
 
       <main class="container-fluid px-lg-4 py-4">
         <transition name="fade" mode="out-in" appear>
@@ -48,14 +32,15 @@
 <script>
 import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
-import AppNavbar from '@/components/navbars/App'
+import TopNavbar from '@/components/navbars/Top'
+import SideNav from '@/components/navbars/Side'
 import DashboardNavbar from '@/components/navbars/Dashboard'
-import 'vue-awesome/icons/question-circle'
 
 export default {
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      showSideNav: false
     }
   },
 
@@ -71,7 +56,8 @@ export default {
   },
 
   components: {
-    AppNavbar,
+    TopNavbar,
+    SideNav,
     DashboardFooter,
     DashboardNavbar
   },
@@ -101,6 +87,10 @@ export default {
     flex-direction: column;
     height: 100%;
     background-image: url('~/assets/img/geometry.png');
+
+    &.dashboard-dark {
+      background-image: url('~/assets/img/geometry-dark.png');
+    }
 
     @include media-breakpoint-up(lg) {
       z-index: 2;

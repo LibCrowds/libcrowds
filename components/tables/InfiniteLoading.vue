@@ -4,6 +4,7 @@
       hover
       striped
       show-empty
+      :dark="darkMode"
       :items="filteredItems"
       :fields="tableFields"
       :style="tableStyle"

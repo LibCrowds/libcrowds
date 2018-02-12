@@ -22,11 +22,16 @@
           </profile-card>
         </div>
         <div class="col-lg-8">
-          <b-card no-body header="Contributions">
+          <b-card
+            no-body
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null"
+            header="Contributions">
             <b-table
               hover
               striped
               show-empty
+              :dark="darkMode"
               :items="projects"
               :fields="tableFields">
               <template slot="overall_progress" scope="project">

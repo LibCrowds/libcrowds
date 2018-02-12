@@ -29,10 +29,12 @@
 
     <span v-show="show">
       <b-card
+        no-body
         header="Notifications"
         id="announcements-container"
         class="dropdown-menu-right d-none d-md-block"
-        no-body>
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null">
 
         <div id="announcements">
           <announcement-card

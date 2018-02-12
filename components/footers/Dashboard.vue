@@ -1,5 +1,7 @@
 <template>
-  <footer id="dashboard-footer" class="footer">
+  <footer
+    id="dashboard-footer"
+    :class="darkMode ? 'footer footer-dark' : 'footer'">
     <div class="container-fluid">
       <p v-html="copyright" class="my-2 mx-1 float-right"></p>
     </div>
@@ -26,5 +28,10 @@ export default {
   background: $white;
   font-size: $font-size-sm;
   border-top: 1px solid $gray-300;
+
+  &.footer-dark {
+    background: $gray-1200;
+    border-top: 1px solid $gray-800;
+  }
 }
 </style>

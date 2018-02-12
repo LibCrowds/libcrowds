@@ -5,6 +5,7 @@
       striped
       show-empty
       responsive
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
       :style="tableStyle"
@@ -28,7 +29,9 @@
       </template>
 
       <template slot="row-details" scope="result">
-        <b-card>
+        <b-card
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
           <pre class=".pre-scrollable mb-0">
             <code>
 <!-- No indentation to force correct indentation in code block -->

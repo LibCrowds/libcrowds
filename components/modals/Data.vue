@@ -2,12 +2,16 @@
   <b-modal
     lazy
     :id="modalId"
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
     title="Download">
     <b-table
       responsive
       striped
       hover
       show-empty
+      :dark="darkMode"
       :items="items"
       :fields="fields">
       <template slot="action" scope="data">

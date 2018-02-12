@@ -1,5 +1,9 @@
 <template>
-  <b-card class="form-container form-base" :no-body="noBody">
+  <b-card
+    :class="cardClass"
+    :no-body="noBody"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null">
 
     <slot></slot>
 
@@ -10,14 +14,14 @@
       <span>
         <b-btn
           v-if="showCancel"
-          variant="outline-dark"
+          :variant="darkMode ? 'secondary': 'outline-dark'"
           :disabled="processing"
           class="mr-1"
           @click="$emit('cancel')">
           {{ cancelText }}
         </b-btn>
         <b-btn
-          variant="success"
+          :variant="darkMode ? 'dark': 'success'"
           :disabled="processing"
           @click="$emit('submit')">
           {{ submitText }}
@@ -56,6 +60,16 @@ export default {
     processing: {
       type: Boolean,
       default: true
+    }
+  },
+
+  computed: {
+    cardClass () {
+      return {
+        'form-container': true,
+        'form-base': true,
+        'form-dark': this.darkMode
+      }
     }
   }
 }

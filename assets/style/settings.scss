@@ -6,21 +6,6 @@ $line-height-base:                 1.6;
 $font-size-xs:                     0.75rem;
 
 /* Colors */
-$blue:                             #2589BD !default;
-$indigo:                           #6610f2 !default;
-$purple:                           #8c52a4 !default;
-$pink:                             #e83e8c !default;
-$red:                              #D00000 !default;
-$orange:                           #E38D13 !default;
-$yellow:                           #ffc107 !default;
-$green:                            #408E40 !default;
-$teal:                             #20c997 !default;
-$cyan:                             #03B5AA !default;
-
-$info:                             $purple;
-
-$body-color:                       #202B35;
-
 $gray-100:                         #f7f7f7;
 $gray-1000:                        #1A1D21;
 $gray-1100:                        #14171A;
@@ -31,6 +16,22 @@ $grays: (
   "1100": $gray-1100,
   "1200": $gray-1200
 );
+
+$blue:                             #2589BD !default;
+$indigo:                           #6610f2 !default;
+$purple:                           #8c52a4 !default;
+$pink:                             #e83e8c !default;
+$red:                              #D00000 !default;
+$orange:                           #E38D13 !default;
+$yellow:                           #ffc107 !default;
+$green:                            #408E40 !default;
+$teal:                             #20c997 !default;
+$cyan:                             #03B5AA !default;
+$dark:                             $gray-1000;
+
+$info:                             $purple;
+
+$body-color:                       #202B35;
 
 $white:                            #FFFFFF;
 $black:                            #000000;
@@ -51,11 +52,10 @@ $btn-border-radius-sm:             0px;
 
 /* Navbars */
 $navbar-light-color:               rgba($black, .7);
-$app-navbar-height:                50px;
-$collection-navbar-height:         65px;
+$top-navbar-height:                50px;
 $navbar-dark-color:                $white;
 $navbar-dark-toggler-border-color: transparent;
-$sidebar-width:                    250px;
+$sidebar-width:                    280px;
 
 /* Tables */
 $table-cell-padding:               .75rem 1.25rem;

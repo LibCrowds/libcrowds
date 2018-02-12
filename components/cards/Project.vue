@@ -1,5 +1,9 @@
 <template>
-  <b-card no-body class="project-card">
+  <b-card
+    no-body
+    class="project-card"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null">
     <nuxt-link
       v-if="projectIncomplete"
       :to="{
@@ -45,7 +49,7 @@
           <b-btn
             v-b-modal="statsModalId"
             class="project-stats-btn d-none d-lg-block"
-            variant="info">
+            :variant="darkMode ? 'dark' : 'info'">
             Stats
             <icon name="bar-chart"></icon>
           </b-btn>
@@ -81,7 +85,7 @@
             block
             v-b-modal="statsModalId"
             class="d-lg-none mb-1"
-            variant="info">
+            :variant="darkMode ? 'dark' : 'info'">
             Stats
           </b-btn>
           <project-contrib-button
@@ -242,7 +246,6 @@ export default {
         justify-content: space-between;
         align-items: center;
         margin-top: auto;
-        background-color: $white;
 
         .btn {
           margin-top: 0;
@@ -310,6 +313,18 @@ export default {
     height: 4px;
     position: relative;
     margin-bottom: 0.5rem;
+  }
+
+  &.bg-dark {
+    .card-footer {
+      background: transparent;
+    }
+
+    .project-stats-btn {
+      color: $white;
+      border-color: $black;
+      background-color: transparent;
+    }
   }
 }
 </style>

@@ -101,6 +101,7 @@ const config = {
   },
   plugins: [
     { src: '~/plugins/cookie-consent', ssr: false },
+    { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/modernizr', ssr: false },
@@ -115,6 +116,7 @@ const config = {
     { src: '~/plugins/vue-infinite-loading', ssr: false },
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
+    { src: '~/plugins/vue-prevent-parent-scroll' },
     { src: '~/plugins/vue-scrollto', ssr: false },
     { src: '~/plugins/vue-simplemde', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },

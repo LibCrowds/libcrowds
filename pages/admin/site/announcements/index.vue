@@ -1,7 +1,7 @@
 <template>
   <card-base :title="title" :description="description">
     <b-btn
-      variant="success"
+      :variant="darkMode ? 'dark' : 'success'"
       size="sm"
       class="float-right"
       slot="controls"
