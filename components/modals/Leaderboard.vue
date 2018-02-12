@@ -9,6 +9,7 @@
       striped
       hover
       show-empty
+      :dark="darkMode"
       :items="filteredUsers"
       :fields="fields">
     </b-table>

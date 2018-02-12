@@ -1,5 +1,9 @@
 <template>
-  <b-card id="project-filters-card" header="Sorting Options">
+  <b-card
+    id="project-filters-card"
+    header="Sorting Options"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null">
 
     <div
       v-for="(value, tag) in collection.info.tags"

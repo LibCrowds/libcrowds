@@ -1,5 +1,9 @@
 <template>
-  <b-card class="profile-card" no-body>
+  <b-card
+    no-body
+    class="profile-card"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null">
 
     <div class="avatar-background profile-card-bg">
       <user-avatar
@@ -23,10 +27,10 @@
         </ul>
       </div>
     </div>
+
     <div class="card-body">
       <slot></slot>
     </div>
-  </div>
 
   </b-card>
 </template>

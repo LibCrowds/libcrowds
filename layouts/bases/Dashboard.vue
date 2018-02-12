@@ -1,5 +1,5 @@
 <template>
-  <div id="dashboard-layout-base">
+  <div id="dashboard-layout-base" :class="darkMode ? 'dark-mode' : null">
 
     <side-nav
       v-model="showSideNav"
@@ -10,7 +10,7 @@
       :nav-items="navItems">
     </dashboard-navbar>
 
-    <div class="dashboard">
+    <div :class="darkMode ? 'dashboard dashboard-dark' : 'dashboard'">
 
       <top-navbar
         show-help
@@ -87,6 +87,10 @@ export default {
     flex-direction: column;
     height: 100%;
     background-image: url('~/assets/img/geometry.png');
+
+    &.dashboard-dark {
+      background-image: url('~/assets/img/geometry-dark.png');
+    }
 
     @include media-breakpoint-up(lg) {
       z-index: 2;

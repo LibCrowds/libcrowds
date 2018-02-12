@@ -8,6 +8,7 @@
       striped
       hover
       show-empty
+      :dark="darkMode"
       :items="items"
       :fields="fields">
       <template slot="action" scope="data">

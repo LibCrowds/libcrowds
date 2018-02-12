@@ -98,7 +98,7 @@ export default {
     background: transparent;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid rgba($gray-300, 0.5);
+    border-bottom: 1px solid $gray-800;
     min-height: $top-navbar-height;
 
     .brand {
@@ -146,7 +146,7 @@ export default {
       position: sticky;
       width: 100%;
       top: 0;
-      background: $gray-1000;
+      background: $gray-1200;
       z-index: 2;
     }
 

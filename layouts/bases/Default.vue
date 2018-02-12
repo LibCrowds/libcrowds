@@ -1,6 +1,10 @@
 <template>
-  <div id="default-layout-base">
-    <div id="custom-background" :style="bgStyle"></div>
+  <div id="default-layout-base" :class="darkMode ? 'dark-mode' : null">
+    <div
+      id="custom-background"
+      :style="bgStyle"
+      :class="darkMode ? 'bg-dark' : null">
+    </div>
 
     <side-nav
       v-model="showSideNav"
@@ -126,7 +130,10 @@ export default {
         typeof this.backgroundImageUrl === 'undefined' ||
         !this.backgroundImageUrl.length
       ) {
-        return
+        if (this.darkMode) {
+          return `url('~/assets/img/geometry-dark.png')`
+        }
+        return `url('~/assets/img/geometry.png')`
       }
       return {
         backgroundImage: `url(${this.backgroundImageUrl})`
@@ -185,6 +192,10 @@ export default {
     background-size: cover;
     background-repeat: no-repeat;
     background-image: url('~/assets/img/app-background.jpg');
+
+    &.bg-dark {
+      filter: brightness(0.5);
+    }
   }
 }
 </style>

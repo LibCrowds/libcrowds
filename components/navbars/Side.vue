@@ -1,5 +1,8 @@
 <template>
-  <nav ref="sidebar" :class="sideNavClass" v-prevent-parent-scroll>
+  <b-nav
+    ref="sidebar"
+    :class="sideNavClass"
+    v-prevent-parent-scroll>
     <div class="header">
       <b-btn
         variant="link"
@@ -25,15 +28,21 @@
       </li>
     </span>
 
-    <!-- <li role="seperator" class="divider"></li>
-    <toggle-button
-      :value="darkMode"
-      class="mb-0"
-      @change="toggleDarkMode">
-    </toggle-button>
-    <li role="seperator" class="divider"></li> -->
+    <div class="d-flex align-items-center justify-content-between my-2 px-2">
+      <label class="mr-1 mb-0 toggle-label text-secondary">
+        <strong>Activate dark mode</strong>
+      </label>
+      <no-ssr>
+        <toggle-button
+          :value="darkMode"
+          :labels="true"
+          class="mb-0"
+          @change="toggleDarkMode">
+        </toggle-button>
+      </no-ssr>
+    </div>
 
-  </nav>
+  </b-nav>
 </template>
 
 <script>
@@ -73,7 +82,8 @@ export default {
     sideNavClass () {
       return {
         'side-nav': true,
-        'show': this.value
+        'show': this.value,
+        'side-nav-dark': this.darkMode
       }
     },
 
@@ -193,7 +203,28 @@ export default {
   z-index: $zindex-modal;
   border-right: 1px solid $gray-300;
   transform: translateX(-100%);
-  transition: transform 350ms;
+  transition: all 350ms ease-out;
+
+  .btn {
+    text-transform: uppercase;
+    font-size: $font-size-sm;
+    color: inherit;
+    cursor: pointer;
+
+    svg {
+      margin-bottom: 2px;
+    }
+
+    @include hover-focus {
+      text-decoration: none;
+    }
+  }
+
+  &.side-nav-dark {
+    color: $white;
+    background: $gray-1000;
+    border-right: 1px solid $gray-1200;
+  }
 
   @include media-breakpoint-up(sm) {
     width: $sidebar-width;
@@ -220,10 +251,9 @@ export default {
     width: 100%;
     top: 0;
     z-index: 2;
-    background: $gray-100;
     height: $top-navbar-height;
     min-height: $top-navbar-height;
-    border-bottom: 1px solid $gray-300;
+    border-bottom: 1px solid rgba($gray-300, 0.75);
   }
 
   .nav-item {
@@ -243,7 +273,7 @@ export default {
 
       @include hover-focus {
         text-decoration: none;
-        background-color: $gray-200;
+        background-color: rgba($gray-600, 0.2);
       }
     }
   }

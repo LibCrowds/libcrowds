@@ -101,6 +101,7 @@ const config = {
   },
   plugins: [
     { src: '~/plugins/cookie-consent', ssr: false },
+    { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/modernizr', ssr: false },

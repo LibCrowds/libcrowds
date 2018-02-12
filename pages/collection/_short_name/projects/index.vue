@@ -12,7 +12,11 @@
       data-title="Get Started">
 
       <b-col xl="3" class="d-none d-xl-block">
-        <b-card header="Sorting Options" class="options-card mb-2">
+        <b-card
+          header="Sorting Options"
+          class="options-card mb-2"
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
           <filter-projects-data
             v-model="tagModel"
             :collection="collection"

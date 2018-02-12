@@ -27,7 +27,7 @@
         :collection="collection">
         <template slot="action" scope="project">
           <b-btn
-            variant="success"
+            :variant="darkMode ? 'dark' : 'success'"
             size="sm"
             block
             v-b-modal="dataModalId"

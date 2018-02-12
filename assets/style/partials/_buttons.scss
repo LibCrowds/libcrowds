@@ -1,0 +1,3 @@
+.btn-dark {
+  @include button-variant($gray-1200, $gray-1200);
+}

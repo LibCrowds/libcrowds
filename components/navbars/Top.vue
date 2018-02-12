@@ -166,10 +166,6 @@ export default {
 
     navbarType () {
       return this.darkMode ? 'dark' : 'light'
-    },
-
-    darkMode () {
-      return this.$store.state.darkMode
     }
   },
 
@@ -249,13 +245,30 @@ export default {
   z-index: $zindex-fixed;
   transition: background-color 200ms;
 
-  &:not(.transparent) {
+  &.navbar-light {
     background-color: $white;
+
+    .btn {
+      border-color: $gray-300;
+    }
   }
 
-  &.bg-transparent {
-    background-color: transparent;
+  &.navbar-dark {
+    background-color: $gray-1200;
 
+    .btn {
+      border-right: 1px solid $gray-1200;
+      border-bottom: 1px solid $gray-800;
+    }
+
+    .top-navbar-left,
+    .top-navbar-right {
+      border-bottom: 1px solid $gray-800;
+    }
+  }
+
+  &.navbar-dark,
+  &.bg-transparent {
     .dropdown-menu {
       background-color: rgba($black, 0.75);
       color: $white;
@@ -270,11 +283,6 @@ export default {
       }
     }
 
-    .top-navbar-left,
-    .top-navbar-right {
-      border-bottom: none;
-    }
-
     .navbar-brand,
     .nav-link {
       color: $white;
@@ -282,11 +290,9 @@ export default {
 
     .btn {
       cursor: pointer;
-      border-color: transparent;
       color: $white;
 
       @include hover-focus {
-        border-color: transparent;
         color: $white;
         background: transparent;
       }
@@ -301,7 +307,23 @@ export default {
     font-size: $font-size-sm;
     font-weight: 600;
     text-transform: uppercase;
-    border-color: $gray-300;
+  }
+
+  &.bg-transparent {
+    background-color: transparent;
+
+    .top-navbar-left,
+    .top-navbar-right {
+      border-color: transparent;
+    }
+
+    .btn {
+      border-color: transparent;
+
+      @include hover-focus {
+        border-color: transparent;
+      }
+    }
   }
 
   .top-navbar-left,

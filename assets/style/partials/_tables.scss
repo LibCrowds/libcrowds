@@ -6,6 +6,11 @@
   background-color: $white;
   border: $table-border-width solid $table-border-color;
 
+  &.table-dark {
+    background-color: $dark;
+    border: $table-border-width solid $dark;
+  }
+
   th {
     font-weight: 400;
     text-transform: uppercase;

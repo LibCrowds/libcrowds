@@ -51,9 +51,7 @@
       </div>
     </section>
 
-    <section
-      id="top-users"
-      class="bg-white">
+    <section id="top-users">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 mx-auto pt-2 text-center">
@@ -66,7 +64,7 @@
               {{ top10UsersTaskRuns | intComma }} contributions!
             </p>
             <b-btn
-              variant="success"
+              :variant="darkMode ? 'dark' : 'success'"
               size="lg"
               v-scroll-to="'#collections'">
               Get Started
@@ -113,7 +111,7 @@
         <div class="row text-center mt-2">
           <div class="col-sm-12 col-lg-6 ml-lg-auto">
             <b-btn
-              variant="black-underline"
+              class="btn-underline"
               v-b-modal="leaderboardModalId">
               <icon name="eye"></icon> View the leaderboard
             </b-btn>
@@ -207,7 +205,6 @@ export default {
 @import '~assets/style/settings';
 
 #index {
-
   #site-tagline {
     font-weight: 600px;
     font-size: 1.75rem;
@@ -239,24 +236,26 @@ export default {
     background-color: $white;
   }
 
-  .btn-black-underline  {
-    color: $black;
+  .btn-underline {
+    border: none;
     background: none;
-    border-bottom: 3px solid rgba($black, 0);
     display: inline-block;
     transition: border-bottom 500ms;
+    color: $black;
+    border-bottom: 3px solid rgba($black, 0);
 
     @include hover-focus {
       border-bottom: 3px solid rgba($black, 1);
     }
   }
 
-  #top-users {
-    color: $gray-1000;
-  }
-
   #collections {
     background-color: $gray-100;
+  }
+
+  #top-users {
+    color: $gray-1000;
+    background: $white;
   }
 
   .stat-row {
@@ -327,6 +326,29 @@ export default {
       &:after {
         content: "";
         margin-right: -100px;
+      }
+    }
+  }
+}
+
+.dark-mode {
+  #index {
+    #collections {
+      color: $gray-200;
+      background-color: $gray-1100;
+    }
+
+    #top-users {
+      color: $gray-100;
+      background-color: $gray-900;
+    }
+
+    .btn-underline {
+      color: $white;
+      border-bottom: 3px solid rgba($gray-100, 0);
+
+      @include hover-focus {
+        border-bottom: 3px solid rgba($gray-100, 1);
       }
     }
   }

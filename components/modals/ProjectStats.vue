@@ -26,7 +26,9 @@
           title="Proportion of Authenticated Users"
           :description="proportionAuthDescription"
           class="mb-3 card-overflow">
-          <b-card-body>
+          <b-card-body
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <pie-chart
               v-if="userStats.authenticated && userStats.anonymous"
               :chart-data="proportionAuthData">
@@ -38,7 +40,9 @@
           title="Daily Contributions"
           :description="dailyContributionsDescriptions"
           class="mb-3 card-overflow">
-          <b-card-body>
+          <b-card-body
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.dayStats"
               :unit="collection.info.terminology.taskrun"
@@ -51,7 +55,9 @@
           title="Hourly Contributions"
           :description="hourlyContributionsDescription"
           class="mb-3 card-overflow">
-          <b-card-body>
+          <b-card-body
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.hourStats"
               :unit="collection.info.terminology.taskrun"
@@ -64,7 +70,9 @@
           title="Top Authenticated Users"
           :description="topUsersDescription"
           class="mb-3 card-overflow">
-          <b-card-body>
+          <b-card-body
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <bar-chart
               v-if="userStats.authenticated"
               :unit="collection.info.terminology.taskrun"

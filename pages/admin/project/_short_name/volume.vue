@@ -14,6 +14,7 @@
       striped
       hover
       show-empty
+      :dark="darkMode"
       :items="filteredVolumes"
       :fields="fields">
       <template slot="action" scope="volume">

@@ -1,6 +1,7 @@
 <template>
   <default-base
     transparent
+    :class="darkMode ? 'dark-mode' : null"
     :navbar-brand="currentCollection.name"
     :background-image-url="currentCollection.info.background">
 
@@ -121,6 +122,23 @@ export default {
       @include media-breakpoint-up(sm) {
         display: block;
       }
+    }
+  }
+}
+
+.dark-mode {
+  #collection-tabs-layout {
+    .nav.nav-unstyled {
+      background-color: rgba($gray-1200, 0.85);
+
+      .nav-link {
+        color: rgba($gray-300, 0.85);
+      }
+    }
+
+    &>main {
+      color: $gray-200;
+      background-color: $gray-900;
     }
   }
 }
