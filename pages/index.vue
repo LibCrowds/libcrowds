@@ -102,7 +102,13 @@
                       </user-avatar>
                     </div>
                   </nuxt-link>
-                  <p class="badge badge-info">{{ user.score }}</p>
+                  <p
+                    :class="darkMode
+                      ? 'badge badge-dark'
+                      : 'badge badge-info'
+                    ">
+                    {{ user.score }}
+                  </p>
                 </div>
               </li>
             </ul>
