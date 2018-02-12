@@ -1,6 +1,5 @@
 <template>
-<<<<<<< HEAD
-  <div class="small-avatar">
+  <div :class="classObj">
     <base-avatar
       :src="src"
       img-class="img-fluid rounded-circle"
@@ -11,19 +10,6 @@
         <icon name="question"></icon>
       </div>
     </base-avatar>
-=======
-  <div :class="classObj">
-    <img
-      v-if="src"
-      :src="src"
-      class="img-fluid rounded-circle"
-      :onerror="hasError = true">
-    <div
-      v-else
-      class="img-fluid rounded-circle placeholder">
-      <icon name="question"></icon>
-    </div>
->>>>>>> master
   </div>
 </template>
 
@@ -58,15 +44,12 @@ export default {
       } else if (this.info.media_url) {
         url = this.info.media_url
       }
-<<<<<<< HEAD
       if (url && url.startsWith('/uploads')) {
         return localConfig.pybossaHost + url
       } else if (url) {
         return url
       }
       return ''
-=======
-      return null
     },
 
     classObj () {
@@ -80,7 +63,6 @@ export default {
   watch: {
     domainObject () {
       this.hasError = false
->>>>>>> master
     }
   }
 }
@@ -96,14 +78,10 @@ export default {
   max-width: 3rem;
   max-height: 3rem;
 
-<<<<<<< HEAD
   .base-avatar,
   .placeholder {
-=======
-  &>* {
     width: 3rem;
     height: 3rem;
->>>>>>> master
     max-width: 3rem;
     max-height: 3rem;
   }

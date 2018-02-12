@@ -179,7 +179,6 @@ export default {
       }
     }
   }
-<<<<<<< HEAD
 
   &.top {
     .nav-item {
@@ -204,7 +203,5 @@ export default {
     overflow: hidden;
     border-bottom: 1px solid rgba($gray-300, 0.5);
   }
-=======
->>>>>>> master
 }
 </style>
