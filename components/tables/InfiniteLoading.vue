@@ -5,6 +5,7 @@
       striped
       show-empty
       :outlined="outlined"
+      :dark="darkMode"
       :items="filteredItems"
       :fields="tableFields"
       @sort-changed="onSortChange">

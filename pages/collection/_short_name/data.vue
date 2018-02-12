@@ -90,11 +90,11 @@
             ref="projects-table">
             <template slot="action" scope="project">
               <b-btn
-                variant="success"
+                :variant="darkMode ? 'dark' : 'success'"
                 size="sm"
                 block
-                v-b-modal="projectDataModalId"
-                @click="downloadProject = project.item">
+                v-b-modal="dataModalId"
+                @click="activeProject = project.item">
                 Download
               </b-btn>
             </template>

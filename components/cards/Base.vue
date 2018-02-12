@@ -1,5 +1,9 @@
 <template>
-  <b-card class="card-base" no-body>
+  <b-card
+    no-body
+    class="card-base"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null">
     <b-row
       slot="header"
       class="mb-0 d-flex align-items-center">

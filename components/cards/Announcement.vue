@@ -1,7 +1,9 @@
 <template>
   <b-card
     no-body
-    :class="styleClass"
+    :bg-variant="darkMode ? 'dark' : 'light'"
+    :text-variant="darkMode ? 'white' : null"
+    :class="classObj"
     @click="onClick">
     <div class="d-flex flex-row">
 
@@ -75,7 +77,7 @@ export default {
       return this.currentUser.info.announcements || {}
     },
 
-    styleClass () {
+    classObj () {
       return {
         'announcement-card': true,
         unread: this.unread

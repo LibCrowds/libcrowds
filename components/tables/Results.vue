@@ -6,6 +6,7 @@
       show-empty
       responsive
       :outlined="outlined"
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
       @sort-changed="onSortChange">
@@ -28,7 +29,9 @@
       </template>
 
       <template slot="row-details" scope="result">
-        <b-card>
+        <b-card
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
           <pre class=".pre-scrollable mb-0">
             <code>
 <!-- No indentation to force correct indentation in code block -->

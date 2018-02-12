@@ -1,6 +1,11 @@
 <template>
-  <collection-base>
-    <div id="collection-tabs-layout" class="container mb-5">
+  <default-base
+    transparent
+    :class="darkMode ? 'dark-mode' : null"
+    :navbar-brand="currentCollection.name"
+    :background-image-url="currentCollection.info.background">
+
+    <div id="collection-tabs-layout" class="container mt-2 mb-5">
 
       <b-nav class="nav-unstyled">
         <b-nav-item
@@ -21,20 +26,24 @@
       </main>
 
     </div>
-  </collection-base>
+  </default-base>
 </template>
 
 <script>
-import CollectionBase from '@/layouts/bases/Collection'
+import DefaultBase from '@/layouts/bases/Default'
 
 export default {
   components: {
-    CollectionBase
+    DefaultBase
   },
 
   computed: {
     navItems () {
       return this.$store.state.collectionNavItems
+    },
+
+    currentCollection () {
+      return this.$store.state.currentCollection
     }
   },
 
@@ -113,6 +122,23 @@ export default {
       @include media-breakpoint-up(sm) {
         display: block;
       }
+    }
+  }
+}
+
+.dark-mode {
+  #collection-tabs-layout {
+    .nav.nav-unstyled {
+      background-color: rgba($gray-1200, 0.85);
+
+      .nav-link {
+        color: rgba($gray-300, 0.85);
+      }
+    }
+
+    &>main {
+      color: $gray-200;
+      background-color: $gray-900;
     }
   }
 }

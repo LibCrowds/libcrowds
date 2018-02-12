@@ -16,6 +16,7 @@
         striped
         hover
         show-empty
+        :dark="darkMode"
         class="border-left-0 border-right-0 border-bottom-0"
         :items="getTableItems"
         :fields="tableFields">

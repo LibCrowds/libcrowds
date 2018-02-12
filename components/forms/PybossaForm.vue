@@ -25,6 +25,7 @@
 
     <vue-form-generator
       ref="form"
+      :class="darkMode ? 'form-dark' : null"
       :schema="form.schema"
       :model="form.model">
     </vue-form-generator>

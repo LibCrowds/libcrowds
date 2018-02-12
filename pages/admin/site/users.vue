@@ -14,6 +14,7 @@
           <b-table
             hover
             show-empty
+            :dark="darkMode"
             class="border-left-0 border-right-0 border-bottom-0"
             :items="found"
             :fields="tableFields">
@@ -24,7 +25,7 @@
 
             <template slot="action" scope="user">
               <b-btn
-                :variant="user.item.admin ? 'warning' : 'success'"
+                variant="warning"
                 size="sm"
                 block
                 @click="toggleAdmin(user.item)">
@@ -41,7 +42,9 @@
       <b-col xl="4">
         <b-card
           header="Export"
-          class="text-center">
+          class="text-center"
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
           <p class="lead">
             {{ nUsers }} users registered
           </p>
@@ -66,7 +69,9 @@
       <b-col xl="8" class="mt-4 mt-xl-0">
         <b-card
           no-body
-          header="Current Administrators">
+          header="Current Administrators"
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
           <b-table
             hover
             show-empty

@@ -9,7 +9,6 @@
               v-if="hasLogo"
               class="d-inline-block"
               :src="collection.info.logo">
-            </img>
             <span
               class="mr-2 d-none d-lg-inline-block"
               v-if="hasLogo">
@@ -42,7 +41,7 @@
       </div>
     </transition>
 
-    <section id="intro" class="bg-white invert-navbar">
+    <section id="intro" class="opaque-navbar">
       <div class="container py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
           {{ collection.description }}
@@ -54,7 +53,7 @@
         </p>
         <hr class="mt-3 w-75">
         <b-btn
-          variant="outline-dark"
+          :variant="darkMode ? 'dark' : 'outline-dark'"
           class="mt-md-2"
           size="lg"
           :to="{
@@ -70,7 +69,7 @@
 
     <section
       id="featured-projects"
-      class="invert-navbar"
+      class="opaque-navbar"
       v-if="featured.length">
       <div class="container w-75 text-center pb-4">
         <div class="row text-lg-left">
@@ -99,7 +98,7 @@
         </ul>
         <b-btn
           class="mt-2"
-          variant="success"
+          :variant="darkMode ? 'dark' : 'success'"
           size="lg"
           :to="{
             name: 'collection-short_name-projects',
@@ -164,7 +163,7 @@
       </b-jumbotron>
     </section> -->
 
-    <section id="final-cta" class="bg-white invert-navbar">
+    <section id="final-cta" class="opaque-navbar">
       <div class="container pt-4 pb-3 text-center">
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
@@ -172,7 +171,7 @@
           research at {{ localConfig.company }}.
         </p>
         <b-btn
-          variant="success"
+          :variant="darkMode ? 'dark' : 'success'"
           size="lg"
           :to="{
             name: 'collection-short_name-projects',
@@ -185,7 +184,7 @@
       </div>
     </section>
 
-    <section id="social-media" class="bg-white invert-navbar">
+    <section id="social-media" class="opaque-navbar">
       <div class="container pb-4 text-center">
         <hr class="mt-0 mb-3">
         <social-media-buttons
@@ -377,12 +376,10 @@ export default {
     }
   }
 
-  #intro {
-    .stat {
-      font-weight: 400;
-      font-family: $headings-font-family;
-      font-size: $font-size-lg;
-    }
+  #intro,
+  #final-cta,
+  #social-media {
+    background: $white;
   }
 
   #featured-projects {
@@ -442,6 +439,31 @@ export default {
       background-position: center;
       background-size: cover;
       margin-bottom: 0;
+    }
+  }
+}
+
+.dark-mode {
+  #collection-index {
+    #intro,
+    #final-cta,
+    #social-media {
+      background: $gray-1000;
+      color: $gray-200;
+    }
+
+    #ribbon {
+      background: $gray-1000;
+
+      &:after {
+        border-color: $gray-1000 $gray-1000 transparent $gray-1000;
+      }
+    }
+
+    #featured-projects {
+      color: $gray-200;
+      background-image: url('~/assets/img/dark-wall.png');
+      border: 1px solid $gray-1000;
     }
   }
 }

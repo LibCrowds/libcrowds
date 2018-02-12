@@ -6,6 +6,8 @@
         <!-- Image -->
         <b-card
           no-body
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null"
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
@@ -23,10 +25,18 @@
 
       </b-col>
       <b-col lg="6" class="mt-3 mt-lg-0">
-        <b-card id="answer-card" no-body>
+        <b-card
+          id="answer-card"
+          no-body
+          :bg-variant="darkMode ? 'dark' : 'light'"
+          :text-variant="darkMode ? 'white' : null">
 
           <!-- Alert -->
-          <b-card-body class="pb-0" v-if="alert">
+          <b-card-body
+            class="pb-0"
+            v-if="alert"
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <b-alert
               show
               :variant="alert.type"
@@ -52,10 +62,14 @@
           </template>
 
           <!-- Search Form -->
-          <b-card-body v-show="stage == 'search'">
+          <b-card-body
+            v-show="stage == 'search'"
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <vue-form-generator
               ref="searchform"
               class="form-container"
+              :class="darkMode ? 'form-dark' : null"
               :schema="form.schema"
               :model="form.model">
             </vue-form-generator>
@@ -109,7 +123,10 @@
           </div>
 
           <!-- Shelfmark Form -->
-          <b-card-body v-show="stage == 'submit'">
+          <b-card-body
+            v-show="stage == 'submit'"
+            :bg-variant="darkMode ? 'dark' : 'light'"
+            :text-variant="darkMode ? 'white' : null">
             <div v-if="selectedRecord">
               <h5 class="mb-1">{{ selectedRecord.title }}</h5>
               <p class="mb-0">{{ selectedRecord.author }}</p>
@@ -135,7 +152,8 @@
             <div id="footer-buttons">
               <b-btn
                 v-b-toggle.collapsecomment
-                variant="dark" v-html="noteButtonText">
+                variant="dark"
+                v-html="noteButtonText">
               </b-btn>
               <b-btn
                 variant="dark"
@@ -168,8 +186,6 @@
 <script>
 import marked from 'marked'
 import capitalize from 'capitalize'
-import 'vue-awesome/icons/times'
-import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'

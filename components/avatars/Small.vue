@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="small-avatar">
     <base-avatar
       :src="src"
@@ -10,6 +11,19 @@
         <icon name="question"></icon>
       </div>
     </base-avatar>
+=======
+  <div :class="classObj">
+    <img
+      v-if="src"
+      :src="src"
+      class="img-fluid rounded-circle"
+      :onerror="hasError = true">
+    <div
+      v-else
+      class="img-fluid rounded-circle placeholder">
+      <icon name="question"></icon>
+    </div>
+>>>>>>> master
   </div>
 </template>
 
@@ -23,6 +37,10 @@ export default {
     info: {
       type: Object,
       required: true
+    },
+    extraSmall: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -40,12 +58,29 @@ export default {
       } else if (this.info.media_url) {
         url = this.info.media_url
       }
+<<<<<<< HEAD
       if (url && url.startsWith('/uploads')) {
         return localConfig.pybossaHost + url
       } else if (url) {
         return url
       }
       return ''
+=======
+      return null
+    },
+
+    classObj () {
+      return {
+        'small-avatar': true,
+        'xs': this.extraSmall
+      }
+    }
+  },
+
+  watch: {
+    domainObject () {
+      this.hasError = false
+>>>>>>> master
     }
   }
 }
@@ -56,17 +91,35 @@ export default {
 
 .small-avatar {
   overflow: hidden;
+  width: 3rem;
+  height: 3rem;
   max-width: 3rem;
   max-height: 3rem;
-  min-width: 3rem;
-  min-height: 3rem;
 
+<<<<<<< HEAD
   .base-avatar,
   .placeholder {
+=======
+  &>* {
+    width: 3rem;
+    height: 3rem;
+>>>>>>> master
     max-width: 3rem;
     max-height: 3rem;
-    min-width: 3rem;
-    min-height: 3rem;
+  }
+
+  &.xs {
+    width: 2rem;
+    height: 2rem;
+    max-width: 2rem;
+    max-height: 2rem;
+
+    &>* {
+      width: 2rem;
+      height: 2rem;
+      max-width: 2rem;
+      max-height: 2rem;
+    }
   }
 
   .placeholder {

@@ -5,6 +5,9 @@
     :title="title"
     :size="size"
     @ok="submit"
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
     @hidden="$emit('hidden')"
     @shown="onShown">
 
@@ -16,6 +19,7 @@
 
       <vue-form-generator
         ref="form"
+        :class="darkMode ? 'form-dark' : null"
         :schema="form.schema"
         :model="form.model">
       </vue-form-generator>

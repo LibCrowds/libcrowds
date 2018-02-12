@@ -1,5 +1,7 @@
 <template>
-  <footer id="dashboard-footer" class="footer">
+  <footer
+    id="dashboard-footer"
+    :class="darkMode ? 'footer footer-dark' : 'footer'">
     <div class="container-fluid">
       <ul class="list-inline my-2 d-flex flex-row align-items-center">
         <li
@@ -62,6 +64,11 @@ export default {
     ul > li > a {
       display: flex;
     }
+  }
+
+  &.footer-dark {
+    background: $gray-1200;
+    border-top: 1px solid $gray-800;
   }
 }
 </style>

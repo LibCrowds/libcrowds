@@ -1,5 +1,5 @@
 <template>
-  <nav id="dashboard-navbar" :class="classObj">
+  <nav id="dashboard-navbar" class="dashboard-nav-bg">
     <div class="brand-wrapper navbar-light text-center">
       <nuxt-link
         class="brand navbar-brand"
@@ -48,27 +48,6 @@ export default {
     navItems: {
       type: Array,
       required: true
-    },
-    position: {
-      type: String,
-      default: 'top',
-      validator: value => {
-        const validPositions = [
-          'top',
-          'side'
-        ]
-        return validPositions.indexOf(value) > -1
-      }
-    }
-  },
-
-  computed: {
-    classObj () {
-      return {
-        top: this.position === 'top',
-        side: this.position === 'side',
-        'dashboard-nav-bg': true
-      }
     }
   },
 
@@ -118,12 +97,12 @@ export default {
 
   .brand-wrapper {
     display: none;
-    height: $app-navbar-height;
+    height: $top-navbar-height;
     background: transparent;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid rgba($gray-300, 0.5);
-    min-height: $app-navbar-height;
+    border-bottom: 1px solid $gray-800;
+    min-height: $top-navbar-height;
 
     .brand {
       margin: 0;
@@ -155,7 +134,7 @@ export default {
     }
   }
 
-  &.side {
+  @include media-breakpoint-up(lg) {
     max-height: 100%;
     height: 100%;
     flex-direction: column;
@@ -170,7 +149,7 @@ export default {
       position: sticky;
       width: 100%;
       top: 0;
-      background: $gray-1000;
+      background: $gray-1200;
       z-index: 2;
     }
 
@@ -200,6 +179,7 @@ export default {
       }
     }
   }
+<<<<<<< HEAD
 
   &.top {
     .nav-item {
@@ -224,5 +204,7 @@ export default {
     overflow: hidden;
     border-bottom: 1px solid rgba($gray-300, 0.5);
   }
+=======
+>>>>>>> master
 }
 </style>

@@ -139,10 +139,10 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
     </ul>
   </nav>
   <div class="dashboard">
-    <nav id="app-navbar"
+    <nav id="top-navbar"
          class="navbar navbar-light"
     >
-      <span class="app-navbar-left">
+      <span class="top-navbar-left">
         <a href="#/"
            target="_self"
            class="active navbar-brand d-lg-none"
@@ -157,7 +157,7 @@ exports[`Collection admin dashboard layout renders correctly 1`] = `
       </span>
       <ul id="sign-in-up"
           right
-          class="app-navbar-right navbar-nav"
+          class="top-navbar-right navbar-nav"
       >
         <li class="nav-item">
           <a href="#/account/signin?next=%2F"

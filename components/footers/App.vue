@@ -1,5 +1,5 @@
 <template>
-  <footer id="app-footer" class="footer">
+  <footer id="app-footer" :class="darkMode ? 'footer footer-dark' : 'footer'">
     <div class="container pt-3 pb-2">
 
       <section>
@@ -120,10 +120,10 @@
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
+import localConfig from '@/local.config'
 
 export default {
   data () {
@@ -165,6 +165,10 @@ export default {
   color: $gray-600;
   font-size: $font-size-sm;
   line-height: 2;
+
+  &.footer-dark {
+    background-color: $gray-1200;
+  }
 
   .container {
     display: flex;

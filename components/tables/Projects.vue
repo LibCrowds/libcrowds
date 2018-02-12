@@ -6,6 +6,7 @@
       show-empty
       responsive
       :outlined="outlined"
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
       @sort-changed="onSortChange">
