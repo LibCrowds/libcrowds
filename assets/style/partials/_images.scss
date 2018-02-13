@@ -13,19 +13,9 @@
   }
 }
 
-.dashboard-nav-bg {
-  background: $gray-1000;
-}
-
 .webp {
   .main-app-bg {
     background-image: url('~/assets/img/app-background.webp');
-  }
-
-  .dashboard-nav-bg {
-    background: linear-gradient(rgba($gray-1200, 0.8),
-      rgba($gray-1200, 0.8)),
-      url('~/assets/img/app-background.webp');
   }
 
   .profile-card-bg {
@@ -47,12 +37,6 @@
 .no-webp {
   .main-app-bg {
     background-image: url('~/assets/img/app-background.jpg');
-  }
-
-  .dashboard-nav-bg {
-    background: linear-gradient(rgba($gray-1200, 0.8),
-      rgba($gray-1200, 0.8)),
-      url('~/assets/img/app-background.jpg');
   }
 
   .profile-card-bg {
