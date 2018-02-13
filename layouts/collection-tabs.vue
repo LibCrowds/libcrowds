@@ -44,6 +44,13 @@ export default {
 
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    backgroundImageUrl () {
+      if (this.currentCollection.info.background) {
+        return this.currentCollection.info.background
+      }
+      return '~/assets/img/app-background.jpg'
     }
   },
 

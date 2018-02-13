@@ -1,10 +1,7 @@
 <template>
-  <div id="default-layout-base" :class="darkMode ? 'dark-mode' : null">
-    <div
-      id="custom-background"
-      :style="bgStyle"
-      :class="darkMode ? 'bg-dark' : null">
-    </div>
+  <div  id="default-layout-base" :class="mainClassObj">
+
+    <div id="custom-background" :style="customBgStyle"></div>
 
     <side-nav
       v-model="showSideNav"
@@ -125,18 +122,22 @@ export default {
       }
     },
 
-    bgStyle () {
+    customBgStyle () {
       if (
-        typeof this.backgroundImageUrl === 'undefined' ||
-        !this.backgroundImageUrl.length
+        typeof this.backgroundImageUrl !== 'undefined' &&
+        this.backgroundImageUrl.length
       ) {
-        if (this.darkMode) {
-          return `url('~/assets/img/geometry-dark.png')`
+        return {
+          backgroundImage: `url(${this.backgroundImageUrl})`
         }
-        return `url('~/assets/img/geometry.png')`
       }
+    },
+
+    mainClassObj () {
       return {
-        backgroundImage: `url(${this.backgroundImageUrl})`
+        'dark-mode': this.darkMode,
+        'bg-default': !this.backgroundImageUrl && !this.darkMode,
+        'bg-default-dark': !this.backgroundImageUrl && this.darkMode
       }
     }
   }
@@ -151,6 +152,14 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+
+  .bg-default {
+    background-image: url('~/assets/img/geometry.png');
+  }
+
+  .bg-default-dark {
+    background-image: url('~/assets/img/geometry-dark.png');
+  }
 
   main {
     flex: 1 1 auto;
@@ -191,10 +200,11 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('~/assets/img/app-background.jpg');
+  }
 
-    &.bg-dark {
-      filter: brightness(0.5);
+  .dark-mode {
+    #custom-background {
+      filter: brightness(0.4);
     }
   }
 }

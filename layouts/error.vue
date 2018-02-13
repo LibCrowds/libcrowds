@@ -1,43 +1,34 @@
 <template>
-  <div id="error-layout">
+  <default-base :navbar-brand="navbarBrand" fixed-top>
+    <b-container class="my-4 my-lg-5">
+      <b-col xl="8" class="mx-auto">
 
-    <top-navbar
-      :navbar-brand="navbarBrand">
-    </top-navbar>
+        <card-base :title="`${error.statusCode} Error`">
+          <b-card-body>
+            <p class="lead my-2 text-center">
+              {{ normalisedMessage }}
+            </p>
+          </b-card-body>
+          <b-card-footer>
+            <b-btn
+              variant="success"
+              class="float-right"
+              :to="{
+                name: 'index'
+              }">
+              Home page
+            </b-btn>
+          </b-card-footer>
+        </card-base>
 
-    <main>
-      <div class="container text-center">
-
-        <div id="error-code" class="inset-text">
-          {{ error.statusCode }}
-        </div>
-
-        <div class="lead mt-1 mb-2">
-          {{ normalisedMessage }}
-        </div>
-
-        <b-btn
-          variant="success"
-          size="lg"
-          class="mt-0 mt-md-1 mb-2"
-          :to="{
-            name: 'index'
-          }">
-          Home page
-        </b-btn>
-
-      </div>
-    </main>
-
-    <app-footer :collections="publishedCollections"></app-footer>
-
-  </div>
+      </b-col>
+    </b-container>
+  </default-base>
 </template>
 
 <script>
-import localConfig from '@/local.config'
-import AppFooter from '@/components/footers/App'
-import TopNavbar from '@/components/navbars/Top'
+import DefaultBase from '@/layouts/bases/Default'
+import CardBase from '@/components/cards/Base'
 
 export default {
   props: ['error'],
@@ -54,23 +45,11 @@ export default {
   },
 
   components: {
-    TopNavbar,
-    AppFooter
+    DefaultBase,
+    CardBase
   },
 
   computed: {
-    publishedCollections () {
-      return this.$store.state.publishedCollections
-    },
-
-    currentUser () {
-      return this.$store.state.currentUser
-    },
-
-    navbarBrand () {
-      return localConfig.brand
-    },
-
     normalisedMessage () {
       const code = this.error.statusCode
       if (this.messages.hasOwnProperty(code)) {
@@ -81,52 +60,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~assets/style/settings';
-
-#error-layout {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  main {
-    margin-top: $top-navbar-height;
-    min-height: 450px;
-    display: flex;
-    flex: 1 1 auto;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lead {
-    color: $gray-1000;
-    font-weight: 400;
-  }
-
-  .inset-text {
-    background-color: $gray-600;
-    color: transparent;
-    text-shadow: 2px 2px 3px rgba($gray-300, 0.5);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    background-clip: text;
-  }
-
-  #error-code {
-    position: relative;
-    line-height: 1;
-    font-weight: 700;
-    font-size: 4rem;
-
-    @include media-breakpoint-up(md) {
-      font-size: 10rem;
-    }
-  }
-
-  .btn {
-    box-shadow: none;
-  }
-}
-</style>
