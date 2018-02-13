@@ -13,13 +13,11 @@
       data-title="Get the Data"
       :description="description">
 
-      <b-form-input
+      <search-form
         slot="controls"
         v-model="filter"
-        class="search-control"
-        size="sm"
         :placeholder="`Type to search by ${filterBy}`">
-      </b-form-input>
+      </search-form>
 
       <b-tabs card @input="onTabsChange">
         <b-tab title="Volumes" no-body active>
@@ -145,6 +143,7 @@ import DataModal from '@/components/modals/Data'
 import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import CardBase from '@/components/cards/Base'
 import VolumesTable from '@/components/tables/Volumes'
+import SearchForm from '@/components/forms/Search'
 
 export default {
   layout: 'collection-tabs',
@@ -199,7 +198,8 @@ export default {
     DataModal,
     ProjectSortingCard,
     CardBase,
-    VolumesTable
+    VolumesTable,
+    SearchForm
   },
 
   computed: {

@@ -1,13 +1,11 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-form-input
+    <search-form
       slot="controls"
       v-model="filter"
-      class="search-control"
-      size="sm"
       :placeholder="`Type to search by ${filterBy}`">
-    </b-form-input>
+    </search-form>
 
     <infinite-loading-table
       ref="table"
@@ -34,6 +32,7 @@ import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
+import SearchForm from '@/components/forms/Search'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -66,7 +65,8 @@ export default {
 
   components: {
     InfiniteLoadingTable,
-    CardBase
+    CardBase,
+    SearchForm
   },
 
   computed: {

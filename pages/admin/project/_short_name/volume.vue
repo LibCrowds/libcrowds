@@ -1,13 +1,11 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-form-input
+    <search-form
       slot="controls"
       v-model="filter"
-      class="search-control"
-      size="sm"
       :placeholder="`Type to search by ${filterBy}`">
-    </b-form-input>
+    </search-form>
 
     <volumes-table :volumes="volumes">
       <template slot="action" scope="vol">
@@ -28,6 +26,7 @@ import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import VolumesTable from '@/components/tables/Volumes'
+import SearchForm from '@/components/forms/Search'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -47,7 +46,8 @@ export default {
 
   components: {
     CardBase,
-    VolumesTable
+    VolumesTable,
+    SearchForm
   },
 
   computed: {

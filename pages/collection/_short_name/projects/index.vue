@@ -55,13 +55,11 @@
           title="Projects"
           description="Choose a project"
           class="d-xl-none">
-          <b-form-input
+          <search-form
             slot="controls"
             v-model="filter"
-            class="search-control"
-            size="sm"
             :placeholder="`Type to search by ${filterBy}`">
-          </b-form-input>
+          </search-form>
           <projects-table
             v-if="showProjectsTable"
             :filter="filter"
@@ -126,6 +124,7 @@ import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
+import SearchForm from '@/components/forms/Search'
 
 export default {
   layout: 'collection-tabs',
@@ -181,7 +180,8 @@ export default {
     InfiniteLoadingTable,
     ProjectContribButton,
     ProjectsTable,
-    CardBase
+    CardBase,
+    SearchForm
   },
 
   computed: {
