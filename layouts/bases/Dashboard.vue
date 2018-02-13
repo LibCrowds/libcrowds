@@ -11,6 +11,7 @@
 
       <top-navbar
         show-help
+        :navbar-brand="localConfig.brand"
         @menuclick="showSideNav = !showSideNav">
       </top-navbar>
 

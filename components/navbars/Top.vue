@@ -44,7 +44,7 @@
         v-if="showHelp && localConfig.docs"
         :href="localConfig.docs"
         target="_blank"
-        class="nav-link d-flex px-1">
+        class="nav-link d-none d-md-flex px-1">
         <icon name="question-circle"></icon>
       </a>
 
@@ -53,6 +53,7 @@
 
       <small-avatar
         extra-small
+        class="d-none d-md-block"
         :gravatar="currentUser.name"
         :info="currentUser.info">
       </small-avatar>
