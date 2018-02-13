@@ -1,11 +1,11 @@
 <template>
   <div id="dashboard-layout-base" :class="darkMode ? 'dark-mode' : null">
 
-    <side-nav
+    <side-navbar
       v-model="showSideNav"
       :nav-items="navItems"
       @menuclick="showSideNav = false">
-    </side-nav>
+    </side-navbar>
 
     <div :class="dashboardClass">
 
@@ -30,7 +30,7 @@
 import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
-import SideNav from '@/components/navbars/Side'
+import SideNavbar from '@/components/navbars/Side'
 import DashboardNavbar from '@/components/navbars/Dashboard'
 
 export default {
@@ -54,7 +54,7 @@ export default {
 
   components: {
     TopNavbar,
-    SideNav,
+    SideNavbar,
     DashboardFooter,
     DashboardNavbar
   },

@@ -3,11 +3,11 @@
 
     <div id="custom-background" :style="customBgStyle"></div>
 
-    <side-nav
+    <side-navbar
       v-model="showSideNav"
       fixed
       @menuclick="showSideNav = false">
-    </side-nav>
+    </side-navbar>
 
     <div id="app-right">
 
@@ -39,7 +39,7 @@ import 'vue-awesome/icons/question-circle'
 import AppFooter from '@/components/footers/App'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
-import SideNav from '@/components/navbars/Side'
+import SideNavbar from '@/components/navbars/Side'
 
 export default {
   data () {
@@ -52,7 +52,7 @@ export default {
     TopNavbar,
     AppFooter,
     DashboardFooter,
-    SideNav
+    SideNavbar
   },
 
   props: {
