@@ -213,6 +213,7 @@ export default {
   left: 0;
   z-index: $zindex-modal;
   border-right: 1px solid $gray-300;
+  min-width: 0;
   width: 0;
   transition: all 350ms ease-out;
   position: fixed;
@@ -247,6 +248,7 @@ export default {
   }
 
   &.show {
+    min-width: 100%;
     width: 100%;
 
     @include media-breakpoint-up(md) {
