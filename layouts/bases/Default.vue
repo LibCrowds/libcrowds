@@ -72,10 +72,6 @@ export default {
       type: Boolean,
       default: false
     },
-    titleBase: {
-      type: String,
-      required: false
-    },
     navbarBrand: {
       type: String,
       required: false

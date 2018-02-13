@@ -1,7 +1,5 @@
 <template>
-  <dashboard-base
-    :nav-items="navItems"
-    :titleBase="titleBase">
+  <dashboard-base :nav-items="navItems">
 
     <b-alert
       show
@@ -53,14 +51,6 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    titleBase () {
-      try {
-        return this.currentTemplate.project.name
-      } catch (err) {
-        return ''
-      }
     },
 
     navItems () {

@@ -45,10 +45,6 @@ export default {
     navItems: {
       type: Object,
       required: true
-    },
-    titleBase: {
-      type: String,
-      default: null
     }
   },
 

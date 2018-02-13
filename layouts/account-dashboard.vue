@@ -1,7 +1,5 @@
 <template>
-  <dashboard-base
-    :nav-items="navItems"
-    :titleBase="titleBase">
+  <dashboard-base :nav-items="navItems">
   </dashboard-base>
 </template>
 
@@ -19,10 +17,6 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    titleBase () {
-      return this.currentUser.fullname
     },
 
     navItems () {

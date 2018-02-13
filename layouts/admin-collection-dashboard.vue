@@ -1,7 +1,5 @@
 <template>
-  <dashboard-base
-    :nav-items="navItems"
-    :titleBase="titleBase">
+  <dashboard-base :nav-items="navItems">
   </dashboard-base>
 </template>
 
@@ -20,10 +18,6 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
-    },
-
-    titleBase () {
-      return this.collection ? this.collection.name : ''
     },
 
     navItems () {
