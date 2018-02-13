@@ -75,6 +75,7 @@
           <b-table
             hover
             show-empty
+            :dark="darkMode"
             :items="adminUsers"
             :fields="tableFields">
 

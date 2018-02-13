@@ -4,6 +4,7 @@
     striped
     hover
     show-empty
+    :dark="darkMode"
     :outlined="outlined"
     :items="filteredItems"
     :fields="mergedFields">

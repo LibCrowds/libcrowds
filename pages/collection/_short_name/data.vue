@@ -173,6 +173,12 @@ export default {
         { dataset: 'Task Runs', type: 'task_run', format: 'json' },
         { dataset: 'Results', type: 'result', format: 'csv' },
         { dataset: 'Results', type: 'result', format: 'json' }
+      ],
+      volumeDownloadItems: [
+        { dataset: 'Transcriptions', type: 'describing', format: 'csv' },
+        { dataset: 'Transcriptions', type: 'describing', format: 'json' },
+        { dataset: 'Comments', type: 'commenting', format: 'csv' },
+        { dataset: 'Comments', type: 'commenting', format: 'json' }
       ]
     }
   },
@@ -209,12 +215,6 @@ export default {
 
     collection () {
       return this.$store.state.currentCollection
-    },
-
-    volumeDownloadItems () {
-      return this.collection.info.export_formats.map(fmt => {
-        return { dataset: fmt.name, type: fmt.id, format: 'csv' }
-      })
     },
 
     description () {

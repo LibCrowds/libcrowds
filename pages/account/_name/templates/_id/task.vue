@@ -81,6 +81,7 @@
           hover
           outlined
           show-empty
+          :dark="darkMode"
           :items="form.model.fields_schema"
           :fields="schemaTableFields">
           <template slot="actions" scope="field">
@@ -120,6 +121,7 @@
           outlined
           show-empty
           empty-text="Add instutution codes using the input field below"
+          :dark="darkMode"
           :items="institutionCodeTableItems"
           :fields="institutionTableFields">
           <template slot="actions" scope="institution">

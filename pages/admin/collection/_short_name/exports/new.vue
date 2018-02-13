@@ -34,6 +34,7 @@
           hover
           outlined
           show-empty
+          :dark="darkMode"
           :items="form.model.fields"
           :fields="tableFields">
           <template slot="template_id" scope="field">
