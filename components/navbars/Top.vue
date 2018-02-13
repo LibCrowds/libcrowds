@@ -87,25 +87,26 @@
     </b-navbar-nav>
 
     <!-- Sign in/sign up -->
-    <b-navbar-nav id="sign-in-up" right class="top-navbar-right" v-else>
-      <b-nav-item
-        exact
+    <b-navbar-nav right class="top-navbar-right" v-else>
+      <b-btn
+        variant="outline-dark"
+        class="px-2 border-0"
         :to="{
           name: 'account-signin',
           query: {
             next: $route.path
           }
         }">
-        Sign in
-      </b-nav-item>
-      <b-nav-item
-        exact
-        id="btn-register"
+        <p class="mb-0">Sign in</p>
+      </b-btn>
+      <b-btn
+        variant="success"
+        class="px-2 border-0"
         :to="{
           name: 'account-register'
         }">
-        Sign up
-      </b-nav-item>
+        <p class="mb-0">Sign up</p>
+      </b-btn>
     </b-navbar-nav>
   </b-navbar>
 </template>
@@ -459,24 +460,6 @@ export default {
           }
         }
       }
-    }
-  }
-
-  #sign-in-up {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    font-size: $font-size-sm;
-    font-weight: 600;
-  }
-
-  #btn-register {
-    background-color: $green;
-    font-weight: 400;
-    border-bottom: 1px solid $green;
-
-    a {
-      color: $white;
     }
   }
 
