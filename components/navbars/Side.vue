@@ -307,16 +307,6 @@ export default {
     }
   }
 
-  &.side-nav-dark {
-    color: $white;
-    background: $gray-1000;
-    border-right: 1px solid $gray-1200;
-
-    .header {
-      background: $gray-1000;
-    }
-  }
-
   &.show {
     min-width: 100%;
     width: 100%;
@@ -381,6 +371,34 @@ export default {
     margin: .5rem 0;
     overflow: hidden;
     border-bottom: 1px solid rgba($gray-300, 0.5);
+  }
+
+  &::-webkit-scrollbar {
+      width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 3px rgba($black,0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-400;
+    outline: 1px solid $gray-200;
+  }
+
+  &.side-nav-dark {
+    color: $white;
+    background: $gray-1000;
+    border-right: 1px solid $gray-1200;
+
+    .header {
+      background: $gray-1000;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gray-800;
+      outline: 1px solid $gray-600;
+    }
   }
 }
 </style>
