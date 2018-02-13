@@ -450,7 +450,6 @@ export default {
   },
 
   asyncData ({ app, error, router }) {
-    let stats = {}
     return app.$axios.$get('/admin/dashboard').then(stats => {
       return {
         activeAnon: stats.active_anon_last_week,
