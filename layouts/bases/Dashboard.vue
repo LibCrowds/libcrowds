@@ -43,7 +43,7 @@ export default {
 
   props: {
     navItems: {
-      type: Array,
+      type: Object,
       required: true
     },
     titleBase: {

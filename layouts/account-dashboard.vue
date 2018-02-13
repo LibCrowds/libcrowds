@@ -26,7 +26,8 @@ export default {
     },
 
     navItems () {
-      return [
+      const items = {}
+      items[this.currentUser.name] = [
         {
           label: 'Profile',
           link: {
@@ -64,6 +65,7 @@ export default {
           }
         }
       ]
+      return items
     }
   },
 

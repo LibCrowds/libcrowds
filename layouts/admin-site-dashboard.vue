@@ -13,33 +13,7 @@ export default {
 
   data () {
     return {
-      navItems: [
-        {
-          label: 'Dashboard',
-          exact: true,
-          link: {
-            name: 'admin-site'
-          }
-        },
-        {
-          label: 'Users',
-          link: {
-            name: 'admin-site-users'
-          }
-        },
-        {
-          label: 'Announcements',
-          link: {
-            name: 'admin-site-announcements'
-          }
-        },
-        {
-          label: 'Background Tasks',
-          link: {
-            name: 'admin-site-jobs'
-          }
-        }
-      ]
+      navItems: {}
     }
   },
 

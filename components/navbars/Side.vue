@@ -47,6 +47,7 @@
 
 <script>
 import 'vue-awesome/icons/times'
+import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import localConfig from '@/local.config'
 
@@ -65,8 +66,8 @@ export default {
       default: false
     },
     navItems: {
-      type: Array,
-      default: () => ([])
+      type: Object,
+      default: () => ({})
     },
     fixed: {
       type: Boolean,
@@ -77,6 +78,10 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    loggedIn () {
+      return !isEmpty(this.currentUser)
     },
 
     publishedCollections () {
@@ -97,11 +102,7 @@ export default {
     },
 
     sideNavItems () {
-      const items = {}
-
-      if (this.navItems.length) {
-        items[''] = this.navItems
-      }
+      const items = JSON.parse(JSON.stringify(this.navItems))
 
       // Microsite nav items
       if (this.currentMicrositeNavItems.length) {
@@ -121,25 +122,86 @@ export default {
         }
       })
 
-      // Admin nav items
+      // Project admin
+      if (this.loggedIn) {
+        items['Projects'] = [
+          {
+            label: 'New Project',
+            link: {
+              name: 'admin-project-new'
+            }
+          },
+          {
+            label: 'Open Project',
+            link: {
+              name: 'admin-project'
+            }
+          }
+        ]
+      }
+
+      // Templates admin
+      if (this.loggedIn) {
+        items['Templates'] = [
+          {
+            label: 'New Template',
+            link: {
+              name: 'account-name-templates-new',
+              params: {
+                name: this.currentUser.name
+              }
+            }
+          },
+          {
+            label: 'Open Template',
+            link: {
+              name: 'account-name-templates',
+              params: {
+                name: this.currentUser.name
+              }
+            }
+          }
+        ]
+      }
+
+      // Site/collection admin nav items
       if (this.currentUser.admin) {
         items['Admin'] = [
           {
-            label: 'Collection Admin',
+            label: 'New Collection',
+            link: {
+              name: 'admin-collection-new'
+            }
+          },
+          {
+            label: 'Open Collection',
             link: {
               name: 'admin-collection'
             }
           },
           {
-            label: 'Project Admin',
+            label: 'Dashboard',
+            exact: true,
             link: {
-              name: 'admin-project'
+              name: 'admin-site'
             }
           },
           {
-            label: 'Site Admin',
+            label: 'Users',
             link: {
-              name: 'admin-site'
+              name: 'admin-site-users'
+            }
+          },
+          {
+            label: 'Announcements',
+            link: {
+              name: 'admin-site-announcements'
+            }
+          },
+          {
+            label: 'Background Tasks',
+            link: {
+              name: 'admin-site-jobs'
             }
           }
         ]
@@ -216,6 +278,8 @@ export default {
   border-right: 1px solid $gray-300;
   min-width: 0;
   width: 0;
+  white-space: normal;
+  word-wrap: break-word;
   transition: all 350ms ease-out;
   position: fixed;
 

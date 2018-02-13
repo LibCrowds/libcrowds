@@ -63,91 +63,64 @@ export default {
       }
     },
 
-    rootNavItems () {
-      return [
-        {
-          label: 'Open Template',
-          exact: true,
-          link: {
-            name: 'account-name-templates',
-            params: {
-              name: this.currentUser.name
-            }
-          }
-        },
-        {
-          label: 'New Template',
-          link: {
-            name: 'account-name-templates-new',
-            params: {
-              name: this.currentUser.name
-            }
-          }
-        }
-      ]
-    },
-
-    templateNavItems () {
-      return [
-        {
-          label: 'Core Details',
-          exact: true,
-          link: {
-            name: 'account-name-templates-id',
-            params: {
-              name: this.currentUser.name,
-              id: this.currentTemplate.id
-            }
-          }
-        },
-        {
-          label: 'Task Details',
-          link: {
-            name: 'account-name-templates-id-task',
-            params: {
-              name: this.currentUser.name,
-              id: this.currentTemplate.id
-            }
-          }
-        },
-        {
-          label: 'Analysis Rules',
-          link: {
-            name: 'account-name-templates-id-rules',
-            params: {
-              name: this.currentUser.name,
-              id: this.currentTemplate.id
-            }
-          }
-        },
-        {
-          label: 'Tutorial',
-          link: {
-            name: 'account-name-templates-id-tutorial',
-            params: {
-              name: this.currentUser.name,
-              id: this.currentTemplate.id
-            }
-          }
-        },
-        {
-          label: 'Delete',
-          link: {
-            name: 'account-name-templates-id-delete',
-            params: {
-              name: this.currentUser.name,
-              id: this.currentTemplate.id
-            }
-          }
-        }
-      ]
-    },
-
     navItems () {
-      if (isEmpty(this.currentTemplate)) {
-        return this.rootNavItems
+      const items = {}
+      if (!isEmpty(this.currentTemplate)) {
+        items[this.currentTemplate.project.name] = [
+          {
+            label: 'Core Details',
+            exact: true,
+            link: {
+              name: 'account-name-templates-id',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          },
+          {
+            label: 'Task Details',
+            link: {
+              name: 'account-name-templates-id-task',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          },
+          {
+            label: 'Analysis Rules',
+            link: {
+              name: 'account-name-templates-id-rules',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          },
+          {
+            label: 'Tutorial',
+            link: {
+              name: 'account-name-templates-id-tutorial',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          },
+          {
+            label: 'Delete',
+            link: {
+              name: 'account-name-templates-id-delete',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          }
+        ]
       }
-      return this.rootNavItems.concat(this.templateNavItems)
+      return items
     }
   },
 
@@ -155,7 +128,7 @@ export default {
     return {
       titleTemplate: isEmpty(this.currentTemplate)
         ? `%s | ${localConfig.brand}`
-        : `%s - ${this.currentTemplate.name} | ${localConfig.brand}`
+        : `%s - ${this.currentTemplate.project.name} | ${localConfig.brand}`
     }
   }
 }
