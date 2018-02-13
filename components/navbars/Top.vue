@@ -246,6 +246,13 @@ export default {
   z-index: $zindex-fixed;
   transition: background-color 200ms;
 
+  .btn-outline-dark {
+    @include hover-focus {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
+
   &.navbar-light {
     background-color: $white;
 
