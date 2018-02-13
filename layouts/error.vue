@@ -1,5 +1,5 @@
 <template>
-  <default-base :navbar-brand="navbarBrand" fixed-top>
+  <default-base :navbar-brand="localConfig.brand" fixed-top>
     <b-container class="my-4 my-lg-5">
       <b-col xl="8" class="mx-auto">
 
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import DefaultBase from '@/layouts/bases/Default'
 import CardBase from '@/components/cards/Base'
 
@@ -35,6 +36,7 @@ export default {
 
   data () {
     return {
+      localConfig: localConfig,
       messages: {
         '403': 'Forbidden.',
         '404': 'This page could not be found.',
