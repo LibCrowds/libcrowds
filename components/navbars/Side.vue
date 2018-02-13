@@ -284,6 +284,7 @@ export default {
   white-space: normal;
   word-wrap: break-word;
   transition: all 350ms ease-out;
+  border-right: 1px solid $gray-200;
 
   @include media-breakpoint-up(md) {
     position: relative;
@@ -384,15 +385,21 @@ export default {
     height: 0;
     margin: .5rem 0;
     overflow: hidden;
-    border-bottom: 1px solid rgba($gray-300, 0.5);
+    border-bottom: 1px solid $gray-200;
   }
 
   &.side-nav-dark {
     color: $white;
     background: $gray-1000;
+    border-color: $gray-900;
 
     .header {
       background: $gray-1000;
+      border-color: $gray-800;
+    }
+
+    .divider {
+      border-color: $gray-900;
     }
 
     #side-nav-items::-webkit-scrollbar-thumb {
