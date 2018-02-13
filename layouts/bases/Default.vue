@@ -204,7 +204,7 @@ export default {
     background-repeat: no-repeat;
   }
 
-  .dark-mode {
+  &.dark-mode {
     #custom-background {
       filter: brightness(0.4);
     }
