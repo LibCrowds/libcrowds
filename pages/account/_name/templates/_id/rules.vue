@@ -46,22 +46,6 @@
       <div
         v-if="presenter == 'iiif-annotation'"
         slot="bottom"
-        class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
-            :value="form.model.target_from_select_parent"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('date_format', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Format the transcription as a date
-        </label>
-      </div>
-      <div
-        v-if="presenter == 'iiif-annotation'"
-        slot="bottom"
         class="form-group mt-1">
         <div class="d-flex">
           <no-ssr>
@@ -73,7 +57,7 @@
             </toggle-button>
           </no-ssr>
           <label class="ml-1">
-            Format transcribed dates
+            Format transcriptions as dates
           </label>
         </div>
         <div class="hint">
