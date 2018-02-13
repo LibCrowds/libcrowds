@@ -135,9 +135,6 @@ export default {
     restrictedNavItems () {
       return [
         {
-          seperator: true
-        },
-        {
           label: 'Collection',
           link: {
             name: 'admin-project-short_name-collection',

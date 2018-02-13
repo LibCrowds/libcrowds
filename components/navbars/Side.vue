@@ -67,6 +67,10 @@ export default {
     navItems: {
       type: Array,
       default: () => ([])
+    },
+    fixed: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -87,7 +91,8 @@ export default {
       return {
         'side-nav': true,
         'show': this.value,
-        'side-nav-dark': this.darkMode
+        'side-nav-dark': this.darkMode,
+        'side-nav-fixed': this.fixed
       }
     },
 
@@ -202,15 +207,18 @@ export default {
   max-height: 100%;
   height: 100%;
   flex-direction: column;
-  width: 100%;
-  position: fixed;
+  position: relative;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: $zindex-modal;
   border-right: 1px solid $gray-300;
-  transform: translateX(-100%);
+  width: 0;
   transition: all 350ms ease-out;
+
+  &.side-nav-fixed {
+    position: fixed;
+  }
 
   .btn {
     text-transform: uppercase;
@@ -233,12 +241,12 @@ export default {
     border-right: 1px solid $gray-1200;
   }
 
-  @include media-breakpoint-up(sm) {
-    width: $sidebar-width;
-  }
-
   &.show {
-    transform: translateX(0);
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      width: $sidebar-width;
+    }
   }
 
   h4 {

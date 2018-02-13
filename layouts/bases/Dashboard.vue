@@ -7,11 +7,7 @@
       @menuclick="showSideNav = false">
     </side-nav>
 
-    <dashboard-navbar
-      :nav-items="navItems">
-    </dashboard-navbar>
-
-    <div :class="darkMode ? 'dashboard dashboard-dark' : 'dashboard'">
+    <div :class="dashboardClass">
 
       <top-navbar
         show-help
@@ -41,7 +37,7 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      showSideNav: false
+      showSideNav: true
     }
   },
 
@@ -66,6 +62,13 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    dashboardClass () {
+      return {
+        'dashboard': true,
+        'dashboard-dark': this.darkMode
+      }
     }
   }
 }
@@ -75,6 +78,7 @@ export default {
 @import '~assets/style/settings';
 
 #dashboard-layout-base {
+  display: flex;
   height: 100vh;
   width: auto;
 
@@ -87,6 +91,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     background-image: url('~/assets/img/geometry.png');
 
     &.dashboard-dark {
@@ -97,7 +102,6 @@ export default {
       z-index: 2;
       height: 100vh;
       float: right;
-      width: calc(100% - #{$sidebar-width});
     }
   }
 }

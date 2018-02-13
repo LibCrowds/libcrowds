@@ -5,10 +5,12 @@
 
     <side-nav
       v-model="showSideNav"
+      fixed
       @menuclick="showSideNav = false">
     </side-nav>
 
     <div id="app-right">
+
       <top-navbar
         :transparent="transparent"
         :fixed-top="fixedTop"
@@ -21,15 +23,14 @@
         <slot></slot>
       </main>
 
+      <app-footer
+        v-if="!hideFooter"
+        :collections="publishedCollections">
+      </app-footer>
+
+      <div :class="backdropClassObj" @click="showSideNav = false"></div>
+
     </div>
-
-    <app-footer
-      v-if="!hideFooter"
-      :collections="publishedCollections">
-    </app-footer>
-
-    <div :class="backdropClassObj" @click="showSideNav = false"></div>
-
   </div>
 </template>
 
@@ -172,7 +173,8 @@ export default {
   #app-right {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 100vh;
+    width: auto;
   }
 
   .fixed {
