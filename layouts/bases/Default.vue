@@ -16,7 +16,7 @@
         :fixed-top="fixedTop"
         :navbar-brand="navbarBrand"
         :class="navbarClass"
-        @menuclick="showSideNav = !showSideNav">
+        @menuclick="showSideNav = false">
       </top-navbar>
 
       <main :class="containerClass">

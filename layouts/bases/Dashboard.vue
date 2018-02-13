@@ -12,7 +12,7 @@
       <top-navbar
         show-help
         :navbar-brand="localConfig.brand"
-        @menuclick="showSideNav = !showSideNav">
+        @menuclick="showSideNav = false">
       </top-navbar>
 
       <main class="container-fluid px-lg-4 py-4">
