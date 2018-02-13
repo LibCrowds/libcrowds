@@ -199,6 +199,7 @@ export default {
 @import '~assets/style/settings';
 
 .side-nav {
+  display: block;
   overflow: auto;
   white-space: nowrap;
   background-size: cover;
@@ -277,6 +278,7 @@ export default {
     height: $top-navbar-height;
     min-height: $top-navbar-height;
     border-bottom: 1px solid rgba($gray-300, 0.75);
+    background: $gray-100;
   }
 
   .nav-item {
