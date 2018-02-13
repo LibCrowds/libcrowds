@@ -246,6 +246,10 @@ export default {
     color: $white;
     background: $gray-1000;
     border-right: 1px solid $gray-1200;
+
+    .header {
+      background: $gray-1000;
+    }
   }
 
   &.show {
