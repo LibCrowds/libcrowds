@@ -88,6 +88,7 @@ export default {
     flex-direction: column;
     height: 100%;
     width: 100%;
+    overflow: hidden;
     background-image: url('~/assets/img/geometry.png');
 
     &.dashboard-dark {
