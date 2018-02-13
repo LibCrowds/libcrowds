@@ -264,10 +264,10 @@ export default {
   }
 
   &.navbar-dark {
-    background-color: $gray-1200;
+    background-color: $gray-1000;
 
     .btn {
-      border-right: 1px solid $gray-1200;
+      border-right: 1px solid $gray-1000;
       border-bottom: 1px solid $gray-800;
     }
 

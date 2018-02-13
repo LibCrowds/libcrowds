@@ -67,7 +67,7 @@ export default {
   }
 
   &.footer-dark {
-    background: $gray-1200;
+    background: $gray-1000;
     border-top: 1px solid $gray-800;
   }
 }
