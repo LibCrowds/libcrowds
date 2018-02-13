@@ -12,7 +12,7 @@
       </b-btn>
     </div>
 
-    <span v-for="(items, key, index) in navItems" :key="key">
+    <span v-for="(items, key, index) in sideNavItems" :key="key">
       <h4>{{ key }}</h4>
       <b-nav-item
         v-for="(item, index) in items"
@@ -22,7 +22,7 @@
         {{ item.label }}
       </b-nav-item>
       <li
-        v-if="index !== navItems.length"
+        v-if="index !== sideNavItems.length"
         role="seperator"
         class="divider">
       </li>
@@ -63,6 +63,10 @@ export default {
     value: {
       type: Boolean,
       default: false
+    },
+    navItems: {
+      type: Array,
+      default: () => ([])
     }
   },
 
@@ -87,8 +91,12 @@ export default {
       }
     },
 
-    navItems () {
+    sideNavItems () {
       const items = {}
+
+      if (this.navItems.length) {
+        items[''] = this.navItems
+      }
 
       // Microsite nav items
       if (this.currentMicrositeNavItems.length) {

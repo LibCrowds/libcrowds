@@ -3,6 +3,7 @@
 
     <side-nav
       v-model="showSideNav"
+      :nav-items="navItems"
       @menuclick="showSideNav = false">
     </side-nav>
 
