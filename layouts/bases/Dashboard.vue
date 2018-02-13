@@ -31,7 +31,6 @@ import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
 import SideNavbar from '@/components/navbars/Side'
-import DashboardNavbar from '@/components/navbars/Dashboard'
 
 export default {
   data () {
