@@ -8,7 +8,7 @@
         v-if="gravatar"
         slot="placeholder"
         :email="gravatar"
-        size="100"
+        :size="100"
         default-img="identicon"
         alt-tag="Small thumbnail placeholder"
         :class="placeholderClassObj">
