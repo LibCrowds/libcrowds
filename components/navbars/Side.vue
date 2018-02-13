@@ -215,9 +215,14 @@ export default {
   border-right: 1px solid $gray-300;
   width: 0;
   transition: all 350ms ease-out;
+  position: fixed;
 
-  &.side-nav-fixed {
-    position: fixed;
+  @include media-breakpoint-up(md) {
+    position: relative;
+
+    &.side-nav-fixed {
+      position: fixed;
+    }
   }
 
   .btn {
@@ -244,7 +249,8 @@ export default {
   &.show {
     width: 100%;
 
-    @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(md) {
+      min-width: $sidebar-width;
       width: $sidebar-width;
     }
   }
