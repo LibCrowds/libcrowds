@@ -103,5 +103,11 @@ export default {
     commit('SET_ITEM', {
       key: 'collectionNavItems', value: navItems
     })
+  },
+
+  TOGGLE_DARK_MODE: ({ commit, state }) => {
+    commit('SET_ITEM', {
+      key: 'darkMode', value: !state.darkMode
+    })
   }
 }

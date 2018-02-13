@@ -140,9 +140,8 @@ export default {
      * Toggle dark mode.
      */
     toggleDarkMode () {
-      this.$store.commit('SET_ITEM', {
-        key: 'darkMode', value: !this.darkMode
-      })
+      this.$cookies.set('dark-mode', !this.$store.state.darkMode)
+      this.$store.dispatch('TOGGLE_DARK_MODE')
     },
 
     /**

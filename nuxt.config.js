@@ -99,6 +99,7 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/cookies' },
     { src: '~/plugins/cookie-consent', ssr: false },
     { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
