@@ -274,7 +274,7 @@ export default {
   max-height: 100%;
   height: 100%;
   flex-direction: column;
-  position: relative;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
