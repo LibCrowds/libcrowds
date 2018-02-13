@@ -327,5 +327,17 @@ export default {
       background-color: transparent;
     }
   }
+
+  &.bg-light {
+    background-color: $white !important;
+
+    .card-footer {
+      background-color: $white;
+    }
+
+    .project-stats-btn {
+      background-color: $white;
+    }
+  }
 }
 </style>
