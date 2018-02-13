@@ -7,7 +7,7 @@
       <b-btn
         variant="link"
         class="d-flex align-items-center float-right"
-        @click="$emit('menuclick')">
+        @click="$emit('close')">
         Close<icon name="times" class="ml-1"></icon>
       </b-btn>
     </div>
@@ -18,7 +18,8 @@
         v-for="(item, index) in items"
         exact
         :key="index"
-        :to="item.link">
+        :to="item.link"
+        @click="$emit('itemclick')">
         {{ item.label }}
       </b-nav-item>
       <li

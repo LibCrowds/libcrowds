@@ -6,7 +6,8 @@
     <side-navbar
       v-model="showSideNav"
       fixed
-      @menuclick="showSideNav = false">
+      @close="showSideNav = false"
+      @itemclick="showSideNav = false">
     </side-navbar>
 
     <div id="app-right">
@@ -16,7 +17,7 @@
         :fixed-top="fixedTop"
         :navbar-brand="navbarBrand"
         :class="navbarClass"
-        @menuclick="showSideNav = false">
+        @menuclick="showSideNav = !showSideNav">
       </top-navbar>
 
       <main :class="containerClass">

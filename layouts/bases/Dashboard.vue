@@ -4,7 +4,7 @@
     <side-navbar
       v-model="showSideNav"
       :nav-items="navItems"
-      @menuclick="showSideNav = false">
+      @close="showSideNav = false">
     </side-navbar>
 
     <div :class="dashboardClass">
@@ -12,7 +12,8 @@
       <top-navbar
         show-help
         :navbar-brand="localConfig.brand"
-        @menuclick="showSideNav = false">
+        @menuclick="showSideNav = !showSideNav"
+        @itemclick="showSideNav = false">
       </top-navbar>
 
       <main class="container-fluid px-lg-4 py-4">

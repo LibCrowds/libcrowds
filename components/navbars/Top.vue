@@ -19,7 +19,8 @@
         class="navbar-brand ml-1 mr-2"
         :to="{
           name: 'index'
-        }">
+        }"
+        @click="$emit('itemclick')">
         <span>{{ navbarBrand }}</span>
       </b-link>
 
@@ -30,7 +31,7 @@
           :key="index"
           exact
           :to="item.link"
-          @click="$emit('menuclick')">
+          @click="$emit('itemclick')">
           {{ item.label }}
         </b-nav-item>
       </b-navbar-nav>
