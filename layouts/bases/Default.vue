@@ -153,11 +153,11 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 
-  .bg-default {
+  &.bg-default {
     background-image: url('~/assets/img/geometry.png');
   }
 
-  .bg-default-dark {
+  &.bg-default-dark {
     background-image: url('~/assets/img/geometry-dark.png');
   }
 
