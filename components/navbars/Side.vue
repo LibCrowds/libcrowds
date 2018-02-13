@@ -1,8 +1,7 @@
 <template>
-  <b-nav
+  <div
     ref="sidebar"
-    :class="sideNavClass"
-    v-prevent-parent-scroll>
+    :class="sideNavClass">
     <div class="header">
       <b-btn
         variant="link"
@@ -12,38 +11,43 @@
       </b-btn>
     </div>
 
-    <span v-for="(items, key, index) in sideNavItems" :key="key">
-      <h4>{{ key }}</h4>
-      <b-nav-item
-        v-for="(item, index) in items"
-        exact
-        :key="index"
-        :to="item.link"
-        @click="$emit('itemclick')">
-        {{ item.label }}
-      </b-nav-item>
-      <li
-        v-if="index !== sideNavItems.length"
-        role="seperator"
-        class="divider">
-      </li>
-    </span>
+    <div id="side-nav-items" v-prevent-parent-scroll>
 
-    <div class="d-flex align-items-center justify-content-between my-2 px-2">
-      <label class="mr-1 mb-0 toggle-label text-secondary">
-        <strong>Activate dark mode</strong>
-      </label>
-      <no-ssr>
-        <toggle-button
-          :value="darkMode"
-          :labels="true"
-          class="mb-0"
-          @change="toggleDarkMode">
-        </toggle-button>
-      </no-ssr>
+      <div v-for="(items, key, index) in sideNavItems" :key="key">
+        <h4>{{ key }}</h4>
+        <b-nav>
+          <b-nav-item
+            v-for="(item, index) in items"
+            exact
+            :key="index"
+            :to="item.link"
+            @click="$emit('itemclick')">
+            {{ item.label }}
+          </b-nav-item>
+          <li
+            v-if="index !== sideNavItems.length"
+            role="seperator"
+            class="divider">
+          </li>
+        </b-nav>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between my-2 px-2">
+        <label class="mr-1 mb-0 toggle-label text-secondary">
+          <strong>Activate dark mode</strong>
+        </label>
+        <no-ssr>
+          <toggle-button
+            :value="darkMode"
+            :labels="true"
+            class="mb-0"
+            @change="toggleDarkMode">
+          </toggle-button>
+        </no-ssr>
+      </div>
+
     </div>
-
-  </b-nav>
+  </div>
 </template>
 
 <script>
@@ -263,7 +267,6 @@ export default {
 
 .side-nav {
   display: block;
-  overflow: auto;
   white-space: nowrap;
   background-size: cover;
   background-position: center center;
@@ -276,13 +279,11 @@ export default {
   bottom: 0;
   left: 0;
   z-index: $zindex-modal;
-  border-right: 1px solid $gray-300;
   min-width: 0;
   width: 0;
   white-space: normal;
   word-wrap: break-word;
   transition: all 350ms ease-out;
-  position: fixed;
 
   @include media-breakpoint-up(md) {
     position: relative;
@@ -330,14 +331,27 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    position: sticky;
     width: 100%;
     top: 0;
     z-index: 2;
     height: $top-navbar-height;
     min-height: $top-navbar-height;
-    border-bottom: 1px solid rgba($gray-300, 0.75);
+    border-bottom: 1px solid $gray-300;
     background: $gray-100;
+  }
+
+  #side-nav-items {
+    height: calc(100vh - #{$top-navbar-height});
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $gray-400;
+      outline: 1px solid $gray-200;
+    }
   }
 
   .nav-item {
@@ -373,29 +387,15 @@ export default {
     border-bottom: 1px solid rgba($gray-300, 0.5);
   }
 
-  &::-webkit-scrollbar {
-      width: 0.5rem;
-  }
-
-  &::-webkit-scrollbar-track {
-      -webkit-box-shadow: inset 0 0 3px rgba($black,0.3);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $gray-400;
-    outline: 1px solid $gray-200;
-  }
-
   &.side-nav-dark {
     color: $white;
     background: $gray-1000;
-    border-right: 1px solid $gray-1200;
 
     .header {
       background: $gray-1000;
     }
 
-    &::-webkit-scrollbar-thumb {
+    #side-nav-items::-webkit-scrollbar-thumb {
       background-color: $gray-800;
       outline: 1px solid $gray-600;
     }
