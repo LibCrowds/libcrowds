@@ -54,8 +54,7 @@ export default {
   components: {
     TopNavbar,
     SideNavbar,
-    DashboardFooter,
-    DashboardNavbar
+    DashboardFooter
   },
 
   computed: {
