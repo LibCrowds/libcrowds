@@ -258,7 +258,11 @@
     </card-base>
 
     <div role="tablist" class="mb-3">
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -310,7 +314,11 @@
           </b-card-body>
         </b-collapse>
       </b-card>
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -362,7 +370,11 @@
           </b-card-body>
         </b-collapse>
       </b-card>
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -600,7 +612,6 @@ export default {
   }
 
   @include media-breakpoint-up(lg) {
-    border-left: 1px solid $gray-300;
     overflow-y: auto;
     display: block;
   }

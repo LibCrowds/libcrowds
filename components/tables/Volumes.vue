@@ -34,7 +34,9 @@
     </template>
 
     <template slot="row-details" scope="volume">
-      <b-card>
+      <b-card
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null">
         <h5>Projects</h5>
         <template v-if="volume.item.projects.length">
           <ul class="list-unstyled mb-0">

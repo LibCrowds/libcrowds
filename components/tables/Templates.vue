@@ -21,7 +21,9 @@
     </template>
 
     <template slot="row-details" scope="tmpl">
-      <b-card>
+      <b-card
+        :bg-variant="darkMode ? 'dark' : 'light'"
+        :text-variant="darkMode ? 'white' : null">
         <h5>Project Details</h5>
         <ul class="list-unstyled">
           <li v-for="key in Object.keys(tmpl.item.project)" :key="key">
