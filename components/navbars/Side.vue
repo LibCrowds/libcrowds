@@ -281,10 +281,7 @@ export default {
   z-index: $zindex-modal;
   min-width: 0;
   width: 0;
-  white-space: normal;
-  word-wrap: break-word;
   transition: all 350ms ease-out;
-  border-right: 1px solid $gray-200;
 
   @include media-breakpoint-up(md) {
     position: relative;
@@ -312,6 +309,9 @@ export default {
   &.show {
     min-width: 100%;
     width: 100%;
+    border-right: 1px solid $gray-200;
+    white-space: normal;
+    word-wrap: break-word;
 
     @include media-breakpoint-up(md) {
       min-width: $sidebar-width;
