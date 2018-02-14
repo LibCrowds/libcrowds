@@ -100,7 +100,6 @@ export default {
         shape: this.collection.info.celebrations.confetti
       })
       this.$swal({
-        title: this.collection.info.celebrations.title,
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
