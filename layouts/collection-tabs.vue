@@ -136,7 +136,7 @@ export default {
 .dark-mode {
   #collection-tabs-layout {
     .nav.nav-unstyled {
-      background-color: rgba($gray-1200, 0.85);
+      background-color: rgba($gray-800, 0.9);
 
       .nav-link {
         color: rgba($gray-300, 0.85);
