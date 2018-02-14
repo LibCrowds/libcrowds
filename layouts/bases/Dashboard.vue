@@ -3,6 +3,7 @@
 
     <side-navbar
       v-model="showSideNav"
+      :dark="darkMode"
       :nav-items="navItems"
       @close="showSideNav = false">
     </side-navbar>
@@ -11,6 +12,7 @@
 
       <top-navbar
         show-help
+        :dark="darkMode"
         :navbar-brand="localConfig.brand"
         @menuclick="showSideNav = !showSideNav"
         @itemclick="showSideNav = false">

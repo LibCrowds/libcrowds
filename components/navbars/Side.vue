@@ -38,7 +38,7 @@
         </label>
         <no-ssr>
           <toggle-button
-            :value="darkMode"
+            :value="dark"
             :labels="true"
             class="mb-0"
             @change="toggleDarkMode">
@@ -77,6 +77,10 @@ export default {
     fixed: {
       type: Boolean,
       default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -93,15 +97,11 @@ export default {
       return this.$store.state.publishedCollections
     },
 
-    darkMode () {
-      return this.$store.state.darkMode
-    },
-
     sideNavClass () {
       return {
         'side-nav': true,
         'show': this.value,
-        'side-nav-dark': this.darkMode,
+        'side-nav-dark': this.dark,
         'side-nav-fixed': this.fixed
       }
     },

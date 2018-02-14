@@ -6,6 +6,7 @@
     <side-navbar
       v-model="showSideNav"
       fixed
+      :dark="darkMode || forceDarkMode"
       @close="showSideNav = false"
       @itemclick="showSideNav = false">
     </side-navbar>
@@ -13,6 +14,7 @@
     <div id="app-right">
 
       <top-navbar
+        :dark="darkMode || forceDarkMode"
         :transparent="transparent"
         :fixed-top="fixedTop"
         :navbar-brand="navbarBrand"
@@ -88,6 +90,10 @@ export default {
     transparent: {
       type: Boolean,
       default: false
+    },
+    forceDarkMode: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -132,10 +138,11 @@ export default {
     },
 
     mainClassObj () {
+      const bgImgUrl = this.backgroundImageUrl
       return {
-        'dark-mode': this.darkMode,
-        'bg-default': !this.backgroundImageUrl && !this.darkMode,
-        'bg-default-dark': !this.backgroundImageUrl && this.darkMode
+        'dark-mode': this.darkMode || this.forceDarkMode,
+        'bg-default': !bgImgUrl && !(this.darkMode || this.forceDarkMode),
+        'bg-default-dark': !bgImgUrl && (this.darkMode || this.forceDarkMode)
       }
     }
   }

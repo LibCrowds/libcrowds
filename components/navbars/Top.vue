@@ -150,6 +150,10 @@ export default {
     showHelp: {
       type: Boolean,
       default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -168,7 +172,7 @@ export default {
     },
 
     navbarType () {
-      return this.darkMode ? 'dark' : 'light'
+      return this.dark ? 'dark' : 'light'
     }
   },
 
