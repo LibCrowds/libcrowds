@@ -7,6 +7,7 @@
   border-bottom: $table-border-width solid $table-border-color;
 
   &.table-dark {
+    color: $gray-200;
     background-color: $dark;
     border: $table-border-width solid $dark;
   }

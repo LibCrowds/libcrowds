@@ -35,5 +35,9 @@
     .card-header {
       background-color: $gray-1000 !important;
     }
+
+    &.text-white {
+      color: $gray-200;
+    }
   }
 }
