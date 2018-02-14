@@ -53,17 +53,6 @@
               </ul>
             </template>
           </b-alert>
-          <b-alert
-            v-if="collection && !collection.info.export_formats.length"
-            show
-            variant="info"
-            class="mb-0">
-            <p class="mb-0">
-              No volume-level exports have been setup for this collection.
-              Click the Projects tab above to download the raw, project-level
-              data.
-            </p>
-          </b-alert>
           <volumes-table
             show-details
             :volumes="volumes"
@@ -71,7 +60,6 @@
             :filter-by="filterBy">
             <template slot="action" scope="volume">
               <b-btn
-                v-if="collection.info.export_formats.length"
                 variant="success"
                 size="sm"
                 block
