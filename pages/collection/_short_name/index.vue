@@ -448,22 +448,26 @@ export default {
     #intro,
     #final-cta,
     #social-media {
-      background: $gray-1000;
+      background: $gray-900;
       color: $gray-200;
     }
 
     #ribbon {
-      background: $gray-1000;
+      background: $gray-900;
+
+      svg {
+        color: $gray-200;
+      }
 
       &:after {
-        border-color: $gray-1000 $gray-1000 transparent $gray-1000;
+        border-color: $gray-900 $gray-900 transparent $gray-900;
       }
     }
 
     #featured-projects {
       color: $gray-200;
       background-image: url('~/assets/img/dark-wall.png');
-      border: 1px solid $gray-1000;
+      border: 1px solid $gray-900;
     }
   }
 }

@@ -203,7 +203,7 @@ export default {
 
   &.dark-mode {
     #custom-background {
-      filter: brightness(0.4);
+      filter: brightness(0.75);
     }
   }
 }

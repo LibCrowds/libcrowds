@@ -348,12 +348,12 @@ export default {
   #index {
     #collections {
       color: $gray-200;
-      background-color: $gray-1100;
+      background-color: $gray-900;
     }
 
     #top-users {
       color: $gray-100;
-      background-color: $gray-900;
+      background-color: $gray-800;
     }
 
     .btn-underline {
