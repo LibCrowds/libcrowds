@@ -8,17 +8,7 @@
     <div class="d-flex flex-row">
 
       <div class="p-1">
-        <img
-          v-if="announcement.media_url"
-          :src="imgSrc"
-          size
-          class="img-announcement img-fluid rounded-circle">
-        </img>
-        <div
-          v-else
-          class="placeholderClassObj">
-          <icon name="question" scale="2"></icon>
-        </div>
+        <small-avatar :info="announcement"></small-avatar>
       </div>
 
       <div class="p-1 flex-grow">
@@ -50,6 +40,7 @@
 import marked from 'marked'
 import 'vue-awesome/icons/question'
 import localConfig from '@/local.config'
+import SmallAvatar from '@/components/avatars/Small'
 
 export default {
   data () {
@@ -66,6 +57,10 @@ export default {
       type: Object,
       required: true
     }
+  },
+
+  components: {
+    SmallAvatar
   },
 
   computed: {
