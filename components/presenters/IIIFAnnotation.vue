@@ -237,7 +237,14 @@ export default {
   align-items: center;
   justify-content: center;
 
+  .lv-sidebar {
+    background-color: $gray-1100;
+    color: $gray-100;
+  }
+
   .lv-sidebar-footer {
+    background-color: $gray-1100;
+
     p {
       margin-bottom: 0;
     }
