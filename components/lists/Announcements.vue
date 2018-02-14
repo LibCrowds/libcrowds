@@ -58,11 +58,12 @@
             :key="announcement.id"
             :announcement="announcement">
           </announcement-card>
-          <div class="m-1 text-center">
+          <div class="m-1">
             <b-btn
               v-if="announcements.length"
               size="sm"
-              variant="primary"
+              :variant="darkMode ? 'secondary' : 'primary'"
+              class="mx-auto"
               :disabled="noMore"
               @click.stop="loadMore">
               Load More
@@ -241,11 +242,28 @@ export default {
     #announcements {
       max-height: 400px;
       overflow-y: auto;
-      border-bottom: 1px solid $gray-300;
+
+      &::-webkit-scrollbar {
+        width: 0.5rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray-400;
+        outline: 1px solid $gray-200;
+      }
     }
 
     .infinite-status-prompt {
       background: $white;
+    }
+
+    &.bg-dark {
+      #announcements {
+        &::-webkit-scrollbar-thumb {
+          background-color: $gray-800;
+          outline: 1px solid $gray-600;
+        }
+      }
     }
   }
 }
