@@ -52,7 +52,7 @@
           </b-btn>
         </div>
 
-        <div id="announcements">
+        <div id="announcements" class="custom-scrollbar">
           <announcement-card
             v-for="announcement in enhancedAnnouncements"
             :key="announcement.id"
@@ -242,28 +242,10 @@ export default {
     #announcements {
       max-height: 400px;
       overflow-y: auto;
-
-      &::-webkit-scrollbar {
-        width: 0.5rem;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: $gray-400;
-        outline: 1px solid $gray-200;
-      }
     }
 
     .infinite-status-prompt {
       background: $white;
-    }
-
-    &.bg-dark {
-      #announcements {
-        &::-webkit-scrollbar-thumb {
-          background-color: $gray-800;
-          outline: 1px solid $gray-600;
-        }
-      }
     }
   }
 }

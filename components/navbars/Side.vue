@@ -11,7 +11,7 @@
       </b-btn>
     </div>
 
-    <div id="side-nav-items" v-prevent-parent-scroll>
+    <div id="side-nav-items" class="custom-scrollbar" v-prevent-parent-scroll>
 
       <div v-for="(items, key, index) in sideNavItems" :key="key">
         <h4>{{ key }}</h4>
@@ -343,16 +343,7 @@ export default {
 
   #side-nav-items {
     height: calc(100vh - #{$top-navbar-height});
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      width: 0.5rem;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $gray-400;
-      outline: 1px solid $gray-200;
-    }
+    overflow-y: auto;
   }
 
   .nav-item {
@@ -400,11 +391,6 @@ export default {
 
     .divider {
       border-color: $gray-900;
-    }
-
-    #side-nav-items::-webkit-scrollbar-thumb {
-      background-color: $gray-800;
-      outline: 1px solid $gray-600;
     }
   }
 }
