@@ -30,7 +30,6 @@
           no-body
           :bg-variant="darkMode ? 'dark' : 'light'"
           :text-variant="darkMode ? 'white' : null">
-
           <!-- Alert -->
           <b-card-body
             class="pb-0"
@@ -272,6 +271,10 @@ export default {
     tasks: {
       type: Array,
       required: true
+    },
+    template: {
+      type: Object,
+      required: false
     }
   },
 
@@ -329,6 +332,18 @@ export default {
       } else {
         return this.referenceForm
       }
+    },
+
+    database () {
+      if (this.template && this.template.task) {
+        return this.template.task.database
+      }
+    },
+
+    institutions () {
+      if (this.template && this.template.task) {
+        return this.template.task.institutions
+      }
     }
   },
 
@@ -339,8 +354,9 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async onInfiniteLoad ($state) {
+      const endpoint = `/z3950/search/${this.database}/json`
       try {
-        const results = await this.$axios.$get('/z3950/search/oclc/json', {
+        const results = await this.$axios.$get(endpoint, {
           params: {
             query: this.searchQuery,
             position: this.searchResults.length + 1
@@ -365,16 +381,14 @@ export default {
      */
     buildQuery () {
       let model = this.searchForm.model
-      let trusted = [
-        'DLC', 'CUY', 'ZCU', 'HMY', 'PULEA', 'YUL', 'CNEAL',
-        'CGU', 'COO', 'AMH', 'AUT', 'NSL', 'SLY', 'L2U', 'OCLCA',
-        'OCLCQ', 'OCLCF', 'OCLCO', 'BLSTP'
-      ].join(' or ')
-      this.searchQuery = `(1,1183)="eng"and(1,6119)="(${trusted})"` +
+      this.searchQuery = `(1,1183)="eng"` +
         `and(1,4)="${model.title}"` +
         `and(1,1003)="${model.author}"` +
         `and(1,31)="${model.year}"` +
         `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
+      if (Array.isArray(this.institutions)) {
+        this.searchQuery += `and(1,6119)="(${this.institutions.join(' or ')})"`
+      }
     },
 
     /**
