@@ -30,7 +30,7 @@
 
       <template slot="row-details" scope="result">
         <b-card
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <pre class=".pre-scrollable mb-0">
             <code>

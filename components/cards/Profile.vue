@@ -2,7 +2,7 @@
   <b-card
     no-body
     class="profile-card"
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
 
     <div class="avatar-background profile-card-bg">

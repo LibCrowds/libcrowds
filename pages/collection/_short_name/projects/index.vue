@@ -15,7 +15,7 @@
         <b-card
           header="Sorting Options"
           class="options-card mb-2"
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <filter-projects-data
             v-model="tagModel"

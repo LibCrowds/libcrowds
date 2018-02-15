@@ -35,7 +35,7 @@
 
     <template slot="row-details" scope="volume">
       <b-card
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
         <h5>Projects</h5>
         <template v-if="volume.item.projects.length">

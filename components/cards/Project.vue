@@ -2,7 +2,7 @@
   <b-card
     no-body
     class="project-card"
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
     <nuxt-link
       v-if="projectIncomplete"

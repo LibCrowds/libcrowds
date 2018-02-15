@@ -1,7 +1,7 @@
 <template>
   <b-card
     no-body
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null"
     :class="classObj"
     @click="onClick">

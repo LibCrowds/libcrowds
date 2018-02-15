@@ -24,7 +24,7 @@
         <div class="col-lg-8">
           <b-card
             no-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null"
             header="Contributions">
             <b-table

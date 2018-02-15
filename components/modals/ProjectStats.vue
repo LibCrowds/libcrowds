@@ -30,7 +30,7 @@
           :description="proportionAuthDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <pie-chart
               v-if="userStats.authenticated && userStats.anonymous"
@@ -44,7 +44,7 @@
           :description="dailyContributionsDescriptions"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.dayStats"
@@ -59,7 +59,7 @@
           :description="hourlyContributionsDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.hourStats"
@@ -74,7 +74,7 @@
           :description="topUsersDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <bar-chart
               v-if="userStats.authenticated"

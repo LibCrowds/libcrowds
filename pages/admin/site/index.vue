@@ -260,7 +260,7 @@
     <div role="tablist" class="mb-3">
       <b-card
         no-body
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null"
         class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
@@ -316,7 +316,7 @@
       </b-card>
       <b-card
         no-body
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null"
         class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
@@ -372,7 +372,7 @@
       </b-card>
       <b-card
         no-body
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null"
         class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">

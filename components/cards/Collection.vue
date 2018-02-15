@@ -2,7 +2,7 @@
   <b-card
     no-body
     show-footer
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null"
     class="collection-card my-3">
     <nuxt-link

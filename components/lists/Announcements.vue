@@ -33,7 +33,7 @@
         header="Notifications"
         id="announcements-container"
         class="dropdown-menu-right d-none d-md-block"
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
 
         <div

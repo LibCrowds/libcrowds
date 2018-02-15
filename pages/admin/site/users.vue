@@ -43,7 +43,7 @@
         <b-card
           header="Export"
           class="text-center"
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <p class="lead">
             {{ nUsers }} users registered
@@ -70,7 +70,7 @@
         <b-card
           no-body
           header="Current Administrators"
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <b-table
             hover

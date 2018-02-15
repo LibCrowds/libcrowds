@@ -2,7 +2,7 @@
   <b-card
     no-body
     class="card-base"
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
     <b-row
       slot="header"
