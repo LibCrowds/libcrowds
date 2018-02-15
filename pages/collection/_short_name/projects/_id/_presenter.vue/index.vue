@@ -2,6 +2,7 @@
   <component
     :is="presenter"
     :project="project"
+    :template="template"
     :collection="collection"
     :tasks="tasks"
     @submit="onSubmit"
@@ -36,10 +37,36 @@ export default {
   },
 
   async asyncData ({ params, app, error, store }) {
+    let project = null
     return app.$axios.$get(`/api/project/${params.id}`).then(data => {
-      store.dispatch('UPDATE_CURRENT_PROJECT', data)
+      project = data
+      return app.$axios.$get(`/api/user/`, {
+        params: {
+          info: {
+            templates: [
+              {
+                id: project.info.template_id
+              }
+            ]
+          }
+        }
+      })
+    }).then(data => {
+
+      // Get the project's template
+      let template = null
+      try {
+        template = data.info.templates.filter(tmpl => {
+          return tmpl.id === project.info.template_id
+        })[0]
+      } catch (err) {
+        console.warn('Project template not found')
+      }
+
+      store.dispatch('UPDATE_CURRENT_PROJECT', project)
       return {
-        project: data
+        project: project,
+        template: template
       }
     }).catch(err => {
       error(err)
