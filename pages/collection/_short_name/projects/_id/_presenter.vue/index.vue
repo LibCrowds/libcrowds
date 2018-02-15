@@ -40,6 +40,7 @@ export default {
     let project = null
     return app.$axios.$get(`/api/project/${params.id}`).then(data => {
       project = data
+      console.log(project)
       return app.$axios.$get(`/api/user/`, {
         params: {
           info: {
@@ -52,8 +53,6 @@ export default {
         }
       })
     }).then(data => {
-
-      // Get the project's template
       let template = null
       try {
         template = data.info.templates.filter(tmpl => {
