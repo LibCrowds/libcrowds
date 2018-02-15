@@ -17,6 +17,7 @@
         :title="collection.name"
         :key="collection.id">
         <projects-table
+          restricted
           :ref="`table-${index}`"
           :filter="filter"
           :filter-by="filterBy"
@@ -68,12 +69,6 @@ export default {
   },
 
   computed: {
-    searchParams () {
-      return this.$store.state.currentUser.admin
-        ? {}
-        : { owner_id: this.$store.state.currentUser.id }
-    },
-
     collections () {
       const published = this.$store.state.publishedCollections
       const collections = JSON.parse(JSON.stringify(published))

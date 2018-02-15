@@ -104,6 +104,10 @@ export default {
     filterBy: {
       type: String,
       default: null
+    },
+    restricted: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -119,12 +123,31 @@ export default {
       return fieldsCopy
     },
 
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
     filteredItems () {
-      if (!this.filter || !this.filterBy) {
-        return this.items
+      let filtered = JSON.parse(JSON.stringify(this.items))
+
+      if (this.restricted && this.currentUser.admin) {
+        filtered = filtered.filter(project => {
+          console.log(project, this.currentUser.id)
+          return (
+            project.owner_id === this.currentUser.id ||
+            (
+              project.info.hasOwnProperty('owners_ids') &&
+              project.info.owners_ids.indexOf(this.currentUser.id) > -1
+            )
+          )
+        })
       }
 
-      return this.items.filter(item => {
+      if (!this.filter || !this.filterBy) {
+        return filtered
+      }
+
+      return filtered.filter(item => {
         const value = this.filter.toUpperCase()
         const cell = item[this.filterBy]
         return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
