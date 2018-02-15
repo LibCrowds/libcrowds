@@ -122,7 +122,7 @@
             </no-ssr>
           </div>
 
-          <!-- Shelfmark Form -->
+          <!-- Reference Form -->
           <b-card-body
             v-show="stage == 'submit'"
             :bg-variant="darkMode ? 'dark' : 'light'"
@@ -142,8 +142,8 @@
             <vue-form-generator
               ref="smform"
               class="form-container"
-              :schema="shelfmarkForm.schema"
-              :model="shelfmarkForm.model">
+              :schema="referenceForm.schema"
+              :model="referenceForm.model">
             </vue-form-generator>
           </b-card-body>
 
@@ -243,18 +243,18 @@ export default {
           ]
         }
       },
-      shelfmarkForm: {
+      referenceForm: {
         model: {
-          'shelfmark': null
+          'reference': null
         },
         schema: {
           fields: [
             {
-              model: 'shelfmark',
-              label: 'Shelfmark',
+              model: 'reference',
+              label: 'Reference',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Enter the shelfmark',
+              placeholder: 'Enter the reference',
               required: true,
               validator: VueFormGenerator.validators.string
             }
@@ -327,7 +327,7 @@ export default {
       if (!this.searchQuery && !this.selectedRecord) {
         return this.searchForm
       } else {
-        return this.shelfmarkForm
+        return this.referenceForm
       }
     }
   },
@@ -481,8 +481,8 @@ export default {
       }).then(result => {
         if (result) {
           this.submit({
-            oclc: '',
-            shelfmark: '',
+            control_number: '',
+            reference: '',
             form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
@@ -499,8 +499,8 @@ export default {
         this.buildQuery()
       } else if (this.stage === 'submit' && this.$refs.smform.validate()) {
         this.submit({
-          oclc: this.selectedRecord.controlNumber,
-          shelfmark: this.shelfmarkForm.model.shelfmark,
+          control_number: this.selectedRecord.controlNumber,
+          reference: this.referenceForm.model.reference,
           form: this.searchForm.model,
           comments: this.$refs.comments.value
         })
@@ -546,7 +546,7 @@ export default {
       this.selectedRecord = null
       this.alert = null
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
-      this.shelfmarkForm.model.shelfmark = null
+      this.referenceForm.model.reference = null
       this.$refs.comments.value = ''
     },
 
