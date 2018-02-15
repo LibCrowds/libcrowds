@@ -49,7 +49,8 @@ export default {
       store.dispatch('UPDATE_CURRENT_COLLECTION', collectionData[0])
       return app.$axios.$get('/api/project', {
         params: {
-          id: params.id
+          id: params.id,
+          all: 1
         }
       })
     }).then(projectData => {
