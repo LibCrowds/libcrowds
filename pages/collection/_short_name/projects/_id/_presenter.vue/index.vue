@@ -64,7 +64,7 @@ export default {
           info: {
             templates: [
               {
-                id: projectData.info.template_id
+                id: projectData[0].info.template_id
               }
             ]
           }
