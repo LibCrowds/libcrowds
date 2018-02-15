@@ -1,9 +1,9 @@
 <template>
   <component
     :is="presenter"
-    :project="project"
-    :template="template"
-    :collection="collection"
+    :project="currentProject"
+    :template="currentTemplate"
+    :collection="currentCollection"
     :tasks="tasks"
     @submit="onSubmit"
     @taskliked="onTaskLiked">
@@ -36,53 +36,73 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error, store }) {
-    let project = null
-    return app.$axios.$get(`/api/project/${params.id}`).then(data => {
-      project = data
-      console.log(project)
+  fetch ({ params, app, error, store }) {
+    return app.$axios.$get('/api/category', {
+      params: {
+        short_name: params.short_name
+      }
+    }).then(collectionData => {
+      if (!collectionData || collectionData.length !== 1) {
+        error({ statusCode: 404 })
+        return
+      }
+      store.dispatch('UPDATE_CURRENT_COLLECTION', collectionData[0])
+      return app.$axios.$get('/api/project', {
+        params: {
+          id: params.id
+        }
+      })
+    }).then(projectData => {
+      if (!projectData || projectData.length !== 1) {
+        error({ statusCode: 404 })
+        return
+      }
+      store.dispatch('UPDATE_CURRENT_PROJECT', projectData[0])
       return app.$axios.$get(`/api/user/`, {
         params: {
           info: {
             templates: [
               {
-                id: project.info.template_id
+                id: projectData.info.template_id
               }
             ]
           }
         }
       })
-    }).then(data => {
+    }).then(templateData => {
       let template = null
       try {
-        template = data.info.templates.filter(tmpl => {
-          return tmpl.id === project.info.template_id
+        template = templateData.info.templates.filter(tmpl => {
+          return tmpl.id === store.state.currentProject.info.template_id
         })[0]
       } catch (err) {
         console.warn('Project template not found')
       }
-
-      store.dispatch('UPDATE_CURRENT_PROJECT', project)
-      return {
-        project: project,
-        template: template
-      }
+      store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
     }).catch(err => {
       error(err)
     })
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
+    currentProject () {
+      return this.$store.state.currentProject
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
     title () {
-      return this.project.name
+      return this.currentProject.name
     },
 
     description () {
-      return this.project.description
+      return this.currentProject.description
     },
 
     presenter () {
@@ -90,7 +110,7 @@ export default {
         'iiif-annotation': IIIFAnnotationPresenter,
         'z3950': Z3950Presenter
       }
-      return presenters[this.collection.info.presenter]
+      return presenters[this.currentCollection.info.presenter]
     },
 
     currentUser () {
@@ -103,7 +123,7 @@ export default {
      * Load the next set of tasks.
      */
     loadTask () {
-      const url = `/api/project/${this.project.id}/newtask`
+      const url = `/api/project/${this.currentProject.id}/newtask`
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
           this.handleCompletion()
@@ -119,11 +139,11 @@ export default {
      * Handle no tasks remaining.
      */
     handleCompletion () {
-      const msg = this.project.overall_progress === 100
-        ? this.collection.info.celebrations.project
-        : this.collection.info.celebrations.user
+      const msg = this.currentProject.overall_progress === 100
+        ? this.currentCollection.info.celebrations.currentProject
+        : this.currentCollection.info.celebrations.user
       this.$confetti.start({
-        shape: this.collection.info.celebrations.confetti
+        shape: this.currentCollection.info.celebrations.confetti
       })
       this.$swal({
         html: marked(msg)
@@ -136,7 +156,7 @@ export default {
       this.$router.push({
         name: 'collection-short_name-projects',
         params: {
-          short_name: this.collection.short_name
+          short_name: this.currentCollection.short_name
         }
       })
     },
@@ -172,7 +192,7 @@ export default {
      * Show notifications depending on user progress.
      */
     trackUserProgress () {
-      const url = `/api/project/${this.project.short_name}/userprogress`
+      const url = `/api/project/${this.currentProject.short_name}/userprogress`
       const signinUrl = this.$router.resolve({
         name: 'account-signin',
         query: {
@@ -232,8 +252,8 @@ export default {
         if (this.$ga) {
           this.$ga.event({
             eventCategory: 'Contributions',
-            eventAction: this.project.name,
-            eventLabel: this.collection.name,
+            eventAction: this.currentProject.name,
+            eventLabel: this.currentCollection.name,
             eventValue: 1
           })
         }
