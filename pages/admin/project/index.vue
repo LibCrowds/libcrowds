@@ -13,7 +13,7 @@
     <b-tabs card @input="onTabChange">
       <b-tab
         no-body
-        v-for="(collection, index) in publishedCollections"
+        v-for="(collection, index) in collections"
         :title="collection.name"
         :key="collection.id">
         <projects-table
@@ -74,8 +74,15 @@ export default {
         : { owner_id: this.$store.state.currentUser.id }
     },
 
-    publishedCollections () {
-      return this.$store.state.publishedCollections
+    collections () {
+      const published = this.$store.state.publishedCollections
+      const collections = JSON.parse(JSON.stringify(published))
+      collections.push({
+        id: 'draft',
+        name: 'Draft',
+        short_name: 'draft'
+      })
+      return collections
     }
   },
 
