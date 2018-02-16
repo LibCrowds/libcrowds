@@ -259,9 +259,10 @@ export default {
     }
   }
 
-  // Remove after https://github.com/LibCrowds/libcrowds-viewer/issues/284
-    .lv-modal .lv-modal-body svg {
-      margin: 0;
+  .lv-modal .lv-modal-body {
+    img {
+      max-width: 100%;
+    }
   }
 }
 </style>
