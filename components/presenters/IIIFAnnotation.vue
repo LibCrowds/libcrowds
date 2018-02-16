@@ -2,7 +2,7 @@
   <div class="iiif-annotation-presenter">
 
     <libcrowds-viewer
-      v-if="taskOpts.length"
+      v-if="tasks.length && taskOpts.length"
       :confirm-on-submit="false"
       :buttons="buttons"
       :task-opts="taskOpts"
@@ -43,6 +43,12 @@
       <span slot="help" v-html="help"></span>
 
     </libcrowds-viewer>
+
+    <p class="mb-0 text-white d-flex align-items-center
+      justify-content-center h-100" v-else>
+      Loading...
+    </p>
+
   </div>
 </template>
 
@@ -75,6 +81,10 @@ export default {
     tasks: {
       type: Array,
       required: true
+    },
+    template: {
+      type: Object,
+      required: true
     }
   },
 
@@ -101,7 +111,6 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-
         return opts
       })
     },
@@ -251,8 +260,8 @@ export default {
   }
 
   // Remove after https://github.com/LibCrowds/libcrowds-viewer/issues/284
-  .lv-modal .lv-modal-body svg {
-    margin: 0;
+    .lv-modal .lv-modal-body svg {
+      margin: 0;
   }
 }
 </style>
