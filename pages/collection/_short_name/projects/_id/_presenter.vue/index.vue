@@ -71,7 +71,7 @@ export default {
         }
       })
     }).then(templateData => {
-      let template = null
+      let template = {}
       try {
         template = templateData[0].info.templates.filter(tmpl => {
           return tmpl.id === store.state.currentProject.info.template_id
