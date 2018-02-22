@@ -55,7 +55,7 @@ export default {
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                hint: 'This appears on the project cards shown on the main ' +
+                hint: 'Appears on the project card shown on the main ' +
                   'projects page'
               }
             ]
