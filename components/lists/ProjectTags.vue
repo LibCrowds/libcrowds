@@ -36,8 +36,12 @@ export default {
      *   The tag type
      */
     getTagStyle (type) {
-      let color = '#909090'
-      if (!isEmpty(this.collection) && this.collection.info.tags[type]) {
+      let color = this.darkMode ? '#868e96' : '#909090'
+      if (
+        !this.darkMode &&
+        !isEmpty(this.collection) &&
+        this.collection.info.tags[type]
+      ) {
         color = this.collection.info.tags[type].color
       }
       return {
