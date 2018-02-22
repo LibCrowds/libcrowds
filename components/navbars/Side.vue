@@ -21,6 +21,7 @@
             exact
             :key="index"
             :to="item.link"
+            :active-class="item.activeClass"
             @click="$emit('itemclick', item.link)">
             {{ item.label }}
           </b-nav-item>
@@ -122,6 +123,7 @@ export default {
       items['Collections'] = this.publishedCollections.map(coll => {
         return {
           label: coll.name,
+          activeClass: 'active-unstyled',
           link: {
             name: 'collection-short_name',
             params: {
@@ -377,7 +379,7 @@ export default {
         background-color: rgba($gray-600, 0.2);
       }
 
-      &.active {
+      &.active:not(.active-unstyled) {
         color: $blue;
       }
     }
