@@ -12,7 +12,7 @@ export default function ({ store, route, redirect, error }) {
     redirect(`/account/signin?next=${route.path}`)
   } else if (!currentUser.admin && !currentUser.name === name) {
     error({
-      message: 'Forbidden',
+      message: 'Sorry, access to this page is restricted.',
       statusCode: 403
     })
   }
