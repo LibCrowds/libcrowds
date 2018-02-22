@@ -11,7 +11,6 @@
       v-else
       submit-text="Update"
       :form="form">
-
       <div slot="bottom" class="d-flex form-group mt-1">
         <no-ssr>
           <toggle-button
@@ -150,7 +149,7 @@ export default {
 
   data () {
     return {
-      title: 'Update Analysis Rules',
+      title: 'Update Template Analysis',
       description: `Edit the project template's analysis rules.`
     }
   },

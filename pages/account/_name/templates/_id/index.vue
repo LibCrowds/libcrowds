@@ -47,15 +47,15 @@ export default {
                 label: 'Name',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'A name for the template (e.g. Transcribe Titles)'
+                hint: 'A name for the template.'
               },
               {
                 model: 'description',
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'This appears on the project cards that are ' +
-                  'shown on the main projects page'
+                hint: 'This appears on the project cards shown on the main ' +
+                  'projects page'
               }
             ]
           }

@@ -1,79 +1,32 @@
 <template>
   <card-base :title="title" :description="description">
     <p slot="guidance">
-      {{ localConfig.brand }} projects are essentially a sets of similar
-      tasks, for example, to transcribe all of the titles in a group of
-      images. The form below can be used to configure the task for all projects
-      generated using this template. The options shown will vary depending on
-      the task presenter chosen for the collection, which in this case is the
-      <strong>{{ presenter }}</strong> task presenter.
+      {{ localConfig.brand }} projects are sets of similar tasks, for example,
+      to transcribe all of the titles in a group of images. Use the form below
+      to configure the task for all projects generated using this template. The
+      options shown will vary depending on the task presenter chosen for the
+      collection, which in this case is the <strong>{{ presenter }}</strong>
+      task presenter.
     </p>
 
-    <p slot="guidance">
-      Use the form below to configure your task as follows:
-    </p>
-
-    <p slot="guidance" v-if="presenter === 'iiif-annotation'">
-      <ol>
-        <li>
-          <strong>Specify a tag:</strong> This is used to group the annotations
-          produced by each task. This tag must be unique (i.e. not already in
-          use by another template) and use lower case characters, numbers or
-          underscores.
-        </li>
-        <li>
-          <strong>Enter an objective:</strong> This is shown at the top of the
-          task sidebar and is always visible to volunteers.
-        </li>
-        <li>
-          <strong>Provide additional guidance:</strong> This is shown directly
-          under the objective and will be visible to users at all times. It
-          is best to keep this brief. More detailed guidance can be provided
-          via the tutorial.
-        </li>
-        <li>
-          <strong>Select a mode:</strong> There are two modes, select and
-          transcribe. Select mode is used to mark up areas of an image and
-          transcribe mode is used to transcribe specified fields.
-          (previously marked up, or otherwise).
-        </li>
-        <li>
-          <strong>Define the form fields:</strong> If transcribe mode is
-          selected, you will be given additional options to configure the
-          form that is shown to volunteers.
-        </li>
-      </ol>
-    </p>
-
-    <p slot="guidance" v-if="presenter === 'z3950'">
-      <ol>
-        <li>
-          <strong>Select a database:</strong> This is the Z39.50 database that
-          will be searched for matching records.
-        </li>
-        <li>
-          <strong>Enter trusted institution codes:</strong>: These are the
-          institutions that you trust to have created or transcribed the
-          records. The search results will be limited to those with one of the
-          given institution codes in MARC fields 040$a or 040$c.
-        </li>
-      </ol>
-    </p>
+    <hr>
 
     <pybossa-form
       submit-text="Update"
       :form="form">
-
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
-          <label class="mb-0">
-            <strong>Fields Schema</strong>
-          </label>
+          <b-form-group label="Fields Schema">
+            <div slot="description">
+              Configure the transcription form shown to volunteers.
+            </div>
+          </b-form-group>
           <b-btn
             variant="success"
             v-b-modal="addFormFieldModalId">
             Add Field
           </b-btn>
+
         </div>
         <b-table
           responsive
@@ -111,9 +64,26 @@
       </div>
 
       <div v-if="showInstitutionCodesInput" slot="bottom">
-        <label class="my-1">
-          <strong>Institution Codes</strong>
-        </label>
+        <b-form-group label="Institution Codes">
+          <b-input-group class="mt-1">
+            <b-form-input
+              ref="institution-code-input"
+              placeholder="Enter a MARC institution code">
+            </b-form-input>
+            <b-input-group-append>
+              <b-btn
+                variant="success"
+                @click="addInstitutionCode">
+                Add
+              </b-btn>
+            </b-input-group-append>
+          </b-input-group>
+          <div slot="description">
+            The institutions that you trust to have created or transcribed
+            quality records. The search results will be limited to those with
+            one of the given institution codes in MARC fields 040$a or 040$c.
+          </div>
+        </b-form-group>
         <b-table
           responsive
           striped
@@ -133,20 +103,6 @@
             </b-btn>
           </template>
         </b-table>
-
-        <b-input-group class="mt-1">
-          <b-form-input
-            ref="institution-code-input"
-            placeholder="Enter a MARC institution code">
-          </b-form-input>
-          <b-input-group-append>
-            <b-btn
-              variant="success"
-              @click="addInstitutionCode">
-              Add
-            </b-btn>
-          </b-input-group-append>
-        </b-input-group>
       </div>
     </pybossa-form>
 
@@ -178,7 +134,7 @@ export default {
 
   data () {
     return {
-      title: 'Update Template Task Details',
+      title: 'Update Template Task',
       description: `Edit the project template's task details.`,
       localConfig: localConfig,
       addFormFieldModalId: 'add-form-field-modal',
@@ -222,24 +178,23 @@ export default {
             label: 'Tag',
             type: 'input',
             inputType: 'text',
-            placeholder: 'Used to identify this set of annotations ' +
-              '(e.g. title)'
+            hint: 'Used to group the annotations.'
           },
           {
             model: 'objective',
             label: 'Objective',
             type: 'input',
             inputType: 'text',
-            placeholder: 'The main objective of a task (e.g. Transcribe ' +
-              'the title)'
+            hint: 'Shown at the top of the task sidebar, this is always ' +
+              'visible to volunteers.'
           },
           {
             model: 'guidance',
             label: 'Guidance',
             type: 'textArea',
             rows: 3,
-            placeholder: 'Short additional guidance that appears underneath' +
-              ' the objective'
+            hint: 'Shown directly under the objective, this is always ' +
+              'visible to volunteers (brief guidance works best).'
           },
           {
             model: 'mode',
@@ -251,7 +206,9 @@ export default {
             ],
             selectOptions: {
               hideNoneSelectedText: true
-            }
+            },
+            hint: 'Select mode is used to mark up areas of an image, ' +
+              'whereas Transcribe mode is used to transcribe specified fields.'
           }
         ],
         'z3950': [
@@ -261,7 +218,8 @@ export default {
             type: 'select',
             values: data.z3950_databases.map(db => {
               return { id: db[0], name: db[1] }
-            })
+            }),
+            hint: 'The Z39.50 database that to search for matching records.'
           }
         ]
       }

@@ -3,7 +3,8 @@
 .form-base.form-container {
   border: none;
 
-  label {
+  label,
+  .col-form-legend {
     font-weight: 600;
     font-size: $font-size-sm;
   }
@@ -25,8 +26,9 @@
   .form-group {
     margin-bottom: 2rem;
 
-    .hint {
-      margin-top: 0.5rem;
+    .hint,
+    .form-text {
+      margin-top: 0.25rem;
       font-size: $font-size-sm;
       color: $text-muted;
     }

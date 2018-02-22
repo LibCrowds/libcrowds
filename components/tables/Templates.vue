@@ -30,7 +30,7 @@
             <strong>{{ key }}:</strong>
             {{ tmpl.item.project[key] }}
           </li>
-          <h5 class="mt-3">Task Details</h5>
+          <h5 class="mt-3">Task</h5>
           <template v-if="tmpl.item.rules">
             <li v-for="key in Object.keys(tmpl.item.task)" :key="key">
               <strong>{{ key }}:</strong>

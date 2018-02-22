@@ -69,7 +69,7 @@ export default {
             }
           },
           {
-            label: 'Task Details',
+            label: 'Task',
             link: {
               name: 'account-name-templates-id-task',
               params: {
@@ -79,7 +79,7 @@ export default {
             }
           },
           {
-            label: 'Analysis Rules',
+            label: 'Analysis',
             link: {
               name: 'account-name-templates-id-rules',
               params: {
