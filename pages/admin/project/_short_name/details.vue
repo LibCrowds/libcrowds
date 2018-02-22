@@ -42,7 +42,7 @@ export default {
 
   data () {
     return {
-      title: 'Details',
+      title: 'Core Details',
       description: 'Configure the core details for the project'
     }
   },

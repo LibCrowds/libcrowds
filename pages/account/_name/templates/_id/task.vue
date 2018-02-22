@@ -8,9 +8,7 @@
       collection, which in this case is the <strong>{{ presenter }}</strong>
       task presenter.
     </p>
-
     <hr>
-
     <pybossa-form
       submit-text="Update"
       :form="form">

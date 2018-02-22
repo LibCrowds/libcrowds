@@ -25,7 +25,7 @@ export default {
       if (!isEmpty(this.currentCollection)) {
         items[this.currentCollection.name] = [
           {
-            label: 'Details',
+            label: 'Core Details',
             link: {
               name: 'admin-collection-short_name-details',
               params: {

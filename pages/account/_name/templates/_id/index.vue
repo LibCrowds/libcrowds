@@ -5,6 +5,7 @@
       will not apply to projects that have already been created from this
       template.
     </p>
+    <hr>
     <pybossa-form
       submit-text="Update"
       :form="form">

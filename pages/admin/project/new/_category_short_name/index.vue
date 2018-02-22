@@ -147,6 +147,7 @@
             <strong>Create</strong>.
           </p>
         </b-card-body>
+        <hr>
         <pybossa-form
           :confirmation="confirmation"
           submit-text="Create"

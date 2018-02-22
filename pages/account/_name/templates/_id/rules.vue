@@ -1,5 +1,11 @@
 <template>
   <card-base :title="title" :description="description">
+    <p slot="guidance">
+      The form below can be used to configure the analysis process that runs
+      when each task is completed. The output of this analysis process is used
+      to update the final result for the task.
+    </p>
+    <hr>
 
     <b-card-body v-if="!currentTemplate.task">
       <b-alert show variant="warning" class="mb-0">

@@ -54,7 +54,7 @@ export default {
     rootNavItems () {
       return [
         {
-          label: 'Details',
+          label: 'Core Details',
           link: {
             name: 'admin-project-short_name-details',
             params: {

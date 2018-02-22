@@ -4,6 +4,7 @@
       Use the form below to update the tutorial shown when the project first
       loads.
     </p>
+    <hr>
     <pybossa-form
       submit-text="Update"
       :form="form">
