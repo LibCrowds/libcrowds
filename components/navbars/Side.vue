@@ -24,6 +24,12 @@
             :active-class="item.activeClass"
             @click="$emit('itemclick', item.link)">
             {{ item.label }}
+            <b-badge
+              v-if="item.badge && item.badge.value"
+              pill
+              :variant="item.badge.variant">
+              {{ item.badge.value }}
+            </b-badge>
           </b-nav-item>
           <li
             v-if="index !== sideNavItems.length"
@@ -216,14 +222,22 @@ export default {
             }
           },
           {
-            label: 'Templates Pending',
+            label: 'Pending Templates ',
             link: {
               name: 'admin-site-templates'
+            },
+            badge: {
+              variant: 'primary',
+              value: this.nPendingTemplates ? this.nPendingTemplates : null
             }
           }
         ]
       }
       return items
+    },
+
+    nPendingTemplates () {
+      return this.$store.state.nPendingTemplates
     }
   },
 
@@ -378,7 +392,10 @@ export default {
       padding: 0.5rem 1.25rem;
       width: 100%;
       color: inherit;
-      display: block;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
 
       &:hover {
         text-decoration: none;

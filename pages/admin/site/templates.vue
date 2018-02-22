@@ -34,7 +34,7 @@ export default {
 
   data () {
     return {
-      title: 'Templates Pending',
+      title: 'Pending Templates',
       description: 'Check templates pending approval.',
       tableFields: {
         name: {
@@ -104,6 +104,7 @@ export default {
         }
       }).then(data => {
         console.log(data)
+        this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     },
 
@@ -129,6 +130,7 @@ export default {
         }
       }).then(data => {
         console.log(data)
+        this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     }
   }
