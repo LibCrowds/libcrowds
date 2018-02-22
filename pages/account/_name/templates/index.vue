@@ -23,7 +23,7 @@
     <b-tabs card>
       <b-tab
         no-body
-        v-for="collection in publishedCollections"
+        v-for="collection in collections"
         :title="collection.name"
         :key="collection.id">
         <templates-table
@@ -47,6 +47,7 @@
         </templates-table>
       </b-tab>
     </b-tabs>
+
   </card-base>
 </template>
 
@@ -68,10 +69,20 @@ export default {
   },
 
   asyncData ({ app, params, error }) {
-    const endpoint = `/lc/users/${params.name}/templates`
-    return app.$axios.$get(endpoint).then(data => {
+    const tmplEndpoint = `/lc/users/${params.name}/templates`
+    return Promise.all([
+      app.$axios.$get('/api/category', {
+        params: {
+          limit: 100,
+          orderby: 'created',
+          desc: 1
+        }
+      }),
+      app.$axios.$get(tmplEndpoint)
+    ]).then(([categoriesData, tmplData]) => {
       return {
-        templates: data.templates.map(tmpl => {
+        collections: categoriesData,
+        templates: tmplData.templates.map(tmpl => {
           tmpl._showDetails = false
           return tmpl
         })
@@ -87,10 +98,6 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    publishedCollections () {
-      return this.$store.state.publishedCollections
     }
   },
 

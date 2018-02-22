@@ -50,11 +50,14 @@ export default {
     return Promise.all([
       app.$axios.$get('/api/category', {
         params: {
-          limit: 100
+          limit: 100,
+          orderby: 'created',
+          desc: 1
         }
       }),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
+      tmplData.form.category_id = categoriesData[0].id
       return {
         form: {
           endpoint: tmplEndpoint,
@@ -66,7 +69,7 @@ export default {
                 model: 'category_id',
                 label: 'Collection',
                 type: 'select',
-                values: store.state.publishedCollections,
+                values: categoriesData,
                 selectOptions: {
                   hideNoneSelectedText: true
                 },
