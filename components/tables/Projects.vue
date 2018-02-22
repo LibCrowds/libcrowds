@@ -49,34 +49,13 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 
 export default {
   data () {
     return {
       items: [],
-      sortModel: {},
-      defaultFields: {
-        name: {
-          label: 'Name'
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        },
-        n_tasks: {
-          label: 'Tasks',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        }
-      }
+      sortModel: {}
     }
   },
 
@@ -91,7 +70,28 @@ export default {
     },
     fields: {
       type: Object,
-      default: () => ({})
+      default: () => {
+        return {
+          name: {
+            label: 'Name'
+          },
+          overall_progress: {
+            label: 'Progress',
+            class: 'text-center d-none d-md-table-cell',
+            sortable: true
+          },
+          n_tasks: {
+            label: 'Tasks',
+            class: 'text-center d-none d-xl-table-cell',
+            sortable: true
+          },
+          created: {
+            label: 'Created',
+            class: 'text-center d-none d-xl-table-cell',
+            sortable: true
+          }
+        }
+      }
     },
     outlined: {
       type: Boolean,
@@ -109,7 +109,7 @@ export default {
 
   computed: {
     mergedFields () {
-      const fieldsCopy = merge({}, this.defaultFields, this.fields)
+      const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {
         fieldsCopy.actions = {
           label: 'Actions',
