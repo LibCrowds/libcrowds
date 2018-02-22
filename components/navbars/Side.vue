@@ -348,6 +348,13 @@ export default {
   #side-nav-items {
     height: calc(100vh - #{$top-navbar-height});
     overflow-y: auto;
+    right: 0;
+    position: absolute;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      width: $sidebar-width;
+    }
   }
 
   .nav-item {
