@@ -9,7 +9,14 @@
       task presenter.
     </p>
     <hr>
+    <b-card-body v-if="!presenter">
+      <b-alert show variant="warning" class="mb-0">
+        This collection has an invalid task presenter and therefore the task
+        template cannot be updated. Please contact and administrator.
+      </b-alert>
+    </b-card-body>
     <pybossa-form
+      v-else
       submit-text="Update"
       :form="form">
       <div v-if="showFieldsSchemaInput" slot="bottom">
@@ -24,7 +31,6 @@
             v-b-modal="addFormFieldModalId">
             Add Field
           </b-btn>
-
         </div>
         <b-table
           responsive
@@ -165,10 +171,16 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error }) {
+  asyncData ({ app, params, error, redirect }) {
     const name = params.name
     const endpoint = `/lc/users/${name}/templates/${params.id}/task`
     return app.$axios.$get(endpoint).then(data => {
+      if (!('presenter' in data)) {
+        return {
+          presenter: null
+        }
+      }
+
       const fields = {
         'iiif-annotation': [
           {
@@ -222,15 +234,24 @@ export default {
         ]
       }
 
+      let schema = {}
+      try {
+        schema = {
+          fields: fields[data.presenter]
+        }
+      } catch (err) {
+        return {
+          presenter: null
+        }
+      }
+
       return {
         presenter: data.presenter,
         form: {
           endpoint: endpoint,
           method: 'post',
           model: data.form,
-          schema: {
-            fields: fields[data.presenter]
-          }
+          schema: schema
         }
       }
     }).catch(err => {
