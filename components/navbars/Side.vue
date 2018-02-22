@@ -214,6 +214,12 @@ export default {
             link: {
               name: 'admin-site-jobs'
             }
+          },
+          {
+            label: 'Templates Pending',
+            link: {
+              name: 'admin-site-templates'
+            }
           }
         ]
       }
