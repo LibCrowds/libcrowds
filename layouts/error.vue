@@ -3,7 +3,7 @@
     <b-container class="my-4 my-lg-5">
       <b-col xl="8" class="mx-auto">
 
-        <card-base :title="`${error.statusCode} Error`">
+        <card-base :title="title">
           <b-card-body>
             <p class="lead my-2 text-center">
               {{ normalisedMessage }}
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import httpStatus from 'http-status'
 import localConfig from '@/local.config'
 import DefaultBase from '@/layouts/bases/Default'
 import CardBase from '@/components/cards/Base'
@@ -38,7 +39,6 @@ export default {
     return {
       localConfig: localConfig,
       messages: {
-        '403': 'Forbidden.',
         '404': 'This page could not be found.',
         '405': 'Method not allowed.',
         '500': 'Uh oh, something\'s broken. We will fix it as soon as we can.'
@@ -58,6 +58,10 @@ export default {
         return this.messages[code]
       }
       return this.error.message
+    },
+
+    title () {
+      return httpStatus[this.error.statusCode]
     }
   }
 }
