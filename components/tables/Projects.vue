@@ -104,10 +104,6 @@ export default {
     filterBy: {
       type: String,
       default: null
-    },
-    restricted: {
-      type: Boolean,
-      default: false
     }
   },
 
@@ -129,19 +125,6 @@ export default {
 
     filteredItems () {
       let filtered = JSON.parse(JSON.stringify(this.items))
-
-      if (this.restricted && this.currentUser.admin) {
-        filtered = filtered.filter(project => {
-          console.log(project, this.currentUser.id)
-          return (
-            project.owner_id === this.currentUser.id ||
-            (
-              project.info.hasOwnProperty('owners_ids') &&
-              project.info.owners_ids.indexOf(this.currentUser.id) > -1
-            )
-          )
-        })
-      }
 
       if (!this.filter || !this.filterBy) {
         return filtered

@@ -34,6 +34,7 @@
 
     <infinite-load
       ref="infiniteload"
+      :all="all"
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
@@ -83,6 +84,10 @@ export default {
     outlined: {
       type: Boolean,
       default: false
+    },
+    all: {
+      type: Boolean,
+      default: true
     }
   },
 

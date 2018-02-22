@@ -16,12 +16,18 @@
         v-for="(collection, index) in collections"
         :title="collection.name"
         :key="collection.id">
-        <projects-table
-          restricted
+
+        <!-- Don't use project-table as we need access to owner details -->
+        <infinite-loading-table
           :ref="`table-${index}`"
+          :all="currentUser.admin"
+          :fields="tableFields"
           :filter="filter"
           :filter-by="filterBy"
-          :collection="collection">
+          :search-params="{
+            category_id: collection.id
+          }"
+          domain-object="project">
           <template slot="action" scope="project">
             <b-btn
               variant="success"
@@ -35,18 +41,49 @@
               Open
             </b-btn>
           </template>
+        </infinite-loading-table>
+      </b-tab>
+
+      <!-- Draft projects -->
+      <b-tab
+        no-body
+        title="Draft"
+        key="draft">
+        <projects-table
+          :ref="`table-${collections.length}`"
+          :filter="filter"
+          :filter-by="filterBy"
+          :collection="{
+            id: 'draft',
+            name: 'Draft',
+            short_name: 'draft'
+          }">
+          <template slot="action" scope="project">
+            <b-btn
+              :disabled="currentUser.admin"
+              variant="success"
+              size="sm"
+              :to="{
+                name: 'admin-project-short_name-details',
+                params: {
+                  short_name: project.item.short_name
+                }
+              }">
+              {{ currentUser.admin ? 'Open' : 'Pending Approval' }}
+            </b-btn>
+          </template>
         </projects-table>
       </b-tab>
-    </b-tabs>
 
+    </b-tabs>
   </card-base>
 </template>
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
-import CardBase from '@/components/cards/Base'
 import ProjectsTable from '@/components/tables/Projects'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
@@ -58,7 +95,13 @@ export default {
       title: 'Open Project',
       description: 'Manage your projects',
       filter: null,
-      filterBy: 'name'
+      filterBy: 'name',
+      tableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        }
+      }
     }
   },
 
@@ -72,12 +115,11 @@ export default {
     collections () {
       const published = this.$store.state.publishedCollections
       const collections = JSON.parse(JSON.stringify(published))
-      collections.push({
-        id: 'draft',
-        name: 'Draft',
-        short_name: 'draft'
-      })
       return collections
+    },
+
+    currentUser () {
+      return this.$store.state.currentUser
     }
   },
 
