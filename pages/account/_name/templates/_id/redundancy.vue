@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import VueFormGenerator from 'vue-form-generator'
 import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
@@ -52,17 +53,29 @@ export default {
                 model: 'min_answers',
                 label: 'Minimum Contributions',
                 type: 'input',
-                inputType: 'integer',
+                inputType: 'number',
+                min: 1,
+                max: 10,
                 hint: 'The minimum number of contributions accepted before ' +
-                  'a final result is created.'
+                  'a final result is created.',
+                validator: VueFormGenerator.validators.number
               },
               {
                 model: 'max_answers',
                 label: 'Maximum Contributions',
                 type: 'input',
-                inputType: 'integer',
+                inputType: 'number',
                 hint: 'The maximum number of contributions accepted before ' +
-                'a task is abandoned.'
+                'a task is abandoned.',
+                validator: (value, field, model) => {
+                  if (value < model.min_answers) {
+                    return 'Must be greater than the minimum contributions'
+                  } else if (value < 1) {
+                    return 'The number is too small! Minimum: 1'
+                  } else if (value > 30) {
+                    return 'The number is too big! Maximum: 30'
+                  }
+                }
               }
             ]
           }
