@@ -33,7 +33,7 @@ export default {
   },
 
   asyncData ({ app, params, error, store }) {
-    const endpoint = `/libcrowds/users/${params.name}/templates/${params.id}`
+    const endpoint = `/lc/users/${params.name}/templates/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
         form: {

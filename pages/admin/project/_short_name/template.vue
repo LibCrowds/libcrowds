@@ -52,7 +52,7 @@ export default {
   },
 
   asyncData ({ params, app, error }) {
-    return app.$axios.$get(`/libcrowds/templates/`).then(data => {
+    return app.$axios.$get(`/lc/templates/`).then(data => {
       return {
         templates: data.templates.map(tmpl => {
           tmpl._showDetails = false
@@ -148,7 +148,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           const presenter = this.collection.info.presenter
-          return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+          return this.$axios.$post(`/lc/analysis/${presenter}`, {
             all: 1,
             project_short_name: this.project.short_name
           })

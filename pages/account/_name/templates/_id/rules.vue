@@ -157,7 +157,7 @@ export default {
 
   asyncData ({ app, params, error }) {
     const name = params.name
-    const endpoint = `/libcrowds/users/${name}/templates/${params.id}/rules`
+    const endpoint = `/lc/users/${name}/templates/${params.id}/rules`
     return app.$axios.$get(endpoint).then(data => {
       return {
         presenter: data.presenter,

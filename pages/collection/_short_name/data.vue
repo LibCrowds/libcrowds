@@ -174,7 +174,7 @@ export default {
   },
 
   asyncData ({ params, app, error }) {
-    const endpoint = `/libcrowds/categories/${params.short_name}/volumes`
+    const endpoint = `/lc/categories/${params.short_name}/volumes`
     return app.$axios.$get(endpoint).then(data => {
       return {
         volumes: data.volumes.map(volume => {
@@ -221,7 +221,7 @@ export default {
 
     downloadVolumeEndpoint () {
       if (this.downloadVolume) {
-        return `/libcrowds/categories/${this.collection.short_name}/volumes/` +
+        return `/lc/categories/${this.collection.short_name}/volumes/` +
           `${this.downloadVolume.id}/export`
       }
     }

@@ -44,7 +44,7 @@ export default {
   },
 
   asyncData ({ app, params, error, store }) {
-    const tmplEndpoint = `/libcrowds/users/${params.name}/templates`
+    const tmplEndpoint = `/lc/users/${params.name}/templates`
     return Promise.all([
       app.$axios.$get('/api/category', {
         params: {

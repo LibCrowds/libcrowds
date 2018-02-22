@@ -46,7 +46,7 @@ export default {
   },
 
   asyncData ({ app }) {
-    return app.$axios.$get(`/libcrowds/templates/`).then(data => {
+    return app.$axios.$get(`/lc/templates/`).then(data => {
       return {
         templates: data.templates
       }

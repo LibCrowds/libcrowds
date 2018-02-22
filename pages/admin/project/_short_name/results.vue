@@ -79,7 +79,7 @@ export default {
         showLoaderOnConfirm: true,
         preConfirm: () => {
           const presenter = this.collection.info.presenter
-          return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+          return this.$axios.$post(`/lc/analysis/${presenter}`, {
             all: 1,
             project_short_name: this.project.short_name
           })
@@ -101,7 +101,7 @@ export default {
     analyse (result, evt) {
       evt.target.disabled = true
       const presenter = this.collection.info.presenter
-      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+      return this.$axios.$post(`/lc/analysis/${presenter}`, {
         project_short_name: this.project.short_name,
         result_id: result.id,
         event: 'task_completed'

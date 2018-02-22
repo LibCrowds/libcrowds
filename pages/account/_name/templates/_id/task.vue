@@ -213,7 +213,7 @@ export default {
 
   asyncData ({ app, params, error }) {
     const name = params.name
-    const endpoint = `/libcrowds/users/${name}/templates/${params.id}/task`
+    const endpoint = `/lc/users/${name}/templates/${params.id}/task`
     return app.$axios.$get(endpoint).then(data => {
       const fields = {
         'iiif-annotation': [

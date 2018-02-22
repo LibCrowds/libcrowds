@@ -48,7 +48,7 @@ export default {
   },
 
   asyncData ({ params, app, error }) {
-    const endpoint = `/libcrowds/categories/${params.short_name}/volumes` +
+    const endpoint = `/lc/categories/${params.short_name}/volumes` +
       `/${params.id}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
       data.upload_form.btn = 'Upload'

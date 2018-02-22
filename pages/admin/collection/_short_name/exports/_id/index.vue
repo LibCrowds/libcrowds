@@ -86,7 +86,7 @@ export default {
 
   asyncData ({ app, params, error }) {
     const id = params.id
-    const endpoint = `/libcrowds/categories/${params.short_name}/exports/${id}`
+    const endpoint = `/lc/categories/${params.short_name}/exports/${id}`
     return app.$axios.$get(endpoint).then(data => {
       return {
         templates: data.templates,
