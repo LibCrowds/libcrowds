@@ -17,10 +17,7 @@
       <b-link
         v-if="navbarBrand"
         class="navbar-brand ml-1 mr-2"
-        :to="{
-          name: 'index'
-        }"
-        @click="$emit('itemclick')">
+        @click="onNavbarBrandClick">
         <span>{{ navbarBrand }}</span>
       </b-link>
 
@@ -178,14 +175,36 @@ export default {
 
   methods: {
     /**
-    * Sign the user out.
-    */
+     * Sign the user out.
+     */
     signout () {
       return this.$axios.$get('/account/signout').then(data => {
         this.$store.dispatch('LOGOUT')
         this.$router.push({ name: 'index' })
         this.flash(data)
       })
+    },
+
+    /**
+     * Handle click of the navbar brand.
+     */
+    onNavbarBrandClick () {
+      const micrositeShortName = this.$route.path.startsWith('/collection')
+        ? this.$route.path.replace(/^(\/collection\/)/, '').split('/')[0]
+        : null
+      if (micrositeShortName) {
+        this.$router.push({
+          name: 'collection-short_name',
+          params: {
+            short_name: micrositeShortName
+          }
+        })
+        return
+      }
+      this.$router.push({
+        name: 'index'
+      })
+      this.$emit('itemclick')
     },
 
     /**
