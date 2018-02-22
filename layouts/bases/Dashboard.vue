@@ -19,6 +19,8 @@
         @itemclick="showSideNav = false">
       </top-navbar>
 
+      <slot name="message"></slot>
+
       <main class="container-fluid px-lg-4 py-4">
         <transition name="fade" mode="out-in" appear>
           <nuxt></nuxt>
