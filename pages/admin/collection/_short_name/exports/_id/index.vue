@@ -170,7 +170,7 @@ export default {
      */
     getTemplateName (id) {
       const tmpl = this.templates.filter(tmpl => tmpl.id === id)
-      return tmpl.length ? tmpl[0].project.name : ''
+      return tmpl.length ? tmpl[0].name : ''
     }
   }
 }

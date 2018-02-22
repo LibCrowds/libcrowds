@@ -226,7 +226,6 @@ export default {
       return {
         endpoint: endpoint,
         templates: data.templates.map(tmpl => {
-          tmpl.name = tmpl.project.name
           tmpl._showDetails = false
           return tmpl
         }),
@@ -353,7 +352,7 @@ export default {
       const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
       this.form.schema.fields = fieldsClone.map(field => {
         if (field.model === 'template_id') {
-          field.values = [{ id: template.id, name: template.project.name }]
+          field.values = template
         } else if (field.model === 'volume_id') {
           field.values = []
         }
