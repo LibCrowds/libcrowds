@@ -42,10 +42,7 @@ export default {
               type: 'select',
               label: 'Template',
               model: 'template_id',
-              values: this.templates.map(tmpl => {
-                tmpl.name = tmpl.project.name
-                return tmpl
-              })
+              values: this.templates
             }
           ]
         }

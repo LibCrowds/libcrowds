@@ -149,15 +149,11 @@ export default {
     },
 
     filteredItems () {
-      let items = this.templates.map(tmpl => {
-        tmpl.name = tmpl.project.name
-        tmpl.description = tmpl.project.description
-        return tmpl
-      })
+      let items = this.templates
 
       if (this.collectionId) {
         items = items.filter(item => {
-          return item.project.category_id === this.collectionId
+          return item.category_id === this.collectionId
         })
       }
 
