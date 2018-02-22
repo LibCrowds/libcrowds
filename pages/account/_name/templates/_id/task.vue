@@ -295,9 +295,6 @@ export default {
     },
 
     institutionCodeTableItems () {
-      console.log(this.form.model.institutions, this.form.model.institutions.map(item => {
-        return { code: item }
-      }))
       return this.form.model.institutions.map(item => {
         return { code: item }
       })

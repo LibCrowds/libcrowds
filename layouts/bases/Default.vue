@@ -156,12 +156,10 @@ export default {
      *   The route being navigated to.
      */
     onSidebarItemClick (route) {
-      console.log('itemclick')
       const isDashboard = (
         route.name.startsWith('admin-') ||
         route.name.startsWith('account-name-templates-')
       )
-      console.log('isdashboard', isDashboard)
       if (window.innerWidth < 768) {
         this.showSideNav = false
       } else if (!isDashboard) {
