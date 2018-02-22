@@ -1,5 +1,5 @@
 <template>
-  <div  id="default-layout-base" :class="mainClassObj">
+  <div id="default-layout-base" :class="mainClassObj">
 
     <div id="custom-background" :style="customBgStyle"></div>
 
@@ -8,7 +8,7 @@
       fixed
       :dark="darkMode || forceDarkMode"
       @close="showSideNav = false"
-      @itemclick="onItemClick">
+      @itemclick="onSidebarItemClick">
     </side-navbar>
 
     <div id="app-right">
@@ -149,15 +149,22 @@ export default {
 
   methods: {
     /**
-     * Handle sidebar click, collapsing if not navigating to a dashboard page.
+     * Handle sidebar click.
+     *
+     * Collapse if not navigating to a dashboard page or the screen is small.
      * @param {Object} route
      *   The route being navigated to.
      */
-    onItemClick (route) {
-      if (
-        !route.name.startsWith('admin-') &&
-        !route.name.startsWith('account-name-templates-')
-      ) {
+    onSidebarItemClick (route) {
+      console.log('itemclick')
+      const isDashboard = (
+        route.name.startsWith('admin-') ||
+        route.name.startsWith('account-name-templates-')
+      )
+      console.log('isdashboard', isDashboard)
+      if (window.innerWidth < 768) {
+        this.showSideNav = false
+      } else if (!isDashboard) {
         this.showSideNav = false
       }
     }

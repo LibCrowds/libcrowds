@@ -5,7 +5,8 @@
       v-model="showSideNav"
       :dark="darkMode"
       :nav-items="navItems"
-      @close="showSideNav = false">
+      @close="showSideNav = false"
+      @itemclick="onSidebarItemClick">
     </side-navbar>
 
     <div :class="dashboardClass">
@@ -66,6 +67,21 @@ export default {
       return {
         'dashboard': true,
         'dashboard-dark': this.darkMode
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Handle sidebar click.
+     *
+     * Collapse if the screen is small.
+     * @param {Object} route
+     *   The route being navigated to.
+     */
+    onSidebarItemClick (route) {
+      if (window.innerWidth < 768) {
+        this.showSideNav = false
       }
     }
   }
