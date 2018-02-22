@@ -28,8 +28,7 @@ export default {
   data () {
     return {
       title: 'Update Project Template',
-      description: `Edit the project template's core details.`,
-      processing: false
+      description: `Edit the project template's core details.`
     }
   },
 
