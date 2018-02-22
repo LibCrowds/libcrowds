@@ -7,7 +7,7 @@
       variant="secondary"
       slot="message"
       class="text-center mb-0">
-      This template is currently pending approval
+      This template is currently pending approval.
       <br>
       It can still be updated and, if approved, any updates will be pushed out
       to all projects using the template.
