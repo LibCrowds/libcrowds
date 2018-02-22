@@ -28,7 +28,7 @@
           :key="index"
           exact
           :to="item.link"
-          @click="$emit('itemclick')">
+          @click="$emit('itemclick', item.link)">
           {{ item.label }}
         </b-nav-item>
       </b-navbar-nav>
@@ -192,19 +192,19 @@ export default {
       const micrositeShortName = this.$route.path.startsWith('/collection')
         ? this.$route.path.replace(/^(\/collection\/)/, '').split('/')[0]
         : null
+      let link = {
+        name: 'index'
+      }
       if (micrositeShortName) {
-        this.$router.push({
+        link = {
           name: 'collection-short_name',
           params: {
             short_name: micrositeShortName
           }
-        })
-        return
+        }
       }
-      this.$router.push({
-        name: 'index'
-      })
-      this.$emit('itemclick')
+      this.$router.push(link)
+      this.$emit('itemclick', link)
     },
 
     /**

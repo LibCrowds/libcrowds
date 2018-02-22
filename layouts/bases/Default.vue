@@ -8,7 +8,7 @@
       fixed
       :dark="darkMode || forceDarkMode"
       @close="showSideNav = false"
-      @itemclick="showSideNav = false">
+      @itemclick="onItemClick">
     </side-navbar>
 
     <div id="app-right">
@@ -143,6 +143,22 @@ export default {
         'dark-mode': this.darkMode || this.forceDarkMode,
         'bg-default': !bgImgUrl && !(this.darkMode || this.forceDarkMode),
         'bg-default-dark': !bgImgUrl && (this.darkMode || this.forceDarkMode)
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Handle sidebar click, collapsing if not navigating to a dashboard page.
+     * @param {Object} route
+     *   The route being navigated to.
+     */
+    onItemClick (route) {
+      if (
+        !route.name.startsWith('admin-') &&
+        !route.name.startsWith('account-name-templates-')
+      ) {
+        this.showSideNav = false
       }
     }
   }

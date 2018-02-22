@@ -21,7 +21,7 @@
             exact
             :key="index"
             :to="item.link"
-            @click="$emit('itemclick')">
+            @click="$emit('itemclick', item.link)">
             {{ item.label }}
           </b-nav-item>
           <li
