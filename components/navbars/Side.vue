@@ -361,9 +361,13 @@ export default {
       color: inherit;
       display: block;
 
-      @include hover-focus {
+      &:hover {
         text-decoration: none;
         background-color: rgba($gray-600, 0.2);
+      }
+
+      &.active {
+        color: $blue;
       }
     }
   }
