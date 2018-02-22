@@ -106,12 +106,6 @@ export default {
       return this.$store.state.currentUser
     },
 
-    appRightClass () {
-      return {
-        fixed: this.showSideNav
-      }
-    },
-
     containerClass () {
       return {
         'container-fluid': this.contained
@@ -198,21 +192,8 @@ export default {
   #app-right {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     width: auto;
-  }
-
-  .fixed {
-    height: 100vh;
-    width: auto;
-
-    main {
-      overflow-y: auto;
-    }
-
-    #app-right {
-      height: 100vh;
-    }
   }
 
   #custom-background {
