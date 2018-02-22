@@ -51,6 +51,7 @@
         key="draft">
         <projects-table
           :ref="`table-${collections.length}`"
+          :fields="draftTableFields"
           :filter="filter"
           :filter-by="filterBy"
           :collection="{
@@ -60,7 +61,7 @@
           }">
           <template slot="action" scope="project">
             <b-btn
-              :disabled="currentUser.admin"
+              :disabled="!currentUser.admin"
               variant="success"
               size="sm"
               :to="{
@@ -101,6 +102,22 @@ export default {
           label: 'Name',
           sortable: true
         }
+      },
+      draftTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        owner: {
+          label: 'Owner',
+          class: 'text-center',
+          sortable: true
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center',
+          sortable: true
+        }
       }
     }
   },
@@ -131,10 +148,11 @@ export default {
      */
     onTabChange (index) {
       this.filter = null
-      const table = this.$refs[`table-${index}`][0]
-      if (typeof table !== 'undefined') {
-        table.reset()
+      let table = this.$refs[`table-${index}`]
+      if (Array.isArray(table)) {
+        table = table[0]
       }
+      table.reset()
     }
   },
 
