@@ -3,13 +3,6 @@
     <div slot="controls" class="float-md-right">
       <b-btn
         variant="success"
-        class="mr-1 my-1"
-        size="sm"
-        @click="analyseEmpty">
-        Analyse Empty
-      </b-btn>
-      <b-btn
-        variant="success"
         size="sm"
         class="my-1"
         @click="analyseAll">
@@ -95,21 +88,6 @@ export default {
         if (result) {
           this.notifySuccess({ message: result.message })
         }
-      })
-    },
-
-    /**
-     * Analyse empty results.
-     */
-    analyseEmpty () {
-      const presenter = this.collection.info.presenter
-      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
-        empty: 1,
-        project_short_name: this.project.short_name
-      }).then(result => {
-        this.notifySuccess({ message: result.message })
-      }).catch(err => {
-        this.$nuxt.error(err)
       })
     },
 
