@@ -99,7 +99,7 @@
         <p class="mb-0">Sign in</p>
       </b-btn>
       <b-btn
-        variant="success"
+        :variant="navbarVariant === 'transparent' ? 'outline-dark' : 'success'"
         class="px-2 border-0"
         :to="{
           name: 'account-register'
