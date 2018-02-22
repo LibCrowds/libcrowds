@@ -108,6 +108,10 @@ export default {
 
     sideNavItems () {
       const items = JSON.parse(JSON.stringify(this.navItems))
+      const canBuild = (
+        this.loggedIn &&
+        (this.currentUser.admin || !localConfig.disableProjectBuilder)
+      )
 
       // Microsite nav items
       if (this.currentMicrositeNavItems.length) {
@@ -128,7 +132,7 @@ export default {
       })
 
       // Project admin
-      if (this.loggedIn) {
+      if (canBuild) {
         items['Projects'] = [
           {
             label: 'New Project',
@@ -146,7 +150,7 @@ export default {
       }
 
       // Templates admin
-      if (this.loggedIn) {
+      if (canBuild) {
         items['Templates'] = [
           {
             label: 'New Template',
@@ -169,7 +173,7 @@ export default {
         ]
       }
 
-      // Site/collection admin nav items
+      // Site/collection admin
       if (this.currentUser.admin) {
         items['Admin'] = [
           {
