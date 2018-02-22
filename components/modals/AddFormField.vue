@@ -42,7 +42,7 @@ export default {
                     'or underscores'
                 }
               },
-              hint: 'A key used to identify the field (e.g. title).',
+              hint: 'A key used to identify the field (e.g. title).'
             },
             {
               type: 'input',
@@ -52,7 +52,7 @@ export default {
               maxlength: 50,
               required: true,
               validator: VueFormGenerator.validators.string,
-              hint: 'A label shown above the form field (e.g. Title).',
+              hint: 'A label shown above the form field (e.g. Title).'
             },
             {
               type: 'select',
@@ -99,7 +99,7 @@ export default {
                   return 'This field is required when the type is "input"'
                 }
               },
-              hint: 'The specific type of input field.',
+              hint: 'The specific type of input field.'
             },
             {
               type: 'input',
