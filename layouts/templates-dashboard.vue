@@ -56,7 +56,7 @@ export default {
     navItems () {
       const items = {}
       if (!isEmpty(this.currentTemplate)) {
-        items[this.currentTemplate.project.name] = [
+        items[this.currentTemplate.name] = [
           {
             label: 'Core Details',
             exact: true,
@@ -118,7 +118,7 @@ export default {
     return {
       titleTemplate: isEmpty(this.currentTemplate)
         ? `%s | ${localConfig.brand}`
-        : `%s - ${this.currentTemplate.project.name} | ${localConfig.brand}`
+        : `%s - ${this.currentTemplate.name} | ${localConfig.brand}`
     }
   }
 }
