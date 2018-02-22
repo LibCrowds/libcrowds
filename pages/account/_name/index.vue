@@ -7,18 +7,19 @@
             v-if="user"
             class="mb-3"
             :user="user">
-            <b-btn
-              v-if="isCurrentUser"
-              block
-              variant="success"
-              :to="{
-                name: 'account-name-settings-profile',
-                params: {
-                  name: user.name
-                }
-              }">
-              Settings
-            </b-btn>
+            <b-card-body v-if="isCurrentUser">
+              <b-btn
+                block
+                variant="success"
+                :to="{
+                  name: 'account-name-settings-profile',
+                  params: {
+                    name: user.name
+                  }
+                }">
+                Settings
+              </b-btn>
+            </b-card-body>
           </profile-card>
         </div>
         <div class="col-lg-8">
@@ -60,13 +61,10 @@ export default {
         name: {
           label: 'Name'
         },
-        n_volunteers: {
-          label: 'Volunteers',
-          class: 'text-center'
-        },
         overall_progress: {
           label: 'Progress',
-          class: 'text-center'
+          class: 'text-center',
+          sortable: true
         }
       }
     }

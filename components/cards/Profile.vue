@@ -24,13 +24,14 @@
           <li>
             <icon name="tasks"></icon>Contributions: {{ user.n_answers }}
           </li>
+          <li>
+            <icon name="clock-o"></icon>Joined: {{ user.registered_ago }}
+          </li>
         </ul>
       </div>
     </div>
 
-    <div class="card-body">
-      <slot></slot>
-    </div>
+    <slot></slot>
 
   </b-card>
 </template>
