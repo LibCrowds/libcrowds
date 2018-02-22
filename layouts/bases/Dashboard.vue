@@ -84,6 +84,12 @@ export default {
         this.showSideNav = false
       }
     }
+  },
+
+  mounted () {
+    if (window.innerWidth < 768) {
+      this.showSideNav = false
+    }
   }
 }
 </script>
