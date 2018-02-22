@@ -154,7 +154,7 @@ export default {
         route.name.startsWith('admin-') ||
         route.name.startsWith('account-name-templates-')
       )
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 576) {
         this.showSideNav = false
       } else if (!isDashboard) {
         this.showSideNav = false

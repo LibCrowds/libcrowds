@@ -80,14 +80,14 @@ export default {
      *   The route being navigated to.
      */
     onSidebarItemClick (route) {
-      if (window.innerWidth < 768) {
+      if (window.innerWidth < 576) {
         this.showSideNav = false
       }
     }
   },
 
   mounted () {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 576) {
       this.showSideNav = false
     }
   }

@@ -283,7 +283,7 @@ export default {
   width: 0;
   transition: all 350ms ease-out;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(sm) {
     position: relative;
 
     &.side-nav-fixed {
@@ -313,7 +313,7 @@ export default {
     white-space: normal;
     word-wrap: break-word;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       min-width: $sidebar-width;
       width: $sidebar-width;
     }
