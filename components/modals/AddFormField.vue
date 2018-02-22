@@ -27,7 +27,6 @@ export default {
               inputType: 'text',
               label: 'Model',
               model: 'model',
-              placeholder: 'A key used to identify the field (e.g. title)',
               required: true,
               validator: (value) => {
                 const keys = this.model.map(field => field.model)
@@ -42,17 +41,18 @@ export default {
                   return 'Can only contain Latin characters, numbers ' +
                     'or underscores'
                 }
-              }
+              },
+              hint: 'A key used to identify the field (e.g. title).',
             },
             {
               type: 'input',
               inputType: 'text',
               label: 'Label',
               model: 'label',
-              placeholder: 'A label for the form field (e.g. Title)',
               maxlength: 50,
               required: true,
-              validator: VueFormGenerator.validators.string
+              validator: VueFormGenerator.validators.string,
+              hint: 'A label shown above the form field (e.g. Title).',
             },
             {
               type: 'select',
@@ -73,7 +73,8 @@ export default {
                 if (!value || !value.length) {
                   return 'This field is required!'
                 }
-              }
+              },
+              hint: 'The type of the form field.'
             },
             {
               type: 'select',
@@ -97,15 +98,16 @@ export default {
                 if ((!value || !value.length) && model.type === 'input') {
                   return 'This field is required when the type is "input"'
                 }
-              }
+              },
+              hint: 'The specific type of input field.',
             },
             {
               type: 'input',
               inputType: 'text',
               label: 'Placeholder',
               model: 'placeholder',
-              placeholder: 'Placeholder text for the form field',
-              validator: VueFormGenerator.validators.string
+              validator: VueFormGenerator.validators.string,
+              hint: 'Placeholder text for the form field'
             }
           ]
         }

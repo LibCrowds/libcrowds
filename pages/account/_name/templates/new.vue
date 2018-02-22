@@ -1,19 +1,21 @@
 <template>
   <card-base :title="title" :description="description">
-
     <p slot="guidance">
-      Project templates can be used by anyone to generate new projects for a
+      Project templates can be used by anyone to generate projects for a
       collection microsite. For example, if you wanted to collect
       transcriptions of all song titles mentioned in a particular set of
       volumes you could create two templates, one to mark out those song
-      titles followed by one to transcribe them.
+      titles followed by one to transcribe them. These templates could then
+      be used for any number of volumes belonging to the collection microsite.
     </p>
     <p slot="guidance">
       After entering the core details below and clicking
       <strong>Create</strong>, you will be given access to futher options to
-      design your task, add tags, a tutorial and set the rules for results
-      analysis.
+      help design your task, add tags, a tutorial and set the rules for
+      results analysis.
     </p>
+
+    <hr>
 
     <pybossa-form
       submit-text="Create"
@@ -67,22 +69,23 @@ export default {
                 values: store.state.publishedCollections,
                 selectOptions: {
                   hideNoneSelectedText: true
-                }
+                },
+                hint: 'The collection microsite for the template.'
               },
               {
                 model: 'name',
                 label: 'Name',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'A name for the template (e.g. Transcribe Titles)'
+                hint: 'A name for the template.'
               },
               {
                 model: 'description',
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'The description appears on the project cards ' +
-                  'displayed on the main projects page'
+                hint: 'Appears on the project cards shown on the main ' +
+                  'projects page.'
               }
             ]
           }
