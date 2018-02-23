@@ -24,13 +24,14 @@
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
+import { notifications } from '@/mixins/notifications'
 import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, notifications ],
 
   data () {
     return {
@@ -89,7 +90,7 @@ export default {
      *   The template.
      */
     approveUpdates (template) {
-      const endpoint = `/lc/templates/${template.id}/accept`
+      const endpoint = `/lc/templates/${template.id}/approve`
       this.$swal({
         title: 'Accept the updates',
         html: `You are about to confirm updates to the "${template.name}"
@@ -99,11 +100,15 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         showLoaderOnConfirm: true,
-        preConfirm: (message) => {
-          return this.$axios.$put(endpoint, { message: message })
+        preConfirm: () => {
+          return this.$axios.$get(endpoint).then(data => {
+            return this.$axios.$post(endpoint, {
+              csrf: data.csrf
+            })
+          })
         }
       }).then(data => {
-        console.log(data)
+        this.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     },
@@ -125,11 +130,15 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         showLoaderOnConfirm: true,
-        preConfirm: (message) => {
-          return this.$axios.$put(endpoint, { message: message })
+        preConfirm: () => {
+          return this.$axios.$get(endpoint).then(data => {
+            return this.$axios.$post(endpoint, {
+              csrf: data.csrf
+            })
+          })
         }
       }).then(data => {
-        console.log(data)
+        this.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     }

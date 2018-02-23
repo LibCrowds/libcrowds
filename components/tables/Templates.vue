@@ -74,9 +74,7 @@
 
         <h5 class="mt-3">Analysis Rules</h5>
         <ul class="list-unstyled" v-if="tmpl.item.rules">
-          <li
-            v-for="key in Object.keys(tmpl.item.rules)"
-            :key="key">
+          <li v-for="key in Object.keys(tmpl.item.rules)" :key="key">
             <strong>{{ key }}:</strong>
             {{ tmpl.item.rules[key] }}
           </li>
