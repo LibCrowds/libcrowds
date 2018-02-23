@@ -161,7 +161,6 @@
 
 <script>
 import localConfig from '@/local.config.js'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import { getShortname } from '@/mixins/getShortname'
 import CardBase from '@/components/cards/Base'
@@ -175,7 +174,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ notifications, metaTags, getShortname ],
+  mixins: [ metaTags, getShortname ],
 
   data () {
     return {

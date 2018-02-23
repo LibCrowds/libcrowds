@@ -126,7 +126,6 @@ import 'vue-awesome/icons/arrow-down'
 import localConfig from '@/local.config'
 import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 import AddFormFieldModal from '@/components/modals/AddFormField'
@@ -134,7 +133,7 @@ import AddFormFieldModal from '@/components/modals/AddFormField'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ metaTags, fetchTemplateById, notifications ],
+  mixins: [ metaTags, fetchTemplateById ],
 
   data () {
     return {
@@ -377,7 +376,7 @@ export default {
         elem.value = ''
         elem.focus()
       } else if (codes.indexOf(elem.value) > -1) {
-        this.flash({
+        this.$notifications.flash({
           'status': 'warning',
           'flash': 'That code already exists'
         })

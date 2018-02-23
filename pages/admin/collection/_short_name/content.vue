@@ -39,7 +39,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -48,7 +47,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -90,7 +89,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Content updated' })
+      this.$notifications.success({ message: 'Content updated' })
     }
   }
 }

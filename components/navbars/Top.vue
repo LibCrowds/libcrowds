@@ -117,12 +117,11 @@ import throttle from 'lodash/throttle'
 import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import SmallAvatar from '@/components/avatars/Small'
-import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 import Announcements from '@/components/lists/Announcements'
 
 export default {
-  mixins: [ notifications, currentMicrositeNavItems ],
+  mixins: [ currentMicrositeNavItems ],
 
   data () {
     return {
@@ -181,7 +180,7 @@ export default {
       return this.$axios.$get('/account/signout').then(data => {
         this.$store.dispatch('LOGOUT')
         this.$router.push({ name: 'index' })
-        this.flash(data)
+        this.$notifications.flash(data)
       })
     },
 

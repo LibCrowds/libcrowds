@@ -38,7 +38,6 @@
 <script>
 import pick from 'lodash/pick'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -46,7 +45,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -134,7 +133,7 @@ export default {
         published: !this.form.model.published
       }).then(data => {
         this.form.model.published = !this.form.model.published
-        this.notifySuccess({
+        this.$notifications.success({
           message: this.form.model.published
             ? 'Announcement published'
             : 'Announcement unpublished'

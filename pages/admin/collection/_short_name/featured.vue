@@ -29,7 +29,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
@@ -37,7 +36,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -74,7 +73,7 @@ export default {
         featured: !project.featured
       }).then(data => {
         project.featured = !project.featured
-        this.notifySuccess({
+        this.$notifications.success({
           message: project.featured
             ? 'Project added to featured'
             : 'Project removed from featured'

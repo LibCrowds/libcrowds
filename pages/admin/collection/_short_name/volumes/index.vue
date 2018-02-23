@@ -43,7 +43,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import VolumesTable from '@/components/tables/Volumes'
 import CardBase from '@/components/cards/Base'
@@ -51,7 +50,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -104,7 +103,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({
+          this.$notifications.success({
             message: 'Volume deleted'
           })
           console.log(result)

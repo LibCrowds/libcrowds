@@ -24,14 +24,13 @@
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ metaTags, notifications ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -108,7 +107,7 @@ export default {
           })
         }
       }).then(data => {
-        this.flash(data)
+        this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     },
@@ -138,7 +137,7 @@ export default {
           })
         }
       }).then(data => {
-        this.flash(data)
+        this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
     }

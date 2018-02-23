@@ -41,11 +41,8 @@
 
 <script>
 import FormBase from '@/components/forms/Base'
-import { notifications } from '@/mixins/notifications'
 
 export default {
-  mixins: [ notifications ],
-
   data () {
     return {
       status: null,
@@ -151,7 +148,7 @@ export default {
       if (!valid) {
         this.alert = 'Please correct the errors'
         this.status = 'error'
-        this.notifyInvalidForm()
+        this.$notifications.invalidForm()
       }
       return valid
     },
@@ -174,7 +171,7 @@ export default {
         if (r.data.status === 'error' || r.data.status === 'danger') {
           this.alert = r.data.flash
           this.status = r.data.status
-          this.notifyInvalidForm()
+          this.$notifications.invalidForm()
           this.injectErrors(r.data.form.errors)
           return
         } else if (
@@ -184,9 +181,9 @@ export default {
         ) {
           this.handleSuccess(r.data)
         }
-        this.flash(r.data)
+        this.$notifications.flash(r.data)
       }).catch(err => {
-        this.notifyError({ message: err.message || 'Server Error' })
+        this.$notifications.error({ message: err.message || 'Server Error' })
       }).then(() => {
         this.processing = false
       })

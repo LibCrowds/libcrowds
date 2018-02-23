@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
@@ -35,7 +34,7 @@ export default {
 
   middleware: 'is-admin',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
@@ -98,7 +97,7 @@ export default {
       this.$axios.$put(`/api/project/${this.project.id}`, {
         info: infoClone
       }).then(data => {
-        this.notifySuccess({ message: 'Volume updated' })
+        this.$notifications.success({ message: 'Volume updated' })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)

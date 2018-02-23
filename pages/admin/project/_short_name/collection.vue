@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
@@ -41,7 +40,7 @@ export default {
 
   middleware: 'is-admin',
 
-  mixins: [ fetchProjectByName, notifications, metaTags ],
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
@@ -86,7 +85,9 @@ export default {
       this.$axios.$put(`/api/project/${this.project.id}`, {
         category_id: collection.id
       }).then(data => {
-        this.notifySuccess({ message: `Project moved to ${collection.name}` })
+        this.$notifications.success({
+          message: `Project moved to ${collection.name}`
+        })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)

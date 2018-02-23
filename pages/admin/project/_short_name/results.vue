@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import ResultsTable from '@/components/tables/Results'
@@ -40,7 +39,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
@@ -86,7 +85,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({ message: result.message })
+          this.$notifications.success({ message: result.message })
         }
       })
     },
@@ -107,7 +106,7 @@ export default {
         event: 'task_completed'
       }).then(result => {
         evt.target.disabled = false
-        this.notifySuccess({ message: result.message })
+        this.$notifications.success({ message: result.message })
       }).catch(err => {
         this.$nuxt.error(err)
       })

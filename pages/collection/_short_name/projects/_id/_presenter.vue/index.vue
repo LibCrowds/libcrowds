@@ -14,7 +14,6 @@
 import marked from 'marked'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -28,7 +27,7 @@ export default {
     return layouts[params.presenter] || 'collection-tabs'
   },
 
-  mixins: [ notifications, fetchCollectionByName, projectMetaTags ],
+  mixins: [ fetchCollectionByName, projectMetaTags ],
 
   data () {
     return {
@@ -176,13 +175,13 @@ export default {
             task_id: taskId
           }
         }).then(() => {
-          this.notifySuccess({ message: 'Removed from favourites' })
+          this.$notifications.success({ message: 'Removed from favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
       } else {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
-          this.notifySuccess({ message: 'Added to favourites' })
+          this.$notifications.success({ message: 'Added to favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
@@ -227,7 +226,7 @@ export default {
                   'directly help enable future research.'
           })
         } else {
-          this.notifyAnswerSaved()
+          this.$notifications.answerSaved()
         }
       })
     },

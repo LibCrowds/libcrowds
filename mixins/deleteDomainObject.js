@@ -1,5 +1,4 @@
 import capitalize from 'capitalize'
-import { notifications } from '@/mixins/notifications'
 
 export const deleteDomainObject = {
   methods: {
@@ -17,14 +16,12 @@ export const deleteDomainObject = {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({
+          this.$notifications.success({
             message: `${capitalize(terminology)} deleted`
           })
           callback()
         }
       })
     }
-  },
-
-  mixins: [ notifications ]
+  }
 }

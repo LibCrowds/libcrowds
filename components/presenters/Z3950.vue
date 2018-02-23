@@ -188,12 +188,11 @@ import capitalize from 'capitalize'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
-import { notifications } from '@/mixins/notifications'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import VueFormGenerator from 'vue-form-generator'
 
 export default {
-  mixins: [ notifications, computeShareUrl ],
+  mixins: [ computeShareUrl ],
 
   data () {
     return {

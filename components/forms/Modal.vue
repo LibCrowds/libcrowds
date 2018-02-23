@@ -30,11 +30,8 @@
 
 <script>
 import FormBase from '@/components/forms/Base'
-import { notifications } from '@/mixins/notifications'
 
 export default {
-  mixins: [ notifications ],
-
   props: {
     form: {
       type: Object,
@@ -71,7 +68,7 @@ export default {
     submit (evt) {
       evt.preventDefault()
       if (!this.$refs.form.validate()) {
-        this.notifyInvalidForm()
+        this.$notifications.invalidForm()
         return
       }
       this.$emit('submit', this.form)

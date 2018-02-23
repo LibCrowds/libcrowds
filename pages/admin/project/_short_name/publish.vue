@@ -44,13 +44,12 @@
 import isEmpty from 'lodash/isEmpty'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, metaTags, notifications ],
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
@@ -110,7 +109,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.flash(result)
+          this.$notifications.flash(result)
           this.$router.push({
             name: 'admin-project-short_name-details',
             params: {

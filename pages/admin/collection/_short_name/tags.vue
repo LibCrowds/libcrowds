@@ -68,7 +68,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import AddTagModal from '@/components/modals/AddTag'
 import EditTagModal from '@/components/modals/EditTag'
@@ -77,7 +76,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -160,7 +159,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({ message: `Tag deleted` })
+          this.$notifications.success({ message: `Tag deleted` })
           this.refresh()
         }
       })

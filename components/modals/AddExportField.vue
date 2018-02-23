@@ -10,12 +10,9 @@
 
 <script>
 import ModalForm from '@/components/forms/Modal'
-import { notifications } from '@/mixins/notifications'
 import VueFormGenerator from 'vue-form-generator'
 
 export default {
-  mixins: [ notifications ],
-
   data () {
     return {
       form: {

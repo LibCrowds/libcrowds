@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import CardBase from '@/components/cards/Base'
@@ -34,7 +33,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ notifications, metaTags, fetchTemplateById ],
+  mixins: [ metaTags, fetchTemplateById ],
 
   data () {
     return {
@@ -82,7 +81,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({
+          this.$notifications.success({
             message: 'Template deleted'
           })
           this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)

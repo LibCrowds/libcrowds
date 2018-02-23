@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
@@ -40,7 +39,7 @@ export default {
 
   middleware: 'is-admin',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
@@ -120,10 +119,10 @@ export default {
         }
       }).then(data => {
         if (data) {
-          this.notifySuccess({
+          this.$notifications.success({
             message: 'Template deleted'
           })
-          this.notifySuccess({ message: 'Template updated' })
+          this.$notifications.success({ message: 'Template updated' })
           this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
           this.analyseAllResults()
         }
@@ -155,7 +154,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({ message: result.message })
+          this.$notifications.success({ message: result.message })
         }
       })
     }

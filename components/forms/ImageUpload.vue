@@ -29,7 +29,6 @@
 import keys from 'lodash/keys'
 import intersection from 'lodash/intersection'
 import axios from 'axios'
-import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 import FormBase from '@/components/forms/Base'
 
@@ -41,8 +40,6 @@ export default {
       processing: false
     }
   },
-
-  mixins: [ notifications ],
 
   components: {
     FormBase
@@ -130,7 +127,7 @@ export default {
         },
         withCredentials: true
       }).then(response => {
-        this.flash(response.data)
+        this.$notifications.flash(response.data)
       }).catch(err => {
         this.$nuxt.error(err)
       }).then(() => {

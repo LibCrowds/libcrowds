@@ -15,7 +15,6 @@
 
 <script>
 import { fetchTemplateById } from '@/mixins/fetchTemplateById'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -23,7 +22,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ notifications, metaTags, fetchTemplateById ],
+  mixins: [ metaTags, fetchTemplateById ],
 
   data () {
     return {

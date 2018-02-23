@@ -434,7 +434,6 @@
 import moment from 'moment'
 import groupBy from 'lodash/groupBy'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
@@ -444,7 +443,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -552,7 +551,7 @@ export default {
         }
       }).then(data => {
         data.status = 'info'
-        this.flash(data)
+        this.$notifications.flash(data)
       }).catch(err => {
         this.$nuxt.error(err)
       })

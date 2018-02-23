@@ -22,7 +22,6 @@
 <script>
 import pick from 'lodash/pick'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -30,7 +29,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, notifications, metaTags ],
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
@@ -72,7 +71,7 @@ export default {
      * Handle form submission success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Help updated' })
+      this.$notifications.success({ message: 'Help updated' })
     }
   }
 }

@@ -26,7 +26,6 @@
 <script>
 import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { licenses } from '@/mixins/licenses'
 import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
@@ -36,7 +35,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, licenses, metaTags ],
+  mixins: [ fetchCollectionByName, licenses, metaTags ],
 
   data () {
     return {
@@ -181,7 +180,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Collection updated' })
+      this.$notifications.success({ message: 'Collection updated' })
     },
 
     /**
@@ -195,7 +194,7 @@ export default {
         info: this.collection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
-        this.notifySuccess({
+        this.$notifications.success({
           message: this.collection.info.published
             ? 'Collection microsite published'
             : 'Collection microsite unpublished'
