@@ -19,12 +19,13 @@
         @itemclick="showSideNav = false">
       </top-navbar>
 
-      <slot name="message"></slot>
-
-      <main class="container-fluid px-lg-4 py-4">
-        <transition name="fade" mode="out-in" appear>
-          <nuxt></nuxt>
-        </transition>
+      <main>
+        <slot name="message"></slot>
+        <div class="container-fluid px-lg-4 py-4">
+          <transition name="fade" mode="out-in" appear>
+            <nuxt></nuxt>
+          </transition>
+        </div>
       </main>
 
       <dashboard-footer></dashboard-footer>
