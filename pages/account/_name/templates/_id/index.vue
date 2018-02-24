@@ -8,7 +8,8 @@
     <hr>
     <pybossa-form
       submit-text="Update"
-      :form="form">
+      :form="form"
+      @success="onFormSuccess">
     </pybossa-form>
   </card-base>
 </template>
@@ -68,6 +69,17 @@ export default {
   components: {
     CardBase,
     PybossaForm
+  },
+
+  methods: {
+    /**
+     * Update the current template on form submission success.
+     * @param {Object} data
+     *   The data returned from the form.
+     */
+    onFormSuccess (data) {
+      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    }
   }
 }
 </script>

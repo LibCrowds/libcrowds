@@ -7,7 +7,8 @@
     <hr>
     <pybossa-form
       submit-text="Update"
-      :form="form">
+      :form="form"
+      @success="onFormSuccess">
       <div slot="bottom">
         <label class="ml-0">
           Tutorial
@@ -63,6 +64,17 @@ export default {
   components: {
     CardBase,
     PybossaForm
+  },
+
+  methods: {
+    /**
+     * Update the current template on form submission success.
+     * @param {Object} data
+     *   The data returned from the form.
+     */
+    onFormSuccess (data) {
+      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    }
   }
 }
 </script>

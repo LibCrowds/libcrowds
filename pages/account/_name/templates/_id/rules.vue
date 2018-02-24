@@ -16,7 +16,8 @@
     <pybossa-form
       v-else
       submit-text="Update"
-      :form="form">
+      :form="form"
+      @success="onFormSuccess">
       <div slot="bottom" class="d-flex form-group mt-1">
         <no-ssr>
           <toggle-button
@@ -240,12 +241,16 @@ export default {
     }
   },
 
-  components: {
-    CardBase,
-    PybossaForm
-  },
-
   methods: {
+    /**
+     * Update the current template on form submission success.
+     * @param {Object} data
+     *   The data returned from the form.
+     */
+    onFormSuccess (data) {
+      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    },
+
     /**
      * Update model boolean.
      * @param {String} key
@@ -256,6 +261,11 @@ export default {
     updateModelBoolean (key, evt) {
       this.form.model[key] = evt.value
     }
+  },
+
+  components: {
+    CardBase,
+    PybossaForm
   }
 }
 </script>

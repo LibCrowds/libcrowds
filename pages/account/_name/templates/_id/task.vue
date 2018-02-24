@@ -18,7 +18,8 @@
     <pybossa-form
       v-else
       submit-text="Update"
-      :form="form">
+      :form="form"
+      @success="onFormSuccess">
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <b-form-group label="Fields Schema">
@@ -381,6 +382,15 @@ export default {
           'flash': 'That code already exists'
         })
       }
+    },
+
+    /**
+     * Update the current template on form submission success.
+     * @param {Object} data
+     *   The data returned from the form.
+     */
+    onFormSuccess (data) {
+      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
     }
   },
 
