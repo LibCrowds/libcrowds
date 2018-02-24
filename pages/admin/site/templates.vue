@@ -107,6 +107,7 @@ export default {
           })
         }
       }).then(data => {
+        this.removeTemplateFromTable(template)
         this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
       })
@@ -138,8 +139,20 @@ export default {
           })
         }
       }).then(data => {
+        this.removeTemplateFromTable(template)
         this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+      })
+    },
+
+    /**
+     * Remove a template from the table.
+     * @param {Object} template
+     *   The template.
+     */
+    removeTemplateFromTable (template) {
+      this.templates = this.templates.filter(tmpl => {
+        return tmpl.id !== template.id
       })
     }
   }
