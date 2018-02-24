@@ -129,10 +129,11 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         showLoaderOnConfirm: true,
-        preConfirm: () => {
+        preConfirm: (reason) => {
           return this.$axios.$get(endpoint).then(data => {
             return this.$axios.$post(endpoint, {
-              csrf: data.csrf
+              csrf: data.csrf,
+              reason: reason
             })
           })
         }
