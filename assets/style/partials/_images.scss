@@ -62,4 +62,8 @@
       $dark calc(50% + (#{$spacer} * 1)), $dark 100% ),
       url('~/assets/img/app-background.jpg');
   }
+
+  .img-thumbnail {
+    background: transparent;
+  }
 }
