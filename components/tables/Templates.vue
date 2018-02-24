@@ -82,7 +82,11 @@
         <p v-else>None</p>
 
         <h5 class="mt-3">Tutorial</h5>
-        <div v-html="marked(tmpl.item.tutorial)"></div>
+        <div
+          v-if="tmpl.item.tutorial"
+          v-html="marked(tmpl.item.tutorial)">
+        </div>
+        <p v-else>None</p>
 
       </b-card>
     </template>
