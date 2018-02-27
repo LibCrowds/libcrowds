@@ -144,7 +144,6 @@
 </template>
 
 <script>
-import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -152,7 +151,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ metaTags, fetchTemplateById ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -161,9 +160,10 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error }) {
+  asyncData ({ app, params, error, store }) {
     const endpoint = `/lc/templates/${params.id}/rules`
     return app.$axios.$get(endpoint).then(data => {
+      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
       return {
         presenter: data.presenter,
         form: {

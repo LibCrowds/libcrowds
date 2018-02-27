@@ -125,7 +125,6 @@
 import 'vue-awesome/icons/arrow-up'
 import 'vue-awesome/icons/arrow-down'
 import localConfig from '@/local.config'
-import { fetchTemplateById } from '@/mixins/fetchTemplateById'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -134,7 +133,7 @@ import AddFormFieldModal from '@/components/modals/AddFormField'
 export default {
   layout: 'templates-dashboard',
 
-  mixins: [ metaTags, fetchTemplateById ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -171,9 +170,10 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error, redirect }) {
+  asyncData ({ app, params, error, redirect, store }) {
     const endpoint = `/lc/templates/${params.id}/task`
     return app.$axios.$get(endpoint).then(data => {
+      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
       if (!('presenter' in data)) {
         return {
           presenter: null
