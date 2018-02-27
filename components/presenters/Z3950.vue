@@ -179,6 +179,19 @@
         </b-card>
       </b-col>
     </b-row>
+
+    <!-- Tutorial modal -->
+    <b-modal
+      show
+      :id="tutorialModalId"
+      title="Tutorial"
+      ok-only
+      :header-bg-variant="darkMode ? 'dark' : null"
+      :body-bg-variant="darkMode ? 'dark' : null"
+      :footer-bg-variant="darkMode ? 'dark' : null">
+      <template v-html="help"></template>
+    </b-modal>
+
   </div>
 </template>
 
@@ -197,6 +210,7 @@ export default {
   data () {
     return {
       header: 'What is this item?',
+      tutorialModalId: 'tutorial-modal',
       searchQuery: null,
       searchResults: [],
       selectedRecord: null,
@@ -271,7 +285,7 @@ export default {
       type: Array,
       required: true
     },
-    template: {
+    projectTemplate: {
       type: Object,
       required: false
     }
@@ -343,6 +357,11 @@ export default {
       if (this.template && this.template.task) {
         return this.template.task.institutions
       }
+    },
+
+    help () {
+      const help = this.projectTemplate.tutorial || ''
+      return marked(help)
     }
   },
 

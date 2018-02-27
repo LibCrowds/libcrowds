@@ -20,11 +20,9 @@ import Z3950Presenter from '@/components/presenters/Z3950'
 
 export default {
   layout ({ params, store }) {
-    const layouts = {
-      'iiif-annotation': 'collection-fullscreen-dark',
-      'z3950': 'collection-tabs'
-    }
-    return layouts[params.presenter] || 'collection-tabs'
+    return params.presenter === 'iiif-annotation'
+      ? 'collection-fullscreen-dark'
+      : 'presenter-tabs'
   },
 
   mixins: [ fetchCollectionByName, projectMetaTags ],

@@ -17,7 +17,7 @@ export default {
 
   computed: {
     navItems () {
-      return this.$store.state.collectionNavItems
+      return []
     },
 
     currentCollection () {
