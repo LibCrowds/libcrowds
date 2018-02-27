@@ -58,27 +58,16 @@ export default {
         return
       }
       store.dispatch('UPDATE_CURRENT_PROJECT', projectData[0])
-      return app.$axios.$get(`/api/user/`, {
-        params: {
-          info: {
-            templates: [
-              {
-                id: projectData[0].info.template_id
-              }
-            ]
-          }
-        }
+
+      // Load template
+      let template = store.state.currentCollection.info.templates.find(t => {
+        return t.id === projectData[0].info.template_id
       })
-    }).then(templateData => {
-      let template = {}
-      try {
-        template = templateData[0].info.templates.filter(tmpl => {
-          return tmpl.id === store.state.currentProject.info.template_id
-        })[0]
-      } catch (err) {
-        console.warn('Project template not found')
+      if (typeof template === 'undefined') {
+        error({statusCode: 500, message: 'Invalid project template'})
+      } else {
+        store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
       }
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
     }).catch(err => {
       error(err)
     })
