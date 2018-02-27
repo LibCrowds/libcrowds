@@ -54,7 +54,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
       return {
-        canDelete: data.canDelete,
+        canDelete: data.can_delete,
         csrf: data.csrf
       }
     })
