@@ -172,8 +172,7 @@ export default {
   },
 
   asyncData ({ app, params, error, redirect }) {
-    const name = params.name
-    const endpoint = `/lc/users/${name}/templates/${params.id}/task`
+    const endpoint = `/lc/templates/${params.id}/task`
     return app.$axios.$get(endpoint).then(data => {
       if (!('presenter' in data)) {
         return {

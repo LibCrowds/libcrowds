@@ -50,7 +50,7 @@ export default {
   },
 
   asyncData ({ params, app, error }) {
-    const tmplEndpoint = '/lc/templates/pending'
+    const tmplEndpoint = '/lc/admin/templates/pending'
     return Promise.all([
       app.$axios.$get('/api/category', {
         params: {
@@ -89,7 +89,7 @@ export default {
      *   The template.
      */
     approveUpdates (template) {
-      const endpoint = `/lc/templates/${template.id}/approve`
+      const endpoint = `/lc/admin/templates/${template.id}/approve`
       this.$swal({
         title: 'Accept the updates',
         html: `You are about to confirm updates to the "${template.name}"
@@ -119,7 +119,7 @@ export default {
      *   The template.
      */
     rejectUpdates (template) {
-      const endpoint = `/lc/templates/${template.id}/reject`
+      const endpoint = `/lc/admin/templates/${template.id}/reject`
       this.$swal({
         title: 'Reject the updates',
         html: `Please write a message to the template owner to explain why the

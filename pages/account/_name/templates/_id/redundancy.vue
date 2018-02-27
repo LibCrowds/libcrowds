@@ -41,7 +41,7 @@ export default {
   },
 
   asyncData ({ app, params, error, store }) {
-    const endpoint = `/lc/users/${params.name}/templates/${params.id}`
+    const endpoint = `/lc/templates/${params.id}/update`
     return app.$axios.$get(endpoint).then(data => {
       return {
         form: {

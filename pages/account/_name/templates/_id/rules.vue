@@ -162,12 +162,10 @@ export default {
   },
 
   asyncData ({ app, params, error }) {
-    const name = params.name
-    const endpoint = `/lc/users/${name}/templates/${params.id}/rules`
+    const endpoint = `/lc/templates/${params.id}/rules`
     return app.$axios.$get(endpoint).then(data => {
       return {
         presenter: data.presenter,
-        template: data.template,
         form: {
           endpoint: endpoint,
           method: 'post',
