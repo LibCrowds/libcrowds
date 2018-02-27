@@ -230,6 +230,7 @@ export default {
 
     .card-footer {
       border-top: none;
+      background-color: transparent;
 
       .footer-buttons {
         @include media-breakpoint-down(md) {
@@ -317,10 +318,6 @@ export default {
   }
 
   &.bg-dark {
-    .card-footer {
-      background: transparent;
-    }
-
     .project-stats-btn {
       color: $white;
       border-color: $black;
