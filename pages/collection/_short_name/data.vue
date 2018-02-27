@@ -82,8 +82,8 @@
                 :variant="darkMode ? 'dark' : 'success'"
                 size="sm"
                 block
-                v-b-modal="dataModalId"
-                @click="activeProject = project.item">
+                v-b-modal="projectDataModalId"
+                @click="downloadProject = project.item">
                 Download
               </b-btn>
             </template>
@@ -100,7 +100,7 @@
       :endpoint="`/project/${downloadProject.short_name}/tasks/export`"
       :filename-prefix="downloadProject.short_name"
       :event-label="downloadProject.name"
-      :modal-id="dataModalId"
+      :modal-id="projectDataModalId"
       :project="downloadProject">
     </data-modal>
 
