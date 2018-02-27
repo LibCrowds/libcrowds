@@ -159,8 +159,8 @@ export default {
       projectDownloadItems: [
         { dataset: 'Tasks', type: 'task', format: 'csv' },
         { dataset: 'Tasks', type: 'task', format: 'json' },
-        { dataset: 'Task Runs', type: 'task_run', format: 'csv' },
-        { dataset: 'Task Runs', type: 'task_run', format: 'json' },
+        { dataset: 'Contributions', type: 'task_run', format: 'csv' },
+        { dataset: 'Contributions', type: 'task_run', format: 'json' },
         { dataset: 'Results', type: 'result', format: 'csv' },
         { dataset: 'Results', type: 'result', format: 'json' }
       ],
