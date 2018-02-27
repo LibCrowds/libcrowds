@@ -2,7 +2,7 @@
   <component
     :is="presenter"
     :project="currentProject"
-    :template="currentTemplate"
+    :project-template="currentTemplate"
     :collection="currentCollection"
     :tasks="tasks"
     @submit="onSubmit"

@@ -82,7 +82,7 @@ export default {
       type: Array,
       required: true
     },
-    template: {
+    projectTemplate: {
       type: Object,
       required: true
     }
@@ -127,7 +127,7 @@ export default {
     },
 
     help () {
-      const help = this.project.info.help || ''
+      const help = this.projectTemplate.tutorial || ''
       return marked(help)
     }
   },

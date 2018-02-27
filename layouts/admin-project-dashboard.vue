@@ -81,15 +81,6 @@ export default {
           }
         },
         {
-          label: 'Help',
-          link: {
-            name: 'admin-project-short_name-help',
-            params: {
-              short_name: this.currentProject.short_name
-            }
-          }
-        },
-        {
           label: 'Results',
           link: {
             name: 'admin-project-short_name-results',
