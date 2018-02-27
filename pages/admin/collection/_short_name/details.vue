@@ -5,13 +5,15 @@
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
       </label>
-      <toggle-button
-        :value="collection.info.published"
-        :sync="true"
-        :labels="true"
-        class="mb-0"
-        @change="togglePublished">
-      </toggle-button>
+      <no-ssr>
+        <toggle-button
+          :value="collection.info.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </no-ssr>
     </div>
 
     <pybossa-form

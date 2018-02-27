@@ -4,13 +4,15 @@
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
       </label>
-      <toggle-button
-        :value="form.model.published"
-        :sync="true"
-        :labels="true"
-        class="mb-0"
-        @change="togglePublished">
-      </toggle-button>
+      <no-ssr>
+        <toggle-button
+          :value="form.model.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </no-ssr>
     </div>
 
     <b-tabs card>
