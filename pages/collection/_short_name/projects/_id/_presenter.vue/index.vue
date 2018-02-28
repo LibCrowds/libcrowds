@@ -14,6 +14,7 @@
 import marked from 'marked'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { hideCookieConsent } from '@/mixins/hideCookieConsent'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -25,7 +26,7 @@ export default {
       : 'presenter-tabs'
   },
 
-  mixins: [ fetchCollectionByName, projectMetaTags ],
+  mixins: [ fetchCollectionByName, projectMetaTags, hideCookieConsent ],
 
   data () {
     return {
