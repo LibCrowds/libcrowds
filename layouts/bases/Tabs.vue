@@ -17,6 +17,9 @@
           </transition>
         </b-nav-item>
         <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+
+        <slot name="right"></slot>
+
       </b-nav>
 
       <main>
@@ -40,7 +43,7 @@ export default {
   props: {
     navItems: {
       type: Array,
-      required: true
+      default: () => ([])
     },
     backgroundImageUrl: {
       type: String,
@@ -127,6 +130,10 @@ export default {
       @include media-breakpoint-up(sm) {
         display: block;
       }
+    }
+
+    #hidden-item a {
+      cursor: default;
     }
   }
 }

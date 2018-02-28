@@ -180,18 +180,6 @@
       </b-col>
     </b-row>
 
-    <!-- Tutorial modal -->
-    <b-modal
-      show
-      :id="tutorialModalId"
-      title="Tutorial"
-      ok-only
-      :header-bg-variant="darkMode ? 'dark' : null"
-      :body-bg-variant="darkMode ? 'dark' : null"
-      :footer-bg-variant="darkMode ? 'dark' : null">
-      <template v-html="help"></template>
-    </b-modal>
-
   </div>
 </template>
 
@@ -357,11 +345,6 @@ export default {
       if (this.template && this.template.task) {
         return this.template.task.institutions
       }
-    },
-
-    help () {
-      const help = this.projectTemplate.tutorial || ''
-      return marked(help)
     }
   },
 
