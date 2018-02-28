@@ -16,7 +16,7 @@
     <span class="top-navbar-left">
       <b-link
         v-if="navbarBrand"
-        class="navbar-brand ml-1 mr-2"
+        class="navbar-brand d-none d-lg-block ml-1 mr-2"
         @click="onNavbarBrandClick">
         <span>{{ navbarBrand }}</span>
       </b-link>
