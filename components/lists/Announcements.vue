@@ -3,7 +3,7 @@
 
     <b-btn
       id="announcements-toggle"
-      class="nav-link d-none d-lg-flex flex-row"
+      class="nav-link"
       v-on-clickaway="hide"
       @click="toggle">
       <icon name="bell"></icon>
@@ -16,23 +16,12 @@
       </b-badge>
     </b-btn>
 
-    <nuxt-link
-      class="d-lg-none nav-link"
-      :to="{
-        name: 'account-name-announcements',
-        params: {
-          name: currentUser.name
-        }
-      }">
-      Notifications
-    </nuxt-link>
-
     <span v-show="show">
       <b-card
         no-body
         header="Notifications"
         id="announcements-container"
-        class="dropdown-menu-right d-none d-md-block"
+        class="dropdown-menu-right"
         :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
 
@@ -146,10 +135,19 @@ export default {
      * Toggle the announcements.
      */
     toggle () {
-      this.show = !this.show
-      if (this.show) {
-        this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
+      console.log(window.innerWidth)
+      if (window.innerWidth < 992) {
+        // Redirect to the announcements page on small screens
+        this.$router.push({
+          name: 'account-name-announcements',
+          params: {
+            name: this.currentUser.name
+          }
+        })
+      } else {
+        this.show = !this.show
       }
+      this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
     },
 
     /**
@@ -205,6 +203,8 @@ export default {
   text-transform: none;
 
   #announcements-toggle {
+    display: flex;
+    flex-direction: row;
     cursor: pointer;
     background: transparent;
     border: none;
