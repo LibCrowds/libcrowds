@@ -30,6 +30,7 @@
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
+          :current-image-url="currentImageUrl"
           file-field="file">
         </image-upload-form>
       </b-tab>
@@ -115,6 +116,18 @@ export default {
     PybossaForm,
     ImageUploadForm,
     CardBase
+  },
+
+  computed: {
+    currentImageUrl () {
+      const thumbnailUrl = this.announcement.media_url
+      if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
+        return ''
+      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
+    }
   },
 
   methods: {

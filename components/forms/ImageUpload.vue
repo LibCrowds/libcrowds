@@ -76,6 +76,10 @@ export default {
         return ['circle', 'square'].indexOf(value) > -1
       }
     },
+    currentImageUrl: {
+      type: String,
+      default: ''
+    },
     viewportWidth: {
       type: Number,
       default: 300
@@ -180,6 +184,13 @@ export default {
         this.model.y2 = Math.floor(data.points[3])
       }
     })
+
+    // Bind current image
+    if (this.currentImageUrl) {
+      this.croppie.bind({
+        url: this.currentImageUrl
+      })
+    }
   }
 }
 </script>

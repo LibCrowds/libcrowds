@@ -20,6 +20,7 @@
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
+          :current-image-url="currentImageUrl"
           @cancel="onCancel">
         </image-upload-form>
       </b-tab>
@@ -54,6 +55,7 @@ export default {
       data.upload_form.btn = 'Upload'
       delete data.upload_form.id
       return {
+        volume: data.volume,
         endpoint: endpoint,
         formData: data.form,
         thumbnailForm: {
@@ -137,6 +139,16 @@ export default {
           ]
         }
       }
+    },
+
+    currentImageUrl () {
+      const thumbnailUrl = this.volume.thumbnail_url
+      if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
+        return ''
+      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
     }
   },
 
