@@ -22,7 +22,7 @@
       </b-link>
 
       <!-- Main menu -->
-      <b-navbar-nav id="main-nav-menu" class="d-none d-lg-flex">
+      <b-navbar-nav class="main-nav-menu d-none d-lg-flex">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
@@ -38,29 +38,31 @@
 
       <slot name="right"></slot>
 
-      <!-- Docs link -->
-      <b-nav-item-dropdown
-        variant="outline-dark"
-        no-caret
+      <!-- Docs -->
+      <b-navbar-nav
         v-if="showHelp && localConfig.docs">
-        <template slot="button-content">
-          <icon name="question-circle"></icon>
-          <span class="sr-only">Help</span>
-        </template>
-        <b-dropdown-item :href="localConfig.docs" target="_blank">
-          Read the docs
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
+        <b-nav-item
+          class="px-1"
+          :href="localConfig.docs"
+          target="_blank">
+          <span class="d-none d-md-block">Go to docs</span>
+          <icon
+            name="question-circle"
+            class="d-md-none"
+            scale="1.2">
+          </icon>
+        </b-nav-item>
+      </b-navbar-nav>
 
-      <!-- Hide on small screens until the new menu is in place -->
-      <announcements class="d-none d-lg-block"></announcements>
+      <!-- Announcements -->
+      <announcements></announcements>
 
+      <!-- User menu -->
       <b-nav-item-dropdown
         right
         no-caret
         id="user-menu"
-        class="px-2">
-
+        class="pr-2 pl-1">
         <div
           class="d-flex flex-row align-items-center"
           slot="button-content">
@@ -274,9 +276,7 @@ export default {
   flex-direction: row;
   align-self: center;
   justify-content: space-between;
-  font-weight: 600;
   font-size: $font-size-sm;
-  text-transform: uppercase;
   min-height: $top-navbar-height;
   height: $top-navbar-height;
   width: 100%;
@@ -405,7 +405,18 @@ export default {
     height: 100%;
   }
 
+  .nav-item {
+    text-transform: none;
+    font-weight: 500;
+
+    svg {
+      display: flex;
+    }
+  }
+
   #user-menu {
+    font-weight: 600;
+    text-transform: uppercase;
     padding: 0 0.75rem;
     color: inherit;
     display: inline-block;
@@ -430,7 +441,7 @@ export default {
     }
   }
 
-  #main-nav-menu {
+  .main-nav-menu {
     display: flex;
     flex-direction: row;
 
@@ -463,6 +474,8 @@ export default {
         letter-spacing: 0.8px;
         transition: color 250ms;
         padding: .25rem 0;
+        transition: color 200ms;
+        padding: .35rem 0;
 
         &:after {
           content: none;
@@ -473,22 +486,6 @@ export default {
         &.active {
           color: $red;
         }
-      }
-
-      &.nav-button {
-        padding: 0 0.5rem;
-        transition: background-color 250ms;
-        margin-left: 1rem;
-
-        @include media-breakpoint-up(lg) {
-          border: 1px solid $white;
-          border-radius: 2.5rem;
-        }
-      }
-
-      .nav-link {
-        transition: color 200ms;
-        padding: .35rem 0;
 
         &:not(.dropdown-toggle) {
           &:after {
@@ -502,6 +499,17 @@ export default {
             opacity: 1;
             transform: none;
           }
+        }
+      }
+
+      &.nav-button {
+        padding: 0 0.5rem;
+        transition: background-color 250ms;
+        margin-left: 1rem;
+
+        @include media-breakpoint-up(lg) {
+          border: 1px solid $white;
+          border-radius: 2.5rem;
         }
       }
     }
