@@ -3,10 +3,10 @@ import capitalize from 'capitalize'
 export const deleteDomainObject = {
   methods: {
     deleteDomainObject (type, id, callback) {
-      const terminology = type === 'category' ? 'collection' : type
+      const object = type === 'category' ? 'collection' : type
       this.$swal({
-        title: `Delete ${capitalize(terminology)}`,
-        text: `Are you sure you want to delete this ${terminology}?`,
+        title: `Delete ${capitalize(object)}`,
+        text: `Are you sure you want to delete this ${object}?`,
         type: 'warning',
         showCancelButton: true,
         reverseButtons: true,
@@ -17,7 +17,7 @@ export const deleteDomainObject = {
       }).then(result => {
         if (result) {
           this.$notifications.success({
-            message: `${capitalize(terminology)} deleted`
+            message: `${capitalize(object)} deleted`
           })
           callback()
         }

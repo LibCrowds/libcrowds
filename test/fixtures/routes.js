@@ -110,11 +110,6 @@ export const routes = [
     name: 'admin-project-short_name-thumbnail'
   },
   {
-    path: '/admin/collection/:short_name/terminology',
-    component: jest.fn(),
-    name: 'admin-collection-short_name-terminology'
-  },
-  {
     path: '/admin/project/:short_name/tags',
     component: jest.fn(),
     name: 'admin-project-short_name-tags'

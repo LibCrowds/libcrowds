@@ -51,7 +51,7 @@
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.dayStats"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="dailyContributionsData">
             </line-chart>
           </b-card-body>
@@ -66,7 +66,7 @@
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.hourStats"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="hourlyContributionsData">
             </line-chart>
           </b-card-body>
@@ -81,7 +81,7 @@
             :text-variant="darkMode ? 'white' : null">
             <bar-chart
               v-if="userStats.authenticated"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="topUsersData">
             </bar-chart>
           </b-card-body>
@@ -214,13 +214,13 @@ export default {
     },
 
     dailyContributionsDescription () {
-      const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Daily ${taskrun} over the past two weeks`
+      const unit = pluralize('contribution')
+      return `Daily ${unit} over the past two weeks`
     },
 
     hourlyContributionsDescription () {
-      const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Hourly ${taskrun} over the past two weeks`
+      const unit = pluralize('contribution')
+      return `Hourly ${unit} over the past two weeks`
     },
 
     proportionAuthDescription () {

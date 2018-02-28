@@ -11,11 +11,6 @@ export const setCollectionDefaults = function (collection) {
     forum: null,
     tagline: '',
     background: null,
-    terminology: {
-      project: 'project',
-      task: 'task',
-      taskrun: 'task run'
-    },
     license: 'CC0',
     presenter: null,
     presenter_options: {

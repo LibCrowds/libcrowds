@@ -52,15 +52,6 @@ export default {
             }
           },
           {
-            label: 'Terminology',
-            link: {
-              name: 'admin-collection-short_name-terminology',
-              params: {
-                short_name: this.currentCollection.short_name
-              }
-            }
-          },
-          {
             label: 'Tags',
             link: {
               name: 'admin-collection-short_name-tags',

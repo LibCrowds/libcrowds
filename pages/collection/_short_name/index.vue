@@ -146,8 +146,8 @@
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
-            As each {{ collection.info.terminology.task }} is completed,
-            {{ collection.info.terminology.taskRun | pluralize }} are
+            As each task is completed,
+            {{ 'contribution' | pluralize }} are
             analysed and the outcome provided via our results page, making
             the efforts of our volunteers immediately apparent.
           </p>
