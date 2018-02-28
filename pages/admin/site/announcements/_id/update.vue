@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import pick from 'lodash/pick'
 import { metaTags } from '@/mixins/metaTags'
 import ImageUploadForm from '@/components/forms/ImageUpload'
