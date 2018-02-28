@@ -135,7 +135,6 @@ export default {
      * Toggle the announcements.
      */
     toggle () {
-      console.log(window.innerWidth)
       if (window.innerWidth < 768) {
         // Redirect to the announcements page on small screens
         this.$router.push({
