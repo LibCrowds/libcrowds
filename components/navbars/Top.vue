@@ -38,29 +38,41 @@
 
       <slot name="right"></slot>
 
-      <a
-        v-if="showHelp && localConfig.docs"
-        :href="localConfig.docs"
-        target="_blank"
-        class="nav-link d-none d-md-flex px-1">
-        <icon name="question-circle"></icon>
-      </a>
+      <!-- Docs link -->
+      <b-nav-item-dropdown
+        variant="outline-dark"
+        no-caret
+        v-if="showHelp && localConfig.docs">
+        <template slot="button-content">
+          <icon name="question-circle"></icon>
+          <span class="sr-only">Help</span>
+        </template>
+        <b-dropdown-item :href="localConfig.docs" target="_blank">
+          Read the docs
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
 
       <!-- Hide on small screens until the new menu is in place -->
       <announcements class="d-none d-lg-block"></announcements>
 
-      <small-avatar
-        extra-small
-        class="d-none d-md-block"
-        :gravatar="currentUser.name"
-        :info="currentUser.info">
-      </small-avatar>
-
       <b-nav-item-dropdown
         right
+        no-caret
         id="user-menu"
-        class="px-2"
-        :text="currentUser.name">
+        class="px-2">
+
+        <div
+          class="d-flex flex-row align-items-center"
+          slot="button-content">
+          <small-avatar
+            extra-small
+            class="mr-1"
+            :gravatar="currentUser.name"
+            :info="currentUser.info">
+          </small-avatar>
+          <span class="d-none d-md-block mr-1">{{ currentUser.name }}</span>
+          <icon name="caret-down"></icon>
+        </div>
 
         <!-- Profile/settings -->
         <b-dropdown-item
@@ -113,6 +125,7 @@
 <script>
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/bars'
+import 'vue-awesome/icons/caret-down'
 import throttle from 'lodash/throttle'
 import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
