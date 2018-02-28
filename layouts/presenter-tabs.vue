@@ -71,9 +71,7 @@ export default {
     },
 
     projectTutorial () {
-      console.log('getting project tutorial')
       const help = this.projectTemplate.tutorial || ''
-      console.log(this.projectTemplate, marked(help))
       return marked(help)
     },
 

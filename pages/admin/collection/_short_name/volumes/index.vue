@@ -106,7 +106,6 @@ export default {
           this.$notifications.success({
             message: 'Volume deleted'
           })
-          console.log(result)
           this.$store.dispatch('UPDATE_CURRENT_COLLECTION', result)
         }
       })

@@ -152,7 +152,6 @@ export default {
 
       if (this.collectionId) {
         items = items.filter(item => {
-          console.log(item)
           return item.category_id === this.collectionId
         })
       }
