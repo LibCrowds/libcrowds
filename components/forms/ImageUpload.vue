@@ -188,7 +188,8 @@ export default {
     // Bind current image
     if (this.currentImageUrl) {
       this.croppie.bind({
-        url: this.currentImageUrl
+        url: this.currentImageUrl,
+        zoom: 0
       })
     }
   }
