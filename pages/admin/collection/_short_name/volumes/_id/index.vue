@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { getShortname } from '@/mixins/getShortname'
