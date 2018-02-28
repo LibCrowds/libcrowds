@@ -7,7 +7,7 @@
       </label>
       <no-ssr>
         <toggle-button
-          :value="collection.info.published"
+          :value="currentCollection.info.published"
           :sync="true"
           :labels="true"
           class="mb-0"
@@ -46,40 +46,30 @@ export default {
     }
   },
 
-  asyncData ({ app }) {
-    return app.$axios.$get(`/lc/templates/`).then(data => {
-      return {
-        templates: data.templates
-      }
-    })
-  },
-
   components: {
     PybossaForm,
     CardBase
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
-    volumes () {
-      return this.$store.state.currentCollection.info.volumes
-    },
-
     taskPresenterDisabled () {
-      const hasVols = (this.volumes !== 'undefined' && this.volumes.length > 0)
-      const hasTemplates = this.templates.length > 0
-      return hasTemplates && hasVols
+      const templates = this.currentCollection.info.templates
+      const hasTemplates = templates !== 'undefined' && templates.length > 0
+      const volumes = this.currentCollection.info.volumes
+      const hasVolumes = volumes !== 'undefined' && volumes.length > 0
+      return hasTemplates || hasVolumes
     },
 
     form () {
       return {
-        endpoint: `/api/category/${this.collection.id}`,
+        endpoint: `/api/category/${this.currentCollection.id}`,
         method: 'put',
         model: pick(
-          this.collection,
+          this.currentCollection,
           'name',
           'short_name',
           'description',
@@ -191,18 +181,19 @@ export default {
      *   The project.
      */
     togglePublished () {
-      this.collection.info.published = !this.collection.info.published
+      const published = this.currentCollection.info.published
+      this.currentCollection.info.published = !published
       this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
         this.$notifications.success({
-          message: this.collection.info.published
+          message: this.currentCollection.info.published
             ? 'Collection microsite published'
             : 'Collection microsite unpublished'
         })
       }).catch(err => {
-        this.collection.info.published = !this.collection.info.published
+        this.currentCollection.info.published = published
         this.$nuxt.error(err)
       })
     }

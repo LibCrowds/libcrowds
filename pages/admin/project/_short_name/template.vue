@@ -3,7 +3,7 @@
     <templates-table
       show-details
       :collection-id="project.category_id"
-      :templates="templates">
+      :templates="currentCollection.info.templates">
       <template slot="action" scope="tmpl">
         <b-btn
           :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
@@ -50,17 +50,6 @@ export default {
     }
   },
 
-  asyncData ({ params, app, error }) {
-    return app.$axios.$get(`/lc/templates/`).then(data => {
-      return {
-        templates: data.templates.map(tmpl => {
-          tmpl._showDetails = false
-          return tmpl
-        })
-      }
-    })
-  },
-
   components: {
     CardBase,
     TemplatesTable
@@ -71,7 +60,7 @@ export default {
       return this.$store.state.currentProject
     },
 
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
@@ -146,7 +135,7 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const presenter = this.collection.info.presenter
+          const presenter = this.currentCollection.info.presenter
           return this.$axios.$post(`/lc/analysis/${presenter}`, {
             all: 1,
             project_short_name: this.project.short_name
