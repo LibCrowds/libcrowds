@@ -5,9 +5,12 @@
     :title="title"
     :size="size"
     @ok="submit"
+    :header-text-variant="darkMode ? 'white' : null"
     :header-bg-variant="darkMode ? 'dark' : null"
     :body-bg-variant="darkMode ? 'dark' : null"
+    :body-text-variant="darkMode ? 'white' : null"
     :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null"
     @hidden="$emit('hidden')"
     @shown="onShown">
 

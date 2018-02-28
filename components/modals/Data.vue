@@ -2,9 +2,12 @@
   <b-modal
     lazy
     :id="modalId"
+    :header-text-variant="darkMode ? 'white' : null"
     :header-bg-variant="darkMode ? 'dark' : null"
     :body-bg-variant="darkMode ? 'dark' : null"
+    :body-text-variant="darkMode ? 'white' : null"
     :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null"
     title="Download">
     <b-table
       responsive
