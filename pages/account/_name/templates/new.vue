@@ -125,6 +125,7 @@ export default {
           }
         })
       }
+      this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
     }
   },
 

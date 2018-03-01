@@ -92,6 +92,7 @@ export default {
         }
       }).then(data => {
         this.$notifications.flash(data)
+        this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
         this.$router.push({
           name: 'account-name-templates',
           params: {
