@@ -210,7 +210,7 @@ export default {
     getHighlightCls (tmpl, key, baseKey = null) {
       let changed = false
       if (
-        typeof tmpl._original !== 'undefined' &
+        typeof tmpl._original !== 'undefined' &&
         this.ignoreDiff.indexOf(key) < 0
       ) {
         changed = baseKey
