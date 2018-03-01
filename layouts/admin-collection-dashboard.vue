@@ -34,7 +34,7 @@ export default {
             }
           },
           {
-            label: 'Content',
+            label: 'Page Content',
             link: {
               name: 'admin-collection-short_name-content',
               params: {

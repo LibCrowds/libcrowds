@@ -51,7 +51,7 @@ export default {
 
   data () {
     return {
-      title: 'Content',
+      title: 'Page Content',
       description: 'Configure the microsite page content using Markdown.',
       markdownConfig: {
         spellChecker: false
