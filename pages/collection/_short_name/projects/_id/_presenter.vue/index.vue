@@ -63,10 +63,9 @@ export default {
         return t.id === projectData[0].info.template_id
       })
       if (typeof template === 'undefined') {
-        error({statusCode: 500, message: 'Invalid project template'})
-      } else {
-        store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
+        template = {}
       }
+      store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
     }).catch(err => {
       error(err)
     })
@@ -248,10 +247,29 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Validate the project template.
+     */
+    validateTemplate () {
+      if (Object.keys(this.currentTemplate).length === 0) {
+        this.$notifications.error({
+          'message': `Sorry, this project is not linked to a valid template.
+            <br>This should be fixed by an administrator.`
+        })
+        this.$router.push({
+          name: 'collection-short_name-projects',
+          params: {
+            short_name: this.currentCollection.short_name
+          }
+        })
+      }
     }
   },
 
   mounted () {
+    this.validateTemplate()
     this.loadTask()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   }
