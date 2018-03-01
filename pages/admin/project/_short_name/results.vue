@@ -5,13 +5,22 @@
         variant="success"
         size="sm"
         class="my-1"
+        :disabled="!validWebhook"
         @click="analyseAll">
         Analyse All
       </b-btn>
     </div>
+    <b-alert
+      v-if="!validWebhook && !loading"
+      show
+      variant="danger"
+      class="mb-0">
+      Results analysis is currently disabled as the project's webhook is
+      invalid.
+    </b-alert>
 
     <results-table
-      :project="project">
+      :project="currentProject">
       <template slot="action" scope="result">
         <b-btn
           variant="info"
@@ -22,6 +31,7 @@
         <b-btn
           variant="success"
           size="sm"
+          :disabled="!validWebhook"
           @click="analyse(result.item, $event)">
           Analyse
         </b-btn>
@@ -44,7 +54,9 @@ export default {
   data () {
     return {
       title: 'Results',
-      description: 'Check the project\'s results.'
+      description: 'Check the project\'s results.',
+      loading: true,
+      validWebhook: false
     }
   },
 
@@ -54,7 +66,7 @@ export default {
   },
 
   computed: {
-    project () {
+    currentProject () {
       return this.$store.state.currentProject
     },
 
@@ -77,10 +89,11 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const presenter = this.collection.info.presenter
-          return this.$axios.$post(`/lc/analysis/${presenter}`, {
+          return this.$axios.$post(this.currentProject.webhook, {
             all: 1,
-            project_short_name: this.project.short_name
+            project_short_name: this.currentProject.short_name
+          }).catch(err => {
+            this.$notifications.error(err.message)
           })
         }
       }).then(result => {
@@ -99,9 +112,8 @@ export default {
      */
     analyse (result, evt) {
       evt.target.disabled = true
-      const presenter = this.collection.info.presenter
-      return this.$axios.$post(`/lc/analysis/${presenter}`, {
-        project_short_name: this.project.short_name,
+      return this.$axios.$post(this.currentProject.webhook, {
+        project_short_name: this.currentProject.short_name,
         result_id: result.id,
         event: 'task_completed'
       }).then(result => {
@@ -120,6 +132,15 @@ export default {
     showDetails (result) {
       result._showDetails = !result._showDetails
     }
+  },
+
+  mounted () {
+    this.$axios.$get(this.currentProject.webhook).then(result => {
+      this.validWebhook = true
+    }).catch(() => {
+      console.warn(`Invalid Webhook: ${this.currentProject.webhook}`)
+    })
+    this.loading = false
   }
 }
 </script>

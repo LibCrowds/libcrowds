@@ -104,6 +104,8 @@ export default {
         preConfirm: () => {
           return this.$axios.$put(`/api/project/${this.project.id}`, {
             info: infoClone
+          }).catch(err => {
+            this.$notifications.error(err.message)
           })
         }
       }).then(data => {
@@ -135,10 +137,11 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const presenter = this.currentCollection.info.presenter
-          return this.$axios.$post(`/lc/analysis/${presenter}`, {
+          return this.$axios.$post(this.project.webhook, {
             all: 1,
             project_short_name: this.project.short_name
+          }).catch(err => {
+            this.$notifications.error(err.message)
           })
         }
       }).then(result => {
