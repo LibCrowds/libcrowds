@@ -53,7 +53,8 @@ export const setCollectionDefaults = function (collection) {
         'This project is now complete.\n\n The data will be processed ' +
         'and used to directly enabled future research.'
     },
-    volumes: {},
+    volumes: [],
+    templates: [],
     export_formats: []
   }
   collection.info = merge(defaults, collection.info)
@@ -63,6 +64,21 @@ export const setCollectionDefaults = function (collection) {
     convertOldTagStructure(collection)
   } else if (!collection.info.tags) {
     collection.info.tags = {}
+  }
+
+  // Ensure volumes is an array
+  if (!Array.isArray(collection.info.volumes)) {
+    collection.info.volumes = []
+  }
+
+  // Ensure templates is an array
+  if (!Array.isArray(collection.info.templates)) {
+    collection.info.templates = []
+  }
+
+  // Ensure export_formats is an array
+  if (!Array.isArray(collection.info.export_formats)) {
+    collection.info.export_formats = []
   }
 }
 
