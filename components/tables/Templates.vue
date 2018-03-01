@@ -27,17 +27,21 @@
 
         <h5>Project Details</h5>
         <ul class="list-unstyled">
-          <li v-for="key in Object.keys(tmpl.item)" :key="key">
-            <template v-if="['task', 'rules', 'tutorial'].indexOf(key) < 0">
-              <strong>{{ key }}:</strong>
-              {{ tmpl.item[key] }}
-            </template>
+          <li
+            v-for="key in getProjectKeys(tmpl.item)"
+            :class="getHighlightCls(tmpl.item, key)"
+            :key="key">
+            <strong>{{ key }}:</strong>
+            {{ tmpl.item[key] }}
           </li>
         </ul>
 
         <h5 class="mt-3">Task Details</h5>
         <ul class="list-unstyled" v-if="tmpl.item.task">
-          <li v-for="key in Object.keys(tmpl.item.task)" :key="key">
+          <li
+            v-for="key in Object.keys(tmpl.item.task)"
+            :class="getHighlightCls(tmpl.item, key, 'task')"
+            :key="key">
             <strong>{{ key }}:</strong>
             <template v-if="key === 'fields_schema'">
               <ul>
@@ -74,16 +78,19 @@
 
         <h5 class="mt-3">Analysis Rules</h5>
         <ul class="list-unstyled" v-if="tmpl.item.rules">
-          <li v-for="key in Object.keys(tmpl.item.rules)" :key="key">
+          <li
+            v-for="key in Object.keys(tmpl.item.rules)"
+            :class="getHighlightCls(tmpl.item, key, 'rules')"
+            :key="key">
             <strong>{{ key }}:</strong>
             {{ tmpl.item.rules[key] }}
           </li>
         </ul>
         <p v-else>None</p>
-
         <h5 class="mt-3">Tutorial</h5>
         <div
           v-if="tmpl.item.tutorial"
+          :class="getHighlightCls(tmpl.item, 'tutorial')"
           v-html="marked(tmpl.item.tutorial)">
         </div>
         <p v-else>None</p>
@@ -94,6 +101,7 @@
 </template>
 
 <script>
+import isEqual from 'lodash/isEqual'
 import marked from 'marked'
 
 export default {
@@ -132,6 +140,10 @@ export default {
     collectionId: {
       type: Number,
       default: null
+    },
+    ignoreDiff: {
+      type: Array,
+      default: () => ([])
     }
   },
 
@@ -169,6 +181,47 @@ export default {
   },
 
   methods: {
+    /**
+     * Return core project keys.
+     * @param {Object} tmpl
+     *   The template.
+     */
+    getProjectKeys (tmpl) {
+      const hiddenKeys = [
+        'task',
+        'rules',
+        'tutorial',
+        'pending',
+        '_original',
+        '_showDetails'
+      ]
+      return Object.keys(tmpl).filter(key => hiddenKeys.indexOf(key) < 0)
+    },
+
+    /**
+     * Highlight text if the value has changed.
+     * @param {Object} tmpl
+     *   The template.
+     * @param {String} key
+     *   The key to check against the original.
+     * @param {String} baseKey
+     *   The context for checking the key.
+     */
+    getHighlightCls (tmpl, key, baseKey = null) {
+      let changed = false
+      if (
+        typeof tmpl._original !== 'undefined' &
+        this.ignoreDiff.indexOf(key) < 0
+      ) {
+        changed = baseKey
+          ? !isEqual(tmpl[baseKey][key], tmpl._original[baseKey][key])
+          : !isEqual(tmpl[key], tmpl._original[key])
+      }
+      return {
+        'text-success': changed
+      }
+    },
+
     /**
      * Markdown processor.
      */

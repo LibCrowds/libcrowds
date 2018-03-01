@@ -3,7 +3,8 @@
     <templates-table
       show-details
       :fields="tableFields"
-      :templates="templates">
+      :templates="templates"
+      :ignore-diff="['category_name']">
       <template slot="action" scope="tmpl">
         <b-btn
           variant="warning"
