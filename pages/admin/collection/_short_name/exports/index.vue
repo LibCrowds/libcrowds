@@ -64,7 +64,7 @@ export default {
 
   data () {
     return {
-      title: 'Export Formats',
+      title: 'Exports',
       description: `Manage the collection's custom export formats.`,
       tableFields: {
         name: {
