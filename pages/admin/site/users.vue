@@ -109,7 +109,7 @@ export default {
 
   data () {
     return {
-      title: 'Users',
+      title: 'User Management',
       description: 'Manage the platform\'s registered users.',
       tableFields: {
         id: {

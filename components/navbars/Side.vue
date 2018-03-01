@@ -204,7 +204,7 @@ export default {
             }
           },
           {
-            label: 'Users',
+            label: 'User Management',
             link: {
               name: 'admin-site-users'
             }
