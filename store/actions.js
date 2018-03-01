@@ -34,19 +34,6 @@ export default {
     })
   },
 
-  LOAD_COLLECTION: ({ commit }, requestPromise) => {
-    return requestPromise.then(data => {
-      if (!data || !data.length === 1) {
-        throw new Error({ statusCode: 404, message: 'Page not found' })
-      }
-
-      setCollectionDefaults(data[0])
-      commit('SET_ITEM', {
-        key: 'collection', value: data[0]
-      })
-    })
-  },
-
   UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
     if (collection && !isEmpty(collection)) {
       setCollectionDefaults(collection)
