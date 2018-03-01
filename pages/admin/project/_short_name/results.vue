@@ -139,8 +139,9 @@ export default {
       this.validWebhook = true
     }).catch(() => {
       console.warn(`Invalid Webhook: ${this.currentProject.webhook}`)
+    }).then(() => {
+      this.loading = false
     })
-    this.loading = false
   }
 }
 </script>
