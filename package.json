@@ -16,7 +16,7 @@
     "test": "npm run lint && npm run unit"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^4.4.0",
+    "@nuxtjs/axios": "^5.1.1",
     "@nuxtjs/google-analytics": "^2.0.1",
     "@nuxtjs/proxy": "^1.1.2",
     "@nuxtjs/pwa": "^2.0.2",
