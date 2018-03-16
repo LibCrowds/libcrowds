@@ -103,7 +103,7 @@ export default {
           {
             label: 'Analysis',
             link: {
-              name: 'account-name-templates-id-rules',
+              name: 'account-name-templates-id-analysis',
               params: {
                 name: this.currentUser.name,
                 id: this.currentTemplate.id
