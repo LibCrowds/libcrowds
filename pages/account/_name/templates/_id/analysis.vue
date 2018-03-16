@@ -3,7 +3,7 @@
     <p slot="guidance">
       The form below can be used to configure the analysis process that runs
       when each task is completed. The output of this analysis process is used
-      to update the final result for the task.
+      to generate the final result for each task.
     </p>
     <hr>
 
@@ -18,39 +18,27 @@
       submit-text="Update"
       :form="form"
       @success="onFormSuccess">
-      <div slot="bottom" class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
-            :value="form.model.trim_punctuation"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('trim_punctuation', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Trim punctuation from the begining and end of transcribed text
-        </label>
+      <div slot="bottom" class="form-group mt-1">
+        <div class="d-flex">
+          <no-ssr>
+            <toggle-button
+              :value="form.model.trim_punctuation"
+              :sync="true"
+              :labels="true"
+              @change="updateModelBoolean('trim_punctuation', $event)">
+            </toggle-button>
+          </no-ssr>
+          <label class="ml-1">
+            Trim punctuation
+          </label>
+        </div>
+        <div class="hint">
+          Removes any punctuation from the beginning and end of any
+          transcriped text.
+        </div>
       </div>
 
       <div
-        v-if="presenter == 'iiif-annotation'"
-        slot="bottom"
-        class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
-            :value="form.model.concatenate"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('concatenate', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Concatenate all fields into a single annotation
-        </label>
-      </div>
-
-      <div
-        v-if="presenter == 'iiif-annotation'"
         slot="bottom"
         class="form-group mt-1">
         <div class="d-flex">
@@ -74,7 +62,7 @@
       </div>
 
       <div
-        v-if="presenter == 'iiif-annotation' && form.model.date_format"
+        v-if="form.model.date_format"
         slot="bottom"
         class="form-group mt-1">
         <div class="d-flex">
@@ -98,7 +86,7 @@
       </div>
 
       <div
-        v-if="presenter == 'iiif-annotation' && form.model.date_format"
+        v-if="form.model.date_format"
         slot="bottom"
         class="form-group mt-1">
         <div class="d-flex">
@@ -123,7 +111,6 @@
       </div>
 
       <div
-        v-if="presenter == 'iiif-annotation'"
         slot="bottom"
         class="d-flex form-group mt-1">
         <no-ssr>
@@ -135,7 +122,7 @@
           </toggle-button>
         </no-ssr>
         <label class="ml-1">
-          Set annotation target from parent selection task
+          Set annotation target from parent task
         </label>
       </div>
 
@@ -165,7 +152,6 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
       return {
-        presenter: data.presenter,
         form: {
           endpoint: endpoint,
           method: 'post',
@@ -196,7 +182,8 @@ export default {
                 ],
                 selectOptions: {
                   hideNoneSelectedText: true
-                }
+                },
+                hint: 'Convert the case of transcriptions'
               },
               {
                 model: 'whitespace',
@@ -222,7 +209,8 @@ export default {
                 ],
                 selectOptions: {
                   hideNoneSelectedText: true
-                }
+                },
+                hint: 'Transform any whitespace within transcriptions'
               }
             ]
           }
