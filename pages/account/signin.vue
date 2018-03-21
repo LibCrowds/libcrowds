@@ -105,6 +105,8 @@ export default {
     onSuccess () {
       this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios, this.$ga)
         .then(data => {
+          console.log(data)
+          this.$flarum.login()
           this.$router.push({ path: this.next })
         })
     }
