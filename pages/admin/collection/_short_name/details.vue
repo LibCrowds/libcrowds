@@ -1,17 +1,19 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <div slot="controls" class="d-flex align-items-center float-right">
+    <div slot="controls" class="d-flex align-items-center float-md-right">
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
       </label>
-      <toggle-button
-        :value="collection.info.published"
-        :sync="true"
-        :labels="true"
-        class="mb-0"
-        @change="togglePublished">
-      </toggle-button>
+      <no-ssr>
+        <toggle-button
+          :value="currentCollection.info.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </no-ssr>
     </div>
 
     <pybossa-form
@@ -26,7 +28,6 @@
 <script>
 import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { licenses } from '@/mixins/licenses'
 import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
@@ -36,12 +37,12 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, licenses, metaTags ],
+  mixins: [ fetchCollectionByName, licenses, metaTags ],
 
   data () {
     return {
-      title: 'Settings',
-      description: 'Configure the core settings for the microsite.'
+      title: 'Core Details',
+      description: 'Configure the core details for the microsite.'
     }
   },
 
@@ -51,16 +52,24 @@ export default {
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    taskPresenterDisabled () {
+      const templates = this.currentCollection.info.templates
+      const hasTemplates = templates !== 'undefined' && templates.length > 0
+      const volumes = this.currentCollection.info.volumes
+      const hasVolumes = volumes !== 'undefined' && volumes.length > 0
+      return hasTemplates || hasVolumes
     },
 
     form () {
       return {
-        endpoint: `/api/category/${this.collection.id}`,
+        endpoint: `/api/category/${this.currentCollection.id}`,
         method: 'put',
         model: pick(
-          this.collection,
+          this.currentCollection,
           'name',
           'short_name',
           'description',
@@ -136,6 +145,11 @@ export default {
               model: 'info.presenter',
               label: 'Task Presenter',
               type: 'select',
+              disabled: () => this.taskPresenterDisabled,
+              hint: this.taskPresenterDisabled
+                ? 'The task presenter cannot be updated while the ' +
+                  'collection contains templates or volumes'
+                : '',
               values: [
                 {
                   id: 'iiif-annotation',
@@ -158,7 +172,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Collection updated' })
+      this.$notifications.success({ message: 'Collection updated' })
     },
 
     /**
@@ -167,18 +181,19 @@ export default {
      *   The project.
      */
     togglePublished () {
-      this.collection.info.published = !this.collection.info.published
+      const published = this.currentCollection.info.published
+      this.currentCollection.info.published = !published
       this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
-        this.notifySuccess({
-          message: this.collection.info.published
+        this.$notifications.success({
+          message: this.currentCollection.info.published
             ? 'Collection microsite published'
             : 'Collection microsite unpublished'
         })
       }).catch(err => {
-        this.collection.info.published = !this.collection.info.published
+        this.currentCollection.info.published = published
         this.$nuxt.error(err)
       })
     }

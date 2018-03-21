@@ -16,21 +16,19 @@
     <span class="top-navbar-left">
       <b-link
         v-if="navbarBrand"
-        class="navbar-brand ml-1 mr-2"
-        :to="{
-          name: 'index'
-        }">
+        class="navbar-brand d-none d-lg-block ml-1 mr-2"
+        @click="onNavbarBrandClick">
         <span>{{ navbarBrand }}</span>
       </b-link>
 
       <!-- Main menu -->
-      <b-navbar-nav id="main-nav-menu" class="d-none d-lg-flex">
+      <b-navbar-nav class="main-nav-menu d-none d-lg-flex">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
           exact
           :to="item.link"
-          @click="$emit('menuclick')">
+          @click="$emit('itemclick', item.link)">
           {{ item.label }}
         </b-nav-item>
       </b-navbar-nav>
@@ -40,28 +38,43 @@
 
       <slot name="right"></slot>
 
-      <a
-        v-if="showHelp && localConfig.docs"
-        :href="localConfig.docs"
-        target="_blank"
-        class="nav-link d-flex px-1">
-        <icon name="question-circle"></icon>
-      </a>
+      <!-- Docs -->
+      <b-navbar-nav
+        v-if="showHelp && localConfig.docs">
+        <b-nav-item
+          class="px-1"
+          :href="localConfig.docs"
+          target="_blank">
+          <span class="d-none d-md-block">Go to docs</span>
+          <icon
+            name="question-circle"
+            class="d-md-none"
+            scale="1.2">
+          </icon>
+        </b-nav-item>
+      </b-navbar-nav>
 
-      <!-- Hide on small screens until the new menu is in place -->
-      <announcements class="d-none d-lg-block"></announcements>
+      <!-- Announcements -->
+      <announcements></announcements>
 
-      <small-avatar
-        extra-small
-        :gravatar="currentUser.name"
-        :domain-object="currentUser">
-      </small-avatar>
-
+      <!-- User menu -->
       <b-nav-item-dropdown
         right
+        no-caret
         id="user-menu"
-        class="px-2"
-        :text="currentUser.name">
+        class="pr-2 pl-1">
+        <div
+          class="d-flex flex-row align-items-center"
+          slot="button-content">
+          <small-avatar
+            extra-small
+            class="mr-1"
+            :gravatar="currentUser.name"
+            :info="currentUser.info">
+          </small-avatar>
+          <span class="d-none d-md-block mr-1">{{ currentUser.name }}</span>
+          <icon name="caret-down"></icon>
+        </div>
 
         <!-- Profile/settings -->
         <b-dropdown-item
@@ -87,25 +100,26 @@
     </b-navbar-nav>
 
     <!-- Sign in/sign up -->
-    <b-navbar-nav id="sign-in-up" right class="top-navbar-right" v-else>
-      <b-nav-item
-        exact
+    <b-navbar-nav right class="top-navbar-right" v-else>
+      <b-btn
+        variant="outline-dark"
+        class="px-2 border-0"
         :to="{
           name: 'account-signin',
           query: {
             next: $route.path
           }
         }">
-        Sign in
-      </b-nav-item>
-      <b-nav-item
-        exact
-        id="btn-register"
+        <p class="mb-0">Sign in</p>
+      </b-btn>
+      <b-btn
+        :variant="navbarVariant === 'transparent' ? 'outline-dark' : 'success'"
+        class="px-2 border-0"
         :to="{
           name: 'account-register'
         }">
-        Sign up
-      </b-nav-item>
+        <p class="mb-0">Sign up</p>
+      </b-btn>
     </b-navbar-nav>
   </b-navbar>
 </template>
@@ -113,16 +127,16 @@
 <script>
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/bars'
+import 'vue-awesome/icons/caret-down'
 import throttle from 'lodash/throttle'
 import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import SmallAvatar from '@/components/avatars/Small'
-import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 import Announcements from '@/components/lists/Announcements'
 
 export default {
-  mixins: [ notifications, currentMicrositeNavItems ],
+  mixins: [ currentMicrositeNavItems ],
 
   data () {
     return {
@@ -147,6 +161,10 @@ export default {
     showHelp: {
       type: Boolean,
       default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -165,20 +183,42 @@ export default {
     },
 
     navbarType () {
-      return this.darkMode ? 'dark' : 'light'
+      return this.dark ? 'dark' : 'light'
     }
   },
 
   methods: {
     /**
-    * Sign the user out.
-    */
+     * Sign the user out.
+     */
     signout () {
       return this.$axios.$get('/account/signout').then(data => {
         this.$store.dispatch('LOGOUT')
         this.$router.push({ name: 'index' })
-        this.flash(data)
+        this.$notifications.flash(data)
       })
+    },
+
+    /**
+     * Handle click of the navbar brand.
+     */
+    onNavbarBrandClick () {
+      const micrositeShortName = this.$route.path.startsWith('/collection')
+        ? this.$route.path.replace(/^(\/collection\/)/, '').split('/')[0]
+        : null
+      let link = {
+        name: 'index'
+      }
+      if (micrositeShortName) {
+        link = {
+          name: 'collection-short_name',
+          params: {
+            short_name: micrositeShortName
+          }
+        }
+      }
+      this.$router.push(link)
+      this.$emit('itemclick', link)
     },
 
     /**
@@ -236,14 +276,19 @@ export default {
   flex-direction: row;
   align-self: center;
   justify-content: space-between;
-  font-weight: 600;
   font-size: $font-size-sm;
-  text-transform: uppercase;
   min-height: $top-navbar-height;
   height: $top-navbar-height;
   width: 100%;
   z-index: $zindex-fixed;
   transition: background-color 200ms;
+
+  .btn-outline-dark {
+    @include hover-focus {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
 
   &.navbar-light {
     background-color: $white;
@@ -254,10 +299,10 @@ export default {
   }
 
   &.navbar-dark {
-    background-color: $gray-1200;
+    background-color: $gray-1000;
 
     .btn {
-      border-right: 1px solid $gray-1200;
+      border-right: 1px solid $gray-1000;
       border-bottom: 1px solid $gray-800;
     }
 
@@ -360,7 +405,18 @@ export default {
     height: 100%;
   }
 
+  .nav-item {
+    text-transform: none;
+    font-weight: 500;
+
+    svg {
+      display: flex;
+    }
+  }
+
   #user-menu {
+    font-weight: 600;
+    text-transform: uppercase;
     padding: 0 0.75rem;
     color: inherit;
     display: inline-block;
@@ -385,7 +441,7 @@ export default {
     }
   }
 
-  #main-nav-menu {
+  .main-nav-menu {
     display: flex;
     flex-direction: row;
 
@@ -418,6 +474,8 @@ export default {
         letter-spacing: 0.8px;
         transition: color 250ms;
         padding: .25rem 0;
+        transition: color 200ms;
+        padding: .35rem 0;
 
         &:after {
           content: none;
@@ -428,22 +486,6 @@ export default {
         &.active {
           color: $red;
         }
-      }
-
-      &.nav-button {
-        padding: 0 0.5rem;
-        transition: background-color 250ms;
-        margin-left: 1rem;
-
-        @include media-breakpoint-up(lg) {
-          border: 1px solid $white;
-          border-radius: 2.5rem;
-        }
-      }
-
-      .nav-link {
-        transition: color 200ms;
-        padding: .35rem 0;
 
         &:not(.dropdown-toggle) {
           &:after {
@@ -459,24 +501,17 @@ export default {
           }
         }
       }
-    }
-  }
 
-  #sign-in-up {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    font-size: $font-size-sm;
-    font-weight: 600;
-  }
+      &.nav-button {
+        padding: 0 0.5rem;
+        transition: background-color 250ms;
+        margin-left: 1rem;
 
-  #btn-register {
-    background-color: $green;
-    font-weight: 400;
-    border-bottom: 1px solid $green;
-
-    a {
-      color: $white;
+        @include media-breakpoint-up(lg) {
+          border: 1px solid $white;
+          border-radius: 2.5rem;
+        }
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 <template>
   <div id="collection-fullscreen-dark-layout">
     <default-base
+      force-dark-mode
       :navbar-brand="currentCollection.name"
       hide-footer>
       <div class="content">
@@ -32,15 +33,6 @@ export default {
 #collection-fullscreen-dark-layout {
   .content {
     height: calc(100vh - #{$top-navbar-height});
-  }
-
-  #collection-navbar {
-    background-color: #0D0D0D;
-
-    .container {
-      margin: 0 1rem;
-      max-width: 100%;
-    }
   }
 }
 </style>

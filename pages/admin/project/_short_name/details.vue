@@ -1,33 +1,35 @@
 <template>
   <card-base :title="title" :description="description">
-
     <pybossa-form
       submit-text="Update"
       :form="form">
       <div slot="bottom" class="d-flex form-group mt-1">
-        <toggle-button
-          :value="form.model.protect"
-          :sync="true"
-          :labels="true"
-          @change="updateModelBoolean('protect', $event)">
-        </toggle-button>
+        <no-ssr>
+          <toggle-button
+            :value="form.model.protect"
+            :sync="true"
+            :labels="true"
+            @change="updateModelBoolean('protect', $event)">
+          </toggle-button>
+        </no-ssr>
         <label class="ml-1">
           Require a password
         </label>
       </div>
       <div slot="bottom" class="d-flex form-group mt-1">
-        <toggle-button
-          :value="form.model.allow_anonymous_contributors"
-          :sync="true"
-          :labels="true"
-          @change="updateModelBoolean('allow_anonymous_contributors', $event)">
-        </toggle-button>
+        <no-ssr>
+          <toggle-button
+            :value="form.model.allow_anonymous_contributors"
+            :sync="true"
+            :labels="true"
+            @change="updateModelBoolean('allow_anonymous_contributors', $event)">
+          </toggle-button>
+        </no-ssr>
         <label class="ml-1">
           Allow anonymous contributors
         </label>
       </div>
     </pybossa-form>
-
   </card-base>
 </template>
 
@@ -44,8 +46,8 @@ export default {
 
   data () {
     return {
-      title: 'Settings',
-      description: 'Configure the core settings for the project'
+      title: 'Core Details',
+      description: 'Configure the core details for the project'
     }
   },
 
@@ -54,7 +56,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         form: {
-          endpoint: `project/${params.short_name}/update`,
+          endpoint: endpoint,
           method: 'post',
           model: data.form,
           schema: {
@@ -79,12 +81,6 @@ export default {
                 placeholder: 'Short description shown on the project cards'
               },
               {
-                model: 'webhook',
-                label: 'Webhook URL',
-                type: 'input',
-                inputType: 'text'
-              },
-              {
                 model: 'pasword',
                 label: 'Password',
                 type: 'input',
@@ -104,16 +100,22 @@ export default {
     CardBase
   },
 
+  computed: {
+    project () {
+      return this.$store.state.currentProject
+    }
+  },
+
   methods: {
     /**
-     * Redirect the user on form submit success.
+     * Update model boolean.
      * @param {String} key
      *   The model key.
      * @param {Object} evt
      *   The event.
      */
     updateModelBoolean (key, evt) {
-      this.model[key] = evt.value
+      this.form.model[key] = evt.value
     }
   }
 }

@@ -1,12 +1,12 @@
 <template>
-  <card-base :header="title">
+  <card-base :title="title">
     <p class="lead">
       {{ description }}
     </p>
-    <template slot="footer">
+    <b-card-footer>
       <div class="text-right">
         <b-btn
-          variant="outline-dark"
+          variant="dark"
           @click="subscribe(false)">
           No thanks
         </b-btn>
@@ -17,7 +17,7 @@
           Sure, sign me up!
         </b-btn>
       </div>
-    </template>
+    </b-card-footer>
   </card-base>
 </template>
 

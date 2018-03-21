@@ -23,7 +23,6 @@ const config = {
   build: {
     vendor: [
       'bootstrap-vue',
-      'papaparse',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
@@ -100,6 +99,7 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/cookies' },
     { src: '~/plugins/cookie-consent', ssr: false },
     { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
@@ -148,7 +148,7 @@ const config = {
   proxy: {
     '/api': localConfig.pybossaHost,
     '/z3950': localConfig.pybossaHost,
-    '/libcrowds': localConfig.pybossaHost
+    '/lc': localConfig.pybossaHost
   },
   manifest: {
     name: localConfig.brand,

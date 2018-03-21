@@ -1,35 +1,37 @@
 <template>
   <card-base :title="title" :description="description">
-    <div slot="controls" class="float-right">
-      <b-btn
-        variant="success"
-        class="mr-1"
-        size="sm"
-        @click="analyseEmpty">
-        Analyse Empty
-      </b-btn>
+    <div slot="controls" class="float-md-right">
       <b-btn
         variant="success"
         size="sm"
+        class="my-1"
+        :disabled="!validWebhook"
         @click="analyseAll">
         Analyse All
       </b-btn>
     </div>
+    <b-alert
+      v-if="!validWebhook && !loading"
+      show
+      variant="danger"
+      class="mb-0">
+      Results analysis is currently disabled as the project's webhook is
+      invalid.
+    </b-alert>
 
     <results-table
-      no-border
-      :project="project">
+      :project="currentProject">
       <template slot="action" scope="result">
         <b-btn
           variant="info"
           size="sm"
-          class="mr-1"
           @click="showDetails(result.item)">
           {{ result.item._showDetails ? 'Hide Details' : 'Show Details' }}
         </b-btn>
         <b-btn
           variant="success"
           size="sm"
+          :disabled="!validWebhook"
           @click="analyse(result.item, $event)">
           Analyse
         </b-btn>
@@ -39,7 +41,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import ResultsTable from '@/components/tables/Results'
@@ -48,12 +49,14 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
       title: 'Results',
-      description: 'Check the project\'s results.'
+      description: 'Check the project\'s results.',
+      loading: true,
+      validWebhook: false
     }
   },
 
@@ -63,7 +66,7 @@ export default {
   },
 
   computed: {
-    project () {
+    currentProject () {
       return this.$store.state.currentProject
     },
 
@@ -86,31 +89,17 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          const presenter = this.collection.info.presenter
-          return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
+          return this.$axios.$post(this.currentProject.webhook, {
             all: 1,
-            project_short_name: this.project.short_name
+            project_short_name: this.currentProject.short_name
+          }).catch(err => {
+            this.$notifications.error(err.message)
           })
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({ message: result.message })
+          this.$notifications.success({ message: result.message })
         }
-      })
-    },
-
-    /**
-     * Analyse empty results.
-     */
-    analyseEmpty () {
-      const presenter = this.collection.info.presenter
-      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
-        empty: 1,
-        project_short_name: this.project.short_name
-      }).then(result => {
-        this.notifySuccess({ message: result.message })
-      }).catch(err => {
-        this.$nuxt.error(err)
       })
     },
 
@@ -123,14 +112,13 @@ export default {
      */
     analyse (result, evt) {
       evt.target.disabled = true
-      const presenter = this.collection.info.presenter
-      return this.$axios.$post(`/libcrowds/analysis/${presenter}`, {
-        project_short_name: this.project.short_name,
+      return this.$axios.$post(this.currentProject.webhook, {
+        project_short_name: this.currentProject.short_name,
         result_id: result.id,
         event: 'task_completed'
       }).then(result => {
         evt.target.disabled = false
-        this.notifySuccess({ message: result.message })
+        this.$notifications.success({ message: result.message })
       }).catch(err => {
         this.$nuxt.error(err)
       })
@@ -144,6 +132,16 @@ export default {
     showDetails (result) {
       result._showDetails = !result._showDetails
     }
+  },
+
+  mounted () {
+    this.$axios.$get(this.currentProject.webhook).then(result => {
+      this.validWebhook = true
+    }).catch(() => {
+      console.warn(`Invalid Webhook: ${this.currentProject.webhook}`)
+    }).then(() => {
+      this.loading = false
+    })
   }
 }
 </script>
