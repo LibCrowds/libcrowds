@@ -108,7 +108,7 @@
     "postcss-url": "^7.1.2",
     "regenerator-runtime": "^0.11.0",
     "sass-loader": "^6.0.6",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.0",
     "vue-template-es2015-compiler": "^1.6.0",
     "vue-test-utils": "1.0.0-beta.11",
     "webpack-node-externals": "^1.6.0"
