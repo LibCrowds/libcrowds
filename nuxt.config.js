@@ -171,7 +171,10 @@ const config = {
   router: {
     middleware: [
       'session'
-    ]
+    ],
+    scrollBehavior: () => {
+      return { x: 0, y: 0 }
+    }
   }
 }
 
