@@ -1,9 +1,9 @@
 <template>
   <card-base :title="title" :description="description">
     <b-btn
-      variant="success"
+      :variant="darkMode ? 'dark' : 'success'"
       size="sm"
-      class="float-right"
+      class="float-md-right"
       slot="controls"
       :to="{
         name: 'admin-site-announcements-new'
@@ -19,7 +19,6 @@
       <template slot="action" scope="announcement">
         <b-btn
           variant="success"
-          class="mr-1"
           size="sm"
           :to="{
             name: 'admin-site-announcements-id-update',

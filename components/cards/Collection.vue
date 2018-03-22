@@ -2,6 +2,8 @@
   <b-card
     no-body
     show-footer
+    :bg-variant="darkMode ? 'dark' : null"
+    :text-variant="darkMode ? 'white' : null"
     class="collection-card my-3">
     <nuxt-link
       :to="{
@@ -62,8 +64,22 @@ export default {
 .collection-card {
   border: none;
 
+  &.bg-dark {
+    .card-title {
+      color: $gray-400;
+    }
+
+    hr {
+      border-color: $gray-900;
+    }
+
+    .collection-card-img:after {
+      background-color: rgba($gray-1000, 0.4);
+    }
+  }
+
   a {
-    color: $gray-800;
+    color: inherit;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -116,7 +132,7 @@ export default {
   }
 
   .card-footer {
-    background-color: $white;
+    background-color: inherit;
     border: none;
     color: $gray-600;
     display: flex;

@@ -59,10 +59,10 @@ exports[`Site admin dashboard layout renders correctly 1`] = `
     </ul>
   </nav>
   <div class="dashboard">
-    <nav id="app-navbar"
+    <nav id="top-navbar"
          class="navbar navbar-light"
     >
-      <span class="app-navbar-left">
+      <span class="top-navbar-left">
         <a href="#/"
            target="_self"
            class="active navbar-brand d-lg-none"
@@ -73,7 +73,7 @@ exports[`Site admin dashboard layout renders correctly 1`] = `
         </a>
       </span>
       <ul right
-          class="app-navbar-right border-bottom navbar-nav"
+          class="top-navbar-right border-bottom navbar-nav"
       >
         <a href="http://docs.example.com"
            target="_blank"
@@ -228,7 +228,33 @@ exports[`Site admin dashboard layout renders correctly 1`] = `
             class="footer"
     >
       <div class="container-fluid">
-        <p class="my-2 mx-1 float-right">
+        <ul class="list-inline my-2 d-flex flex-row align-items-center">
+          <li class="list-inline-item mx-1">
+            <a href="https://twitter.com/mytwitterhandle"
+               class="text-muted"
+            >
+              <icon name="twitter">
+              </icon>
+            </a>
+          </li>
+          <li class="list-inline-item mx-1">
+            <a href="mailto:me@example.com"
+               class="text-muted"
+            >
+              <icon name="envelope">
+              </icon>
+            </a>
+          </li>
+          <li class="list-inline-item mx-1">
+            <a href="https://github.com/Organization/repo"
+               class="text-muted"
+            >
+              <icon name="github">
+              </icon>
+            </a>
+          </li>
+        </ul>
+        <p class="my-2 mx-1 float-right text-muted">
           &copy; My Company, 2017
         </p>
       </div>

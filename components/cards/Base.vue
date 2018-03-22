@@ -1,5 +1,9 @@
 <template>
-  <b-card class="card-base" no-body>
+  <b-card
+    no-body
+    class="card-base"
+    :bg-variant="darkMode ? 'dark' : null"
+    :text-variant="darkMode ? 'white' : null">
     <b-row
       slot="header"
       class="mb-0 d-flex align-items-center">
@@ -16,13 +20,34 @@
       </b-col>
     </b-row>
 
+    <template v-if="$slots.guidance">
+      <b-card-body>
+        <slot name="guidance"></slot>
+        <p v-if="localConfig.docs" class="mb-0">
+          <small>
+            See the
+            <a :href="localConfig.docs" target="_blank">full documentation</a>
+            for further guidance.
+          </small>
+        </p>
+      </b-card-body>
+    </template>
+
     <slot></slot>
 
   </b-card>
 </template>
 
 <script>
+import localConfig from '@/local.config'
+
 export default {
+  data () {
+    return {
+      localConfig: localConfig
+    }
+  },
+
   props: {
     title: {
       type: String,

@@ -1,13 +1,12 @@
 import capitalize from 'capitalize'
-import { notifications } from '@/mixins/notifications'
 
 export const deleteDomainObject = {
   methods: {
     deleteDomainObject (type, id, callback) {
-      const terminology = type === 'category' ? 'collection' : type
+      const object = type === 'category' ? 'collection' : type
       this.$swal({
-        title: `Delete ${capitalize(terminology)}`,
-        text: `Are you sure you want to delete this ${terminology}?`,
+        title: `Delete ${capitalize(object)}`,
+        text: `Are you sure you want to delete this ${object}?`,
         type: 'warning',
         showCancelButton: true,
         reverseButtons: true,
@@ -16,15 +15,13 @@ export const deleteDomainObject = {
           return this.$axios.$delete(`/api/${type}/${id}`)
         }
       }).then(result => {
-        if (result.value) {
-          this.notifySuccess({
-            message: `${capitalize(terminology)} deleted`
+        if (result) {
+          this.$notifications.success({
+            message: `${capitalize(object)} deleted`
           })
           callback()
         }
       })
     }
-  },
-
-  mixins: [ notifications ]
+  }
 }

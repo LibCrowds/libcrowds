@@ -8,7 +8,7 @@
 
     <div class="text-center">
       <b-btn
-        variant="success"
+        :variant="darkMode ? 'dark' : 'success'"
         size="lg"
         :to="{
           name: 'collection-short_name-projects',

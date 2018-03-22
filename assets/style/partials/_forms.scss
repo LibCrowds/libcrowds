@@ -1,7 +1,10 @@
-.form-container {
+.form-base,
+.form-container,
+.form-base.form-container {
   border: none;
 
-  label {
+  label,
+  .col-form-legend {
     font-weight: 600;
     font-size: $font-size-sm;
   }
@@ -22,11 +25,34 @@
 
   .form-group {
     margin-bottom: 2rem;
+
+    .hint,
+    .form-text {
+      margin-top: 0.25rem;
+      font-size: $font-size-sm;
+      color: $text-muted;
+    }
   }
 }
 
 .input-group-btn {
   input {
     border-radius: 0;
+  }
+}
+
+.form-dark {
+  .form-control,
+  .custom-file-control {
+    color: $gray-100;
+    background-color: $gray-800;
+    border-color: $gray-800;
+  }
+
+  .btn,
+  .custom-file-control:before {
+    color: $gray-100;
+    background-color: $gray-1200;
+    border-color: $gray-1200;
   }
 }

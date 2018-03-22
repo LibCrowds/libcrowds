@@ -1,7 +1,5 @@
 <template>
-  <dashboard-base
-    :navItems="navItems"
-    :titleBase="titleBase">
+  <dashboard-base :nav-items="navItems">
   </dashboard-base>
 </template>
 
@@ -21,12 +19,9 @@ export default {
       return this.$store.state.currentUser
     },
 
-    titleBase () {
-      return this.currentUser.fullname
-    },
-
     navItems () {
-      return [
+      const items = {}
+      items[this.currentUser.name] = [
         {
           label: 'Profile',
           link: {
@@ -64,6 +59,7 @@ export default {
           }
         }
       ]
+      return items
     }
   },
 
