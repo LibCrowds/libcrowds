@@ -31,8 +31,12 @@ export default {
   computed: {
     mergedOptions () {
       const defaults = {
-        height: '300px',
-        plugins: [
+        height: '300px'
+      }
+
+      // $chartist will only be available on the client
+      if (this.$chartist) {
+        defaults.plugins = [
           this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
               let text = pluralize(this.unit, Number(val))

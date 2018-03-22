@@ -1,5 +1,5 @@
 <template>
-  <card-base :header="title" :description="description">
+  <card-base :title="title" :description="description">
     <pybossa-form
       v-if="!hasError"
       submitText="Reset"

@@ -29,7 +29,6 @@
 import keys from 'lodash/keys'
 import intersection from 'lodash/intersection'
 import axios from 'axios'
-import { notifications } from '@/mixins/notifications'
 import localConfig from '@/local.config'
 import FormBase from '@/components/forms/Base'
 
@@ -41,8 +40,6 @@ export default {
       processing: false
     }
   },
-
-  mixins: [ notifications ],
 
   components: {
     FormBase
@@ -78,6 +75,10 @@ export default {
       validator: (value) => {
         return ['circle', 'square'].indexOf(value) > -1
       }
+    },
+    currentImageUrl: {
+      type: String,
+      default: ''
     },
     viewportWidth: {
       type: Number,
@@ -130,7 +131,7 @@ export default {
         },
         withCredentials: true
       }).then(response => {
-        this.flash(response.data)
+        this.$notifications.flash(response.data)
       }).catch(err => {
         this.$nuxt.error(err)
       }).then(() => {
@@ -183,6 +184,14 @@ export default {
         this.model.y2 = Math.floor(data.points[3])
       }
     })
+
+    // Bind current image
+    if (this.currentImageUrl) {
+      this.croppie.bind({
+        url: this.currentImageUrl,
+        zoom: 0
+      })
+    }
   }
 }
 </script>

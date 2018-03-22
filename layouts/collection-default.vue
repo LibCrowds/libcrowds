@@ -3,7 +3,7 @@
     fixed-top
     transparent
     :navbar-brand="currentCollection.name"
-    :background-image-url="currentCollection.info.background">
+    :background-image-url="backgroundImageUrl">
     <nuxt></nuxt>
   </default-base>
 </template>
@@ -19,6 +19,13 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    backgroundImageUrl () {
+      if (this.currentCollection.info.background) {
+        return this.currentCollection.info.background
+      }
+      return '~/assets/img/app-background.jpg'
     }
   }
 }

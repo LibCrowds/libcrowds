@@ -39,14 +39,13 @@ import identity from 'lodash/identity'
 import pickBy from 'lodash/pickBy'
 import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
@@ -95,7 +94,7 @@ export default {
       } finally {
         this.processing = false
       }
-      this.notifySuccess({ message: 'Tags updated' })
+      this.$notifications.success({ message: 'Tags updated' })
     }
   }
 }

@@ -25,19 +25,9 @@ export const routes = [
     name: 'help-api'
   },
   {
-    path: '/account/newsletter',
-    component: jest.fn(),
-    name: 'account-newsletter'
-  },
-  {
     path: '/admin/site',
     component: jest.fn(),
     name: 'admin-site'
-  },
-  {
-    path: '/admin/project',
-    component: jest.fn(),
-    name: 'admin-project'
   },
   {
     path: '/account/register',
@@ -55,9 +45,19 @@ export const routes = [
     name: 'account-reset-password'
   },
   {
+    path: '/admin/project',
+    component: jest.fn(),
+    name: 'admin-project'
+  },
+  {
     path: '/account/forgot-password',
     component: jest.fn(),
     name: 'account-forgot-password'
+  },
+  {
+    path: '/account/newsletter',
+    component: jest.fn(),
+    name: 'account-newsletter'
   },
   {
     path: '/admin/collection',
@@ -65,9 +65,14 @@ export const routes = [
     name: 'admin-collection'
   },
   {
-    path: '/admin/site/announcements',
+    path: '/admin/project/new',
     component: jest.fn(),
-    name: 'admin-site-announcements'
+    name: 'admin-project-new'
+  },
+  {
+    path: '/admin/site/users',
+    component: jest.fn(),
+    name: 'admin-site-users'
   },
   {
     path: '/account/register/confirmation',
@@ -75,19 +80,19 @@ export const routes = [
     name: 'account-register-confirmation'
   },
   {
-    path: '/admin/site/jobs',
-    component: jest.fn(),
-    name: 'admin-site-jobs'
-  },
-  {
     path: '/admin/collection/new',
     component: jest.fn(),
     name: 'admin-collection-new'
   },
   {
-    path: '/admin/site/users',
+    path: '/admin/site/announcements',
     component: jest.fn(),
-    name: 'admin-site-users'
+    name: 'admin-site-announcements'
+  },
+  {
+    path: '/admin/site/jobs',
+    component: jest.fn(),
+    name: 'admin-site-jobs'
   },
   {
     path: '/admin/site/announcements/new',
@@ -100,24 +105,39 @@ export const routes = [
     name: 'admin-site-announcements-id-update'
   },
   {
-    path: '/admin/collection/:short_name/featured',
+    path: '/admin/project/:short_name/thumbnail',
     component: jest.fn(),
-    name: 'admin-collection-short_name-featured'
+    name: 'admin-project-short_name-thumbnail'
   },
   {
-    path: '/admin/collection/:short_name/celebration',
+    path: '/admin/project/:short_name/tags',
     component: jest.fn(),
-    name: 'admin-collection-short_name-celebration'
+    name: 'admin-project-short_name-tags'
   },
   {
-    path: '/admin/collection/:short_name/delete',
+    path: '/admin/collection/:short_name/details',
     component: jest.fn(),
-    name: 'admin-collection-short_name-delete'
+    name: 'admin-collection-short_name-details'
+  },
+  {
+    path: '/admin/collection/:short_name/celebrations',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-celebrations'
   },
   {
     path: '/admin/project/:short_name/results',
     component: jest.fn(),
     name: 'admin-project-short_name-results'
+  },
+  {
+    path: '/admin/collection/:short_name/templates',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-templates'
+  },
+  {
+    path: '/admin/project/:short_name/volume',
+    component: jest.fn(),
+    name: 'admin-project-short_name-volume'
   },
   {
     path: '/admin/collection/:short_name/volumes',
@@ -130,34 +150,9 @@ export const routes = [
     name: 'admin-project-short_name-collection'
   },
   {
-    path: '/admin/project/:short_name/tags',
+    path: '/admin/project/:short_name/delete',
     component: jest.fn(),
-    name: 'admin-project-short_name-tags'
-  },
-  {
-    path: '/admin/project/:short_name/volume',
-    component: jest.fn(),
-    name: 'admin-project-short_name-volume'
-  },
-  {
-    path: '/admin/collection/:short_name/terminology',
-    component: jest.fn(),
-    name: 'admin-collection-short_name-terminology'
-  },
-  {
-    path: '/admin/collection/:short_name/settings',
-    component: jest.fn(),
-    name: 'admin-collection-short_name-settings'
-  },
-  {
-    path: '/admin/project/:short_name/help',
-    component: jest.fn(),
-    name: 'admin-project-short_name-help'
-  },
-  {
-    path: '/admin/project/:short_name/settings',
-    component: jest.fn(),
-    name: 'admin-project-short_name-settings'
+    name: 'admin-project-short_name-delete'
   },
   {
     path: '/admin/collection/:short_name/content',
@@ -165,19 +160,49 @@ export const routes = [
     name: 'admin-collection-short_name-content'
   },
   {
+    path: '/admin/project/:short_name/help',
+    component: jest.fn(),
+    name: 'admin-project-short_name-help'
+  },
+  {
+    path: '/admin/project/:short_name/details',
+    component: jest.fn(),
+    name: 'admin-project-short_name-details'
+  },
+  {
     path: '/admin/collection/:short_name/presenter',
     component: jest.fn(),
     name: 'admin-collection-short_name-presenter'
   },
   {
-    path: '/admin/project/:short_name/thumbnail',
+    path: '/admin/collection/:short_name/delete',
     component: jest.fn(),
-    name: 'admin-project-short_name-thumbnail'
+    name: 'admin-collection-short_name-delete'
   },
   {
     path: '/admin/collection/:short_name/tags',
     component: jest.fn(),
     name: 'admin-collection-short_name-tags'
+  },
+  {
+    path: '/admin/collection/:short_name/featured',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-featured'
+  },
+  {
+    path: '/admin/collection/:short_name/volumes/new',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-volumes-new'
+  },
+  {
+    path: '/admin/collection/:short_name/templates/new',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-templates-new'
+  },
+  {
+    path: '/admin/collection/:short_name/templates/:key',
+    component: jest.fn(),
+    name: 'admin-collection-short_name-templates-key'
   },
   {
     path: '/collection/:short_name?',
@@ -195,11 +220,6 @@ export const routes = [
     name: 'collection-short_name-projects'
   },
   {
-    path: '/collection/:short_name?/about',
-    component: jest.fn(),
-    name: 'collection-short_name-about'
-  },
-  {
     path: '/collection/:short_name?/data',
     component: jest.fn(),
     name: 'collection-short_name-data'
@@ -210,9 +230,9 @@ export const routes = [
     name: 'account-name-announcements'
   },
   {
-    path: '/account/:name?/settings/profile',
+    path: '/collection/:short_name?/about',
     component: jest.fn(),
-    name: 'account-name-settings-profile'
+    name: 'collection-short_name-about'
   },
   {
     path: '/account/:name?/settings/avatar',
@@ -223,6 +243,11 @@ export const routes = [
     path: '/account/:name?/settings/security',
     component: jest.fn(),
     name: 'account-name-settings-security'
+  },
+  {
+    path: '/account/:name?/settings/profile',
+    component: jest.fn(),
+    name: 'account-name-settings-profile'
   },
   {
     path: '/account/:name?/settings/api',
