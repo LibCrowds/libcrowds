@@ -194,6 +194,12 @@ export default {
     signout () {
       return this.$axios.$get('/account/signout').then(data => {
         this.$store.dispatch('LOGOUT')
+
+        // Sign out from Flarum, if enabled
+        if (localConfig.hasOwnProperty('flarum')) {
+          this.$flarum.signout()
+        }
+
         this.$router.push({ name: 'index' })
         this.$notifications.flash(data)
       })

@@ -201,7 +201,8 @@ if (localConfig.hasOwnProperty('sentry')) {
 if (
   localConfig.hasOwnProperty('flarum') &&
   localConfig.flarum.hasOwnProperty('apiKey') &&
-  localConfig.flarum.hasOwnProperty('url')
+  localConfig.flarum.hasOwnProperty('url') &&
+  localConfig.flarum.hasOwnProperty('salt')
 ) {
   config.modules.push([ '~/modules/flarum/module', localConfig.flarum ])
 }
