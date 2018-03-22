@@ -166,10 +166,6 @@ export default {
   font-size: $font-size-sm;
   line-height: 2;
 
-  &.footer-dark {
-    background-color: $gray-1200;
-  }
-
   .container {
     display: flex;
     flex-direction: column;

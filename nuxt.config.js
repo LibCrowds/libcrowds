@@ -23,7 +23,6 @@ const config = {
   build: {
     vendor: [
       'bootstrap-vue',
-      'papaparse',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
@@ -100,6 +99,8 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/axios' },
+    { src: '~/plugins/cookies' },
     { src: '~/plugins/cookie-consent', ssr: false },
     { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
@@ -129,26 +130,12 @@ const config = {
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
-    baseURL: localConfig.pybossaHost,
-    requestInterceptor: (config) => {
-      config.headers['Content-Type'] = 'application/json'
-
-      // Use form data to set CSRF token header
-      if (config.data && config.data.hasOwnProperty('csrf')) {
-        config.headers['X-CSRFToken'] = config.data.csrf
-      }
-
-      // Ensure some data otherwise axois can delete Content-Type
-      if (config.data === undefined) {
-        config.data = {}
-      }
-      return config
-    }
+    baseURL: localConfig.pybossaHost
   },
   proxy: {
     '/api': localConfig.pybossaHost,
     '/z3950': localConfig.pybossaHost,
-    '/libcrowds': localConfig.pybossaHost
+    '/lc': localConfig.pybossaHost
   },
   manifest: {
     name: localConfig.brand,
@@ -171,14 +158,19 @@ const config = {
   router: {
     middleware: [
       'session'
-    ]
+    ],
+    scrollBehavior: () => {
+      return { x: 0, y: 0 }
+    }
   }
 }
 
+// Configure Google Analytics
 if (localConfig.hasOwnProperty('analytics')) {
   config.modules.push([ '@nuxtjs/google-analytics', localConfig.analytics ])
 }
 
+// Configure Facebook meta tags
 if (localConfig.hasOwnProperty('facebook')) {
   config.head.meta.push({
     property: 'fb:app_id',
@@ -186,12 +178,23 @@ if (localConfig.hasOwnProperty('facebook')) {
   })
 }
 
+// Configure Sentry
 if (localConfig.hasOwnProperty('sentry')) {
   localConfig.sentry.release = git.tag()
   localConfig.sentry.tags = {
     git_commit: git.short()
   }
   config.modules.push([ '~/modules/sentry/sentry', localConfig.sentry ])
+}
+
+// Configure Flarum integration
+if (
+  localConfig.hasOwnProperty('flarum') &&
+  localConfig.flarum.hasOwnProperty('apiKey') &&
+  localConfig.flarum.hasOwnProperty('url') &&
+  localConfig.flarum.hasOwnProperty('salt')
+) {
+  config.modules.push([ '~/modules/flarum/module', localConfig.flarum ])
 }
 
 module.exports = config

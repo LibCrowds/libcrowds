@@ -3,7 +3,7 @@
     <b-btn
       slot="controls"
       variant="success"
-      class="float-right"
+      class="float-md-right"
       size="sm"
       :to="{
         name: 'admin-collection-new'
@@ -15,14 +15,13 @@
       ref="table"
       :fields="tableFields"
       domain-object="category">
-      <template slot="action" scope="category">
+      <template slot="action" slot-scope="category">
         <b-btn
           variant="success"
           size="sm"
-          block
           exact
           :to="{
-            name: 'admin-collection-short_name-settings',
+            name: 'admin-collection-short_name-details',
             params: {
               short_name: category.item.short_name
             }
@@ -70,7 +69,7 @@ export default {
   },
 
   beforeMount () {
-    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', null)
+    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', {})
   }
 }
 </script>

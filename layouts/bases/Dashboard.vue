@@ -1,26 +1,31 @@
 <template>
   <div id="dashboard-layout-base" :class="darkMode ? 'dark-mode' : null">
 
-    <side-nav
+    <side-navbar
       v-model="showSideNav"
-      @menuclick="showSideNav = false">
-    </side-nav>
+      :dark="darkMode"
+      :nav-items="navItems"
+      @close="showSideNav = false"
+      @itemclick="onSidebarItemClick">
+    </side-navbar>
 
-    <dashboard-navbar
-      :nav-items="navItems">
-    </dashboard-navbar>
-
-    <div :class="darkMode ? 'dashboard dashboard-dark' : 'dashboard'">
+    <div :class="dashboardClass">
 
       <top-navbar
         show-help
-        @menuclick="showSideNav = !showSideNav">
+        :dark="darkMode"
+        :navbar-brand="localConfig.brand"
+        @menuclick="showSideNav = !showSideNav"
+        @itemclick="showSideNav = false">
       </top-navbar>
 
-      <main class="container-fluid px-lg-4 py-4">
-        <transition name="fade" mode="out-in" appear>
-          <nuxt></nuxt>
-        </transition>
+      <main>
+        <slot name="message"></slot>
+        <div class="container-fluid px-lg-4 py-4">
+          <transition name="fade" mode="out-in" appear>
+            <nuxt></nuxt>
+          </transition>
+        </div>
       </main>
 
       <dashboard-footer></dashboard-footer>
@@ -33,38 +38,60 @@
 import localConfig from '@/local.config'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
-import SideNav from '@/components/navbars/Side'
-import DashboardNavbar from '@/components/navbars/Dashboard'
+import SideNavbar from '@/components/navbars/Side'
 
 export default {
   data () {
     return {
       localConfig: localConfig,
-      showSideNav: false
+      showSideNav: true
     }
   },
 
   props: {
     navItems: {
-      type: Array,
+      type: Object,
       required: true
-    },
-    titleBase: {
-      type: String,
-      default: null
     }
   },
 
   components: {
     TopNavbar,
-    SideNav,
-    DashboardFooter,
-    DashboardNavbar
+    SideNavbar,
+    DashboardFooter
   },
 
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    dashboardClass () {
+      return {
+        'dashboard': true,
+        'dashboard-dark': this.darkMode
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Handle sidebar click.
+     *
+     * Collapse if the screen is small.
+     * @param {Object} route
+     *   The route being navigated to.
+     */
+    onSidebarItemClick (route) {
+      if (window.innerWidth < 576) {
+        this.showSideNav = false
+      }
+    }
+  },
+
+  mounted () {
+    if (window.innerWidth < 576) {
+      this.showSideNav = false
     }
   }
 }
@@ -74,6 +101,7 @@ export default {
 @import '~assets/style/settings';
 
 #dashboard-layout-base {
+  display: flex;
   height: 100vh;
   width: auto;
 
@@ -86,6 +114,8 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
+    overflow: hidden;
     background-image: url('~/assets/img/geometry.png');
 
     &.dashboard-dark {
@@ -96,7 +126,6 @@ export default {
       z-index: 2;
       height: 100vh;
       float: right;
-      width: calc(100% - #{$sidebar-width});
     }
   }
 }

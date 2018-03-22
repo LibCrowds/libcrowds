@@ -4,17 +4,19 @@
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
       </label>
-      <toggle-button
-        :value="form.model.published"
-        :sync="true"
-        :labels="true"
-        class="mb-0"
-        @change="togglePublished">
-      </toggle-button>
+      <no-ssr>
+        <toggle-button
+          :value="form.model.published"
+          :sync="true"
+          :labels="true"
+          class="mb-0"
+          @change="togglePublished">
+        </toggle-button>
+      </no-ssr>
     </div>
 
-    <b-tabs ref="tabs" no-body card>
-      <b-tab title="Core Details" active>
+    <b-tabs card>
+      <b-tab title="Core Details" active no-body>
         <pybossa-form
           submit-text="Update"
           show-cancel
@@ -22,14 +24,14 @@
           @cancel="onCancel">
         </pybossa-form>
       </b-tab>
-      <b-tab title="Thumbnail">
+      <b-tab title="Thumbnail" no-body>
         <image-upload-form
           submit-text="Update"
           :endpoint="thumbnailForm.endpoint"
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
-          file-field="file"
-          method="PUT">
+          :current-image-url="currentImageUrl"
+          file-field="file">
         </image-upload-form>
       </b-tab>
     </b-tabs>
@@ -37,9 +39,9 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import pick from 'lodash/pick'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -47,7 +49,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -117,6 +119,18 @@ export default {
     CardBase
   },
 
+  computed: {
+    currentImageUrl () {
+      const thumbnailUrl = this.announcement.media_url
+      if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
+        return ''
+      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
+    }
+  },
+
   methods: {
     /**
      * Handle cancel.
@@ -135,12 +149,11 @@ export default {
         published: !this.form.model.published
       }).then(data => {
         this.form.model.published = !this.form.model.published
-        this.notifySuccess({
+        this.$notifications.success({
           message: this.form.model.published
             ? 'Announcement published'
             : 'Announcement unpublished'
         })
-        this.$store.dispatch('UPDATE_LAST_ANNOUNCEMENT', this.$axios)
       }).catch(err => {
         this.$nuxt.error(err)
       })

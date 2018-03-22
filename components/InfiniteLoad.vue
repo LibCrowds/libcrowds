@@ -15,18 +15,7 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
-
 export default {
-  data () {
-    return {
-      defaultSearchParams: {
-        limit: 20,
-        all: 1
-      }
-    }
-  },
-
   methods: {
     /**
      * Handler to infinitely load domain objects.
@@ -34,10 +23,12 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async infiniteLoadDomainObjects ($state) {
-      const params = {}
-      merge(params, this.defaultSearchParams, this.searchParams, {
-        offset: this.value.length
-      })
+      const params = Object.assign({}, this.searchParams)
+      params.offset = this.value.length
+
+      if (this.all) {
+        params.all = 1
+      }
 
       try {
         // Get the data
@@ -124,6 +115,10 @@ export default {
     noMoreResults: {
       type: String,
       default: 'No more results'
+    },
+    all: {
+      type: Boolean,
+      default: true
     }
   },
 
