@@ -3,13 +3,15 @@
     <label class="mr-1 mb-0 toggle-label">
       Show Completed
     </label>
-    <toggle-button
-      :value="value"
-      :sync="true"
-      :labels="true"
-      class="mb-0"
-      @change="onChange">
-    </toggle-button>
+    <no-ssr>
+      <toggle-button
+        :value="value"
+        :sync="true"
+        :labels="true"
+        class="mb-0"
+        @change="onChange">
+      </toggle-button>
+    </no-ssr>
   </div>
 </template>
 

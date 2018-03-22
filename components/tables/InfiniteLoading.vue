@@ -4,10 +4,10 @@
       hover
       striped
       show-empty
+      :outlined="outlined"
       :dark="darkMode"
       :items="filteredItems"
       :fields="tableFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
       <template slot="nTags" scope="data">
@@ -34,6 +34,7 @@
 
     <infinite-load
       ref="infiniteload"
+      :all="all"
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
@@ -80,22 +81,17 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
+    },
+    all: {
+      type: Boolean,
+      default: true
     }
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     tableFields () {
       const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {

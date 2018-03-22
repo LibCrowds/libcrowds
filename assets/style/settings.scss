@@ -87,10 +87,6 @@ $modal-inner-padding:              0;
 $modal-dialog-margin-y-sm-up:      50px;
 $modal-backdrop-bg:                $gray-100;
 
-/* Hamburger */
-$hamburger-hover-opacity:          100%;
-$hamburger-types:                  (collapse, arrow);
-
 /* Font-Awesome */
 $fa-font-path:                     '~font-awesome/fonts';
 
@@ -116,6 +112,9 @@ $ct-series-colors:
   #6C7A89,
   #A748CA
 ;
+
+/* LibCrowds Viewer */
+$lv-sidebar-bg: $gray-1100;
 
 @import
   '~bootstrap/scss/functions',
