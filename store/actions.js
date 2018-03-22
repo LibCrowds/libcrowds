@@ -7,7 +7,7 @@ export default {
       if (data.hasOwnProperty('user')) {
         commit('LOGIN', data.user)
         if (ga) {
-          this.$ga.set({ userId: data.user.id })
+          ga.set({ userId: data.user.id })
         }
         return data.user
       } else {
