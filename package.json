@@ -41,7 +41,7 @@
     "moment": "^2.19.1",
     "nuxt": "1.0.0-rc11",
     "progressbar.js": "^1.0.1",
-    "query-string": "^5.0.1",
+    "query-string": "^6.0.0",
     "raven": "^2.2.1",
     "raven-js": "^3.19.1",
     "source-map-support": "^0.5.0",
