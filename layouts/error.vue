@@ -20,7 +20,6 @@
 
 <script>
 import httpStatus from 'http-status'
-import localConfig from '@/local.config'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -30,7 +29,6 @@ export default {
 
   data () {
     return {
-      localConfig: localConfig,
       messages: {
         '404': 'This page could not be found.',
         '405': 'Method not allowed.',
