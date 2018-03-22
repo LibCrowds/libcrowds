@@ -99,6 +99,7 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/axios' },
     { src: '~/plugins/cookies' },
     { src: '~/plugins/cookie-consent', ssr: false },
     { src: '~/plugins/dark-mode' },
@@ -129,21 +130,7 @@ const config = {
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
-    baseURL: localConfig.pybossaHost,
-    requestInterceptor: (config) => {
-      config.headers['Content-Type'] = 'application/json'
-
-      // Use form data to set CSRF token header
-      if (config.data && config.data.hasOwnProperty('csrf')) {
-        config.headers['X-CSRFToken'] = config.data.csrf
-      }
-
-      // Ensure some data otherwise axois can delete Content-Type
-      if (config.data === undefined) {
-        config.data = {}
-      }
-      return config
-    }
+    baseURL: localConfig.pybossaHost
   },
   proxy: {
     '/api': localConfig.pybossaHost,
