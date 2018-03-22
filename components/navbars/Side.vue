@@ -181,9 +181,9 @@ export default {
         ]
       }
 
-      // Site/collection admin
+      // Collection admin
       if (this.currentUser.admin) {
-        items['Admin'] = [
+        items['Collection Admin'] = [
           {
             label: 'New Collection',
             link: {
@@ -195,7 +195,13 @@ export default {
             link: {
               name: 'admin-collection'
             }
-          },
+          }
+        ]
+      }
+
+      // Site/collection admin
+      if (this.currentUser.admin) {
+        items['Site Admin'] = [
           {
             label: 'Dashboard',
             exact: true,
