@@ -3,12 +3,13 @@ import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
 export default {
   UPDATE_CURRENT_USER: ({ dispatch, commit }, axios, ga) => {
-    axios.$get(`/account/profile`).then(data => {
+    return axios.$get(`/account/profile`).then(data => {
       if (data.hasOwnProperty('user')) {
         commit('LOGIN', data.user)
         if (ga) {
           this.$ga.set({ userId: data.user.id })
         }
+        return data.user
       } else {
         commit('LOGOUT')
       }
