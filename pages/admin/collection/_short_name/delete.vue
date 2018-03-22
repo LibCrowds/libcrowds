@@ -1,15 +1,15 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-card-body v-if="collection.nProjects.length">
+    <b-card-body v-if="canDelete">
       <b-alert show variant="danger">
         <strong>Danger:</strong> Deleting a collection microsite is final,
         there is no undo!
       </b-alert>
     </b-card-body>
-    <b-card-body v-else>
+    <b-card-body v-else-if="!loading">
       <b-alert show variant="warning">
-        <strong>Warning:</strong> You cannot delete collections that contain
-        projects, please move all projects to another collection first.
+        You cannot delete this collection as it contains active projects.
+        Please move all projects to another collection first.
       </b-alert>
     </b-card-body>
     <b-card-footer>
@@ -17,7 +17,7 @@
         <b-btn
           variant="danger"
           class="ml-auto"
-          :disabled="collection.nProjects === 0"
+          :disabled="!canDelete"
           @click="deleteCollection">
           Delete
         </b-btn>
@@ -40,34 +40,10 @@ export default {
   data () {
     return {
       title: 'Delete',
-      description: 'Permanently delete the microsite.'
+      description: 'Permanently delete the microsite.',
+      canDelete: false,
+      loading: true
     }
-  },
-
-  // Fetch the category and check if it has any projects
-  fetch ({ params, app, error, store }) {
-    let category = null
-    return app.$axios.$get('/api/category', {
-      params: {
-        short_name: params.short_name
-      }
-    }).then(categoriesData => {
-      if (!categoriesData || categoriesData.length !== 1) {
-        error(new Error({ statusCode: 404 }))
-        return
-      }
-      category = categoriesData[0]
-      return app.$axios.$get('/api/project', {
-        params: {
-          category_id: category.id
-        }
-      })
-    }).then(projectsData => {
-      category.nProjects = projectsData.length
-      store.dispatch('UPDATE_CURRENT_COLLECTION', category)
-    }).catch(err => {
-      error(err)
-    })
   },
 
   computed: {
@@ -91,8 +67,21 @@ export default {
       }
       this.deleteDomainObject('category', id, () => {
         this.$router.push({ name: 'admin-collection' })
+        this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
       })
     }
+  },
+
+  created () {
+    this.$axios.$get('/api/project', {
+      params: {
+        all: 1,
+        category_id: this.collection.id
+      }
+    }).then(data => {
+      this.canDelete = data.length < 1
+      this.loading = false
+    })
   }
 }
 </script>

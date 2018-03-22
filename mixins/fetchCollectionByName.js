@@ -9,7 +9,7 @@ export const fetchCollectionByName = {
       }
     }).then(data => {
       if (!data || data.length !== 1) {
-        error(new Error({ statusCode: 404 }))
+        error({ statusCode: 404 })
         return
       }
       store.dispatch('UPDATE_CURRENT_COLLECTION', data[0])

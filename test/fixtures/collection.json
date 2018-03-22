@@ -7,11 +7,6 @@
     "tagline": "Bring past performances to life.",
     "forum": "http://example.com/discuss",
     "background": "http://example.com/background.jpg",
-    "presenter": "libcrowds-viewer",
-    "terminology": {
-      "project": "project",
-      "task": "task",
-      "taskRun": "contribution"
-    }
+    "presenter": "libcrowds-viewer"
   }
 }

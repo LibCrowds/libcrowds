@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -17,7 +16,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -78,7 +77,7 @@ export default {
         return category.name === data.form.name
       })[0]
       this.$router.push({
-        name: 'admin-collection-short_name-settings',
+        name: 'admin-collection-short_name-details',
         params: {
           short_name: category.short_name
         }

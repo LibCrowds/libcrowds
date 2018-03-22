@@ -5,9 +5,10 @@
       striped
       show-empty
       responsive
+      :outlined="outlined"
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
 
@@ -28,11 +29,13 @@
       </template>
 
       <template slot="row-details" scope="result">
-        <b-card>
+        <b-card
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null">
           <pre class=".pre-scrollable mb-0">
             <code>
 <!-- No indentation to force correct indentation in code block -->
-{{ JSON.stringify(result.item.info, null, 2) }}
+{{ JSON.stringify(result.item, null, 2) }}
             </code>
           </pre>
         </b-card>
@@ -96,7 +99,7 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -111,15 +114,6 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedParams () {
       const mergedParams = Object.assign({}, this.searchParams)
       return Object.assign(mergedParams, this.sortParams)

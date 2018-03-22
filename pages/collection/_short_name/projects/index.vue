@@ -12,7 +12,11 @@
       data-title="Get Started">
 
       <b-col xl="3" class="d-none d-xl-block">
-        <b-card header="Sorting Options" class="options-card mb-2">
+        <b-card
+          header="Sorting Options"
+          class="options-card mb-2"
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null">
           <filter-projects-data
             v-model="tagModel"
             :collection="collection"
@@ -50,15 +54,19 @@
         <card-base
           title="Projects"
           description="Choose a project"
-          class="d-lg-none">
-          <b-form-input
-            slot="controls"
-            v-model="filter"
-            class="search-control"
-            size="sm"
-            :placeholder="`Type to search by ${filterBy}`">
-          </b-form-input>
+          class="d-xl-none">
+
+          <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
+            <b-form-input
+              v-model="filter"
+              class="search-control"
+              size="sm"
+              :placeholder="`Type to search by ${filterBy}`">
+            </b-form-input>
+          </b-form>
+
           <projects-table
+            v-if="showProjectsTable"
             :filter="filter"
             :filter-by="filterBy"
             :collection="collection">
@@ -73,7 +81,7 @@
 
         <transition-group
           tag="ul"
-          class="list-unstyled d-none d-lg-block"
+          class="list-unstyled d-none d-xl-block"
           name="fade-up">
           <li v-for="project in filteredProjects" :key="project.id">
             <project-card
@@ -161,7 +169,8 @@ export default {
       sortModel: {
         orderby: 'overall_progress',
         desc: true
-      }
+      },
+      showProjectsTable: false
     }
   },
 
@@ -249,12 +258,27 @@ export default {
      */
     reset () {
       this.$refs.infiniteload.reset(500)
+    },
+
+    /**
+     * Remove the table on large screens.
+     */
+    setTableVisiblity () {
+      this.showProjectsTable = window.innerWidth < 1200
     }
   },
 
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
+
+    // The table won't load while hidden so listen for window size
+    window.addEventListener('resize', this.setTableVisiblity)
+    this.setTableVisiblity()
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.setTableVisiblity)
   }
 }
 </script>

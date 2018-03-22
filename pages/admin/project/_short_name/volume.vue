@@ -1,67 +1,53 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-form-input
-      slot="controls"
-      v-model="filter"
-      class="search-control"
-      size="sm"
-      :placeholder="`Type to search by ${filterBy}`">
-    </b-form-input>
+    <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
+      <b-form-input
+        v-model="filter"
+        class="search-control"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+    </b-form>
 
-    <b-table
-      responsive
-      striped
-      hover
-      show-empty
-      :items="filteredVolumes"
-      :fields="fields">
-      <template slot="action" scope="volume">
+    <volumes-table :volumes="volumes">
+      <template slot="action" scope="vol">
         <b-btn
-          variant="success"
+          :variant="vol.item.id !== currentVolumeId ? 'success' : 'warning'"
           size="sm"
-          block
-          :disabled="volume.item.name == project.info.volume"
-          @click="setVolume(volume.item.name)">
-          Select
+          @click="updateVolume(vol.item)">
+          {{ vol.item.id !== currentVolumeId ? 'Select' : 'Deselect' }}
         </b-btn>
       </template>
-    </b-table>
+    </volumes-table>
   </card-base>
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
+import VolumesTable from '@/components/tables/Volumes'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectAndCollection, notifications, metaTags ],
+  middleware: 'is-admin',
+
+  mixins: [ fetchProjectAndCollection, metaTags ],
 
   data () {
     return {
       title: 'Volume',
-      description: 'Choose the volume that this project belongs to.',
-      fields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        action: {
-          label: 'Action',
-          class: 'text-center'
-        }
-      },
+      description: 'Choose the volume associated with this project.',
       filter: null,
       filterBy: 'name'
     }
   },
 
   components: {
-    CardBase
+    CardBase,
+    VolumesTable
   },
 
   computed: {
@@ -71,6 +57,10 @@ export default {
 
     volumes () {
       return this.$store.state.currentCollection.info.volumes
+    },
+
+    currentVolumeId () {
+      return this.project.info.volume_id
     },
 
     /**
@@ -91,17 +81,23 @@ export default {
 
   methods: {
     /**
-     * Set the volume for the project.
-     * @param {String} volume
+     * Update the volume for the project.
+     * @param {Object} volume
      *   The volume.
      */
-    setVolume (volume) {
+    updateVolume (volume) {
       let infoClone = Object.assign({}, this.project.info)
-      infoClone.volume = volume
+
+      if (this.currentVolumeId === volume.id) {
+        infoClone.volume_id = null
+      } else {
+        infoClone.volume_id = volume.id
+      }
+
       this.$axios.$put(`/api/project/${this.project.id}`, {
         info: infoClone
       }).then(data => {
-        this.notifySuccess({ message: `Project moved to ${volume}` })
+        this.$notifications.success({ message: 'Volume updated' })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)
