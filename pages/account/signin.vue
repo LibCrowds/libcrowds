@@ -39,7 +39,6 @@
 import localConfig from '@local.config'
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import { metaTags } from '@/mixins/metaTags'
-import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 import CardBase from '@/components/cards/Base'
