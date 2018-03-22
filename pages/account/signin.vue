@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import localConfig from '@local.config'
+import localConfig from '@/local.config'
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
