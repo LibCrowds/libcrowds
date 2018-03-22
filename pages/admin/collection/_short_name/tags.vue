@@ -20,7 +20,7 @@
         class="border-left-0 border-right-0 border-bottom-0"
         :items="getTableItems"
         :fields="tableFields">
-        <template slot="color" scope="tag">
+        <template slot="color" slot-scope="tag">
           <div
             class="d-flex flex-row align-items-center justify-content-center">
             <b-badge
@@ -31,7 +31,7 @@
             {{ tag.item.color }}
           </div>
         </template>
-        <template slot="actions" scope="tag">
+        <template slot="actions" slot-scope="tag">
           <b-btn
             variant="success"
             size="sm"

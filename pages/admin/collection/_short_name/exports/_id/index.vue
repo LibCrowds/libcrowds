@@ -25,10 +25,10 @@
           :dark="darkMode"
           :items="form.model.fields"
           :fields="tableFields">
-          <template slot="template_id" scope="field">
+          <template slot="template_id" slot-scope="field">
             {{ getTemplateName(field.item.template_id) }}
           </template>
-          <template slot="actions" scope="field">
+          <template slot="actions" slot-scope="field">
             <b-btn
               variant="warning"
               size="sm"

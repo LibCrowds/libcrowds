@@ -9,7 +9,7 @@
     :items="filteredItems"
     :fields="mergedFields">
 
-    <template slot="name" scope="volume">
+    <template slot="name" slot-scope="volume">
       <div class="d-flex flex-row align-items-center">
         <small-avatar
           class="mr-1"
@@ -21,7 +21,7 @@
       </div>
     </template>
 
-    <template slot="actions" scope="volume">
+    <template slot="actions" slot-scope="volume">
       <b-btn
         v-if="showDetails"
         variant="info"
@@ -33,7 +33,7 @@
       <slot name="action" :item="volume.item"></slot>
     </template>
 
-    <template slot="row-details" scope="volume">
+    <template slot="row-details" slot-scope="volume">
       <b-card
         :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">

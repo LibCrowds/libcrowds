@@ -21,7 +21,7 @@
 
     <results-table
       :project="currentProject">
-      <template slot="action" scope="result">
+      <template slot="action" slot-scope="result">
         <b-btn
           variant="info"
           size="sm"

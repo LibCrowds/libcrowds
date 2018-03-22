@@ -5,7 +5,7 @@
       :fields="tableFields"
       :templates="templates"
       :ignore-diff="['category_name']">
-      <template slot="action" scope="tmpl">
+      <template slot="action" slot-scope="tmpl">
         <b-btn
           variant="warning"
           size="sm"

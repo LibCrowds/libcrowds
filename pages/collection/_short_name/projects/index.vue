@@ -70,7 +70,7 @@
             :filter="filter"
             :filter-by="filterBy"
             :collection="collection">
-            <template slot="action" scope="project">
+            <template slot="action" slot-scope="project">
               <project-contrib-button
                 :collection="collection"
                 :project="project.item">

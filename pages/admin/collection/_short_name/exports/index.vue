@@ -25,10 +25,10 @@
       class="border-left-0 border-right-0 border-bottom-0"
       :items="collection.info.export_formats"
       :fields="tableFields">
-      <template slot="fields" scope="exportFormat">
+      <template slot="fields" slot-scope="exportFormat">
         {{ exportFormat.item.fields.length }}
       </template>
-      <template slot="actions" scope="exportFormat">
+      <template slot="actions" slot-scope="exportFormat">
         <b-btn
           variant="success"
           size="sm"

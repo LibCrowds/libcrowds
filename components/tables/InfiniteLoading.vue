@@ -10,23 +10,23 @@
       :fields="tableFields"
       @sort-changed="onSortChange">
 
-      <template slot="nTags" scope="data">
+      <template slot="nTags" slot-scope="data">
         {{ Object.keys(data.item.info.tags || {}).length }}
       </template>
 
-      <template slot="created" scope="data">
+      <template slot="created" slot-scope="data">
         {{ data.item.created | moment('calendar') }}
       </template>
 
-      <template slot="updated" scope="data">
+      <template slot="updated" slot-scope="data">
         {{ data.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="last_activity" scope="data">
+      <template slot="last_activity" slot-scope="data">
         {{ data.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="actions" scope="data">
+      <template slot="actions" slot-scope="data">
         <slot name="action" :item="data.item"></slot>
       </template>
 

@@ -16,7 +16,7 @@
       :fields="tableFields"
       :search-params="tableSearchParams"
       domain-object="category">
-      <template slot="action" scope="category">
+      <template slot="action" slot-scope="category">
         <b-btn
           variant="success"
           size="sm"

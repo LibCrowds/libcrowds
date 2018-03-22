@@ -12,23 +12,23 @@
       @sort-changed="onSortChange">
 
 
-      <template slot="created" scope="result">
+      <template slot="created" slot-scope="result">
         {{ result.item.created | moment('calendar') }}
       </template>
 
-      <template slot="isempty" scope="result">
+      <template slot="isempty" slot-scope="result">
         {{ isResultEmpty(result.item) }}
       </template>
 
-      <template slot="task_run_ids" scope="result">
+      <template slot="task_run_ids" slot-scope="result">
         {{ result.item.task_run_ids.length }}
       </template>
 
-      <template slot="actions" scope="result">
+      <template slot="actions" slot-scope="result">
         <slot name="action" :item="result.item"></slot>
       </template>
 
-      <template slot="row-details" scope="result">
+      <template slot="row-details" slot-scope="result">
         <b-card
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">

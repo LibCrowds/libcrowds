@@ -28,7 +28,7 @@
             category_id: collection.id
           }"
           domain-object="project">
-          <template slot="action" scope="project">
+          <template slot="action" slot-scope="project">
             <b-btn
               variant="success"
               size="sm"
@@ -59,7 +59,7 @@
             name: 'Draft',
             short_name: 'draft'
           }">
-          <template slot="action" scope="project">
+          <template slot="action" slot-scope="project">
             <b-btn
               :disabled="!currentUser.admin"
               variant="success"

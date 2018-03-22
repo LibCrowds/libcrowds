@@ -42,7 +42,7 @@
           :dark="darkMode"
           :items="form.model.fields_schema"
           :fields="schemaTableFields">
-          <template slot="actions" scope="field">
+          <template slot="actions" slot-scope="field">
             <b-btn
               variant="warning"
               size="sm"
@@ -99,7 +99,7 @@
           :dark="darkMode"
           :items="institutionCodeTableItems"
           :fields="institutionTableFields">
-          <template slot="actions" scope="institution">
+          <template slot="actions" slot-scope="institution">
             <b-btn
               variant="warning"
               size="sm"

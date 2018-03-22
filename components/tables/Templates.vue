@@ -9,7 +9,7 @@
     :items="filteredItems"
     :fields="mergedFields">
 
-    <template slot="actions" scope="tmpl">
+    <template slot="actions" slot-scope="tmpl">
       <b-btn
         v-if="showDetails"
         variant="info"
@@ -20,7 +20,7 @@
       <slot name="action" :item="tmpl.item"></slot>
     </template>
 
-    <template slot="row-details" scope="tmpl">
+    <template slot="row-details" slot-scope="tmpl">
       <b-card
         :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">

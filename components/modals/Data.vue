@@ -17,7 +17,7 @@
       :dark="darkMode"
       :items="items"
       :fields="fields">
-      <template slot="action" scope="data">
+      <template slot="action" slot-scope="data">
         <b-btn
           variant="success"
           size="sm"

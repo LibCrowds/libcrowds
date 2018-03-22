@@ -14,7 +14,7 @@
       :filter="filter"
       :filter-by="filterBy"
       :collection="collection">
-      <template slot="action" scope="project">
+      <template slot="action" slot-scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
           size="sm"

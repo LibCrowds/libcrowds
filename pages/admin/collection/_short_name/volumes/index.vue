@@ -16,7 +16,7 @@
     </div>
 
     <volumes-table :volumes="volumes">
-      <template slot="action" scope="volume">
+      <template slot="action" slot-scope="volume">
         <b-btn
           variant="warning"
           size="sm"

@@ -4,7 +4,7 @@
       show-details
       :collection-id="project.category_id"
       :templates="currentCollection.info.templates">
-      <template slot="action" scope="tmpl">
+      <template slot="action" slot-scope="tmpl">
         <b-btn
           :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
           size="sm"

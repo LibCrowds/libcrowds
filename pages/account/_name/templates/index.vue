@@ -30,7 +30,7 @@
           show-details
           :collection-id="collection.id"
           :templates="templates">
-          <template slot="action" scope="template">
+          <template slot="action" slot-scope="template">
             <b-btn
               variant="success"
               size="sm"

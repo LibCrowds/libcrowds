@@ -11,27 +11,27 @@
       :fields="mergedFields"
       @sort-changed="onSortChange">
 
-      <template slot="name" scope="project">
+      <template slot="name" slot-scope="project">
         {{ project.item.name }}
       </template>
 
-      <template slot="overall_progress" scope="project">
+      <template slot="overall_progress" slot-scope="project">
         {{ project.item.overall_progress }}%
       </template>
 
-      <template slot="created" scope="project">
+      <template slot="created" slot-scope="project">
         {{ project.item.created | moment('calendar') }}
       </template>
 
-      <template slot="updated" scope="project">
+      <template slot="updated" slot-scope="project">
         {{ project.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="last_activity" scope="project">
+      <template slot="last_activity" slot-scope="project">
         {{ project.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="actions" scope="project">
+      <template slot="actions" slot-scope="project">
         <slot name="action" :item="project.item"></slot>
       </template>
 

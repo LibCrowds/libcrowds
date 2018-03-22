@@ -19,11 +19,11 @@
             :items="found"
             :fields="tableFields">
 
-            <template slot="created" scope="user">
+            <template slot="created" slot-scope="user">
               {{ user.item.created | moment('calendar') }}
             </template>
 
-            <template slot="action" scope="user">
+            <template slot="action" slot-scope="user">
               <b-btn
                 variant="warning"
                 size="sm"
@@ -79,7 +79,7 @@
             :items="adminUsers"
             :fields="tableFields">
 
-            <template slot="action" scope="user">
+            <template slot="action" slot-scope="user">
               <b-btn
                 variant="warning"
                 size="sm"

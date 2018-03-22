@@ -16,7 +16,7 @@
       :filter="filter"
       :filter-by="filterBy"
       domain-object="category">
-      <template slot="action" scope="collection">
+      <template slot="action" slot-scope="collection">
         <b-btn
           variant="success"
           size="sm"

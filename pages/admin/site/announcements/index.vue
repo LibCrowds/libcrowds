@@ -16,7 +16,7 @@
       :fields="tableFields"
       :search-params="searchParams"
       domain-object="announcement">
-      <template slot="action" scope="announcement">
+      <template slot="action" slot-scope="announcement">
         <b-btn
           variant="success"
           size="sm"

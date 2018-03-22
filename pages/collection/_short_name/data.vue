@@ -58,7 +58,7 @@
             :volumes="volumes"
             :filter="filter"
             :filter-by="filterBy">
-            <template slot="action" scope="volume">
+            <template slot="action" slot-scope="volume">
               <b-btn
                 variant="success"
                 size="sm"
@@ -77,7 +77,7 @@
             :filter-by="filterBy"
             :collection="collection"
             ref="projects-table">
-            <template slot="action" scope="project">
+            <template slot="action" slot-scope="project">
               <b-btn
                 :variant="darkMode ? 'dark' : 'success'"
                 size="sm"

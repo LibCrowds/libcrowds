@@ -39,7 +39,7 @@
         <templates-table
           show-details
           :templates="templates">
-          <template slot="action" scope="tmpl">
+          <template slot="action" slot-scope="tmpl">
             <b-btn
               variant="success"
               size="sm"
@@ -75,7 +75,7 @@
           </p>
         </b-card-body>
         <volumes-table :volumes="availableVolumes">
-          <template slot="action" scope="volume">
+          <template slot="action" slot-scope="volume">
             <b-btn
               variant="success"
               size="sm"
@@ -117,7 +117,7 @@
           filter="100"
           filter-by="overall_progress"
           :collection="collection">
-          <template slot="action" scope="project">
+          <template slot="action" slot-scope="project">
             <b-btn
               variant="success"
               size="sm"

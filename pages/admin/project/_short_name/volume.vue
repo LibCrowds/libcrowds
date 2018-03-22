@@ -11,7 +11,7 @@
     </b-form>
 
     <volumes-table :volumes="volumes">
-      <template slot="action" scope="vol">
+      <template slot="action" slot-scope="vol">
         <b-btn
           :variant="vol.item.id !== currentVolumeId ? 'success' : 'warning'"
           size="sm"
