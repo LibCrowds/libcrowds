@@ -23,7 +23,6 @@ const config = {
   build: {
     vendor: [
       'bootstrap-vue',
-      'papaparse',
       'progressbar.js',
       'vue-awesome',
       'vue-chartist',
@@ -100,7 +99,9 @@ const config = {
     }
   },
   plugins: [
+    { src: '~/plugins/cookies' },
     { src: '~/plugins/cookie-consent', ssr: false },
+    { src: '~/plugins/dark-mode' },
     { src: '~/plugins/filters' },
     { src: '~/plugins/libcrowds-viewer', ssr: false },
     { src: '~/plugins/modernizr', ssr: false },
@@ -115,6 +116,7 @@ const config = {
     { src: '~/plugins/vue-infinite-loading', ssr: false },
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
+    { src: '~/plugins/vue-prevent-parent-scroll' },
     { src: '~/plugins/vue-scrollto', ssr: false },
     { src: '~/plugins/vue-simplemde', ssr: false },
     { src: '~/plugins/vue-sweetalert', ssr: false },
@@ -146,7 +148,7 @@ const config = {
   proxy: {
     '/api': localConfig.pybossaHost,
     '/z3950': localConfig.pybossaHost,
-    '/libcrowds': localConfig.pybossaHost
+    '/lc': localConfig.pybossaHost
   },
   manifest: {
     name: localConfig.brand,
@@ -173,10 +175,12 @@ const config = {
   }
 }
 
+// Configure Google Analytics
 if (localConfig.hasOwnProperty('analytics')) {
   config.modules.push([ '@nuxtjs/google-analytics', localConfig.analytics ])
 }
 
+// Configure Facebook meta tags
 if (localConfig.hasOwnProperty('facebook')) {
   config.head.meta.push({
     property: 'fb:app_id',
@@ -184,12 +188,23 @@ if (localConfig.hasOwnProperty('facebook')) {
   })
 }
 
+// Configure Sentry
 if (localConfig.hasOwnProperty('sentry')) {
   localConfig.sentry.release = git.tag()
   localConfig.sentry.tags = {
     git_commit: git.short()
   }
   config.modules.push([ '~/modules/sentry/sentry', localConfig.sentry ])
+}
+
+// Configure Flarum integration
+if (
+  localConfig.hasOwnProperty('flarum') &&
+  localConfig.flarum.hasOwnProperty('apiKey') &&
+  localConfig.flarum.hasOwnProperty('url') &&
+  localConfig.flarum.hasOwnProperty('salt')
+) {
+  config.modules.push([ '~/modules/flarum/module', localConfig.flarum ])
 }
 
 module.exports = config

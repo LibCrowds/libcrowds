@@ -1,5 +1,9 @@
 <template>
-  <b-card no-body class="project-card">
+  <b-card
+    no-body
+    class="project-card"
+    :bg-variant="darkMode ? 'dark' : null"
+    :text-variant="darkMode ? 'white' : null">
     <nuxt-link
       v-if="projectIncomplete"
       :to="{
@@ -45,7 +49,7 @@
           <b-btn
             v-b-modal="statsModalId"
             class="project-stats-btn d-none d-lg-block"
-            variant="info">
+            :variant="darkMode ? 'dark' : 'info'">
             Stats
             <icon name="bar-chart"></icon>
           </b-btn>
@@ -56,7 +60,8 @@
       </p>
       <div class="mb-0 px-2 pt-1">
         <project-tags-list
-          :project="project"
+          v-if="project.info.tags"
+          :tags="project.info.tags"
           :collection="collection"
           @tag-click="onTagClick">
         </project-tags-list>
@@ -70,7 +75,7 @@
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
-          {{ collection.info.terminology.task | pluralize(project.n_tasks) }}
+          {{ 'task' | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
@@ -81,7 +86,7 @@
             block
             v-b-modal="statsModalId"
             class="d-lg-none mb-1"
-            variant="info">
+            :variant="darkMode ? 'dark' : 'info'">
             Stats
           </b-btn>
           <project-contrib-button
@@ -225,6 +230,7 @@ export default {
 
     .card-footer {
       border-top: none;
+      background-color: transparent;
 
       .footer-buttons {
         @include media-breakpoint-down(md) {
@@ -242,7 +248,6 @@ export default {
         justify-content: space-between;
         align-items: center;
         margin-top: auto;
-        background-color: $white;
 
         .btn {
           margin-top: 0;
@@ -310,6 +315,26 @@ export default {
     height: 4px;
     position: relative;
     margin-bottom: 0.5rem;
+  }
+
+  &.bg-dark {
+    .project-stats-btn {
+      color: $white;
+      border-color: $black;
+      background-color: transparent;
+    }
+  }
+
+  &.bg-light {
+    background-color: $white !important;
+
+    .card-footer {
+      background-color: $white;
+    }
+
+    .project-stats-btn {
+      background-color: $white;
+    }
   }
 }
 </style>

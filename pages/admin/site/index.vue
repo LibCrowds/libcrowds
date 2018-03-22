@@ -1,50 +1,14 @@
 <template>
   <div id="admin-dashboard">
-
     <card-base :title="title" :description="description" class="mb-3">
       <b-btn
         size="sm"
         variant="success"
-        class="float-right"
+        class="float-md-right"
         slot="controls"
         @click="refresh">
         Refresh
       </b-btn>
-
-      <no-ssr>
-        <b-card-body v-if="emptyResults">
-          <b-alert
-            show
-            dismissible
-            variant="danger"
-            class="mb-1">
-            <h4>Unanalysed Results Detected</h4>
-            <p>
-              The following projects have results that have remained Unanalysed
-              for over a day. This usually indicates some issue with the
-              automated results analysis process.
-            </p>
-            <p>
-              Follow the links to check the results admin page for each project.
-            </p>
-            <hr>
-            <ul class="list-unstyled">
-              <li v-for="project in emptyResults" :key="project.short_name">
-                <nuxt-link :to="{
-                    name: 'admin-project-short_name-results',
-                    params: {
-                      short_name: project.short_name
-                    }
-                  }">
-                  {{ project.name }}
-                </nuxt-link>
-                ({{ project.n_empty_results }}
-                  empty {{ 'results' | pluralize(project.n_empty_results) }})
-              </li>
-            </ul>
-          </b-alert>
-        </b-card-body>
-      </no-ssr>
     </card-base>
 
     <b-card-group
@@ -98,7 +62,10 @@
             <li
               v-for="(item, index) in groupedFeed['UserContribution']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 <nuxt-link
                   :to="{
@@ -112,7 +79,7 @@
                 contributed to
                 <nuxt-link
                   :to="{
-                    name: 'admin-project-short_name-settings',
+                    name: 'admin-project-short_name-details',
                     params: {
                       short_name: item.project_short_name
                     }
@@ -151,12 +118,15 @@
             <li
               v-for="(item, index) in groupedFeed['Task']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 Tasks were added to
                 <nuxt-link
                   :to="{
-                    name: 'admin-project-short_name-settings',
+                    name: 'admin-project-short_name-details',
                     params: {
                       short_name: item.short_name
                     }
@@ -227,7 +197,10 @@
             <li
               v-for="(item, index) in groupedFeed['User']"
               :key="index">
-              <small-avatar :domain-object="item" class="mr-1"></small-avatar>
+              <small-avatar
+                :info="item.info"
+                class="mr-1">
+              </small-avatar>
               <small>
                 <nuxt-link
                   :to="{
@@ -273,7 +246,7 @@
       <chart-legend
         :items="[ 'Anonymous', 'Authenticated' ]"
         slot="controls"
-        class="float-right">
+        class="float-md-right">
       </chart-legend>
       <b-card-body class="pt-2 px-0 chart-row">
         <bar-chart
@@ -285,7 +258,11 @@
     </card-base>
 
     <div role="tablist" class="mb-3">
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : null"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -313,7 +290,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }
@@ -337,7 +314,11 @@
           </b-card-body>
         </b-collapse>
       </b-card>
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : null"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -365,7 +346,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }
@@ -389,7 +370,11 @@
           </b-card-body>
         </b-collapse>
       </b-card>
-      <b-card no-body class="mb-1">
+      <b-card
+        no-body
+        :bg-variant="darkMode ? 'dark' : null"
+        :text-variant="darkMode ? 'white' : null"
+        class="mb-1">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-btn
             block
@@ -417,7 +402,7 @@
                     </strong>
                     <nuxt-link
                       :to="{
-                        name: 'admin-project-short_name-settings',
+                        name: 'admin-project-short_name-details',
                         params: {
                           short_name: project.short_name
                         }
@@ -449,7 +434,6 @@
 import moment from 'moment'
 import groupBy from 'lodash/groupBy'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import SmallAvatar from '@/components/avatars/Small'
 import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
@@ -459,7 +443,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -477,11 +461,7 @@ export default {
   },
 
   asyncData ({ app, error, router }) {
-    let stats = {}
-    return app.$axios.$get('/admin/dashboard').then(statsData => {
-      stats = statsData
-      return app.$axios.$get('/libcrowds/results/empty')
-    }).then(emptyResultsData => {
+    return app.$axios.$get('/admin/dashboard').then(stats => {
       return {
         activeAnon: stats.active_anon_last_week,
         activeAuth: stats.active_users_last_week,
@@ -492,8 +472,7 @@ export default {
         updateFeed: stats.update_feed,
         draftProjects: stats.draft_projects_last_week,
         publishedProjects: stats.published_projects_last_week,
-        updatedProjects: stats.update_projects_last_week,
-        emptyResults: emptyResultsData
+        updatedProjects: stats.update_projects_last_week
       }
     }).catch(err => {
       error(err)
@@ -546,14 +525,7 @@ export default {
     },
 
     groupedFeed () {
-      // Convert epoch timestamp to ISO string
-      const feed = this.updateFeed.map(item => {
-        const d = new Date(0)
-        d.setUTCSeconds(item.updated)
-        item.updated = d.toISOString()
-        return item
-      })
-      return groupBy(feed, item => item.action_updated)
+      return groupBy(this.updateFeed, item => item.action_updated)
     }
   },
 
@@ -579,7 +551,7 @@ export default {
         }
       }).then(data => {
         data.status = 'info'
-        this.flash(data)
+        this.$notifications.flash(data)
       }).catch(err => {
         this.$nuxt.error(err)
       })
@@ -639,7 +611,6 @@ export default {
   }
 
   @include media-breakpoint-up(lg) {
-    border-left: 1px solid $gray-300;
     overflow-y: auto;
     display: block;
   }

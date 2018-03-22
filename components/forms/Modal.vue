@@ -3,9 +3,18 @@
     ref="modal"
     :id="modalId"
     :title="title"
+    :size="size"
     @ok="submit"
+    :header-text-variant="darkMode ? 'white' : null"
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :body-text-variant="darkMode ? 'white' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null"
     @hidden="$emit('hidden')"
     @shown="onShown">
+
+    <slot></slot>
 
     <form-base
       class="pybossa-form"
@@ -13,6 +22,7 @@
 
       <vue-form-generator
         ref="form"
+        :class="darkMode ? 'form-dark' : null"
         :schema="form.schema"
         :model="form.model">
       </vue-form-generator>
@@ -23,11 +33,8 @@
 
 <script>
 import FormBase from '@/components/forms/Base'
-import { notifications } from '@/mixins/notifications'
 
 export default {
-  mixins: [ notifications ],
-
   props: {
     form: {
       type: Object,
@@ -46,6 +53,10 @@ export default {
     modalId: {
       type: String,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'md'
     }
   },
 
@@ -60,7 +71,7 @@ export default {
     submit (evt) {
       evt.preventDefault()
       if (!this.$refs.form.validate()) {
-        this.notifyInvalidForm()
+        this.$notifications.invalidForm()
         return
       }
       this.$emit('submit', this.form)

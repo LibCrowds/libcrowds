@@ -13,7 +13,6 @@
 <script>
 import pick from 'lodash/pick'
 import { metaTags } from '@/mixins/metaTags'
-import { notifications } from '@/mixins/notifications'
 import VueFormGenerator from 'vue-form-generator'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -22,7 +21,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-site-dashboard',
 
-  mixins: [ notifications, metaTags ],
+  mixins: [ metaTags ],
 
   data () {
     return {
@@ -84,7 +83,7 @@ export default {
      *   The response data.
      */
     onSuccess (data) {
-      this.notifySuccess({ message: 'Announcement created' })
+      this.$notifications.success({ message: 'Announcement created' })
       this.$router.push({
         name: 'admin-site-announcements-id-update',
         params: {

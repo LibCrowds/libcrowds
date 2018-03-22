@@ -1,13 +1,14 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-form-input
-      slot="controls"
-      v-model="filter"
-      class="search-control"
-      size="sm"
-      :placeholder="`Type to search by ${filterBy}`">
-    </b-form-input>
+    <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
+      <b-form-input
+        v-model="filter"
+        class="search-control"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+    </b-form>
 
     <infinite-loading-table
       ref="table"
@@ -19,7 +20,6 @@
         <b-btn
           variant="success"
           size="sm"
-          block
           :disabled="collection.item.id == project.category_id"
           @click="setCollection(collection.item)">
           Select
@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
 import { fetchProjectByName } from '@/mixins/fetchProjectByName'
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
@@ -39,7 +38,9 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ fetchProjectByName, notifications, metaTags ],
+  middleware: 'is-admin',
+
+  mixins: [ fetchProjectByName, metaTags ],
 
   data () {
     return {
@@ -84,7 +85,9 @@ export default {
       this.$axios.$put(`/api/project/${this.project.id}`, {
         category_id: collection.id
       }).then(data => {
-        this.notifySuccess({ message: `Project moved to ${collection.name}` })
+        this.$notifications.success({
+          message: `Project moved to ${collection.name}`
+        })
         this.$store.dispatch('UPDATE_CURRENT_PROJECT', data)
       }).catch(err => {
         this.$nuxt.error(err)

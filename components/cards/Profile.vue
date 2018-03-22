@@ -1,5 +1,9 @@
 <template>
-  <b-card class="profile-card" no-body>
+  <b-card
+    no-body
+    class="profile-card"
+    :bg-variant="darkMode ? 'dark' : null"
+    :text-variant="darkMode ? 'white' : null">
 
     <div class="avatar-background profile-card-bg">
       <user-avatar
@@ -20,13 +24,14 @@
           <li>
             <icon name="tasks"></icon>Contributions: {{ user.n_answers }}
           </li>
+          <li>
+            <icon name="clock-o"></icon>Joined: {{ user.registered_ago }}
+          </li>
         </ul>
       </div>
     </div>
-    <div class="card-body">
-      <slot></slot>
-    </div>
-  </div>
+
+    <slot></slot>
 
   </b-card>
 </template>

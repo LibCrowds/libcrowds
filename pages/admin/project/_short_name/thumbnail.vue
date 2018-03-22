@@ -9,6 +9,7 @@
       :method="form.method"
       :viewport-height="250"
       :viewport-width="250"
+      :current-image-url="currentImageUrl"
       crop-type="square">
     </image-upload-form>
 
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import ImageUploadForm from '@/components/forms/ImageUpload'
@@ -54,6 +56,19 @@ export default {
   components: {
     ImageUploadForm,
     CardBase
+  },
+
+  computed: {
+    currentImageUrl () {
+      const currentProject = this.$store.state.currentProject
+      const thumbnailUrl = currentProject.info.thumbnail_url
+      if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
+        return ''
+      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
+    }
   }
 }
 </script>

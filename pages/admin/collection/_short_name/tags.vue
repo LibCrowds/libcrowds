@@ -3,7 +3,7 @@
     <card-base :title="title" :description="description">
       <b-btn
         slot="controls"
-        class="float-right"
+        class="float-md-right"
         size="sm"
         variant="success"
         v-b-modal="addTagModalId">
@@ -16,6 +16,8 @@
         striped
         hover
         show-empty
+        :dark="darkMode"
+        class="border-left-0 border-right-0 border-bottom-0"
         :items="getTableItems"
         :fields="tableFields">
         <template slot="color" scope="tag">
@@ -32,7 +34,6 @@
         <template slot="actions" scope="tag">
           <b-btn
             variant="success"
-            class="mr-1"
             size="sm"
             @click="editedTag = tag.item"
             v-b-modal="editTagModalId">
@@ -67,7 +68,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import AddTagModal from '@/components/modals/AddTag'
 import EditTagModal from '@/components/modals/EditTag'
@@ -76,7 +76,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -121,7 +121,7 @@ export default {
 
   methods: {
     /**
-     * Return the collection's tags formatted to be used in the table.
+     * Return the collection's tags, formatted to be used in the table.
      */
     getTableItems () {
       const items = []
@@ -159,7 +159,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.notifySuccess({ message: `Tag deleted` })
+          this.$notifications.success({ message: `Tag deleted` })
           this.refresh()
         }
       })

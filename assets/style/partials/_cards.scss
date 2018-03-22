@@ -27,4 +27,17 @@
   &.card-overflow {
     overflow: visible;
   }
+
+  &.bg-dark {
+    background-color: $gray-1000 !important;
+    border-color: $gray-900;
+
+    .card-header {
+      background-color: $gray-1000 !important;
+    }
+
+    &.text-white {
+      color: $gray-200;
+    }
+  }
 }

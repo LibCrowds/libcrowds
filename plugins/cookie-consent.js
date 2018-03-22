@@ -1,8 +1,5 @@
 /**
- * Dispatch the nuxt client init event.
- *
- * This is used to that we can asynchronously perform actions that are only
- * available on the client, before rendering.
+ * Show cookie consent on the client only.
  */
 export default ({ isClient, app }) => {
   if (isClient) {
@@ -16,10 +13,10 @@ export default ({ isClient, app }) => {
       },
       palette: {
         popup: {
-          background: '#000'
+          background: 'rgba(0,0,0,0.8)'
         },
         button: {
-          background: '#BA0000'
+          background: '#2589bd'
         }
       }
     })

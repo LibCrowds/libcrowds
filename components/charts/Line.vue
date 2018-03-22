@@ -32,19 +32,23 @@ export default {
     mergedOptions () {
       const defaults = {
         height: '300px',
-        plugins: [
+        low: 0,
+        showArea: true
+      }
+
+      // $chartist will only be available on the client
+      if (this.$chartist) {
+        defaults.lineSmooth = this.$chartist.Interpolation.cardinal({
+          fillHoles: true
+        })
+        defaults.plugins = [
           this.$chartist.plugins.tooltip({
             transformTooltipTextFnc: (val) => {
               let text = pluralize(this.unit, Number(val))
               return `${val} ${text}`
             }
           })
-        ],
-        lineSmooth: this.$chartist.Interpolation.cardinal({
-          fillHoles: true
-        }),
-        low: 0,
-        showArea: true
+        ]
       }
       return Object.assign(defaults, this.options)
     }
