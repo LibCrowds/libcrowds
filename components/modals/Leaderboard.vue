@@ -4,9 +4,12 @@
     :id="modalId"
     title="Leaderboard"
     ok-only
+    :header-text-variant="darkMode ? 'white' : null"
     :header-bg-variant="darkMode ? 'dark' : null"
     :body-bg-variant="darkMode ? 'dark' : null"
-    :footer-bg-variant="darkMode ? 'dark' : null">
+    :body-text-variant="darkMode ? 'white' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null">
     <b-table
       responsive
       striped

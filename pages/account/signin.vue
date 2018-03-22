@@ -36,9 +36,9 @@
 </template>
 
 <script>
+import localConfig from '@/local.config'
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import { metaTags } from '@/mixins/metaTags'
-import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 import CardBase from '@/components/cards/Base'
@@ -102,11 +102,21 @@ export default {
   },
 
   methods: {
+    /**
+     * Update the current user and sign in to Flaum, if enabled.
+     */
     onSuccess () {
-      this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios, this.$ga)
-        .then(data => {
+      const action = 'UPDATE_CURRENT_USER'
+
+      this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
+        if (localConfig.hasOwnProperty('flarum')) {
+          return this.$flarum.signin(data.name, data.email_addr)
+        } else {
           this.$router.push({ path: this.next })
-        })
+        }
+      }).then(data => {
+        this.$router.push({ path: this.next })
+      })
     }
   }
 }

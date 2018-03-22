@@ -1,33 +1,42 @@
 <template>
   <div :class="classObj">
-    <img
-      v-if="src"
+    <base-avatar
       :src="src"
-      class="img-fluid rounded-circle"
-      :onerror="hasError = true">
-    <div
-      v-else
-      class="img-fluid rounded-circle placeholder">
-      <icon name="question"></icon>
-    </div>
+      img-class="img-fluid rounded-circle"
+      alt-tag="Small thumbnail image">
+      <v-gravatar
+        v-if="gravatar"
+        slot="placeholder"
+        :email="gravatar"
+        :size="100"
+        default-img="identicon"
+        alt-tag="Small thumbnail placeholder"
+        :class="placeholderClassObj">
+      </v-gravatar>
+      <div
+       v-else
+        slot="placeholder"
+        :class="placeholderClassObj">
+        <icon name="question"></icon>
+      </div>
+    </base-avatar>
   </div>
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import 'vue-awesome/icons/picture-o'
+import localConfig from '@/local.config'
+import BaseAvatar from '@/components/avatars/Base'
 
 export default {
-  data () {
-    return {
-      hasError: false
-    }
-  },
-
   props: {
-    domainObject: {
+    info: {
       type: Object,
       required: true
+    },
+    gravatar: {
+      type: String,
+      required: false
     },
     extraSmall: {
       type: Boolean,
@@ -35,25 +44,41 @@ export default {
     }
   },
 
+  components: {
+    BaseAvatar
+  },
+
   computed: {
     src () {
-      const host = localConfig.pybossaHost
-      if (!this.domainObject.info) {
-        return null
-      } else if (this.domainObject.info.avatar_url) {
-        return host + this.domainObject.info.avatar_url
-      } else if (this.domainObject.info.thumbnail_url) {
-        return host + this.domainObject.info.thumbnail_url
-      } else if (this.domainObject.info.media_url) {
-        return host + this.domainObject.info.media_url
+      let url = null
+      if (this.info.avatar_url) {
+        url = this.info.avatar_url
+      } else if (this.info.thumbnail_url) {
+        url = this.info.thumbnail_url
+      } else if (this.info.media_url) {
+        url = this.info.media_url
       }
-      return null
+      if (url && url.startsWith('/uploads')) {
+        return localConfig.pybossaHost + url
+      } else if (url) {
+        return url
+      }
+      return ''
     },
 
     classObj () {
       return {
         'small-avatar': true,
         'xs': this.extraSmall
+      }
+    },
+
+    placeholderClassObj () {
+      return {
+        'img-fluid': true,
+        'rounded-circle': true,
+        'placeholder': true,
+        'placeholder-dark': this.darkMode
       }
     }
   },
@@ -76,7 +101,8 @@ export default {
   max-width: 3rem;
   max-height: 3rem;
 
-  &>* {
+  .base-avatar,
+  .placeholder {
     width: 3rem;
     height: 3rem;
     max-width: 3rem;
@@ -89,7 +115,7 @@ export default {
     max-width: 2rem;
     max-height: 2rem;
 
-    &>* {
+    .placeholder {
       width: 2rem;
       height: 2rem;
       max-width: 2rem;
@@ -99,6 +125,10 @@ export default {
 
   .placeholder {
     border: 1px solid $gray-300;
+
+    &.placeholder-dark {
+      border-color: $gray-600;
+    }
   }
 }
 </style>

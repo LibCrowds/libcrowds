@@ -1,21 +1,27 @@
 <template>
   <div class="project-avatar">
-    <img v-if="avatar" :src="avatar" :class="imgClass">
-    <div class="placeholder">
-      <icon name="picture-o" scale="4"></icon>
-    </div>
+    <base-avatar
+      :src="src"
+      :img-class="imgClass"
+      :alt-tag="altTag">
+      <div
+        slot="placeholder"
+        :class="darkMode ? 'placeholder placeholder-dark' : 'placeholder'">
+        <icon name="picture-o" scale="4"></icon>
+      </div>
+    </base-avatar>
   </div>
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import 'vue-awesome/icons/picture-o'
+import localConfig from '@/local.config'
+import BaseAvatar from '@/components/avatars/Base'
 
 export default {
-  data: function () {
+  data () {
     return {
       altTag: `Avatar for ${this.project.name}`,
-      avatar: null,
       imgClass: `hoizontal-${this.horizontalBreakpoint}-up`
     }
   },
@@ -27,27 +33,23 @@ export default {
     }
   },
 
-  methods: {
-    /**
-     * Load a project avatar.
-     * @param {String} avatarUrl
-     *   The avatar URL.
-     */
-    loadAvatar (avatarUrl) {
-      if (avatarUrl === undefined || avatarUrl === null) {
-        return
-      }
-
-      if (avatarUrl.indexOf('/uploads') > -1) {
-        this.avatar = localConfig.pybossaHost + avatarUrl
-        return
-      }
-      this.avatar = avatarUrl
-    }
+  components: {
+    BaseAvatar
   },
 
-  created () {
-    this.loadAvatar(this.project.info.thumbnail_url)
+  computed: {
+    src () {
+      const thumbnailUrl = this.project.info.thumbnail_url
+
+      if (thumbnailUrl === undefined || thumbnailUrl === null) {
+        return ''
+      }
+
+      if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
+    }
   }
 }
 </script>
@@ -59,9 +61,14 @@ export default {
   height: 100%;
   width: auto;
 
-  img {
-    width: 100%;
-    height: auto;
+  .base-avatar {
+    height: 100%;
+    width: auto;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 </style>

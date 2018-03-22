@@ -1,3 +1,4 @@
+import localConfig from '@/local.config'
 import isEmpty from 'lodash/isEmpty'
 
 /**
@@ -11,7 +12,8 @@ export default function ({ store, redirect, error }) {
     redirect(`/account/signin`)
   } else if (!currentUser.admin) {
     error({
-      message: 'Forbidden',
+      message: `Sorry, this page can only be accessed by ${localConfig.brand}
+        administrators.`,
       statusCode: 403
     })
   }

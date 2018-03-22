@@ -1,0 +1,15 @@
+.dark-mode {
+  .nav-tabs {
+    .nav-item {
+      .nav-link {
+        background-color: transparent;
+        border-bottom: none;
+
+        &.active {
+          color: $gray-100;
+          border-color: $gray-800;
+        }
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@
             hover
             show-empty
             :dark="darkMode"
+            class="border-left-0 border-right-0 border-bottom-0"
             :items="found"
             :fields="tableFields">
 
@@ -42,7 +43,7 @@
         <b-card
           header="Export"
           class="text-center"
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <p class="lead">
             {{ nUsers }} users registered
@@ -69,11 +70,12 @@
         <b-card
           no-body
           header="Current Administrators"
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <b-table
             hover
             show-empty
+            :dark="darkMode"
             :items="adminUsers"
             :fields="tableFields">
 
@@ -107,7 +109,7 @@ export default {
 
   data () {
     return {
-      title: 'Users',
+      title: 'User Management',
       description: 'Manage the platform\'s registered users.',
       tableFields: {
         id: {
