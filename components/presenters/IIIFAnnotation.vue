@@ -2,7 +2,7 @@
   <div class="iiif-annotation-presenter">
 
     <libcrowds-viewer
-      v-if="taskOpts.length"
+      v-if="tasks.length && taskOpts.length"
       :confirm-on-submit="false"
       :buttons="buttons"
       :task-opts="taskOpts"
@@ -16,7 +16,7 @@
 
       <div slot="share">
         <span v-html="shareText"></span>
-        <b-input-group-button class="mb-2" slot="right">
+        <b-input-group-append class="mb-2">
           <b-form-input
             id="share-input"
             v-if="viewerShareUrl"
@@ -24,7 +24,7 @@
             :value="viewerShareUrl">
           </b-form-input>
           <clipboard-button :content="viewerShareUrl"></clipboard-button>
-        </b-input-group-button>
+        </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
             <span v-if="viewerShareUrl">
@@ -43,6 +43,12 @@
       <span slot="help" v-html="help"></span>
 
     </libcrowds-viewer>
+
+    <p class="mb-0 text-white d-flex align-items-center
+      justify-content-center h-100" v-else>
+      Loading...
+    </p>
+
   </div>
 </template>
 
@@ -75,6 +81,10 @@ export default {
     tasks: {
       type: Array,
       required: true
+    },
+    projectTemplate: {
+      type: Object,
+      required: true
     }
   },
 
@@ -101,7 +111,6 @@ export default {
         if (!isEmpty(this.currentUser) && task.fav_user_ids) {
           opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
         }
-
         return opts
       })
     },
@@ -118,7 +127,7 @@ export default {
     },
 
     help () {
-      const help = this.project.info.help || ''
+      const help = this.projectTemplate.tutorial || ''
       return marked(help)
     }
   },
@@ -237,15 +246,20 @@ export default {
   align-items: center;
   justify-content: center;
 
+  .lv-sidebar {
+    color: $gray-100;
+  }
+
   .lv-sidebar-footer {
     p {
       margin-bottom: 0;
     }
   }
 
-  // Remove after https://github.com/LibCrowds/libcrowds-viewer/issues/284
-  .lv-modal .lv-modal-body svg {
-    margin: 0;
+  .lv-modal .lv-modal-body {
+    img {
+      max-width: 100%;
+    }
   }
 }
 </style>

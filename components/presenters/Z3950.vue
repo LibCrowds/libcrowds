@@ -6,6 +6,8 @@
         <!-- Image -->
         <b-card
           no-body
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null"
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
@@ -23,10 +25,17 @@
 
       </b-col>
       <b-col lg="6" class="mt-3 mt-lg-0">
-        <b-card id="answer-card" no-body>
-
+        <b-card
+          id="answer-card"
+          no-body
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null">
           <!-- Alert -->
-          <b-card-body class="pb-0" v-if="alert">
+          <b-card-body
+            class="pb-0"
+            v-if="alert"
+            :bg-variant="darkMode ? 'dark' : null"
+            :text-variant="darkMode ? 'white' : null">
             <b-alert
               show
               :variant="alert.type"
@@ -52,10 +61,14 @@
           </template>
 
           <!-- Search Form -->
-          <b-card-body v-show="stage == 'search'">
+          <b-card-body
+            v-show="stage == 'search'"
+            :bg-variant="darkMode ? 'dark' : null"
+            :text-variant="darkMode ? 'white' : null">
             <vue-form-generator
               ref="searchform"
               class="form-container"
+              :class="darkMode ? 'form-dark' : null"
               :schema="form.schema"
               :model="form.model">
             </vue-form-generator>
@@ -108,8 +121,11 @@
             </no-ssr>
           </div>
 
-          <!-- Shelfmark Form -->
-          <b-card-body v-show="stage == 'submit'">
+          <!-- Reference Form -->
+          <b-card-body
+            v-show="stage == 'submit'"
+            :bg-variant="darkMode ? 'dark' : null"
+            :text-variant="darkMode ? 'white' : null">
             <div v-if="selectedRecord">
               <h5 class="mb-1">{{ selectedRecord.title }}</h5>
               <p class="mb-0">{{ selectedRecord.author }}</p>
@@ -125,8 +141,8 @@
             <vue-form-generator
               ref="smform"
               class="form-container"
-              :schema="shelfmarkForm.schema"
-              :model="shelfmarkForm.model">
+              :schema="referenceForm.schema"
+              :model="referenceForm.model">
             </vue-form-generator>
           </b-card-body>
 
@@ -135,7 +151,8 @@
             <div id="footer-buttons">
               <b-btn
                 v-b-toggle.collapsecomment
-                variant="dark" v-html="noteButtonText">
+                variant="dark"
+                v-html="noteButtonText">
               </b-btn>
               <b-btn
                 variant="dark"
@@ -162,27 +179,26 @@
         </b-card>
       </b-col>
     </b-row>
+
   </div>
 </template>
 
 <script>
 import marked from 'marked'
 import capitalize from 'capitalize'
-import 'vue-awesome/icons/times'
-import 'vue-awesome/icons/plus'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
-import { notifications } from '@/mixins/notifications'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import VueFormGenerator from 'vue-form-generator'
 
 export default {
-  mixins: [ notifications, computeShareUrl ],
+  mixins: [ computeShareUrl ],
 
   data () {
     return {
       header: 'What is this item?',
+      tutorialModalId: 'tutorial-modal',
       searchQuery: null,
       searchResults: [],
       selectedRecord: null,
@@ -227,18 +243,18 @@ export default {
           ]
         }
       },
-      shelfmarkForm: {
+      referenceForm: {
         model: {
-          'shelfmark': null
+          'reference': null
         },
         schema: {
           fields: [
             {
-              model: 'shelfmark',
-              label: 'Shelfmark',
+              model: 'reference',
+              label: 'Reference',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Enter the shelfmark',
+              placeholder: 'Enter the reference',
               required: true,
               validator: VueFormGenerator.validators.string
             }
@@ -256,6 +272,10 @@ export default {
     tasks: {
       type: Array,
       required: true
+    },
+    projectTemplate: {
+      type: Object,
+      required: false
     }
   },
 
@@ -311,7 +331,19 @@ export default {
       if (!this.searchQuery && !this.selectedRecord) {
         return this.searchForm
       } else {
-        return this.shelfmarkForm
+        return this.referenceForm
+      }
+    },
+
+    database () {
+      if (this.template && this.template.task) {
+        return this.template.task.database
+      }
+    },
+
+    institutions () {
+      if (this.template && this.template.task) {
+        return this.template.task.institutions
       }
     }
   },
@@ -323,8 +355,9 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async onInfiniteLoad ($state) {
+      const endpoint = `/z3950/search/${this.database}/json`
       try {
-        const results = await this.$axios.$get('/z3950/search/oclc/json', {
+        const results = await this.$axios.$get(endpoint, {
           params: {
             query: this.searchQuery,
             position: this.searchResults.length + 1
@@ -349,16 +382,14 @@ export default {
      */
     buildQuery () {
       let model = this.searchForm.model
-      let trusted = [
-        'DLC', 'CUY', 'ZCU', 'HMY', 'PULEA', 'YUL', 'CNEAL',
-        'CGU', 'COO', 'AMH', 'AUT', 'NSL', 'SLY', 'L2U', 'OCLCA',
-        'OCLCQ', 'OCLCF', 'OCLCO', 'BLSTP'
-      ].join(' or ')
-      this.searchQuery = `(1,1183)="eng"and(1,6119)="(${trusted})"` +
+      this.searchQuery = `(1,1183)="eng"` +
         `and(1,4)="${model.title}"` +
         `and(1,1003)="${model.author}"` +
         `and(1,31)="${model.year}"` +
         `and(1,7)="${model.isbn.trim().replace(/-/g, '')}"`
+      if (Array.isArray(this.institutions)) {
+        this.searchQuery += `and(1,6119)="(${this.institutions.join(' or ')})"`
+      }
     },
 
     /**
@@ -465,8 +496,8 @@ export default {
       }).then(result => {
         if (result) {
           this.submit({
-            oclc: '',
-            shelfmark: '',
+            control_number: '',
+            reference: '',
             form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
@@ -483,8 +514,8 @@ export default {
         this.buildQuery()
       } else if (this.stage === 'submit' && this.$refs.smform.validate()) {
         this.submit({
-          oclc: this.selectedRecord.controlNumber,
-          shelfmark: this.shelfmarkForm.model.shelfmark,
+          control_number: this.selectedRecord.controlNumber,
+          reference: this.referenceForm.model.reference,
           form: this.searchForm.model,
           comments: this.$refs.comments.value
         })
@@ -530,7 +561,7 @@ export default {
       this.selectedRecord = null
       this.alert = null
       this.searchForm.model = mapValues(this.searchForm.model, () => '')
-      this.shelfmarkForm.model.shelfmark = null
+      this.referenceForm.model.reference = null
       this.$refs.comments.value = ''
     },
 

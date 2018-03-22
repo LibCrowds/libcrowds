@@ -3,12 +3,19 @@
     lazy
     :id="modalId"
     title="Leaderboard"
-    ok-only>
+    ok-only
+    :header-text-variant="darkMode ? 'white' : null"
+    :header-bg-variant="darkMode ? 'dark' : null"
+    :body-bg-variant="darkMode ? 'dark' : null"
+    :body-text-variant="darkMode ? 'white' : null"
+    :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null">
     <b-table
       responsive
       striped
       hover
       show-empty
+      :dark="darkMode"
       :items="filteredUsers"
       :fields="fields">
     </b-table>

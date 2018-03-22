@@ -5,9 +5,10 @@
       striped
       show-empty
       responsive
+      :outlined="outlined"
+      :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
       <template slot="name" scope="project">
@@ -37,6 +38,7 @@
     </b-table>
 
     <infinite-load-projects
+      ref="loading"
       :collection="collection"
       :orderby="sortModel.orderby"
       :desc="sortModel.desc"
@@ -47,34 +49,13 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
 
 export default {
   data () {
     return {
       items: [],
-      sortModel: {},
-      defaultFields: {
-        name: {
-          label: 'Name'
-        },
-        overall_progress: {
-          label: 'Progress',
-          class: 'text-center d-none d-md-table-cell',
-          sortable: true
-        },
-        n_tasks: {
-          label: 'Tasks',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        },
-        created: {
-          label: 'Created',
-          class: 'text-center d-none d-xl-table-cell',
-          sortable: true
-        }
-      }
+      sortModel: {}
     }
   },
 
@@ -89,9 +70,30 @@ export default {
     },
     fields: {
       type: Object,
-      default: () => ({})
+      default: () => {
+        return {
+          name: {
+            label: 'Name'
+          },
+          overall_progress: {
+            label: 'Progress',
+            class: 'text-center d-none d-md-table-cell',
+            sortable: true
+          },
+          n_tasks: {
+            label: 'Tasks',
+            class: 'text-center d-none d-xl-table-cell',
+            sortable: true
+          },
+          created: {
+            label: 'Created',
+            class: 'text-center d-none d-xl-table-cell',
+            sortable: true
+          }
+        }
+      }
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -106,17 +108,8 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedFields () {
-      const fieldsCopy = merge({}, this.defaultFields, this.fields)
+      const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {
         fieldsCopy.actions = {
           label: 'Actions',
@@ -126,12 +119,18 @@ export default {
       return fieldsCopy
     },
 
+    currentUser () {
+      return this.$store.state.currentUser
+    },
+
     filteredItems () {
+      let filtered = JSON.parse(JSON.stringify(this.items))
+
       if (!this.filter || !this.filterBy) {
-        return this.items
+        return filtered
       }
 
-      return this.items.filter(item => {
+      return filtered.filter(item => {
         const value = this.filter.toUpperCase()
         const cell = item[this.filterBy]
         return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
@@ -148,6 +147,13 @@ export default {
         orderby: value.sortBy,
         desc: value.sortDesc
       }
+    },
+
+    /**
+     * Reset the loaded table data.
+     */
+    reset () {
+      this.$refs.loading.reset()
     }
   }
 }
