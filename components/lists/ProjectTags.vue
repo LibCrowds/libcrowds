@@ -1,7 +1,7 @@
 <template>
   <div class="project-tags-list">
     <b-badge
-      v-for="(value, type) in project.info.tags"
+      v-for="(value, type) in tags"
       :key="type"
       :style="getTagStyle(type)"
       @click.prevent="handleClick(type, value)">
@@ -15,19 +15,17 @@ import isEmpty from 'lodash/isEmpty'
 
 export default {
   props: {
-    project: {
+    tags: {
       type: Object,
       required: true
     },
     collection: {
       type: Object,
       default: () => ({})
-    }
-  },
-
-  computed: {
-    enabled () {
-      return !isEmpty(this.collection)
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -38,13 +36,17 @@ export default {
      *   The tag type
      */
     getTagStyle (type) {
-      let color = '#909090'
-      if (!isEmpty(this.collection) && this.collection.info.tags[type]) {
+      let color = this.darkMode ? '#868e96' : '#909090'
+      if (
+        !this.darkMode &&
+        !isEmpty(this.collection) &&
+        this.collection.info.tags[type]
+      ) {
         color = this.collection.info.tags[type].color
       }
       return {
         backgroundColor: color,
-        cursor: this.enabled ? 'pointer' : 'default'
+        cursor: this.disabled ? 'default' : 'pointer'
       }
     },
 
@@ -56,7 +58,7 @@ export default {
      *   The tag name.
      */
     handleClick (type, name) {
-      if (this.enabled) {
+      if (!this.disabled) {
         this.$emit('tag-click', type, name)
       }
     }

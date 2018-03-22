@@ -4,9 +4,10 @@
   font-size: $font-size-sm;
   margin-bottom: 0;
   background-color: $white;
-  border: $table-border-width solid $table-border-color;
+  border-bottom: $table-border-width solid $table-border-color;
 
   &.table-dark {
+    color: $gray-200;
     background-color: $dark;
     border: $table-border-width solid $dark;
   }
@@ -15,11 +16,19 @@
     font-weight: 400;
     text-transform: uppercase;
     color: $text-muted;
-    border-top: none;
   }
 
   td {
     vertical-align: middle;
+  }
+
+  .btn {
+    margin: 0.25rem;
+
+    @include media-breakpoint-down(md) {
+      display: block;
+      width: 100%;
+    }
   }
 }
 
