@@ -39,7 +39,7 @@ const config = {
       'vue-js-toggle-button'
     ],
     extend (config, ctx) {
-      if (ctx.isClient) {
+      if (process.client) {
         // Run eslint on save
         config.module.rules.push({
           enforce: 'pre',
@@ -52,7 +52,7 @@ const config = {
         })
       }
 
-      if (ctx.isServer) {
+      if (process.server) {
         // Whitelist vue-awesome
         config.externals = [
           nodeExternals({
