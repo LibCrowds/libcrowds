@@ -16,6 +16,11 @@
       </no-ssr>
     </div>
 
+    <p slot="guidance">
+      Use the form below to configure the collection microsite.
+    </p>
+    <hr>
+
     <pybossa-form
       submit-text="Update"
       :form="form"
@@ -117,30 +122,34 @@ export default {
               type: 'input',
               inputType: 'text',
               required: true,
-              validator: VueFormGenerator.validators.string
+              validator: VueFormGenerator.validators.string,
+              hint: 'The name of the collection'
             },
             {
               model: 'short_name',
               label: 'Short name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Used to form the url',
               required: true,
-              validator: VueFormGenerator.validators.string
+              validator: VueFormGenerator.validators.string,
+              hint: 'An identifier used to form the collection ' +
+                'microsite\'s URL'
             },
             {
               model: 'info.tagline',
               label: 'Tagline',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Appears on the homepage and as its title'
+              hint: 'Appears on the collection microsite\'s homepage'
             },
             {
               model: 'description',
               label: 'Description',
               type: 'textArea',
               rows: 3,
-              placeholder: 'Appears on the homepage and as its meta description'
+              hint: 'Appears on the collection microsite\'s homepage and ' +
+                'in the meta description that will be visible to search ' +
+                'engines'
             },
             {
               model: 'info.background',
@@ -148,7 +157,8 @@ export default {
               type: 'input',
               inputType: 'text',
               placeholder: 'https://example.com/img.jpg',
-              validator: VueFormGenerator.validators.url
+              validator: VueFormGenerator.validators.url,
+              hint: 'Used to style all of collection microsite\'s main pages'
             },
             {
               model: 'info.logo',
@@ -156,7 +166,8 @@ export default {
               type: 'input',
               inputType: 'text',
               placeholder: 'https://example.com/img.jpg',
-              validator: VueFormGenerator.validators.url
+              validator: VueFormGenerator.validators.url,
+              hint: 'Appears on the collection microsite\'s homepage'
             },
             {
               model: 'info.forum',
@@ -164,8 +175,8 @@ export default {
               type: 'select',
               disabled: () => !localConfig.flarum || !localConfig.flarum.url,
               hint: localConfig.flarum && localConfig.flarum.url
-                ? 'Provide a link to a particular forum topic in the main ' +
-                  'navigation bar'
+                ? 'Used to provide a link to a particular forum topic in ' +
+                  'the main navigation bar'
                 : 'To select a related forum topic Flarum integration ' +
                   'should be enabled in application\'s the main ' +
                   'configuration file',
@@ -178,7 +189,8 @@ export default {
               values: Object.keys(this.dataLicenses).map(key => {
                 return { id: key, name: this.dataLicenses[key].name }
               }),
-              default: 'CC0'
+              hint: 'The license used to release all data produced by ' +
+                'project\'s within the collection microsite'
             },
             {
               model: 'info.presenter',
