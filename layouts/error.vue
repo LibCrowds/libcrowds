@@ -1,39 +1,32 @@
 <template>
-  <default-base :navbar-brand="localConfig.brand" fixed-top>
-    <b-container class="my-4 my-lg-5">
-      <b-col xl="8" class="mx-auto">
-
-        <card-base :title="title">
-          <b-card-body>
-            <p class="lead my-2 text-center">
-              {{ normalisedMessage }}
-            </p>
-          </b-card-body>
-          <b-card-footer>
-            <b-btn
-              variant="success"
-              class="float-right"
-              :to="{
-                name: 'index'
-              }">
-              Home page
-            </b-btn>
-          </b-card-footer>
-        </card-base>
-
-      </b-col>
-    </b-container>
-  </default-base>
+  <card-base :title="title">
+    <b-card-body>
+      <p class="lead my-2 text-center">
+        {{ normalisedMessage }}
+      </p>
+    </b-card-body>
+    <b-card-footer>
+      <b-btn
+        variant="success"
+        class="float-right"
+        :to="{
+          name: 'index'
+        }">
+        Home page
+      </b-btn>
+    </b-card-footer>
+  </card-base>
 </template>
 
 <script>
 import httpStatus from 'http-status'
 import localConfig from '@/local.config'
-import DefaultBase from '@/layouts/bases/Default'
 import CardBase from '@/components/cards/Base'
 
 export default {
   props: ['error'],
+
+  layout: 'container',
 
   data () {
     return {
@@ -47,7 +40,6 @@ export default {
   },
 
   components: {
-    DefaultBase,
     CardBase
   },
 
