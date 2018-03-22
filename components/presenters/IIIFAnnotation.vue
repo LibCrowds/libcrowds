@@ -16,7 +16,7 @@
 
       <div slot="share">
         <span v-html="shareText"></span>
-        <b-input-group-append class="mb-2">
+        <b-input-group-append class="mb-2 d-flex">
           <b-form-input
             id="share-input"
             v-if="viewerShareUrl"
@@ -30,7 +30,7 @@
             <span v-if="viewerShareUrl">
               Or
             </span>
-            share this project
+            share this project via
           </small>
         </p>
         <social-media-buttons

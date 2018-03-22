@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Clipboard from 'clipboard'
+import ClipboardJS from 'clipboard'
 
 export default {
   props: {
@@ -32,7 +32,7 @@ export default {
   mounted () {
     const btn = this.$refs.btn
     /* eslint-disable no-new */
-    new Clipboard(btn, {
+    new ClipboardJS(btn, {
       text: (trigger) => {
         this.$notifications.success({ message: this.message })
         return this.content
