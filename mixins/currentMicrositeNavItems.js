@@ -3,20 +3,22 @@
  */
 export const currentMicrositeNavItems = {
   computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
     currentMicrositeNavItems () {
-      const micrositeShortName = this.$route.path.startsWith('/collection')
-        ? this.$route.path.replace(/^(\/collection\/)/, '').split('/')[0]
-        : null
-      if (!micrositeShortName) {
+      if (!this.currentCollection) {
         return []
       }
-      return [
+
+      const items = [
         {
           label: 'Home',
           link: {
             name: 'collection-short_name',
             params: {
-              short_name: micrositeShortName
+              short_name: this.currentCollection.short_name
             }
           }
         },
@@ -25,7 +27,7 @@ export const currentMicrositeNavItems = {
           link: {
             name: 'collection-short_name-about',
             params: {
-              short_name: micrositeShortName
+              short_name: this.currentCollection.short_name
             }
           }
         },
@@ -34,7 +36,7 @@ export const currentMicrositeNavItems = {
           link: {
             name: 'collection-short_name-projects',
             params: {
-              short_name: micrositeShortName
+              short_name: this.currentCollection.short_name
             }
           }
         },
@@ -43,11 +45,22 @@ export const currentMicrositeNavItems = {
           link: {
             name: 'collection-short_name-data',
             params: {
-              short_name: micrositeShortName
+              short_name: this.currentCollection.short_name
             }
           }
         }
       ]
+
+      // Add the forum URL if configured
+      if (this.currentCollection.info.forum) {
+        items.push({
+          label: 'Discuss',
+          external: true,
+          link: this.currentCollection.info.forum
+        })
+      }
+
+      return items
     }
   }
 }

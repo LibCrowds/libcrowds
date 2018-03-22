@@ -20,7 +20,8 @@
             v-for="(item, index) in items"
             exact
             :key="index"
-            :to="item.link"
+            :to="item.external ? '' : item.link"
+            :href="item.external ? item.link : ''"
             :active-class="item.activeClass"
             @click="$emit('itemclick', item.link)">
             {{ item.label }}

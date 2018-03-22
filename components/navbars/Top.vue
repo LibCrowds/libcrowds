@@ -27,7 +27,8 @@
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
           exact
-          :to="item.link"
+          :to="item.external ? '' : item.link"
+          :href="item.external ? item.link : ''"
           @click="$emit('itemclick', item.link)">
           {{ item.label }}
         </b-nav-item>
