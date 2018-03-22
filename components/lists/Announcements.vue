@@ -3,7 +3,7 @@
 
     <b-btn
       id="announcements-toggle"
-      class="nav-link d-none d-lg-flex flex-row"
+      class="nav-link"
       v-on-clickaway="hide"
       @click="toggle">
       <icon name="bell"></icon>
@@ -16,69 +16,72 @@
       </b-badge>
     </b-btn>
 
-    <nuxt-link
-      class="d-lg-none nav-link"
-      :to="{
-        name: 'account-name-announcements',
-        params: {
-          name: currentUser.name
-        }
-      }">
-      Notifications
-    </nuxt-link>
-
     <span v-show="show">
       <b-card
         no-body
         header="Notifications"
         id="announcements-container"
-        class="dropdown-menu-right d-none d-md-block"
-        :bg-variant="darkMode ? 'dark' : 'light'"
+        class="dropdown-menu-right"
+        :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
 
-        <div id="announcements">
+        <div
+          slot="header"
+          class="d-flex align-items-center justify-content-between">
+          <h6 class="mb-0">
+            Notifications
+          </h6>
+          <b-btn
+            size="sm"
+            variant="link"
+            @click="markAllAsRead">
+            <small>
+              Mark all as read
+            </small>
+          </b-btn>
+        </div>
+
+        <div id="announcements" class="custom-scrollbar">
           <announcement-card
-            v-for="announcement in announcements"
+            v-for="announcement in enhancedAnnouncements"
             :key="announcement.id"
             :announcement="announcement">
           </announcement-card>
+          <div class="m-1">
+            <b-btn
+              v-if="announcements.length"
+              size="sm"
+              :variant="darkMode ? 'secondary' : 'primary'"
+              class="mx-auto"
+              :disabled="noMore"
+              @click.stop="loadMore">
+              Load More
+            </b-btn>
+            <small v-else>
+              There are no notifications yet.
+            </small>
+          </div>
         </div>
-
-        <infinite-load
-          ref="infiniteload"
-          :search-params="searchParams"
-          domain-object="announcement"
-          no-results="No announcements have been made yet"
-          no-more-results=""
-          v-model="announcements">
-        </infinite-load>
       </b-card>
     </span>
   </div>
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import 'vue-awesome/icons/bell'
-import InfiniteLoad from '@/components/InfiniteLoad'
 import AnnouncementCard from '@/components/cards/Announcement'
 
 export default {
   data () {
     return {
       show: false,
-      announcements: [],
-      searchParams: {
-        published: true,
-        orderby: 'created',
-        desc: true
-      }
+      noMore: false,
+      announcements: []
     }
   },
 
   components: {
-    AnnouncementCard,
-    InfiniteLoad
+    AnnouncementCard
   },
 
   computed: {
@@ -86,25 +89,37 @@ export default {
       return this.$store.state.currentUser
     },
 
-    noAnnouncements () {
-      return isEmpty(this.lastAnnouncement)
-    },
-
-    lastAnnouncement () {
-      return this.$store.state.lastAnnouncement
-    },
-
-    lastRead () {
-      const annoucements = this.currentUser.info.announcements || {}
-      return annoucements.last_read
+    userAnnouncements () {
+      return this.currentUser.info.announcements || {}
     },
 
     hasUnread () {
-      if (this.noAnnouncements) {
+      if (!this.announcements.length) {
         return false
       }
-      const last = Date.parse(this.lastAnnouncement.created)
-      return !this.lastRead || Date.parse(this.lastRead) < last
+      const lastRead = this.userAnnouncements.last_read
+      if (!lastRead) {
+        return true
+      }
+      const lastAnnouncement = this.announcements[0]
+      const lastCreated = Date.parse(lastAnnouncement.created)
+      return !lastRead || Date.parse(lastRead) < lastCreated
+    },
+
+    enhancedAnnouncements () {
+      const readIds = this.userAnnouncements.read_ids || []
+      const allRead = this.userAnnouncements.all_read
+      return this.announcements.map(ann => {
+        if (allRead && Date.parse(allRead) > Date.parse(ann.created)) {
+          ann._read = true
+        } else {
+          ann._read = readIds.indexOf(ann.id) > -1
+        }
+        return ann
+      }).filter(ann => {
+        // Only show admin announcements to admin users
+        return !ann.info.admin || this.currentUser.admin
+      })
     }
   },
 
@@ -120,15 +135,57 @@ export default {
      * Toggle the announcements.
      */
     toggle () {
-      this.show = !this.show
-      if (this.show) {
-        // Reload each time the list is shown in case of changes
-        this.$refs.infiniteload.reset()
+      if (window.innerWidth < 768) {
+        // Redirect to the announcements page on small screens
+        this.$router.push({
+          name: 'account-name-announcements',
+          params: {
+            name: this.currentUser.name
+          }
+        })
+      } else {
+        this.show = !this.show
       }
-      if (this.show && this.hasUnread) {
-        this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
-      }
+      this.$store.dispatch('UPDATE_LAST_READ', this.$axios)
+    },
+
+    /**
+     * Load the next batch of announcements.
+     */
+    loadMore () {
+      const limit = 50
+      this.$axios.get('/api/announcement', {
+        params: {
+          published: true,
+          orderby: 'created',
+          desc: true,
+          limit: limit,
+          offset: this.announcements.length
+        }
+      }).then(response => {
+        if (response.data.length) {
+          this.announcements = this.announcements.concat(response.data)
+          if (response.data.length < limit) {
+            this.noMore = true
+          }
+        } else {
+          this.noMore = true
+        }
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Mark all announcements as read.
+     */
+    markAllAsRead () {
+      this.$store.dispatch('UPDATE_ALL_READ', this.$axios)
     }
+  },
+
+  created () {
+    this.loadMore()
   }
 }
 </script>
@@ -145,6 +202,8 @@ export default {
   text-transform: none;
 
   #announcements-toggle {
+    display: flex;
+    flex-direction: row;
     cursor: pointer;
     background: transparent;
     border: none;
@@ -182,7 +241,6 @@ export default {
     #announcements {
       max-height: 400px;
       overflow-y: auto;
-      border-bottom: 1px solid $gray-300;
     }
 
     .infinite-status-prompt {

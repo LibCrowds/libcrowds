@@ -1,21 +1,22 @@
 <template>
   <card-base :title="title" :description="description">
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right ml-1"
-      size="sm"
-      @click="testCelebration(form.model.info.celebration.user)">
-      Test user
-    </b-btn>
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-right"
-      size="sm"
-      @click="testCelebration(form.model.info.celebration.project)">
-      Test project
-    </b-btn>
+    <div class="float-md-right" slot="controls">
+      <b-btn
+        variant="success"
+        class="mr-1 my-1"
+        size="sm"
+        @click="testCelebration(form.model.info.celebrations.user)">
+        Test user
+      </b-btn>
+      <b-btn
+        slot="controls"
+        variant="success"
+        class="my-1"
+        size="sm"
+        @click="testCelebration(form.model.info.celebrations.project)">
+        Test project
+      </b-btn>
+    </div>
 
     <pybossa-form
       submit-text="Update"
@@ -26,7 +27,7 @@
           User completion
         </label>
         <markdown-editor
-          v-model="collection.info.celebration.user"
+          v-model="collection.info.celebrations.user"
           :configs="markdownConfig">
         </markdown-editor>
       </div>
@@ -35,7 +36,7 @@
           Project completion
         </label>
         <markdown-editor
-          v-model="collection.info.celebration.project"
+          v-model="collection.info.celebrations.project"
           :configs="markdownConfig">
         </markdown-editor>
       </div>
@@ -46,7 +47,6 @@
 <script>
 import marked from 'marked'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import pick from 'lodash/pick'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -55,11 +55,11 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
-      title: 'Celebration',
+      title: 'Celebrations',
       description: 'Configure the celebrations shown on project completion.',
       markdownConfig: {
         spellChecker: false
@@ -88,7 +88,7 @@ export default {
         schema: {
           fields: [
             {
-              model: 'info.celebration.confetti',
+              model: 'info.celebrations.confetti',
               label: 'Confetti type',
               type: 'select',
               values: [
@@ -117,7 +117,7 @@ export default {
      * Handle form success.
      */
     onSuccess () {
-      this.notifySuccess({ message: 'Celebration updated' })
+      this.$notifications.success({ message: 'Celebration updated' })
     },
 
     /**
@@ -127,7 +127,7 @@ export default {
      */
     testCelebration (msg) {
       this.$confetti.start({
-        shape: this.form.model.info.celebration.confetti
+        shape: this.form.model.info.celebrations.confetti
       })
       this.$swal({
         html: marked(msg)

@@ -10,11 +10,8 @@
 <script>
 import isEmpty from 'lodash/isEmpty'
 import ModalForm from '@/components/forms/Modal'
-import { notifications } from '@/mixins/notifications'
 
 export default {
-  mixins: [ notifications ],
-
   data () {
     return {
       form: {
@@ -100,7 +97,7 @@ export default {
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
-        this.notifySuccess({ message: 'Tag type updated' })
+        this.$notifications.success({ message: 'Tag type updated' })
         this.$emit('update', this.tag)
         this.processing = false
       })

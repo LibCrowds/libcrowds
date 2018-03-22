@@ -102,7 +102,13 @@
                       </user-avatar>
                     </div>
                   </nuxt-link>
-                  <p class="badge badge-info">{{ user.score }}</p>
+                  <p
+                    :class="darkMode
+                      ? 'badge badge-dark'
+                      : 'badge badge-info'
+                    ">
+                    {{ user.score }}
+                  </p>
                 </div>
               </li>
             </ul>
@@ -160,6 +166,13 @@ export default {
       app.$axios.$get('/stats'),
       app.$axios.$get('/leaderboard')
     ]).then(([statsData, leaderboardData, categoryData]) => {
+      if (typeof statsData === 'undefined') {
+        return {
+          stats: {},
+          topUsers: [],
+          top10Users: []
+        }
+      }
       return {
         stats: statsData.stats,
         topUsers: leaderboardData.top_users,
@@ -335,12 +348,12 @@ export default {
   #index {
     #collections {
       color: $gray-200;
-      background-color: $gray-1100;
+      background-color: $gray-900;
     }
 
     #top-users {
       color: $gray-100;
-      background-color: $gray-900;
+      background-color: $gray-800;
     }
 
     .btn-underline {

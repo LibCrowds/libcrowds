@@ -41,11 +41,8 @@
 
 <script>
 import FormBase from '@/components/forms/Base'
-import { notifications } from '@/mixins/notifications'
 
 export default {
-  mixins: [ notifications ],
-
   data () {
     return {
       status: null,
@@ -98,6 +95,10 @@ export default {
     noBody: {
       type: Boolean,
       default: false
+    },
+    confirmation: {
+      type: String,
+      required: false
     }
   },
 
@@ -147,28 +148,18 @@ export default {
       if (!valid) {
         this.alert = 'Please correct the errors'
         this.status = 'error'
-        this.notifyInvalidForm()
+        this.$notifications.invalidForm()
       }
       return valid
     },
 
     /**
-     * Submit the form.
+     * Process and submit the form.
      */
-    submit () {
-      if (!this.isValid()) {
-        return
-      }
-
-      this.$emit('submit', this.form)
-      if (this.noSubmit) {
-        return
-      }
-
+    process () {
       this.processing = true
-
       this.alert = ''
-      this.$axios({
+      return this.$axios({
         method: this.form.method,
         url: this.form.endpoint,
         data: this.form.model,
@@ -180,7 +171,7 @@ export default {
         if (r.data.status === 'error' || r.data.status === 'danger') {
           this.alert = r.data.flash
           this.status = r.data.status
-          this.notifyInvalidForm()
+          this.$notifications.invalidForm()
           this.injectErrors(r.data.form.errors)
           return
         } else if (
@@ -190,11 +181,43 @@ export default {
         ) {
           this.handleSuccess(r.data)
         }
-        this.flash(r.data)
+        this.$notifications.flash(r.data)
       }).catch(err => {
-        this.notifyError({ message: err.message || 'Server Error' })
+        this.$notifications.error({ message: err.message || 'Server Error' })
       }).then(() => {
         this.processing = false
+      })
+    },
+
+    /**
+     * Submit the form.
+     */
+    submit () {
+      if (!this.isValid()) {
+        return
+      }
+
+      if (this.noSubmit) {
+        return
+      }
+
+      this.$emit('submit', this.form)
+
+      if (!this.confirmation) {
+        this.process()
+        return
+      }
+
+      this.$swal({
+        title: `Confirm`,
+        html: this.confirmation,
+        type: 'question',
+        showCancelButton: true,
+        reverseButtons: true,
+        showLoaderOnConfirm: true,
+        preConfirm: () => {
+          return this.process()
+        }
       })
     },
 

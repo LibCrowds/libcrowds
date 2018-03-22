@@ -10,7 +10,7 @@ export const fetchProjectAndCollection = {
       }
     }).then(data => {
       if (!data || data.length !== 1) {
-        error(new Error({ statusCode: 404 }))
+        error({ statusCode: 404 })
       } else {
         store.dispatch('UPDATE_CURRENT_PROJECT', data[0])
         return app.$axios.$get(`/api/category/${data[0].category_id}`)

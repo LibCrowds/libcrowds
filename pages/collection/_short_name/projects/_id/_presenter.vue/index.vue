@@ -1,8 +1,9 @@
 <template>
   <component
     :is="presenter"
-    :project="project"
-    :collection="collection"
+    :project="currentProject"
+    :project-template="currentTemplate"
+    :collection="currentCollection"
     :tasks="tasks"
     @submit="onSubmit"
     @taskliked="onTaskLiked">
@@ -13,21 +14,19 @@
 import marked from 'marked'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
+import { hideCookieConsent } from '@/mixins/hideCookieConsent'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
 
 export default {
   layout ({ params, store }) {
-    const layouts = {
-      'iiif-annotation': 'collection-fullscreen-dark',
-      'z3950': 'collection-tabs'
-    }
-    return layouts[params.presenter] || 'collection-tabs'
+    return params.presenter === 'iiif-annotation'
+      ? 'collection-fullscreen-dark'
+      : 'presenter-tabs'
   },
 
-  mixins: [ notifications, fetchCollectionByName, projectMetaTags ],
+  mixins: [ fetchCollectionByName, projectMetaTags, hideCookieConsent ],
 
   data () {
     return {
@@ -35,28 +34,62 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error, store }) {
-    return app.$axios.$get(`/api/project/${params.id}`).then(data => {
-      store.dispatch('UPDATE_CURRENT_PROJECT', data)
-      return {
-        project: data
+  fetch ({ params, app, error, store }) {
+    return app.$axios.$get('/api/category', {
+      params: {
+        short_name: params.short_name
       }
+    }).then(collectionData => {
+      if (!collectionData || collectionData.length !== 1) {
+        error({ statusCode: 404 })
+        return
+      }
+      store.dispatch('UPDATE_CURRENT_COLLECTION', collectionData[0])
+      return app.$axios.$get('/api/project', {
+        params: {
+          id: params.id,
+          all: 1
+        }
+      })
+    }).then(projectData => {
+      if (!projectData || projectData.length !== 1) {
+        error({ statusCode: 404 })
+        return
+      }
+      store.dispatch('UPDATE_CURRENT_PROJECT', projectData[0])
+
+      // Load template
+      let template = store.state.currentCollection.info.templates.find(t => {
+        return t.id === projectData[0].info.template_id
+      })
+      if (typeof template === 'undefined') {
+        template = {}
+      }
+      store.dispatch('UPDATE_CURRENT_TEMPLATE', template)
     }).catch(err => {
       error(err)
     })
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
+    currentProject () {
+      return this.$store.state.currentProject
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
     title () {
-      return this.project.name
+      return this.currentProject.name
     },
 
     description () {
-      return this.project.description
+      return this.currentProject.description
     },
 
     presenter () {
@@ -64,7 +97,7 @@ export default {
         'iiif-annotation': IIIFAnnotationPresenter,
         'z3950': Z3950Presenter
       }
-      return presenters[this.collection.info.presenter]
+      return presenters[this.currentCollection.info.presenter]
     },
 
     currentUser () {
@@ -77,7 +110,7 @@ export default {
      * Load the next set of tasks.
      */
     loadTask () {
-      const url = `/api/project/${this.project.id}/newtask`
+      const url = `/api/project/${this.currentProject.id}/newtask`
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
           this.handleCompletion()
@@ -93,14 +126,13 @@ export default {
      * Handle no tasks remaining.
      */
     handleCompletion () {
-      const msg = this.project.overall_progress === 100
-        ? this.collection.info.celebration.project
-        : this.collection.info.celebration.user
+      const msg = this.currentProject.overall_progress === 100
+        ? this.currentCollection.info.celebrations.currentProject
+        : this.currentCollection.info.celebrations.user
       this.$confetti.start({
-        shape: this.collection.info.celebration.confetti
+        shape: this.currentCollection.info.celebrations.confetti
       })
       this.$swal({
-        title: this.collection.info.celebration.title,
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
@@ -111,7 +143,7 @@ export default {
       this.$router.push({
         name: 'collection-short_name-projects',
         params: {
-          short_name: this.collection.short_name
+          short_name: this.currentCollection.short_name
         }
       })
     },
@@ -130,13 +162,13 @@ export default {
             task_id: taskId
           }
         }).then(() => {
-          this.notifySuccess({ message: 'Removed from favourites' })
+          this.$notifications.success({ message: 'Removed from favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
       } else {
         this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
-          this.notifySuccess({ message: 'Added to favourites' })
+          this.$notifications.success({ message: 'Added to favourites' })
         }).catch(err => {
           this.$nuxt.error(err)
         })
@@ -147,7 +179,7 @@ export default {
      * Show notifications depending on user progress.
      */
     trackUserProgress () {
-      const url = `/api/project/${this.project.short_name}/userprogress`
+      const url = `/api/project/${this.currentProject.short_name}/userprogress`
       const signinUrl = this.$router.resolve({
         name: 'account-signin',
         query: {
@@ -181,7 +213,7 @@ export default {
                   'directly help enable future research.'
           })
         } else {
-          this.notifyAnswerSaved()
+          this.$notifications.answerSaved()
         }
       })
     },
@@ -207,18 +239,37 @@ export default {
         if (this.$ga) {
           this.$ga.event({
             eventCategory: 'Contributions',
-            eventAction: this.project.name,
-            eventLabel: this.collection.name,
+            eventAction: this.currentProject.name,
+            eventLabel: this.currentCollection.name,
             eventValue: 1
           })
         }
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Validate the project template.
+     */
+    validateTemplate () {
+      if (Object.keys(this.currentTemplate).length === 0) {
+        this.$notifications.error({
+          'message': `Sorry, this project is not linked to a valid template.
+            <br>This should be fixed by an administrator.`
+        })
+        this.$router.push({
+          name: 'collection-short_name-projects',
+          params: {
+            short_name: this.currentCollection.short_name
+          }
+        })
+      }
     }
   },
 
   mounted () {
+    this.validateTemplate()
     this.loadTask()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   }

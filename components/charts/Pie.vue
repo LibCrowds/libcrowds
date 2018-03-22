@@ -33,8 +33,14 @@ export default {
     mergedOptions () {
       const defaults = {
         height: '200px',
-        plugins: [ this.$chartist.plugins.tooltip() ],
         labelInterpolationFnc: this.labelInterpolationFnc
+      }
+
+      // $chartist will only be available on the client
+      if (this.$chartist) {
+        defaults.plugins = [
+          this.$chartist.plugins.tooltip()
+        ]
       }
       return Object.assign(defaults, this.options)
     }

@@ -1,18 +1,20 @@
 <template>
-  <div id="default-layout-base" :class="darkMode ? 'dark-mode' : null">
-    <div
-      id="custom-background"
-      :style="bgStyle"
-      :class="darkMode ? 'bg-dark' : null">
-    </div>
+  <div id="default-layout-base" :class="mainClassObj">
 
-    <side-nav
+    <div id="custom-background" :style="customBgStyle"></div>
+
+    <side-navbar
       v-model="showSideNav"
-      @menuclick="showSideNav = false">
-    </side-nav>
+      fixed
+      :dark="darkMode || forceDarkMode"
+      @close="showSideNav = false"
+      @itemclick="onSidebarItemClick">
+    </side-navbar>
 
     <div id="app-right">
+
       <top-navbar
+        :dark="darkMode || forceDarkMode"
         :transparent="transparent"
         :fixed-top="fixedTop"
         :navbar-brand="navbarBrand"
@@ -24,15 +26,14 @@
         <slot></slot>
       </main>
 
+      <app-footer
+        v-if="!hideFooter"
+        :collections="publishedCollections">
+      </app-footer>
+
+      <div :class="backdropClassObj" @click="showSideNav = false"></div>
+
     </div>
-
-    <app-footer
-      v-if="!hideFooter"
-      :collections="publishedCollections">
-    </app-footer>
-
-    <div :class="backdropClassObj" @click="showSideNav = false"></div>
-
   </div>
 </template>
 
@@ -41,7 +42,7 @@ import 'vue-awesome/icons/question-circle'
 import AppFooter from '@/components/footers/App'
 import DashboardFooter from '@/components/footers/Dashboard'
 import TopNavbar from '@/components/navbars/Top'
-import SideNav from '@/components/navbars/Side'
+import SideNavbar from '@/components/navbars/Side'
 
 export default {
   data () {
@@ -54,7 +55,7 @@ export default {
     TopNavbar,
     AppFooter,
     DashboardFooter,
-    SideNav
+    SideNavbar
   },
 
   props: {
@@ -74,10 +75,6 @@ export default {
       type: Boolean,
       default: false
     },
-    titleBase: {
-      type: String,
-      required: false
-    },
     navbarBrand: {
       type: String,
       required: false
@@ -93,6 +90,10 @@ export default {
     transparent: {
       type: Boolean,
       default: false
+    },
+    forceDarkMode: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -103,12 +104,6 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    appRightClass () {
-      return {
-        fixed: this.showSideNav
-      }
     },
 
     containerClass () {
@@ -125,18 +120,44 @@ export default {
       }
     },
 
-    bgStyle () {
+    customBgStyle () {
       if (
-        typeof this.backgroundImageUrl === 'undefined' ||
-        !this.backgroundImageUrl.length
+        typeof this.backgroundImageUrl !== 'undefined' &&
+        this.backgroundImageUrl.length
       ) {
-        if (this.darkMode) {
-          return `url('~/assets/img/geometry-dark.png')`
+        return {
+          backgroundImage: `url(${this.backgroundImageUrl})`
         }
-        return `url('~/assets/img/geometry.png')`
       }
+    },
+
+    mainClassObj () {
+      const bgImgUrl = this.backgroundImageUrl
       return {
-        backgroundImage: `url(${this.backgroundImageUrl})`
+        'dark-mode': this.darkMode || this.forceDarkMode,
+        'bg-default': !bgImgUrl && !(this.darkMode || this.forceDarkMode),
+        'bg-default-dark': !bgImgUrl && (this.darkMode || this.forceDarkMode)
+      }
+    }
+  },
+
+  methods: {
+    /**
+     * Handle sidebar click.
+     *
+     * Collapse if not navigating to a dashboard page or the screen is small.
+     * @param {Object} route
+     *   The route being navigated to.
+     */
+    onSidebarItemClick (route) {
+      const isDashboard = (
+        route.name.startsWith('admin-') ||
+        route.name.startsWith('account-name-templates-')
+      )
+      if (window.innerWidth < 576) {
+        this.showSideNav = false
+      } else if (!isDashboard) {
+        this.showSideNav = false
       }
     }
   }
@@ -152,6 +173,14 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 
+  &.bg-default {
+    background-image: url('~/assets/img/geometry.png');
+  }
+
+  &.bg-default-dark {
+    background-image: url('~/assets/img/geometry-dark.png');
+  }
+
   main {
     flex: 1 1 auto;
   }
@@ -164,19 +193,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
-  }
-
-  .fixed {
-    height: 100vh;
     width: auto;
-
-    main {
-      overflow-y: auto;
-    }
-
-    #app-right {
-      height: 100vh;
-    }
   }
 
   #custom-background {
@@ -191,10 +208,11 @@ export default {
     background-position: top center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url('~/assets/img/app-background.jpg');
+  }
 
-    &.bg-dark {
-      filter: brightness(0.5);
+  &.dark-mode {
+    #custom-background {
+      filter: brightness(0.75);
     }
   }
 }

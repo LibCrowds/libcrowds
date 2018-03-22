@@ -1,52 +1,65 @@
 <template>
-  <b-nav
+  <div
     ref="sidebar"
-    :class="sideNavClass"
-    v-prevent-parent-scroll>
+    :class="sideNavClass">
     <div class="header">
       <b-btn
         variant="link"
         class="d-flex align-items-center float-right"
-        @click="$emit('menuclick')">
+        @click="$emit('close')">
         Close<icon name="times" class="ml-1"></icon>
       </b-btn>
     </div>
 
-    <span v-for="(items, key, index) in navItems" :key="key">
-      <h4>{{ key }}</h4>
-      <b-nav-item
-        v-for="(item, index) in items"
-        exact
-        :key="index"
-        :to="item.link">
-        {{ item.label }}
-      </b-nav-item>
-      <li
-        v-if="index !== navItems.length"
-        role="seperator"
-        class="divider">
-      </li>
-    </span>
+    <div id="side-nav-items" class="custom-scrollbar" v-prevent-parent-scroll>
 
-    <div class="d-flex align-items-center justify-content-between my-2 px-2">
-      <label class="mr-1 mb-0 toggle-label text-secondary">
-        <strong>Activate dark mode</strong>
-      </label>
-      <no-ssr>
-        <toggle-button
-          :value="darkMode"
-          :labels="true"
-          class="mb-0"
-          @change="toggleDarkMode">
-        </toggle-button>
-      </no-ssr>
+      <div v-for="(items, key, index) in sideNavItems" :key="key">
+        <h4>{{ key }}</h4>
+        <b-nav>
+          <b-nav-item
+            v-for="(item, index) in items"
+            exact
+            :key="index"
+            :to="item.link"
+            :active-class="item.activeClass"
+            @click="$emit('itemclick', item.link)">
+            {{ item.label }}
+            <b-badge
+              v-if="item.badge && item.badge.value"
+              pill
+              :variant="item.badge.variant">
+              {{ item.badge.value }}
+            </b-badge>
+          </b-nav-item>
+          <li
+            v-if="index !== sideNavItems.length"
+            role="seperator"
+            class="divider">
+          </li>
+        </b-nav>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between my-2 px-2">
+        <label class="mr-1 mb-0 toggle-label text-secondary">
+          <strong>Activate dark mode</strong>
+        </label>
+        <no-ssr>
+          <toggle-button
+            :value="dark"
+            :labels="true"
+            class="mb-0"
+            @change="toggleDarkMode">
+          </toggle-button>
+        </no-ssr>
+      </div>
+
     </div>
-
-  </b-nav>
+  </div>
 </template>
 
 <script>
 import 'vue-awesome/icons/times'
+import isEmpty from 'lodash/isEmpty'
 import { currentMicrositeNavItems } from '@/mixins/currentMicrositeNavItems'
 import localConfig from '@/local.config'
 
@@ -63,6 +76,18 @@ export default {
     value: {
       type: Boolean,
       default: false
+    },
+    navItems: {
+      type: Object,
+      default: () => ({})
+    },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
+    dark: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -71,24 +96,29 @@ export default {
       return this.$store.state.currentUser
     },
 
-    publishedCollections () {
-      return this.$store.state.publishedCollections
+    loggedIn () {
+      return !isEmpty(this.currentUser)
     },
 
-    darkMode () {
-      return this.$store.state.darkMode
+    publishedCollections () {
+      return this.$store.state.publishedCollections
     },
 
     sideNavClass () {
       return {
         'side-nav': true,
         'show': this.value,
-        'side-nav-dark': this.darkMode
+        'side-nav-dark': this.dark,
+        'side-nav-fixed': this.fixed
       }
     },
 
-    navItems () {
-      const items = {}
+    sideNavItems () {
+      const items = JSON.parse(JSON.stringify(this.navItems))
+      const canBuild = (
+        this.loggedIn &&
+        (this.currentUser.admin || !localConfig.disableProjectBuilder)
+      )
 
       // Microsite nav items
       if (this.currentMicrositeNavItems.length) {
@@ -99,6 +129,7 @@ export default {
       items['Collections'] = this.publishedCollections.map(coll => {
         return {
           label: coll.name,
+          activeClass: 'active-unstyled',
           link: {
             name: 'collection-short_name',
             params: {
@@ -108,30 +139,111 @@ export default {
         }
       })
 
-      // Admin nav items
-      if (this.currentUser.admin) {
-        items['Admin'] = [
+      // Project admin
+      if (canBuild) {
+        items['Projects'] = [
           {
-            label: 'Collection Admin',
+            label: 'New Project',
             link: {
-              name: 'admin-collection'
+              name: 'admin-project-new'
             }
           },
           {
-            label: 'Project Admin',
+            label: 'Open Project',
             link: {
               name: 'admin-project'
             }
+          }
+        ]
+      }
+
+      // Templates admin
+      if (canBuild) {
+        items['Templates'] = [
+          {
+            label: 'New Template',
+            link: {
+              name: 'account-name-templates-new',
+              params: {
+                name: this.currentUser.name
+              }
+            }
           },
           {
-            label: 'Site Admin',
+            label: 'Open Template',
+            link: {
+              name: 'account-name-templates',
+              params: {
+                name: this.currentUser.name
+              }
+            }
+          }
+        ]
+      }
+
+      // Collection admin
+      if (this.currentUser.admin) {
+        items['Collection Admin'] = [
+          {
+            label: 'New Collection',
+            link: {
+              name: 'admin-collection-new'
+            }
+          },
+          {
+            label: 'Open Collection',
+            link: {
+              name: 'admin-collection'
+            }
+          }
+        ]
+      }
+
+      // Site/collection admin
+      if (this.currentUser.admin) {
+        items['Site Admin'] = [
+          {
+            label: 'Dashboard',
+            exact: true,
             link: {
               name: 'admin-site'
+            }
+          },
+          {
+            label: 'User Management',
+            link: {
+              name: 'admin-site-users'
+            }
+          },
+          {
+            label: 'Announcements',
+            link: {
+              name: 'admin-site-announcements'
+            }
+          },
+          {
+            label: 'Background Tasks',
+            link: {
+              name: 'admin-site-jobs'
+            }
+          },
+          {
+            label: 'Pending Templates ',
+            link: {
+              name: 'admin-site-templates'
+            },
+            badge: {
+              variant: 'primary',
+              value: this.nPendingTemplates ? this.nPendingTemplates : null
             }
           }
         ]
       }
       return items
+    },
+
+    nPendingTemplates () {
+      return this.$store.state.nPendingTemplates
     }
   },
 
@@ -140,9 +252,8 @@ export default {
      * Toggle dark mode.
      */
     toggleDarkMode () {
-      this.$store.commit('SET_ITEM', {
-        key: 'darkMode', value: !this.darkMode
-      })
+      this.$cookies.set('dark-mode', !this.$store.state.darkMode)
+      this.$store.dispatch('TOGGLE_DARK_MODE')
     },
 
     /**
@@ -187,7 +298,7 @@ export default {
 @import '~assets/style/settings';
 
 .side-nav {
-  overflow: auto;
+  display: block;
   white-space: nowrap;
   background-size: cover;
   background-position: center center;
@@ -195,15 +306,22 @@ export default {
   max-height: 100%;
   height: 100%;
   flex-direction: column;
-  width: 100%;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: $zindex-modal;
-  border-right: 1px solid $gray-300;
-  transform: translateX(-100%);
+  min-width: 0;
+  width: 0;
   transition: all 350ms ease-out;
+
+  @include media-breakpoint-up(sm) {
+    position: relative;
+
+    &.side-nav-fixed {
+      position: fixed;
+    }
+  }
 
   .btn {
     text-transform: uppercase;
@@ -220,18 +338,17 @@ export default {
     }
   }
 
-  &.side-nav-dark {
-    color: $white;
-    background: $gray-1000;
-    border-right: 1px solid $gray-1200;
-  }
-
-  @include media-breakpoint-up(sm) {
-    width: $sidebar-width;
-  }
-
   &.show {
-    transform: translateX(0);
+    min-width: 100%;
+    width: 100%;
+    border-right: 1px solid $gray-200;
+    white-space: normal;
+    word-wrap: break-word;
+
+    @include media-breakpoint-up(sm) {
+      min-width: $sidebar-width;
+      width: $sidebar-width;
+    }
   }
 
   h4 {
@@ -247,13 +364,25 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    position: sticky;
     width: 100%;
     top: 0;
     z-index: 2;
     height: $top-navbar-height;
     min-height: $top-navbar-height;
-    border-bottom: 1px solid rgba($gray-300, 0.75);
+    border-bottom: 1px solid $gray-300;
+    background: $gray-100;
+  }
+
+  #side-nav-items {
+    height: calc(100vh - #{$top-navbar-height});
+    overflow-y: auto;
+    right: 0;
+    position: absolute;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      width: $sidebar-width;
+    }
   }
 
   .nav-item {
@@ -269,11 +398,18 @@ export default {
       padding: 0.5rem 1.25rem;
       width: 100%;
       color: inherit;
-      display: block;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
 
-      @include hover-focus {
+      &:hover {
         text-decoration: none;
         background-color: rgba($gray-600, 0.2);
+      }
+
+      &.active:not(.active-unstyled) {
+        color: $blue;
       }
     }
   }
@@ -286,7 +422,22 @@ export default {
     height: 0;
     margin: .5rem 0;
     overflow: hidden;
-    border-bottom: 1px solid rgba($gray-300, 0.5);
+    border-bottom: 1px solid $gray-200;
+  }
+
+  &.side-nav-dark {
+    color: $white;
+    background: $gray-1000;
+    border-color: $gray-900;
+
+    .header {
+      background: $gray-1000;
+      border-color: $gray-800;
+    }
+
+    .divider {
+      border-color: $gray-900;
+    }
   }
 }
 </style>
