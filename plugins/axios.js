@@ -1,4 +1,4 @@
-export default function ({ $axios, error }) {
+export default function ({ $axios, error, req }) {
   $axios.onRequest(config => {
     config.headers['Content-Type'] = 'application/json'
 
@@ -15,13 +15,14 @@ export default function ({ $axios, error }) {
   })
 
   $axios.onError(err => {
-    err.code = parseInt(err.response && err.response.status) || 500
-    err.message = (
-      err.message ||
-      err.response.statusText ||
-      'Internal Server Error'
-    )
-    console.log(err)
-    return error(err)
+    const errorParams = {
+      statusCode: parseInt(err.response && err.response.status) || 500,
+      message: (
+        err.message ||
+        err.response.statusText ||
+        'Internal Server Error'
+      )
+    }
+    return Promise.reject(errorParams)
   })
 }
