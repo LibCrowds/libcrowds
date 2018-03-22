@@ -4,21 +4,23 @@
     class="card-base"
     :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
-    <b-row
-      slot="header"
-      class="mb-0 d-flex align-items-center">
-      <b-col>
-        <h6 class="mb-0">{{ title }}</h6>
-        <p class="text-muted mb-0">
-          <small>
-            {{ description }}
-          </small>
-        </p>
-      </b-col>
-      <b-col xs="12" md="6" class="my-1 my-md-0" v-if="$slots.controls">
-        <slot name="controls"></slot>
-      </b-col>
-    </b-row>
+
+    <template slot="header">
+      <b-row
+        class="mb-0 d-flex align-items-center">
+        <b-col>
+          <h6 v-if="title.length" class="mb-0">{{ title }}</h6>
+          <p v-if="description.length" class="text-muted mb-0">
+            <small>
+              {{ description }}
+            </small>
+          </p>
+        </b-col>
+        <b-col xs="12" md="6" class="my-1 my-md-0" v-if="$slots.controls">
+          <slot name="controls"></slot>
+        </b-col>
+      </b-row>
+    </template>
 
     <template v-if="$slots.guidance">
       <b-card-body>
@@ -51,11 +53,11 @@ export default {
   props: {
     title: {
       type: String,
-      default: null
+      default: ''
     },
     description: {
       type: String,
-      default: null
+      default: ''
     }
   }
 }
