@@ -130,7 +130,8 @@ const config = {
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
-    baseURL: localConfig.pybossaHost
+    baseURL: localConfig.pybossaHost,
+    credentials: true
   },
   proxy: {
     '/api': localConfig.pybossaHost,
