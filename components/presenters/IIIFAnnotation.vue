@@ -14,32 +14,6 @@
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
 
-      <lv-modal v-model="showShareModal" title="Share">
-        <span v-html="shareText"></span>
-        <b-input-group-append class="mb-2 d-flex">
-          <b-form-input
-            id="share-input"
-            v-if="tasks.length"
-            readonly
-            :value="tasks[0].info.link">
-          </b-form-input>
-          <clipboard-button :content="tasks[0].info.link"></clipboard-button>
-        </b-input-group-append>
-        <p class="mb-1 text-uppercase text-center">
-          <small>
-            <span v-if="tasks[0].info.link">
-              Or
-            </span>
-            share this project via
-          </small>
-        </p>
-        <social-media-buttons
-          class="text-center"
-          :tweet="project.description"
-          :shareUrl="shareUrl">
-        </social-media-buttons>
-      </lv-modal>
-
       <span slot="help" v-html="help"></span>
 
     </libcrowds-viewer>
@@ -55,16 +29,10 @@
 <script>
 import marked from 'marked'
 import pluralize from 'pluralize'
-import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import { computeShareUrl } from '@/mixins/computeShareUrl'
-import ClipboardButton from '@/components/buttons/Clipboard'
 
 export default {
-  mixins: [ computeShareUrl ],
-
   data () {
     return {
-      showShareModal: false,
       taskTmpl: this.projectTemplate.task
     }
   },
@@ -96,11 +64,6 @@ export default {
     }
   },
 
-  components: {
-    SocialMediaButtons,
-    ClipboardButton
-  },
-
   computed: {
     currentUser () {
       return this.$store.state.currentUser
@@ -108,10 +71,6 @@ export default {
 
     taskOpts () {
       return this.tasks.map(task => Object.assign(this.taskTmpl, task.info))
-    },
-
-    shareText () {
-      return marked(this.collection.info.presenter_options.share_text)
     },
 
     sidebarButtons () {
@@ -151,7 +110,7 @@ export default {
      */
     onToolbarBtnClick (key) {
       if (key === 'share-alt') {
-        this.showShareModal = true
+        this.$emit('share')
       }
     },
 

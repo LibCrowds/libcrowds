@@ -1,12 +1,57 @@
 <template>
-  <component
-    :is="presenter"
-    :project="currentProject"
-    :project-template="currentTemplate"
-    :collection="currentCollection"
-    :tasks="tasks"
-    @submit="onSubmit">
-  </component>
+  <div>
+
+    <!-- Task presenter -->
+    <component
+      :is="presenter"
+      :project="currentProject"
+      :project-template="currentTemplate"
+      :collection="currentCollection"
+      :tasks="tasks"
+      @share="$refs.share.show()"
+      @submit="onSubmit">
+    </component>
+
+    <!-- Share model -->
+    <b-modal
+      lazy
+      v-if="tasks.length"
+      title="Share"
+      ref="share"
+      size="lg"
+      header-text-variant="white"
+      header-bg-variant="dark"
+      body-bg-variant="dark"
+      body-text-variant="white"
+      footer-bg-variant="dark"
+      footer-text-variant="white">
+      <b-container class="py-2">
+        <span v-html="shareText"></span>
+        <b-input-group-append class="mb-2 d-flex">
+          <b-form-input
+            id="share-input"
+            readonly
+            :value="tasks[0].info.link">
+          </b-form-input>
+          <clipboard-button :content="tasks[0].info.link"></clipboard-button>
+        </b-input-group-append>
+        <p class="mb-1 text-uppercase text-center">
+          <small>
+            <span v-if="tasks[0].info.link">
+              Or
+            </span>
+            share this project via
+          </small>
+        </p>
+        <social-media-buttons
+          class="text-center"
+          :tweet="description"
+          :shareUrl="shareUrl">
+        </social-media-buttons>
+      </b-container>
+    </b-modal>
+
+  </div>
 </template>
 
 <script>
@@ -14,6 +59,9 @@ import marked from 'marked'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { hideCookieConsent } from '@/mixins/hideCookieConsent'
+import { computeShareUrl } from '@/mixins/computeShareUrl'
+import SocialMediaButtons from '@/components/buttons/SocialMedia'
+import ClipboardButton from '@/components/buttons/Clipboard'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
@@ -25,7 +73,12 @@ export default {
       : 'presenter-tabs'
   },
 
-  mixins: [ fetchCollectionByName, projectMetaTags, hideCookieConsent ],
+  mixins: [
+    fetchCollectionByName,
+    projectMetaTags,
+    hideCookieConsent,
+    computeShareUrl
+  ],
 
   data () {
     return {
@@ -70,6 +123,11 @@ export default {
     })
   },
 
+  components: {
+    SocialMediaButtons,
+    ClipboardButton
+  },
+
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
@@ -101,6 +159,10 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    shareText () {
+      return marked(this.currentCollection.info.presenter_options.share_text)
     }
   },
 
