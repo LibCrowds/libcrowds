@@ -3,30 +3,31 @@
 
     <libcrowds-viewer
       v-if="tasks.length && taskOpts.length"
-      :confirm-on-submit="false"
-      :buttons="buttons"
       :task-opts="taskOpts"
+      :sidebar-buttons="sidebarButtons"
+      :toolbar-buttons="toolbarButtons"
       :browsable="false"
+      :confirm-on-submit="false"
       :selections-editable="false"
       :before-submit="checkSubmission"
       show-help-on-mount
       @submit="onSubmit"
-      @taskchange="onTaskChange">
+      @toolbarbtnclick="onToolbarBtnClick">
 
-      <div slot="share">
+      <lv-modal v-model="showShareModal" title="Share">
         <span v-html="shareText"></span>
         <b-input-group-append class="mb-2 d-flex">
           <b-form-input
             id="share-input"
-            v-if="viewerShareUrl"
+            v-if="tasks.length"
             readonly
-            :value="viewerShareUrl">
+            :value="tasks[0].info.link">
           </b-form-input>
-          <clipboard-button :content="viewerShareUrl"></clipboard-button>
+          <clipboard-button :content="tasks[0].info.link"></clipboard-button>
         </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
-            <span v-if="viewerShareUrl">
+            <span v-if="tasks[0].info.link">
               Or
             </span>
             share this project via
@@ -37,7 +38,7 @@
           :tweet="project.description"
           :shareUrl="shareUrl">
         </social-media-buttons>
-      </div>
+      </lv-modal>
 
       <span slot="help" v-html="help"></span>
 
@@ -54,7 +55,6 @@
 <script>
 import marked from 'marked'
 import pluralize from 'pluralize'
-import isEmpty from 'lodash/isEmpty'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import ClipboardButton from '@/components/buttons/Clipboard'
@@ -64,7 +64,8 @@ export default {
 
   data () {
     return {
-      viewerShareUrl: null
+      showShareModal: false,
+      taskTmpl: this.projectTemplate.task
     }
   },
 
@@ -83,7 +84,15 @@ export default {
     },
     projectTemplate: {
       type: Object,
-      required: true
+      required: true,
+      validator: (value) => {
+        return (
+          value.hasOwnProperty('task') &&
+          value.task.hasOwnProperty('mode') &&
+          value.task.hasOwnProperty('objective') &&
+          value.task.hasOwnProperty('guidance')
+        )
+      }
     }
   },
 
@@ -97,28 +106,26 @@ export default {
       return this.$store.state.currentUser
     },
 
+    taskOpts () {
+      return this.tasks.map(task => Object.assign(this.taskTmpl, task.info))
+    },
+
     shareText () {
       return marked(this.collection.info.presenter_options.share_text)
     },
 
-    taskOpts () {
-      return this.tasks.map((task) => {
-        let opts = task.info
-        opts.id = task.id
-        opts.manifest = opts.info // Fix for LibCrowds Viewer < 4.0.0
-        return opts
-      })
-    },
-
-    buttons () {
-      let buttons = {
+    sidebarButtons () {
+      return {
         note: marked(this.collection.info.presenter_options.note_button),
         submit: marked(this.collection.info.presenter_options.submit_button)
       }
-      if (isEmpty(this.currentUser)) {
-        buttons.like = false
+    },
+
+    toolbarButtons () {
+      return {
+        browse: false,
+        'share-alt': 'Share'
       }
-      return buttons
     },
 
     help () {
@@ -129,30 +136,24 @@ export default {
 
   methods: {
     /**
-     * Handle the task changed event.
-     * @param {Object} oldTask
-     *   The old task.
-     * @param {Object} newTask
-     *   The new task.
-     */
-    onTaskChange (oldTask, newTask) {
-      const tasks = this.tasks.filter(task => {
-        return task.id === newTask.id
-      })
-      if (tasks.length === 1 && tasks[0].info.shareUrl) {
-        this.viewerShareUrl = tasks[0].info.shareUrl
-      } else {
-        this.viewerShareUrl = null
-      }
-    },
-
-    /**
      * Submit an answer.
      * @param {Object} taskData
      *   The task data.
      */
     onSubmit (taskData) {
       this.$emit('submit', this.project.id, taskData.id, taskData.annotations)
+    },
+
+    /**
+     * Handle a toolbar button click.
+     * @param {String} key
+     *   The button key
+     */
+    onToolbarBtnClick (key) {
+      if (key === 'share-alt') {
+        this.showShareModal = true
+        console.log(this.showShareModal)
+      }
     },
 
     /**
