@@ -76,7 +76,10 @@ export default {
         // Build the form for transcribe tasks
         if (opts.hasOwnProperty('fields_schema')) {
           opts['form'] = {
-            model: opts.fields_schema.map(item => (item.model)),
+            model: opts.fields_schema.reduce((obj, item) => {
+              obj[item.model] = ''
+              return obj
+            }, {}),
             schema: {
               fields: opts.fields_schema
             }
