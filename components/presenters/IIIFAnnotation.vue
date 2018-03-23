@@ -236,6 +236,10 @@ export default {
     color: $gray-100;
   }
 
+  .lv-sidebar-header {
+    padding-top: 2rem;
+  }
+
   .lv-sidebar-footer {
     p {
       margin-bottom: 0;
