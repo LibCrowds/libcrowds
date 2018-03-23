@@ -52,7 +52,7 @@ export const currentMicrositeNavItems = {
       ]
 
       // Add the forum URL if configured
-      if (this.currentCollection.info.forum) {
+      if (this.currentCollection && this.currentCollection.info.forum) {
         items.push({
           label: 'Discuss',
           external: true,
