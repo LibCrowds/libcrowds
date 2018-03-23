@@ -3,7 +3,7 @@
     <b-btn
       :variant="darkMode ? 'dark' : 'success'"
       size="sm"
-      class="float-right"
+      class="float-md-right"
       slot="controls"
       :to="{
         name: 'admin-site-announcements-new'
@@ -16,10 +16,9 @@
       :fields="tableFields"
       :search-params="searchParams"
       domain-object="announcement">
-      <template slot="action" scope="announcement">
+      <template slot="action" slot-scope="announcement">
         <b-btn
           variant="success"
-          class="mr-1"
           size="sm"
           :to="{
             name: 'admin-site-announcements-id-update',

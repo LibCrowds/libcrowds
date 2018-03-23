@@ -4,29 +4,29 @@
       hover
       striped
       show-empty
+      :outlined="outlined"
       :dark="darkMode"
       :items="filteredItems"
       :fields="tableFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
-      <template slot="nTags" scope="data">
+      <template slot="nTags" slot-scope="data">
         {{ Object.keys(data.item.info.tags || {}).length }}
       </template>
 
-      <template slot="created" scope="data">
+      <template slot="created" slot-scope="data">
         {{ data.item.created | moment('calendar') }}
       </template>
 
-      <template slot="updated" scope="data">
+      <template slot="updated" slot-scope="data">
         {{ data.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="last_activity" scope="data">
+      <template slot="last_activity" slot-scope="data">
         {{ data.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="actions" scope="data">
+      <template slot="actions" slot-scope="data">
         <slot name="action" :item="data.item"></slot>
       </template>
 
@@ -34,6 +34,7 @@
 
     <infinite-load
       ref="infiniteload"
+      :all="all"
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
@@ -80,22 +81,17 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
+    },
+    all: {
+      type: Boolean,
+      default: true
     }
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     tableFields () {
       const fieldsCopy = JSON.parse(JSON.stringify(this.fields))
       if (this.$scopedSlots.action) {

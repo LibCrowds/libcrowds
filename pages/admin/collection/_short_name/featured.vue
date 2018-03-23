@@ -1,23 +1,23 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-form-input
-      slot="controls"
-      v-model="filter"
-      class="search-control"
-      size="sm"
-      :placeholder="`Type to search by ${filterBy}`">
-    </b-form-input>
+    <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
+      <b-form-input
+        v-model="filter"
+        class="search-control"
+        size="sm"
+        :placeholder="`Type to search by ${filterBy}`">
+      </b-form-input>
+    </b-form>
 
     <projects-table
       :filter="filter"
       :filter-by="filterBy"
       :collection="collection">
-      <template slot="action" scope="project">
+      <template slot="action" slot-scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
           size="sm"
-          block
           @click="toggleFeatured(project.item)">
           {{ getButtonText(project.item.featured) }}
         </b-btn>
@@ -29,7 +29,6 @@
 
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { notifications } from '@/mixins/notifications'
 import { metaTags } from '@/mixins/metaTags'
 import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
@@ -37,7 +36,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, notifications, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags ],
 
   data () {
     return {
@@ -74,7 +73,7 @@ export default {
         featured: !project.featured
       }).then(data => {
         project.featured = !project.featured
-        this.notifySuccess({
+        this.$notifications.success({
           message: project.featured
             ? 'Project added to featured'
             : 'Project removed from featured'

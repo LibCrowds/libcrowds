@@ -2,7 +2,7 @@
   <b-card
     no-body
     class="project-card"
-    :bg-variant="darkMode ? 'dark' : 'light'"
+    :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
     <nuxt-link
       v-if="projectIncomplete"
@@ -60,7 +60,8 @@
       </p>
       <div class="mb-0 px-2 pt-1">
         <project-tags-list
-          :project="project"
+          v-if="project.info.tags"
+          :tags="project.info.tags"
           :collection="collection"
           @tag-click="onTagClick">
         </project-tags-list>
@@ -74,7 +75,7 @@
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
-          {{ collection.info.terminology.task | pluralize(project.n_tasks) }}
+          {{ 'task' | pluralize(project.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0">
           <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
@@ -229,6 +230,7 @@ export default {
 
     .card-footer {
       border-top: none;
+      background-color: transparent;
 
       .footer-buttons {
         @include media-breakpoint-down(md) {
@@ -316,14 +318,22 @@ export default {
   }
 
   &.bg-dark {
-    .card-footer {
-      background: transparent;
-    }
-
     .project-stats-btn {
       color: $white;
       border-color: $black;
       background-color: transparent;
+    }
+  }
+
+  &.bg-light {
+    background-color: $white !important;
+
+    .card-footer {
+      background-color: $white;
+    }
+
+    .project-stats-btn {
+      background-color: $white;
     }
   }
 }

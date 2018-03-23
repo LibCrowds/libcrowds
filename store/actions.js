@@ -1,13 +1,15 @@
+import isEmpty from 'lodash/isEmpty'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
 export default {
   UPDATE_CURRENT_USER: ({ dispatch, commit }, axios, ga) => {
-    axios.$get(`/account/profile`).then(data => {
+    return axios.$get(`/account/profile`).then(data => {
       if (data.hasOwnProperty('user')) {
         commit('LOGIN', data.user)
         if (ga) {
-          this.$ga.set({ userId: data.user.id })
+          ga.set({ userId: data.user.id })
         }
+        return data.user
       } else {
         commit('LOGOUT')
       }
@@ -33,21 +35,8 @@ export default {
     })
   },
 
-  LOAD_COLLECTION: ({ commit }, requestPromise) => {
-    return requestPromise.then(data => {
-      if (!data || !data.length === 1) {
-        throw new Error({ statusCode: 404, message: 'Page not found' })
-      }
-
-      setCollectionDefaults(data[0])
-      commit('SET_ITEM', {
-        key: 'collection', value: data[0]
-      })
-    })
-  },
-
   UPDATE_CURRENT_COLLECTION: ({ commit }, collection) => {
-    if (collection) {
+    if (collection && !isEmpty(collection)) {
       setCollectionDefaults(collection)
     }
     commit('SET_ITEM', {
@@ -61,28 +50,31 @@ export default {
     })
   },
 
-  UPDATE_LAST_ANNOUNCEMENT: ({ commit }, axios) => {
-    return axios.get('/api/announcement', {
-      params: {
-        orderby: 'created',
-        published: true,
-        desc: true,
-        limit: 1
-      }
-    }).then(res => {
-      if (res.data.length) {
-        commit('SET_ITEM', {
-          key: 'lastAnnouncement', value: res.data[0]
-        })
-      }
+  UPDATE_CURRENT_TEMPLATE: ({ commit }, template) => {
+    commit('SET_ITEM', {
+      key: 'currentTemplate', value: template
     })
   },
 
   UPDATE_LAST_READ: ({ state, dispatch }, axios) => {
-    const announcements = state.currentUser.info.announcements || {}
-    announcements['last_read'] = state.lastAnnouncement.created
+    const infoClone = JSON.parse(JSON.stringify(state.currentUser.info))
+    const userAnnouncements = infoClone.announcements || {}
+    userAnnouncements['last_read'] = new Date().toISOString()
+    infoClone.announcements = userAnnouncements
     return axios.$put(`/api/user/${state.currentUser.id}`, {
-      info: state.currentUser.info
+      info: infoClone
+    }).then(data => {
+      dispatch('UPDATE_CURRENT_USER', axios)
+    })
+  },
+
+  UPDATE_ALL_READ: ({ state, dispatch }, axios) => {
+    const infoClone = JSON.parse(JSON.stringify(state.currentUser.info))
+    const userAnnouncements = infoClone.announcements || {}
+    userAnnouncements['all_read'] = new Date().toISOString()
+    infoClone.announcements = userAnnouncements
+    return axios.$put(`/api/user/${state.currentUser.id}`, {
+      info: infoClone
     }).then(data => {
       dispatch('UPDATE_CURRENT_USER', axios)
     })
@@ -98,6 +90,20 @@ export default {
     }
     commit('SET_ITEM', {
       key: 'collectionNavItems', value: navItems
+    })
+  },
+
+  TOGGLE_DARK_MODE: ({ commit, state }) => {
+    commit('SET_ITEM', {
+      key: 'darkMode', value: !state.darkMode
+    })
+  },
+
+  UPDATE_N_PENDING_TEMPLATES: ({ commit }, axios) => {
+    return axios.$get('/lc/admin/templates/pending').then(data => {
+      commit('SET_ITEM', {
+        key: 'nPendingTemplates', value: data.templates.length
+      })
     })
   }
 }

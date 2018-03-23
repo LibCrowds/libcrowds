@@ -1,9 +1,11 @@
 <template>
   <default-base :navbar-brand="navbarBrand">
     <b-container class="my-4 my-lg-5">
-      <b-col xl="8" class="mx-auto">
-        <nuxt></nuxt>
-      </b-col>
+      <b-row>
+        <b-col xl="8" class="mx-auto">
+          <nuxt></nuxt>
+        </b-col>
+      </b-row>
     </b-container>
   </default-base>
 </template>

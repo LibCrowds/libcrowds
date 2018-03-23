@@ -7,12 +7,9 @@
 </template>
 
 <script>
-import { notifications } from '@/mixins/notifications'
-import Clipboard from 'clipboard'
+import ClipboardJS from 'clipboard'
 
 export default {
-  mixins: [ notifications ],
-
   props: {
     content: {
       type: String,
@@ -35,9 +32,9 @@ export default {
   mounted () {
     const btn = this.$refs.btn
     /* eslint-disable no-new */
-    new Clipboard(btn, {
+    new ClipboardJS(btn, {
       text: (trigger) => {
-        this.notifySuccess({ message: this.message })
+        this.$notifications.success({ message: this.message })
         return this.content
       }
     })

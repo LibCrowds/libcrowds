@@ -3,9 +3,12 @@
     lazy
     :id="modalId"
     ok-only
+    :header-text-variant="darkMode ? 'white' : null"
     :header-bg-variant="darkMode ? 'dark' : null"
     :body-bg-variant="darkMode ? 'dark' : null"
+    :body-text-variant="darkMode ? 'white' : null"
     :footer-bg-variant="darkMode ? 'dark' : null"
+    :footer-text-variant="darkMode ? 'white' : null"
     title="Project Stats"
     size="lg"
     @shown="fetchData">
@@ -30,7 +33,7 @@
           :description="proportionAuthDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <pie-chart
               v-if="userStats.authenticated && userStats.anonymous"
@@ -44,11 +47,11 @@
           :description="dailyContributionsDescriptions"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.dayStats"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="dailyContributionsData">
             </line-chart>
           </b-card-body>
@@ -59,11 +62,11 @@
           :description="hourlyContributionsDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <line-chart
               v-if="projectStats.hourStats"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="hourlyContributionsData">
             </line-chart>
           </b-card-body>
@@ -74,11 +77,11 @@
           :description="topUsersDescription"
           class="mb-3 card-overflow">
           <b-card-body
-            :bg-variant="darkMode ? 'dark' : 'light'"
+            :bg-variant="darkMode ? 'dark' : null"
             :text-variant="darkMode ? 'white' : null">
             <bar-chart
               v-if="userStats.authenticated"
-              :unit="collection.info.terminology.taskrun"
+              unit="contribution"
               :chart-data="topUsersData">
             </bar-chart>
           </b-card-body>
@@ -211,13 +214,13 @@ export default {
     },
 
     dailyContributionsDescription () {
-      const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Daily ${taskrun} over the past two weeks`
+      const unit = pluralize('contribution')
+      return `Daily ${unit} over the past two weeks`
     },
 
     hourlyContributionsDescription () {
-      const taskrun = pluralize(this.collection.info.terminology.taskrun)
-      return `Hourly ${taskrun} over the past two weeks`
+      const unit = pluralize('contribution')
+      return `Hourly ${unit} over the past two weeks`
     },
 
     proportionAuthDescription () {

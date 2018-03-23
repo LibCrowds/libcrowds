@@ -5,37 +5,37 @@
       striped
       show-empty
       responsive
+      :outlined="outlined"
       :dark="darkMode"
       :items="filteredItems"
       :fields="mergedFields"
-      :style="tableStyle"
       @sort-changed="onSortChange">
 
 
-      <template slot="created" scope="result">
+      <template slot="created" slot-scope="result">
         {{ result.item.created | moment('calendar') }}
       </template>
 
-      <template slot="isempty" scope="result">
+      <template slot="isempty" slot-scope="result">
         {{ isResultEmpty(result.item) }}
       </template>
 
-      <template slot="task_run_ids" scope="result">
+      <template slot="task_run_ids" slot-scope="result">
         {{ result.item.task_run_ids.length }}
       </template>
 
-      <template slot="actions" scope="result">
+      <template slot="actions" slot-scope="result">
         <slot name="action" :item="result.item"></slot>
       </template>
 
-      <template slot="row-details" scope="result">
+      <template slot="row-details" slot-scope="result">
         <b-card
-          :bg-variant="darkMode ? 'dark' : 'light'"
+          :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <pre class=".pre-scrollable mb-0">
             <code>
 <!-- No indentation to force correct indentation in code block -->
-{{ JSON.stringify(result.item.info, null, 2) }}
+{{ JSON.stringify(result.item, null, 2) }}
             </code>
           </pre>
         </b-card>
@@ -99,7 +99,7 @@ export default {
       type: Object,
       default: () => ({})
     },
-    noBorder: {
+    outlined: {
       type: Boolean,
       default: false
     },
@@ -114,15 +114,6 @@ export default {
   },
 
   computed: {
-    tableStyle () {
-      if (this.noBorder) {
-        return {
-          borderLeft: 'none',
-          borderRight: 'none'
-        }
-      }
-    },
-
     mergedParams () {
       const mergedParams = Object.assign({}, this.searchParams)
       return Object.assign(mergedParams, this.sortParams)

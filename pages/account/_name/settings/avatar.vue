@@ -5,7 +5,8 @@
       file-field="avatar"
       :endpoint="form.endpoint"
       :model="form.model"
-      :method="form.method">
+      :method="form.method"
+      :current-image-url="currentImageUrl">
     </image-upload-form>
   </card-base>
 </template>
@@ -55,6 +56,16 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    currentImageUrl () {
+      const thumbnailUrl = this.currentUser.info.avatar_url
+      if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
+        return ''
+      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+        return localConfig.pybossaHost + thumbnailUrl
+      }
+      return thumbnailUrl
     }
   },
 

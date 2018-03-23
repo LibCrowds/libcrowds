@@ -1,6 +1,6 @@
 <template>
   <dashboard-base
-    :navItems="navItems">
+    :nav-items="navItems">
   </dashboard-base>
 </template>
 
@@ -13,32 +13,7 @@ export default {
 
   data () {
     return {
-      navItems: [
-        {
-          label: 'Dashboard',
-          link: {
-            name: 'admin-site'
-          }
-        },
-        {
-          label: 'Users',
-          link: {
-            name: 'admin-site-users'
-          }
-        },
-        {
-          label: 'Announcements',
-          link: {
-            name: 'admin-site-announcements'
-          }
-        },
-        {
-          label: 'Background Tasks',
-          link: {
-            name: 'admin-site-jobs'
-          }
-        }
-      ]
+      navItems: {}
     }
   },
 

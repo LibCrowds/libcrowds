@@ -146,8 +146,8 @@
         <div class="container py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Results</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
-            As each {{ collection.info.terminology.task }} is completed,
-            {{ collection.info.terminology.taskRun | pluralize }} are
+            As each task is completed,
+            {{ 'contribution' | pluralize }} are
             analysed and the outcome provided via our results page, making
             the efforts of our volunteers immediately apparent.
           </p>
@@ -448,22 +448,26 @@ export default {
     #intro,
     #final-cta,
     #social-media {
-      background: $gray-1000;
+      background: $gray-900;
       color: $gray-200;
     }
 
     #ribbon {
-      background: $gray-1000;
+      background: $gray-900;
+
+      svg {
+        color: $gray-200;
+      }
 
       &:after {
-        border-color: $gray-1000 $gray-1000 transparent $gray-1000;
+        border-color: $gray-900 $gray-900 transparent $gray-900;
       }
     }
 
     #featured-projects {
       color: $gray-200;
       background-image: url('~/assets/img/dark-wall.png');
-      border: 1px solid $gray-1000;
+      border: 1px solid $gray-900;
     }
   }
 }
