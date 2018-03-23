@@ -126,6 +126,7 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/proxy',
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
@@ -135,9 +136,9 @@ const config = {
     proxy: true
   },
   proxy: {
-    '/api': localConfig.pybossaHost,
-    '/z3950': localConfig.pybossaHost,
-    '/lc': localConfig.pybossaHost
+    '/api/': localConfig.pybossaHost,
+    '/z3950/': localConfig.pybossaHost,
+    '/lc/': localConfig.pybossaHost
   },
   manifest: {
     name: localConfig.brand,
