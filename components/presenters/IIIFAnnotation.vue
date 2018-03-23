@@ -11,7 +11,6 @@
       :before-submit="checkSubmission"
       show-help-on-mount
       @submit="onSubmit"
-      @taskliked="onTaskLiked"
       @taskchange="onTaskChange">
 
       <div slot="share">
@@ -107,10 +106,6 @@ export default {
         let opts = task.info
         opts.id = task.id
         opts.manifest = opts.info // Fix for LibCrowds Viewer < 4.0.0
-
-        if (!isEmpty(this.currentUser) && task.fav_user_ids) {
-          opts.liked = task.fav_user_ids.indexOf(this.currentUser.id) > -1
-        }
         return opts
       })
     },
@@ -133,15 +128,6 @@ export default {
   },
 
   methods: {
-    /**
-     * Handle the task liked event.
-     * @param {Object} taskData
-     *   The task data.
-     */
-    onTaskLiked (taskData) {
-      this.$emit('taskliked', taskData.id, taskData.liked)
-    },
-
     /**
      * Handle the task changed event.
      * @param {Object} oldTask

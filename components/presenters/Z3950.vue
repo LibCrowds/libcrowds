@@ -523,15 +523,6 @@ export default {
     },
 
     /**
-     * Handle the task liked event.
-     * @param {Object} task
-     *   The task.
-     */
-    onTaskLiked (task) {
-      this.$emit('taskliked', task.id, task.liked)
-    },
-
-    /**
      * Submit a task run.
      * @param {Object} answer
      *   The answer.

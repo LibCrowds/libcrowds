@@ -5,8 +5,7 @@
     :project-template="currentTemplate"
     :collection="currentCollection"
     :tasks="tasks"
-    @submit="onSubmit"
-    @taskliked="onTaskLiked">
+    @submit="onSubmit">
   </component>
 </template>
 
@@ -146,33 +145,6 @@ export default {
           short_name: this.currentCollection.short_name
         }
       })
-    },
-
-    /**
-     * Handle the task liked event.
-     * @param {String|Number} id
-     *   The task ID.
-     * @param {Boolean} liked
-     *   True for task liked, false otherwise.
-     */
-    onTaskLiked (taskId, liked) {
-      if (liked) {
-        this.axios.$post('/api/favorite', {
-          params: {
-            task_id: taskId
-          }
-        }).then(() => {
-          this.$notifications.success({ message: 'Removed from favourites' })
-        }).catch(err => {
-          this.$nuxt.error(err)
-        })
-      } else {
-        this.$axios.$delete(`/api/favorite/${taskId}`).then(() => {
-          this.$notifications.success({ message: 'Added to favourites' })
-        }).catch(err => {
-          this.$nuxt.error(err)
-        })
-      }
     },
 
     /**
