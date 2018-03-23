@@ -86,6 +86,9 @@ export default {
           }
         }
 
+        // Add the task ID
+        opts.id = task.id
+
         return opts
       })
     },
