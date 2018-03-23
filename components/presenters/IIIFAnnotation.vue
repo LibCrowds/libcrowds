@@ -152,7 +152,6 @@ export default {
     onToolbarBtnClick (key) {
       if (key === 'share-alt') {
         this.showShareModal = true
-        console.log(this.showShareModal)
       }
     },
 
