@@ -70,7 +70,21 @@ export default {
     },
 
     taskOpts () {
-      return this.tasks.map(task => Object.assign(this.taskTmpl, task.info))
+      return this.tasks.map(task => {
+        const opts = Object.assign(this.taskTmpl, task.info)
+
+        // Build the form for transcribe tasks
+        if (opts.hasOwnProperty('fields_schema')) {
+          opts['form'] = {
+            model: opts.fields_schema.map(item => (item.model)),
+            schema: {
+              fields: opts.fields_schema
+            }
+          }
+        }
+
+        return opts
+      })
     },
 
     sidebarButtons () {
