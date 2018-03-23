@@ -131,7 +131,8 @@ const config = {
   ],
   axios: {
     baseURL: localConfig.pybossaHost,
-    credentials: true
+    credentials: true,
+    retry: true
   },
   proxy: {
     '/api': localConfig.pybossaHost,
