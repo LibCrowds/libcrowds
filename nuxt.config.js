@@ -126,13 +126,13 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/proxy',
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
     baseURL: localConfig.pybossaHost,
     credentials: true,
-    retry: true
+    retry: true,
+    proxy: true
   },
   proxy: {
     '/api': localConfig.pybossaHost,
