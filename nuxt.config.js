@@ -180,11 +180,7 @@ if (localConfig.hasOwnProperty('facebook')) {
 
 // Configure Sentry
 if (localConfig.hasOwnProperty('sentry')) {
-  localConfig.sentry.release = git.tag()
-  localConfig.sentry.tags = {
-    git_commit: git.short()
-  }
-  config.modules.push([ '~/modules/sentry/sentry', localConfig.sentry ])
+  config.modules.push([ '@nuxtjs/sentry', localConfig.sentry ])
 }
 
 // Configure Flarum integration
