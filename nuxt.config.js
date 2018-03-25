@@ -130,7 +130,6 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/proxy',
     ['bootstrap-vue/nuxt', { css: false }]
   ],
   axios: {
