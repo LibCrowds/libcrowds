@@ -4,11 +4,5 @@ export default {
   },
   DELETE_ITEM: (state, key) => {
     state[key] = null
-  },
-  LOGIN: (state, user) => {
-    state.currentUser = user
-  },
-  LOGOUT: (state) => {
-    state.currentUser = {}
   }
 }

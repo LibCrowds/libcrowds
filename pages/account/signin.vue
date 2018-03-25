@@ -1,6 +1,7 @@
 <template>
   <card-base :title="title">
     <pybossa-form
+      v-if="!signedIn"
       id="account-signin"
       :lead="lead"
       submit-text="Sign in"
@@ -56,16 +57,21 @@ export default {
     }
   },
 
-  async asyncData ({ query, redirect, app, error }) {
+  asyncData ({ query, redirect, app, error }) {
     const endpoint = '/account/signin'
     return app.$axios.$get(endpoint).then(data => {
       const next = query.next || '/'
+
+      // If already signed in next=/ will be returned
       if (data.next === '/') {
-        // Redirect if already signed in
-        redirect(next)
+        return {
+          signedIn: true,
+          next: next
+        }
       }
 
       return {
+        signedIn: false,
         next: next,
         auth: data.auth,
         form: {
@@ -103,7 +109,7 @@ export default {
 
   methods: {
     /**
-     * Update the current user and sign in to Flaum, if enabled.
+     * Update the current user and sign in to Flarum, if enabled.
      */
     onSuccess () {
       const action = 'UPDATE_CURRENT_USER'
@@ -111,12 +117,20 @@ export default {
       this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
         if (localConfig.hasOwnProperty('flarum')) {
           return this.$flarum.signin(data.name, data.email_addr)
-        } else {
-          this.$router.push({ path: this.next })
         }
       }).then(data => {
         this.$router.push({ path: this.next })
+      }).catch(err => {
+        console.error(err)
+        this.$notifications.error('Flarum SSO failed')
+        this.$router.push({ path: this.next })
       })
+    }
+  },
+
+  created () {
+    if (this.signedIn) {
+      this.onSuccess()
     }
   }
 }

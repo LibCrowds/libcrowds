@@ -1,3 +1,4 @@
+import localConfig from '@/local.config'
 import isEmpty from 'lodash/isEmpty'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
@@ -5,19 +6,35 @@ export default {
   UPDATE_CURRENT_USER: ({ dispatch, commit }, axios, ga) => {
     return axios.$get(`/account/profile`).then(data => {
       if (data.hasOwnProperty('user')) {
-        commit('LOGIN', data.user)
+        commit('SET_ITEM', {
+          key: 'currentUser', value: data.user
+        })
+
+        // Set GA tracking ID
         if (ga) {
           ga.set({ userId: data.user.id })
         }
+
         return data.user
       } else {
-        commit('LOGOUT')
+        commit('SET_ITEM', {
+          key: 'currentUser', value: {}
+        })
       }
     })
   },
 
-  LOGOUT: ({ commit }) => {
-    commit('LOGOUT')
+  LOGOUT: ({ commit }, axios, flarum) => {
+    return axios.$get('/account/signout').then(data => {
+      // Sign out from Flarum, if enabled
+      if (flarum) {
+        flarum.signout()
+      }
+
+      commit('SET_ITEM', {
+        key: 'currentUser', value: {}
+      })
+    })
   },
 
   UPDATE_PUBLISHED_COLLECTIONS: ({ commit, state }, axios) => {
