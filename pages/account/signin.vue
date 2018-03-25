@@ -33,6 +33,15 @@
       </div>
 
     </pybossa-form>
+
+    <b-alert
+      v-else
+      show
+      variant="info"
+      class="m-1">
+      You're already signed in, redirecting...
+    </b-alert>
+
   </card-base>
 </template>
 
