@@ -18,6 +18,7 @@ class Flarum {
    *   The user's email address.
    */
   signin (username, email) {
+    console.log('signin to flarum')
     const password = this.createPassword(username)
 
     return this.getToken(password).then(token => {
@@ -27,6 +28,7 @@ class Flarum {
         })
       }
     }).then(token => {
+      console.log(token)
       JSCookie.set(this.remember_me_key, token)
     })
   }
@@ -41,6 +43,7 @@ class Flarum {
    *   The user's email address.
    */
   signup (username, password, email) {
+    console.log('signup to flarum')
     const data = {
       type: 'users',
       attributes: {
@@ -118,7 +121,8 @@ class Flarum {
 export default (ctx, inject) => {
   const options = {
     url: '<%= options.url %>',
-    apiKey: '<%= options.apiKey %>'
+    apiKey: '<%= options.apiKey %>',
+    salt: '<%= options.salt %>'
   }
 
   // Create new flarum instance
