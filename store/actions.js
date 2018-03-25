@@ -1,4 +1,3 @@
-import localConfig from '@/local.config'
 import isEmpty from 'lodash/isEmpty'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
 
