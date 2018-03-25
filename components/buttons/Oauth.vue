@@ -61,7 +61,10 @@ export default {
      *   The endpoint.
      */
     redirect (endpoint) {
-      const query = `next=${this.next}&response_format=json`
+      // next param could be added here but makes things complicated with
+      // Oauth via an SPA
+      const query = `response_format=json`
+
       const url = `${localConfig.pybossaHost}/${endpoint}?${query}`
       window.location.assign(url)
     }
