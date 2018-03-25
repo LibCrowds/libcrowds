@@ -96,6 +96,8 @@ export default {
   overflow: hidden;
   width: 3rem;
   height: 3rem;
+  min-width: 3rem;
+  min-height: 3rem;
   max-width: 3rem;
   max-height: 3rem;
 
@@ -103,6 +105,8 @@ export default {
   .placeholder {
     width: 3rem;
     height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
     max-width: 3rem;
     max-height: 3rem;
   }
@@ -110,12 +114,16 @@ export default {
   &.xs {
     width: 2rem;
     height: 2rem;
+    min-width: 2rem;
+    min-height: 2rem;
     max-width: 2rem;
     max-height: 2rem;
 
     .placeholder {
       width: 2rem;
       height: 2rem;
+      min-width: 2rem;
+      min-height: 2rem;
       max-width: 2rem;
       max-height: 2rem;
     }
