@@ -60,6 +60,7 @@ class Flarum {
    * Sign the current user out.
    */
   signout () {
+    console.log('signing out from flarum')
     JSCookie.remove(this.remember_me_key)
   }
 
@@ -92,6 +93,8 @@ class Flarum {
     return new Promise((resolve, reject) => {
       this.post('/api/token', data).then(response => {
         resolve(response.hasOwnProperty('token') ? response['token'] : '')
+      }).catch(err => {
+        reject(err)
       })
     })
   }
@@ -125,7 +128,7 @@ export default (ctx, inject) => {
     salt: '<%= options.salt %>'
   }
 
-  // Create new flarum instance
+  // Create a new Flarum instance
   const flarum = new Flarum(options)
 
   // Inject as $flarum
