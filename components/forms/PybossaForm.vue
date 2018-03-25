@@ -227,7 +227,7 @@ export default {
      *   The response data
      */
     handleSuccess (data) {
-      if (this.next && this.next.length) {
+      if (typeof this.next === 'string' && this.next.length) {
         this.$router.push({ path: this.next })
       }
       this.$emit('success', data)
