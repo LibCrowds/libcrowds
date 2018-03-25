@@ -122,7 +122,7 @@ export default {
         this.$router.push({ path: this.next })
       }).catch(err => {
         console.error(err)
-        this.$notifications.error('Flarum SSO failed')
+        this.$notifications.warn({ message: 'Flarum SSO failed' })
         this.$router.push({ path: this.next })
       })
     }
