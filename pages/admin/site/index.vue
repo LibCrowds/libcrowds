@@ -86,7 +86,7 @@
                   }">
                   {{ item.project_name }}
                 </nuxt-link>
-                {{ item.updated | moment('calendar') }}
+                {{ item.updated | moment('L') }}
               </small>
             </li>
           </ul>
@@ -133,7 +133,7 @@
                   }">
                   {{ item.name }}
                 </nuxt-link>
-                {{ item.updated | moment('calendar') }}
+                {{ item.updated | moment('L') }}
               </small>
             </li>
           </ul>
@@ -212,7 +212,7 @@
                   {{ item.fullname }}
                 </nuxt-link>
                 joined
-                {{ item.updated | moment('calendar') }}
+                {{ item.updated | moment('L') }}
               </small>
             </li>
           </ul>
@@ -462,6 +462,7 @@ export default {
 
   asyncData ({ app, error, router }) {
     return app.$axios.$get('/admin/dashboard').then(stats => {
+      console.log(stats)
       return {
         activeAnon: stats.active_anon_last_week,
         activeAuth: stats.active_users_last_week,
@@ -469,7 +470,11 @@ export default {
         newUsers: stats.new_users_week,
         newTaskRuns: stats.new_task_runs_week,
         newTasks: stats.new_tasks_week,
-        updateFeed: stats.update_feed,
+        updateFeed: stats.update_feed.map(item => {
+          // Convert UNIX timestamps
+          item.updated = new Date(item.updated * 1000)
+          return item
+        }),
         draftProjects: stats.draft_projects_last_week,
         publishedProjects: stats.published_projects_last_week,
         updatedProjects: stats.update_projects_last_week
