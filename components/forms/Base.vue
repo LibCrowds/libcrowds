@@ -76,7 +76,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
 .form-base {
   .btn {
     transition: 250ms opacity;

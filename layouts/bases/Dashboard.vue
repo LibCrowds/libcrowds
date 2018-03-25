@@ -98,8 +98,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #dashboard-layout-base {
   display: flex;
   height: 100vh;

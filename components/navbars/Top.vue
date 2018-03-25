@@ -275,8 +275,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #top-navbar {
   padding: 0;
   display: flex;

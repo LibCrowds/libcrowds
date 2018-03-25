@@ -91,8 +91,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 .social-media-buttons {
   div {
     display: inline-block;

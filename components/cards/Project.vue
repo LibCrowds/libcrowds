@@ -179,8 +179,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 .card.project-card {
   text-align: center;
   flex-direction: column;

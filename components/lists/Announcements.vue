@@ -191,8 +191,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #announcements-list {
   font-size: $font-size-sm;
   display: flex;

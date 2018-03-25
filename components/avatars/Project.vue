@@ -55,8 +55,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 .project-avatar {
   height: 100%;
   width: auto;

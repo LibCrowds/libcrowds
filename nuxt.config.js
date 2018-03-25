@@ -96,6 +96,10 @@ const config = {
           'markdown-loader'
         ]
       })
+    },
+
+    styleResources: {
+      scss: './assets/style/settings.scss'
     }
   },
   plugins: [

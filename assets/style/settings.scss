@@ -1,3 +1,9 @@
+@import
+  '~bootstrap/scss/functions',
+  '~bootstrap/scss/variables',
+  '~bootstrap/scss/mixins'
+;
+
 /* Text */
 $headings-font-family:             'Varela Round', sans-serif;
 $font-family-base:                 'Roboto', sans-serif;
@@ -115,9 +121,3 @@ $ct-series-colors:
 
 /* LibCrowds Viewer */
 $lv-sidebar-bg: $gray-1100;
-
-@import
-  '~bootstrap/scss/functions',
-  '~bootstrap/scss/variables',
-  '~bootstrap/scss/mixins'
-;

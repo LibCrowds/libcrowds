@@ -146,8 +146,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #project-filters-card {
   font-size: $font-size-sm;
   margin-top: 0;

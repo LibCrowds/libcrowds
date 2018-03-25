@@ -306,8 +306,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #collection-index {
   .container.full-height {
     min-height: 400px;

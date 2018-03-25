@@ -575,8 +575,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #z3950-presenter {
   div {
     transition: opacity 400ms ease;

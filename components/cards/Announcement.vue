@@ -150,8 +150,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 .announcement-card {
   cursor: pointer;
   display: block;

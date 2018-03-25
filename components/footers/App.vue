@@ -157,8 +157,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #app-footer {
   background-color: $gray-1000;
   letter-spacing: 0.8px;

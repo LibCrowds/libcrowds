@@ -296,8 +296,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 .side-nav {
   display: block;
   white-space: nowrap;

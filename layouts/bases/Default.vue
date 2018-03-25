@@ -165,8 +165,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #default-layout-base {
   flex: 1 1 auto;
   display: flex;

@@ -28,8 +28,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #collection-fullscreen-dark-layout {
   .content {
     height: calc(100vh - #{$top-navbar-height});

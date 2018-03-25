@@ -592,8 +592,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 .chart-row {
   height: 300px;
   max-height: 300px;

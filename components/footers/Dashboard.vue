@@ -50,8 +50,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #dashboard-footer {
   background: $white;
   font-size: $font-size-sm;

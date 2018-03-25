@@ -197,9 +197,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
 @import '~croppie/croppie';
-
 .image-upload {
   .custom-file {
     width: 100%;

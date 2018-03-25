@@ -74,8 +74,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 #oauth-buttons {
   display: flex;
   flex-direction: column;

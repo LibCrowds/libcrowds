@@ -57,8 +57,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~assets/style/settings';
-
 .profile-card {
   .avatar-background {
     text-align: center;

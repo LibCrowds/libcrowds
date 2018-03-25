@@ -74,8 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #collection-tabs-layout {
   background-repeat: no-repeat;
   background-size: cover;

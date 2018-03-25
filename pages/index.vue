@@ -215,8 +215,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 #index {
   #site-tagline {
     font-weight: 600px;

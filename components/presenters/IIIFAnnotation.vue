@@ -200,8 +200,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 .iiif-annotation-presenter {
   width: 100%;
   height: 100%;

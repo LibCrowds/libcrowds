@@ -92,8 +92,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~assets/style/settings';
-
 .small-avatar {
   overflow: hidden;
   width: 3rem;
