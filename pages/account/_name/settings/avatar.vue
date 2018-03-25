@@ -62,7 +62,7 @@ export default {
       const thumbnailUrl = this.currentUser.info.avatar_url
       if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
         return ''
-      } else if (thumbnailUrl.startsWith('/uploads') > -1) {
+      } else if (thumbnailUrl.startsWith('/uploads')) {
         return localConfig.pybossaHost + thumbnailUrl
       }
       return thumbnailUrl
