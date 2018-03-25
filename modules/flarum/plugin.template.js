@@ -18,18 +18,25 @@ class Flarum {
    *   The user's email address.
    */
   signin (username, email) {
-    console.log('signin to flarum')
     const password = this.createPassword(username)
 
-    return this.getToken(password).then(token => {
-      if (!token) {
-        return this.signup(username, password, email).then(data => {
-          return this.getToken(password)
-        })
-      }
-    }).then(token => {
-      console.log(token)
-      JSCookie.set(this.remember_me_key, token)
+    return new Promise((resolve, reject) => {
+      return this.getUser(username).then(() => {
+        // User exists, so get a token
+        return this.getToken(username, password)
+      }).catch(err => {
+        if (err.statusCode === 404) {
+          // User doesn't exist, so sign up then get a token
+          return this.signup(username, password, email).then(data => {
+            return this.getToken(username, password)
+          })
+        } else {
+          reject(err)
+        }
+      }).then(token => {
+        JSCookie.set(this.remember_me_key, token)
+        resolve()
+      })
     })
   }
 
@@ -43,7 +50,6 @@ class Flarum {
    *   The user's email address.
    */
   signup (username, password, email) {
-    console.log('signup to flarum')
     const data = {
       type: 'users',
       attributes: {
@@ -53,14 +59,13 @@ class Flarum {
       }
     }
 
-    return this.post('/api/users', data)
+    return this.request('/api/users', 'POST', data)
   }
 
   /**
    * Sign the current user out.
    */
   signout () {
-    console.log('signing out from flarum')
     JSCookie.remove(this.remember_me_key)
   }
 
@@ -71,12 +76,35 @@ class Flarum {
    */
   createPassword (username) {
     const hash = crypto.createHmac('sha256', this.salt)
-    hash.update(username)
-    return hash.digest('hex')
+      .update(username)
+      .digest('hex')
+    return hash
   }
 
   /**
-   * Get Flarum token for a signed in user.
+   * Get a user by name.
+   * @param {String} username
+   *   The user's name.
+   */
+  getUser (username) {
+    const endpoint = `/api/users/${username}`
+    return this.request(endpoint, 'GET')
+  }
+
+  /**
+   * Update a user by name.
+   * @param {String} username
+   *   The user's name.
+   * @param {Object} data
+   *   The data to update.
+   */
+  updateUser (username, data) {
+    const endpoint = `/api/users/${username}`
+    return this.request(endpoint, 'PATCH', data)
+  }
+
+  /**
+   * Get token for an authenticated user.
    * @param {String} username
    *   The user's name.
    * @param {String} password
@@ -91,8 +119,21 @@ class Flarum {
     }
 
     return new Promise((resolve, reject) => {
-      this.post('/api/token', data).then(response => {
-        resolve(response.hasOwnProperty('token') ? response['token'] : '')
+      this.request('/api/token', 'POST', data).then(response => {
+        resolve(response['token'])
+      }).catch(err => {
+        if (err.statusCode === 401) {
+          // If permission is denied it probably means the user set their
+          // password before this module was enabled, so let's update it.
+          return this.updateUser(username, { password: password })
+        } else {
+          reject(err)
+        }
+      }).then(response => {
+        // Attempt to get the token again, following the user update
+        return this.request('/api/token', 'POST', data)
+      }).then(response => {
+        resolve(response['token'])
       }).catch(err => {
         reject(err)
       })
@@ -100,17 +141,17 @@ class Flarum {
   }
 
   /**
-   * Send a POST request to Flarum.
+   * Send a request to Flarum.
    * @param {String} endpoint
    *   The Flarum endpoint.
    * @param {Object} data
    *   The data.
    */
-  post (endpoint, data) {
+  request (endpoint, method, data = {}) {
     return axios({
       baseURL: this.url,
       url: endpoint,
-      method: 'POST',
+      method: method,
       data: data,
       headers: {
         'Content-Type': 'application/json',

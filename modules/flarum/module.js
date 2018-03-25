@@ -1,9 +1,19 @@
 const path = require('path')
 
-// Flarum module that just adds the plugin
-module.exports = function nuxtFlarum (moduleOptions) {
+module.exports = function nuxtFlarum (_moduleOptions) {
+  // Combine options
+  const moduleOptions = Object.assign({}, this.options.flarum, _moduleOptions)
+
+  // Apply defaults
+  const options = Object.assign({
+    salt: '',
+    debug: true
+  }, moduleOptions)
+
+  // Register plugin
   this.addPlugin({
     src: path.resolve(__dirname, 'plugin.template.js'),
-    options: moduleOptions
+    fileName: 'flarum.js',
+    options: options
   })
 }
