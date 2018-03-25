@@ -105,7 +105,7 @@ export default {
           return this.$axios.$put(`/api/project/${this.project.id}`, {
             info: infoClone
           }).catch(err => {
-            this.$notifications.error(err.message)
+            this.$notifications.error({ message: err.message })
           })
         }
       }).then(data => {
@@ -141,7 +141,7 @@ export default {
             all: 1,
             project_short_name: this.project.short_name
           }).catch(err => {
-            this.$notifications.error(err.message)
+            this.$notifications.error({ message: err.message })
           })
         }
       }).then(result => {

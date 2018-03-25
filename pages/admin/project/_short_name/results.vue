@@ -93,7 +93,7 @@ export default {
             all: 1,
             project_short_name: this.currentProject.short_name
           }).catch(err => {
-            this.$notifications.error(err.message)
+            this.$notifications.error({ message: err.message })
           })
         }
       }).then(result => {
