@@ -87,7 +87,7 @@ class Flarum {
    *   The user's name.
    */
   getUser (username) {
-    const endpoint = `/api/users/${username}`
+    const endpoint = '/api/users/' + username
     return this.request(endpoint, 'GET')
   }
 
@@ -99,7 +99,7 @@ class Flarum {
    *   The data to update.
    */
   updateUser (username, data) {
-    const endpoint = `/api/users/${username}`
+    const endpoint = '/api/users/' + username
     return this.request(endpoint, 'PATCH', data)
   }
 
@@ -155,7 +155,7 @@ class Flarum {
       data: data,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Token ${this.apiKey}; userId=1`
+        'Authorization': 'Token ' + this.apiKey + '; userId=1'
       },
       withCredentials: true
     })
