@@ -145,14 +145,17 @@ export default {
     /**
      * Handle sidebar click.
      *
-     * Collapse if not navigating to a dashboard page or the screen is small.
+     * Collapse if not navigating to a dashboard page, or the screen is small.
      * @param {Object} route
      *   The route being navigated to.
      */
     onSidebarItemClick (route) {
       const isDashboard = (
-        route.name.startsWith('admin-') ||
-        route.name.startsWith('account-name-templates-')
+        typeof route.name === 'string' &&
+        (
+          route.name.startsWith('admin-') ||
+          route.name.startsWith('account-name-templates-')
+        )
       )
       if (window.innerWidth < 576) {
         this.showSideNav = false
