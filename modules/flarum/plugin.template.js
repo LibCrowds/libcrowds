@@ -8,7 +8,6 @@ class Flarum {
     this.rememberMeKey = 'flarum_remember'
     this.salt = options.salt
     this.url = options.url
-    this.oneYear = 365 * 24 * 60 * 60
     this.client = this.createAxiosClient(options.url, options.apiKey)
   }
 
@@ -36,10 +35,7 @@ class Flarum {
           reject(err)
         }
       }).then(tokenResponse => {
-        JSCookie.set(this.rememberMeKey, tokenResponse.data['token'], {
-          domain: url.parse(this.url).host,
-          expires: this.oneYear
-        })
+        this.setCookie(tokenResponse.data['token'])
         resolve()
       })
     })
@@ -124,10 +120,11 @@ class Flarum {
    *   The user's password.
    */
   getToken (username, userId, password) {
+    const year = 365 * 24 * 60 * 60
     const authData = {
       identification: username,
       password: password,
-      lifetime: this.oneYear
+      lifetime: year
     }
 
     return new Promise((resolve, reject) => {
@@ -150,6 +147,22 @@ class Flarum {
         reject(err)
       })
     })
+  }
+
+  /**
+   * Set the Flarum user auth cookie.
+   * @param {String} token
+   *   The Flarum token.
+   */
+  setCookie (token) {
+    JSCookie.set(this.rememberMeKey, token, {
+      domain: url.parse(this.url).host,
+      expires: 365
+    })
+
+    <% if (options.debug) { %>
+    console.log('Cookie set for', url.parse(this.url).host)
+    <% } %>
   }
 
   /**
