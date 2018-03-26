@@ -4,9 +4,9 @@ import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { routes } from '@/test/fixtures/routes'
 import { mount, createLocalVue } from '@vue/test-utils'
-import DashboardNavbar from '@/components/navbars/Dashboard'
+import SideNavbar from '@/components/navbars/Side'
 
-describe('Dashboard navbar', () => {
+describe('Side navbar', () => {
   let localVue = null
   let wrapper = null
   let router = null
@@ -36,27 +36,11 @@ describe('Dashboard navbar', () => {
     ]
   })
 
-  it('renders correctly in top position', () => {
-    wrapper = mount(DashboardNavbar, {
+  it('renders correctly when signed out and no extra items', () => {
+    wrapper = mount(SideNavbar, {
       localVue,
       router,
       propsData: {
-        position: 'top',
-        navItems: navItems
-      }
-    })
-    const renderer = require('vue-server-renderer').createRenderer()
-    renderer.renderToString(wrapper.vm, (err, str) => {
-      expect(str).toMatchSnapshot()
-    })
-  })
-
-  it('renders correctly in side position', () => {
-    wrapper = mount(DashboardNavbar, {
-      localVue,
-      router,
-      propsData: {
-        position: 'side',
         navItems: navItems
       }
     })

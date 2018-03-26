@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Top navbar renders correctly when signed in and has collection 1`] = `
+<nav id="top-navbar" class="navbar navbar-light">
+  <button type="button" class="btn px-2 border-top-0 border-left-0 btn-outline-dark">
+    <svg version="1.1" role="presentation" width="13.714285714285714" height="16" viewBox="0 0 1536 1792" class="mr-1 fa-icon">
+      <path d="M1536 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 832v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 320v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path> 
+      <!---->
+    </svg>
+    <p class="mb-0">Menu</p>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
+        Home
+      </a></li><li class="nav-item"><a href="#/collection/playbills/about" target="_self" class="nav-link">
+        About
+      </a></li></ul></span>
+  <ul right="" class="navbar-nav top-navbar-right">
+    <!---->
+    <div id="announcements-list">
+      <button id="announcements-toggle" type="button" class="btn nav-link btn-secondary">
+        <svg version="1.1" role="presentation" width="16" height="16" viewBox="0 0 1792 1792" class="fa-icon">
+          <path d="M912 1696q0-16-16-16-59 0-101.5-42.5t-42.5-101.5q0-16-16-16t-16 16q0 73 51.5 124.5t124.5 51.5q16 0 16-16zM1728 1408q0 52-38 90t-90 38h-448q0 106-75 181t-181 75-181-75-75-181h-448q-52 0-90-38t-38-90q50-42 91-88t85-119.5 74.5-158.5 50-206 19.5-260q0-152 117-282.5t307-158.5q-8-19-8-39 0-40 28-68t68-28 68 28 28 68q0 20-8 39 190 28 307 158.5t117 282.5q0 139 19.5 260t50 206 74.5 158.5 85 119.5 91 88z"></path> 
+          <!---->
+        </svg>
+        <!---->
+      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div>Notifications</div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
+            There are no notifications yet.
+          </small></div></div></div></span></div>
+    <li id="user-menu" class="pr-2 pl-1 nav-item b-nav-dropdown dropdown">
+      <a href="#" id="user-menu__BV_button_" aria-haspopup="true" aria-expanded="false" class="nav-link">
+        <div class="d-flex flex-row align-items-center">
+          <div class="mr-1 small-avatar xs">
+            <div class="base-avatar">
+              <img src="//www.gravatar.com/avatar/6579e96f76baa00787a28653876c6127?s=100&amp;d=identicon&amp;r=g" alt="Avatar" alt-tag="Small thumbnail placeholder" class="img-fluid rounded-circle placeholder">
+            </div>
+          </div> <span class="d-none d-md-block mr-1">JohnDoe</span>
+          <svg version="1.1" role="presentation" width="9.142857142857142" height="16" viewBox="0 0 1024 1792" class="fa-icon">
+            <path d="M1024 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z"></path> 
+            <!---->
+          </svg>
+        </div>
+      </a>
+      <div aria-labelledby="user-menu__BV_button_" class="dropdown-menu dropdown-menu-right">
+        <a href="#/account/JohnDoe" role="menuitem" target="_self" class="dropdown-item">Profile
+        </a>
+        <a href="#/account/JohnDoe/settings/profile" role="menuitem" target="_self" class="dropdown-item">Settings
+        </a>
+        <div role="separator" class="dropdown-divider"></div>
+        <a role="menuitem" href="#" target="_self" class="dropdown-item">Sign Out</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`Top navbar renders correctly when signed in and no collection 1`] = `
+<nav id="top-navbar" class="navbar navbar-light">
+  <button type="button" class="btn px-2 border-top-0 border-left-0 btn-outline-dark">
+    <svg version="1.1" role="presentation" width="13.714285714285714" height="16" viewBox="0 0 1536 1792" class="mr-1 fa-icon">
+      <path d="M1536 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 832v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 320v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path> 
+      <!---->
+    </svg>
+    <p class="mb-0">Menu</p>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul></span>
+  <ul right="" class="navbar-nav top-navbar-right">
+    <!---->
+    <div id="announcements-list">
+      <button id="announcements-toggle" type="button" class="btn nav-link btn-secondary">
+        <svg version="1.1" role="presentation" width="16" height="16" viewBox="0 0 1792 1792" class="fa-icon">
+          <path d="M912 1696q0-16-16-16-59 0-101.5-42.5t-42.5-101.5q0-16-16-16t-16 16q0 73 51.5 124.5t124.5 51.5q16 0 16-16zM1728 1408q0 52-38 90t-90 38h-448q0 106-75 181t-181 75-181-75-75-181h-448q-52 0-90-38t-38-90q50-42 91-88t85-119.5 74.5-158.5 50-206 19.5-260q0-152 117-282.5t307-158.5q-8-19-8-39 0-40 28-68t68-28 68 28 28 68q0 20-8 39 190 28 307 158.5t117 282.5q0 139 19.5 260t50 206 74.5 158.5 85 119.5 91 88z"></path> 
+          <!---->
+        </svg>
+        <!---->
+      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div>Notifications</div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
+            There are no notifications yet.
+          </small></div></div></div></span></div>
+    <li id="user-menu" class="pr-2 pl-1 nav-item b-nav-dropdown dropdown">
+      <a href="#" id="user-menu__BV_button_" aria-haspopup="true" aria-expanded="false" class="nav-link">
+        <div class="d-flex flex-row align-items-center">
+          <div class="mr-1 small-avatar xs">
+            <div class="base-avatar">
+              <img src="//www.gravatar.com/avatar/6579e96f76baa00787a28653876c6127?s=100&amp;d=identicon&amp;r=g" alt="Avatar" alt-tag="Small thumbnail placeholder" class="img-fluid rounded-circle placeholder">
+            </div>
+          </div> <span class="d-none d-md-block mr-1">JohnDoe</span>
+          <svg version="1.1" role="presentation" width="9.142857142857142" height="16" viewBox="0 0 1024 1792" class="fa-icon">
+            <path d="M1024 704q0 26-19 45l-448 448q-19 19-45 19t-45-19l-448-448q-19-19-19-45t19-45 45-19h896q26 0 45 19t19 45z"></path> 
+            <!---->
+          </svg>
+        </div>
+      </a>
+      <div aria-labelledby="user-menu__BV_button_" class="dropdown-menu dropdown-menu-right">
+        <a href="#/account/JohnDoe" role="menuitem" target="_self" class="dropdown-item">Profile
+        </a>
+        <a href="#/account/JohnDoe/settings/profile" role="menuitem" target="_self" class="dropdown-item">Settings
+        </a>
+        <div role="separator" class="dropdown-divider"></div>
+        <a role="menuitem" href="#" target="_self" class="dropdown-item">Sign Out</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`Top navbar renders correctly when signed out and has collection 1`] = `
+<nav id="top-navbar" class="navbar navbar-light">
+  <button type="button" class="btn px-2 border-top-0 border-left-0 btn-outline-dark">
+    <svg version="1.1" role="presentation" width="13.714285714285714" height="16" viewBox="0 0 1536 1792" class="mr-1 fa-icon">
+      <path d="M1536 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 832v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 320v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path> 
+      <!---->
+    </svg>
+    <p class="mb-0">Menu</p>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
+        Home
+      </a></li><li class="nav-item"><a href="#/collection/playbills/about" target="_self" class="nav-link">
+        About
+      </a></li></ul></span>
+  <ul right="" class="navbar-nav top-navbar-right">
+    <a href="#/account/signin?next=%2F" target="_self" class="btn px-2 border-0 btn-outline-dark">
+      <p class="mb-0">Sign in</p>
+    </a>
+    <a href="#/account/register" target="_self" class="btn px-2 border-0 btn-success">
+      <p class="mb-0">Sign up</p>
+    </a>
+  </ul>
+</nav>
+`;
+
+exports[`Top navbar renders correctly when signed out and no collection 1`] = `
+<nav id="top-navbar" class="navbar navbar-light">
+  <button type="button" class="btn px-2 border-top-0 border-left-0 btn-outline-dark">
+    <svg version="1.1" role="presentation" width="13.714285714285714" height="16" viewBox="0 0 1536 1792" class="mr-1 fa-icon">
+      <path d="M1536 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 832v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 320v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path> 
+      <!---->
+    </svg>
+    <p class="mb-0">Menu</p>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul></span>
+  <ul right="" class="navbar-nav top-navbar-right">
+    <a href="#/account/signin?next=%2F" target="_self" class="btn px-2 border-0 btn-outline-dark">
+      <p class="mb-0">Sign in</p>
+    </a>
+    <a href="#/account/register" target="_self" class="btn px-2 border-0 btn-success">
+      <p class="mb-0">Sign up</p>
+    </a>
+  </ul>
+</nav>
+`;
+
+exports[`Top navbar renders correctly with props 1`] = `
+<nav id="top-navbar" class="navbar navbar-dark bg-transparent fixed-top">
+  <button type="button" class="btn px-2 border-top-0 border-left-0 btn-outline-dark">
+    <svg version="1.1" role="presentation" width="13.714285714285714" height="16" viewBox="0 0 1536 1792" class="mr-1 fa-icon">
+      <path d="M1536 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 832v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zM1536 320v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path> 
+      <!---->
+    </svg>
+    <p class="mb-0">Menu</p>
+  </button> <span class="top-navbar-left"><a href="#" target="_self" class="navbar-brand d-none d-lg-block ml-1 mr-2"><span>Foo</span></a>
+  <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul>
+  </span>
+  <ul right="" class="navbar-nav top-navbar-right">
+    <a href="#/account/signin?next=%2F" target="_self" class="btn px-2 border-0 btn-outline-dark">
+      <p class="mb-0">Sign in</p>
+    </a>
+    <a href="#/account/register" target="_self" class="btn px-2 border-0 btn-outline-dark">
+      <p class="mb-0">Sign up</p>
+    </a>
+  </ul>
+</nav>
+`;

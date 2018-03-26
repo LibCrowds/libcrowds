@@ -1,27 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectContrib button is active by default 1`] = `
-
-<a href="#"
-   target="_self"
-   data-server-rendered="true"
-   class="btn btn-success btn-block"
->
+<a href="#" target="_self" class="btn btn-success btn-block">
   Contribute
 </a>
-
 `;
 
 exports[`ProjectContrib button is disabled when project is completed 1`] = `
-
-<a tabindex="-1"
-   href="#"
-   target="_self"
-   aria-disabled="true"
-   data-server-rendered="true"
-   class="btn btn-success btn-block disabled disabled"
->
+<a tabindex="-1" href="#" target="_self" aria-disabled="true" class="btn disabled btn-success btn-block disabled">
   Contribute
 </a>
-
 `;

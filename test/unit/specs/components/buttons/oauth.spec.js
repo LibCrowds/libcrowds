@@ -13,34 +13,48 @@ describe('Oauth buttons', () => {
   let localVue = null
   let next = null
   let wrapper = null
+  let propsData = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
     localVue.component('icon', Icon)
     next = '/example'
+    propsData = {
+      facebook: true,
+      google: true,
+      twitter: true,
+      next: next
+    }
     wrapper = mount(OauthButtons, {
       localVue,
-      propsData: {
-        facebook: true,
-        google: true,
-        twitter: true,
-        next: next
-      }
+      propsData: propsData
     })
   })
 
-  it('renders correctly', () => {
+  it('does not render disabled buttons', () => {
+    const renderer = require('vue-server-renderer').createRenderer()
+    wrapper.setProps({
+      facebook: false,
+      google: false,
+      twitter: false
+    })
+    renderer.renderToString(wrapper.vm, (err, str) => {
+      expect(str).toMatchSnapshot()
+    })
+  })
+
+  it('renders all enabled buttons', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()
     })
   })
 
-  it('redirect to the correct oauth endpoint', () => {
+  it('redirects to the correct oauth endpoint', () => {
     const endpoint = 'twitter'
     const host = testLocalConfig.pybossaHost
-    const expectedUrl = `${host}/${endpoint}?next=${next}&response_format=json`
+    const expectedUrl = `${host}/${endpoint}?response_format=json`
     const mockAssign = jest.fn()
     window.location.assign = mockAssign
     wrapper.vm.redirect(endpoint)
