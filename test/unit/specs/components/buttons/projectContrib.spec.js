@@ -2,7 +2,7 @@ import BootstrapVue from 'bootstrap-vue'
 
 import collection from '@/test/fixtures/collection.json'
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 
 describe('ProjectContrib button', () => {

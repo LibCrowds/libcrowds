@@ -4,7 +4,7 @@ import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import collection from '@/test/fixtures/collection.json'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import Container from '@/layouts/container'
 import { routes } from '@/test/fixtures/routes'
 

@@ -3,7 +3,7 @@ import VueGravatar from 'vue-gravatar'
 
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import testLocalConfig from '@/test/test.local.config'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import UserAvatar from '@/components/avatars/User'
 
 describe('User avatar', () => {

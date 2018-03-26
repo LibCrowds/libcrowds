@@ -6,7 +6,7 @@ import 'vue-awesome/icons/circle-thin'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import collection from '@/test/fixtures/collection.json'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import CollectionCard from '@/components/cards/Collection'
 import { routes } from '@/test/fixtures/routes'
 

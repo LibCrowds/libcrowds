@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import AdminSiteDashboard from '@/layouts/admin-site-dashboard'
 import { routes } from '@/test/fixtures/routes'
 

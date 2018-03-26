@@ -6,7 +6,7 @@ import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/twitter'
 
 import testLocalConfig from '@/test/test.local.config'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import OauthButtons from '@/components/buttons/Oauth'
 
 describe('Oauth buttons', () => {

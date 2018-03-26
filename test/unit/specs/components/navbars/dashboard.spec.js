@@ -3,7 +3,7 @@ import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import { routes } from '@/test/fixtures/routes'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import DashboardNavbar from '@/components/navbars/Dashboard'
 
 describe('Dashboard navbar', () => {

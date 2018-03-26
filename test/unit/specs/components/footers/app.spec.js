@@ -8,7 +8,7 @@ import 'vue-awesome/icons/github'
 import 'vue-awesome/icons/envelope'
 
 import collection from '@/test/fixtures/collection.json'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import AppFooter from '@/components/footers/App'
 import { routes } from '@/test/fixtures/routes'
 

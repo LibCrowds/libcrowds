@@ -2,7 +2,7 @@ import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
 
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import LineChart from '@/components/charts/Line'
 
 describe('Line chart', () => {

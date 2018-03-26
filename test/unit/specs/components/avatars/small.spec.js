@@ -1,7 +1,7 @@
 import BootstrapVue from 'bootstrap-vue'
 
 import testLocalConfig from '@/test/test.local.config'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import SmallAvatar from '@/components/avatars/Small'
 
 describe('User avatar', () => {

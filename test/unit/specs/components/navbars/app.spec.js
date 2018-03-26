@@ -4,7 +4,7 @@ import BootstrapVue from 'bootstrap-vue'
 import NuxtLink from '@/.nuxt/components/nuxt-link'
 
 import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
-import { mount, createLocalVue } from 'vue-test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import TopNavbar from '@/components/navbars/Top'
 import { routes } from '@/test/fixtures/routes'
 
