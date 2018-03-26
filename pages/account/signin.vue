@@ -124,11 +124,13 @@ export default {
       const action = 'UPDATE_CURRENT_USER'
 
       this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
-        if (localConfig.hasOwnProperty('flarum')) {
-          this.$flarum.signin(data.name, data.email_addr)
-        }
-
-        this.goToNext(this.next)
+        if (this.$flarum) {
+          return this.$flarum.signin(data.name, data.email_addr).then(() => {
+            this.goToNext(this.next)
+          })
+        } else (
+          this.goToNext(this.next)
+        )
       }).catch(err => {
         console.error(err)
         this.$notifications.warn({ message: 'Flarum SSO failed' })
