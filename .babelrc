@@ -1,11 +1,13 @@
 {
   "presets": [
-    ["env", {
-      "modules": false,
-      "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 9"]
+    [
+      "env", {
+        "modules": false,
+        "targets": {
+          "browsers": ["> 1%", "last 2 versions", "not ie <= 9"]
+        }
       }
-    }],
+    ],
     "stage-2",
     "backpack-core/babel"
   ],
@@ -13,14 +15,15 @@
   "env": {
     "testing": {
       "presets": [
-        "env",
-        "stage-2",
-        "backpack-core/babel",
-        {
-          "targets": {
-            "node": "current"
+        [
+          "env", {
+            "targets": {
+              "node": "current"
+            }
           }
-        }
+        ],
+        "stage-2",
+        "backpack-core/babel"
       ]
     }
   }
