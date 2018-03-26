@@ -7,7 +7,7 @@ module.exports = function nuxtFlarum (_moduleOptions) {
   // Apply defaults
   const options = Object.assign({
     salt: '',
-    debug: true
+    debug: false
   }, moduleOptions)
 
   // Register plugin

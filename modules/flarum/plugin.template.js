@@ -5,9 +5,8 @@ import crypto from 'crypto'
 class Flarum {
   constructor (options) {
     this.remember_me_key = 'flarum_remember'
-    this.url = options.url
-    this.apiKey = options.apiKey
     this.salt = options.salt
+    this.client = this.createAxiosClient(options.url, options.apiKey)
   }
 
   /**
@@ -21,20 +20,20 @@ class Flarum {
     const password = this.createPassword(username)
 
     return new Promise((resolve, reject) => {
-      return this.getUser(username).then(() => {
+      return this.getUser(username).then(userResponse => {
         // User exists, so get a token
-        return this.getToken(username, password)
+        return this.getToken(username, userResponse.data.data.id, password)
       }).catch(err => {
-        if (err.statusCode === 404) {
+        if (err.status === 404) {
           // User doesn't exist, so sign up then get a token
-          return this.signup(username, password, email).then(data => {
-            return this.getToken(username, password)
+          return this.signup(username, email).then(userResponse => {
+            return this.getToken(username, userResponse.data.data.id, password)
           })
         } else {
           reject(err)
         }
-      }).then(token => {
-        JSCookie.set(this.remember_me_key, token)
+      }).then(tokenResponse => {
+        JSCookie.set(this.remember_me_key, tokenResponse.data['token'])
         resolve()
       })
     })
@@ -44,12 +43,12 @@ class Flarum {
    * Sign a user up.
    * @param {String} username
    *   The user's name.
-   * @param {String} password
-   *   The user's password.
    * @param {String} email
    *   The user's email address.
    */
-  signup (username, password, email) {
+  signup (username, email) {
+    const password = this.createPassword(username)
+
     const data = {
       type: 'users',
       attributes: {
@@ -93,47 +92,55 @@ class Flarum {
 
   /**
    * Update a user by name.
-   * @param {String} username
-   *   The user's name.
-   * @param {Object} data
-   *   The data to update.
+   * @param {String} userId
+   *   The user's ID.
+   * @param {Object} attributes
+   *   The attributes to update.
    */
-  updateUser (username, data) {
-    const endpoint = '/api/users/' + username
-    return this.request(endpoint, 'PATCH', data)
+  updateUser (userId, attributes) {
+    const endpoint = '/api/users/' + userId
+    return this.request(endpoint, 'PATCH', {
+      data: {
+        type: 'users',
+        id: userId,
+        attributes: attributes
+      }
+    })
   }
 
   /**
    * Get token for an authenticated user.
    * @param {String} username
    *   The user's name.
+   * @param {String} userId
+   *   The user's ID.
    * @param {String} password
    *   The user's password.
    */
-  getToken (username, password) {
+  getToken (username, userId, password) {
     const year = 365 * 24 * 60 * 60
-    const data = {
+    const authData = {
       identification: username,
       password: password,
       lifetime: year
     }
 
     return new Promise((resolve, reject) => {
-      this.request('/api/token', 'POST', data).then(response => {
-        resolve(response['token'])
+      this.request('/api/token', 'POST', authData).then(response => {
+        resolve(response)
       }).catch(err => {
-        if (err.statusCode === 401) {
+        if (err.response.status === 401) {
           // If permission is denied it probably means the user set their
           // password before this module was enabled, so let's update it.
-          return this.updateUser(username, { password: password })
+          return this.updateUser(userId, { password: password })
         } else {
           reject(err)
         }
       }).then(response => {
         // Attempt to get the token again, following the user update
-        return this.request('/api/token', 'POST', data)
+        return this.request('/api/token', 'POST', authData)
       }).then(response => {
-        resolve(response['token'])
+        resolve(response)
       }).catch(err => {
         reject(err)
       })
@@ -148,17 +155,39 @@ class Flarum {
    *   The data.
    */
   request (endpoint, method, data = {}) {
-    return axios({
-      baseURL: this.url,
+    return this.client({
       url: endpoint,
       method: method,
-      data: data,
+      data: data
+    })
+  }
+
+  /**
+   * Return a configured axios instance.
+   * @param {String} baseURL
+   *   The base Flarum URL.
+   * @param {String} apiKey
+   *   The Flarum API key.
+   */
+  createAxiosClient (baseURL, apiKey) {
+    const instance = axios.create({
+      baseURL: baseURL,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token ' + this.apiKey + '; userId=1'
+        'Authorization': 'Token ' + apiKey + '; userId=1'
       },
       withCredentials: true
     })
+
+    // Enable response debugger
+    <% if (options.debug) { %>
+      instance.interceptors.response.use(resp => {
+        console.log('Response:', resp)
+        return resp
+      })
+    <% } %>
+
+    return instance
   }
 }
 
