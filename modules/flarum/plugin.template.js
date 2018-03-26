@@ -26,7 +26,7 @@ class Flarum {
     const password = this.createPassword(username)
 
     return new Promise((resolve, reject) => {
-      return this.getUser(username).then(userResponse => {
+      return this.getUser(email).then(userResponse => {
         // User exists, so get a token
         return this.getToken(username, userResponse.data.data.id, password)
       }).catch(err => {
@@ -87,13 +87,14 @@ class Flarum {
   }
 
   /**
-   * Get a user by name.
-   * @param {String} username
-   *   The user's name.
+   * Get a user by email address.
+   * @param {String} email
+   *   The user's email.
    */
-  getUser (username) {
-    const endpoint = '/api/users/' + username
-    return this.request(endpoint, 'GET')
+  getUser (email) {
+    return this.request('/api/users/', 'GET', {}, {
+      'filter[q]': 'email:"' + email + '"'
+    })
   }
 
   /**
@@ -175,13 +176,16 @@ class Flarum {
    * @param {String} endpoint
    *   The Flarum endpoint.
    * @param {Object} data
-   *   The data.
+   *   Data for PUT, POST or PATCH requests.
+   * @param {Object} params
+   *   URL parameters.
    */
-  request (endpoint, method, data = {}) {
+  request (endpoint, method, data = {}, params = {}) {
     return this.client({
       url: endpoint,
       method: method,
-      data: data
+      data: data,
+      params: params
     })
   }
 
