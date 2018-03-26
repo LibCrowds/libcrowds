@@ -38,7 +38,7 @@
       v-else
       show
       variant="info"
-      class="m-1">
+      class="m-2">
       You're already signed in, redirecting...
     </b-alert>
 
