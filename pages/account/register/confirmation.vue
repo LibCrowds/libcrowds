@@ -26,7 +26,7 @@ export default {
       this.$notifications.flash(data)
       this.$router.push({ path: data.next })
     }).catch(err => {
-      error(err)
+      this.$nuxt.error(err)
     })
   }
 }
