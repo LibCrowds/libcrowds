@@ -24,21 +24,23 @@ class Flarum {
     const password = this.createPassword(username)
 
     return new Promise((resolve, reject) => {
-      return this.getUserByEmail(email).then(userResponse => {
-        // User exists, so get a token
-        return this.getToken(username, userResponse.data.data.id, password)
-      }).catch(err => {
-        if (err.status === 404) {
-          // User doesn't exist, so sign up then get a token
-          return this.signup(username, email).then(userResponse => {
-            return this.getToken(username, userResponse.data.data.id, password)
-          })
+      return this.getUserByEmail(email).then(user => {
+        if (!user) {
+          // Sign up if existing user not found
+          return this.signup(username, email)
         } else {
-          reject(err)
+          return user
         }
-      }).then(tokenResponse => {
-        this.setCookie(tokenResponse.data['token'])
+      }).then(user => {
+        // Ensure that the username and password are consistent
+        this.updateUser(user.id, { password: password, username: username })
+      }).then(user => {
+        return this.getToken(username, password)
+      }).then(token => {
+        this.setCookie(token)
         resolve()
+      }).catch(err => {
+        reject(err)
       })
     })
   }
@@ -62,7 +64,13 @@ class Flarum {
       }
     }
 
-    return this.request('/api/users', 'POST', data)
+    return new Promise((resolve, reject) => {
+      return this.request('/api/users', 'POST', data).then(response => {
+        resolve(response.data.data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
   }
 
   /**
@@ -90,8 +98,14 @@ class Flarum {
    *   The user's email.
    */
   getUserByEmail (email) {
-    return this.request('/api/users', 'GET', {}, {
-      'filter[q]': 'email:"' + email + '"'
+    return new Promise((resolve, reject) => {
+      this.request('/api/users', 'GET', {}, {
+        'filter[q]': 'email:"' + email + '"'
+      }).then(response => {
+        resolve(response.data.data[0])
+      }).catch(err => {
+        reject(err)
+      })
     })
   }
 
@@ -104,12 +118,18 @@ class Flarum {
    */
   updateUser (userId, attributes) {
     const endpoint = '/api/users/' + userId
-    return this.request(endpoint, 'PATCH', {
-      data: {
-        type: 'users',
-        id: userId,
-        attributes: attributes
-      }
+    return new Promise((resolve, reject) => {
+      return this.request(endpoint, 'PATCH', {
+        data: {
+          type: 'users',
+          id: userId,
+          attributes: attributes
+        }
+      }).then(response => {
+        resolve(response.data.data)
+      }).catch(err => {
+        reject(err)
+      })
     })
   }
 
@@ -117,12 +137,10 @@ class Flarum {
    * Get token for an authenticated user.
    * @param {String} username
    *   The user's name.
-   * @param {String} userId
-   *   The user's ID.
    * @param {String} password
    *   The user's password.
    */
-  getToken (username, userId, password) {
+  getToken (username, password) {
     const year = 365 * 24 * 60 * 60
     const authData = {
       identification: username,
@@ -132,20 +150,7 @@ class Flarum {
 
     return new Promise((resolve, reject) => {
       this.request('/api/token', 'POST', authData).then(response => {
-        resolve(response)
-      }).catch(err => {
-        if (err.response.status === 401) {
-          // If permission is denied it probably means the user set their
-          // password before this module was enabled, so let's update it.
-          return this.updateUser(userId, { password: password })
-        } else {
-          reject(err)
-        }
-      }).then(response => {
-        // Attempt to get the token again, following the user update
-        return this.request('/api/token', 'POST', authData)
-      }).then(response => {
-        resolve(response)
+        resolve(response.data['token'])
       }).catch(err => {
         reject(err)
       })
