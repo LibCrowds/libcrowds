@@ -22,12 +22,13 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('LOGOUT', this.$axios, this.$flarum).then(data => {
-      this.$notifications.flash(data)
-      this.$router.push({ path: data.next || '/' })
-    }).catch(err => {
-      this.$nuxt.error(err)
-    })
+    return this.$store.dispatch('LOGOUT', this.$axios, this.$flarum)
+      .then(data => {
+        this.$notifications.flash(data)
+        this.$router.push({ path: data.next || '/' })
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
   }
 }
 </script>
