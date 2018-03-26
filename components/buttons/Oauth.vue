@@ -4,6 +4,7 @@
     <b-btn
       v-if="facebook"
       variant="facebook"
+      class="d-flex align-items-center"
       @click="redirect('facebook')">
       <icon name="facebook"></icon>
       Facebook
@@ -12,6 +13,7 @@
     <b-btn
       v-if="google"
       variant="googleplus"
+      class="d-flex align-items-center"
       @click="redirect('google')">
       <icon name="google"></icon>
       Google
@@ -20,6 +22,7 @@
     <b-btn
       v-if="twitter"
       variant="twitter"
+      class="d-flex align-items-center"
       @click="redirect('twitter')">
       <icon name="twitter"></icon>
       Twitter
