@@ -16,7 +16,7 @@ export default {
     })
   },
 
-  created () {
+  beforeMount () {
     this.$notifications.flash(this.data)
     this.$router.push({ path: this.next })
   }
