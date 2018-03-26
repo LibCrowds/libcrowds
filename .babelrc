@@ -15,18 +15,12 @@
       "presets": [
         "env",
         "stage-2",
-        "backpack-core/babel"
-      ],
-      "plugins": [
-        [
-          "module-resolver",
-          {
-            "root": ["."],
-            "alias": {
-              "@": "./"
-            }
+        "backpack-core/babel",
+        {
+          "targets": {
+            "node": "current"
           }
-        ]
+        }
       ]
     }
   }
