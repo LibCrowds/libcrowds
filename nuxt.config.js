@@ -1,4 +1,3 @@
-const git = require('git-rev-sync')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
