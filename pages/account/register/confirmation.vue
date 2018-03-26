@@ -1,8 +1,18 @@
 <template>
+  <card-base>
+    <b-alert
+      show
+      variant="info"
+      class="m-2">
+      Confirming email address...
+    </b-alert>
+  </card-base>
 </template>
 
 <script>
 export default {
+  layout: 'container',
+
   asyncData ({ app, error, redirect, route }) {
     return app.$axios.$get('/account/register/confirmation', {
       params: route.query
