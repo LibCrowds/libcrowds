@@ -176,7 +176,7 @@ class Flarum {
     })
 
     if (this.debug) {
-      console.log('Cookie set for', this.sessionCookieDomain)
+      console.log('Cookies updated:', document.cookie)
     }
   }
 
