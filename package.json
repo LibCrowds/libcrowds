@@ -123,7 +123,7 @@
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/test/assetsTransformer.js",
       "\\.(scss)$": "<rootDir>/test/assetsTransformer.js",
       "(.*)/local.config$": "<rootDir>/test/test.local.config.js",
-      "^@/(.*)$": "<rootDir>/src/$1"
+      "^@/(.*)$": "<rootDir>/$1"
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
