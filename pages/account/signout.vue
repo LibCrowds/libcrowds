@@ -17,24 +17,17 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'container',
 
-  asyncData ({ app, store, error }) {
-    return store.dispatch('LOGOUT', app.$axios, app.$flarum).then(data => {
-      return {
-        data: data,
-        next: data.next || '/'
-      }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
   components: {
     CardBase
   },
 
-  beforeMount () {
-    this.$notifications.flash(this.data)
-    this.$router.push({ path: this.next })
+  mounted () {
+    this.$store.dispatch('LOGOUT', this.$axios, this.$flarum).then(data => {
+      this.$notifications.flash(data)
+      this.$router.push({ path: data.next || '/' })
+    }).catch(err => {
+      error(err)
+    })
   }
 }
 </script>

@@ -15,25 +15,19 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'container',
 
-  asyncData ({ app, error, redirect, route }) {
-    return app.$axios.$get('/account/register/confirmation', {
-      params: route.query
-    }).then(data => {
-      return {
-        response: data
-      }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
   components: {
     CardBase
   },
 
-  beforeMount () {
-    this.$notifications.flash(this.response)
-    this.$router.push({ path: this.response.next })
+  mounted () {
+    this.$axios.$get('/account/register/confirmation', {
+      params: this.$route.query
+    }).then(data => {
+      this.$notifications.flash(data)
+      this.$router.push({ path: data.next })
+    }).catch(err => {
+      error(err)
+    })
   }
 }
 </script>
