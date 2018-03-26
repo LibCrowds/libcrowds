@@ -148,7 +148,7 @@ export default {
       if (isInternal) {
         this.$router.push({ path: url })
       } else {
-        window.open(url)
+        window.location.assign(url)
       }
     }
   },
