@@ -128,9 +128,9 @@ export default {
           return this.$flarum.signin(data.name, data.email_addr).then(() => {
             this.goToNext(this.next)
           })
-        } else (
+        } else {
           this.goToNext(this.next)
-        )
+        }
       }).catch(err => {
         console.error(err)
         this.$notifications.warn({ message: 'Flarum SSO failed' })
