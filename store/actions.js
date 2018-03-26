@@ -33,6 +33,8 @@ export default {
       commit('SET_ITEM', {
         key: 'currentUser', value: {}
       })
+
+      return data
     })
   },
 
