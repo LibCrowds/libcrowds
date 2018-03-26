@@ -8,7 +8,7 @@ module.exports = function nuxtFlarum (_moduleOptions) {
   const options = Object.assign({
     salt: '',
     debug: false,
-    secure: false
+    secure: true
   }, moduleOptions)
 
   // Register plugin
