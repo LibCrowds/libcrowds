@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import CardBase from '@/components/cards/Base'
+
 export default {
   layout: 'container',
 
@@ -23,6 +25,10 @@ export default {
     }).catch(err => {
       error(err)
     })
+  },
+
+  components: {
+    CardBase
   },
 
   beforeMount () {
