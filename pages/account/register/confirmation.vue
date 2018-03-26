@@ -18,6 +18,12 @@ export default {
   created () {
     this.$notifications.flash(this.response)
     this.$router.push({ path: this.response.next })
+
+    // Sign in to Flarum when a new email is confirmed. This will create a
+    // new Flarum user if one does not already exist with this address.
+    if (this.response.status === 'success') {
+      this.$flarum.signin()
+    }
   }
 }
 </script>
