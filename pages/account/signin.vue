@@ -127,7 +127,7 @@ export default {
         this.$router.push({ path: this.next })
 
         if (localConfig.hasOwnProperty('flarum')) {
-           return this.$flarum.signin(data.name, data.email_addr)
+          return this.$flarum.signin(data.name, data.email_addr)
         }
       }).catch(err => {
         console.error(err)
