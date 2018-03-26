@@ -83,12 +83,14 @@ export default {
     onSuccess () {
       const action = 'UPDATE_CURRENT_USER'
       return this.$store.dispatch(action, this.$axios).then(libcrowdsUser => {
-        // Update the email address in Flarum so a new user is not created.
         if (this.$flarum && this.email !== libcrowdsUser.email_addr) {
+          // Update the email address in Flarum so a new user is not created.
           return this.$flarum.getUserByEmail(this.email).then(flarumUser => {
-            return this.$flarum.updateUser(flarumUser.id, {
-              email: libcrowdsUser.email
-            })
+            if (flarumUser) {
+              return this.$flarum.updateUser(flarumUser.id, {
+                email: libcrowdsUser.email
+              })
+            }
           }).catch(err => {
             this.$nuxt.error(err)
           })
