@@ -1,11 +1,14 @@
 import JSCookie from 'js-cookie'
 import axios from 'axios'
 import crypto from 'crypto'
+import url from 'url'
 
 class Flarum {
   constructor (options) {
-    this.remember_me_key = 'flarum_remember'
+    this.rememberMeKey = 'flarum_remember'
     this.salt = options.salt
+    this.url = options.url
+    this.oneYear = 365 * 24 * 60 * 60
     this.client = this.createAxiosClient(options.url, options.apiKey)
   }
 
@@ -33,7 +36,10 @@ class Flarum {
           reject(err)
         }
       }).then(tokenResponse => {
-        JSCookie.set(this.remember_me_key, tokenResponse.data['token'])
+        JSCookie.set(this.rememberMeKey, tokenResponse.data['token'], {
+          domain: url.parse(this.url).host,
+          expires: this.oneYear
+        })
         resolve()
       })
     })
@@ -118,11 +124,10 @@ class Flarum {
    *   The user's password.
    */
   getToken (username, userId, password) {
-    const year = 365 * 24 * 60 * 60
     const authData = {
       identification: username,
       password: password,
-      lifetime: year
+      lifetime: this.oneYear
     }
 
     return new Promise((resolve, reject) => {
