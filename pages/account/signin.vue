@@ -125,15 +125,14 @@ export default {
 
       this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
         if (this.$flarum) {
-          return this.$flarum.signin(data.name, data.email_addr).then(() => {
-            this.goToNext(this.next)
-          })
+          return this.$flarum.signin(data.name, data.email_addr)
         } else {
           this.goToNext(this.next)
         }
       }).catch(err => {
         console.error(err)
         this.$notifications.warn({ message: 'Flarum SSO failed' })
+      }).then(() => {
         this.goToNext(this.next)
       })
     },
