@@ -31,7 +31,7 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       data.form.btn = 'Profile'
       return {
-        originalEmail: data.form.email_addr,
+        email: data.form.email_addr,
         form: {
           endpoint: `account/${params.name}/update`,
           method: 'post',
@@ -82,10 +82,16 @@ export default {
      */
     onSuccess () {
       const action = 'UPDATE_CURRENT_USER'
-      return this.$store.dispatch(action, this.$axios).then(user => {
+      return this.$store.dispatch(action, this.$axios).then(libcrowdsUser => {
         // Update the email address in Flarum so a new user is not created.
-        if (this.$flarum && this.originalEmail !== user.email_addr) {
-          this.$flarum.updateUserEmail(this.originalEmail, user.email_addr)
+        if (this.$flarum && this.email !== libcrowdsUser.email_addr) {
+          return this.$flarum.getUserByEmail(this.email).then(flarumUser => {
+            return this.$flarum.updateUser(flarumUser.id, {
+              email: libcrowdsUser.email
+            })
+          }).catch(err => {
+            this.$nuxt.error(err)
+          })
         }
       })
     }
