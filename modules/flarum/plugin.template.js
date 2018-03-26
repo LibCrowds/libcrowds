@@ -11,6 +11,7 @@ class Flarum {
     this.apiKey = options.apiKey
     this.debug = options.debug
     this.secure = options.secure
+    this.sessionCookieDomain = options.sessionCookieDomain
     this.client = this.createAxiosClient()
   }
 
@@ -159,13 +160,13 @@ class Flarum {
    */
   setCookie (token) {
     JSCookie.set(this.rememberMeKey, token, {
-      domain: url.parse(this.url).host,
+      domain: this.sessionCookieDomain,
       expires: 365,
       secure: this.secure
     })
 
     if (this.debug) {
-      console.log('Cookie set for', url.parse(this.url).host)
+      console.log('Cookie set for', this.sessionCookieDomain)
     }
   }
 
@@ -213,6 +214,7 @@ export default (ctx, inject) => {
   const options = {
     url: '<%= options.url %>',
     apiKey: '<%= options.apiKey %>',
+    sessionCookieDomain: '<%= options.sessionCookieDomain %>',
     salt: '<%= options.salt %>',
     debug: '<%= options.debug %>',
     secure: '<%= options.secure %>'
