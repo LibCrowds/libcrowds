@@ -102,7 +102,11 @@ class Flarum {
       this.request('/api/users', 'GET', {}, {
         'filter[q]': 'email:"' + email + '"'
       }).then(response => {
-        resolve(response.data.data[0])
+        if (response.data.data.length) {
+          resolve(response.data.data[0])
+        } else {
+          resolve(null)
+        }
       }).catch(err => {
         reject(err)
       })
