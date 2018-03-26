@@ -49,6 +49,7 @@
 import localConfig from '@/local.config'
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import { metaTags } from '@/mixins/metaTags'
+import { next } from '@/mixins/next'
 import PybossaForm from '@/components/forms/PybossaForm'
 import OauthButtons from '@/components/buttons/Oauth'
 import CardBase from '@/components/cards/Base'
@@ -56,7 +57,7 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'container',
 
-  mixins: [ handleHashedFlashes, metaTags ],
+  mixins: [ handleHashedFlashes, metaTags, next ],
 
   data () {
     return {
@@ -124,7 +125,7 @@ export default {
       const action = 'UPDATE_CURRENT_USER'
 
       this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
-        this.$router.push({ path: this.next })
+        this.next(this.next)
 
         if (localConfig.hasOwnProperty('flarum')) {
           return this.$flarum.signin(data.name, data.email_addr)
@@ -132,7 +133,7 @@ export default {
       }).catch(err => {
         console.error(err)
         this.$notifications.warn({ message: 'Flarum SSO failed' })
-        this.$router.push({ path: this.next })
+        this.next(this.next)
       })
     }
   },
