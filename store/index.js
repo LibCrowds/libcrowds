@@ -11,7 +11,7 @@ actions.nuxtServerInit = async ({ dispatch }, { app }) => {
   // Sign in to Flarum in case we have been redirected back to LibCrowds
   // following a PYBOSSA SSO sign in
   if (user) {
-    app.$flarum.signin(user.name, user.email_addr)
+    await app.$flarum.signin(user.name, user.email_addr)
   }
 
   // Toggle dark mode
