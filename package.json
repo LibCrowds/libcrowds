@@ -145,7 +145,6 @@
     "testRegex": "/test/unit/specs/.*(test|spec)\\.jsx?$",
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
-    ],
-    "mapCoverage": true
+    ]
   }
 }
