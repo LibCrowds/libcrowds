@@ -28,7 +28,7 @@
           :to="{
             name: 'account-forgot-password'
           }">
-          Forgot your password?
+          Forgotten your password?
         </nuxt-link>
       </div>
 
