@@ -8,7 +8,10 @@ class Flarum {
     this.rememberMeKey = 'flarum_remember'
     this.salt = options.salt
     this.url = options.url
-    this.client = this.createAxiosClient(options.url, options.apiKey)
+    this.apiKey = options.apiKey
+    this.debug = options.debug
+    this.secure = options.secure
+    this.client = this.createAxiosClient()
   }
 
   /**
@@ -157,12 +160,13 @@ class Flarum {
   setCookie (token) {
     JSCookie.set(this.rememberMeKey, token, {
       domain: url.parse(this.url).host,
-      expires: 365
+      expires: 365,
+      secure: this.secure
     })
 
-    <% if (options.debug) { %>
-    console.log('Cookie set for', url.parse(this.url).host)
-    <% } %>
+    if (this.debug) {
+      console.log('Cookie set for', url.parse(this.url).host)
+    }
   }
 
   /**
@@ -182,28 +186,24 @@ class Flarum {
 
   /**
    * Return a configured axios instance.
-   * @param {String} baseURL
-   *   The base Flarum URL.
-   * @param {String} apiKey
-   *   The Flarum API key.
    */
-  createAxiosClient (baseURL, apiKey) {
+  createAxiosClient () {
     const instance = axios.create({
-      baseURL: baseURL,
+      baseURL: this.url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Token ' + apiKey + '; userId=1'
+        'Authorization': 'Token ' + this.apiKey + '; userId=1'
       },
       withCredentials: true
     })
 
     // Enable response debugger
-    <% if (options.debug) { %>
+    if (this.debug) {
       instance.interceptors.response.use(resp => {
         console.log('Response:', resp)
         return resp
       })
-    <% } %>
+    }
 
     return instance
   }
@@ -213,7 +213,9 @@ export default (ctx, inject) => {
   const options = {
     url: '<%= options.url %>',
     apiKey: '<%= options.apiKey %>',
-    salt: '<%= options.salt %>'
+    salt: '<%= options.salt %>',
+    debug: '<%= options.debug %>',
+    secure: '<%= options.secure %>'
   }
 
   // Create a new Flarum instance
