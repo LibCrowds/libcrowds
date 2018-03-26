@@ -56,11 +56,13 @@ class Flarum {
     const password = this.createPassword(username)
 
     const data = {
-      type: 'users',
-      attributes: {
-        username: username,
-        password: password,
-        email: email
+      data: {
+        type: 'users',
+        attributes: {
+          username: username,
+          password: password,
+          email: email
+        }
       }
     }
 
