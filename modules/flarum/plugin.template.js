@@ -1,6 +1,7 @@
 import JSCookie from 'js-cookie'
 import axios from 'axios'
 import crypto from 'crypto'
+
 class Flarum {
   constructor (options) {
     this.rememberMeKey = 'flarum_remember'
