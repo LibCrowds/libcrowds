@@ -194,9 +194,10 @@ if (
   localConfig.hasOwnProperty('flarum') &&
   localConfig.flarum.hasOwnProperty('apiKey') &&
   localConfig.flarum.hasOwnProperty('url') &&
+  localConfig.flarum.hasOwnProperty('sessionCookieDomain') &&
   localConfig.flarum.hasOwnProperty('salt')
 ) {
-  config.modules.push([ '~/modules/flarum/module', localConfig.flarum ])
+  config.modules.push([ 'nuxt-flarum', localConfig.flarum ])
 }
 
 module.exports = config
