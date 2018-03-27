@@ -1,16 +1,16 @@
 import BootstrapVue from 'bootstrap-vue'
 
 import { mount, createLocalVue } from '@vue/test-utils'
-import DashboardFooter from '@/components/footers/Dashboard'
+import CookiesHelp from '@/pages/help/cookies'
 
-describe('Dashboard footer', () => {
+describe('API help page', () => {
   let localVue = null
   let wrapper = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
-    wrapper = mount(DashboardFooter, {
+    wrapper = mount(CookiesHelp, {
       localVue
     })
   })

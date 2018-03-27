@@ -1,11 +1,12 @@
 import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
+import noSSR from '@/.nuxt/components/no-ssr'
 
 import { mount, createLocalVue } from '@vue/test-utils'
-import BarChart from '@/components/charts/Bar'
+import LineChart from '@/components/charts/Line'
 
-describe('Bar chart', () => {
+describe('Line chart', () => {
   let localVue = null
   let wrapper = null
 
@@ -13,7 +14,8 @@ describe('Bar chart', () => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
     localVue.use(VueChartist)
-    wrapper = mount(BarChart, {
+    localVue.component(noSSR.name, noSSR)
+    wrapper = mount(LineChart, {
       localVue,
       propsData: {
         chartData: {

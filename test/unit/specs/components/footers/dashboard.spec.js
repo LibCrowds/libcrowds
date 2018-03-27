@@ -1,27 +1,23 @@
 import BootstrapVue from 'bootstrap-vue'
-import VueChartist from 'vue-chartist'
-import 'chartist-plugin-tooltips'
+
+import Icon from 'vue-awesome/components/Icon'
+import 'vue-awesome/icons/twitter'
+import 'vue-awesome/icons/github'
+import 'vue-awesome/icons/envelope'
 
 import { mount, createLocalVue } from '@vue/test-utils'
-import LineChart from '@/components/charts/Line'
+import DashboardFooter from '@/components/footers/Dashboard'
 
-describe('Line chart', () => {
+describe('Dashboard footer', () => {
   let localVue = null
   let wrapper = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
-    localVue.use(VueChartist)
-    wrapper = mount(LineChart, {
-      localVue,
-      propsData: {
-        chartData: {
-          labels: ['A', 'B', 'C'],
-          series: [[1, 3, 2], [4, 6, 5]]
-        },
-        unit: 'task'
-      }
+    localVue.component('icon', Icon)
+    wrapper = mount(DashboardFooter, {
+      localVue
     })
   })
 

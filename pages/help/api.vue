@@ -48,6 +48,7 @@ export default {
   computed: {
     apiBase () {
       if (process.browser) {
+        /* istanbul ignore next line */
         return `${window.location.origin}/api`
       }
     }

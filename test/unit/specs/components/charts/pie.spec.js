@@ -1,6 +1,7 @@
 import BootstrapVue from 'bootstrap-vue'
 import VueChartist from 'vue-chartist'
 import 'chartist-plugin-tooltips'
+import noSSR from '@/.nuxt/components/no-ssr'
 
 import { mount, createLocalVue } from '@vue/test-utils'
 import PieChart from '@/components/charts/Pie'
@@ -16,6 +17,7 @@ describe('Pie chart', () => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
     localVue.use(VueChartist)
+    localVue.component(noSSR.name, noSSR)
     max = 100
     random = Math.floor(Math.random() * (max - 1 + 1)) + 1
     propsData = {

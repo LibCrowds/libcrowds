@@ -1,0 +1,32 @@
+{
+  "id": 79,
+  "info": {
+    "thumbnail_url": "/uploads/user_362/project_79_thumbnail_1510222150.png",
+    "container": "user_362",
+    "tags": {
+      "Task": "Transcribe",
+      "Location": "Dublin",
+      "Entity": "Dates"
+    },
+    "volume_id": "7f101c63-ae39-49cb-bffe-cf2c6aff17e9",
+    "template_id": "fe496028-d1a6-4b7d-b1fc-61df16a1f18f",
+    "thumbnail": "project_79_thumbnail_1510222150.png"
+  },
+  "updated": "2018-02-14T00:59:04.858600",
+  "description": "Transcribe the dates of plays in historic playbills",
+  "short_name": "transcribe_dates_theatre_royal_dublin_1825-1829_vol_1",
+  "created": "2017-11-08T12:25:27.351084",
+  "name": "Transcribe Dates: Theatre Royal, Dublin 1825-1829 (Vol. 1)",
+  "links": [
+    "<link rel='category' title='category' href='https://backend.libcrowds.com/api/category/22'/>"
+  ],
+  "owner_id": 1,
+  "featured": false,
+  "link": "<link rel='self' title='project' href='https://backend.libcrowds.com/api/project/79'/>",
+  "category_id": 22,
+  "long_description": "",
+  "owners_ids": [
+    1,
+    1
+  ]
+}

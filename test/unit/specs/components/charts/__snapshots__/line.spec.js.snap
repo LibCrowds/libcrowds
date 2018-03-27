@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line chart renders correctly 1`] = `<div class="no-ssr-placeholder"></div>`;

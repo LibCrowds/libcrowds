@@ -1,27 +1,28 @@
 import BootstrapVue from 'bootstrap-vue'
-import Icon from 'vue-awesome/components/Icon'
-import 'vue-awesome/icons/trophy'
-import 'vue-awesome/icons/tasks'
-import 'vue-awesome/icons/clock-o'
+import VueChartist from 'vue-chartist'
+import 'chartist-plugin-tooltips'
+import noSSR from '@/.nuxt/components/no-ssr'
 
-import pbTestResponses from '@/test/fixtures/pybossaTestResponses.json'
 import { mount, createLocalVue } from '@vue/test-utils'
-import ProfileCard from '@/components/cards/Profile'
+import BarChart from '@/components/charts/Bar'
 
-describe('Profile card', () => {
+describe('Bar chart', () => {
   let localVue = null
-  let user = null
   let wrapper = null
 
   beforeEach(() => {
     localVue = createLocalVue()
     localVue.use(BootstrapVue)
-    localVue.component('icon', Icon)
-    user = pbTestResponses.getAccount.data.user
-    wrapper = mount(ProfileCard, {
+    localVue.use(VueChartist)
+    localVue.component(noSSR.name, noSSR)
+    wrapper = mount(BarChart, {
       localVue,
       propsData: {
-        user: user
+        chartData: {
+          labels: ['A', 'B', 'C'],
+          series: [[1, 3, 2], [4, 6, 5]]
+        },
+        unit: 'task'
       }
     })
   })
