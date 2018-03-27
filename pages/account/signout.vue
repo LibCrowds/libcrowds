@@ -1,5 +1,5 @@
 <template>
-  <card-base>
+  <card-base title="Signing out">
     <b-alert
       show
       variant="info"
@@ -12,8 +12,8 @@
 <script>
 import CardBase from '@/components/cards/Base'
 
-// This page only exists separately so that we can redirect to it and sign
-// out from both the main application and the forum (if SSO is enabled)
+// This page exists so that we can redirect to it for signing out, for example
+// when signing out via the forum
 export default {
   layout: 'container',
 
@@ -22,13 +22,8 @@ export default {
   },
 
   mounted () {
-    return this.$store.dispatch('LOGOUT', this.$axios, this.$flarum)
-      .then(data => {
-        this.$notifications.flash(data)
-        this.$router.push({ path: data.next || '/' })
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
+    this.$store.dispatch('LOGOUT', this.$axios, this.$flarum)
+    this.$router.push({ path: '/' })
   }
 }
 </script>
