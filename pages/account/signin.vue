@@ -46,6 +46,7 @@
 
 <script>
 import localConfig from '@/local.config'
+import { getDefaultEmail } from '@/utils/getDefaultEmail'
 import { handleHashedFlashes } from '@/mixins/handleHashedFlashes'
 import { metaTags } from '@/mixins/metaTags'
 import PybossaForm from '@/components/forms/PybossaForm'
@@ -124,7 +125,8 @@ export default {
 
       this.$store.dispatch(action, this.$axios, this.$ga).then(data => {
         if (this.$flarum) {
-          return this.$flarum.signin(data.name, data.email_addr)
+          const email = getDefaultEmail(data.email_addr)
+          return this.$flarum.signin(data.name, email)
         } else {
           this.goToNext(this.next)
         }

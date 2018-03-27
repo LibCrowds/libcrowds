@@ -1,4 +1,5 @@
 import Vuex from 'vuex'
+import { getDefaultEmail } from '@/utils/getDefaultEmail'
 
 import mutations from '@/store/mutations'
 import actions from '@/store/actions'
@@ -15,8 +16,10 @@ actions.nuxtServerInit = async ({ dispatch }, { app }) => {
 
 // nuxtClientInit is dispatched from plugins/nuxt-client-init
 actions.nuxtClientInit = ({ state }, { app }) => {
+  const email = getDefaultEmail(state.currentUser.email_addr)
+  const name = state.currentUser.name
   if (state.currentUser.id && app.$flarum) {
-    app.$flarum.signin(state.currentUser.name, state.currentUser.email_addr)
+    app.$flarum.signin(name, email)
   }
 }
 
