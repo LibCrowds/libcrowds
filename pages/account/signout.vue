@@ -22,8 +22,10 @@ export default {
   },
 
   mounted () {
-    this.$store.dispatch('LOGOUT', this.$axios, this.$flarum)
-    this.$router.push({ path: '/' })
+    return this.$store.dispatch('LOGOUT', this.$axios, this.$flarum)
+      .then(data => {
+        this.$router.push({ path: '/' })
+      })
   }
 }
 </script>
