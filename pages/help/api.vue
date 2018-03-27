@@ -8,7 +8,7 @@
       </p>
       <pre class="mt-2 mb-0">
         <code>
-          {{ apiBase }}
+          {{ localConfig.libcrowdsHost }}
         </code>
       </pre>
       <p>
@@ -42,15 +42,6 @@ export default {
       title: 'API',
       description: `The ${localConfig.brand} API documentation.`,
       localConfig: localConfig
-    }
-  },
-
-  computed: {
-    apiBase () {
-      if (process.browser) {
-        /* istanbul ignore next line */
-        return `${window.location.origin}/api`
-      }
     }
   },
 
