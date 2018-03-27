@@ -8,7 +8,7 @@
  * @param {String} email
  *   The email address.
  */
-export const batch = function (email) {
+export const getDefaultEmail = function (email) {
   const re = new RegExp(/[^@]+@[^@]+\.[^@]+/)
   if (re.test(email)) {
     return email
