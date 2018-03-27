@@ -20,7 +20,7 @@ exports[`API help page renders correctly 1`] = `
     <p>
       My Brand provides a RESTful API that can be used for retreiving information about tasks, task runs, results, etc. The API expects and returns JSON and is available at:
     </p> <pre class="mt-2 mb-0">      <code>
-        
+        http://mylibcrowds.com
       </code>
     </pre>
     <p>
