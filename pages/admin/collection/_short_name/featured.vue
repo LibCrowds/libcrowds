@@ -10,6 +10,17 @@
       </b-form-input>
     </b-form>
 
+    <p slot="guidance">
+      Use the table below to select projects to be featured on the collection
+      microsite's homepage.
+    </p>
+    <p slot="guidance">
+      If no projects are selected then the top three projects that are closest
+      to completion will be used instead. This approach may cause a lack of
+      variety in the chosen projects but does mean that the list doesn't have
+      to be constantly updated.
+    </p>
+
     <projects-table
       :filter="filter"
       :filter-by="filterBy"
