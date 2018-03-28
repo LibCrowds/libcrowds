@@ -61,6 +61,13 @@ export default {
     },
 
     form () {
+      const validImporters = [
+        'iiif',
+        'flickr',
+        's3',
+        'dropbox'
+      ]
+
       return {
         endpoint: this.endpoint,
         method: 'post',
@@ -94,7 +101,9 @@ export default {
               label: 'Importer',
               model: 'importer',
               required: true,
-              values: () => this.importers.map(importer => {
+              values: () => this.importers.filter(importer => {
+                return validImporters.indexOf(importer) > -1
+              }).map(importer => {
                 return { id: importer, name: importer }
               }),
               selectOptions: {

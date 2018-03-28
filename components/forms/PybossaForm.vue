@@ -99,6 +99,10 @@ export default {
     confirmation: {
       type: String,
       required: false
+    },
+    formKey: {
+      type: String,
+      default: 'form'
     }
   },
 
@@ -172,7 +176,7 @@ export default {
           this.alert = r.data.flash
           this.status = r.data.status
           this.$notifications.invalidForm()
-          this.injectErrors(r.data.form.errors)
+          this.injectErrors(r.data[this.formKey].errors)
           return
         } else if (
           r.data.status === 'success' ||
