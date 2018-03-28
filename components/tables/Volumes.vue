@@ -69,6 +69,7 @@ export default {
         },
         importer: {
           label: 'Importer',
+          class: 'text-center',
           sortable: true
         }
       }
