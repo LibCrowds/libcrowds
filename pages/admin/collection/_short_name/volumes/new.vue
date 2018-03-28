@@ -1,17 +1,13 @@
 <template>
   <card-base :title="title" :description="description">
     <p slot="guidance">
-      Volumes provide the input used to build tasks for projects (e.g. the
-      images). The format of the volume's source URI depends on the task
-      presenter chosen for the collection. As this collection uses the
-      <strong>{{ collection.info.presenter }}</strong> task presenter, the
-      source field should be a URI for {{ sourceType }}.
+      Use the form below to add a new volume to the collection microsite.
     </p>
     <p slot="guidance">
       After adding a volume you will be able to upload a thumbnail image that
       will be used by all projects built from the volume.
     </p>
-    <hr>
+    <hr class="my-1">
     <pybossa-form
       submit-text="Add Volume"
       :form="form"
@@ -83,23 +79,22 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A name for the volume',
               onChanged: (model, newVal, oldVal, field) => {
                 const newSn = this.getShortname(newVal)
                 const oldSn = this.getShortname(oldVal)
                 if (!model.short_name || model.short_name === oldSn) {
                   model.short_name = newSn
                 }
-              }
+              },
+              hint: 'The name of the volume'
             },
             {
               model: 'short_name',
               label: 'Short Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A short name for the volume',
-              hint: 'The short name is used in the file names of any ' +
-                'custom, volume-level downloads.'
+              hint: 'An identifier used, for example, in the file names of ' +
+                ' volume-level downloads'
             },
             {
               model: 'source',

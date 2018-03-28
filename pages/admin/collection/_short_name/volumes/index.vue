@@ -15,6 +15,18 @@
       </b-btn>
     </div>
 
+    <p slot="guidance">
+      Volumes provide the initial input used to generate tasks and group
+      tasks. For example, a volume may contain a reference to a IIIF manifest
+      URI via which the location of images can be retrieved and used to
+      generate a set of tasks. Volumes also help with the aggregation of
+      results data.
+    </p>
+    <p slot="guidance">
+      The volumes currently available for this collection microsite are listed
+      below.
+    </p>
+
     <volumes-table :volumes="volumes">
       <template slot="action" slot-scope="volume">
         <b-btn
