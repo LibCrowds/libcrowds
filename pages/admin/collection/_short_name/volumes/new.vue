@@ -4,8 +4,8 @@
       Use the form below to add a new volume to the collection microsite.
     </p>
     <p slot="guidance">
-      After adding a volume you will be able to upload a thumbnail image that
-      will be used by all projects built from the volume.
+      After adding a volume you will be able to upload a thumbnail image and
+      provide the input source, according to the chosen importer type.
     </p>
     <hr class="my-1">
     <pybossa-form
@@ -42,7 +42,8 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         endpoint: endpoint,
-        formData: data.form
+        formModel: data.form,
+        importers: data.all_importers
       }
     }).catch(err => {
       error(err)
@@ -59,19 +60,11 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    sourceType () {
-      if (this.collection.info.presenter === 'iiif-annotation') {
-        return 'a IIIF manifest'
-      } else if (this.collection.info.presenter === 'z3950') {
-        return 'a Flickr album'
-      }
-    },
-
     form () {
       return {
         endpoint: this.endpoint,
         method: 'post',
-        model: this.formData,
+        model: this.formModel,
         schema: {
           fields: [
             {
@@ -97,36 +90,17 @@ export default {
                 ' volume-level downloads'
             },
             {
-              model: 'source',
-              label: 'Source',
-              type: 'input',
-              inputType: 'url',
-              placeholder: `The input source URI`,
-              validator: (value) => {
-                const presenter = this.collection.info['presenter']
-                const source = value ? value.trim() : null
-                if (!source) {
-                  return 'This field is required!'
-                } else if (
-                  presenter === 'iiif-annotation' &&
-                  !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
-                ) {
-                  return 'Not a valid IIIF manifest URI'
-                } else if (
-                  presenter === 'z3950' &&
-                  !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
-                ) {
-                  return 'Not a valid Flickr album URI'
-                }
+              type: 'select',
+              label: 'Importer',
+              model: 'importer',
+              required: true,
+              values: () => this.importers.map(importer => {
+                return { id: importer, name: importer }
+              }),
+              selectOptions: {
+                hideNoneSelected: true
               },
-              hint: () => {
-                const presenter = this.collection.info['presenter']
-                if (presenter === 'iiif-annotation') {
-                  return 'This should be a valid IIIF manifest URI.'
-                } else if (presenter === 'z3950') {
-                  return 'This should be a valid Flickr album URI.'
-                }
-              }
+              hint: 'The importer type'
             }
           ]
         }
@@ -137,12 +111,15 @@ export default {
   methods: {
     /**
      * Handle success.
+     * @param {Object} data
+     *   The returned data.
      */
-    onSuccess () {
+    onSuccess (data) {
       this.$router.push({
-        name: 'admin-collection-short_name-volumes',
+        name: 'admin-collection-short_name-volumes-id',
         params: {
-          short_name: this.collection.short_name
+          short_name: this.collection.short_name,
+          id: data.new_volume.id
         }
       })
     }
