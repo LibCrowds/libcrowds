@@ -66,6 +66,10 @@ export default {
         name: {
           label: 'Volume',
           sortable: true
+        },
+        importer: {
+          label: 'Importer',
+          sortable: true
         }
       }
     }
