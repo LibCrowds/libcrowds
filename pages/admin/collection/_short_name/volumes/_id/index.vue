@@ -7,7 +7,19 @@
           cancel-text="Back"
           show-cancel
           :form="form"
-          @cancel="onCancel">
+          @cancel="onCancel"
+          @success="onSuccess">
+        </pybossa-form>
+      </b-tab>
+      <b-tab title="Import Souce" no-body>
+        <pybossa-form
+          submit-text="Update Import Source"
+          cancel-text="Back"
+          form-key="import_form"
+          show-cancel
+          :form="importForm"
+          @cancel="onCancel"
+          @success="onSuccess">
         </pybossa-form>
       </b-tab>
       <b-tab title="Thumbnail" no-body>
@@ -21,7 +33,8 @@
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
           :current-image-url="currentImageUrl"
-          @cancel="onCancel">
+          @cancel="onCancel"
+          @success="onSuccess">
         </image-upload-form>
       </b-tab>
     </b-tabs>
@@ -54,11 +67,14 @@ export default {
       `/${params.id}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
       data.upload_form.btn = 'Upload'
+      data.import_form.btn = 'Import'
       delete data.upload_form.id
       return {
+        importers: data.all_importers,
         volume: data.volume,
         endpoint: endpoint,
-        formData: data.form,
+        formModel: data.form,
+        importFormModel: data.import_form,
         thumbnailForm: {
           endpoint: endpoint,
           method: 'POST',
@@ -76,10 +92,16 @@ export default {
     },
 
     form () {
+      const validImporters = [
+        'iiif',
+        'flickr',
+        'gdocs'
+      ]
+
       return {
         endpoint: this.endpoint,
         method: 'post',
-        model: this.formData,
+        model: this.formModel,
         schema: {
           fields: [
             {
@@ -87,57 +109,87 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A name for the volume',
               onChanged: (model, newVal, oldVal, field) => {
                 const newSn = this.getShortname(newVal)
                 const oldSn = this.getShortname(oldVal)
                 if (!model.short_name || model.short_name === oldSn) {
                   model.short_name = newSn
                 }
-              }
+              },
+              hint: 'The name of the volume'
             },
             {
               model: 'short_name',
               label: 'Short Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A short name for the volume',
-              hint: 'The short name is used in the file names of any ' +
-                'custom, volume-level downloads.'
+              hint: 'An identifier used, for example, in the file names of ' +
+                ' volume-level downloads'
             },
             {
-              model: 'source',
-              label: 'Source',
-              type: 'input',
-              inputType: 'url',
-              placeholder: `The input source URI`,
-              validator: (value) => {
-                const presenter = this.collection.info['presenter']
-                const source = value ? value.trim() : null
-                if (!source) {
-                  return 'This field is required!'
-                } else if (
-                  presenter === 'iiif-annotation' &&
-                  !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
-                ) {
-                  return 'Not a valid IIIF manifest URI'
-                } else if (
-                  presenter === 'z3950' &&
-                  !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
-                ) {
-                  return 'Not a valid Flickr album URI'
-                }
+              type: 'select',
+              label: 'Importer',
+              model: 'importer',
+              required: true,
+              values: () => this.importers.filter(importer => {
+                return validImporters.indexOf(importer) > -1
+              }).map(importer => {
+                return { id: importer, name: importer }
+              }),
+              selectOptions: {
+                hideNoneSelected: true
               },
-              hint: () => {
-                const presenter = this.collection.info['presenter']
-                if (presenter === 'iiif-annotation') {
-                  return 'This should be a valid IIIF manifest URI.'
-                } else if (presenter === 'z3950') {
-                  return 'This should be a valid Flickr album URI.'
-                }
-              }
+              hint: 'The importer type'
             }
           ]
+        }
+      }
+    },
+
+    importForm () {
+      // We only implement those types where the tasks will be imported with
+      // link, url, url_b and url_m fields, so that we can be consistent with
+      // generic ways of handling that data
+      const importerFields = {
+        iiif: [
+          {
+            model: 'manifest_uri',
+            label: 'Manifest URI',
+            type: 'input',
+            inputType: 'text',
+            placeholder: 'https://host/prefix/identifier/manifest.json',
+            hint: 'A IIIF manifest URI'
+          }
+        ],
+        flickr: [
+          {
+            model: 'album_id',
+            label: 'Album ID',
+            type: 'input',
+            inputType: 'text',
+            hint: 'A Flickr album ID'
+          }
+        ],
+        gdocs: [
+          {
+            model: 'googledocs_url',
+            label: 'Google Spreadsheet URL',
+            type: 'input',
+            inputType: 'text',
+            placeholder: 'https://docs.google.com/spreadsheets/d/key/edit' +
+              '?usp=sharing',
+            hint: 'A shareable Google Docs spreadsheet URL'
+          }
+        ]
+        // TODO: Add S3, dropbox and maybe csv/gdocs
+      }
+
+      return {
+        endpoint: this.endpoint,
+        method: 'post',
+        model: this.importFormModel,
+        schema: {
+          fields: importerFields[this.volume.importer]
         }
       }
     },
@@ -170,6 +222,15 @@ export default {
           short_name: this.collection.short_name
         }
       })
+    },
+
+    /**
+     * Handle form success.
+     * @param {Object} data
+     *   The returned data.
+     */
+    onSuccess (data) {
+      this.volume = data.volume
     }
   }
 }

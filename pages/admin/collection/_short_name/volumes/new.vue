@@ -1,17 +1,13 @@
 <template>
   <card-base :title="title" :description="description">
     <p slot="guidance">
-      Volumes provide the input used to build tasks for projects (e.g. the
-      images). The format of the volume's source URI depends on the task
-      presenter chosen for the collection. As this collection uses the
-      <strong>{{ collection.info.presenter }}</strong> task presenter, the
-      source field should be a URI for {{ sourceType }}.
+      Use the form below to add a new volume to the collection microsite.
     </p>
     <p slot="guidance">
-      After adding a volume you will be able to upload a thumbnail image that
-      will be used by all projects built from the volume.
+      After adding a volume you will be able to upload a thumbnail image and
+      provide the input source, according to the chosen importer type.
     </p>
-    <hr>
+    <hr class="my-1">
     <pybossa-form
       submit-text="Add Volume"
       :form="form"
@@ -46,7 +42,8 @@ export default {
     return app.$axios.$get(endpoint).then(data => {
       return {
         endpoint: endpoint,
-        formData: data.form
+        formModel: data.form,
+        importers: data.all_importers
       }
     }).catch(err => {
       error(err)
@@ -63,19 +60,17 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    sourceType () {
-      if (this.collection.info.presenter === 'iiif-annotation') {
-        return 'a IIIF manifest'
-      } else if (this.collection.info.presenter === 'z3950') {
-        return 'a Flickr album'
-      }
-    },
-
     form () {
+      const validImporters = [
+        'iiif',
+        'flickr',
+        'gdocs'
+      ]
+
       return {
         endpoint: this.endpoint,
         method: 'post',
-        model: this.formData,
+        model: this.formModel,
         schema: {
           fields: [
             {
@@ -83,55 +78,37 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A name for the volume',
               onChanged: (model, newVal, oldVal, field) => {
                 const newSn = this.getShortname(newVal)
                 const oldSn = this.getShortname(oldVal)
                 if (!model.short_name || model.short_name === oldSn) {
                   model.short_name = newSn
                 }
-              }
+              },
+              hint: 'The name of the volume'
             },
             {
               model: 'short_name',
               label: 'Short Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'A short name for the volume',
-              hint: 'The short name is used in the file names of any ' +
-                'custom, volume-level downloads.'
+              hint: 'An identifier used, for example, in the file names of ' +
+                ' volume-level downloads'
             },
             {
-              model: 'source',
-              label: 'Source',
-              type: 'input',
-              inputType: 'url',
-              placeholder: `The input source URI`,
-              validator: (value) => {
-                const presenter = this.collection.info['presenter']
-                const source = value ? value.trim() : null
-                if (!source) {
-                  return 'This field is required!'
-                } else if (
-                  presenter === 'iiif-annotation' &&
-                  !source.match(/^(https?:\/\/).*\/manifest\.json$/g)
-                ) {
-                  return 'Not a valid IIIF manifest URI'
-                } else if (
-                  presenter === 'z3950' &&
-                  !source.match(/www.flickr.com\/.+\/albums\/\d+$/g)
-                ) {
-                  return 'Not a valid Flickr album URI'
-                }
+              type: 'select',
+              label: 'Importer',
+              model: 'importer',
+              required: true,
+              values: () => this.importers.filter(importer => {
+                return validImporters.indexOf(importer) > -1
+              }).map(importer => {
+                return { id: importer, name: importer }
+              }),
+              selectOptions: {
+                hideNoneSelected: true
               },
-              hint: () => {
-                const presenter = this.collection.info['presenter']
-                if (presenter === 'iiif-annotation') {
-                  return 'This should be a valid IIIF manifest URI.'
-                } else if (presenter === 'z3950') {
-                  return 'This should be a valid Flickr album URI.'
-                }
-              }
+              hint: 'The importer type'
             }
           ]
         }
@@ -142,12 +119,15 @@ export default {
   methods: {
     /**
      * Handle success.
+     * @param {Object} data
+     *   The returned data.
      */
-    onSuccess () {
+    onSuccess (data) {
       this.$router.push({
-        name: 'admin-collection-short_name-volumes',
+        name: 'admin-collection-short_name-volumes-id',
         params: {
-          short_name: this.collection.short_name
+          short_name: this.collection.short_name,
+          id: data.new_volume.id
         }
       })
     }

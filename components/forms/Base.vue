@@ -14,7 +14,7 @@
       <span>
         <b-btn
           v-if="showCancel"
-          :variant="darkMode ? 'secondary': 'outline-dark'"
+          :variant="darkMode ? 'secondary': 'dark'"
           :disabled="processing"
           class="mr-1"
           @click="$emit('cancel')">

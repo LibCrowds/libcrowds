@@ -75,7 +75,7 @@ export default {
     }).catch(err => {
       if (err.message === 'Network Error') {
         // This is most likely a CORS issue with the forum endpoint
-        console.error(err)
+        console.warn('Network Error: Cannot get forum tags')
         return {
           forumTags: []
         }
