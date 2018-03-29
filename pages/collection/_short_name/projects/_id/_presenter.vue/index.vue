@@ -15,18 +15,17 @@
     <!-- Share model -->
     <b-modal
       lazy
+      ref="share"
       v-if="tasks.length"
       title="Share"
-      ref="share"
       size="lg"
-      header-text-variant="white"
       :header-text-variant="darkPresenterModals ? 'white' : null"
       :header-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-text-variant="darkPresenterModals ? 'white' : null"
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null">
-      <b-container class="py-2">
+      <b-container :id="shareModalId" class="py-2">
         <span v-html="shareText"></span>
         <b-input-group-append class="mb-2 d-flex">
           <b-form-input
@@ -34,7 +33,10 @@
             readonly
             :value="tasks[0].info.link">
           </b-form-input>
-          <clipboard-button :content="tasks[0].info.link"></clipboard-button>
+          <clipboard-button
+            :container-id="shareModalId"
+            :content="tasks[0].info.link">
+          </clipboard-button>
         </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
@@ -83,7 +85,8 @@ export default {
 
   data () {
     return {
-      tasks: []
+      tasks: [],
+      shareModalId: 'presenter-share-modal'
     }
   },
 
