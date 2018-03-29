@@ -1,5 +1,32 @@
 <template>
   <div id="z3950-presenter">
+
+    <!-- Toolbar buttons -->
+    <b-row class="mb-2 text-right">
+      <b-col>
+        <b-btn-group>
+          <b-btn
+            class="d-flex"
+            variant="outline-primary"
+            @click="$emit('help')">
+            <icon name="question-circle"></icon>
+          </b-btn>
+          <b-btn
+            class="d-flex"
+            variant="outline-primary"
+            @click="$emit('info')">
+            <icon name="info-circle"></icon>
+          </b-btn>
+          <b-btn
+            class="d-flex"
+            variant="outline-primary"
+            @click="$emit('share')">
+            <icon name="share-alt"></icon>
+          </b-btn>
+        </b-btn-group>
+      </b-col>
+    </b-row>
+
     <b-row>
       <b-col lg="6">
 
@@ -11,17 +38,6 @@
           v-if="currentTask" >
           <img :src="currentTask.info.url" class="img-fluid">
         </b-card>
-
-        <!-- Share Buttons -->
-        <div class="mt-3 text-center d-none d-lg-block">
-          <span id="share-text" v-html="shareText">
-          </span>
-          <social-media-buttons
-            class="mt-1"
-            :tweet="project.description"
-            :shareUrl="shareUrl">
-          </social-media-buttons>
-        </div>
 
       </b-col>
       <b-col lg="6" class="mt-3 mt-lg-0">
@@ -184,17 +200,17 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/question-circle'
+import 'vue-awesome/icons/info-circle'
+import 'vue-awesome/icons/share-alt'
 import marked from 'marked'
 import capitalize from 'capitalize'
 import isEmpty from 'lodash/isEmpty'
 import mapValues from 'lodash/mapValues'
-import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import VueFormGenerator from 'vue-form-generator'
 
 export default {
-  mixins: [ computeShareUrl ],
-
   data () {
     return {
       header: 'What is this item?',

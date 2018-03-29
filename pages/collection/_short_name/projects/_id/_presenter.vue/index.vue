@@ -20,11 +20,12 @@
       ref="share"
       size="lg"
       header-text-variant="white"
-      header-bg-variant="dark"
-      body-bg-variant="dark"
-      body-text-variant="white"
-      footer-bg-variant="dark"
-      footer-text-variant="white">
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
       <b-container class="py-2">
         <span v-html="shareText"></span>
         <b-input-group-append class="mb-2 d-flex">
@@ -70,7 +71,7 @@ export default {
   layout ({ params, store }) {
     return params.presenter === 'iiif-annotation'
       ? 'collection-fullscreen-dark'
-      : 'presenter-tabs'
+      : 'collection-tabs'
   },
 
   mixins: [
@@ -163,6 +164,11 @@ export default {
 
     shareText () {
       return marked(this.currentCollection.info.presenter_options.share_text)
+    },
+
+    darkPresenterModals () {
+      const presenter = this.$route.params.presenter
+      return this.darkMode || presenter === 'iiif-annotation'
     }
   },
 
