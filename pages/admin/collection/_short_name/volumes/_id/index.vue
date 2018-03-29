@@ -7,7 +7,8 @@
           cancel-text="Back"
           show-cancel
           :form="form"
-          @cancel="onCancel">
+          @cancel="onCancel"
+          @success="onSuccess">
         </pybossa-form>
       </b-tab>
       <b-tab title="Tasks" no-body>
@@ -18,7 +19,7 @@
           show-cancel
           :form="importForm"
           @cancel="onCancel"
-          @success="onImportFormSuccess">
+          @success="onSuccess">
         </pybossa-form>
       </b-tab>
       <b-tab title="Thumbnail" no-body>
@@ -32,7 +33,8 @@
           :model="thumbnailForm.model"
           :method="thumbnailForm.method"
           :current-image-url="currentImageUrl"
-          @cancel="onCancel">
+          @cancel="onCancel"
+          @success="onSuccess">
         </image-upload-form>
       </b-tab>
     </b-tabs>
@@ -222,11 +224,11 @@ export default {
     },
 
     /**
-     * Handle import form success.
+     * Handle form success.
      * @param {Object} data
      *   The returned data.
      */
-    onImportFormSuccess (data) {
+    onSuccess (data) {
       this.volume = data.volume
     }
   }
