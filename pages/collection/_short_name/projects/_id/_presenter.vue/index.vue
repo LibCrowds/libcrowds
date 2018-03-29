@@ -8,6 +8,7 @@
       :project-template="currentTemplate"
       :collection="currentCollection"
       :tasks="tasks"
+      @help="$refs.help.show()"
       @share="$refs.share.show()"
       @submit="onSubmit">
     </component>
@@ -51,6 +52,26 @@
           :tweet="description"
           :shareUrl="shareUrl">
         </social-media-buttons>
+      </b-container>
+    </b-modal>
+
+    <!-- Tutorial modal -->
+    <b-modal
+      show
+      lazy
+      ref="help"
+      title="Tutorial"
+      size="lg"
+      ok-only
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      <b-container
+        class="py-2 px-3"
+        v-html="tutorial">
       </b-container>
     </b-modal>
 
@@ -172,6 +193,11 @@ export default {
     darkPresenterModals () {
       const presenter = this.$route.params.presenter
       return this.darkMode || presenter === 'iiif-annotation'
+    },
+
+    tutorial () {
+      const help = this.currentTemplate.tutorial || ''
+      return marked(help)
     }
   },
 
