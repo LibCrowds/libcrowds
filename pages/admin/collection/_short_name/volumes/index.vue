@@ -32,7 +32,7 @@
         <b-btn
           variant="warning"
           size="sm"
-          @click="deleteVolume(volume.item.id)">
+          @click="deleteVolume(volume.item.id, $event)">
           Delete
         </b-btn>
         <b-btn
@@ -96,13 +96,37 @@ export default {
      * Delete a volume.
      * @param {String} id
      *   The volume ID.
+     * @param {Object} evt
+     *   The event.
      */
-    deleteVolume (id) {
-      const endpoint = `/api/category/${this.collection.id}`
+    async deleteVolume (id, evt) {
+      evt.target.setAttribute('disabled', true)
+
+      const noProjects = await this.hasNoProjects(id)
+      if (!noProjects) {
+        evt.target.removeAttribute('disabled')
+        this.$swal({
+          title: 'Cannot Delete',
+          text: 'This volume is already attached to projects and therefore ' +
+            'cannot be deleted.',
+          type: 'warning'
+        }).catch(err => {
+          // Refactor if vue-sweetalert gets updated to swal v.7
+          if (
+            !(typeof err === 'string' ||
+            (typeof err === 'object' && err.hasOwnProperty('dismiss')))
+          ) {
+            this.$nuxt.error(err)
+          }
+        })
+        return
+      }
+
       const infoClone = JSON.parse(JSON.stringify(this.collection.info))
       infoClone.volumes = this.collection.info.volumes.filter(vol => {
         return vol.id !== id
       })
+
       this.$swal({
         title: `Delete Volume`,
         text: `Are you sure you want to delete this volume?`,
@@ -111,7 +135,9 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.$axios.$put(endpoint, { info: infoClone })
+          return this.$axios.$put(`/api/category/${this.collection.id}`, {
+            info: infoClone
+          })
         }
       }).then(result => {
         if (result) {
@@ -119,8 +145,37 @@ export default {
             message: 'Volume deleted'
           })
           this.$store.dispatch('UPDATE_CURRENT_COLLECTION', result)
+          this.volumes = this.volumes.filter(vol => (vol.id !== id))
+        }
+      }).catch(err => {
+        // Refactor if vue-sweetalert gets updated to swal v.7
+        if (
+          !(typeof err === 'string' ||
+          (typeof err === 'object' && err.hasOwnProperty('dismiss')))
+        ) {
+          this.$nuxt.error(err)
+        }
+      }).then(() => {
+        evt.target.removeAttribute('disabled')
+      })
+    },
+
+    /**
+     * Check that a volume is not assigned to any projects.
+     * @param {id} id
+     *   The volume ID.
+     */
+    async hasNoProjects (id) {
+      const projectsData = await this.$axios.get('/api/project', {
+        params: {
+          category_id: this.collection.id,
+          all: 1,
+          info: {
+            volume_id: id
+          }
         }
       })
+      return projectsData.data.length < 1
     }
   }
 }
