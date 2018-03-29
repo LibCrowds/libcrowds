@@ -157,6 +157,7 @@ export default {
             label: 'Manifest URI',
             type: 'input',
             inputType: 'text',
+            placeholder: 'https://host/prefix/identifier/manifest.json',
             hint: 'A IIIF manifest URI'
           }
         ],
