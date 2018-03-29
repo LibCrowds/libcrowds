@@ -11,9 +11,9 @@
           @success="onSuccess">
         </pybossa-form>
       </b-tab>
-      <b-tab title="Tasks" no-body>
+      <b-tab title="Import Souce" no-body>
         <pybossa-form
-          submit-text="Update Task Data"
+          submit-text="Update Import Source"
           cancel-text="Back"
           form-key="import_form"
           show-cancel
