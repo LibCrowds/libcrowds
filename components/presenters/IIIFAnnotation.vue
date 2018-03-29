@@ -10,12 +10,9 @@
       :confirm-on-submit="false"
       :selections-editable="false"
       :before-submit="checkSubmission"
-      show-help-on-mount
+      disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
-
-      <span slot="help" v-html="help"></span>
-
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
@@ -105,11 +102,6 @@ export default {
         browse: false,
         'share-alt': 'Share'
       }
-    },
-
-    help () {
-      const help = this.projectTemplate.tutorial || ''
-      return marked(help)
     }
   },
 
@@ -131,6 +123,10 @@ export default {
     onToolbarBtnClick (key) {
       if (key === 'share-alt') {
         this.$emit('share')
+      } else if (key === 'help') {
+        this.$emit('help')
+      } else if (key === 'info') {
+        this.$emit('info')
       }
     },
 
