@@ -64,8 +64,7 @@ export default {
       const validImporters = [
         'iiif',
         'flickr',
-        's3',
-        'dropbox'
+        'gdocs'
       ]
 
       return {

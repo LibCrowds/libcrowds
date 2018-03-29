@@ -93,8 +93,7 @@ export default {
       const validImporters = [
         'iiif',
         'flickr',
-        's3',
-        'dropbox'
+        'gdocs'
       ]
 
       return {
@@ -166,6 +165,17 @@ export default {
             type: 'input',
             inputType: 'text',
             hint: 'A Flickr album ID'
+          }
+        ],
+        gdocs: [
+          {
+            model: 'googledocs_url',
+            label: 'Google Spreadsheet URL',
+            type: 'input',
+            inputType: 'text',
+            placeholder: 'https://docs.google.com/spreadsheets/d/key/edit' +
+              '?usp=sharing',
+            hint: 'A shareable Google Docs spreadsheet URL'
           }
         ]
         // TODO: Add S3, dropbox and maybe csv/gdocs
