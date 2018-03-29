@@ -2,7 +2,7 @@
   <div class="iiif-annotation-presenter">
 
     <libcrowds-viewer
-      v-if="tasks.length && taskOpts.length"
+      v-if="showViewer"
       :task-opts="taskOpts"
       :sidebar-buttons="sidebarButtons"
       :toolbar-buttons="toolbarButtons"
@@ -50,14 +50,7 @@ export default {
     projectTemplate: {
       type: Object,
       required: true,
-      validator: (value) => {
-        return (
-          value.hasOwnProperty('task') &&
-          value.task.hasOwnProperty('mode') &&
-          value.task.hasOwnProperty('objective') &&
-          value.task.hasOwnProperty('guidance')
-        )
-      }
+      validator: this.projectTemplateIsValid
     }
   },
 
@@ -102,6 +95,14 @@ export default {
         browse: false,
         'share-alt': 'Share'
       }
+    },
+
+    showViewer () {
+      return (
+        this.projectTemplateIsValid(this.projectTemplate) &&
+        this.tasks.length &&
+        this.taskOpts.length
+      )
     }
   },
 
@@ -128,6 +129,20 @@ export default {
       } else if (key === 'info') {
         this.$emit('info')
       }
+    },
+
+    /**
+     * Check if a project template is valid.
+     * @param {Object} tmpl
+     *   The project template.
+     */
+    projectTemplateIsValid (tmpl) {
+      return (
+        tmpl.hasOwnProperty('task') &&
+        tmpl.task.hasOwnProperty('mode') &&
+        tmpl.task.hasOwnProperty('objective') &&
+        tmpl.task.hasOwnProperty('guidance')
+      )
     },
 
     /**
