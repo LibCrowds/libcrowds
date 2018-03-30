@@ -35,6 +35,12 @@
   }
 }
 
+.input-group-append {
+  input {
+    border-radius: 0;
+  }
+}
+
 .input-group-btn {
   input {
     border-radius: 0;
