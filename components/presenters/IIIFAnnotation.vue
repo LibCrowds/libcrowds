@@ -2,7 +2,7 @@
   <div class="iiif-annotation-presenter">
 
     <libcrowds-viewer
-      v-if="tasks.length && taskOpts.length"
+      v-if="showViewer"
       :task-opts="taskOpts"
       :sidebar-buttons="sidebarButtons"
       :toolbar-buttons="toolbarButtons"
@@ -10,12 +10,9 @@
       :confirm-on-submit="false"
       :selections-editable="false"
       :before-submit="checkSubmission"
-      show-help-on-mount
+      disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
-
-      <span slot="help" v-html="help"></span>
-
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
@@ -53,14 +50,7 @@ export default {
     projectTemplate: {
       type: Object,
       required: true,
-      validator: (value) => {
-        return (
-          value.hasOwnProperty('task') &&
-          value.task.hasOwnProperty('mode') &&
-          value.task.hasOwnProperty('objective') &&
-          value.task.hasOwnProperty('guidance')
-        )
-      }
+      validator: this.projectTemplateIsValid
     }
   },
 
@@ -107,9 +97,12 @@ export default {
       }
     },
 
-    help () {
-      const help = this.projectTemplate.tutorial || ''
-      return marked(help)
+    showViewer () {
+      return (
+        this.projectTemplateIsValid(this.projectTemplate) &&
+        this.tasks.length &&
+        this.taskOpts.length
+      )
     }
   },
 
@@ -131,7 +124,25 @@ export default {
     onToolbarBtnClick (key) {
       if (key === 'share-alt') {
         this.$emit('share')
+      } else if (key === 'help') {
+        this.$emit('help')
+      } else if (key === 'info') {
+        this.$emit('info')
       }
+    },
+
+    /**
+     * Check if a project template is valid.
+     * @param {Object} tmpl
+     *   The project template.
+     */
+    projectTemplateIsValid (tmpl) {
+      return (
+        tmpl.hasOwnProperty('task') &&
+        tmpl.task.hasOwnProperty('mode') &&
+        tmpl.task.hasOwnProperty('objective') &&
+        tmpl.task.hasOwnProperty('guidance')
+      )
     },
 
     /**

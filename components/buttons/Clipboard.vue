@@ -26,6 +26,10 @@ export default {
     message: {
       type: String,
       default: 'Copied!'
+    },
+    containerId: {
+      type: String,
+      default: ''
     }
   },
 
@@ -36,7 +40,11 @@ export default {
       text: (trigger) => {
         this.$notifications.success({ message: this.message })
         return this.content
-      }
+      },
+      // Container ID needs to be set as the Bootstrap modal takes focus
+      container: this.containerId.length
+        ? document.getElementById(this.containerId)
+        : document.body
     })
   }
 }
