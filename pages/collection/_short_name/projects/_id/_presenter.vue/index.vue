@@ -9,6 +9,7 @@
       :collection="currentCollection"
       :tasks="tasks"
       @help="$refs.help.show()"
+      @info="$refs.info.show()"
       @share="$refs.share.show()"
       @submit="onSubmit">
     </component>
@@ -20,6 +21,7 @@
       v-if="tasks.length"
       title="Share"
       size="lg"
+      ok-only
       :header-text-variant="darkPresenterModals ? 'white' : null"
       :header-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
@@ -75,6 +77,42 @@
       </b-container>
     </b-modal>
 
+    <!-- Info modal (currently only for tasks with a manifest, i.e. IIIF) -->
+    <b-modal
+      show
+      lazy
+      ref="info"
+      title="Info"
+      size="lg"
+      ok-only
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      <b-container class="py-2 px-3">
+        <ul v-if="taskInfo.metadata" class="list-unstyled">
+          <li
+            v-for="item in taskInfo.metadata"
+            :key="item.label"
+            class="mb-1">
+            <strong>{{ item.label }}: </strong>
+            <span v-html="item.value"></span>
+          </li>
+        </ul>
+        <div class="text-center">
+          <img v-if="taskInfo.logo" :src="taskInfo.logo" class="my-2">
+          <p v-if="taskInfo.attribution" v-html="taskInfo.attribution"></p>
+          <a
+            v-if="taskInfo.license"
+            :href="taskInfo.license"
+            v-html="taskInfo.license">
+          </a>
+        </div>
+      </b-container>
+    </b-modal>
+
   </div>
 </template>
 
@@ -107,6 +145,7 @@ export default {
   data () {
     return {
       tasks: [],
+      taskInfo: '',
       shareModalId: 'presenter-share-modal'
     }
   },
@@ -341,6 +380,22 @@ export default {
     this.validateTemplate()
     this.loadTask()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
+  },
+
+  watch: {
+    tasks (val) {
+      if (!val.length || !val[0].info.hasOwnProperty('manifest')) {
+        this.taskInfo = 'no data'
+      }
+
+      this.$axios.$get(this.tasks[0].info.manifest, {
+        headers: {
+          'Content-type': 'text/plain' // to avoid CORS preflight
+        }
+      }).then(data => {
+        this.taskInfo = data
+      })
+    }
   }
 }
 </script>

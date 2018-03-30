@@ -14,12 +14,6 @@
           <b-btn
             class="d-flex"
             variant="outline-primary"
-            @click="$emit('info')">
-            <icon name="info-circle"></icon>
-          </b-btn>
-          <b-btn
-            class="d-flex"
-            variant="outline-primary"
             @click="$emit('share')">
             <icon name="share-alt"></icon>
           </b-btn>
