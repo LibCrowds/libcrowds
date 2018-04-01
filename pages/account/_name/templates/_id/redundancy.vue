@@ -1,5 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
+
     <p slot="guidance">
       Use the form below to configure when a task is considered complete and
       a final result created.
@@ -12,12 +13,14 @@
       matches is established, or the maximum number of contributions is
       reached.
     </p>
-    <hr>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Update"
       :form="form"
       @success="onFormSuccess">
     </pybossa-form>
+
   </card-base>
 </template>
 

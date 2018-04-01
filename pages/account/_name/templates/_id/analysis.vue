@@ -5,7 +5,7 @@
       when each task is completed. The output of this analysis process is used
       to generate the final result for each task.
     </p>
-    <hr>
+    <hr class="my-1">
 
     <b-card-body v-if="!currentTemplate.task">
       <b-alert show variant="warning" class="mb-0">

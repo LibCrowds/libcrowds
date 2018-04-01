@@ -1,21 +1,18 @@
 <template>
   <card-base :title="title" :description="description">
     <p slot="guidance">
-      Project templates can be used by anyone to generate projects for a
-      collection microsite. For example, if you wanted to collect
-      transcriptions of all song titles mentioned in a particular set of
-      volumes you could create two templates, one to mark out those song
-      titles followed by one to transcribe them. These templates could then
-      be used for any number of volumes belonging to the collection microsite.
+      Project templates contain all of the configuration details used to
+      generate projects for a collection microsite. Each template can be used
+      to generate a project for all available volumes, without having to
+      redefine the settings each time.
     </p>
     <p slot="guidance">
       After entering the core details below and clicking
       <strong>Create</strong>, you will be given access to futher options to
-      help design your task, add tags, a tutorial and set the rules for
+      help design the task, add tags, a tutorial and set the rules for
       results analysis.
     </p>
-
-    <hr>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Create"
@@ -57,7 +54,9 @@ export default {
       }),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
+      // Set default collection
       tmplData.form.category_id = categoriesData[0].id
+
       return {
         form: {
           endpoint: tmplEndpoint,
