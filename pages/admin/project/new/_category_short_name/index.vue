@@ -175,27 +175,7 @@ export default {
   data () {
     return {
       tabIndex: 0,
-      localConfig: localConfig,
-      volumeTableFields: {
-        thumbnail: {
-          label: 'Thumbnail',
-          class: 'text-center'
-        },
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        source: {
-          label: 'Source',
-          sortable: true
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
-      existingProjectDetails: {},
-      shortnameValid: false
+      localConfig: localConfig
     }
   },
 
