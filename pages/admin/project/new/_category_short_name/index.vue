@@ -9,11 +9,9 @@
             Choose a project template
           </p>
           <p>
-            Project templates provide the configuration details for a
+            Project templates provide all of the configuration details for a
             particular task. For example, a template might be created to
-            transcribe all of the titles shown in an image. Each template can
-            be used to generate a similar project for multiple volumes (the
-            volume is chosen in the next section).
+            transcribe all of the titles shown in an image.
           </p>
           <p>
             If you can't find a suitable template you can create your own by
@@ -58,10 +56,10 @@
             Choose a volume
           </p>
           <p>
-            Volumes provide the input for a project (e.g. the images). The
-            available volumes for a collection are maintained by
-            administrators. If the volume that you want to create your project
-            from is not listed here, please
+            Volumes provide the input source for a project (e.g. the images).
+            The available volumes for each collection are maintained by
+            {{ localConfig.brand }} administrators. If the volume that you
+            want to create your project from is not listed here, please
             <a :href="`mailto:${localConfig.email}`">get in touch</a> and we
             will see if it can be made available.
           </p>
@@ -94,11 +92,9 @@
             Choose a parent project
           </p>
           <p>
-            IIIF Annotation projects can be built from an optional parent
-            project. When a project is built from a parent, a task will be
-            generated for each result that was produced by that parent.
+            Projects can be built from the results of a parent project.
             For example, the parent project might contain tasks to mark up all
-            titles in a volume. The  child project containing tasks to
+            titles in a volume and the child project will contain tasks to
             transcribe all of those titles.
           </p>
           <p>
@@ -349,14 +345,17 @@ export default {
      */
     selectTemplate (template) {
       const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
+
+      // Set template and reset volume
       this.form.schema.fields = fieldsClone.map(field => {
         if (field.model === 'template_id') {
-          field.values = template
+          field.values = [template]
         } else if (field.model === 'volume_id') {
           field.values = []
         }
         return field
       })
+
       this.form.model.template_id = template.id
       this.form.model.volume_id = null
       this.tabIndex++
@@ -373,7 +372,7 @@ export default {
       const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
       this.form.schema.fields = fieldsClone.map(field => {
         if (field.model === 'volume_id') {
-          field.values = [{ id: volume.id, name: volume.name }]
+          field.values = [volume]
         }
         return field
       })
@@ -392,7 +391,7 @@ export default {
       const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
       this.form.schema.fields = fieldsClone.map(field => {
         if (field.model === 'parent_id') {
-          field.values = [{ id: parent.id, name: parent.name }]
+          field.values = [project]
         }
         return field
       })
@@ -441,11 +440,11 @@ export default {
     /**
      * Handle tabs being changed.
      */
-    onTabsChange () {
+    onTabsChange (key) {
       this.filter = null
       const table = this.$refs['projects-table']
       if (typeof table !== 'undefined') {
-        table.reset()
+        // table.reset()
       }
     }
   },
