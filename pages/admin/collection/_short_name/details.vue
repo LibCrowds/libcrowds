@@ -19,7 +19,7 @@
     <p slot="guidance">
       Use the form below to configure the collection microsite.
     </p>
-    <hr>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Update"

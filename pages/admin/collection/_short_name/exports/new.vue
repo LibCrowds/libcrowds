@@ -1,5 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
+
     <p slot="guidance">
       Use the form below to add a custom, volume-level export to the
       collection's data page. Such exports can be used to collate
@@ -11,12 +12,12 @@
       different projects will be grouped. For example, for IIIF transcription
       projects this will be the annotation target.
     </p>
-    <hr>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Add Export Format"
       :form="form"
       @success="onSuccess">
-
       <div slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <label class="mb-0">
@@ -50,7 +51,6 @@
           </template>
         </b-table>
       </div>
-
     </pybossa-form>
 
     <add-export-field-modal

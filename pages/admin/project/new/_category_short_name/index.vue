@@ -86,16 +86,17 @@
       </b-tab>
 
       <!-- Parent selection tab -->
-      <b-tab title="Parent" no-body>
+      <b-tab
+        title="Parent"
+        no-body
+        :disabled="!selectedTemplate.parent">
         <b-card-body v-if="collection.info.presenter === 'iiif-annotation'">
           <p class="lead">
             Choose a parent project
           </p>
           <p>
-            Projects can be built from the results of a parent project.
-            For example, the parent project might contain tasks to mark up all
-            titles in a volume and the child project will contain tasks to
-            transcribe all of those titles.
+            The chosen template must be built from the results of a
+            <strong>{{ selectedTemplate.parent }}</strong> parent.
           </p>
           <p>
             If you are unsure about this stage,
@@ -104,8 +105,8 @@
           </p>
           <p>
             Choose a parent project by locating it in the list below and
-            clicking <strong>Select</strong>. Note that only completed projects
-            are shown.
+            clicking <strong>Select</strong>. Note that only valid parent
+            projects are shown.
           </p>
         </b-card-body>
         <projects-table
@@ -143,15 +144,16 @@
             <strong>Create</strong>.
           </p>
         </b-card-body>
-        <hr>
+        <hr class="my-1">
+
         <pybossa-form
           :confirmation="confirmation"
           submit-text="Create"
           :form="form">
         </pybossa-form>
+
       </b-tab>
     </b-tabs>
-
   </card-base>
 </template>
 
@@ -175,7 +177,9 @@ export default {
   data () {
     return {
       tabIndex: 0,
-      localConfig: localConfig
+      localConfig: localConfig,
+      selectedTemplate: {},
+      selectedVolume: {}
     }
   },
 
@@ -325,6 +329,8 @@ export default {
      */
     selectTemplate (template) {
       const fieldsClone = JSON.parse(JSON.stringify(this.form.schema.fields))
+
+      this.selectedTemplate = template
 
       // Set template and reset volume
       this.form.schema.fields = fieldsClone.map(field => {
