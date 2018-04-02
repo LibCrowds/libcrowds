@@ -164,7 +164,7 @@ export default {
         const parentTmpl = this.templates.filter(parentTmpl => {
           return parentTmpl.id === tmpl.parent_template_id
         })[0] || 'Unknown'
-        msg += `Note that this project will be built from the
+        msg += `<br><br>Note that this project will be built from the
           "${parentTmpl.name}" parent of the same volume.`
       }
 
