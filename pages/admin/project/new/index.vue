@@ -1,11 +1,8 @@
 <template>
   <card-base :title="title" :description="description">
-    <p slot="guidance" class="lead">
-      Welcome to the project builder
-    </p>
     <p slot="guidance">
-      The following pages contain a series of options for generating a
-      new project from a chosen volume and template.
+      The following page contains a form to generate a project from a chosen
+      template and volume.
     </p>
     <p slot="guidance">
       To get started, select a collection from the table below.
