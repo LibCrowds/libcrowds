@@ -153,9 +153,23 @@ export default {
     },
 
     confirmation () {
-      return `You're about to create a project for
-        ${this.currentCollection.name}.
-        <br><br>Click OK to continue.`
+      let msg = `You're about to create a project for
+        ${this.currentCollection.name}.`
+
+      // Add building from parent message, if applicable
+      const tmpl = this.templates.filter(tmpl => {
+        return tmpl.id === this.formModel.template_id
+      })[0] || {}
+      if (tmpl.parent_template_id) {
+        const parentTmpl = this.templates.filter(parentTmpl => {
+          return parentTmpl.id === tmpl.parent_template_id
+        })[0] || 'Unknown'
+        msg += `Note that this project will be built from the
+          "${parentTmpl.name}" parent of the same volume.`
+      }
+
+      msg += '<br><br>Click OK to continue.'
+      return msg
     }
   },
 
