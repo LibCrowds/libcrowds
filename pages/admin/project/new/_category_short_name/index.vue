@@ -21,6 +21,35 @@
       :confirmation="confirmation"
       submit-text="Create"
       :form="form">
+
+      <div slot="top" class="form-group">
+        <label>Template</label>
+        <multiselect
+          v-model="selectedTemplate"
+          label="name"
+          track-by="id"
+          :options="templates"
+          @input="selectTemplate">
+        </multiselect>
+        <div class="hint">
+          The template provides the task configuration details.
+        </div>
+      </div>
+
+      <div slot="top" class="form-group">
+        <label>Volume</label>
+        <multiselect
+          v-model="selectedVolume"
+          label="name"
+          track-by="id"
+          :options="availableVolumes"
+          @input="selectVolume">
+        </multiselect>
+        <div class="hint">
+          The volume provides the input source.
+        </div>
+      </div>
+
     </pybossa-form>
 
   </card-base>
@@ -40,7 +69,9 @@ export default {
 
   data () {
     return {
-      localConfig: localConfig
+      localConfig: localConfig,
+      selectedTemplate: {},
+      selectedVolume: {}
     }
   },
 
@@ -92,33 +123,6 @@ export default {
         schema: {
           fields: [
             {
-              type: 'select',
-              label: 'Template',
-              model: 'template_id',
-              values: this.templates,
-              hint: 'The template provides the task configuration details.',
-              onChanged: this.setNameAndShortName
-            },
-            {
-              type: 'select',
-              label: 'Volume',
-              model: 'volume_id',
-              values: (model) => {
-                const filteredTemplates = this.templates.filter(tmpl => {
-                  return tmpl.id === model.template_id
-                })
-                if (filteredTemplates.length < 1) {
-                  return []
-                }
-                const tmpl = filteredTemplates[0]
-                return this.volumes.filter(vol => {
-                  return tmpl.available_volumes.indexOf(vol.id) > -1
-                })
-              },
-              hint: 'The volume provides the input source.',
-              onChanged: this.setNameAndShortName
-            },
-            {
               type: 'input',
               inputType: 'text',
               label: 'Name',
@@ -152,6 +156,19 @@ export default {
       return `Create a new ${this.currentCollection.name} project`
     },
 
+    availableVolumes () {
+      const tmpl = this.templates.filter(tmpl => {
+        return tmpl.id === this.formModel.template_id
+      })[0] || null
+      if (!tmpl) {
+        return []
+      }
+
+      return this.volumes.filter(vol => {
+        return tmpl.available_volumes.indexOf(vol.id) > -1
+      })
+    },
+
     confirmation () {
       let msg = `You're about to create a project for
         ${this.currentCollection.name}.`
@@ -175,19 +192,32 @@ export default {
 
   methods: {
     /**
+     * Select a template.
+     * @param {Object} tmpl
+     *   The template.
+     */
+    selectTemplate (tmpl) {
+      this.formModel.template_id = tmpl.id
+      this.formModel.volume_id = null
+      this.setNameAndShortName()
+    },
+
+    /**
+     * Select a volume.
+     * @param {Object} volume
+     *   The volume.
+     */
+    selectVolume (volume) {
+      this.formModel.volume_id = volume.id
+      this.setNameAndShortName()
+    },
+
+    /**
      * Pre-fill the name and short name.
      */
     setNameAndShortName () {
-      const tmpl = this.templates.filter(tmpl => {
-        return tmpl.id === this.formModel.template_id
-      })[0] || null
-      const tmplName = tmpl ? tmpl.name : ''
-
-      const vol = this.volumes.filter(vol => {
-        return vol.id === this.formModel.volume_id
-      })[0] || null
-      const volName = vol ? vol.name : ''
-
+      const tmplName = this.selectedTemplate.name || ''
+      const volName = this.selectedVolume.name || ''
       const name = `${tmplName}: ${volName}`
       this.formModel.name = name
       this.formModel.short_name = this.getShortname(name)
