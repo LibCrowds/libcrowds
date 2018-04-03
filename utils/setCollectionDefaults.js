@@ -59,11 +59,9 @@ export const setCollectionDefaults = function (collection) {
   }
   collection.info = merge(defaults, collection.info)
 
-  // Handle old tag structure
-  if (Array.isArray(collection.info.tags)) {
-    convertOldTagStructure(collection)
-  } else if (!collection.info.tags) {
-    collection.info.tags = {}
+  // Ensure tags is an array
+  if (!Array.isArray(collection.info.tags)) {
+    collection.info.tags = []
   }
 
   // Ensure volumes is an array
@@ -80,25 +78,4 @@ export const setCollectionDefaults = function (collection) {
   if (!Array.isArray(collection.info.export_formats)) {
     collection.info.export_formats = []
   }
-}
-
-/**
- * Convert the pre 1.0.0 data structure for tags.
- * @param {Object} collection
- *   The collection.
- */
-function convertOldTagStructure (collection) {
-  const newTags = {}
-  const uniqueTypes = [...new Set(collection.info.tags.map(tag => tag.type))]
-  for (let type of uniqueTypes) {
-    newTags[type] = {
-      color: '#2589BD',
-      options: collection.info.tags.filter(tag => {
-        return tag.type === type
-      }).map(tag => {
-        return tag.name
-      })
-    }
-  }
-  collection.info.tags = newTags
 }

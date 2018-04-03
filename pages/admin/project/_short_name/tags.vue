@@ -4,14 +4,14 @@
     <b-card-body>
       <span v-if="hasTags">
         <div
-          v-for="(value, tag) in collection.info.tags"
-          :key="tag"
+          v-for="(tag, index) in currentCollection.info.tags"
+          :key="index"
           class="mb-2">
-          <label>{{ tag | capitalize }}</label>
+          <label>{{ tag.name | capitalize }}</label>
           <multiselect
             placeholder="Select one"
             v-model="project.info.tags[tag]"
-            :options="value.options">
+            :options="options[tag.name] || []">
           </multiselect>
         </div>
       </span>
@@ -37,7 +37,6 @@
 <script>
 import identity from 'lodash/identity'
 import pickBy from 'lodash/pickBy'
-import isEmpty from 'lodash/isEmpty'
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
@@ -51,7 +50,8 @@ export default {
     return {
       title: 'Tags',
       description: 'Set the tags used to filter and organise projects',
-      processing: false
+      processing: false,
+      options: {}
     }
   },
 
@@ -60,7 +60,7 @@ export default {
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
@@ -71,7 +71,7 @@ export default {
     },
 
     hasTags () {
-      return !isEmpty(this.collection.info.tags)
+      return this.currentCollection.info.tags.length
     }
   },
 
@@ -96,6 +96,16 @@ export default {
       }
       this.$notifications.success({ message: 'Tags updated' })
     }
+  },
+
+  mounted () {
+    // Get all current tags for the collection.
+    const endpoint = `/lc/categories/${this.currentCollection.short_name}/tags`
+    return this.$axios.$get(endpoint).then(data => {
+      this.options = data.tags
+    }).catch(err => {
+      this.$nuxt.error(err)
+    })
   }
 }
 </script>

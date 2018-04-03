@@ -19,18 +19,18 @@ export default {
         schema: {
           fields: [
             {
-              model: 'type',
+              model: 'name',
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              placeholder: 'Name the tag type (e.g. Location)',
+              hint: 'The name of the tag type (e.g. Location).',
               required: true,
               validator: (value) => {
                 const currentTags = Object.keys(this.collection.info.tags)
                 if (!value || !value.length) {
                   return 'This field is required'
                 }
-                if (currentTags.indexOf(value) > -1) {
+                if (currentTags.filter(tag => (tag.id === value)).length) {
                   return 'A tag type already exists with that name'
                 }
               }
@@ -39,14 +39,8 @@ export default {
               model: 'color',
               label: 'Colour',
               type: 'input',
-              inputType: 'color'
-            },
-            {
-              model: 'options',
-              label: 'Tags',
-              type: 'textArea',
-              rows: 4,
-              placeholder: 'Separate tags with a comma or new line'
+              inputType: 'color',
+              hint: 'A color for the tag.'
             }
           ]
         }
@@ -71,26 +65,21 @@ export default {
 
   methods: {
     /**
-     * Add a tag.
+     * Add a tag type.
      */
     addTag () {
-      const type = this.form.model.type
-      const color = this.form.model.color
-      const options = this.form.model.options
-        .replace(/\n/g, ',')
-        .split(',')
-        .map(option => option.trim())
-        .filter(option => option.length)
-
-      this.collection.info.tags[type] = {
-        options: options,
-        color: color
+      const tag = {
+        name: this.form.model.name,
+        color: this.form.model.color
       }
+
+      this.collection.info.tags.push(tag)
+
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
         this.$notifications.success({ message: 'Tag type added' })
-        this.$emit('update', this.tag)
+        this.$emit('update', tag)
         this.processing = false
       })
     },
@@ -100,9 +89,8 @@ export default {
      */
     resetModel () {
       this.form.model = {
-        type: '',
-        options: '',
-        color: '#2589BD'
+        name: '',
+        color: '#9DD0EC'
       }
     }
   }
