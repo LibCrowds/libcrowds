@@ -50,6 +50,25 @@
         </div>
       </div>
 
+      <div
+        slot="bottom"
+        v-if="hasTags"
+        v-for="(tag, index) in currentCollection.info.tags"
+        :key="index"
+        class="form-group mb-2">
+        <label>{{ tag.name | capitalize }}</label>
+        <multiselect
+          :id="tag.name"
+          v-model="formModel.tags[tag.name]"
+          :options="tagOptions[tag.name] || []"
+          :taggable="true"
+          @tag="addTag">
+        </multiselect>
+        <div class="hint">
+          Add a "{{ tag.name }}" tag.
+        </div>
+      </div>
+
     </pybossa-form>
 
   </card-base>
@@ -71,7 +90,9 @@ export default {
     return {
       localConfig: localConfig,
       selectedTemplate: {},
-      selectedVolume: {}
+      selectedVolume: {},
+      tagOptions: {},
+      tags: {}
     }
   },
 
@@ -187,6 +208,10 @@ export default {
 
       msg += '<br><br>Click OK to continue.'
       return msg
+    },
+
+    hasTags () {
+      return this.currentCollection.info.tags.length
     }
   },
 
@@ -221,11 +246,42 @@ export default {
       const name = `${tmplName}: ${volName}`
       this.formModel.name = name
       this.formModel.short_name = this.getShortname(name)
+    },
+
+    /**
+     * Add a new tag.
+     * @param {String} value
+     *   The new tag value.
+     * @param {String} name
+     *   The tag name (from the multiselect id).
+     */
+    addTag (value, name) {
+      if (Array.isArray(this.tagOptions[name])) {
+        this.tagOptions[name].push(value)
+      } else {
+        this.tagOptions[name] = [value]
+      }
+
+      if (Array.isArray(this.formModel.tags[name])) {
+        this.formModel.tags[name] = value
+      } else {
+        this.formModel.tags[name] = value
+      }
     }
   },
 
   beforeMount () {
     this.$store.dispatch('UPDATE_CURRENT_PROJECT', {})
+  },
+
+  mounted () {
+    // Get tags for the collection.
+    const endpoint = `/lc/categories/${this.currentCollection.short_name}/tags`
+    return this.$axios.$get(endpoint).then(data => {
+      this.tagOptions = data.tags
+    }).catch(err => {
+      this.$nuxt.error(err)
+    })
   }
 }
 </script>
