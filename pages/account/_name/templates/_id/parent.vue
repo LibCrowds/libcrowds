@@ -13,11 +13,6 @@
       case, the marking up project would be the parent and the transcription
       project would be the child.
     </p>
-    <p slot="guidance">
-      Child projects will also be generated automatically, on completion of
-      the parent. So, we can easily create workflows that can be used to
-      collect increasingly specific information.
-    </p>
     <hr class="my-1">
 
     <pybossa-form
