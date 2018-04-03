@@ -28,9 +28,9 @@
         <h5>Project Details</h5>
         <ul class="list-unstyled">
           <li
-            v-for="key in getProjectKeys(tmpl.item)"
+            v-for="(key, index) in getProjectKeys(tmpl.item)"
             :class="getHighlightCls(tmpl.item, key)"
-            :key="key">
+            :key="index">
             <strong>{{ key }}:</strong>
             {{ tmpl.item[key] }}
           </li>
@@ -39,20 +39,20 @@
         <h5 class="mt-3">Task Details</h5>
         <ul class="list-unstyled" v-if="tmpl.item.task">
           <li
-            v-for="key in Object.keys(tmpl.item.task)"
+            v-for="(key, index) in Object.keys(tmpl.item.task)"
             :class="getHighlightCls(tmpl.item, key, 'task')"
-            :key="key">
+            :key="index">
             <strong>{{ key }}:</strong>
             <template v-if="key === 'fields_schema'">
               <ul>
                 <li
-                  v-for="field in tmpl.item.task[key]"
-                  :key="field">
+                  v-for="(field, index) in tmpl.item.task[key]"
+                  :key="index">
                   <strong>{{ field.model }}:</strong>
                   <ul>
                     <li
-                      v-for="fieldKey in Object.keys(field)"
-                      :key="fieldKey">
+                      v-for="(fieldKey, index) in Object.keys(field)"
+                      :key="index">
                       <strong>{{ fieldKey }}:</strong>
                       {{ field[fieldKey] }}
                     </li>
@@ -79,9 +79,9 @@
         <h5 class="mt-3">Analysis Rules</h5>
         <ul class="list-unstyled" v-if="tmpl.item.rules">
           <li
-            v-for="key in Object.keys(tmpl.item.rules)"
+            v-for="(key, index) in Object.keys(tmpl.item.rules)"
             :class="getHighlightCls(tmpl.item, key, 'rules')"
-            :key="key">
+            :key="index">
             <strong>{{ key }}:</strong>
             {{ tmpl.item.rules[key] }}
           </li>
