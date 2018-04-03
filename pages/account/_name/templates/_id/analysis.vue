@@ -110,22 +110,6 @@
         </div>
       </div>
 
-      <div
-        slot="bottom"
-        class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
-            :value="form.model.target_from_select_parent"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('target_from_select_parent', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Set annotation target from parent task
-        </label>
-      </div>
-
     </pybossa-form>
   </card-base>
 </template>
