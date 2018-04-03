@@ -114,10 +114,10 @@ export default {
         this.options[name] = [value]
       }
 
-      if (Array.isArray(this.selected[name])) {
-        this.selected[name].push(value)
+      if (Array.isArray(this.selections[name])) {
+        this.selections[name] = value
       } else {
-        this.selected[name] = [value]
+        this.selections[name] = value
       }
     }
   },
