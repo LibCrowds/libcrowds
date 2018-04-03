@@ -21,6 +21,7 @@
           {{ cancelText }}
         </b-btn>
         <b-btn
+          v-if="showSubmit"
           :variant="darkMode ? 'dark': 'success'"
           :disabled="processing"
           @click="$emit('submit')">
@@ -48,6 +49,10 @@ export default {
     showCancel: {
       type: Boolean,
       default: false
+    },
+    showSubmit: {
+      type: Boolean,
+      default: true
     },
     showFooter: {
       type: Boolean,

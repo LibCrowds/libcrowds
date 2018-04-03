@@ -1,7 +1,7 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-alert show variant="info" v-if="!hasProjects">
+    <b-alert show variant="info" v-if="hasProjects">
       As projects have already been built from the volume you can only update
       the thumbnail. Otherwise, we would risk breaking functions that rely on
       consistent volume data, such as results aggregation.
@@ -13,6 +13,7 @@
           submit-text="Update Details"
           cancel-text="Back"
           show-cancel
+          :show-submit="!hasProjects"
           :form="form"
           @cancel="onCancel"
           @success="onSuccess">
@@ -24,6 +25,7 @@
           cancel-text="Back"
           form-key="import_form"
           show-cancel
+          :show-submit="!hasProjects"
           :form="importForm"
           @cancel="onCancel"
           @success="onSuccess">
