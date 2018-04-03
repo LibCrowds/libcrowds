@@ -131,7 +131,6 @@ import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
-import ProjectSortingCard from '@/components/cards/ProjectSorting'
 import CardBase from '@/components/cards/Base'
 import VolumesTable from '@/components/tables/Volumes'
 
@@ -192,7 +191,6 @@ export default {
     ToggleCompletedData,
     ProjectsTable,
     DataModal,
-    ProjectSortingCard,
     CardBase,
     VolumesTable
   },
