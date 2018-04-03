@@ -1,5 +1,12 @@
 <template>
   <card-base :title="title" :description="description">
+
+    <b-alert show variant="info" v-if="!hasProjects">
+      As projects have already been built from the volume you can only update
+      the thumbnail. Otherwise, we would risk breaking functions that rely on
+      consistent volume data, such as results aggregation.
+    </b-alert>
+
     <b-tabs card>
       <b-tab title="Details" active no-body>
         <pybossa-form
@@ -65,11 +72,14 @@ export default {
   asyncData ({ params, app, error }) {
     const endpoint = `/lc/categories/${params.short_name}/volumes` +
       `/${params.id}/update?response_format=json`
-    return app.$axios.$get(endpoint).then(data => {
+    return app.$axios.$get(endpoint).then((data) => {
       data.upload_form.btn = 'Upload'
       data.import_form.btn = 'Import'
+
       delete data.upload_form.id
+
       return {
+        hasProjects: data.has_projects,
         importers: data.all_importers,
         volume: data.volume,
         endpoint: endpoint,
@@ -116,7 +126,8 @@ export default {
                   model.short_name = newSn
                 }
               },
-              hint: 'The name of the volume'
+              hint: 'The name of the volume',
+              disabled: this.hasProjects
             },
             {
               model: 'short_name',
@@ -124,7 +135,8 @@ export default {
               type: 'input',
               inputType: 'text',
               hint: 'An identifier used, for example, in the file names of ' +
-                ' volume-level downloads'
+                ' volume-level downloads',
+              disabled: this.hasProjects
             },
             {
               type: 'select',
@@ -139,7 +151,8 @@ export default {
               selectOptions: {
                 hideNoneSelected: true
               },
-              hint: 'The importer type'
+              hint: 'The importer type',
+              disabled: this.hasProjects
             }
           ]
         }
@@ -158,7 +171,8 @@ export default {
             type: 'input',
             inputType: 'text',
             placeholder: 'https://host/prefix/identifier/manifest.json',
-            hint: 'A IIIF manifest URI'
+            hint: 'A IIIF manifest URI',
+            disabled: this.hasProjects
           }
         ],
         flickr: [
@@ -167,7 +181,8 @@ export default {
             label: 'Album ID',
             type: 'input',
             inputType: 'text',
-            hint: 'A Flickr album ID'
+            hint: 'A Flickr album ID',
+            disabled: this.hasProjects
           }
         ],
         gdocs: [
@@ -178,7 +193,8 @@ export default {
             inputType: 'text',
             placeholder: 'https://docs.google.com/spreadsheets/d/key/edit' +
               '?usp=sharing',
-            hint: 'A shareable Google Docs spreadsheet URL'
+            hint: 'A shareable Google Docs spreadsheet URL',
+            disabled: this.hasProjects
           }
         ]
         // TODO: Add S3, dropbox and maybe csv/gdocs
