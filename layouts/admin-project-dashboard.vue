@@ -54,9 +54,9 @@ export default {
     rootNavItems () {
       return [
         {
-          label: 'Core Details',
+          label: 'Tags',
           link: {
-            name: 'admin-project-short_name-details',
+            name: 'admin-project-short_name-tags',
             params: {
               short_name: this.currentProject.short_name
             }
@@ -66,15 +66,6 @@ export default {
           label: 'Thumbnail',
           link: {
             name: 'admin-project-short_name-thumbnail',
-            params: {
-              short_name: this.currentProject.short_name
-            }
-          }
-        },
-        {
-          label: 'Tags',
-          link: {
-            name: 'admin-project-short_name-tags',
             params: {
               short_name: this.currentProject.short_name
             }
@@ -103,6 +94,15 @@ export default {
 
     restrictedNavItems () {
       return [
+        {
+          label: 'Core Details',
+          link: {
+            name: 'admin-project-short_name-details',
+            params: {
+              short_name: this.currentProject.short_name
+            }
+          }
+        },
         {
           label: 'Collection',
           link: {
