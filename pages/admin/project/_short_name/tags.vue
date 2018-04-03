@@ -9,9 +9,11 @@
           class="mb-2">
           <label>{{ tag.name | capitalize }}</label>
           <multiselect
-            placeholder="Select one"
-            v-model="project.info.tags[tag]"
-            :options="options[tag.name] || []">
+            :id="tag.name"
+            v-model="selections[tag.name]"
+            :options="options[tag.name] || []"
+            :taggable="true"
+            @tag="addTag">
           </multiselect>
         </div>
       </span>
@@ -51,6 +53,7 @@ export default {
       title: 'Tags',
       description: 'Set the tags used to filter and organise projects',
       processing: false,
+      selections: {},
       options: {}
     }
   },
@@ -95,10 +98,34 @@ export default {
         this.processing = false
       }
       this.$notifications.success({ message: 'Tags updated' })
+    },
+
+    /**
+     * Add a new tag.
+     * @param {String} value
+     *   The new tag value.
+     * @param {String} name
+     *   The tag name (from the multiselect id).
+     */
+    addTag (value, name) {
+      if (Array.isArray(this.options[name])) {
+        this.options[name].push(value)
+      } else {
+        this.options[name] = [value]
+      }
+
+      if (Array.isArray(this.selected[name])) {
+        this.selected[name].push(value)
+      } else {
+        this.selected[name] = [value]
+      }
     }
   },
 
   mounted () {
+    // Populate with the project's current tags
+    this.selections = this.project.info.tags
+
     // Get all current tags for the collection.
     const endpoint = `/lc/categories/${this.currentCollection.short_name}/tags`
     return this.$axios.$get(endpoint).then(data => {
