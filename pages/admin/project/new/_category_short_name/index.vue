@@ -20,7 +20,8 @@
     <pybossa-form
       :confirmation="confirmation"
       submit-text="Create"
-      :form="form">
+      :form="form"
+      @success="onSuccess">
 
       <div slot="top" class="form-group">
         <label>Template</label>
@@ -50,25 +51,6 @@
         </div>
       </div>
 
-      <div
-        slot="bottom"
-        v-if="hasTags"
-        v-for="(tag, index) in currentCollection.info.tags"
-        :key="index"
-        class="form-group mb-2">
-        <label>{{ tag.name | capitalize }}</label>
-        <multiselect
-          :id="tag.name"
-          v-model="formModel.tags[tag.name]"
-          :options="tagOptions[tag.name] || []"
-          :taggable="true"
-          @tag="addTag">
-        </multiselect>
-        <div class="hint">
-          Add a "{{ tag.name }}" tag.
-        </div>
-      </div>
-
     </pybossa-form>
 
   </card-base>
@@ -90,9 +72,7 @@ export default {
     return {
       localConfig: localConfig,
       selectedTemplate: {},
-      selectedVolume: {},
-      tagOptions: {},
-      tags: {}
+      selectedVolume: {}
     }
   },
 
@@ -206,12 +186,10 @@ export default {
           "${parentTmpl.name}" parent of the same volume.`
       }
 
-      msg += '<br><br>Click OK to continue.'
+      msg += '<br><br>Once generated, you will be redirected to a settings ' +
+        'page where you can choose some tags for the project.' +
+        '<br><br>Click OK to continue.'
       return msg
-    },
-
-    hasTags () {
-      return this.currentCollection.info.tags.length
     }
   },
 
@@ -249,39 +227,20 @@ export default {
     },
 
     /**
-     * Add a new tag.
-     * @param {String} value
-     *   The new tag value.
-     * @param {String} name
-     *   The tag name (from the multiselect id).
+     * Handle form success.
      */
-    addTag (value, name) {
-      if (Array.isArray(this.tagOptions[name])) {
-        this.tagOptions[name].push(value)
-      } else {
-        this.tagOptions[name] = [value]
-      }
-
-      if (Array.isArray(this.formModel.tags[name])) {
-        this.formModel.tags[name] = value
-      } else {
-        this.formModel.tags[name] = value
-      }
+    onSuccess (data) {
+      this.$router.push({
+        name: 'admin-project-short_name-tags',
+        params: {
+          short_name: data.form.short_name
+        }
+      })
     }
   },
 
   beforeMount () {
     this.$store.dispatch('UPDATE_CURRENT_PROJECT', {})
-  },
-
-  mounted () {
-    // Get tags for the collection.
-    const endpoint = `/lc/categories/${this.currentCollection.short_name}/tags`
-    return this.$axios.$get(endpoint).then(data => {
-      this.tagOptions = data.tags
-    }).catch(err => {
-      this.$nuxt.error(err)
-    })
   }
 }
 </script>
