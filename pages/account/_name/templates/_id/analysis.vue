@@ -110,6 +110,34 @@
         </div>
       </div>
 
+      <div
+        slot="bottom"
+        class="form-group mt-1">
+        <div class="d-flex">
+          <no-ssr>
+            <toggle-button
+              :value="form.model.remove_fragment_selector"
+              :sync="true"
+              :labels="true"
+              @change="updateModelBoolean('remove_fragment_selector', $event)">
+            </toggle-button>
+          </no-ssr>
+          <label class="ml-1">
+            Remove fragment selector from annotation target
+          </label>
+        </div>
+        <div class="hint">
+           If set to True, any of selected fragments will be removed from the
+           final annotations, leaving just the main source. This is useful for
+           child projects where fragments that were highlighted for the task
+           are not directly related to the result produced from that task.
+           For example, if a parent task was to select all titles
+           and a child task was to transcribe a genre associated with each
+           title, then the final result should contain just the transcription
+           and not the highlighted title text.
+        </div>
+      </div>
+
     </pybossa-form>
   </card-base>
 </template>
