@@ -145,7 +145,7 @@ export default {
      */
     goToNext (url) {
       const origin = window.location.origin
-      const isInternal = url.startsWith(origin) || url.startsWith('/')
+      const isInternal = url.indexOf(origin) === 0 || url.indexOf('/') === 0
 
       if (isInternal) {
         this.$router.push({ path: url })

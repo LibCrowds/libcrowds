@@ -30,7 +30,7 @@ describe('User avatar', () => {
     const renderer = require('vue-server-renderer').createRenderer()
     const src = wrapper.find('img').element.src
     expect(user.info.hasOwnProperty('avatar_url')).toBe(false)
-    expect(src.startsWith('//www.gravatar.com')).toBe(true)
+    expect(src.indexOf('//www.gravatar.com') === 0).toBe(true)
     expect(loadAvatarSpy).toHaveBeenCalled()
     renderer.renderToString(wrapper.vm, (err, str) => {
       expect(str).toMatchSnapshot()

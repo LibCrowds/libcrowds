@@ -414,7 +414,7 @@ export default {
     parseSubfield (subfield, linkedFields, codes) {
       let res = ''
       for (let code in subfield) {
-        if (code === '6' && subfield[code].startsWith('880')) {
+        if (code === '6' && subfield[code].indexOf('880') === 0) {
           let linkIndex = parseInt(subfield[code].split('-')[1]) - 1
           res += linkedFields[linkIndex]['880']['subfields'].map((sf) => {
             return this.parseSubfield(sf)

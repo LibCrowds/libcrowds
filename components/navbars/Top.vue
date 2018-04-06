@@ -200,7 +200,7 @@ export default {
      * Handle click of the navbar brand.
      */
     onNavbarBrandClick () {
-      const micrositeShortName = this.$route.path.startsWith('/collection')
+      const micrositeShortName = this.$route.path.indexOf('/collection') === 0
         ? this.$route.path.replace(/^(\/collection\/)/, '').split('/')[0]
         : null
       let link = {

@@ -63,7 +63,7 @@ export default {
       }
 
       // Prepend the pybossa host if a standard upload
-      if (avatarUrl.startsWith('/uploads')) {
+      if (avatarUrl.indexOf('/uploads') === 0) {
         return localConfig.pybossaHost + avatarUrl
       }
 

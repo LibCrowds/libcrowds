@@ -122,7 +122,7 @@ export default {
      */
     isInternal (url) {
       const origin = window.location.origin
-      return url && (url.startsWith(origin) || url.startsWith('/'))
+      return url && (url.indexOf(origin) === 0 || url.indexOf('/') === 0)
     },
 
     /**

@@ -8,7 +8,7 @@ export const currentMicrositeNavItems = {
     },
 
     currentMicrositeNavItems () {
-      const isMicrositePath = this.$route.path.startsWith('/collection')
+      const isMicrositePath = this.$route.path.indexOf('/collection') === 0
 
       if (!this.currentCollection.id || !isMicrositePath) {
         return []

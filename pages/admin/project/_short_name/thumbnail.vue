@@ -64,7 +64,7 @@ export default {
       const thumbnailUrl = currentProject.info.thumbnail_url
       if (typeof thumbnailUrl === 'undefined' || thumbnailUrl === null) {
         return ''
-      } else if (thumbnailUrl.startsWith('/uploads')) {
+      } else if (thumbnailUrl.indexOf('/uploads') === 0) {
         return localConfig.pybossaHost + thumbnailUrl
       }
       return thumbnailUrl
