@@ -5,12 +5,14 @@
       will not apply to projects that have already been created from this
       template.
     </p>
-    <hr>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Update"
       :form="form"
       @success="onFormSuccess">
     </pybossa-form>
+
   </card-base>
 </template>
 

@@ -1,18 +1,16 @@
 <template>
   <div class="project-tags-list">
     <b-badge
-      v-for="(value, type) in tags"
-      :key="type"
-      :style="getTagStyle(type)"
-      @click.prevent="handleClick(type, value)">
-      {{ type }}: {{ value }}
+      v-for="(value, name) in tags"
+      :key="name"
+      :style="getTagStyle(name)"
+      @click.prevent="handleClick(name, value)">
+      {{ name }}: {{ value }}
     </b-badge>
   </div>
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
-
 export default {
   props: {
     tags: {
@@ -31,19 +29,19 @@ export default {
 
   methods: {
     /**
-     * Return the colour of the tag, if it still exists.
-     * @param {String} type
-     *   The tag type
+     * Return the colour of a tag.
+     * @param {String} name
+     *   The tag name.
      */
-    getTagStyle (type) {
-      let color = this.darkMode ? '#868e96' : '#909090'
-      if (
-        !this.darkMode &&
-        !isEmpty(this.collection) &&
-        this.collection.info.tags[type]
-      ) {
-        color = this.collection.info.tags[type].color
-      }
+    getTagStyle (name) {
+      const tag = this.collection.info.tags.filter(t => {
+        return t.name === name
+      })[0] || null
+
+      let color = this.darkMode || !tag || !tag.color
+        ? '#868e96'
+        : tag.color
+
       return {
         backgroundColor: color,
         cursor: this.disabled ? 'default' : 'pointer'
@@ -52,14 +50,14 @@ export default {
 
     /**
      * Handle click.
-     * @param {String} type
-     *   The tag type.
      * @param {String} name
      *   The tag name.
+     * @param {String} value
+     *   The tag value.
      */
-    handleClick (type, name) {
+    handleClick (name, value) {
       if (!this.disabled) {
-        this.$emit('tag-click', type, name)
+        this.$emit('tag-click', name, value)
       }
     }
   }

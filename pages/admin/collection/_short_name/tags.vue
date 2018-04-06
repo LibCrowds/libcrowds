@@ -18,27 +18,16 @@
         show-empty
         :dark="darkMode"
         class="border-left-0 border-right-0 border-bottom-0"
-        :items="getTableItems"
+        :items="currentCollection.info.tags"
         :fields="tableFields">
         <template slot="color" slot-scope="tag">
           <div
-            class="d-flex flex-row align-items-center justify-content-center">
-            <b-badge
-              class="mr-1"
-              :style="`background-color: ${tag.item.color}; width: 1rem;`">
-              &nbsp;
-            </b-badge>
-            {{ tag.item.color }}
+            :style="`background-color: ${tag.item.color};`"
+            class="p-1 text-white">
+            <strong>{{ tag.item.color }}</strong>
           </div>
         </template>
         <template slot="actions" slot-scope="tag">
-          <b-btn
-            variant="success"
-            size="sm"
-            @click="editedTag = tag.item"
-            v-b-modal="editTagModalId">
-            Edit
-          </b-btn>
           <b-btn
             variant="warning"
             size="sm"
@@ -51,17 +40,10 @@
 
     <add-tag-modal
       lazy
-      :collection="collection"
+      :collection="currentCollection"
       :modal-id="addTagModalId"
       @update="refresh">
     </add-tag-modal>
-
-    <edit-tag-modal
-      :collection="collection"
-      :modal-id="editTagModalId"
-      :tag="editedTag"
-      @update="refresh">
-    </edit-tag-modal>
 
   </div>
 </template>
@@ -70,7 +52,6 @@
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
 import AddTagModal from '@/components/modals/AddTag'
-import EditTagModal from '@/components/modals/EditTag'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -83,20 +64,14 @@ export default {
       title: 'Tags',
       description: 'Manage the available tags for the microsite.',
       addTagModalId: 'add-tag-modal',
-      editTagModalId: 'edit-tag-modal',
       tableFields: {
-        type: {
+        name: {
           label: 'Type',
           sortable: true
         },
-        nTags: {
-          label: 'Tags',
-          sortable: true,
-          class: 'text-center'
-        },
         color: {
           label: 'Colour',
-          class: 'text-center d-none d-sm-block'
+          class: 'text-center d-none d-sm-table-cell'
         },
         actions: {
           label: 'Actions',
@@ -109,34 +84,16 @@ export default {
 
   components: {
     AddTagModal,
-    EditTagModal,
     CardBase
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     }
   },
 
   methods: {
-    /**
-     * Return the collection's tags, formatted to be used in the table.
-     */
-    getTableItems () {
-      const items = []
-      for (let type of Object.keys(this.collection.info.tags)) {
-        const tagType = this.collection.info.tags[type]
-        items.push({
-          type: type,
-          options: tagType.options,
-          nTags: tagType.options.length,
-          color: tagType.color
-        })
-      }
-      return items
-    },
-
     /**
      * Show the remove tag alert.
      */
@@ -149,12 +106,14 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          let infoClone = Object.assign({}, this.collection.info)
-          delete infoClone.tags[tag.type]
-          return this.$axios.$put(`/api/category/${this.collection.id}`, {
+          const endpoint = `/api/category/${this.currentCollection.id}`
+          let infoClone = Object.assign({}, this.currentCollection.info)
+          infoClone.tags = infoClone.tags.filter(t => (t !== tag))
+
+          return this.$axios.$put(endpoint, {
             info: infoClone
           }).then(data => {
-            this.collection.info = infoClone
+            this.currentCollection.info = infoClone
           })
         }
       }).then(result => {

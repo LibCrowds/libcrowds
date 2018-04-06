@@ -5,7 +5,7 @@
       when each task is completed. The output of this analysis process is used
       to generate the final result for each task.
     </p>
-    <hr>
+    <hr class="my-1">
 
     <b-card-body v-if="!currentTemplate.task">
       <b-alert show variant="warning" class="mb-0">
@@ -112,18 +112,30 @@
 
       <div
         slot="bottom"
-        class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
-            :value="form.model.target_from_select_parent"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('target_from_select_parent', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Set annotation target from parent task
-        </label>
+        class="form-group mt-1">
+        <div class="d-flex">
+          <no-ssr>
+            <toggle-button
+              :value="form.model.remove_fragment_selector"
+              :sync="true"
+              :labels="true"
+              @change="updateModelBoolean('remove_fragment_selector', $event)">
+            </toggle-button>
+          </no-ssr>
+          <label class="ml-1">
+            Remove fragment selector from annotation target
+          </label>
+        </div>
+        <div class="hint">
+           If set to True, any of selected fragments will be removed from the
+           final annotations, leaving just the main source. This is useful for
+           child projects where fragments that were highlighted for the task
+           are not directly related to the result produced from that task.
+           For example, if a parent task was to select all titles
+           and a child task was to transcribe a genre associated with each
+           title, then the final result should contain just the transcription
+           and not the highlighted title text.
+        </div>
       </div>
 
     </pybossa-form>

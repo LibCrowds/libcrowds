@@ -1,10 +1,12 @@
 <template>
   <card-base :title="title" :description="description">
+
     <p slot="guidance">
       Use the form below to update the tutorial shown when the project first
       loads.
     </p>
-    <hr>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Update"
       :form="form"
@@ -19,6 +21,7 @@
         </markdown-editor>
       </div>
     </pybossa-form>
+
   </card-base>
 </template>
 

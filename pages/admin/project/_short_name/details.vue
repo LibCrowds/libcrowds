@@ -42,6 +42,8 @@ import CardBase from '@/components/cards/Base'
 export default {
   layout: 'admin-project-dashboard',
 
+  middleware: 'is-admin',
+
   mixins: [ fetchProjectByName, metaTags ],
 
   data () {

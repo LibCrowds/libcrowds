@@ -101,6 +101,16 @@ export default {
             }
           },
           {
+            label: 'Parent',
+            link: {
+              name: 'account-name-templates-id-parent',
+              params: {
+                name: this.currentUser.name,
+                id: this.currentTemplate.id
+              }
+            }
+          },
+          {
             label: 'Analysis',
             link: {
               name: 'account-name-templates-id-analysis',

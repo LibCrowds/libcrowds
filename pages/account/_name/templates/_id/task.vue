@@ -8,7 +8,8 @@
       collection, which in this case is the <strong>{{ presenter }}</strong>
       task presenter.
     </p>
-    <hr>
+    <hr class="my-1">
+
     <b-card-body v-if="!presenter">
       <b-alert show variant="warning" class="mb-0">
         This collection has an invalid task presenter and therefore the task

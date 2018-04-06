@@ -19,7 +19,7 @@
     <p slot="guidance">
       Use the form below to configure the collection microsite.
     </p>
-    <hr>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Update"
@@ -123,7 +123,7 @@ export default {
               inputType: 'text',
               required: true,
               validator: VueFormGenerator.validators.string,
-              hint: 'The name of the collection'
+              hint: 'Applies branding throughout the collection microsite.'
             },
             {
               model: 'short_name',

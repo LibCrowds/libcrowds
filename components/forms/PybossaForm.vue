@@ -4,6 +4,7 @@
     :show-footer="showFooter"
     :no-body="noBody"
     :show-cancel="showCancel"
+    :show-submit="showSubmit"
     :cancel-text="cancelText"
     :processing="processing"
     :submit-text="submitText"
@@ -79,6 +80,10 @@ export default {
     showCancel: {
       type: Boolean,
       default: false
+    },
+    showSubmit: {
+      type: Boolean,
+      default: true
     },
     showFooter: {
       type: Boolean,
