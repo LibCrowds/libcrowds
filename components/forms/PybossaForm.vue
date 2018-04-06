@@ -192,7 +192,7 @@ export default {
         }
         this.$notifications.flash(r.data)
       }).catch(err => {
-        this.$notifications.error({ message: err.message || 'Server Error' })
+        this.$nuxt.error(err)
       }).then(() => {
         this.processing = false
       })
