@@ -45,7 +45,7 @@ export default {
         return ''
       }
 
-      if (thumbnailUrl.indexOf('/uploads') == 0) {
+      if (thumbnailUrl.indexOf('/uploads') === 0) {
         return localConfig.pybossaHost + thumbnailUrl
       }
       return thumbnailUrl
