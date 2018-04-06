@@ -58,7 +58,7 @@ export default {
       } else if (this.info.media_url) {
         url = this.info.media_url
       }
-      if (url && url.startsWith('/uploads')) {
+      if (url && url.indexOf('/uploads') === 0) {
         return localConfig.pybossaHost + url
       } else if (url) {
         return url

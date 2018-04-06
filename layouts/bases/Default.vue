@@ -153,8 +153,8 @@ export default {
       const isDashboard = (
         typeof route.name === 'string' &&
         (
-          route.name.startsWith('admin-') ||
-          route.name.startsWith('account-name-templates-')
+          route.name.indexOf('admin-') === 0 ||
+          route.name.indexOf('account-name-templates-') === 0
         )
       )
       if (window.innerWidth < 576) {

@@ -171,7 +171,7 @@ export const projectMetaTags = {
     })
     const url = localConfig.libcrowdsHost + projectRoute.href
 
-    if (image && image.startsWith('/uploads')) {
+    if (image && image.indexOf('/uploads') === 0) {
       image = localConfig.pybossaHost + image
     }
 
