@@ -100,7 +100,7 @@ export default {
     removeTag (tag) {
       this.$swal({
         title: `Delete Tag`,
-        text: `Are you sure you want to delete the "${tag.type}" tag type?`,
+        text: `Are you sure you want to delete the "${tag.name}" tag type?`,
         type: 'warning',
         showCancelButton: true,
         reverseButtons: true,
