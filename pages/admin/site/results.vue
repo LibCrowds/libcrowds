@@ -102,10 +102,8 @@ export default {
             })
           })
         }
-      }).then(result => {
-        if (result) {
-          this.$notifications.success({ message: result.message })
-        }
+      }).then(data => {
+        this.$notifications.flash(data)
       })
     },
 
@@ -130,10 +128,8 @@ export default {
             })
           })
         }
-      }).then(result => {
-        if (result) {
-          this.$notifications.success({ message: result.message })
-        }
+      }).then(data => {
+        this.$notifications.flash(data)
       })
     }
   }
