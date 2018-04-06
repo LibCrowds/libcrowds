@@ -223,13 +223,19 @@ export default {
             }
           },
           {
+            label: 'Results',
+            link: {
+              name: 'admin-site-results'
+            }
+          },
+          {
             label: 'Background Tasks',
             link: {
               name: 'admin-site-jobs'
             }
           },
           {
-            label: 'Pending Templates ',
+            label: 'Pending Templates',
             link: {
               name: 'admin-site-templates'
             },
