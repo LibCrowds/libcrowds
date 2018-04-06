@@ -88,7 +88,11 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.$axios.$post(endpoint)
+          return this.$axios.$get(endpoint).then(data => {
+            return this.$axios.$post(endpoint, {
+              csrf: data.csrf
+            })
+          })
         }
       }).then(data => {
         this.$notifications.flash(data)
