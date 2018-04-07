@@ -11,7 +11,6 @@
       :fields="mergedFields"
       @sort-changed="onSortChange">
 
-
       <template slot="created" slot-scope="result">
         {{ result.item.created | moment('calendar') }}
       </template>
