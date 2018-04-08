@@ -285,7 +285,7 @@ export default {
     },
     projectTemplate: {
       type: Object,
-      required: false
+      required: true
     }
   },
 
@@ -346,14 +346,14 @@ export default {
     },
 
     database () {
-      if (this.template && this.template.task) {
-        return this.template.task.database
+      if (this.projectTemplate.task) {
+        return this.projectTemplate.task.database
       }
     },
 
     institutions () {
-      if (this.template && this.template.task) {
-        return this.template.task.institutions
+      if (this.projectTemplate.task) {
+        return this.projectTemplate.task.institutions
       }
     }
   },
