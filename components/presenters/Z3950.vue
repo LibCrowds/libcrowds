@@ -283,9 +283,9 @@ export default {
       type: Array,
       required: true
     },
-    projectTemplate: {
+    template: {
       type: Object,
-      required: false
+      required: true
     }
   },
 
@@ -346,13 +346,13 @@ export default {
     },
 
     database () {
-      if (this.template && this.template.task) {
+      if (this.template.task) {
         return this.template.task.database
       }
     },
 
     institutions () {
-      if (this.template && this.template.task) {
+      if (this.template.task) {
         return this.template.task.institutions
       }
     }
