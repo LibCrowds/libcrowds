@@ -283,7 +283,7 @@ export default {
       type: Array,
       required: true
     },
-    template: {
+    projectTemplate: {
       type: Object,
       required: true
     }
@@ -346,14 +346,14 @@ export default {
     },
 
     database () {
-      if (this.template.task) {
-        return this.template.task.database
+      if (this.projectTemplate.task) {
+        return this.projectTemplate.task.database
       }
     },
 
     institutions () {
-      if (this.template.task) {
-        return this.template.task.institutions
+      if (this.projectTemplate.task) {
+        return this.projectTemplate.task.institutions
       }
     }
   },
