@@ -119,7 +119,7 @@ export default {
         }
       },
       searching: false,
-      showAdmins: false
+      showAdmins: true
     }
   },
 
