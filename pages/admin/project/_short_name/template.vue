@@ -118,7 +118,9 @@ export default {
           this.analyseAllResults()
         }
       }).catch(err => {
-        this.$nuxt.error(err)
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 
@@ -147,6 +149,10 @@ export default {
       }).then(result => {
         if (result) {
           this.$notifications.success({ message: result.message })
+        }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
         }
       })
     }

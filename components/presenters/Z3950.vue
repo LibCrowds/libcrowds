@@ -512,6 +512,10 @@ export default {
             comments: this.$refs.comments.value
           })
         }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 

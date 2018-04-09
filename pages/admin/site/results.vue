@@ -104,6 +104,10 @@ export default {
         }
       }).then(data => {
         this.$notifications.flash(data)
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 
@@ -130,6 +134,10 @@ export default {
         }
       }).then(data => {
         this.$notifications.flash(data)
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }

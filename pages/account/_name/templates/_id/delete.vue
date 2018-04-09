@@ -103,6 +103,10 @@ export default {
             name: this.currentUser.name
           }
         })
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }

@@ -134,8 +134,10 @@ export default {
       }).then(() => {
         this.$confetti.stop()
       }).catch(err => {
-        console.debug(err)
         this.$confetti.stop()
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }
