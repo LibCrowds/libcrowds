@@ -177,6 +177,7 @@ export default {
           'X-CSRFToken': this.form.model.csrf
         }
       }).then(r => {
+        this.$emit('response', r.data)
         if (r.data.status === 'error' || r.data.status === 'danger') {
           this.alert = r.data.flash
           this.status = r.data.status
