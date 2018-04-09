@@ -146,8 +146,9 @@ export default {
     tableItems () {
       let usersCopy = JSON.parse(JSON.stringify(this.users))
 
+      // Prepend admin users
       if (this.showAdmins) {
-        usersCopy = usersCopy.concat(this.adminUsers)
+        usersCopy = this.adminUsers.concat(usersCopy.filter(u => (!u.admin)))
       }
 
       return usersCopy.map(user => {
