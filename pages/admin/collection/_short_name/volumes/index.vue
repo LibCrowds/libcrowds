@@ -111,11 +111,7 @@ export default {
             'cannot be deleted.',
           type: 'warning'
         }).catch(err => {
-          // Refactor if vue-sweetalert gets updated to swal v.7
-          if (
-            !(typeof err === 'string' ||
-            (typeof err === 'object' && err.hasOwnProperty('dismiss')))
-          ) {
+          if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
             this.$nuxt.error(err)
           }
         })
@@ -148,11 +144,7 @@ export default {
           this.volumes = this.volumes.filter(vol => (vol.id !== id))
         }
       }).catch(err => {
-        // Refactor if vue-sweetalert gets updated to swal v.7
-        if (
-          !(typeof err === 'string' ||
-          (typeof err === 'object' && err.hasOwnProperty('dismiss')))
-        ) {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
           this.$nuxt.error(err)
         }
       }).then(() => {
