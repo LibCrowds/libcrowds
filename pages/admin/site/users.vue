@@ -66,8 +66,8 @@
         <b-btn
           variant="info"
           size="sm"
-          @click="user.toggleDetails">
-          {{ user.item._showDetails ? 'Hide' : 'Show' }} Details
+          @click.stop="user.toggleDetails">
+          {{ user.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-btn>
         <b-btn
           :variant="user.item.admin ? 'warning' : 'success'"
@@ -80,6 +80,11 @@
         <b-card
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
+          <ul class="list-unstyled">
+            <li v-for="(key, index) in Object.keys(user.item)" :key="index">
+              <strong>{{ key }}: </strong>{{ user.item[key] }}
+            </li>
+          </ul>
         </b-card>
       </template>
     </b-table>
@@ -121,7 +126,10 @@ export default {
   async asyncData ({ app, error }) {
     return app.$axios.$get('/admin/users').then(data => {
       return {
-        adminUsers: data.users,
+        adminUsers: data.users.map(user => {
+          user._showDetails = false
+          return user
+        }),
         found: data.found,
         form: {
           endpoint: '/admin/users',
@@ -151,10 +159,7 @@ export default {
         usersCopy = this.adminUsers.concat(usersCopy.filter(u => (!u.admin)))
       }
 
-      return usersCopy.map(user => {
-        user._showDetails = false
-        return user
-      })
+      return usersCopy
     }
   },
 
@@ -166,7 +171,10 @@ export default {
       this.searching = false
       if (data.hasOwnProperty('form') && data.hasOwnProperty('found')) {
         this.form.model = data.form
-        this.users = data.found || []
+        this.users = data.found.map(user => {
+          user._showDetails = false
+          return user
+        })
       }
     },
 
