@@ -61,11 +61,14 @@ export default {
      * Delete the collection.
      */
     deleteCollection () {
-      const id = this.collection.id
-      if (this.collection.nProjects > 0) {
+      if (!this.canDelete) {
+        this.$notifications.error({
+          message: 'This collection contains projects and cannot be deleted'
+        })
         return
       }
-      this.deleteDomainObject('category', id, () => {
+
+      this.deleteDomainObject('category', this.collection.id, () => {
         this.$router.push({ name: 'admin-collection' })
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
       })
