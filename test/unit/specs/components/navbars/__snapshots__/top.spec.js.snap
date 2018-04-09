@@ -22,7 +22,11 @@ exports[`Top navbar renders correctly when signed in and has collection 1`] = `
           <!---->
         </svg>
         <!---->
-      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div>Notifications</div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
+      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div class="d-flex align-items-center justify-content-between"><h6 class="mb-0">
+          Notifications
+        </h6> <button type="button" class="btn btn-link btn-sm"><small>
+            Mark all as read
+          </small></button></div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
             There are no notifications yet.
           </small></div></div></div></span></div>
     <li id="user-menu" class="pr-2 pl-1 nav-item b-nav-dropdown dropdown">
@@ -70,7 +74,11 @@ exports[`Top navbar renders correctly when signed in and no collection 1`] = `
           <!---->
         </svg>
         <!---->
-      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div>Notifications</div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
+      </button> <span style="display:none;"><div id="announcements-container" class="card dropdown-menu-right"><div class="card-header"><div class="d-flex align-items-center justify-content-between"><h6 class="mb-0">
+          Notifications
+        </h6> <button type="button" class="btn btn-link btn-sm"><small>
+            Mark all as read
+          </small></button></div></div> <div id="announcements" class="custom-scrollbar"> <div class="m-1"><small>
             There are no notifications yet.
           </small></div></div></div></span></div>
     <li id="user-menu" class="pr-2 pl-1 nav-item b-nav-dropdown dropdown">

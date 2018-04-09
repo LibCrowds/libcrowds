@@ -1,5 +1,5 @@
 <template>
-  <div class="infinite-loading-table">
+  <div class="results-table">
     <b-table
       hover
       striped

@@ -1,106 +1,102 @@
 <template>
-  <div>
-    <card-base :title="title" :description="description">
-      <b-row no-gutters>
-        <b-col lg="4">
-          <pybossa-form
-            submit-text="Search"
-            header="Search"
-            :form="form"
-            @success="onSuccess">
-          </pybossa-form>
-        </b-col>
-        <b-col lg="8" class="p-2">
-          <b-table
-            hover
-            show-empty
-            :dark="darkMode"
-            class="border-left-0 border-right-0 border-bottom-0"
-            :items="found"
-            :fields="tableFields">
+  <card-base :title="title" :description="description">
+    <div slot="controls" class="d-flex align-items-center float-md-right">
+      <b-btn
+        variant="success"
+        size="sm"
+        @click="download('csv')">
+        Export All
+      </b-btn>
+    </div>
 
-            <template slot="created" slot-scope="user">
-              {{ user.item.created | moment('calendar') }}
-            </template>
+    <p slot="guidance">
+      Use the search box below to locate users by name in order to view
+      their details or assign admin rights.
+    </p>
 
-            <template slot="action" slot-scope="user">
-              <b-btn
-                variant="warning"
-                size="sm"
-                block
-                @click="toggleAdmin(user.item)">
-                {{ getButtonText(user.item) }}
-              </b-btn>
-            </template>
-
-          </b-table>
-        </b-col>
-      </b-row>
-    </card-base>
-
-    <b-row class="mt-4">
-      <b-col xl="4">
-        <b-card
-          header="Export"
-          class="text-center"
-          :bg-variant="darkMode ? 'dark' : null"
-          :text-variant="darkMode ? 'white' : null">
-          <p class="lead">
-            {{ nUsers }} users registered
-          </p>
+    <pybossa-form
+      ref="search"
+      :show-footer="false"
+      :form="form"
+      @response="onResponse">
+      <b-input-group slot="bottom">
+        <b-form-input
+          v-model="form.model.user"
+          size="sm"
+          placeholder="Search by name"
+          @keyup.enter.native="submitSearchForm">
+        </b-form-input>
+        <b-input-group-append>
           <b-btn
             variant="success"
-            class="mt-1"
-            block
-            size="sm"
-            @click="download('csv')">
-            Export as CSV
+            :disabled="searching"
+            @click="submitSearchForm">
+            Search
           </b-btn>
-          <b-btn
-            variant="success"
-            class="mt-1"
-            block
-            size="sm"
-            @click="download('json')">
-            Export as JSON
-          </b-btn>
-        </b-card>
-      </b-col>
-      <b-col xl="8" class="mt-4 mt-xl-0">
+        </b-input-group-append>
+      </b-input-group>
+    </pybossa-form>
+
+    <b-card-body class="pt-0">
+      <div class="d-flex">
+        <no-ssr>
+          <toggle-button
+            :value="showAdmins"
+            :sync="true"
+            :labels="true"
+            @change="showAdmins = !showAdmins">
+          </toggle-button>
+        </no-ssr>
+        <label class="ml-1 mb-0 toggle-label text-secondary">
+          <strong>Always show admins</strong>
+        </label>
+      </div>
+    </b-card-body>
+
+    <b-table
+      responsive
+      striped
+      hover
+      outlined
+      show-empty
+      :dark="darkMode"
+      :items="tableItems"
+      :fields="tableFields">
+      <template slot="action" slot-scope="user">
+        <b-btn
+          variant="info"
+          size="sm"
+          @click.stop="user.toggleDetails">
+          {{ user.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-btn>
+        <b-btn
+          :variant="user.item.admin ? 'warning' : 'success'"
+          size="sm"
+          @click="toggleAdmin(user.item)">
+          {{ user.item.admin ? 'Revoke admin rights' : 'Grant admin rights' }}
+        </b-btn>
+      </template>
+      <template slot="row-details" slot-scope="user">
         <b-card
-          no-body
-          header="Current Administrators"
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
-          <b-table
-            hover
-            show-empty
-            :dark="darkMode"
-            :items="adminUsers"
-            :fields="tableFields">
-
-            <template slot="action" slot-scope="user">
-              <b-btn
-                variant="warning"
-                size="sm"
-                block
-                @click="toggleAdmin(user.item)">
-                {{ getButtonText(user.item) }}
-              </b-btn>
-            </template>
-
-          </b-table>
+          <ul class="list-unstyled">
+            <li v-for="(key, index) in Object.keys(user.item)" :key="index">
+              <strong>{{ key }}: </strong>{{ user.item[key] }}
+            </li>
+          </ul>
         </b-card>
-      </b-col>
-    </b-row>
-  </div>
+      </template>
+    </b-table>
+
+  </card-base>
 </template>
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import { exportFile } from '@/mixins/exportFile'
-import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
+import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-site-dashboard',
@@ -111,49 +107,36 @@ export default {
     return {
       title: 'User Management',
       description: 'Manage the platform\'s registered users.',
+      users: [],
       tableFields: {
-        id: {
-          label: 'ID',
-          class: 'text-center'
-        },
-        name: {
-          label: 'Username'
-        },
-        email_addr: {
-          label: 'Email',
-          class: 'd-none d-xl-table-cell'
+        fullname: {
+          label: 'Name',
+          sortable: true
         },
         action: {
-          label: 'Action',
+          label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      searching: false,
+      showAdmins: true
     }
   },
 
   async asyncData ({ app, error }) {
-    return Promise.all([
-      app.$axios.$get('/admin/users'),
-      app.$axios.$get('/api/globalstats')
-    ]).then(([adminUserData, statsData]) => {
+    return app.$axios.$get('/admin/users').then(data => {
       return {
-        nUsers: statsData.n_users,
-        adminUsers: adminUserData.users,
-        found: adminUserData.found,
+        adminUsers: data.users.map(user => {
+          user._showDetails = false
+          return user
+        }),
+        found: data.found,
         form: {
           endpoint: '/admin/users',
           method: 'post',
-          model: adminUserData.form,
+          model: data.form,
           schema: {
-            fields: [
-              {
-                model: 'user',
-                label: 'Search Users',
-                type: 'input',
-                inputType: 'text',
-                placeholder: 'Search by name'
-              }
-            ]
+            fields: []
           }
         }
       }
@@ -167,14 +150,40 @@ export default {
     CardBase
   },
 
+  computed: {
+    tableItems () {
+      let usersCopy = JSON.parse(JSON.stringify(this.users))
+
+      // Prepend admin users
+      if (this.showAdmins) {
+        usersCopy = this.adminUsers.concat(usersCopy.filter(u => (!u.admin)))
+      }
+
+      return usersCopy
+    }
+  },
+
   methods: {
     /**
-     * Return the featured button text.
-     * @param {Object} user
-     *   The user.
+     * Handle form response data.
      */
-    getButtonText (user) {
-      return user.admin ? 'Revoke admin rights' : 'Grant admin rights'
+    onResponse (data) {
+      this.searching = false
+      if (data.hasOwnProperty('form') && data.hasOwnProperty('found')) {
+        this.form.model = data.form
+        this.users = data.found.map(user => {
+          user._showDetails = false
+          return user
+        })
+      }
+    },
+
+    /**
+     * Submit the search form.
+     */
+    submitSearchForm () {
+      this.searching = true
+      this.$refs.search.submit()
     },
 
     /**
@@ -190,14 +199,6 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
-    },
-
-    /**
-     * Handle form success.
-     */
-    onSuccess (data) {
-      this.form.model = data.form
-      this.found = data.found
     },
 
     /**
