@@ -133,6 +133,10 @@ export default {
           })
           this.$store.dispatch('UPDATE_CURRENT_COLLECTION', data)
         }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }

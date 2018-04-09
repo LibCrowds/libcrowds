@@ -145,12 +145,16 @@ export default {
      */
     onSuccess (data) {
       if (data.status === 'sent') {
-        this.$swal(
-          'Confirm your email',
-          'To complete your registration please click the confirmation ' +
-          'link in the email that we just sent you',
-          'success'
-        )
+        this.$swal({
+          title: 'Confirm your email',
+          text: 'To complete your registration please click the ' +
+            'confirmation link in the email that we just sent you',
+          type: 'success'
+        }).catch(err => {
+          if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+            this.$nuxt.error(err)
+          }
+        })
       }
     }
   }

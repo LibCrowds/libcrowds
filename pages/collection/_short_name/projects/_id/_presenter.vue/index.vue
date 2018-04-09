@@ -267,14 +267,18 @@ export default {
       this.$confetti.start({
         shape: this.currentCollection.info.celebrations.confetti
       })
+
       this.$swal({
         html: marked(msg)
       }).then(() => {
         this.$confetti.stop()
       }).catch(err => {
-        console.debug(err)
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
         this.$confetti.stop()
       })
+
       this.$router.push({
         name: 'collection-short_name-projects',
         params: {
@@ -319,6 +323,10 @@ export default {
             title: 'Thank you!',
             html: 'Your contribution has been saved successfully and will ' +
                   'directly help enable future research.'
+          }).catch(err => {
+            if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+              this.$nuxt.error(err)
+            }
           })
         } else {
           this.$notifications.answerSaved()

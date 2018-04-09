@@ -100,6 +100,10 @@ export default {
         if (result) {
           this.$notifications.success({ message: result.message })
         }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 

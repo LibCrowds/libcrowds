@@ -121,6 +121,10 @@ export default {
           this.$notifications.success({ message: `Tag deleted` })
           this.refresh()
         }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 

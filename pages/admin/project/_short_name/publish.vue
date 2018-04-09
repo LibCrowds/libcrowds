@@ -117,6 +117,10 @@ export default {
             }
           })
         }
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }
