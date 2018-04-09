@@ -111,6 +111,10 @@ export default {
         this.removeTemplateFromTable(template)
         this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 
@@ -143,6 +147,10 @@ export default {
         this.removeTemplateFromTable(template)
         this.$notifications.flash(data)
         this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     },
 

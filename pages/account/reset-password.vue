@@ -92,6 +92,10 @@ export default {
           has expired.</p><p>Please try submitting the password reset form
           again.</p>`,
         type: 'warning'
+      }).catch(err => {
+        if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
+          this.$nuxt.error(err)
+        }
       })
     }
   }
