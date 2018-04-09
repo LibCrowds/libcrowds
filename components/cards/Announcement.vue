@@ -25,11 +25,6 @@
             {{ announcement.created | moment('L') }}
           </span>
         </small>
-        <small
-          :v-if="announcement.info.admin"
-          class="text-primary float-right">
-          Admin
-        </small>
       </div>
 
     </div>
