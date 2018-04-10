@@ -49,7 +49,13 @@ export default {
     },
 
     userAnnouncements () {
-      return this.currentUser.info.announcements || {}
+      if (
+        typeof this.currentUser.info === 'undefined' ||
+        typeof this.currentUser.info.announcements === 'undefined'
+      ) {
+        return {}
+      }
+      return this.currentUser.info.announcements
     },
 
     enhancedAnnouncements () {
