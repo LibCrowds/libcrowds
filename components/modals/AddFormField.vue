@@ -64,7 +64,7 @@ export default {
                 ]
               },
               selectOptions: {
-                hideNoneSelected: true
+                hideNoneSelectedText: true
               },
               validator: (value) => {
                 if (!value || !value.length) {
@@ -89,7 +89,7 @@ export default {
                 return model.type !== 'input'
               },
               selectOptions: {
-                hideNoneSelected: true
+                hideNoneSelectedText: true
               },
               validator: (value, field, model) => {
                 if ((!value || !value.length) && model.type === 'input') {
