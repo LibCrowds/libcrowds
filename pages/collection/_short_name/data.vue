@@ -22,55 +22,31 @@
         </b-form-input>
       </b-form>
 
+      <!-- Custom downloads tab -->
       <b-tabs card @input="onTabsChange">
-        <b-tab title="Volumes" no-body active>
-          <b-alert
-            v-if="unknownProjects.length"
-            show
-            variant="warning"
-            class="mb-0">
-            <p class="mb-0">
-              The data below is incomplete as the collection contains projects
-              associated with a unknown volumes. This will need be fixed
-              by a {{ localConfig.brand }} administrator.
-            </p>
-            <template v-if="currentUser.admin">
-              <p class="mb-2">
-                Please correct the volumes for the following projects:
-              </p>
-              <ul>
-                <li v-for="project in unknownProjects" :key="project.id">
-                  <nuxt-link
-                    :to="{
-                      name: 'admin-project-short_name-volume',
-                      params: {
-                        short_name: project.short_name
-                      }
-                    }">
-                    {{ project.name }}
-                  </nuxt-link>
-                </li>
-              </ul>
-            </template>
-          </b-alert>
-          <volumes-table
-            show-details
-            :volumes="volumes"
-            :filter="filter"
-            :filter-by="filterBy">
-            <template slot="action" slot-scope="volume">
+        <b-tab title="Custom" no-body active>
+          <b-table
+            responsive
+            striped
+            hover
+            outlined
+            show-empty
+            :dark="darkMode"
+            :items="collection.info.export_formats"
+            :fields="customTableFields">
+            <template slot="action" slot-scope="fmt">
               <b-btn
                 variant="success"
                 size="sm"
-                block
-                v-b-modal="volumeDataModalId"
-                @click="downloadVolume = volume.item">
+                v-b-modal="customDataModalId"
+                @click="customDownload = fmt.item">
                 Download
               </b-btn>
             </template>
-          </volumes-table>
+          </b-table>
         </b-tab>
 
+        <!-- Projects downloads tab -->
         <b-tab title="Projects" no-body>
           <projects-table
             :filter="filter"
@@ -81,9 +57,8 @@
               <b-btn
                 :variant="darkMode ? 'dark' : 'success'"
                 size="sm"
-                block
                 v-b-modal="projectDataModalId"
-                @click="downloadProject = project.item">
+                @click="projectDownload = project.item">
                 Download
               </b-btn>
             </template>
@@ -91,28 +66,29 @@
         </b-tab>
 
       </b-tabs>
+
     </card-base>
 
     <data-modal
       lazy
-      v-if="downloadProject"
+      v-if="projectDownload"
       :items="projectDownloadItems"
-      :endpoint="`/project/${downloadProject.short_name}/tasks/export`"
-      :filename-prefix="downloadProject.short_name"
-      :event-label="downloadProject.name"
+      :endpoint="`/project/${projectDownload.short_name}/tasks/export`"
+      :filename-prefix="projectDownload.short_name"
+      :event-label="projectDownload.name"
       :modal-id="projectDataModalId"
-      :project="downloadProject">
+      :project="projectDownload">
     </data-modal>
 
     <data-modal
       lazy
-      v-if="downloadVolume"
-      :items="volumeDownloadItems"
-      :endpoint="downloadVolumeEndpoint"
-      :filename-prefix="downloadVolume.short_name"
-      :event-label="downloadVolume.name"
-      :modal-id="volumeDataModalId"
-      :project="downloadVolume">
+      v-if="customDownload"
+      :items="customDownloadItems"
+      :endpoint="customDownloadEndpoint"
+      :filename-prefix="customDownload.short_name"
+      :event-label="customDownload.short_name"
+      :modal-id="customDataModalId"
+      :project="customDownload">
     </data-modal>
 
   </div>
@@ -132,7 +108,6 @@ import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import CardBase from '@/components/cards/Base'
-import VolumesTable from '@/components/tables/Volumes'
 
 export default {
   layout: 'collection-tabs',
@@ -151,10 +126,10 @@ export default {
       title: 'Data',
       filter: null,
       filterBy: 'name',
-      downloadProject: null,
-      downloadVolume: null,
+      projectDownload: null,
+      customDownload: null,
       projectDataModalId: 'project-data-download-modal',
-      volumeDataModalId: 'volume-data-download-modal',
+      customDataModalId: 'custom-data-download-modal',
       projectDownloadItems: [
         { dataset: 'Tasks', type: 'task', format: 'csv' },
         { dataset: 'Tasks', type: 'task', format: 'json' },
@@ -163,26 +138,22 @@ export default {
         { dataset: 'Results', type: 'result', format: 'csv' },
         { dataset: 'Results', type: 'result', format: 'json' }
       ],
-      volumeDownloadItems: [
-        { dataset: 'Transcriptions', type: 'describing', format: 'csv' },
-        { dataset: 'Transcriptions', type: 'describing', format: 'json' },
-        { dataset: 'Comments', type: 'commenting', format: 'csv' },
-        { dataset: 'Comments', type: 'commenting', format: 'json' }
-      ]
-    }
-  },
-
-  asyncData ({ params, app, error }) {
-    const endpoint = `/lc/categories/${params.short_name}/volumes`
-    return app.$axios.$get(endpoint).then(data => {
-      return {
-        volumes: data.volumes.map(volume => {
-          volume._showDetails = false
-          return volume
-        }),
-        unknownProjects: data.unknown_projects
+      customTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        motivation: {
+          label: 'Motivation',
+          class: 'text-center',
+          sortable: true
+        },
+        action: {
+          label: 'Actions',
+          class: 'text-center'
+        }
       }
-    })
+    }
   },
 
   components: {
@@ -191,8 +162,7 @@ export default {
     ToggleCompletedData,
     ProjectsTable,
     DataModal,
-    CardBase,
-    VolumesTable
+    CardBase
   },
 
   computed: {
@@ -210,18 +180,28 @@ export default {
           projects are made available under a
           ${this.dataLicenses[this.collection.license].name} license.`
       }
-      return 'Download the project data.'
+      return 'Download all task and contribution data.'
     },
 
     currentUser () {
       return this.$store.state.currentUser
     },
 
-    downloadVolumeEndpoint () {
-      if (this.downloadVolume) {
-        return `/lc/categories/${this.collection.short_name}/volumes/` +
-          `${this.downloadVolume.id}/export`
+    customDownloadEndpoint () {
+      if (this.customDownload) {
+        return `/lc/categories/${this.collection.short_name}/exports/` +
+          `${this.customDownload.id}/export`
       }
+    },
+
+    customDownloadItems () {
+      return this.collection.info.export_formats.map(fmt => {
+        return {
+          dataset: fmt.name,
+          type: fmt.id,
+          format: 'csv'
+        }
+      })
     }
   },
 
