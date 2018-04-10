@@ -29,7 +29,7 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
+  asyncData ({ params, app, error }) {
     const endpoint = `/account/${params.name}/update?response_format=json`
     return app.$axios.$get(endpoint).then(data => {
       // See https://github.com/LibCrowds/libcrowds/issues/100

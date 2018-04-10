@@ -58,7 +58,7 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
+  asyncData ({ params, app, error }) {
     const endpoint = `/api/announcement/${params.id}`
     return app.$axios.$get(endpoint).then(data => {
       return {

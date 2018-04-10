@@ -66,7 +66,7 @@ export default {
     }
   },
 
-  async asyncData ({ query, redirect, app, error }) {
+  asyncData ({ query, redirect, app, error }) {
     return Promise.all([
       app.$axios.$get('/account/register'),
       app.$axios.$get('/account/signin')

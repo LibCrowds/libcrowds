@@ -27,7 +27,7 @@ export default {
     }
   },
 
-  async asyncData ({ query, app, error }) {
+  asyncData ({ query, app, error }) {
     const endpoint = '/account/forgot-password'
     return app.$axios.$get(endpoint).then(data => {
       return {
