@@ -47,11 +47,11 @@ export default {
     },
     backgroundImageUrl: {
       type: String,
-      required: true
+      default: ''
     },
     navbarBrand: {
       type: String,
-      required: true
+      default: ''
     }
   },
 
