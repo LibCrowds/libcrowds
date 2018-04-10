@@ -22,7 +22,10 @@ export default {
     },
 
     backgroundImageUrl () {
-      if (this.currentCollection.info.background) {
+      if (
+        typeof this.currentCollection.info !== 'undefined' &&
+        this.currentCollection.info.background
+      ) {
         return this.currentCollection.info.background
       }
       return '~/assets/img/app-background.jpg'
