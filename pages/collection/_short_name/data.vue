@@ -83,7 +83,7 @@
       lazy
       v-if="customDownload"
       :items="customDownloadItems"
-      :endpoint="customDownloadEndpoint"
+      :endpoint="`/lc/categories/${collection.short_name}/exports/download`"
       :filename-prefix="customDownload.short_name"
       :event-label="customDownload.short_name"
       :modal-id="customDataModalId"
@@ -184,13 +184,6 @@ export default {
 
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    customDownloadEndpoint () {
-      if (this.customDownload) {
-        return `/lc/categories/${this.collection.short_name}/exports/` +
-          `${this.customDownload.id}/export`
-      }
     },
 
     customDownloadItems () {
