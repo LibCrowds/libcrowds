@@ -26,6 +26,7 @@
 <script>
 import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
+import { fetchAll } from '@/utils/fetchAll'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
@@ -45,13 +46,7 @@ export default {
   asyncData ({ app, params, error, store }) {
     const tmplEndpoint = `/lc/users/${params.name}/templates`
     return Promise.all([
-      app.$axios.$get('/api/category', {
-        params: {
-          limit: 100,
-          orderby: 'created',
-          desc: 1
-        }
-      }),
+      fetchAll(app.$axios, 'category'),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
       // Set default collection

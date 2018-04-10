@@ -25,6 +25,7 @@
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
+import { fetchAll } from '@/utils/fetchAll'
 import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
@@ -53,11 +54,7 @@ export default {
   asyncData ({ params, app, error }) {
     const tmplEndpoint = '/lc/admin/templates/pending'
     return Promise.all([
-      app.$axios.$get('/api/category', {
-        params: {
-          limit: 100
-        }
-      }),
+      fetchAll(app.$axios, 'category'),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
       return {
