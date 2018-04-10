@@ -66,13 +66,14 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
+import { getShortname } from '@/mixins/getShortname'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-collection-dashboard',
 
-  mixins: [ fetchCollectionByName, metaTags ],
+  mixins: [ fetchCollectionByName, metaTags, getShortname ],
 
   data () {
     return {
@@ -120,7 +121,21 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              hint: 'A name for the export format.'
+              onChanged: (model, newVal, oldVal, field) => {
+                const newSn = this.getShortname(newVal)
+                const oldSn = this.getShortname(oldVal)
+                if (!model.short_name || model.short_name === oldSn) {
+                  model.short_name = newSn
+                }
+              },
+              hint: 'The name of the custom export.'
+            },
+            {
+              model: 'short_name',
+              label: 'Short Name',
+              type: 'input',
+              inputType: 'text',
+              hint: 'An identifier used in the filenames of downloaded files.'
             }
           ]
         }
