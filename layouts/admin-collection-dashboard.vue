@@ -70,7 +70,7 @@ export default {
             }
           },
           {
-            label: 'Exports',
+            label: 'Custom Exports',
             link: {
               name: 'admin-collection-short_name-exports',
               params: {

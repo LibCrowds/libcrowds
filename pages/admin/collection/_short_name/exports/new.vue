@@ -1,16 +1,15 @@
 <template>
   <card-base :title="title" :description="description">
-
     <p slot="guidance">
-      Use the form below to add a custom, volume-level export to the
-      collection's data page. Such exports can be used to collate
-      transcriptions for all projects associated with each volume.
+      Use the form below to add a custom export format to the collection's
+      data page. These can be used to provide all annotation data with a
+      given motivation as a single download.
     </p>
     <p slot="guidance">
-      A reference will always be included as the first column, with the header
-      entered below. This reference is how the transcriptions from the
-      different projects will be grouped. For example, for IIIF transcription
-      projects this will be the annotation target.
+      Additionally, if a root template is selected a row will be created for
+      each annotation created from projects using that template and this data
+      then appended with annotations from any child templates. This is one way
+      that we can take advantage of the links created between entities.
     </p>
     <hr class="my-1">
 
@@ -18,46 +17,48 @@
       submit-text="Add Export Format"
       :form="form"
       @success="onSuccess">
-      <div slot="bottom">
-        <div class="d-flex align-items-center justify-content-between my-1">
-          <label class="mb-0">
-            <strong>Export Fields</strong>
-          </label>
-          <b-btn
-            variant="success"
-            v-b-modal="addExportFieldModalId">
-            Add Field
-          </b-btn>
-        </div>
-        <b-table
-          responsive
-          striped
-          hover
-          outlined
-          show-empty
-          :dark="darkMode"
-          :items="form.model.fields"
-          :fields="tableFields">
-          <template slot="template_id" slot-scope="field">
-            {{ getTemplateName(field.item.template_id) }}
-          </template>
-          <template slot="actions" slot-scope="field">
-            <b-btn
-              variant="warning"
-              size="sm"
-              @click="removeFormField(field.item.model)">
-              Remove
-            </b-btn>
-          </template>
-        </b-table>
-      </div>
-    </pybossa-form>
 
-    <add-export-field-modal
-      :modal-id="addExportFieldModalId"
-      :templates="templates"
-      @submit="addExportField">
-    </add-export-field-modal>
+      <div slot="bottom" class="form-group">
+        <label>Motivation</label>
+        <multiselect
+          v-model="formModel.motivation"
+          label="name"
+          track-by="id"
+          :options="motivations">
+        </multiselect>
+        <div class="hint">
+          The annotation motivation.
+        </div>
+      </div>
+
+      <div slot="bottom" class="form-group">
+        <label>Root Template</label>
+        <multiselect
+          v-model="formModel.root_template_id"
+          label="name"
+          track-by="id"
+          :options="currentCollection.info.templates">
+        </multiselect>
+        <div class="hint">
+          The root template (leave blank to include all data).
+        </div>
+      </div>
+
+      <div slot="bottom" class="form-group">
+        <label>Include</label>
+        <multiselect
+          v-model="formModel.include"
+          label="name"
+          track-by="id"
+          :options="currentCollection.info.templates"
+          :multiple="true">
+        </multiselect>
+        <div class="hint">
+          Include additional templates not already within the chosen hierarchy.
+        </div>
+      </div>
+
+    </pybossa-form>
 
   </card-base>
 </template>
@@ -67,7 +68,6 @@ import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
-import AddExportFieldModal from '@/components/modals/AddExportField'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -78,21 +78,11 @@ export default {
     return {
       title: 'Add Export Format',
       description: 'Add an export format.',
-      addExportFieldModalId: 'add-export-field-modal',
-      tableFields: {
-        header: {
-          label: 'Header'
-        },
-        value: {
-          label: 'Value'
-        },
-        template_id: {
-          label: 'Template'
-        },
-        actions: {
-          label: 'Actions'
-        }
-      }
+      motivations: [
+        { id: 'describing', name: 'Describing' },
+        { id: 'tagging', name: 'Tagging' },
+        { id: 'commenting', name: 'Commenting' }
+      ]
     }
   },
 
@@ -100,30 +90,8 @@ export default {
     const endpoint = `/lc/categories/${params.short_name}/exports`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        templates: data.templates,
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: {
-            fields: [
-              {
-                model: 'name',
-                label: 'Name',
-                type: 'input',
-                inputType: 'text',
-                placeholder: 'A name for the export format'
-              },
-              {
-                model: 'reference_header',
-                label: 'Reference Header',
-                type: 'input',
-                inputType: 'text',
-                placeholder: 'The header for the reference'
-              }
-            ]
-          }
-        }
+        endpoint: endpoint,
+        formModel: data.form
       }
     }).catch(err => {
       error(err)
@@ -132,13 +100,31 @@ export default {
 
   components: {
     CardBase,
-    PybossaForm,
-    AddExportFieldModal
+    PybossaForm
   },
 
   computed: {
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    form () {
+      return {
+        endpoint: this.endpoint,
+        method: 'post',
+        model: this.formModel,
+        schema: {
+          fields: [
+            {
+              model: 'name',
+              label: 'Name',
+              type: 'input',
+              inputType: 'text',
+              hint: 'A name for the export format.'
+            }
+          ]
+        }
+      }
     }
   },
 
@@ -150,38 +136,9 @@ export default {
       this.$router.push({
         name: 'admin-collection-short_name-exports',
         params: {
-          short_name: this.collection.short_name
+          short_name: this.currentCollection.short_name
         }
       })
-    },
-
-    /**
-     * Add an export field.
-     * @param {Object} data
-     *  The data returned from a AddExportField modal.
-     */
-    addExportField (data) {
-      this.form.model.fields.push(data)
-    },
-
-    /**
-     * Remove form field.
-     * @param {Number} index
-     *  The index of the field to remove.
-     */
-    removeFormField (index) {
-      const clone = JSON.parse(JSON.stringify(this.form.model.fields))
-      this.form.model.fields = clone.splice(index, 1)
-    },
-
-    /**
-     * Return a template name from its ID.
-     * @param {Number} id
-     *  The template ID.
-     */
-    getTemplateName (id) {
-      const tmpl = this.templates.filter(tmpl => tmpl.id === id)
-      return tmpl.length ? tmpl[0].name : ''
     }
   }
 }

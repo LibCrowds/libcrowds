@@ -25,9 +25,6 @@
       class="border-left-0 border-right-0 border-bottom-0"
       :items="collection.info.export_formats"
       :fields="tableFields">
-      <template slot="fields" slot-scope="exportFormat">
-        {{ exportFormat.item.fields.length }}
-      </template>
       <template slot="actions" slot-scope="exportFormat">
         <b-btn
           variant="success"
@@ -64,15 +61,15 @@ export default {
 
   data () {
     return {
-      title: 'Exports',
+      title: 'Custom Exports',
       description: `Manage the collection's custom export formats.`,
       tableFields: {
         name: {
           label: 'Name',
           sortable: true
         },
-        fields: {
-          label: 'Exported Fields',
+        motivation: {
+          label: 'Motivation',
           class: 'text-center',
           sortable: true
         },
@@ -82,15 +79,6 @@ export default {
         }
       }
     }
-  },
-
-  asyncData ({ params, app, error }) {
-    const endpoint = `/lc/categories/${params.short_name}/exports`
-    return app.$axios.$get(endpoint).then(data => {
-      return {
-        volumes: data.exports
-      }
-    })
   },
 
   components: {
