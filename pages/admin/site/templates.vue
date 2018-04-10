@@ -3,8 +3,7 @@
     <templates-table
       show-details
       :fields="tableFields"
-      :templates="templates"
-      :ignore-diff="['category_name']">
+      :templates="templates">
       <template slot="action" slot-scope="tmpl">
         <b-btn
           variant="warning"
@@ -61,14 +60,6 @@ export default {
         collections: categoriesData,
         templates: tmplData.templates.map(tmpl => {
           tmpl._showDetails = false
-          try {
-            tmpl.category_name = categoriesData.filter(category => {
-              return category.id === tmpl.category_id
-            })[0].name
-          } catch (err) {
-            tmpl.category_name = null
-            console.warn('Invalid category_id')
-          }
           return tmpl
         })
       }

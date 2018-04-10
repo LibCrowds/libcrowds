@@ -140,10 +140,6 @@ export default {
     collectionId: {
       type: Number,
       default: null
-    },
-    ignoreDiff: {
-      type: Array,
-      default: () => ([])
     }
   },
 
