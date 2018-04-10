@@ -49,7 +49,13 @@ export default {
     },
 
     userAnnouncements () {
-      return this.currentUser.info.announcements || {}
+      if (
+        typeof this.currentUser.info === 'undefined' ||
+        typeof this.currentUser.info.announcements === 'undefined'
+      ) {
+        return {}
+      }
+      return this.currentUser.info.announcements
     },
 
     enhancedAnnouncements () {
@@ -62,9 +68,6 @@ export default {
           ann._read = readIds.indexOf(ann.id) > -1
         }
         return ann
-      }).filter(ann => {
-        // Only show admin announcements to admin users
-        return !ann.info.admin || this.currentUser.admin
       })
     }
   }

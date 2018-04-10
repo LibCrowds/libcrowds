@@ -70,10 +70,10 @@ export default {
     }
   },
 
-  async asyncData ({ params, app, error }) {
+  asyncData ({ params, app, error }) {
     return app.$axios.$get(`/account/${params.name}`).then((data) => {
       return {
-        user: data.user,
+        user: data.user || {},
         projects: data.projects || data.projects_contrib
       }
     }).catch(err => {

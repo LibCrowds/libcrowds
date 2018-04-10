@@ -3,8 +3,7 @@
     <templates-table
       show-details
       :fields="tableFields"
-      :templates="templates"
-      :ignore-diff="['category_name']">
+      :templates="templates">
       <template slot="action" slot-scope="tmpl">
         <b-btn
           variant="warning"
@@ -25,6 +24,7 @@
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
+import { fetchAll } from '@/utils/fetchAll'
 import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
@@ -53,25 +53,13 @@ export default {
   asyncData ({ params, app, error }) {
     const tmplEndpoint = '/lc/admin/templates/pending'
     return Promise.all([
-      app.$axios.$get('/api/category', {
-        params: {
-          limit: 100
-        }
-      }),
+      fetchAll(app.$axios, 'category'),
       app.$axios.$get(tmplEndpoint)
     ]).then(([categoriesData, tmplData]) => {
       return {
         collections: categoriesData,
         templates: tmplData.templates.map(tmpl => {
           tmpl._showDetails = false
-          try {
-            tmpl.category_name = categoriesData.filter(category => {
-              return category.id === tmpl.category_id
-            })[0].name
-          } catch (err) {
-            tmpl.category_name = null
-            console.warn('Invalid category_id')
-          }
           return tmpl
         })
       }

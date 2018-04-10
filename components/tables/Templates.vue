@@ -140,10 +140,6 @@ export default {
     collectionId: {
       type: Number,
       default: null
-    },
-    ignoreDiff: {
-      type: Array,
-      default: () => ([])
     }
   },
 
@@ -210,8 +206,7 @@ export default {
     getHighlightCls (tmpl, key, baseKey = null) {
       let changed = false
       if (
-        typeof tmpl._original !== 'undefined' &&
-        this.ignoreDiff.indexOf(key) < 0
+        typeof tmpl._original !== 'undefined'
       ) {
         changed = baseKey
           ? !isEqual(tmpl[baseKey][key], tmpl._original[baseKey][key])

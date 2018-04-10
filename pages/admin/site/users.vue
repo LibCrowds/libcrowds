@@ -123,7 +123,7 @@ export default {
     }
   },
 
-  async asyncData ({ app, error }) {
+  asyncData ({ app, error }) {
     return app.$axios.$get('/admin/users').then(data => {
       return {
         adminUsers: data.users.map(user => {

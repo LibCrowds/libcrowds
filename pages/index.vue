@@ -161,7 +161,7 @@ export default {
     }
   },
 
-  async asyncData ({ app, error }) {
+  asyncData ({ app, error }) {
     return Promise.all([
       app.$axios.$get('/stats'),
       app.$axios.$get('/leaderboard')

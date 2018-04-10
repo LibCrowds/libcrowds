@@ -25,7 +25,7 @@ export default {
     }
   },
 
-  async asyncData ({ app, error }) {
+  asyncData ({ app, error }) {
     return app.$axios.$get(`/admin/categories`).then(data => {
       // See https://github.com/LibCrowds/libcrowds/issues/100
       delete data.form.id

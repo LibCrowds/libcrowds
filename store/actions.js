@@ -1,5 +1,6 @@
 import isEmpty from 'lodash/isEmpty'
 import { setCollectionDefaults } from '@/utils/setCollectionDefaults'
+import { fetchAll } from '@/utils/fetchAll'
 
 export default {
   UPDATE_CURRENT_USER: ({ dispatch, commit }, axios, ga) => {
@@ -39,13 +40,10 @@ export default {
   },
 
   UPDATE_PUBLISHED_COLLECTIONS: ({ commit, state }, axios) => {
-    return axios.$get('/api/category', {
-      params: {
-        limit: 100,
-        info: 'published::true',
-        orderby: 'created',
-        desc: true
-      }
+    return fetchAll(axios, 'category', {
+      info: 'published::true',
+      orderby: 'created',
+      desc: true
     }).then(data => {
       commit('SET_ITEM', {
         key: 'publishedCollections', value: data

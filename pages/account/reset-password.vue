@@ -27,7 +27,7 @@ export default {
     }
   },
 
-  async asyncData ({ query, app, error }) {
+  asyncData ({ query, app, error }) {
     const endpoint = '/account/reset-password'
     const params = {
       key: query.key
