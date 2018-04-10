@@ -249,7 +249,7 @@ export default {
         let value = modelCopy[field.model]
         if (Array.isArray(value)) {
           modelCopy[field.model] = value.map(item => (item.id))
-        } else {
+        } else if (value) {
           modelCopy[field.model] = value.id
         }
       }
