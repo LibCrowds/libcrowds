@@ -29,7 +29,6 @@
             responsive
             striped
             hover
-            outlined
             show-empty
             :dark="darkMode"
             :items="collection.info.export_formats"
