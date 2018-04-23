@@ -22,23 +22,23 @@
         </b-form-input>
       </b-form>
 
-      <!-- Custom downloads tab -->
+      <!-- Collection downloads tab -->
       <b-tabs card @input="onTabsChange">
-        <b-tab title="Custom" no-body active>
+        <b-tab title="Collection" no-body active>
           <b-table
             responsive
             striped
             hover
             show-empty
             :dark="darkMode"
-            :items="collection.info.export_formats"
-            :fields="customTableFields">
+            :items="collectionTableItems"
+            :fields="collectionTableFields">
             <template slot="action" slot-scope="fmt">
               <b-btn
                 variant="success"
                 size="sm"
-                v-b-modal="customDataModalId"
-                @click="customDownload = fmt.item">
+                v-b-modal="collectionDataModalId"
+                @click="collectionDownload = fmt.item">
                 Download
               </b-btn>
             </template>
@@ -81,13 +81,13 @@
 
     <data-modal
       lazy
-      v-if="customDownload"
-      :items="customDownloadItems"
-      :endpoint="`/lc/categories/${collection.short_name}/exports/download`"
-      :filename-prefix="customDownload.short_name"
-      :event-label="customDownload.short_name"
-      :modal-id="customDataModalId"
-      :project="customDownload">
+      v-if="collectionDownload"
+      :items="collectionDownloadItems"
+      :endpoint="`/lc/categories/${collection.short_name}/export`"
+      :filename-prefix="collectionDownload.short_name"
+      :event-label="collectionDownload.short_name"
+      :modal-id="collectionDataModalId"
+      :project="collectionDownload">
     </data-modal>
 
   </div>
@@ -126,9 +126,9 @@ export default {
       filter: null,
       filterBy: 'name',
       projectDownload: null,
-      customDownload: null,
+      collectionDownload: null,
       projectDataModalId: 'project-data-download-modal',
-      customDataModalId: 'custom-data-download-modal',
+      collectionDataModalId: 'collection-data-download-modal',
       projectDownloadItems: [
         { dataset: 'Tasks', type: 'task', format: 'csv' },
         { dataset: 'Tasks', type: 'task', format: 'json' },
@@ -137,21 +137,21 @@ export default {
         { dataset: 'Results', type: 'result', format: 'csv' },
         { dataset: 'Results', type: 'result', format: 'json' }
       ],
-      customTableFields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
+      collectionTableFields: {
         motivation: {
           label: 'Motivation',
-          class: 'text-center',
           sortable: true
         },
         action: {
           label: 'Actions',
           class: 'text-center'
         }
-      }
+      },
+      collectionTableItems: [
+        { motivation: 'Describing' },
+        { motivation: 'Tagging' },
+        { motivation: 'Commenting' }
+      ]
     }
   },
 
@@ -186,14 +186,19 @@ export default {
       return this.$store.state.currentUser
     },
 
-    customDownloadItems () {
-      return this.collection.info.export_formats.map(fmt => {
-        return {
-          dataset: fmt.name,
-          type: fmt.id,
+    collectionDownloadItems () {
+      return [
+        {
+          dataset: 'Annotations',
+          type: this.collectionDownload.motivation,
           format: 'csv'
+        },
+        {
+          dataset: 'Annotations',
+          type: this.collectionDownload.motivation,
+          format: 'json'
         }
-      })
+      ]
     }
   },
 

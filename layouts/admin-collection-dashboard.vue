@@ -70,15 +70,6 @@ export default {
             }
           },
           {
-            label: 'Custom Exports',
-            link: {
-              name: 'admin-collection-short_name-exports',
-              params: {
-                short_name: this.currentCollection.short_name
-              }
-            }
-          },
-          {
             label: 'Featured Projects',
             link: {
               name: 'admin-collection-short_name-featured',
