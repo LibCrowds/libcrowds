@@ -31,14 +31,14 @@
             hover
             show-empty
             :dark="darkMode"
-            :items="collectionTableItems"
+            :items="motivations"
             :fields="collectionTableFields">
-            <template slot="action" slot-scope="fmt">
+            <template slot="action" slot-scope="motivation">
               <b-btn
                 variant="success"
                 size="sm"
                 v-b-modal="collectionDataModalId"
-                @click="collectionDownload = fmt.item">
+                @click="collectionDownload = motivation.item">
                 Download
               </b-btn>
             </template>
@@ -75,8 +75,7 @@
       :endpoint="`/project/${projectDownload.short_name}/tasks/export`"
       :filename-prefix="projectDownload.short_name"
       :event-label="projectDownload.name"
-      :modal-id="projectDataModalId"
-      :project="projectDownload">
+      :modal-id="projectDataModalId">
     </data-modal>
 
     <data-modal
@@ -84,10 +83,9 @@
       v-if="collectionDownload"
       :items="collectionDownloadItems"
       :endpoint="`/lc/categories/${collection.short_name}/export`"
-      :filename-prefix="collectionDownload.short_name"
-      :event-label="collectionDownload.short_name"
-      :modal-id="collectionDataModalId"
-      :project="collectionDownload">
+      :filename-prefix="collectionDownload.type"
+      :event-label="collectionDownload.type"
+      :modal-id="collectionDataModalId">
     </data-modal>
 
   </div>
@@ -138,7 +136,7 @@ export default {
         { dataset: 'Results', type: 'result', format: 'json' }
       ],
       collectionTableFields: {
-        motivation: {
+        name: {
           label: 'Motivation',
           sortable: true
         },
@@ -147,10 +145,10 @@ export default {
           class: 'text-center'
         }
       },
-      collectionTableItems: [
-        { motivation: 'Describing' },
-        { motivation: 'Tagging' },
-        { motivation: 'Commenting' }
+      motivations: [
+        { name: 'Describing', type: 'describing' },
+        { name: 'Tagging', type: 'tagging' },
+        { name: 'Commenting', type: 'commenting' }
       ]
     }
   },
@@ -190,12 +188,12 @@ export default {
       return [
         {
           dataset: 'Annotations',
-          type: this.collectionDownload.motivation,
+          type: this.collectionDownload.type,
           format: 'csv'
         },
         {
           dataset: 'Annotations',
-          type: this.collectionDownload.motivation,
+          type: this.collectionDownload.type,
           format: 'json'
         }
       ]
