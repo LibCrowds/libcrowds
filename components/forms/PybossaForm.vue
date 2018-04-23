@@ -168,10 +168,11 @@ export default {
     process () {
       this.processing = true
       this.alert = ''
+
       return this.$axios({
         method: this.form.method,
         url: this.form.endpoint,
-        data: this.form.model,
+        data: this.getModel(),
         params: this.form.params || {},
         headers: {
           'X-CSRFToken': this.form.model.csrf
@@ -233,6 +234,26 @@ export default {
           this.$nuxt.error(err)
         }
       })
+    },
+
+    /**
+     * Return the form model after converting any multiselect fields.
+     */
+    getModel () {
+      const modelCopy = JSON.parse(JSON.stringify(this.form.model))
+      const multiselectFields = this.form.schema.fields.filter(field => {
+        return field.type === 'vueMultiSelect'
+      })
+
+      for (let field of multiselectFields) {
+        let value = modelCopy[field.model]
+        if (Array.isArray(value)) {
+          modelCopy[field.model] = value.map(item => (item.id))
+        } else if (value) {
+          modelCopy[field.model] = value.id
+        }
+      }
+      return modelCopy
     },
 
     /**
