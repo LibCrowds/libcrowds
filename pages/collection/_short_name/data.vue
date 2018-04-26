@@ -22,9 +22,9 @@
         </b-form-input>
       </b-form>
 
-      <!-- Collection downloads tab -->
+      <!-- Annotations downloads tab -->
       <b-tabs card @input="onTabsChange">
-        <b-tab title="Collection" no-body active>
+        <b-tab title="Annotations" no-body active>
           <b-table
             responsive
             striped
