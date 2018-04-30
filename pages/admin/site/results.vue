@@ -11,21 +11,21 @@
       show-empty
       responsive
       :dark="darkMode"
-      :items="unanalysedResultsByCategory"
+      :items="unanalysedResultsSummary"
       :fields="tableFields">
-      <template slot="action" slot-scope="category">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
           class="my-1"
-          @click="analyseEmpty(category.item.id)">
+          @click="analyseEmpty(row.item.category_id)">
           Analyse Empty
         </b-btn>
         <b-btn
           variant="success"
           size="sm"
           class="my-1"
-          @click="analyseAll(category.item.id)">
+          @click="analyseAll(row.item.category_id)">
           Analyse All
         </b-btn>
       </template>
@@ -48,7 +48,7 @@ export default {
       title: 'Results',
       description: 'Trigger results analysis for categories.',
       tableFields: {
-        name: {
+        category_name: {
           label: 'Name'
         },
         n_unanalysed: {
@@ -66,7 +66,7 @@ export default {
   asyncData ({ app, error }) {
     return app.$axios.$get('/lc/admin/results/unanalysed').then(data => {
       return {
-        unanalysedResultsByCategory: data.results
+        unanalysedResultsSummary: data.summary
       }
     }).catch(err => {
       error(err)
@@ -80,6 +80,8 @@ export default {
   methods: {
     /**
      * Analyse all results.
+     * @param {Number} id
+     *   The category ID.
      */
     analyseAll (id) {
       this.$swal({
@@ -113,6 +115,8 @@ export default {
 
     /**
      * Analyse empty results.
+     * @param {Number} id
+     *   The category ID.
      */
     analyseEmpty (id) {
       this.$swal({
