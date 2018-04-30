@@ -11,7 +11,7 @@
       show-empty
       responsive
       :dark="darkMode"
-      :items="unanalysedCategories"
+      :items="unanalysedResultsByCategory"
       :fields="tableFields">
       <template slot="action" slot-scope="category">
         <b-btn
@@ -64,9 +64,9 @@ export default {
   },
 
   asyncData ({ app, error }) {
-    return app.$axios.$get('/lc/admin/results').then(data => {
+    return app.$axios.$get('/lc/admin/results/unanalysed').then(data => {
       return {
-        unanalysedCategories: data.unanalysed_categories
+        unanalysedResultsByCategory: data.results
       }
     }).catch(err => {
       error(err)
