@@ -106,7 +106,7 @@ export default {
                 return { id: importer, name: importer }
               }),
               selectOptions: {
-                hideNoneSelected: true
+                hideNoneSelectedText: true
               },
               hint: 'The importer type'
             }
