@@ -4,6 +4,7 @@ language: node_js
 node_js:
 - '9'
 - '8'
+- '10'
 before_install:
 # Remove the line below once node 9 moves to LTS (and npm 5 is standard)
 - npm install -g npm@5
