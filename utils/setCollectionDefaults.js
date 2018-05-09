@@ -52,7 +52,8 @@ export const setCollectionDefaults = function (collection) {
     },
     volumes: [],
     templates: [],
-    export_formats: []
+    export_formats: [],
+    tags: []
   }
   collection.info = merge(defaults, collection.info)
 
