@@ -11,6 +11,7 @@
       @help="$refs.help.show()"
       @info="$refs.info.show()"
       @share="$refs.share.show()"
+      @tags="$refs.tags.show()"
       @submit="onSubmit">
     </component>
 
@@ -113,6 +114,47 @@
       </b-container>
     </b-modal>
 
+    <!-- Tags modal -->
+    <b-modal
+      show
+      lazy
+      ref="tags"
+      title="Tags"
+      size="lg"
+      ok-only
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      <b-container class="py-2 px-3">
+        <p>
+          Add tags to the image to generate shareable image albums.
+        </p>
+        <multiselect
+          v-model="selectedTags"
+          id="ajax"
+          label="name"
+          track-by="code"
+          placeholder="Type to search"
+          open-direction="bottom"
+          :options="foundTags"
+          :multiple="true"
+          :searchable="true"
+          :loading="tagSearchLoading"
+          :internal-search="false"
+          :clear-on-select="false"
+          :close-on-select="false"
+          :options-limit="300"
+          :max-height="600"
+          :show-no-results="false"
+          :hide-selected="true"
+          @search-change="asyncFind">
+        </multiselect>
+      </b-container>
+    </b-modal>
+
   </div>
 </template>
 
@@ -146,7 +188,10 @@ export default {
     return {
       tasks: [],
       taskInfo: '',
-      shareModalId: 'presenter-share-modal'
+      shareModalId: 'presenter-share-modal',
+      tagSearchLoading: false,
+      foundTags: [],
+      selectedTags: []
     }
   },
 
@@ -381,7 +426,20 @@ export default {
           }
         })
       }
-    }
+    },
+
+    /**
+     * Tag limit text.
+     * @param {Number} count
+     *   The number of current tags.
+     */
+    asyncFindTags (query) {
+      this.tagSearchLoading = true
+      this.$axios.$get('tags').then(response => {
+        this.foundTags = response
+        this.tagSearchLoading = false
+      })
+    },
   },
 
   mounted () {

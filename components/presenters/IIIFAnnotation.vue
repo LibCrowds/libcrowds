@@ -93,7 +93,8 @@ export default {
     toolbarButtons () {
       return {
         browse: false,
-        'share-alt': 'Share'
+        'share-alt': 'Share',
+        'tags': 'Tags'
       }
     },
 
@@ -128,6 +129,8 @@ export default {
         this.$emit('help')
       } else if (key === 'info') {
         this.$emit('info')
+      } else if (key === 'tags') {
+        this.$emit('tags')
       }
     },
 

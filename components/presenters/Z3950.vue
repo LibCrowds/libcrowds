@@ -17,6 +17,12 @@
             @click="$emit('share')">
             <icon name="share-alt"></icon>
           </b-btn>
+          <b-btn
+            class="d-flex"
+            variant="outline-primary"
+            @click="$emit('tag')">
+            <icon name="Tags"></icon>
+          </b-btn>
         </b-btn-group>
       </b-col>
     </b-row>
