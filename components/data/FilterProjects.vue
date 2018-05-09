@@ -73,7 +73,8 @@ export default {
 
   mounted () {
     // Get all current tags for the collection.
-    const endpoint = `/lc/categories/${this.collection.short_name}/tags`
+    const catShortName = this.collection.short_name
+    const endpoint = `/lc/categories/${catShortName}/project-tags`
     return this.$axios.$get(endpoint).then(data => {
       this.options = data.tags
     }).catch(err => {
