@@ -158,6 +158,7 @@
           :custom-label="getTagLabel"
           :taggable="true"
           @tag="addTag"
+          @select="selectTag"
           @search-change="asyncFindTags">
         </multiselect>
       </b-container>
@@ -482,6 +483,35 @@ export default {
 
       this.$axios.$post(endpoint, {
         value: value,
+        target: target,
+        type: type
+      }).then(data => {
+        this.$notifications.flash(data)
+        if (data.tag) {
+          this.selectedTags.push(data.tag)
+        }
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Select a tag.
+     * @param {Object} tag
+     *   The tag.
+     */
+    selectTag (value) {
+      const catShortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${catShortName}/tags/add`
+      const type = this.task.info.hasOwnProperty('tileSource')
+        ? 'iiif'
+        : 'image'
+      const target = this.task.info.hasOwnProperty('tileSource')
+        ? this.task.info.tileSource
+        : this.task.info.url
+
+      this.$axios.$post(endpoint, {
+        value: tag['body']['value'],
         target: target,
         type: type
       }).then(data => {
