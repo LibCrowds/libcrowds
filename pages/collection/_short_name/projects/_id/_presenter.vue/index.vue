@@ -500,7 +500,7 @@ export default {
      * @param {Object} tag
      *   The tag.
      */
-    selectTag (value) {
+    selectTag (tag) {
       const catShortName = this.currentCollection.short_name
       const endpoint = `/lc/categories/${catShortName}/tags/add`
       const type = this.task.info.hasOwnProperty('tileSource')
