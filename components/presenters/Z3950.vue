@@ -21,7 +21,7 @@
             class="d-flex"
             variant="outline-primary"
             @click="$emit('tag')">
-            <icon name="Tags"></icon>
+            <icon name="tags"></icon>
           </b-btn>
         </b-btn-group>
       </b-col>
@@ -203,6 +203,7 @@
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/info-circle'
 import 'vue-awesome/icons/share-alt'
+import 'vue-awesome/icons/tags'
 import marked from 'marked'
 import capitalize from 'capitalize'
 import isEmpty from 'lodash/isEmpty'
