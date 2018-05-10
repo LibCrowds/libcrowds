@@ -133,7 +133,8 @@
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-text-variant="darkPresenterModals ? 'white' : null"
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
-      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      :footer-text-variant="darkPresenterModals ? 'white' : null"
+      body-class="overflow-visible">
       <b-container class="py-2 px-3">
         <p>
           Begin typing in the box below to search for existing tags or to add
