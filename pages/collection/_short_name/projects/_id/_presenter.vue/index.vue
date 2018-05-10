@@ -130,13 +130,17 @@
       :footer-text-variant="darkPresenterModals ? 'white' : null">
       <b-container class="py-2 px-3">
         <p>
-          Add tags to the image to generate shareable image albums.
+          Begin typing in the box below to search for existing tags or to add
+          your own.
+        </p>
+        <p>
+          The tags will be used to generate shareable albums.
         </p>
         <multiselect
           v-model="selectedTags"
           id="ajax"
           label="name"
-          track-by="code"
+          track-by="id"
           placeholder="Type to search"
           open-direction="bottom"
           :options="foundTags"
@@ -146,11 +150,14 @@
           :internal-search="false"
           :clear-on-select="false"
           :close-on-select="false"
-          :options-limit="300"
+          :options-limit="100"
           :max-height="600"
           :show-no-results="false"
           :hide-selected="true"
-          @search-change="asyncFind">
+          :custom-label="getTagLabel"
+          :taggable="true"
+          @tag="addTag"
+          @search-change="asyncFindTags">
         </multiselect>
       </b-container>
     </b-modal>
@@ -429,16 +436,40 @@ export default {
     },
 
     /**
-     * Tag limit text.
-     * @param {Number} count
-     *   The number of current tags.
+     * Search the category for current tags.
+     * @param {String} query
+     *   The query string.
      */
     asyncFindTags (query) {
       this.tagSearchLoading = true
-      this.$axios.$get('tags').then(response => {
-        this.foundTags = response
+      const catShortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${catShortName}/tags`
+      this.$axios.$get(endpoint, {
+        params: {
+          query: query
+        }
+      }).then(data => {
+        this.foundTags = data.tags
         this.tagSearchLoading = false
       })
+    },
+
+    /**
+     * Get the label to display for a tag.
+     * @param {Object} tag
+     *   The tag.
+     */
+    getTagLabel (tag) {
+      return tag['body']['value']
+    },
+
+    /**
+     * Add a new tag.
+     * @param {String} value
+     *   The tag value.
+     */
+    addTag (value) {
+      // Call add tag function based on current task value
     }
   },
 
