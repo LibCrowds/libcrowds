@@ -473,7 +473,27 @@ export default {
      *   The tag value.
      */
     addTag (value) {
-      // Call add tag function based on current task value
+      const catShortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${catShortName}/tags/add`
+      const type = this.task.info.hasOwnProperty('tileSource')
+        ? 'iiif'
+        : 'image'
+      const target = this.task.info.hasOwnProperty('tileSource')
+        ? this.task.info.tileSource
+        : this.task.info.url
+
+      this.$axios.$post(endpoint, {
+        value: value,
+        target: target,
+        type: type
+      }).then(data => {
+        this.$notifications.flash(data)
+        if (data.tag) {
+          this.selectedTags.push(data.tag)
+        }
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
     }
   },
 
@@ -485,16 +505,31 @@ export default {
 
   watch: {
     task (val) {
+      // Load manifest
       if (!val.length || !val.info.hasOwnProperty('manifest')) {
         this.manifest = null
+      } else {
+        this.$axios.$get(val.info.manifest, {
+          headers: {
+            'Content-type': 'text/plain' // to avoid CORS preflight
+          }
+        }).then(data => {
+          this.manifest = data
+        })
       }
 
-      this.$axios.$get(val.info.manifest, {
-        headers: {
-          'Content-type': 'text/plain' // to avoid CORS preflight
+      // Get current tags for the item
+      const catShortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${catShortName}/tags`
+      const target = val.info.hasOwnProperty('tileSource')
+        ? val.info.tileSource
+        : val.info.url
+      this.$axios.$get(endpoint, {
+        params: {
+          target: target
         }
       }).then(data => {
-        this.manifest = data
+        this.selectedTags = data.tags
       })
     }
   }
