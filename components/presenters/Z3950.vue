@@ -20,7 +20,7 @@
           <b-btn
             class="d-flex"
             variant="outline-primary"
-            @click="$emit('tag')">
+            @click="$emit('tags')">
             <icon name="tags"></icon>
           </b-btn>
         </b-btn-group>
