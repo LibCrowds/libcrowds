@@ -516,9 +516,6 @@ export default {
         type: type
       }).then(data => {
         this.$notifications.flash(data)
-        if (data.tag) {
-          this.selectedTags.push(data.tag)
-        }
       }).catch(err => {
         this.$nuxt.error(err)
       })
