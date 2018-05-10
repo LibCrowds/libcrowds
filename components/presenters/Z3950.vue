@@ -35,8 +35,8 @@
           no-body
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null"
-          v-if="currentTask" >
-          <img :src="currentTask.info.url" class="img-fluid">
+          v-if="task" >
+          <img :src="task.info.url" class="img-fluid">
         </b-card>
 
       </b-col>
@@ -285,8 +285,8 @@ export default {
       type: Object,
       required: true
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     projectTemplate: {
@@ -302,10 +302,6 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    currentTask () {
-      return this.tasks[0]
     },
 
     buttons () {
@@ -548,7 +544,7 @@ export default {
      *   The answer.
      */
     submit (answer) {
-      this.$emit('submit', this.project.id, this.currentTask.id, answer)
+      this.$emit('submit', this.project.id, this.task.id, answer)
       this.reset()
     },
 

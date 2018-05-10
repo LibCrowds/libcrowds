@@ -3,11 +3,12 @@
 
     <!-- Task presenter -->
     <component
+      v-if="task"
       :is="presenter"
       :project="currentProject"
       :project-template="currentTemplate"
       :collection="currentCollection"
-      :tasks="tasks"
+      :task="task"
       @help="$refs.help.show()"
       @info="$refs.info.show()"
       @share="$refs.share.show()"
@@ -19,7 +20,7 @@
     <b-modal
       lazy
       ref="share"
-      v-if="tasks.length"
+      v-if="task"
       title="Share"
       size="lg"
       ok-only
@@ -35,16 +36,16 @@
           <b-form-input
             id="share-input"
             readonly
-            :value="tasks[0].info.link">
+            :value="task.info.link">
           </b-form-input>
           <clipboard-button
             :container-id="shareModalId"
-            :content="tasks[0].info.link">
+            :content="task.info.link">
           </clipboard-button>
         </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
-            <span v-if="tasks[0].info.link">
+            <span v-if="task.info.link">
               Or
             </span>
             share this project via
@@ -92,10 +93,10 @@
       :body-text-variant="darkPresenterModals ? 'white' : null"
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null">
-      <b-container class="py-2 px-3">
-        <ul v-if="taskInfo.metadata" class="list-unstyled">
+      <b-container class="py-2 px-3" v-if="manifest">
+        <ul v-if="manifest.metadata" class="list-unstyled">
           <li
-            v-for="item in taskInfo.metadata"
+            v-for="item in manifest.metadata"
             :key="item.label"
             class="mb-1">
             <strong>{{ item.label }}: </strong>
@@ -103,14 +104,19 @@
           </li>
         </ul>
         <div class="text-center">
-          <img v-if="taskInfo.logo" :src="taskInfo.logo" class="my-2">
-          <p v-if="taskInfo.attribution" v-html="taskInfo.attribution"></p>
+          <img v-if="manifest.logo" :src="manifest.logo" class="my-2">
+          <p v-if="manifest.attribution" v-html="manifest.attribution"></p>
           <a
-            v-if="taskInfo.license"
-            :href="taskInfo.license"
-            v-html="taskInfo.license">
+            v-if="manifest.license"
+            :href="manifest.license"
+            v-html="manifest.license">
           </a>
         </div>
+      </b-container>
+      <b-container class="py-2 px-3" v-else>
+        <p class="text-center">
+          No additional information is available for this task.
+        </p>
       </b-container>
     </b-modal>
 
@@ -131,10 +137,7 @@
       <b-container class="py-2 px-3">
         <p>
           Begin typing in the box below to search for existing tags or to add
-          your own.
-        </p>
-        <p>
-          The tags will be used to generate shareable albums.
+          your own. The tags will be used to generate shareable albums.
         </p>
         <multiselect
           v-model="selectedTags"
@@ -193,8 +196,8 @@ export default {
 
   data () {
     return {
-      tasks: [],
-      taskInfo: '',
+      task: null,
+      manifest: null,
       shareModalId: 'presenter-share-modal',
       tagSearchLoading: false,
       foundTags: [],
@@ -300,9 +303,10 @@ export default {
       const url = `/api/project/${this.currentProject.id}/newtask`
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
+          this.task = null
           this.handleCompletion()
         } else {
-          this.tasks = Array.isArray(data) ? data : [data]
+          this.task = data
         }
       }).catch(err => {
         this.$nuxt.error(err)
@@ -480,17 +484,17 @@ export default {
   },
 
   watch: {
-    tasks (val) {
-      if (!val.length || !val[0].info.hasOwnProperty('manifest')) {
-        this.taskInfo = 'no data'
+    task (val) {
+      if (!val.length || !val.info.hasOwnProperty('manifest')) {
+        this.manifest = null
       }
 
-      this.$axios.$get(this.tasks[0].info.manifest, {
+      this.$axios.$get(val.info.manifest, {
         headers: {
           'Content-type': 'text/plain' // to avoid CORS preflight
         }
       }).then(data => {
-        this.taskInfo = data
+        this.manifest = data
       })
     }
   }
