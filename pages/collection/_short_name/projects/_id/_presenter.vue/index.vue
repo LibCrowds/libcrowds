@@ -439,7 +439,7 @@ export default {
         this.foundTags = response
         this.tagSearchLoading = false
       })
-    },
+    }
   },
 
   mounted () {
