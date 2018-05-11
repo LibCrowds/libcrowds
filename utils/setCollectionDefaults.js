@@ -53,7 +53,6 @@ export const setCollectionDefaults = function (collection) {
     },
     volumes: [],
     templates: [],
-    export_formats: [],
     tags: []
   }
   collection.info = merge(defaults, collection.info)
@@ -71,10 +70,5 @@ export const setCollectionDefaults = function (collection) {
   // Ensure templates is an array
   if (!Array.isArray(collection.info.templates)) {
     collection.info.templates = []
-  }
-
-  // Ensure export_formats is an array
-  if (!Array.isArray(collection.info.export_formats)) {
-    collection.info.export_formats = []
   }
 }
