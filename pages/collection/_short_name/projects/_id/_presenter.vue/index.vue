@@ -529,9 +529,19 @@ export default {
      */
     removeTag (tag) {
       const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/${tag.id}/remove`
+      const endpoint = `/lc/categories/${catShortName}/tags/remove`
+      const type = this.task.info.hasOwnProperty('tileSource')
+        ? 'iiif'
+        : 'image'
+      const target = this.task.info.hasOwnProperty('tileSource')
+        ? this.task.info.tileSource
+        : this.task.info.url
 
-      this.$axios.$post(endpoint).then(data => {
+      this.$axios.$post(endpoint, {
+        value: tag['body']['value'],
+        target: target,
+        type: type
+      }).then(data => {
         this.$notifications.flash(data)
       }).catch(err => {
         this.$nuxt.error(err)
