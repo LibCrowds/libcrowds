@@ -251,7 +251,6 @@ export default {
               label: 'Version',
               model: 'image_api_version',
               placeholder: '2.0',
-              validator: VueFormGenerator.validators.double,
               hint: 'The version of the above IIIF Image API.'
             },
             {
@@ -259,7 +258,6 @@ export default {
               label: 'Compliance Level',
               model: 'image_api_compliance',
               placeholder: '0',
-              validator: VueFormGenerator.validators.integer,
               hint: 'The compliance level of the above IIIF Image API.'
             }
           ]
