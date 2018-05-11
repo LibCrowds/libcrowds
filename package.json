@@ -28,7 +28,7 @@
     "clipboard": "^2.0.1",
     "cookie": "^0.3.1",
     "cookieconsent": "^3.0.4",
-    "croppie": "^2.6.2",
+    "croppie": "~2.5.0",
     "cross-env": "^5.0.1",
     "es6-promise": "^4.1.1",
     "express": "~4.16.2",
