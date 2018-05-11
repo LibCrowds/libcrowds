@@ -186,7 +186,7 @@ export default {
               model: 'iiif_settings.image_api_version',
               placeholder: '2.0',
               validator: VueFormGenerator.validators.double,
-              hint: 'The versionl of the above IIIF Image API.',
+              hint: 'The version of the above IIIF Image API.',
               visible: (model) => (model.presenter === 'iiif')
             },
             {
