@@ -137,7 +137,7 @@
       body-class="overflow-visible">
       <b-container class="py-2 px-3">
         <p>
-          Begin typing in the box below to search for existing tags or to add
+          Begin typing in the box below to search for existing tags or add
           your own. The tags will be used to generate shareable albums.
         </p>
         <multiselect
@@ -159,6 +159,7 @@
           :taggable="true"
           @tag="addTag"
           @select="selectTag"
+          @remove="removeTag"
           @search-change="asyncFindTags">
         </multiselect>
       </b-container>
@@ -515,6 +516,22 @@ export default {
         target: target,
         type: type
       }).then(data => {
+        this.$notifications.flash(data)
+      }).catch(err => {
+        this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Remove a tag.
+     * @param {Object} tag
+     *   The tag.
+     */
+    removeTag (tag) {
+      const catShortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${catShortName}/tags/${tag.id}/remove`
+
+      this.$axios.$post(endpoint).then(data => {
         this.$notifications.flash(data)
       }).catch(err => {
         this.$nuxt.error(err)
