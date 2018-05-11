@@ -2,9 +2,10 @@
   <card-base :title="title" :description="description">
 
     <b-alert show variant="info" v-if="hasProjects">
-      As projects have already been built from the volume you can only update
-      the thumbnail. Otherwise, we would risk breaking functions that rely on
-      consistent volume data, such as results aggregation.
+      As projects have already been built from this volume certain fields
+      are disabled and cannot be updated. This is because doing so would
+      risk breaking functions that rely on consistent volume data, such as
+      results aggregation.
     </b-alert>
 
     <b-tabs card>
@@ -31,6 +32,17 @@
           @success="onSuccess">
         </pybossa-form>
       </b-tab>
+      <b-tab title="IIIF Settings" no-body>
+        <pybossa-form
+          submit-text="Update IIIF Settings"
+          cancel-text="Back"
+          form-key="iiif_form"
+          show-cancel
+          :form="iiifForm"
+          @cancel="onCancel"
+          @success="onSuccess">
+        </pybossa-form>
+      </b-tab>
       <b-tab title="Thumbnail" no-body>
         <image-upload-form
           submit-text="Update Thumbnail"
@@ -51,6 +63,7 @@
 </template>
 
 <script>
+import VueFormGenerator from 'vue-form-generator'
 import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
@@ -87,6 +100,7 @@ export default {
         endpoint: endpoint,
         formModel: data.form,
         importFormModel: data.import_form,
+        iiifFormModel: data.iiif_form,
         thumbnailForm: {
           endpoint: endpoint,
           method: 'POST',
@@ -155,6 +169,34 @@ export default {
               },
               hint: 'The importer type',
               disabled: this.hasProjects
+            },
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'iiif_settings.image_api_uri',
+              placeholder: 'http://example.org/images',
+              validator: VueFormGenerator.validators.url,
+              hint: 'Optional base URI for the IIIF Image API service; used ' +
+                'to generate custom manifests, such as those from user tags.',
+              visible: (model) => (model.presenter === 'iiif')
+            },
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'iiif_settings.image_api_version',
+              placeholder: '2.0',
+              validator: VueFormGenerator.validators.double,
+              hint: 'The versionl of the above IIIF Image API.',
+              visible: (model) => (model.presenter === 'iiif')
+            },
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'iiif_settings.image_api_compliance_level',
+              placeholder: 'http://example.org/images',
+              validator: VueFormGenerator.validators.integer,
+              hint: 'The compliance level of the above IIIF Image API.',
+              visible: (model) => (model.presenter === 'iiif')
             }
           ]
         }
@@ -208,6 +250,43 @@ export default {
         model: this.importFormModel,
         schema: {
           fields: importerFields[this.volume.importer]
+        }
+      }
+    },
+
+    iiifForm () {
+      return {
+        endpoint: this.endpoint,
+        method: 'post',
+        model: this.iiifFormModel,
+        schema: {
+          fields: [
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'image_api_uri',
+              placeholder: 'http://example.org/images',
+              validator: VueFormGenerator.validators.url,
+              hint: 'Optional base URI for the IIIF Image API service; used ' +
+                'to generate custom manifests, such as from user tags.'
+            },
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'image_api_version',
+              placeholder: '2.0',
+              validator: VueFormGenerator.validators.double,
+              hint: 'The versionl of the above IIIF Image API.'
+            },
+            {
+              type: 'input',
+              label: 'Image API',
+              model: 'image_api_compliance_level',
+              placeholder: 'http://example.org/images',
+              validator: VueFormGenerator.validators.integer,
+              hint: 'The compliance level of the above IIIF Image API.'
+            }
+          ]
         }
       }
     },
