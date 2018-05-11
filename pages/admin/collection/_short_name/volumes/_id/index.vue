@@ -248,17 +248,17 @@ export default {
             },
             {
               type: 'input',
-              label: 'Image API',
+              label: 'Version',
               model: 'image_api_version',
               placeholder: '2.0',
               validator: VueFormGenerator.validators.double,
-              hint: 'The versionl of the above IIIF Image API.'
+              hint: 'The version of the above IIIF Image API.'
             },
             {
               type: 'input',
-              label: 'Image API',
-              model: 'image_api_compliance_level',
-              placeholder: 'http://example.org/images',
+              label: 'Compliance Level',
+              model: 'image_api_compliance',
+              placeholder: '0',
               validator: VueFormGenerator.validators.integer,
               hint: 'The compliance level of the above IIIF Image API.'
             }
