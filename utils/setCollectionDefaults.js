@@ -53,13 +53,13 @@ export const setCollectionDefaults = function (collection) {
     },
     volumes: [],
     templates: [],
-    tags: []
+    project_filters: []
   }
   collection.info = merge(defaults, collection.info)
 
-  // Ensure tags is an array
-  if (!Array.isArray(collection.info.tags)) {
-    collection.info.tags = []
+  // Ensure project_filters is an array
+  if (!Array.isArray(collection.info.project_filters)) {
+    collection.info.project_filters = []
   }
 
   // Ensure volumes is an array

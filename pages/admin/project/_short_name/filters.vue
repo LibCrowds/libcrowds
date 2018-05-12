@@ -2,9 +2,9 @@
   <card-base :title="title" :description="description">
 
     <b-card-body>
-      <span v-if="hasTags">
+      <span v-if="hasFilters">
         <div
-          v-for="(tag, index) in currentCollection.info.tags"
+          v-for="(tag, index) in currentCollection.info.project_filters"
           :key="index"
           class="mb-2">
           <label>{{ tag.name | capitalize }}</label>
@@ -13,13 +13,13 @@
             v-model="selections[tag.name]"
             :options="options[tag.name] || []"
             :taggable="true"
-            @tag="addTag">
+            @tag="addFilter">
           </multiselect>
         </div>
       </span>
 
       <p v-else class="lead my-2 text-center">
-        No tags have been enabled for this collection.
+        No filters have been enabled for this collection.
       </p>
     </b-card-body>
 
@@ -50,8 +50,8 @@ export default {
 
   data () {
     return {
-      title: 'Tags',
-      description: 'Set the tags used to filter and organise projects',
+      title: 'Project Filters',
+      description: 'Set the filters used to help locate the project',
       processing: false,
       selections: {},
       options: {}
@@ -69,24 +69,24 @@ export default {
 
     project () {
       const project = this.$store.state.currentProject
-      project.info.tags = project.info.tags || {}
+      project.info.filters = project.info.filters || {}
       return project
     },
 
-    hasTags () {
-      return this.currentCollection.info.tags.length
+    hasFilters () {
+      return this.currentCollection.info.project_filters.length
     }
   },
 
   methods: {
     /**
-     * Update the project's tags.
+     * Update the project's filters.
      */
     async submit () {
       this.processing = true
 
-      // Remove null tags
-      this.project.info.tags = pickBy(this.project.info.tags, identity)
+      // Remove null filters
+      this.project.info.filters = pickBy(this.project.info.filters, identity)
 
       try {
         await this.$axios.$put(`/api/project/${this.project.id}`, {
@@ -97,17 +97,17 @@ export default {
       } finally {
         this.processing = false
       }
-      this.$notifications.success({ message: 'Tags updated' })
+      this.$notifications.success({ message: 'Filters updated' })
     },
 
     /**
-     * Add a new tag.
+     * Add a new filter.
      * @param {String} value
-     *   The new tag value.
+     *   The new filter value.
      * @param {String} name
-     *   The tag name (from the multiselect id).
+     *   The filter name (from the multiselect id).
      */
-    addTag (value, name) {
+    addFilter (value, name) {
       if (Array.isArray(this.options[name])) {
         this.options[name].push(value)
       } else {
@@ -123,14 +123,14 @@ export default {
   },
 
   mounted () {
-    // Populate with the project's current tags
-    this.selections = this.project.info.tags
+    // Populate with the project's current filters
+    this.selections = this.project.info.filters
 
-    // Get all current tags for the collection.
+    // Get all current filters for the collection.
     const catShortName = this.currentCollection.short_name
-    const endpoint = `/lc/categories/${catShortName}/project-tags`
+    const endpoint = `/lc/categories/${catShortName}/project-filters`
     return this.$axios.$get(endpoint).then(data => {
-      this.options = data.tags
+      this.options = data.filters
     }).catch(err => {
       this.$nuxt.error(err)
     })

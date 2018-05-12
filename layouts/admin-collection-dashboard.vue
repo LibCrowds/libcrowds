@@ -52,9 +52,9 @@ export default {
             }
           },
           {
-            label: 'Tags',
+            label: 'Project Filters',
             link: {
-              name: 'admin-collection-short_name-tags',
+              name: 'admin-collection-short_name-filters',
               params: {
                 short_name: this.currentCollection.short_name
               }
