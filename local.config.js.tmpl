@@ -1,14 +1,15 @@
 const config = {
-  company: 'My Company',
+  annotationServer: 'http://127.0.0.1:3000',
   brand: 'My Brand',
-  tagline: 'My inspiring tagline',
+  company: 'My Company',
   description: 'My SEO optimised meta description',
+  libcrowdsHost: process.env.NODE_ENV === 'development'
+    ? 'http://127.0.0.1:8080'
+    : 'http://xxxx.com',
   pybossaHost: process.env.NODE_ENV === 'development'
     ? 'http://127.0.0.1:5000'
     : 'http://xxxx.com',
-  libcrowdsHost: process.env.NODE_ENV === 'development'
-    ? 'http://127.0.0.1:8080'
-    : 'http://xxxx.com'
+  tagline: 'My inspiring tagline'
 }
 
 // Twitter
@@ -64,8 +65,5 @@ const config = {
 
 // Disable project building functions for non-admin users
 // config.disableProjectBuilder = true
-
-// User tags Web Annotations server URI
-config.tagsServer = 'http://127.0.0.1:3000'
 
 module.exports = config
