@@ -151,7 +151,7 @@ export default {
      */
     loadMore () {
       const limit = 50
-      this.$axios.get('/api/announcement', {
+      this.$axios.$get('/api/announcement', {
         params: {
           published: true,
           orderby: 'created',
