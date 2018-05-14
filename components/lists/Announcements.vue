@@ -150,7 +150,7 @@ export default {
      * Load the next batch of announcements.
      */
     loadMore () {
-      limit = 50
+      const limit = 50
       // For some reason the $get version of this request won't work (?)
       this.$axios.get('/api/announcement', {
         params: {
