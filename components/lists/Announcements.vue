@@ -150,13 +150,14 @@ export default {
      * Load the next batch of announcements.
      */
     loadMore () {
+      limit = 50
       // For some reason the $get version of this request won't work (?)
       this.$axios.get('/api/announcement', {
         params: {
           published: true,
           orderby: 'created',
           desc: true,
-          limit: 50,
+          limit: limit,
           offset: this.announcements.length
         }
       }).then(response => {
