@@ -140,28 +140,10 @@
           Begin typing in the box below to search for existing tags or add
           your own. The tags will be used to generate shareable albums.
         </p>
-        <multiselect
-          v-model="selectedTags"
-          id="ajax"
-          label="name"
-          track-by="id"
-          placeholder="Type to search"
-          open-direction="bottom"
-          :options="foundTags"
-          :multiple="true"
-          :searchable="true"
-          :loading="tagSearchLoading"
-          :internal-search="false"
-          :limit="10"
-          :show-no-results="false"
-          :hide-selected="true"
-          :custom-label="getTagLabel"
-          :taggable="true"
-          @tag="addTag"
-          @select="selectTag"
-          @remove="removeTag"
-          @search-change="asyncFindTags">
-        </multiselect>
+        <item-tags
+          :collection="currentCollection"
+          :metadata="task.info">
+        </item-tags>
       </b-container>
     </b-modal>
 
@@ -179,6 +161,7 @@ import ClipboardButton from '@/components/buttons/Clipboard'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
+import TagSelectionAnnotator from '@/components/annotators/TagSelection'
 
 export default {
   layout ({ params, store }) {
@@ -244,7 +227,8 @@ export default {
 
   components: {
     SocialMediaButtons,
-    ClipboardButton
+    ClipboardButton,
+    TagSelectionAnnotator
   },
 
   computed: {
@@ -437,115 +421,6 @@ export default {
           }
         })
       }
-    },
-
-    /**
-     * Search the category for current tags.
-     * @param {String} query
-     *   The query string.
-     */
-    asyncFindTags (query) {
-      this.tagSearchLoading = true
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags`
-      this.$axios.$get(endpoint, {
-        params: {
-          query: query
-        }
-      }).then(data => {
-        this.foundTags = data.tags
-        this.tagSearchLoading = false
-      })
-    },
-
-    /**
-     * Get the label to display for a tag.
-     * @param {Object} tag
-     *   The tag.
-     */
-    getTagLabel (tag) {
-      return tag['body']['value']
-    },
-
-    /**
-     * Add a new tag.
-     * @param {String} value
-     *   The tag value.
-     */
-    addTag (value) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/add`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
-
-      this.$axios.$post(endpoint, {
-        value: value,
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
-        if (data.tag) {
-          this.selectedTags.push(data.tag)
-        }
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
-    },
-
-    /**
-     * Select a tag.
-     * @param {Object} tag
-     *   The tag.
-     */
-    selectTag (tag) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/add`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
-
-      this.$axios.$post(endpoint, {
-        value: tag['body']['value'],
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
-    },
-
-    /**
-     * Remove a tag.
-     * @param {Object} tag
-     *   The tag.
-     */
-    removeTag (tag) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/remove`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
-
-      this.$axios.$post(endpoint, {
-        value: tag['body']['value'],
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
     }
   },
 
@@ -569,20 +444,6 @@ export default {
           this.manifest = data
         })
       }
-
-      // Get current tags for the item
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags`
-      const target = val.info.hasOwnProperty('tileSource')
-        ? val.info.tileSource
-        : val.info.url
-      this.$axios.$get(endpoint, {
-        params: {
-          target: target
-        }
-      }).then(data => {
-        this.selectedTags = data.tags
-      })
     }
   }
 }
