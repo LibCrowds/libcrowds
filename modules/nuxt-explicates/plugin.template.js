@@ -178,8 +178,6 @@ export default (ctx, inject) => {
     accept: '<%= options.accept %>'
   }
 
-  console.log(baseURL)
-
   // Create a new Explicates instance
   const explicates = new Explicates(options)
 
