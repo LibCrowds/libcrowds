@@ -130,7 +130,8 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    ['bootstrap-vue/nuxt', { css: false }]
+    ['bootstrap-vue/nuxt', { css: false }],
+    ['modules/nuxt-explicates/module.js', localConfig.explicates]
   ],
   axios: {
     baseURL: localConfig.pybossaHost,

@@ -1,5 +1,4 @@
 const config = {
-  annotationServer: 'http://127.0.0.1:3000',
   brand: 'My Brand',
   company: 'My Company',
   description: 'My SEO optimised meta description',
@@ -9,7 +8,10 @@ const config = {
   pybossaHost: process.env.NODE_ENV === 'development'
     ? 'http://127.0.0.1:5000'
     : 'http://xxxx.com',
-  tagline: 'My inspiring tagline'
+  tagline: 'My inspiring tagline',
+  annotationServer: {
+    baseURL: 'http://127.0.0.1:3000'
+  }
 }
 
 // Twitter

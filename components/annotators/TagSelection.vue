@@ -32,11 +32,7 @@ export default {
       tagSearchLoading: false,
       foundTags: [],
       selectedTags: [],
-      container: null,
-      containerBase: {
-        creator: `${libcrowdsHost}/api/category/${this.collection.id}`,
-        motivation: 'tagging',
-      }
+      container: null
     }
   },
 
@@ -44,61 +40,48 @@ export default {
     collection: {
       type: Object,
       required: true
+    },
+    sourceUri: {
+      type: String,
+      required: true
+    },
+    scopeUri: {
+      type: String,
+      default: ''
     }
   },
 
   methods: {
     /**
-     * Create a container for the collection's tags.
+     * Return an AnnotationCollection for the collection's tags.
+     *
+     * Creates a new AnnotationCollection if an existing one is not found.
      */
-    async createContainer () {
-      const endpoint = `${localConfig.tagsServer}/annotations`
+    async getContainer () {
       const libcrowdsHost = localConfig.libcrowdsHost
-      const data = Object.assign({
+      const data = {
         type: [
           'AnnotationCollection',
           'BasicContainer'
         ],
-        label: `${this.collection.name} Tags`,
-      }, this.containerBase)
-      const headers = {
-        'Slug': `${this.collection.short_name}-tags`
+        creator: `${libcrowdsHost}/api/category/${this.collection.id}`,
+        motivation: 'tagging',
+        label: `${this.collection.name} Tags`
       }
 
-      const container = await this.$axios.$post(endpoint, data, {
-        headers: headers
-      }).catch(err => {
-        this.$nuxt.error(err)
+      let searchResponse = await this.$explicates.searchCollections({
+        contains: {
+          creator: data.creator,
+          motivation: data.motivation
+        }
       })
 
-      return container
-    },
-
-    /**
-     * Find a container for the collection's tags.
-     */
-    async findContainer () {
-      const libcrowdsHost = localConfig.libcrowdsHost
-      const endpoint = `${localConfig.tagsServer}/search/collection`
-      const params = {
-        contains: this.containerBase
-      }
-      const headers = {
-        prefer: 'return=representation;' +
-          'include="http://www.w3.org/ns/ldp#PreferMinimalContainer"'
-      }
-      const containers = await this.$axios.$get(endpoint, {
-        params: params,
-        headers: headers
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
-
-      if (containers && containers.contains.length) {
-        return containers.contains[0]
+      if (searchResponse.data.total > 0) {
+        return searchResponse.data.first.items[0]
       }
 
-      return this.createContainer()
+      let createResponse = await this.$explicates.createCollection(data)
+      return createResponse.data
     },
 
     /**
@@ -107,43 +90,20 @@ export default {
      *   The query string.
      */
     findTags (query) {
-      const libcrowdsHost = localConfig.libcrowdsHost
-      const endpoint = `${localConfig.tagsServer}/search/annotation`
-
-      this.tagSearchLoading = true
-
       if (!this.container) {
-        this.container = this.findContainer()
+        this.container = this.getContainer()
       }
 
-      const libcrowdsHost = localConfig.libcrowdsHost
-      const endpoint = `${localConfig.tagsServer}/search/annotation`
-      const params = {
-        contains: {
-          creator: this.creator
-        }
-      }
-      const headers = {
-        prefer: 'return=representation;' +
-          'include="http://www.w3.org/ns/ldp#PreferMinimalContainer"'
-      }
-      const container = await this.$axios.$get(endpoint, {
-        params: params,
-        headers: headers
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
+      const idParts = this.container.id.split('/')
+      const containerId = idParts[idParts.length - 1]
 
-      this.tagSearchLoading = true
-      this.endpoint = localConfig.tagsServer
-      const catShortName = this.collection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags`
-      this.$axios.$get(endpoint, {
-        params: {
-          query: query
+      return this.$explicates.searchAnnotations({
+        fts: `body::${query}:*`,
+        'collection.id': containerId
+      }).then(r => {
+        if (r.data.total > 0) {
+          this.foundTags = r.data.first.items
         }
-      }).then(data => {
-        this.foundTags = data.tags
         this.tagSearchLoading = false
       })
     },
@@ -154,7 +114,26 @@ export default {
      *   The tag.
      */
     getTagLabel (tag) {
-      return tag['body']['value']
+      return tag.body.value
+    },
+
+    /**
+     * Get the target of the current item.
+     */
+    getTarget () {
+      const source = {
+        id: this.sourceUri,
+        type: 'Image'
+      }
+
+      if (this.manifestUri.length) {
+        return {
+          source: source,
+          scope: this.manifestUri
+        }
+      }
+
+      return source
     },
 
     /**
@@ -163,24 +142,21 @@ export default {
      *   The tag value.
      */
     addTag (value) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/add`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
+      const target = this.getTarget()
+      const newTag = {
+        motivation: 'tagging',
+        type: 'Annotation',
+        body: {
+          type: 'TextualBody',
+          value: 'foo',
+          format: 'text/plain'
+        },
+        target: [target]
+      }
 
-      this.$axios.$post(endpoint, {
-        value: value,
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
-        if (data.tag) {
-          this.selectedTags.push(data.tag)
-        }
+      return this.$explicates.createAnnotation(this.container.id, newTag).then(r => {
+        this.$notifications.success({ message: 'Tag added' })
+        this.selectedTags.push(r.data)
       }).catch(err => {
         this.$nuxt.error(err)
       })
@@ -192,24 +168,9 @@ export default {
      *   The tag.
      */
     selectTag (tag) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/add`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
-
-      this.$axios.$post(endpoint, {
-        value: tag['body']['value'],
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
+      const newTarget = this.getTarget()
+      tag.target.push(newTarget)
+      this.updateTag(tag)
     },
 
     /**
@@ -218,31 +179,24 @@ export default {
      *   The tag.
      */
     removeTag (tag) {
-      const catShortName = this.currentCollection.short_name
-      const endpoint = `/lc/categories/${catShortName}/tags/remove`
-      const type = this.task.info.hasOwnProperty('tileSource')
-        ? 'iiif'
-        : 'image'
-      const target = this.task.info.hasOwnProperty('tileSource')
-        ? this.task.info.tileSource
-        : this.task.info.url
+      const oldTarget = this.getTarget()
+      tag.target.filter(t => t.scope.id !== oldTarget.scope.id)
+      this.updateTag(tag)
+    },
 
-      this.$axios.$post(endpoint, {
-        value: tag['body']['value'],
-        target: target,
-        type: type
-      }).then(data => {
-        this.$notifications.flash(data)
+    /**
+     * Update a tag.
+     * @param {Object} tag
+     *   The tag.
+     */
+    updateTag (tag) {
+      return this.$explicates.updateAnnotation(tag.id, tag).then(r => {
+        this.$notifications.success({ message: 'Tag updated' })
+        this.selectedTags.push(r.data)
       }).catch(err => {
         this.$nuxt.error(err)
       })
     }
-  },
-
-  mounted () {
-    this.validateTemplate()
-    this.loadTask()
-    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   }
 }
 </script>

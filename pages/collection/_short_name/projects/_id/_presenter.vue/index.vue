@@ -124,6 +124,7 @@
     <b-modal
       show
       lazy
+      v-if="task"
       ref="tags"
       title="Tags"
       size="lg"
@@ -140,10 +141,11 @@
           Begin typing in the box below to search for existing tags or add
           your own. The tags will be used to generate shareable albums.
         </p>
-        <item-tags
+        <tag-selection-annotator
           :collection="currentCollection"
-          :metadata="task.info">
-        </item-tags>
+          :source-uri="task.info.url"
+          :scope-uri="task.info.manifest">
+        </tag-selection-annotator>
       </b-container>
     </b-modal>
 
