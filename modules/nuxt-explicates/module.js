@@ -18,6 +18,6 @@ module.exports = function nuxtExplicates (_moduleOptions) {
   this.addPlugin({
     src: path.resolve(__dirname, 'plugin.template.js'),
     fileName: 'explicates.js',
-    options: {}
+    options: options
   })
 }
