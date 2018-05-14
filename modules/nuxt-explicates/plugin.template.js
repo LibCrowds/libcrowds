@@ -4,7 +4,7 @@ class Explicates {
   constructor (options) {
     this.baseURL = options.baseURL,
     this.accept = options.accept,
-    this.client = this.createAxiosClient()
+    this.client = this._createAxiosClient()
   }
 
   /**
@@ -35,7 +35,7 @@ class Explicates {
    */
   getCollection(iri, minimal = false, iris = false) {
     const headers = {
-      prefer: this.getPreferHeader(minimal, iris)
+      prefer: this._getPreferHeader(minimal, iris)
     }
     return this.client.get(iri, {
       headers: headers
@@ -118,7 +118,7 @@ class Explicates {
   _search(table, params, minimal, iris) {
     const endpoint = '/search/' + table + '/'
     const headers = {
-      prefer: this.getPreferHeader(minimal, iris)
+      prefer: this._getPreferHeader(minimal, iris)
     }
     return this.client.get(endpoint, {
       params: params,
@@ -149,7 +149,7 @@ class Explicates {
   /**
    * Return a configured axios instance.
    */
-  createAxiosClient () {
+  _createAxiosClient () {
     const instance = axios.create({
       baseURL: this.baseURL,
       headers: {
@@ -177,6 +177,8 @@ export default (ctx, inject) => {
     baseURL: '<%= options.baseURL %>',
     accept: '<%= options.accept %>'
   }
+
+  console.log(baseURL)
 
   // Create a new Explicates instance
   const explicates = new Explicates(options)
