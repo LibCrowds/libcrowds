@@ -32,7 +32,10 @@ export default {
       tagSearchLoading: false,
       foundTags: [],
       selectedTags: [],
-      container: null
+      container: null,
+      errorMessage: `Oh no, our tagging system seems to be broken. Sorry about
+        that, we'll get it fixed as soon as possible. You can still continue
+        using the result of the application as normal.`
     }
   },
 
@@ -68,20 +71,32 @@ export default {
         motivation: 'tagging',
         label: `${this.collection.name} Tags`
       }
+      let response = null
 
-      let searchResponse = await this.$explicates.searchCollections({
-        contains: {
-          creator: data.creator,
-          motivation: data.motivation
-        }
-      })
-
-      if (searchResponse.data.total > 0) {
-        return searchResponse.data.first.items[0]
+      try {
+        response = await this.$explicates.searchCollections({
+          contains: {
+            creator: data.creator,
+            motivation: data.motivation
+          }
+        })
+      } catch (err) {
+        this.$notifications.error({ message: this.errorMessage })
+        return
       }
 
-      let createResponse = await this.$explicates.createCollection(data)
-      return createResponse.data
+      if (response.data.total > 0) {
+        return response.data.first.items[0]
+      }
+
+      const slug = `${this.collection.short_name}-tags`
+      try {
+        response = await this.$explicates.createCollection(data, slug)
+      } catch (err) {
+        this.$notifications.error({ message: this.errorMessage })
+        return
+      }
+      return response.data
     },
 
     /**
@@ -89,9 +104,9 @@ export default {
      * @param {String} query
      *   The query string.
      */
-    findTags (query) {
+    async findTags (query) {
       if (!this.container) {
-        this.container = this.getContainer()
+        this.container = await this.getContainer()
       }
 
       const idParts = this.container.id.split('/')
@@ -105,6 +120,9 @@ export default {
           this.foundTags = r.data.first.items
         }
         this.tagSearchLoading = false
+      }).catch(err => {
+        console.log(err)
+        this.$notifications.error({ message: this.errorMessage })
       })
     },
 
@@ -126,7 +144,7 @@ export default {
         type: 'Image'
       }
 
-      if (this.manifestUri.length) {
+      if (this.manifestUri && this.manifestUri.length) {
         return {
           source: source,
           scope: this.manifestUri
@@ -142,7 +160,6 @@ export default {
      *   The tag value.
      */
     addTag (value) {
-      const target = this.getTarget()
       const newTag = {
         motivation: 'tagging',
         type: 'Annotation',
@@ -151,14 +168,15 @@ export default {
           value: 'foo',
           format: 'text/plain'
         },
-        target: [target]
+        target: [this.getTarget()]
       }
 
       return this.$explicates.createAnnotation(this.container.id, newTag).then(r => {
         this.$notifications.success({ message: 'Tag added' })
         this.selectedTags.push(r.data)
       }).catch(err => {
-        this.$nuxt.error(err)
+        console.log(err)
+        this.$notifications.error({ message: this.errorMessage })
       })
     },
 
@@ -194,7 +212,8 @@ export default {
         this.$notifications.success({ message: 'Tag updated' })
         this.selectedTags.push(r.data)
       }).catch(err => {
-        this.$nuxt.error(err)
+        console.log(err)
+        this.$notifications.error({ message: this.errorMessage })
       })
     }
   }

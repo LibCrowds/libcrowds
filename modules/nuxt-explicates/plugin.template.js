@@ -2,8 +2,8 @@ import axios from 'axios'
 
 class Explicates {
   constructor (options) {
-    this.baseURL = options.baseURL,
-    this.accept = options.accept,
+    this.baseURL = options.baseURL
+    this.accept = options.accept
     this.client = this._createAxiosClient()
   }
 
@@ -14,10 +14,11 @@ class Explicates {
    * @param {String} slug
    *   A suggestion for the IRI path segment.
    */
-  createCollection(data, slug = null) {
+  createCollection (data, slug = null) {
     const endpoint = '/annotations/'
-    const headers = {
-      slug: slug
+    const headers = {}
+    if (slug) {
+      headers['Slug'] = slug
     }
     return this.client.post(endpoint, data, {
       headers: headers
@@ -33,13 +34,33 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  getCollection(iri, minimal = false, iris = false) {
+  getCollection (iri, minimal = false, iris = false) {
     const headers = {
       prefer: this._getPreferHeader(minimal, iris)
     }
     return this.client.get(iri, {
       headers: headers
     })
+  }
+
+  /**
+   * Update an AnnotationCollection.
+   * @param {String} iri
+   *   The IRI of a the AnnotationCollection.
+   * @param {Object} data
+   *   The AnnotationCollection data.
+   */
+  updateCollection (containerIri, data) {
+    return this.client.put(containerIri, data)
+  }
+
+  /**
+   * Delete an AnnotationCollection.
+   * @param {String} iri
+   *   The IRI of a the AnnotationCollection.
+   */
+  deleteCollection (iri) {
+    return this.client.delete(iri)
   }
 
   /**
@@ -51,13 +72,23 @@ class Explicates {
    * @param {String} slug
    *   Suggestion for the IRI path segment.
    */
-  createAnnotation(containerIri, data, slug = null) {
-    const headers = {
-      slug: slug
+  createAnnotation (containerIri, data, slug = null) {
+    const headers = {}
+    if (slug) {
+      headers['Slug'] = slug
     }
     return this.client.post(containerIri, data, {
       headers: headers
     })
+  }
+
+  /**
+   * Get an Annotation.
+   * @param {String} iri
+   *   The IRI of a the Annotation.
+   */
+  getAnnotation (iri) {
+    return this.client.get(iri)
   }
 
   /**
@@ -66,16 +97,18 @@ class Explicates {
    *   The IRI of a the Annotation.
    * @param {Object} data
    *   The Annotation data.
-   * @param {String} slug
-   *   Suggestion for a new IRI path segment.
    */
-  updateAnnotation(containerIri, data, slug = null) {
-    const headers = {
-      slug: slug
-    }
-    return this.client.put(containerIri, data, {
-      headers: headers
-    })
+  updateAnnotation (containerIri, data) {
+    return this.client.put(containerIri, data)
+  }
+
+  /**
+   * Delete an Annotation.
+   * @param {String} iri
+   *   The IRI of a the Annotation.
+   */
+  deleteAnnotation (iri) {
+    return this.client.delete(iri)
   }
 
   /**
@@ -87,7 +120,7 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  searchCollections(params, minimal = false, iris = false) {
+  searchCollections (params, minimal = false, iris = false) {
     return this._search('collection', params, minimal, iris)
   }
 
@@ -100,7 +133,7 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  searchAnnotations(params, minimal = false, iris = false) {
+  searchAnnotations (params, minimal = false, iris = false) {
     return this._search('annotation', params, minimal, iris)
   }
 
@@ -115,7 +148,7 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  _search(table, params, minimal, iris) {
+  _search (table, params, minimal, iris) {
     const endpoint = '/search/' + table + '/'
     const headers = {
       prefer: this._getPreferHeader(minimal, iris)
@@ -153,7 +186,7 @@ class Explicates {
     const instance = axios.create({
       baseURL: this.baseURL,
       headers: {
-        accept: this.accept
+        'Accept': this.accept
       },
       withCredentials: true
     })
@@ -167,10 +200,16 @@ class Explicates {
       })
     }
 
+    // Internal request helpers ($get, $post, $put, $delete)
+    for (let m in ['get', 'post', 'put', 'delete']) {
+      instance['$' + m] = function () {
+        return this[m].apply(this, arguments).then(res => res && res.data)
+      }.bind(instance)
+    }
+
     return instance
   }
 }
-
 
 export default (ctx, inject) => {
   const options = {

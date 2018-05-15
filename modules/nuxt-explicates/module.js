@@ -3,16 +3,14 @@ const path = require('path')
 // Javascript client for the Explicates Web Annotation server
 // https://github.com/alexandermendes/explicates
 
-module.exports = function nuxtExplicates (_moduleOptions) {
+module.exports = function nuxtExplicates (_modOptions) {
   // Combine options
-  const moduleOptions = Object.assign({}, this.options.explicates,
-                                      _moduleOptions)
+  const modOptions = Object.assign({}, this.options.explicates, _modOptions)
 
   // Apply defaults (currently no defaults)
   const options = Object.assign({
-    baseURL: '',
     accept: 'application/ld+json; profile="http://www.w3.org/ns/anno.jsonld"'
-  }, moduleOptions)
+  }, modOptions)
 
   // Register plugin
   this.addPlugin({
