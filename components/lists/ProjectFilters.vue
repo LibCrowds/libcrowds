@@ -1,5 +1,5 @@
 <template>
-  <div class="project-filters-list">
+  <div class="badge-list">
     <b-badge
       v-for="(value, name) in projectFilters"
       :key="name"
@@ -63,22 +63,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.project-filters-list {
-  .badge {
-    letter-spacing: 0.2px;
-    font-weight: 400;
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-</style>

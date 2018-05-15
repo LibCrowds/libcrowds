@@ -24,8 +24,6 @@
 </template>
 
 <script>
-import localConfig from '@/local.config'
-
 export default {
   data () {
     return {
@@ -37,15 +35,15 @@ export default {
   },
 
   props: {
-    collection: {
-      type: Object,
-      required: true
-    },
-    sourceUri: {
+    containerIri: {
       type: String,
       required: true
     },
-    scopeUri: {
+    sourceIri: {
+      type: String,
+      required: true
+    },
+    scopeIri: {
       type: String,
       default: ''
     }
@@ -53,68 +51,22 @@ export default {
 
   methods: {
     /**
-     * Return an AnnotationCollection for the collection's tags.
-     *
-     * Creates a new AnnotationCollection if an existing one is not found.
-     */
-    async getContainer () {
-      const libcrowdsHost = localConfig.libcrowdsHost
-      const data = {
-        type: [
-          'AnnotationCollection',
-          'BasicContainer'
-        ],
-        creator: `${libcrowdsHost}/api/category/${this.collection.id}`,
-        motivation: 'tagging',
-        label: `${this.collection.name} Tags`
-      }
-      let response = null
-
-      try {
-        response = await this.$explicates.searchCollections({
-          contains: {
-            creator: data.creator,
-            motivation: data.motivation
-          }
-        })
-      } catch (err) {
-        this.handleError(err)
-        return
-      }
-
-      if (response.data.total > 0) {
-        return response.data.first.items[0]
-      }
-
-      const slug = `${this.collection.short_name}-tags`
-      try {
-        response = await this.$explicates.createCollection(data, slug)
-      } catch (err) {
-        this.$notifications.error({ message: this.errorMessage })
-        return
-      }
-      return response.data
-    },
-
-    /**
      * Search for current tags.
      * @param {String} query
      *   The query string.
      */
     async findTags (query) {
-      if (!this.container) {
-        this.container = await this.getContainer()
-      }
-
-      if (!query || !query.length || !this.container) {
+      if (!query.length) {
         return
       }
 
-      const idParts = this.container.id.split('/')
+      const safeQuery = query.replace(/[^\w\s&]/gi, '')
+      console.log(safeQuery)
+      const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
 
       return this.$explicates.searchAnnotations({
-        fts: `body::${query}:*`,
+        fts: `body::${safeQuery}:*`,
         'collection.id': containerId
       }).then(r => {
         if (r.data.total > 0) {
@@ -140,14 +92,14 @@ export default {
      */
     getTarget () {
       const source = {
-        id: this.sourceUri,
-        type: 'Image'
+        id: this.sourceIri,
+        type: this.type
       }
 
-      if (this.manifestUri && this.manifestUri.length) {
+      if (this.scopeIri && this.scopeIri.length) {
         return {
           source: source,
-          scope: this.manifestUri
+          scope: this.scopeIri
         }
       }
 
@@ -172,7 +124,7 @@ export default {
       }
 
       this.tagsLoading = true
-      return this.$explicates.createAnnotation(this.container.id, newTag).then(r => {
+      return this.$explicates.createAnnotation(this.containerIri, newTag).then(r => {
         this.$notifications.success({ message: 'Tag added' })
         this.selectedTags.push(r.data)
         this.tagsLoading = false

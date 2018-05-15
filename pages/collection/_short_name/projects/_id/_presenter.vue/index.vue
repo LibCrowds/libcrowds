@@ -136,16 +136,67 @@
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null"
       body-class="overflow-visible">
-      <b-container class="py-2 px-3">
+      <b-container
+        class="py-2 px-3"
+        v-if="currentCollection.info.annotations.tags">
         <p>
-          Begin typing in the box below to search for existing tags or add
-          your own. The tags will be used to generate shareable albums.
+          The tags added below will help researchers locate items of
+          particular interest, by being used to to generate shareable albums,
+          which can be accessed via the
+          <nuxt-link
+            :to="{
+              name: 'collection-short_name-browse',
+              params: {
+                short_name: currentCollection.short_name
+              }
+            }">
+            Browse
+          </nuxt-link> page.
+        <p>
+          For the more technically inclined, the data will also be available
+          via the API at
+          <a :href="currentCollection.info.annotations.tags" _target="blank">
+            {{ currentCollection.info.annotations.tags }}
+          </a>
+        </p>
+        <p>
+          Tags can be added by anyone but once confirmed can only be deleted
+          by administrators. If you have spotted a tag that you think is
+          incorrect or should be removed for any reason please contact
+          <a :href="`mailto:${localConfig.email}`">
+            {{ localConfig.email }}.
+          </a>
+        </p>
+        <p>
+          <h6 class="mb-1">Current tags:</h6>
+          <item-tags-list
+            :container-iri="currentCollection.info.annotations.tags"
+            :source-iri="task.info.url"
+            :scope-iri="task.info.manifest"
+            type="Image">
+          </item-tags-list>
+        </p>
+        <p>
+          Begin typing in the box below to add tags.
         </p>
         <tag-selection-annotator
-          :collection="currentCollection"
-          :source-uri="task.info.url"
-          :scope-uri="task.info.manifest">
+          :container-iri="currentCollection.info.annotations.tags"
+          :source-iri="task.info.url"
+          :scope-iri="task.info.manifest"
+          type="Image">  <!-- TODO: Replace with content check -->
         </tag-selection-annotator>
+      </b-container>
+      <b-container class="py-2 px-3" v-else>
+        <p>
+          Tagging is currently disabled for this collection microsite as the
+          link to a suitable place to store the tags has not been configured.
+        </p>
+        <p>
+          To help resolve this, please let us know by contacting
+          <a :href="`mailto:${localConfig.email}`">
+            {{ localConfig.email }}
+          </a>.
+        </p>
       </b-container>
     </b-modal>
 
@@ -154,6 +205,7 @@
 
 <script>
 import marked from 'marked'
+import localConfig from '@/local.config'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { hideCookieConsent } from '@/mixins/hideCookieConsent'
@@ -164,6 +216,7 @@ import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
 import TagSelectionAnnotator from '@/components/annotators/TagSelection'
+import ItemTagsList from '@/components/lists/ItemTags'
 
 export default {
   layout ({ params, store }) {
@@ -186,7 +239,8 @@ export default {
       shareModalId: 'presenter-share-modal',
       tagSearchLoading: false,
       foundTags: [],
-      selectedTags: []
+      selectedTags: [],
+      localConfig: localConfig
     }
   },
 
@@ -230,7 +284,8 @@ export default {
   components: {
     SocialMediaButtons,
     ClipboardButton,
-    TagSelectionAnnotator
+    TagSelectionAnnotator,
+    ItemTagsList
   },
 
   computed: {

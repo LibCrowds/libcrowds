@@ -22,13 +22,15 @@
       <pybossa-form
         submit-text="Update"
         :form="form"
+        :show-footer="false"
         @success="onSuccess">
       </pybossa-form>
     </card-base>
 
      <add-anno-collection-modal
       :collection="currentCollection"
-      :modal-id="addAnnoCollectionModalId">
+      :modal-id="addAnnoCollectionModalId"
+      @success="onSuccess">
     </add-anno-collection-modal>
   </div>
 </template>

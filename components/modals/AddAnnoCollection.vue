@@ -163,6 +163,7 @@ export default {
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: infoClone
       }).then(data => {
+        this.$emit('success')
         this.$store.dispatch('UPDATE_CURRENT_COLLECTION', data)
       }).catch(err => {
         this.$notifications.error({ message: err.messag })
