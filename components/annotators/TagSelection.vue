@@ -109,8 +109,12 @@ export default {
         this.container = await this.getContainer()
       }
 
+      if (!query || !query.length) {
+        return
+      }
+
       const idParts = this.container.id.split('/')
-      const containerId = idParts[idParts.length - 1]
+      const containerId = idParts[idParts.length - 2]
 
       return this.$explicates.searchAnnotations({
         fts: `body::${query}:*`,
@@ -198,7 +202,12 @@ export default {
      */
     removeTag (tag) {
       const oldTarget = this.getTarget()
-      tag.target.filter(t => t.scope.id !== oldTarget.scope.id)
+      tag.target.filter(t => {
+        if (t.hasOwnProperty('scope') && oldTarget.hasOwnProperty('scope')) {
+          return t.scope.id !== oldTarget.scope.id
+        }
+        return t.id !== oldTarget.id
+      })
       this.updateTag(tag)
     },
 
