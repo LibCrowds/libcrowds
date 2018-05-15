@@ -51,7 +51,6 @@ export default {
               hint: `Used to form part of the AnnotationCollection's IRI.`,
               validator: (value) => {
                 const checkFunc = this.getAnnotationCollection
-                console.log(checkFunc)
                 return new Promise((resolve, reject) => {
                   if (!value.length) {
                     resolve([ 'This field is required!' ])
@@ -59,7 +58,7 @@ export default {
 
                   // Check that the IRI does not already exist
                   /* eslint-disable handle-callback-err */
-                  return checkFunc(value).then(r => {
+                  checkFunc(value).then(r => {
                     resolve([
                       `An AnnotationCollection is already using this slug ` +
                       `(see ${r.data.id})`
@@ -110,7 +109,8 @@ export default {
       return this.$swal({
         title: `Confirm`,
         html: `An AnnotationCollection is already linked to the collection
-        microsite for this purpose (see ${currentIri}).<br><br>
+        microsite for this purpose:<br><br>
+        <a href="${currentIri}" _target="blank">${currentIri}</a><br><br>
         Once AnnotationCollections have been generated for a particular
         purpose they should not normally be changed, especially without
         first migrating the data.<br><br>
@@ -119,7 +119,9 @@ export default {
         showCancelButton: true,
         reverseButtons: true,
         showLoaderOnConfirm: true,
-        preConfirm: () => this.addAnnotationCollection
+        preConfirm: () => {
+          return this.addAnnotationCollection()
+        }
       }).catch(err => {
         if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
           this.$notifications.error({ message: err.message })
