@@ -110,7 +110,7 @@ export default {
         title: `Confirm`,
         html: `An AnnotationCollection is already linked to the collection
         microsite for this purpose:<br><br>
-        <a href="${currentIri}" _target="blank">${currentIri}</a><br><br>
+        <a href="${currentIri}" target="_blank">${currentIri}</a><br><br>
         Once AnnotationCollections have been generated for a particular
         purpose they should not normally be changed, especially without
         first migrating the data.<br><br>

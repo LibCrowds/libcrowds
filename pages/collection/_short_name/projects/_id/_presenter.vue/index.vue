@@ -155,7 +155,7 @@
         <p>
           For the more technically inclined, the data will also be available
           via the API at
-          <a :href="currentCollection.info.annotations.tags" _target="blank">
+          <a :href="currentCollection.info.annotations.tags" target="_blank">
             {{ currentCollection.info.annotations.tags }}
           </a>
         </p>
