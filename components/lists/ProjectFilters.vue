@@ -1,6 +1,5 @@
 <template>
   <div class="project-filters-list">
-    {{ projectFilters }}
     <b-badge
       v-for="(value, name) in projectFilters"
       :key="name"
