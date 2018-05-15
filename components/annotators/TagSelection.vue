@@ -32,10 +32,7 @@ export default {
       tagsLoading: false,
       foundTags: [],
       selectedTags: [],
-      container: null,
-      errorMessage: `Oh no, our tagging system seems to be broken. Sorry about
-        that, we'll get it fixed as soon as possible. You can still continue
-        using the result of the application as normal.`
+      container: null
     }
   },
 
@@ -81,7 +78,7 @@ export default {
           }
         })
       } catch (err) {
-        this.$notifications.error({ message: this.errorMessage })
+        this.handleError(err)
         return
       }
 
@@ -109,7 +106,7 @@ export default {
         this.container = await this.getContainer()
       }
 
-      if (!query || !query.length) {
+      if (!query || !query.length || !this.container) {
         return
       }
 
@@ -125,8 +122,7 @@ export default {
         }
         this.tagsLoading = false
       }).catch(err => {
-        console.log(err)
-        this.$notifications.error({ message: this.errorMessage })
+        this.handleError(err)
       })
     },
 
@@ -181,9 +177,7 @@ export default {
         this.selectedTags.push(r.data)
         this.tagsLoading = false
       }).catch(err => {
-        console.log(err)
-        this.$notifications.error({ message: this.errorMessage })
-        this.tagsLoading = false
+        this.handleError(err)
       })
     },
 
@@ -225,9 +219,27 @@ export default {
      */
     updateTag (tag) {
       return this.$explicates.updateAnnotation(tag.id, tag).catch(err => {
-        console.log(err)
-        this.$notifications.error({ message: this.errorMessage })
+        this.handleError(err)
       })
+    },
+
+    /**
+     * Handle an error.
+     *
+     * If the Annotation Server fails we probably just want to disable this
+     * tagging function, so display a friendly error message and emit the
+     * error event.
+     * @param {Object} err
+     *   The error.
+     */
+    handleError (err) {
+      const errorMessage = `Oh no, our tagging system seems to be broken.
+        Sorry about that, we'll get it fixed as soon as possible. You can
+        still continue using the result of the application as normal.`
+      this.tagsLoading = false
+      this.$emit('error', err)
+      console.error(err)
+      this.$notifications.error({ message: errorMessage })
     }
   }
 }
