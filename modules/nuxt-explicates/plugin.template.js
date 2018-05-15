@@ -44,6 +44,25 @@ class Explicates {
   }
 
   /**
+   * Get an AnnotationCollection by slug.
+   * @param {String} slug
+   *   The IRI part of the AnnotationCollection.
+   * @param {Boolean} minimal
+   *   Prefer a minimal container.
+   * @param {Boolean} iris
+   *   Prefer contained IRIs.
+   */
+  getCollectionBySlug (slug, minimal = false, iris = false) {
+    const endpoint = '/annotations/' + slug + '/'
+    const headers = {
+      prefer: this._getPreferHeader(minimal, iris)
+    }
+    return this.client.get(endpoint, {
+      headers: headers
+    })
+  }
+
+  /**
    * Update an AnnotationCollection.
    * @param {String} iri
    *   The IRI of a the AnnotationCollection.

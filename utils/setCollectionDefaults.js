@@ -51,6 +51,7 @@ export const setCollectionDefaults = function (collection) {
         'This project is now complete.\n\n The data will be processed ' +
         'and used to directly enabled future research.'
     },
+    annotations: {},
     volumes: [],
     templates: [],
     project_filters: []
