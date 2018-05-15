@@ -9,7 +9,7 @@
     :options="foundTags"
     :multiple="true"
     :searchable="true"
-    :loading="tagSearchLoading"
+    :loading="tagsLoading"
     :internal-search="false"
     :limit="10"
     :show-no-results="false"
@@ -29,7 +29,7 @@ import localConfig from '@/local.config'
 export default {
   data () {
     return {
-      tagSearchLoading: false,
+      tagsLoading: false,
       foundTags: [],
       selectedTags: [],
       container: null,
@@ -123,7 +123,7 @@ export default {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
         }
-        this.tagSearchLoading = false
+        this.tagsLoading = false
       }).catch(err => {
         console.log(err)
         this.$notifications.error({ message: this.errorMessage })
@@ -169,18 +169,21 @@ export default {
         type: 'Annotation',
         body: {
           type: 'TextualBody',
-          value: 'foo',
+          value: value,
           format: 'text/plain'
         },
         target: [this.getTarget()]
       }
 
+      this.tagsLoading = true
       return this.$explicates.createAnnotation(this.container.id, newTag).then(r => {
         this.$notifications.success({ message: 'Tag added' })
         this.selectedTags.push(r.data)
+        this.tagsLoading = false
       }).catch(err => {
         console.log(err)
         this.$notifications.error({ message: this.errorMessage })
+        this.tagsLoading = false
       })
     },
 
@@ -192,7 +195,9 @@ export default {
     selectTag (tag) {
       const newTarget = this.getTarget()
       tag.target.push(newTarget)
-      this.updateTag(tag)
+      this.updateTag(tag).then(() => {
+        this.$notifications.success({ message: 'Tag selected' })
+      })
     },
 
     /**
@@ -208,7 +213,9 @@ export default {
         }
         return t.id !== oldTarget.id
       })
-      this.updateTag(tag)
+      this.updateTag(tag).then(() => {
+        this.$notifications.success({ message: 'Tag removed' })
+      })
     },
 
     /**
@@ -217,10 +224,7 @@ export default {
      *   The tag.
      */
     updateTag (tag) {
-      return this.$explicates.updateAnnotation(tag.id, tag).then(r => {
-        this.$notifications.success({ message: 'Tag updated' })
-        this.selectedTags.push(r.data)
-      }).catch(err => {
+      return this.$explicates.updateAnnotation(tag.id, tag).catch(err => {
         console.log(err)
         this.$notifications.error({ message: this.errorMessage })
       })
