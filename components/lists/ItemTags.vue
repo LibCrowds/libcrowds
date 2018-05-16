@@ -50,15 +50,15 @@ export default {
       return this.$explicates.searchAnnotations({
         'collection.id': containerId,
         contains: {
-          target: [this.getTarget()]
+          target: this.getTarget()
         }
       }).then(r => {
         if (r.data.total > 0) {
+          this.message = ''
           this.tags = r.data.first.items
         } else {
           this.message = 'None'
         }
-        this.message = ''
       }).catch(err => {
         this.message = 'Failed to load tags'
         this.$notifications.flash({ status: 'error', message: err.message })
@@ -69,10 +69,7 @@ export default {
      * Get the target of for searching purposes.
      */
     getTarget () {
-      const source = {
-        id: this.sourceIri,
-        type: this.type
-      }
+      const source = this.sourceIri
 
       if (this.scopeIri && this.scopeIri.length) {
         return {

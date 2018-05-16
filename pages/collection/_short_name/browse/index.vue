@@ -1,28 +1,34 @@
 <template>
-  <div id="collection-browse">
+  <section id="collection-browse">
     <h1 class="text-center">{{ title }}</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
 
-    <div v-if="hasAnnotations">
-      <b-card-group
-        deck
-        v-for="(batch, index) in tagAlbums"
-        :key="index">
-        <album-card
-          v-for="tagAlbum in batch"
-          v-if="tagAlbum"
-          :key="tagAlbum.id"
-          :thumbnail="tagAlbum.thumbnail"
-          :title="tagAlbum.title"
-          :description="`${tagAlbum.count} items`">
-        </album-card>
-      </b-card-group>
+    <div v-if="hasTagAnnotations">
+      <no-ssr>
+        <div
+          v-masonry transition-duration="1s"
+          item-selector=".image-grid-item"
+          class="image-grid">
+          <div
+            v-for="(url, index) in uniqueImageURLs"
+            :key="index"
+            v-masonry-tile
+            class="image-grid-item"
+            column-width="#image-grid-column"
+            gutter="#image-grid-gutter"
+            @click="showImagePreview">
+            <img :src="url" class="img-fluid">
+          </div>
+        </div>
+      </no-ssr>
+      <div id="image-grid-column"></div>
+      <div id="image-grid-gutter"></div>
 
       <infinite-load-annotations
-        v-model="annotations"
+        v-model="tagAnnotations"
         :container-iri="currentCollection.info.annotations.tags">
       </infinite-load-annotations>
     </div>
@@ -30,15 +36,13 @@
     <p class="lead text-center" v-else>
       Sorry, user tags haven't been configured for this collection yet.
     </p>
-  </div>
+  </section>
 </template>
 
 <script>
 import marked from 'marked'
-import { batch } from '@/utils/batch'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import AlbumCard from '@/components/Cards/Album'
 import InfiniteLoadAnnotations from '@/components/InfiniteLoadAnnotations'
 
 export default {
@@ -49,12 +53,11 @@ export default {
   data () {
     return {
       title: 'Browse',
-      annotations: []
+      tagAnnotations: []
     }
   },
 
   components: {
-    AlbumCard,
     InfiniteLoadAnnotations
   },
 
@@ -71,45 +74,41 @@ export default {
       return `Browse ${this.currentCollection.info.brand} albums.`
     },
 
-    tagAlbums () {
-      const tagAlbums = this.annotations.map(anno => {
-        return {
-          id: anno.id,
-          title: anno.body.value,
-          count: anno.target.length,
-          thumbnail: this.getTagThumbnail(anno.target[0])
-        }
-      })
-      return batch(tagAlbums, 3, null)
+    hasTagAnnotations () {
+      return this.currentCollection.info.annotations.hasOwnProperty('tags')
     },
 
-    hasAnnotations () {
-      return this.currentCollection.info.annotations.hasOwnProperty('tags')
+    uniqueImageURLs () {
+      const urls = this.tagAnnotations.map(anno => {
+        if (typeof anno.target === 'object') {
+          // Return smaller thumbnails for IIIF images
+          return anno.target.source.replace(/(max)(?!.*\1)/, '240,')
+        }
+        return anno.target
+      })
+      return Array.from(new Set(urls))
     }
   },
 
   methods: {
     /**
-     * Get a tag thumbnail based on target.
-     * @param {Object} target
-     *   The target.
+     * Expand image to show preview with details.
      */
-    getTagThumbnail (target) {
-      const url = typeof target.source === 'object'
-        ? target.source.id
-        : target.source
-
-      // Return smaller thumbnail for IIIF images
-      if (target.hasOwnProperty('scope')) {
-        return url.replace(/(max)(?!.*\1)/, '240,')
-      }
-      return url
-    },
-
-    /**
-     * Markdown processor.
-     */
-    marked
+    showImagePreview () {
+      console.log('show preview')
+    }
   }
 }
 </script>
+
+<style lang="scss">
+.image-grid {
+  #image-grid-gutter {
+    width: 12px;
+  }
+
+  #image-grid-column {
+    max-width: 200px;
+  }
+}
+</style>

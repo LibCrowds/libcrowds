@@ -141,8 +141,8 @@
         v-if="currentCollection.info.annotations.tags">
         <p>
           The tags added below will help researchers locate items of
-          particular interest, by being used to to generate shareable albums,
-          which can be accessed via the
+          particular interest by being used to generate keywords that can
+          be searched via the
           <nuxt-link
             :to="{
               name: 'collection-short_name-browse',
@@ -160,7 +160,7 @@
           </a>
         </p>
         <p>
-          Tags can be added by anyone but once confirmed can only be deleted
+          Tags can be added by anyone but, once confirmed, can only be deleted
           by administrators. If you have spotted a tag that you think is
           incorrect or should be removed for any reason please contact
           <a :href="`mailto:${localConfig.email}`">
