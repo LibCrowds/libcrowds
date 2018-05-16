@@ -66,7 +66,7 @@ export default {
     reset () {
       this.$emit('input', [])
       this.$nextTick(() => {
-        this.page = 1
+        this.page = 0
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
       })
     },
