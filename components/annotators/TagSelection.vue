@@ -61,7 +61,6 @@ export default {
       }
 
       const safeQuery = query.replace(/[^\w\s&]/gi, '')
-      console.log(safeQuery)
       const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
 

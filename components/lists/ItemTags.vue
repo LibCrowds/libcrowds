@@ -56,7 +56,6 @@ export default {
         if (r.data.total > 0) {
           this.tags = r.data.first.items
         } else {
-          console.log('none')
           this.message = 'None'
         }
         this.message = ''

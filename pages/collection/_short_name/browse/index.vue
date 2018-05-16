@@ -6,20 +6,30 @@
       <hr class="mx-0">
     </span>
 
-    <b-card-group
-      deck
-      v-for="(batch, index) in batchedTags"
-      :key="index">
-      <album-card
-        v-for="tag in batch"
-        v-if="tag"
-        :key="tag.id"
-        :collection="currentCollection"
-        :tileSources="tag.target"
-        :title="tag.body.value"
-        :description="`${tag.target.length} items`">
-      </album-card>
-    </b-card-group>
+    <div v-if="hasAnnotations">
+      <b-card-group
+        deck
+        v-for="(batch, index) in tagAlbums"
+        :key="index">
+        <album-card
+          v-for="tagAlbum in batch"
+          v-if="tagAlbum"
+          :key="tagAlbum.id"
+          :thumbnail="tagAlbum.thumbnail"
+          :title="tagAlbum.title"
+          :description="`${tagAlbum.count} items`">
+        </album-card>
+      </b-card-group>
+
+      <infinite-load-annotations
+        v-model="annotations"
+        :container-iri="currentCollection.info.annotations.tags">
+      </infinite-load-annotations>
+    </div>
+
+    <p class="lead text-center" v-else>
+      Sorry, user tags haven't been configured for this collection yet.
+    </p>
   </div>
 </template>
 
@@ -29,6 +39,7 @@ import { batch } from '@/utils/batch'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import AlbumCard from '@/components/Cards/Album'
+import InfiniteLoadAnnotations from '@/components/InfiniteLoadAnnotations'
 
 export default {
   layout: 'collection-tabs',
@@ -37,23 +48,14 @@ export default {
 
   data () {
     return {
-      title: 'Browse'
+      title: 'Browse',
+      annotations: []
     }
   },
 
-  asyncData ({ app, params, error }) {
-    const endpoint = `/lc/categories/${params.short_name}/tags`
-    return app.$axios.$get(endpoint).then(data => {
-      return {
-        tags: data.tags
-      }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
   components: {
-    AlbumCard
+    AlbumCard,
+    InfiniteLoadAnnotations
   },
 
   computed: {
@@ -69,21 +71,45 @@ export default {
       return `Browse ${this.currentCollection.info.brand} albums.`
     },
 
-    batchedTags () {
-      return batch(this.tags, 2, null)
+    tagAlbums () {
+      const tagAlbums = this.annotations.map(anno => {
+        return {
+          id: anno.id,
+          title: anno.body.value,
+          count: anno.targets.length,
+          thumbnail: this.getTagThumbnail(anno.targets[0])
+        }
+      })
+      return batch(tagAlbums, 3, null)
+    },
+
+    hasAnnotations () {
+      return this.currentCollection.info.annotations.hasOwnProperty('tags')
     }
   },
 
   methods: {
     /**
+     * Get a tag thumbnail based on target.
+     * @param {Object} target
+     *   The target.
+     */
+    getTagThumbnail (target) {
+      const url = typeof target.source === 'object'
+        ? target.source.id
+        : target.source
+
+      // Return smaller thumbnail for IIIF images
+      if (target.hasOwnProperty('scope')) {
+        return url.replace(/(max)(?!.*\1)/, '240,')
+      }
+      return url
+    },
+
+    /**
      * Markdown processor.
      */
     marked
-  },
-
-  mounted () {
-    const nodes = document.querySelectorAll('.collection-nav-item')
-    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }
 </script>

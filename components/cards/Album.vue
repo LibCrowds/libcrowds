@@ -5,13 +5,6 @@
     :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null"
     class="album-card my-3">
-    <nuxt-link
-      :to="{
-        name: 'collection-short_name-browse',
-        params: {
-          short_name: collection.short_name
-        }
-      }">
       <div class="album-card-img main-app-bg" :style="cardBgStyle">
       </div>
       <div class="card-body">
@@ -29,7 +22,6 @@
           <icon name="circle-thin" scale="2"></icon>
         </icon>
       </div>
-    </nuxt-link>
   </b-card>
 </template>
 
@@ -39,11 +31,7 @@ import 'vue-awesome/icons/circle-thin'
 
 export default {
   props: {
-    collection: {
-      type: Object,
-      required: true
-    },
-    tileSources: {
+    thumbnail: {
       type: Array,
       required: true
     },
@@ -59,11 +47,8 @@ export default {
 
   computed: {
     cardBgStyle () {
-      if (!this.collection.info || !this.collection.info.background) {
-        return
-      }
       return {
-        backgroundImage: `url('${this.collection.info.background}')`
+        backgroundImage: `url('${this.thumbnail}')`
       }
     }
   }

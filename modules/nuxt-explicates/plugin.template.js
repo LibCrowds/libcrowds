@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Z_NULL } from 'zlib';
 
 class Explicates {
   constructor (options) {
@@ -34,12 +35,17 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  getCollection (iri, minimal = false, iris = false) {
+  getCollection (iri, page = null, minimal = false, iris = false) {
     const headers = {
       prefer: this._getPreferHeader(minimal, iris)
     }
+    const params = {}
+    if (page !== null) {
+      params.page = page
+    }
     return this.client.get(iri, {
-      headers: headers
+      headers: headers,
+      params: params
     })
   }
 
