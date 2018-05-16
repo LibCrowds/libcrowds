@@ -76,8 +76,8 @@ export default {
         return {
           id: anno.id,
           title: anno.body.value,
-          count: anno.targets.length,
-          thumbnail: this.getTagThumbnail(anno.targets[0])
+          count: anno.target.length,
+          thumbnail: this.getTagThumbnail(anno.target[0])
         }
       })
       return batch(tagAlbums, 3, null)
