@@ -1,5 +1,6 @@
 <template>
   <multiselect
+    ref="multiselect"
     v-model="selectedTags"
     track-by="id"
     placeholder="Type to search"
@@ -80,8 +81,15 @@ export default {
      *   The query string.
      */
     searchTags (query) {
-      if (!query.length) {
+      if (!query || !query.length) {
         return
+      }
+
+      const parts = query.split(' ')
+
+      if (parts.length > 1) {
+        this.$refs.multiselect.search = parts[1]
+        return this.addTag(parts[0])
       }
 
       return this.searchAnnotations(query).then(r => {
@@ -108,10 +116,6 @@ export default {
       const suffix = strict ? '' : ':*'
       const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
-
-      if (query.split(' ').length > 1) {
-        return this.addTag(query.split(' ')[0])
-      }
 
       return this.$explicates.searchAnnotations({
         fts: `body::${safeQuery}${suffix}`,
@@ -187,8 +191,12 @@ export default {
      * Add a new tag.
      * @param {String} value
      *   The tag value.
+     * @param {String} id
+     *   The multiselect item id.
+     * @param {Boolean} isNew
+     *   New if adding a new tag, false if selecting.
      */
-    async addTag (value, isNew = true) {
+    async addTag (value, id, isNew = true) {
       const exists = await this.checkTagExists(value)
       if (exists) {
         this.$notifications.info({ message: 'Tag already exists' })
