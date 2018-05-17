@@ -478,12 +478,27 @@ export default {
           }
         })
       }
+    },
+
+    /**
+     * Show tutorial, unless disabled by the current user.
+     */
+    showInitialTutorial () {
+      console.log(this.currentUser.info.hide_tutorials)
+      if (
+        isEmpty(this.currentUser) ||
+        !this.currentUser.info.hasOwnProperty('hide_tutorials') ||
+        this.currentUser.info.hide_tutorials === false
+      ) {
+        this.$refs.help.show()
+      }
     }
   },
 
   mounted () {
     this.validateTemplate()
     this.loadTask()
+    this.showInitialTutorial()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   },
 
