@@ -387,6 +387,7 @@ export default {
   mounted () {
     this.validateTemplate()
     this.loadTask()
+    this.$refs.help.show()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   },
 
