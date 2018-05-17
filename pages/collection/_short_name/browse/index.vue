@@ -57,7 +57,8 @@
       @hidden="selectedImageData = {}">
       <b-container
         fluid
-        class="bg-muted">
+        class="bg-muted"
+        v-if="selectedImageData.url">
         <b-row>
           <b-col xs="12" lg="6" class="text-center">
               <img
