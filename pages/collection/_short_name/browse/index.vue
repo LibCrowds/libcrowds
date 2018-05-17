@@ -7,49 +7,57 @@
     </span>
 
     <div v-if="hasTagAnnotations">
+      <search-tags
+        :container-iri="currentCollection.info.annotations.tags"
+        :value="selectedTags"
+        class="mb-2"
+        @input="$refs.grid.filter('filterByTag')">
+      </search-tags>
+
       <no-ssr>
-        <ul
-          v-masonry transition-duration="1s"
-          item-selector=".img-grid-item"
-          class="img-grid">
-          <li
-            v-for="(url, index) in uniqueImageURLs"
+        <isotope
+          ref="grid"
+          v-images-loaded:on.progress="layout"
+          :options="imageGridOptions"
+          :list="uniqueImageData">
+          <div
+            v-for="(item, index) in uniqueImageData"
             :key="index"
-            v-masonry-tile
             class="img-grid-item"
-            column-width="#img-grid-column"
-            gutter="#img-grid-gutter"
-            @click="showImagePreview">
-            <img :src="url" class="img-fluid">
-            <div class="img-grid-expander">
-              <div class="img-grid-expander-inner">
-                <span class="img-grid-close"></span>
-                <div class="img-grid-fullimg">
-                  <div class="img-grid-loading"></div>
-                  <img src="images/2.jpg">
-                </div>
-                <div class="img-grid-details">
-                  <h3>Veggies sunt bona vobis</h3>
-                  <p>Komatsuna prairie turnip wattle seed artichoke mustard horseradish taro rutabaga ricebean carrot black-eyed pea turnip greens beetroot yarrow watercress kombu.</p>
-                  <a href="http://cargocollective.com/jaimemartinez/">Visit website</a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+            v-b-modal['previewModalId']>
+            <img :src="item.url" class="img-fluid">
+          </div>
+        </isotope>
       </no-ssr>
-      <div id="img-grid-column"></div>
-      <div id="img-grid-gutter"></div>
 
       <infinite-load-annotations
         v-model="tagAnnotations"
-        :container-iri="currentCollection.info.annotations.tags">
+        :container-iri="currentCollection.info.annotations.tags"
+        no-results="It looks like nothing has been tagged yet!"
+        no-more-results="">
       </infinite-load-annotations>
     </div>
 
     <p class="lead text-center" v-else>
       Sorry, user tags haven't been configured for this collection yet.
     </p>
+
+    <b-modal
+      lazy
+      :id="previewModalId"
+      title="Item Preview"
+      size="lg"
+      hide-footer
+      hide-header
+      :header-text-variant="darkMode ? 'white' : null"
+      :header-bg-variant="darkMode ? 'dark' : null"
+      :body-bg-variant="darkMode ? 'dark' : null"
+      :body-text-variant="darkMode ? 'white' : null"
+      :footer-bg-variant="darkMode ? 'dark' : null"
+      :footer-text-variant="darkMode ? 'white' : null">
+      Foo
+    </b-modal>
+
   </section>
 </template>
 
@@ -58,6 +66,7 @@ import marked from 'marked'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import InfiniteLoadAnnotations from '@/components/InfiniteLoadAnnotations'
+import SearchTags from '@/components/data/SearchTags'
 
 export default {
   layout: 'collection-tabs',
@@ -67,12 +76,16 @@ export default {
   data () {
     return {
       title: 'Browse',
-      tagAnnotations: []
+      tagAnnotations: [],
+      selectedTags: [],
+      selectedImageData: {},
+      previewModalId: 'image-preview-modal'
     }
   },
 
   components: {
-    InfiniteLoadAnnotations
+    InfiniteLoadAnnotations,
+    SearchTags
   },
 
   computed: {
@@ -92,15 +105,50 @@ export default {
       return this.currentCollection.info.annotations.hasOwnProperty('tags')
     },
 
-    uniqueImageURLs () {
-      const urls = this.tagAnnotations.map(anno => {
-        if (typeof anno.target === 'object') {
-          // Return smaller thumbnails for IIIF images
-          return anno.target.source.replace(/(max)(?!.*\1)/, '240,')
+    selectedTagValues () {
+      console.log(this.selectedTags.map(anno => anno.body.value), this.selectedTags.map(anno => (anno.body.value)))
+      return this.selectedTags.map(anno => anno.body.value)
+    },
+
+    uniqueImageData () {
+      const data = {}
+      for (let anno of this.tagAnnotations) {
+        const target = this.getImageSource(anno)
+        if (data.hasOwnProperty(target)) {
+          data[target].tags.push(anno.body.value)
+        } else {
+          data[target] = {
+            tags: [anno.body.value],
+            target: anno.target,
+            manifest: anno.target === 'object'
+              ? anno.scope
+              : null
+          }
         }
-        return anno.target
+      }
+      return Object.keys(data).map(key => {
+        return {
+          url: key,
+          tags: data[key].tags,
+          manifest: data[key].manifest,
+          target: data[key].target
+        }
       })
-      return Array.from(new Set(urls))
+    },
+
+    imageGridOptions () {
+      return {
+        layout: 'masonry',
+        getFilterData: {
+          filterByTag (itemElem) {
+            const a = new Set(itemElem.tags)
+            const b = new Set(this.selectedTags)
+            const intersection = new Set([...a].filter(x => b.has(x)))
+            console.log(intersection)
+            return intersection.length > 0
+          }
+        }
+      }
     }
   },
 
@@ -110,105 +158,70 @@ export default {
      */
     showImagePreview () {
       console.log('show preview')
+    },
+
+    /**
+     * Set the image grid layout (after images have loaded).
+     */
+    layout () {
+      this.$nextTick(() => {
+        this.$refs.grid.layout('masonry')
+      })
+    },
+
+    /**
+     * Return the image source URI from an Annotation target.
+     * @param {Object} tag
+     *   The tag.
+     */
+    getImageSource (tag) {
+      if (typeof tag.target === 'object') {
+        // Return smaller thumbnails for IIIF images
+        return tag.target.source.replace(/(max)(?!.*\1)/, '240,')
+      }
+      return tag.target
+    },
+
+    async getImageMetadata () {
+      const containerIri = this.currentCollection.info.annotations.tags
+      const idParts = containerIri.split('/')
+      const containerId = idParts[idParts.length - 2]
+      const metadata = {}
+      let manifest = null
+
+      // Get manifest
+      if (this.selectedImageData.manifest) {
+        try {
+          manifest = await this.$axios.$get(this.selectedImageData.manifest)
+        } catch (err) {
+          this.$notifications.error({ message: err.message })
+        }
+        metadata.title = manifest.label
+        metadata.description = manifest.label
+      } else {
+        metadata.title = `A ${this.currentCollection.name} image`
+        metadata.description = 'Used in the projects on this platform'
+      }
+
+      // Get all tags (OK, a max of 1000 or whatever the page limit is)
+      let tagsResponse = null
+      try {
+        tagsResponse = await this.$explicates.searchAnnotations({
+          'collection.id': containerId,
+          contains: {
+            target: this.selectedImageData.target
+          }
+        })
+      } catch (err) {
+        this.$notifications.error({ message: err.message })
+      }
+
+      metadata.tags = tagsResponse.total === 0
+        ? []
+        : new Set(tagsResponse.first.items.map(anno => anno.body.value))
+
+      return metadata
     }
   }
 }
 </script>
-
-<style lang="scss">
-.img-grid {
-  .img-grid-item {
-    list-style: none;
-  }
-  #img-grid-gutter {
-    width: 12px;
-  }
-
-  #img-grid-column {
-    max-width: 200px;
-  }
-
-  .img-grid-expander {
-    position: absolute;
-    background: #ddd;
-    top: auto;
-    left: 0;
-    width: 100%;
-    margin-top: 10px;
-    text-align: left;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .og-grid li.og-expanded > img::after {
-    top: auto;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-bottom-color: #ddd;
-    border-width: 15px;
-    left: 50%;
-    margin: -20px 0 0 -15px;
-  }
-
-  .img-grid-expander-inner {
-    padding: 50px 30px;
-    height: 100%;
-  }
-
-  .img-grid-close {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-  }
-
-  .img-grid-close::before,
-  .img-grid-close::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    height: 1px;
-    background: #888;
-    transform: rotate(45deg);
-  }
-
-  .img-grid-close::after {
-    transform: rotate(-45deg);
-  }
-
-  .img-grid-close:hover::before,
-  .img-grid-close:hover::after {
-    background: #333;
-  }
-
-  .img-grid-fullimg,
-  .img-grid-details {
-    width: 50%;
-    float: left;
-    height: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .img-grid-details {
-    padding: 0 40px 0 20px;
-  }
-
-  .img-grid-fullimg {
-    text-align: center;
-  }
-
-  .img-grid-fullimg img {
-    display: inline-block;
-    max-height: 100%;
-    max-width: 100%;
-  }
-}
-</style>

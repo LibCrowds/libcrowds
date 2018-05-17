@@ -179,12 +179,12 @@
         <p>
           Begin typing in the box below to add tags.
         </p>
-        <tag-selection-annotator
+        <Select-tags
           :container-iri="currentCollection.info.annotations.tags"
           :source-iri="task.info.url"
           :scope-iri="task.info.manifest"
           type="Image">  <!-- TODO: Replace with content check -->
-        </tag-selection-annotator>
+        </select-tags>
       </b-container>
       <b-container class="py-2 px-3" v-else>
         <p>
@@ -215,7 +215,7 @@ import ClipboardButton from '@/components/buttons/Clipboard'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
-import TagSelectionAnnotator from '@/components/annotators/TagSelection'
+import SelectTags from '@/components/data/SelectTags'
 import ItemTagsList from '@/components/lists/ItemTags'
 
 export default {
@@ -242,6 +242,13 @@ export default {
       selectedTags: [],
       localConfig: localConfig
     }
+  },
+
+  components: {
+    SocialMediaButtons,
+    ClipboardButton,
+    SelectTags,
+    ItemTagsList
   },
 
   fetch ({ params, app, error, store }) {
@@ -279,13 +286,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  components: {
-    SocialMediaButtons,
-    ClipboardButton,
-    TagSelectionAnnotator,
-    ItemTagsList
   },
 
   computed: {

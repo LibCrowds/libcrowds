@@ -56,8 +56,10 @@ export default {
         $state.complete()
         return
       }
+
       this.page++
       this.$emit('input', this.value.concat(response.data.items))
+      $state.loaded()
     },
 
     /**

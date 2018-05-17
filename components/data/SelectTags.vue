@@ -1,8 +1,6 @@
 <template>
   <multiselect
     v-model="selectedTags"
-    id="ajax"
-    label="name"
     track-by="id"
     placeholder="Type to search"
     open-direction="bottom"
@@ -31,8 +29,7 @@ export default {
     return {
       tagsLoading: false,
       foundTags: [],
-      selectedTags: [],
-      container: null
+      selectedTags: []
     }
   },
 
@@ -111,6 +108,10 @@ export default {
       const suffix = strict ? '' : ':*'
       const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
+
+      if (query.split(' ').length > 1) {
+        return this.addTag(query.split(' ')[0])
+      }
 
       return this.$explicates.searchAnnotations({
         fts: `body::${safeQuery}${suffix}`,
