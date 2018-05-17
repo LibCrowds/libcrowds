@@ -37,7 +37,10 @@ export const setCollectionDefaults = function (collection) {
         'Custom datasets are configured by administrators and provide a ' +
         'view of all of the final annotations data within the collection.',
       projects: '',
-      browse: `Browse image albums from ${collection.name}.`
+      browse: `Browse items from the projects hosted on ${collection.name}.` +
+        '\n\nYou can use the search box to locate items of particular ' +
+        'interest, then click on an item to view additional details and ' +
+        'a link to the source.'
     },
     pubished: false,
     celebrations: {
