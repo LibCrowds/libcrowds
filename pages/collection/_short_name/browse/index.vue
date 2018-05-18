@@ -63,7 +63,7 @@
         <b-row>
           <b-col xs="12" lg="6" class="text-center">
               <img
-                :src="selectedImageData.url"
+                :src="selectedImageData.thumbnail"
                 class="img-fluid pb-4 px-4 pt-1">
           </b-col>
           <b-col
@@ -271,7 +271,7 @@ export default {
         this.$axios.$get('/api/task', {
           params: {
             info: {
-              url: item.thumbnail
+              url: item.url
             }
           }
         }).then(data => {
