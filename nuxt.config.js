@@ -119,6 +119,8 @@ const config = {
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },
+    { src: '~/plugins/vue-images-loaded', ssr: false },
+    { src: '~/plugins/vue-isotope', ssr: false },
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
     { src: '~/plugins/vue-prevent-parent-scroll' },
@@ -130,7 +132,8 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    ['bootstrap-vue/nuxt', { css: false }]
+    ['bootstrap-vue/nuxt', { css: false }],
+    ['modules/nuxt-explicates/module.js', localConfig.explicates]
   ],
   axios: {
     baseURL: localConfig.pybossaHost,

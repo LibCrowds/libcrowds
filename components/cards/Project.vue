@@ -59,12 +59,12 @@
         {{ project.description }}
       </p>
       <div class="mb-0 px-2 pt-1">
-        <project-tags-list
-          v-if="project.info.tags"
-          :tags="project.info.tags"
+        <project-filters-list
+          v-if="project.info.filters"
+          :project-filters="project.info.filters"
           :collection="collection"
-          @tag-click="onTagClick">
-        </project-tags-list>
+          @click="onProjectFilterClick">
+        </project-filters-list>
       </div>
 
       <div class="progress-container" :id="progressBarId"></div>
@@ -115,7 +115,7 @@ import ProgressBar from 'progressbar.js'
 import ProjectAvatar from '@/components/avatars/Project'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
-import ProjectTagsList from '@/components/lists/ProjectTags'
+import ProjectFiltersList from '@/components/lists/ProjectFilters'
 
 export default {
   data () {
@@ -140,7 +140,7 @@ export default {
     ProjectStatsModal,
     ProjectContribButton,
     ProjectAvatar,
-    ProjectTagsList
+    ProjectFiltersList
   },
 
   computed: {
@@ -151,10 +151,10 @@ export default {
 
   methods: {
     /**
-     * Handle a tag click.
+     * Handle a project filters click.
      */
-    onTagClick (type, value) {
-      this.$emit('tagclick', type, value)
+    onProjectFilterClick (type, value) {
+      this.$emit('filter', type, value)
     }
   },
 

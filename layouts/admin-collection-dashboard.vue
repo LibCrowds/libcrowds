@@ -43,6 +43,15 @@ export default {
             }
           },
           {
+            label: 'Annotations',
+            link: {
+              name: 'admin-collection-short_name-annotations',
+              params: {
+                short_name: this.currentCollection.short_name
+              }
+            }
+          },
+          {
             label: 'Celebrations',
             link: {
               name: 'admin-collection-short_name-celebrations',
@@ -52,9 +61,9 @@ export default {
             }
           },
           {
-            label: 'Tags',
+            label: 'Project Filters',
             link: {
-              name: 'admin-collection-short_name-tags',
+              name: 'admin-collection-short_name-filters',
               params: {
                 short_name: this.currentCollection.short_name
               }

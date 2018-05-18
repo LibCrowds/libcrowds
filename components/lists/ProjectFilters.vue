@@ -1,9 +1,9 @@
 <template>
-  <div class="project-tags-list">
+  <div class="badge-list">
     <b-badge
-      v-for="(value, name) in tags"
+      v-for="(value, name) in projectFilters"
       :key="name"
-      :style="getTagStyle(name)"
+      :style="getFilterStyle(name)"
       @click.prevent="handleClick(name, value)">
       {{ name }}: {{ value }}
     </b-badge>
@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    tags: {
+    projectFilters: {
       type: Object,
       required: true
     },
@@ -29,18 +29,18 @@ export default {
 
   methods: {
     /**
-     * Return the colour of a tag.
+     * Return the colour of a project filter.
      * @param {String} name
-     *   The tag name.
+     *   The filter name.
      */
-    getTagStyle (name) {
-      const tag = this.collection.info.tags.filter(t => {
+    getFilterStyle (name) {
+      const filter = this.collection.info.project_filters.filter(t => {
         return t.name === name
       })[0] || null
 
-      let color = this.darkMode || !tag || !tag.color
+      let color = this.darkMode || !filter || !filter.color
         ? '#868e96'
-        : tag.color
+        : filter.color
 
       return {
         backgroundColor: color,
@@ -51,34 +51,15 @@ export default {
     /**
      * Handle click.
      * @param {String} name
-     *   The tag name.
+     *   The filter name.
      * @param {String} value
-     *   The tag value.
+     *   The filter value.
      */
     handleClick (name, value) {
       if (!this.disabled) {
-        this.$emit('tag-click', name, value)
+        this.$emit('click', name, value)
       }
     }
   }
 }
 </script>
-
-<style lang="scss">
-.project-tags-list {
-  .badge {
-    letter-spacing: 0.2px;
-    font-weight: 400;
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-
-    &:first-child {
-      margin-left: 0;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-</style>
