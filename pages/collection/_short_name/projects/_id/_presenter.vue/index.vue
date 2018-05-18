@@ -168,6 +168,11 @@
           </a>
         </p>
         <p>
+          By default, a new tag will be added for each word. To create tags
+          that comprise multiple words please follow the convention of adding
+          a hyphen between words (e.g. my-long-tag).
+        </p>
+        <p>
           <h6 class="mb-1">Current tags:</h6>
           <item-tags-list
             :container-iri="currentCollection.info.annotations.tags"
