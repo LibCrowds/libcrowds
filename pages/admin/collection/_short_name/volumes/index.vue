@@ -158,7 +158,7 @@ export default {
      *   The volume ID.
      */
     async hasNoProjects (id) {
-      const projectsData = await this.$axios.get('/api/project', {
+      const projectsData = await this.$axios.$get('/api/project', {
         params: {
           category_id: this.collection.id,
           all: 1,

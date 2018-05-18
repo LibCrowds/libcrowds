@@ -54,9 +54,9 @@ export default {
     rootNavItems () {
       return [
         {
-          label: 'Tags',
+          label: 'Filters',
           link: {
-            name: 'admin-project-short_name-tags',
+            name: 'admin-project-short_name-filters',
             params: {
               short_name: this.currentProject.short_name
             }

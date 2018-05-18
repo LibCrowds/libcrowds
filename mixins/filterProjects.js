@@ -5,17 +5,17 @@ export const filterProjects = {
   data () {
     return {
       showCompleted: true,
-      tagModel: {}
+      filterModel: {}
     }
   },
 
   computed: {
     filteredProjects () {
-      // Check tags
+      // Check filters
       let filtered = this.projects.filter(project => {
-        for (let key of Object.keys(this.tagModel)) {
-          project.info.tags = project.info.tags || {}
-          if (project.info.tags[key] !== this.tagModel[key]) {
+        for (let key of Object.keys(this.filterModel)) {
+          project.info.filters = project.info.filters || {}
+          if (project.info.filters[key] !== this.filterModel[key]) {
             return false
           }
         }
@@ -35,20 +35,20 @@ export const filterProjects = {
 
   methods: {
     /**
-     * Set a tag type in the tag model.
+     * Set a filter.
      * @param {String} type
      *   The type.
      * @param {String} value
      *   The value.
      */
-    updateTagModel (type, value) {
-      this.tagModel[type] = value
+    updateFilterModel (type, value) {
+      this.filterModel[type] = value
       // Create a new object to trigger changes
-      this.tagModel = Object.assign({}, this.tagModel)
+      this.filterModel = Object.assign({}, this.filterModel)
     },
 
     clearFilters () {
-      this.tagModel = Object.assign({})
+      this.filterModel = Object.assign({})
     }
   }
 }

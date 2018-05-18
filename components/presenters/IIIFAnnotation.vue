@@ -43,8 +43,8 @@ export default {
       type: Object,
       required: true
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     projectTemplate: {
@@ -60,27 +60,26 @@ export default {
     },
 
     taskOpts () {
-      return this.tasks.map(task => {
-        const opts = Object.assign(this.taskTmpl, task.info)
+      const opts = Object.assign(this.taskTmpl, this.task.info)
 
-        // Build the form for transcribe tasks
-        if (opts.hasOwnProperty('fields_schema')) {
-          opts['form'] = {
-            model: opts.fields_schema.reduce((obj, item) => {
-              obj[item.model] = ''
-              return obj
-            }, {}),
-            schema: {
-              fields: opts.fields_schema
-            }
+      // Build the form for transcribe tasks
+      if (opts.hasOwnProperty('fields_schema')) {
+        opts['form'] = {
+          model: opts.fields_schema.reduce((obj, item) => {
+            obj[item.model] = ''
+            return obj
+          }, {}),
+          schema: {
+            fields: opts.fields_schema
           }
         }
+      }
 
-        // Add the task ID
-        opts.id = task.id
+      // Add the task ID
+      opts.id = this.task.id
 
-        return opts
-      })
+      // LibCrowds viewer currently requires an Array of options
+      return [opts]
     },
 
     sidebarButtons () {
@@ -93,14 +92,14 @@ export default {
     toolbarButtons () {
       return {
         browse: false,
-        'share-alt': 'Share'
+        'share-alt': 'Share',
+        'tags': 'Add Tags'
       }
     },
 
     showViewer () {
       return (
         this.projectTemplateIsValid(this.projectTemplate) &&
-        this.tasks.length &&
         this.taskOpts.length
       )
     }
@@ -128,6 +127,8 @@ export default {
         this.$emit('help')
       } else if (key === 'info') {
         this.$emit('info')
+      } else if (key === 'tags') {
+        this.$emit('tags')
       }
     },
 

@@ -17,6 +17,12 @@
             @click="$emit('share')">
             <icon name="share-alt"></icon>
           </b-btn>
+          <b-btn
+            class="d-flex"
+            variant="outline-primary"
+            @click="$emit('tags')">
+            <icon name="tags"></icon>
+          </b-btn>
         </b-btn-group>
       </b-col>
     </b-row>
@@ -29,8 +35,8 @@
           no-body
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null"
-          v-if="currentTask" >
-          <img :src="currentTask.info.url" class="img-fluid">
+          v-if="task" >
+          <img :src="task.info.url" class="img-fluid">
         </b-card>
 
       </b-col>
@@ -197,6 +203,7 @@
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/info-circle'
 import 'vue-awesome/icons/share-alt'
+import 'vue-awesome/icons/tags'
 import marked from 'marked'
 import capitalize from 'capitalize'
 import isEmpty from 'lodash/isEmpty'
@@ -279,8 +286,8 @@ export default {
       type: Object,
       required: true
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     projectTemplate: {
@@ -296,10 +303,6 @@ export default {
   computed: {
     currentUser () {
       return this.$store.state.currentUser
-    },
-
-    currentTask () {
-      return this.tasks[0]
     },
 
     buttons () {
@@ -542,7 +545,7 @@ export default {
      *   The answer.
      */
     submit (answer) {
-      this.$emit('submit', this.project.id, this.currentTask.id, answer)
+      this.$emit('submit', this.project.id, this.task.id, answer)
       this.reset()
     },
 

@@ -28,7 +28,7 @@
     "clipboard": "^2.0.1",
     "cookie": "^0.3.1",
     "cookieconsent": "^3.0.4",
-    "croppie": "^2.5.0",
+    "croppie": "~2.5.0",
     "cross-env": "^5.0.1",
     "es6-promise": "^4.1.1",
     "express": "~4.16.2",
@@ -54,6 +54,7 @@
     "vue-confetti": "^0.3.3",
     "vue-form-generator": "^2.1.1",
     "vue-gravatar": "^1.1.4",
+    "vue-images-loaded": "^1.1.2",
     "vue-infinite-loading": "^2.2.1",
     "vue-js-toggle-button": "^1.2.0",
     "vue-moment": "^3.0.0",
@@ -63,7 +64,8 @@
     "vue-progress": "^0.2.1",
     "vue-scrollto": "^2.7.8",
     "vue-simplemde": "^0.4.6",
-    "vue-sweetalert": "^0.1.18"
+    "vue-sweetalert": "^0.1.18",
+    "vueisotope": "^3.1.2"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.12",

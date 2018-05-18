@@ -151,6 +151,7 @@ export default {
      */
     loadMore () {
       const limit = 50
+      // For some reason the $get version of this request won't work (?)
       this.$axios.get('/api/announcement', {
         params: {
           published: true,
