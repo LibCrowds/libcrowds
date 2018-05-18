@@ -48,18 +48,14 @@
         <!-- Projects downloads tab -->
         <b-tab title="Projects" no-body>
           <projects-table
+            ref="projects-table"
             :filter="filter"
             :filter-by="filterBy"
-            :collection="collection"
-            ref="projects-table">
+            :collection="collection">
             <template slot="action" slot-scope="project">
-              <b-btn
-                :variant="darkMode ? 'dark' : 'success'"
-                size="sm"
-                v-b-modal="projectDataModalId"
-                @click="projectDownload = project.item">
-                Download
-              </b-btn>
+              <download-project-data
+                :project="project.item">
+              </download-project-data>
             </template>
           </projects-table>
         </b-tab>
@@ -67,16 +63,6 @@
       </b-tabs>
 
     </card-base>
-
-    <data-modal
-      lazy
-      v-if="projectDownload"
-      :items="projectDownloadItems"
-      :endpoint="`/project/${projectDownload.short_name}/tasks/export`"
-      :filename-prefix="projectDownload.short_name"
-      :event-label="projectDownload.name"
-      :modal-id="projectDataModalId">
-    </data-modal>
 
     <data-modal
       lazy
@@ -105,6 +91,7 @@ import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
 import DataModal from '@/components/modals/Data'
 import CardBase from '@/components/cards/Base'
+import DownloadProjectData from '@/components/data/DownloadProjectData'
 
 export default {
   layout: 'collection-tabs',
@@ -123,18 +110,8 @@ export default {
       title: 'Data',
       filter: null,
       filterBy: 'name',
-      projectDownload: null,
       collectionDownload: null,
-      projectDataModalId: 'project-data-download-modal',
       collectionDataModalId: 'collection-data-download-modal',
-      projectDownloadItems: [
-        { dataset: 'Tasks', type: 'task', format: 'csv' },
-        { dataset: 'Tasks', type: 'task', format: 'json' },
-        { dataset: 'Contributions', type: 'task_run', format: 'csv' },
-        { dataset: 'Contributions', type: 'task_run', format: 'json' },
-        { dataset: 'Results', type: 'result', format: 'csv' },
-        { dataset: 'Results', type: 'result', format: 'json' }
-      ],
       collectionTableFields: {
         name: {
           label: 'Motivation',
@@ -159,7 +136,8 @@ export default {
     ToggleCompletedData,
     ProjectsTable,
     DataModal,
-    CardBase
+    CardBase,
+    DownloadProjectData
   },
 
   computed: {
