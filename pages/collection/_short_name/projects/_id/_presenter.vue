@@ -11,8 +11,8 @@
       :task="task"
       @help="showModal('help')"
       @info="showModal('info')"
-      @share="$showModal('share')"
-      @tags="$showModal('tags')"
+      @share="showModal('share')"
+      @tags="showModal('tags')"
       @submit="onSubmit">
     </component>
 
