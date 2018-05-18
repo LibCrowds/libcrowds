@@ -152,8 +152,9 @@
             }">
             Browse
           </nuxt-link> page.
+        </p>
         <p>
-          For the more technically inclined, the data will also be available
+          For programmatic research purposes the data will also be available
           via the API at
           <a :href="currentCollection.info.annotations.tags" target="_blank">
             {{ currentCollection.info.annotations.tags }}
