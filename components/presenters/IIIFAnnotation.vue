@@ -93,7 +93,7 @@ export default {
       return {
         browse: false,
         'share-alt': 'Share',
-        'tags': 'Tags'
+        'tags': 'Add Tags'
       }
     },
 

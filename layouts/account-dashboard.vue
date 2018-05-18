@@ -32,6 +32,15 @@ export default {
           }
         },
         {
+          label: 'Preferences',
+          link: {
+            name: 'account-name-settings-preferences',
+            params: {
+              name: this.currentUser.name
+            }
+          }
+        },
+        {
           label: 'API',
           link: {
             name: 'account-name-settings-api',

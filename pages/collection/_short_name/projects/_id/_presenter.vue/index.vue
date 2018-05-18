@@ -152,8 +152,9 @@
             }">
             Browse
           </nuxt-link> page.
+        </p>
         <p>
-          For the more technically inclined, the data will also be available
+          For programmatic research purposes the data will also be available
           via the API at
           <a :href="currentCollection.info.annotations.tags" target="_blank">
             {{ currentCollection.info.annotations.tags }}
@@ -166,6 +167,11 @@
           <a :href="`mailto:${localConfig.email}`">
             {{ localConfig.email }}.
           </a>
+        </p>
+        <p>
+          By default, a new tag will be added for each word. To create tags
+          that comprise multiple words please follow the convention of adding
+          a hyphen between words (e.g. my-long-tag).
         </p>
         <p>
           <h6 class="mb-1">Current tags:</h6>
@@ -478,12 +484,27 @@ export default {
           }
         })
       }
+    },
+
+    /**
+     * Show tutorial, unless disabled by the current user.
+     */
+    showInitialTutorial () {
+      console.log(this.currentUser.info.hide_tutorials)
+      if (
+        isEmpty(this.currentUser) ||
+        !this.currentUser.info.hasOwnProperty('hide_tutorials') ||
+        this.currentUser.info.hide_tutorials === false
+      ) {
+        this.$refs.help.show()
+      }
     }
   },
 
   mounted () {
     this.validateTemplate()
     this.loadTask()
+    this.showInitialTutorial()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
   },
 
