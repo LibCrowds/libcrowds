@@ -9,10 +9,10 @@
       :project-template="currentTemplate"
       :collection="currentCollection"
       :task="task"
-      @help="$refs.help.show()"
-      @info="$refs.info.show()"
-      @share="$refs.share.show()"
-      @tags="$refs.tags.show()"
+      @help="showModal('help')"
+      @info="showModal('info')"
+      @share="$showModal('share')"
+      @tags="$showModal('tags')"
       @submit="onSubmit">
     </component>
 
@@ -435,6 +435,21 @@ export default {
           this.$notifications.answerSaved()
         }
       })
+    },
+
+    /**
+     * Show a modal, also tracking the event.
+     */
+    showModal (name) {
+      if (this.$ga) {
+        this.$ga.event({
+          eventCategory: 'Project Toolbar',
+          eventAction: `${name}_shown`,
+          eventLabel: this.currentCollection.name,
+          eventValue: 1
+        })
+      }
+      this.$refs[name].show()
     },
 
     /**
