@@ -196,10 +196,17 @@ export default {
             const selectedTagValues = _this.selectedTags.map(anno => {
               return anno.body.value
             })
-            const isSuperset = selectedTagValues.every((val) => {
-              return itemElem.tags.indexOf(val) >= 0
-            })
-            return selectedTagValues.length === 0 || isSuperset
+            const a = new Set(itemElem.tags)
+            const b = new Set(selectedTagValues)
+            const intersection = new Set([...a].filter(x => b.has(x)))
+            return b.size === 0 || intersection.size > 0
+
+            // Uncomment below if we decide to switch to AND style queries
+            //
+            // const isSuperset = selectedTagValues.every((val) => {
+            //   return itemElem.tags.indexOf(val) >= 0
+            // })
+            // return selectedTagValues.length === 0 || isSuperset
           }
         }
       }
