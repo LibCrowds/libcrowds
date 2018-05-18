@@ -329,6 +329,11 @@ export default {
       this.selectedTags = tags
       this.$refs.grid.filter('filterByTag')
     }
+  },
+
+  mounted () {
+    const nodes = document.querySelectorAll('.collection-nav-item')
+    this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
   }
 }
 </script>
