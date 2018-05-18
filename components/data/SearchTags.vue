@@ -13,8 +13,8 @@
     :hide-selected="true"
     :custom-label="getTagLabel"
     no-result="No tags found, try changing the search query"
-    @select="$emit('input', selectedTags)"
-    @remove="$emit('input', selectedTags)"
+    @select="selectTag"
+    @remove="removeTag"
     @search-change="searchTags">
   </multiselect>
 </template>
@@ -30,10 +30,6 @@ export default {
   },
 
   props: {
-    value: {
-      type: Array,
-      required: true
-    },
     containerIri: {
       type: String,
       required: true
@@ -47,10 +43,6 @@ export default {
      *   The query string.
      */
     searchTags (query) {
-      if (!query.length) {
-        return
-      }
-
       return this.searchAnnotations(query).then(r => {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
@@ -75,12 +67,14 @@ export default {
       const suffix = strict ? '' : ':*'
       const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
-
-      return this.$explicates.searchAnnotations({
-        fts: `body::${safeQuery}${suffix}`,
+      const params = {
         'collection.id': containerId,
         contains: contains === null ? {} : contains
-      })
+      }
+      if (safeQuery.length) {
+        params.fts = `body::${safeQuery}${suffix}`
+      }
+      return this.$explicates.searchAnnotations(params)
     },
 
     /**
@@ -109,7 +103,34 @@ export default {
       this.$emit('error', err)
       console.error(err)
       this.$notifications.error({ message: errorMessage })
+    },
+
+    /**
+     * Select a tag.
+     *
+     * The selected values are not actually up-to-date when the @select
+     * event is emitted, so we have to add the selected tag first, then return.
+     * @param {Object} tag
+     *   The tag.
+     */
+    selectTag (tag) {
+      const tagsClone = JSON.parse(JSON.stringify(this.selectedTags))
+      tagsClone.push(tag)
+      this.$emit('change', tagsClone)
+    },
+
+    /**
+     * Select a tag.
+     * @param {Object} tag
+     *   The tag.
+     */
+    removeTag (tag) {
+      this.$emit('change', this.selectedTags)
     }
+  },
+
+  mounted () {
+    this.searchTags('') // Populate initial list
   }
 }
 </script>

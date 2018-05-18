@@ -9,7 +9,7 @@
     <div v-if="hasTagAnnotations">
       <search-tags
         :container-iri="currentCollection.info.annotations.tags"
-        :value="selectedTags"
+        @change="updateFilters"
         class="mb-2">
       </search-tags>
 
@@ -24,7 +24,7 @@
               v-for="(item, index) in uniqueImageData"
               :key="index"
               :src="item.thumbnail"
-              class="img-grid-item img-fluid"
+              class="img-grid-item img-fluid my-1"
               @click="showPreview(item)">
           </isotope>
         </no-ssr>
@@ -154,11 +154,6 @@ export default {
       return this.currentCollection.info.annotations.hasOwnProperty('tags')
     },
 
-    selectedTagValues () {
-      console.log(this.selectedTags.map(anno => anno.body.value), this.selectedTags.map(anno => (anno.body.value)))
-      return this.selectedTags.map(anno => anno.body.value)
-    },
-
     uniqueImageData () {
       const data = {}
       for (let anno of this.tagAnnotations) {
@@ -189,6 +184,7 @@ export default {
     },
 
     imageGridOptions () {
+      const _this = this
       return {
         layout: 'masonry',
         itemSelector: '.img-grid-item',
@@ -197,12 +193,13 @@ export default {
         },
         getFilterData: {
           filterByTag (itemElem) {
-            console.log('selectedTags', this.selectedTags)
-            const a = new Set(itemElem.tags)
-            const b = new Set(this.selectedTags)
-            const intersection = new Set([...a].filter(x => b.has(x)))
-            console.log(intersection)
-            return intersection.length > 0
+            const selectedTagValues = _this.selectedTags.map(anno => {
+              return anno.body.value
+            })
+            const isSuperset = selectedTagValues.every((val) => {
+              return itemElem.tags.indexOf(val) >= 0
+            })
+            return selectedTagValues.length === 0 || isSuperset
           }
         }
       }
@@ -304,10 +301,9 @@ export default {
         item.description = values[0].description
         item.link = values[1]
         this.selectedImageData = item
-        console.log(this.selectedImageData)
         this.$refs.previewModal.show()
       }).catch(err => {
-        console.log(err)
+        console.error(err)
         this.$notifications.error({
           message: `Sorry, we're having trouble loading the additional metadata
             required to display the preview for this item. We will get this
@@ -315,6 +311,16 @@ export default {
             the rest of the platform as normal.`
         })
       })
+    },
+
+    /**
+     * Update filters.
+     * @param {Array} tags
+     *   The selected tags.
+     */
+    updateFilters (tags) {
+      this.selectedTags = tags
+      this.$refs.grid.filter('filterByTag')
     }
   }
 }
