@@ -269,7 +269,7 @@ export default {
     },
 
     /**
-     * Submit the form the event wasn't triggered via a textarea.
+     * Submit the form if the event wasn't triggered via a textarea.
      * @param {Object} evt
      *   The event.
      */

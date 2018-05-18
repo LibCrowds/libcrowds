@@ -2,8 +2,8 @@
   <modal-form
     :form="form"
     :modalId="modalId"
-    title="Add a tag type"
-    @submit="addTag"
+    title="Add a project filter"
+    @submit="addProjectFilter"
     @shown="resetModel">
   </modal-form>
 </template>
@@ -23,15 +23,16 @@ export default {
               label: 'Name',
               type: 'input',
               inputType: 'text',
-              hint: 'The name of the tag type (e.g. Location).',
+              hint: 'The name of the project filter (e.g. Location).',
               required: true,
               validator: (value) => {
-                const currentTags = Object.keys(this.collection.info.tags)
+                const projectFilters = this.collection.info.project_filters
+                const currentFilters = Object.keys(projectFilters)
                 if (!value || !value.length) {
                   return 'This field is required'
                 }
-                if (currentTags.filter(tag => (tag.id === value)).length) {
-                  return 'A tag type already exists with that name'
+                if (currentFilters.filter(f => (f.id === value)).length) {
+                  return 'A project filter already exists with that name'
                 }
               }
             },
@@ -40,7 +41,7 @@ export default {
               label: 'Colour',
               type: 'input',
               inputType: 'color',
-              hint: 'A color for the tag.'
+              hint: 'A color for the project filter.'
             }
           ]
         }
@@ -65,21 +66,21 @@ export default {
 
   methods: {
     /**
-     * Add a tag type.
+     * Add a project filter.
      */
-    addTag () {
-      const tag = {
+    addProjectFilter () {
+      const filter = {
         name: this.form.model.name,
         color: this.form.model.color
       }
 
-      this.collection.info.tags.push(tag)
+      this.collection.info.project_filters.push(filter)
 
       return this.$axios.$put(`/api/category/${this.collection.id}`, {
         info: this.collection.info
       }).then(data => {
-        this.$notifications.success({ message: 'Tag type added' })
-        this.$emit('update', tag)
+        this.$notifications.success({ message: 'Project filter added' })
+        this.$emit('update', filter)
         this.processing = false
       })
     },

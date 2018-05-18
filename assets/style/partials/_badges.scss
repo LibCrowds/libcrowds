@@ -1,0 +1,17 @@
+.badge-list {
+  .badge {
+    letter-spacing: 0.2px;
+    font-weight: 400;
+    font-size: 90%;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

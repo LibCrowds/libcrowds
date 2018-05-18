@@ -53,6 +53,12 @@ export default {
     title () {
       return httpStatus[this.error.statusCode]
     }
+  },
+
+  mounted () {
+    if (process.env.NODE_ENV === 'development') {
+      console.trace(this.error)
+    }
   }
 }
 </script>

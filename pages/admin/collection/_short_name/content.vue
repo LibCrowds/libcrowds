@@ -32,6 +32,15 @@
           :configs="markdownConfig">
         </markdown-editor>
       </div>
+      <div slot="bottom" class="mt-1">
+        <label class="ml-0">
+          Browse page
+        </label>
+        <markdown-editor
+          v-model="collection.info.content.browse"
+          :configs="markdownConfig">
+        </markdown-editor>
+      </div>
     </pybossa-form>
 
   </card-base>

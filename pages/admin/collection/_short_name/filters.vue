@@ -6,8 +6,8 @@
         class="float-md-right"
         size="sm"
         variant="success"
-        v-b-modal="addTagModalId">
-        Add a tag type
+        v-b-modal="addProjectFilterModalId">
+        Add a filter
       </b-btn>
 
       <b-table
@@ -18,32 +18,32 @@
         show-empty
         :dark="darkMode"
         class="border-left-0 border-right-0 border-bottom-0"
-        :items="currentCollection.info.tags"
+        :items="currentCollection.info.project_filters"
         :fields="tableFields">
-        <template slot="color" slot-scope="tag">
+        <template slot="color" slot-scope="filter">
           <div
-            :style="`background-color: ${tag.item.color};`"
+            :style="`background-color: ${filter.item.color};`"
             class="p-1 text-white">
-            <strong>{{ tag.item.color }}</strong>
+            <strong>{{ filter.item.color }}</strong>
           </div>
         </template>
-        <template slot="actions" slot-scope="tag">
+        <template slot="actions" slot-scope="filter">
           <b-btn
             variant="warning"
             size="sm"
-            @click="removeTag(tag.item)">
+            @click="removeProjectFilter(filter.item)">
             Remove
           </b-btn>
         </template>
       </b-table>
     </card-base>
 
-    <add-tag-modal
+    <add-project-filter-modal
       lazy
       :collection="currentCollection"
-      :modal-id="addTagModalId"
+      :modal-id="addProjectFilterModalId"
       @update="refresh">
-    </add-tag-modal>
+    </add-project-filter-modal>
 
   </div>
 </template>
@@ -51,7 +51,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
-import AddTagModal from '@/components/modals/AddTag'
+import AddProjectFilterModal from '@/components/modals/AddProjectFilter'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -61,9 +61,10 @@ export default {
 
   data () {
     return {
-      title: 'Tags',
-      description: 'Manage the available tags for the microsite.',
-      addTagModalId: 'add-tag-modal',
+      title: 'Project Filters',
+      description: 'Manage the available filters for project on the ' +
+        'microsite.',
+      addProjectFilterModalId: 'add-project-filter-modal',
       tableFields: {
         name: {
           label: 'Type',
@@ -77,13 +78,12 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
-      },
-      editedTag: {}
+      }
     }
   },
 
   components: {
-    AddTagModal,
+    AddProjectFilterModal,
     CardBase
   },
 
@@ -95,12 +95,14 @@ export default {
 
   methods: {
     /**
-     * Show the remove tag alert.
+     * Show the remove project filter alert.
+     * @param {Object} filter
+     *   The project filter.
      */
-    removeTag (tag) {
+    removeProjectFilter (filter) {
       this.$swal({
-        title: `Delete Tag`,
-        text: `Are you sure you want to delete the "${tag.name}" tag type?`,
+        title: `Delete Project Filter`,
+        text: `Are you sure you want to delete the "${filter.name}" filter?`,
         type: 'warning',
         showCancelButton: true,
         reverseButtons: true,
@@ -108,7 +110,9 @@ export default {
         preConfirm: () => {
           const endpoint = `/api/category/${this.currentCollection.id}`
           let infoClone = Object.assign({}, this.currentCollection.info)
-          infoClone.tags = infoClone.tags.filter(t => (t !== tag))
+          infoClone.project_filters = infoClone.project_filters.filter(f => {
+            return f !== filter
+          })
 
           return this.$axios.$put(endpoint, {
             info: infoClone
@@ -118,7 +122,7 @@ export default {
         }
       }).then(result => {
         if (result) {
-          this.$notifications.success({ message: `Tag deleted` })
+          this.$notifications.success({ message: `Project Filter deleted` })
           this.refresh()
         }
       }).catch(err => {
@@ -129,7 +133,7 @@ export default {
     },
 
     /**
-     * Handle a tag being updated.
+     * Handle a project filter being updated.
      */
     refresh () {
       this.$refs.table.refresh()
