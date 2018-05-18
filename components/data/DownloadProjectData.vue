@@ -2,7 +2,8 @@
   <b-dropdown
     :text="btnText"
     :variant="btnVariant"
-    :size="btnSize">
+    :size="btnSize"
+    :disabled="processing">
     <b-dropdown-item-button
       v-for="item in items"
       :key="item.dataset"
@@ -31,7 +32,8 @@ export default {
         { dataset: 'Tasks', type: 'task' },
         { dataset: 'Contributions', type: 'task_run' },
         { dataset: 'Results', type: 'result' }
-      ]
+      ],
+      processing: false
     }
   },
 
@@ -69,6 +71,7 @@ export default {
      *   The download format.
      */
     download (type, format) {
+      this.processing = true
       if (this.$ga) {
         this.$ga.event({
           eventCategory: 'Downloads',
@@ -86,6 +89,7 @@ export default {
         }
       }).then(data => {
         this.exportFile(data, `${this.project.short_name}_${type}`, 'zip')
+        this.processing = false
       }).catch(err => {
         this.$nuxt.error(err)
       })
