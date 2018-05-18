@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/details/">
 
     <div slot="controls" class="d-flex align-items-center float-md-right">
       <label class="mr-1 mb-0 toggle-label">

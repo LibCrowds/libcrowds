@@ -1,6 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/tutorial/">
     <p slot="guidance">
       Use the form below to update the tutorial shown when the project first
       loads.

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <card-base :title="title" :description="description">
+    <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/annotations/">
       <b-btn
         slot="controls"
         class="float-md-right"

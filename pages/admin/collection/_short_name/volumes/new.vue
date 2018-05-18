@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/volumes/">
     <p slot="guidance">
       Use the form below to add a new volume to the collection microsite.
     </p>

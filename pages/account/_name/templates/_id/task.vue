@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/task/">
     <p slot="guidance">
       {{ localConfig.brand }} projects are sets of similar tasks, for example,
       to transcribe all of the titles in a group of images. Use the form below
