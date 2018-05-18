@@ -1,16 +1,16 @@
 <template>
   <div class="filter-projects-data">
     <div
-      v-for="(tag, index) in collection.info.tags"
+      v-for="(filter, index) in collection.info.project_filters"
       :key="index"
       class="mb-2">
-      <label v-if="!hideLabel">{{ tag.name }}</label>
+      <label v-if="!hideLabel">{{ filter.name }}</label>
       <multiselect
-        :id="tag.name"
-        v-model="model[tag.name]"
-        :placeholder="`Filter by ${tag.name.toLowerCase()}`"
+        :id="filter.name"
+        v-model="model[filter.name]"
+        :placeholder="`Filter by ${filter.name.toLowerCase()}`"
         :show-labels="false"
-        :options="options[tag.name] || []"
+        :options="options[filter.name] || []"
         @input="onInput"
         @select="onSelect">
       </multiselect>
@@ -47,11 +47,11 @@ export default {
 
   methods: {
     /**
-     * Handle a tag being selected or removed.
+     * Handle a filter being selected or removed.
      * @param {String} value
-     *   The tag value.
+     *   The filter value.
      * @param {String} name
-     *   The tag name (which comes from the multiselect component ID).
+     *   The filter name (which comes from the multiselect component ID).
      */
     onInput (value, name) {
       this.model[name] = value
@@ -60,11 +60,11 @@ export default {
     },
 
     /**
-     * Handle a tag being selected.
+     * Handle a filter being selected.
      * @param {String} value
-     *   The tag name.
+     *   The filter name.
      * @param {String} name
-     *   The tag name (which comes from the multiselect component ID).
+     *   The filter name (which comes from the multiselect component ID).
      */
     onSelect (value, typnamee) {
       this.$emit('select', value, name)
@@ -72,10 +72,11 @@ export default {
   },
 
   mounted () {
-    // Get all current tags for the collection.
-    const endpoint = `/lc/categories/${this.collection.short_name}/tags`
+    // Get all current filters for the collection.
+    const catShortName = this.collection.short_name
+    const endpoint = `/lc/categories/${catShortName}/project-filters`
     return this.$axios.$get(endpoint).then(data => {
-      this.options = data.tags
+      this.options = data.filters
     }).catch(err => {
       this.$nuxt.error(err)
     })

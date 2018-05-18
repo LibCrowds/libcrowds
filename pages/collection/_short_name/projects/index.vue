@@ -18,7 +18,7 @@
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <filter-projects-data
-            v-model="tagModel"
+            v-model="filterModel"
             :collection="collection"
             @input="reset"
             @select="onFilter">
@@ -87,7 +87,7 @@
             <project-card
               :collection="collection"
               :project="project"
-              @tagclick="updateTagModel">
+              @filter="updateFilterModel">
             </project-card>
           </li>
         </transition-group>

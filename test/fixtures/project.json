@@ -3,7 +3,7 @@
   "info": {
     "thumbnail_url": "/uploads/user_362/project_79_thumbnail_1510222150.png",
     "container": "user_362",
-    "tags": {
+    "filters": {
       "Task": "Transcribe",
       "Location": "Dublin",
       "Entity": "Dates"

@@ -187,7 +187,7 @@ export default {
       }
 
       msg += '<br><br>Once generated, you will be redirected to a settings ' +
-        'page where you can choose some tags for the project.' +
+        'page where you can set some filters for the project.' +
         '<br><br>Click OK to continue.'
       return msg
     }
@@ -231,7 +231,7 @@ export default {
      */
     onSuccess (data) {
       this.$router.push({
-        name: 'admin-project-short_name-tags',
+        name: 'admin-project-short_name-filters',
         params: {
           short_name: data.form.short_name
         }

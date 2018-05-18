@@ -3,14 +3,16 @@
 
     <!-- Task presenter -->
     <component
+      v-if="task"
       :is="presenter"
       :project="currentProject"
       :project-template="currentTemplate"
       :collection="currentCollection"
-      :tasks="tasks"
+      :task="task"
       @help="$refs.help.show()"
       @info="$refs.info.show()"
       @share="$refs.share.show()"
+      @tags="$refs.tags.show()"
       @submit="onSubmit">
     </component>
 
@@ -18,7 +20,7 @@
     <b-modal
       lazy
       ref="share"
-      v-if="tasks.length"
+      v-if="task"
       title="Share"
       size="lg"
       ok-only
@@ -34,16 +36,16 @@
           <b-form-input
             id="share-input"
             readonly
-            :value="tasks[0].info.link">
+            :value="task.info.link">
           </b-form-input>
           <clipboard-button
             :container-id="shareModalId"
-            :content="tasks[0].info.link">
+            :content="task.info.link">
           </clipboard-button>
         </b-input-group-append>
         <p class="mb-1 text-uppercase text-center">
           <small>
-            <span v-if="tasks[0].info.link">
+            <span v-if="task.info.link">
               Or
             </span>
             share this project via
@@ -91,10 +93,10 @@
       :body-text-variant="darkPresenterModals ? 'white' : null"
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null">
-      <b-container class="py-2 px-3">
-        <ul v-if="taskInfo.metadata" class="list-unstyled">
+      <b-container class="py-2 px-3" v-if="manifest">
+        <ul v-if="manifest.metadata" class="list-unstyled">
           <li
-            v-for="item in taskInfo.metadata"
+            v-for="item in manifest.metadata"
             :key="item.label"
             class="mb-1">
             <strong>{{ item.label }}: </strong>
@@ -102,14 +104,105 @@
           </li>
         </ul>
         <div class="text-center">
-          <img v-if="taskInfo.logo" :src="taskInfo.logo" class="my-2">
-          <p v-if="taskInfo.attribution" v-html="taskInfo.attribution"></p>
+          <img v-if="manifest.logo" :src="manifest.logo" class="my-2">
+          <p v-if="manifest.attribution" v-html="manifest.attribution"></p>
           <a
-            v-if="taskInfo.license"
-            :href="taskInfo.license"
-            v-html="taskInfo.license">
+            v-if="manifest.license"
+            :href="manifest.license"
+            v-html="manifest.license">
           </a>
         </div>
+      </b-container>
+      <b-container class="py-2 px-3" v-else>
+        <p class="text-center">
+          No additional information is available for this task.
+        </p>
+      </b-container>
+    </b-modal>
+
+    <!-- Tags modal -->
+    <b-modal
+      show
+      lazy
+      v-if="task"
+      ref="tags"
+      title="Tags"
+      size="lg"
+      ok-only
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null"
+      body-class="overflow-visible">
+      <b-container
+        class="py-2 px-3"
+        v-if="currentCollection.info.annotations.tags">
+        <p>
+          The tags added below will help researchers locate items of
+          particular interest by being used to generate keywords that can
+          be searched via the
+          <nuxt-link
+            :to="{
+              name: 'collection-short_name-browse',
+              params: {
+                short_name: currentCollection.short_name
+              }
+            }">
+            Browse
+          </nuxt-link> page.
+        </p>
+        <p>
+          For programmatic research purposes the data will also be available
+          via the API at
+          <a :href="currentCollection.info.annotations.tags" target="_blank">
+            {{ currentCollection.info.annotations.tags }}
+          </a>
+        </p>
+        <p>
+          Tags can be added by anyone but, once confirmed, can only be deleted
+          by administrators. If you have spotted a tag that you think is
+          incorrect or should be removed for any reason please contact
+          <a :href="`mailto:${localConfig.email}`">
+            {{ localConfig.email }}.
+          </a>
+        </p>
+        <p>
+          By default, a new tag will be added for each word. To create tags
+          that comprise multiple words please follow the convention of adding
+          a hyphen between words (e.g. my-long-tag).
+        </p>
+        <p>
+          <h6 class="mb-1">Current tags:</h6>
+          <item-tags-list
+            :container-iri="currentCollection.info.annotations.tags"
+            :source-iri="task.info.url"
+            :scope-iri="task.info.manifest"
+            type="Image">
+          </item-tags-list>
+        </p>
+        <p>
+          Begin typing in the box below to add tags.
+        </p>
+        <Select-tags
+          :container-iri="currentCollection.info.annotations.tags"
+          :source-iri="task.info.url"
+          :scope-iri="task.info.manifest"
+          type="Image">  <!-- TODO: Replace with content check -->
+        </select-tags>
+      </b-container>
+      <b-container class="py-2 px-3" v-else>
+        <p>
+          Tagging is currently disabled for this collection microsite as the
+          link to a suitable place to store the tags has not been configured.
+        </p>
+        <p>
+          To help resolve this, please let us know by contacting
+          <a :href="`mailto:${localConfig.email}`">
+            {{ localConfig.email }}
+          </a>.
+        </p>
       </b-container>
     </b-modal>
 
@@ -118,6 +211,7 @@
 
 <script>
 import marked from 'marked'
+import localConfig from '@/local.config'
 import { projectMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { hideCookieConsent } from '@/mixins/hideCookieConsent'
@@ -127,6 +221,8 @@ import ClipboardButton from '@/components/buttons/Clipboard'
 import isEmpty from 'lodash/isEmpty'
 import IIIFAnnotationPresenter from '@/components/presenters/IIIFAnnotation'
 import Z3950Presenter from '@/components/presenters/Z3950'
+import SelectTags from '@/components/data/SelectTags'
+import ItemTagsList from '@/components/lists/ItemTags'
 
 export default {
   layout ({ params, store }) {
@@ -144,10 +240,21 @@ export default {
 
   data () {
     return {
-      tasks: [],
-      taskInfo: '',
-      shareModalId: 'presenter-share-modal'
+      task: null,
+      manifest: null,
+      shareModalId: 'presenter-share-modal',
+      tagSearchLoading: false,
+      foundTags: [],
+      selectedTags: [],
+      localConfig: localConfig
     }
+  },
+
+  components: {
+    SocialMediaButtons,
+    ClipboardButton,
+    SelectTags,
+    ItemTagsList
   },
 
   fetch ({ params, app, error, store }) {
@@ -185,11 +292,6 @@ export default {
     }).catch(err => {
       error(err)
     })
-  },
-
-  components: {
-    SocialMediaButtons,
-    ClipboardButton
   },
 
   computed: {
@@ -248,9 +350,10 @@ export default {
       const url = `/api/project/${this.currentProject.id}/newtask`
       this.$axios.$get(url).then(data => {
         if (isEmpty(data)) {
+          this.task = null
           this.handleCompletion()
         } else {
-          this.tasks = Array.isArray(data) ? data : [data]
+          this.task = data
         }
       }).catch(err => {
         this.$nuxt.error(err)
@@ -406,18 +509,19 @@ export default {
   },
 
   watch: {
-    tasks (val) {
-      if (!val.length || !val[0].info.hasOwnProperty('manifest')) {
-        this.taskInfo = 'no data'
+    task (val) {
+      // Load manifest
+      if (!val.length || !val.info.hasOwnProperty('manifest')) {
+        this.manifest = null
+      } else {
+        this.$axios.$get(val.info.manifest, {
+          headers: {
+            'Content-type': 'text/plain' // to avoid CORS preflight
+          }
+        }).then(data => {
+          this.manifest = data
+        })
       }
-
-      this.$axios.$get(this.tasks[0].info.manifest, {
-        headers: {
-          'Content-type': 'text/plain' // to avoid CORS preflight
-        }
-      }).then(data => {
-        this.taskInfo = data
-      })
     }
   }
 }

@@ -10,10 +10,6 @@
       :fields="tableFields"
       @sort-changed="onSortChange">
 
-      <template slot="nTags" slot-scope="data">
-        {{ Object.keys(data.item.info.tags || {}).length }}
-      </template>
-
       <template slot="created" slot-scope="data">
         {{ data.item.created | moment('calendar') }}
       </template>

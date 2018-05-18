@@ -9,7 +9,7 @@
     <p slot="guidance">
       After entering the core details below and clicking
       <strong>Create</strong>, you will be given access to futher options to
-      help design the task, add tags, a tutorial and set the rules for
+      help design the task, add filters, a tutorial and set the rules for
       results analysis.
     </p>
     <hr class="my-1">
