@@ -271,7 +271,7 @@ export default {
         this.$axios.$get('/api/task', {
           params: {
             info: {
-              url: item.url
+              url: item.thumbnail
             }
           }
         }).then(data => {
