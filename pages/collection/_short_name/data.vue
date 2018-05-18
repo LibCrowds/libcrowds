@@ -31,16 +31,13 @@
             hover
             show-empty
             :dark="darkMode"
-            :items="motivations"
-            :fields="collectionTableFields">
-            <template slot="action" slot-scope="motivation">
-              <b-btn
-                variant="success"
-                size="sm"
-                v-b-modal="collectionDataModalId"
-                @click="collectionDownload = motivation.item">
-                Download
-              </b-btn>
+            :items="annotationTableItems"
+            :fields="annotationTableFields">
+            <template slot="action" slot-scope="row">
+              <download-annotation-data
+                :container-iri="row.item.iri"
+                :scope="row.item.scope">
+              </download-annotation-data>
             </template>
           </b-table>
         </b-tab>
@@ -51,7 +48,7 @@
             ref="projects-table"
             :filter="filter"
             :filter-by="filterBy"
-            :collection="collection">
+            :collection="currentCollection">
             <template slot="action" slot-scope="project">
               <download-project-data
                 :project="project.item">
@@ -61,37 +58,23 @@
         </b-tab>
 
       </b-tabs>
-
     </card-base>
-
-    <data-modal
-      lazy
-      v-if="collectionDownload"
-      :items="collectionDownloadItems"
-      :endpoint="`/lc/categories/${collection.short_name}/export`"
-      :filename-prefix="collectionDownload.type"
-      :event-label="collectionDownload.type"
-      :modal-id="collectionDataModalId">
-    </data-modal>
-
   </div>
 </template>
 
 <script>
 import marked from 'marked'
-import localConfig from '@/local.config'
+import capitalize from 'capitalize'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
-import { getShortname } from '@/mixins/getShortname'
 import SortProjectsData from '@/components/data/SortProjects'
-import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
-import DataModal from '@/components/modals/Data'
 import CardBase from '@/components/cards/Base'
 import DownloadProjectData from '@/components/data/DownloadProjectData'
+import DownloadAnnotationData from '@/components/data/DownloadAnnotationData'
 
 export default {
   layout: 'collection-tabs',
@@ -100,60 +83,50 @@ export default {
     fetchCollectionByName,
     filterProjects,
     licenses,
-    collectionMetaTags,
-    getShortname
+    collectionMetaTags
   ],
 
   data () {
     return {
-      localConfig: localConfig,
       title: 'Data',
       filter: null,
       filterBy: 'name',
-      collectionDownload: null,
-      collectionDataModalId: 'collection-data-download-modal',
-      collectionTableFields: {
-        name: {
-          label: 'Motivation',
+      annotationTableFields: {
+        scope: {
+          label: 'Scope',
           sortable: true
         },
         action: {
           label: 'Actions',
           class: 'text-center'
         }
-      },
-      motivations: [
-        { name: 'Describing', type: 'describing' },
-        { name: 'Tagging', type: 'tagging' },
-        { name: 'Commenting', type: 'commenting' }
-      ]
+      }
     }
   },
 
   components: {
     SortProjectsData,
     FilterProjectsData,
-    ToggleCompletedData,
     ProjectsTable,
-    DataModal,
     CardBase,
-    DownloadProjectData
+    DownloadProjectData,
+    DownloadAnnotationData
   },
 
   computed: {
     pageContent () {
-      return marked(this.collection.info.content.data)
+      return marked(this.currentCollection.info.content.data)
     },
 
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
     description () {
-      if (this.collection.license) {
-        return `All datasets generated from ${this.collection.name}
+      if (this.currentCollection.license) {
+        return `All datasets generated from ${this.currentCollection.name}
           projects are made available under a
-          ${this.dataLicenses[this.collection.license].name} license.`
+          ${this.dataLicenses[this.currentCollection.license].name} license.`
       }
       return 'Download all task and contribution data.'
     },
@@ -162,19 +135,17 @@ export default {
       return this.$store.state.currentUser
     },
 
-    collectionDownloadItems () {
-      return [
-        {
-          dataset: 'Annotations',
-          type: this.collectionDownload.type,
-          format: 'csv'
-        },
-        {
-          dataset: 'Annotations',
-          type: this.collectionDownload.type,
-          format: 'json'
+    annotationCollections () {
+      return this.currentCollection.info.annotations
+    },
+
+    annotationTableItems () {
+      return Object.keys(this.annotationCollections).map(key => {
+        return {
+          scope: capitalize(key),
+          iri: this.annotationCollections[key]
         }
-      ]
+      })
     }
   },
 
