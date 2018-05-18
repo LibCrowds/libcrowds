@@ -6,14 +6,14 @@
     :disabled="processing">
     <b-dropdown-item-button
       v-for="item in items"
-      :key="item.dataset"
+      :key="item.type + 'json'"
       @click="download(item.type, 'json')">
       {{ item.dataset }} JSON
     </b-dropdown-item-button>
     <b-dropdown-divider class="my-1"></b-dropdown-divider>
     <b-dropdown-item-button
       v-for="item in items"
-      :key="item.dataset"
+      :key="item.type + 'csv'"
       @click="download(item.type, 'csv')">
       {{ item.dataset }} CSV
     </b-dropdown-item-button>
@@ -65,6 +65,11 @@ export default {
   methods: {
     /**
      * Download the data.
+     *
+     * The <b-dropdown-item-button> tag does not support href attributes,
+     * so let's keep the old method of re-exporting the downloaded file
+     * for now. If memory usage becomes an issue we might want to have
+     * another look at this.
      * @param {String} type
      *   The download type.
      * @param {String} format
