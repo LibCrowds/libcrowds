@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/new/">
     <p slot="guidance">
       Project templates contain all of the configuration details used to
       generate projects for a collection microsite. Each template can be used
@@ -9,7 +12,7 @@
     <p slot="guidance">
       After entering the core details below and clicking
       <strong>Create</strong>, you will be given access to futher options to
-      help design the task, add tags, a tutorial and set the rules for
+      help design the task, add filters, a tutorial and set the rules for
       results analysis.
     </p>
     <hr class="my-1">

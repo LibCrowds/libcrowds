@@ -1,6 +1,7 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description">
     <b-card-body>
       <b-alert
         v-if="canDelete"

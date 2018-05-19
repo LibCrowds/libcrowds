@@ -22,7 +22,7 @@
       </b-link>
 
       <!-- Main menu -->
-      <b-navbar-nav class="main-nav-menu d-none d-lg-flex">
+      <b-navbar-nav class="main-nav-menu d-none d-xl-flex">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"

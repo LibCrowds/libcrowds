@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/analysis/">
     <p slot="guidance">
       The form below can be used to configure the analysis process that runs
       when each task is completed. The output of this analysis process is used

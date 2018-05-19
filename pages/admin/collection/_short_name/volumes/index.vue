@@ -1,5 +1,9 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/volumes/">
+
     <div class="float-md-right" slot="controls">
       <b-btn
         variant="success"
@@ -158,7 +162,7 @@ export default {
      *   The volume ID.
      */
     async hasNoProjects (id) {
-      const projectsData = await this.$axios.get('/api/project', {
+      const projectsData = await this.$axios.$get('/api/project', {
         params: {
           category_id: this.collection.id,
           all: 1,

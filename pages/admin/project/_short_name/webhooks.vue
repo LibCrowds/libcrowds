@@ -1,9 +1,21 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/webhooks/">
+
+    <p slot="guidance">
+      The webhook associated with a project will be set during project
+      creation. However, on the rare occasion that it is necessary, the
+      webhook can be changed via the form below.
+    </p>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Update"
       :form="form">
     </pybossa-form>
+
   </card-base>
 </template>
 

@@ -36,7 +36,11 @@ export const setCollectionDefaults = function (collection) {
         '## Custom datasets' +
         'Custom datasets are configured by administrators and provide a ' +
         'view of all of the final annotations data within the collection.',
-      projects: ''
+      projects: '',
+      browse: `Browse items from the projects hosted on ${collection.name}.` +
+        '\n\nYou can use the search box to locate items of particular ' +
+        'interest, then click on an item to view additional details and ' +
+        'a link to the source.'
     },
     pubished: false,
     celebrations: {
@@ -50,15 +54,16 @@ export const setCollectionDefaults = function (collection) {
         'This project is now complete.\n\n The data will be processed ' +
         'and used to directly enabled future research.'
     },
+    annotations: {},
     volumes: [],
     templates: [],
-    export_formats: []
+    project_filters: []
   }
   collection.info = merge(defaults, collection.info)
 
-  // Ensure tags is an array
-  if (!Array.isArray(collection.info.tags)) {
-    collection.info.tags = []
+  // Ensure project_filters is an array
+  if (!Array.isArray(collection.info.project_filters)) {
+    collection.info.project_filters = []
   }
 
   // Ensure volumes is an array
@@ -69,10 +74,5 @@ export const setCollectionDefaults = function (collection) {
   // Ensure templates is an array
   if (!Array.isArray(collection.info.templates)) {
     collection.info.templates = []
-  }
-
-  // Ensure export_formats is an array
-  if (!Array.isArray(collection.info.export_formats)) {
-    collection.info.export_formats = []
   }
 }

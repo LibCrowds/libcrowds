@@ -1,5 +1,14 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/details/">
+
+    <p slot="guidance">
+      Update the project's core details using the form below.
+    </p>
+    <hr class="my-1">
+
     <pybossa-form
       submit-text="Update"
       :form="form">
@@ -30,6 +39,7 @@
         </label>
       </div>
     </pybossa-form>
+
   </card-base>
 </template>
 

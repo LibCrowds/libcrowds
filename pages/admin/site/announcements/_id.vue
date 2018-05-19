@@ -1,5 +1,14 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/admin/announcements">
+
+    <p slot="guidance">
+      Use the form below to update the announcement.
+    </p>
+    <hr class="my-1">
+
     <div slot="controls" class="d-flex align-items-center float-right">
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
@@ -35,6 +44,7 @@
         </image-upload-form>
       </b-tab>
     </b-tabs>
+
   </card-base>
 </template>
 

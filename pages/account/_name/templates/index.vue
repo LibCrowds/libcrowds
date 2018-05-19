@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/introduction/">
     <b-btn
       slot="controls"
       class="float-md-right"

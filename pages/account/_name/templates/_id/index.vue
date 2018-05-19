@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/details/">
     <p slot="guidance">
       Update the core details for the template below. Note that these changes
       will not apply to projects that have already been created from this

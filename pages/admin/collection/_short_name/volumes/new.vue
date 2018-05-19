@@ -1,5 +1,9 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/volumes/">
+
     <p slot="guidance">
       Use the form below to add a new volume to the collection microsite.
     </p>
@@ -8,11 +12,13 @@
       provide the input source, according to the chosen importer type.
     </p>
     <hr class="my-1">
+
     <pybossa-form
       submit-text="Add Volume"
       :form="form"
       @success="onSuccess">
     </pybossa-form>
+
   </card-base>
 </template>
 

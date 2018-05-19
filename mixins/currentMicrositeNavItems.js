@@ -50,6 +50,15 @@ export const currentMicrositeNavItems = {
               short_name: this.currentCollection.short_name
             }
           }
+        },
+        {
+          label: 'Browse',
+          link: {
+            name: 'collection-short_name-browse',
+            params: {
+              short_name: this.currentCollection.short_name
+            }
+          }
         }
       ]
 

@@ -1,5 +1,14 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/admin/announcements">
+
+    <p slot="guidance">
+      Use the form below to create a global announcement.
+    </p>
+    <hr class="my-1">
+
     <pybossa-form
       id="admin-announcement-new"
       show-cancel
@@ -7,6 +16,7 @@
       @success="onSuccess"
       @cancel="onCancel">
     </pybossa-form>
+
   </card-base>
 </template>
 
