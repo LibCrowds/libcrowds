@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/collections/celebrations/">
+
     <div class="float-md-right" slot="controls">
       <b-btn
         variant="success"
@@ -26,6 +27,7 @@
       when a project is completed, or when a user has contributed to all
       available tasks.
     </p>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Update"
@@ -50,6 +52,7 @@
         </markdown-editor>
       </div>
     </pybossa-form>
+
   </card-base>
 </template>
 

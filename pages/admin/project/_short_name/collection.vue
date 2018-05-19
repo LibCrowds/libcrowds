@@ -3,11 +3,7 @@
     :title="title"
     :description="description"
     docs="/projects/collection/">
-    <p slot="guidance">
-      The collection microsite associated with a project will be set during
-      project creation. However, on the rare occasion that it is necessary, it
-      can be changed via the form below.
-    </p>
+
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
         v-model="filter"
@@ -16,6 +12,12 @@
         :placeholder="`Type to search by ${filterBy}`">
       </b-form-input>
     </b-form>
+
+    <p slot="guidance">
+      The collection microsite associated with a project will be set during
+      project creation. However, on the rare occasion that it is necessary, it
+      can be changed via the form below.
+    </p>
 
     <infinite-loading-table
       ref="table"
@@ -33,6 +35,7 @@
         </b-btn>
       </template>
     </infinite-loading-table>
+
   </card-base>
 </template>
 

@@ -3,11 +3,14 @@
     :title="title"
     :description="description"
     docs="/projects/publish/">
+
     <p slot="guidance">
       Projects will be published automatically following generation. However,
       just in case something goes wrong with the process this page is provided
       to manually publish the project.
     </p>
+    <hr class="my-1">
+
     <b-card-body v-if="project && project.published">
       <b-alert show variant="success">
         This project is already published!
@@ -45,6 +48,7 @@
         </b-btn>
       </div>
     </b-card-footer>
+
   </card-base>
 </template>
 

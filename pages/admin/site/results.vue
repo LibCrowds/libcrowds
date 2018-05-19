@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/admin/results/">
+
     <p slot="guidance">
       The table below can be used to identify any collections where the
       analysis process has not been successfully completed for all results.

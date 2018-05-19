@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/collections/volumes/">
+
     <div class="float-md-right" slot="controls">
       <b-btn
         variant="success"

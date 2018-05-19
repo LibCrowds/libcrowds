@@ -3,9 +3,11 @@
     :title="title"
     :description="description"
     docs="/collections/volumes/">
+
     <p slot="guidance">
       Use the form below to update the volume details.
     </p>
+    <hr class="my-1">
 
     <b-alert show variant="info" v-if="hasProjects">
       As projects have already been built from this volume certain fields
@@ -68,6 +70,7 @@
         </image-upload-form>
       </b-tab>
     </b-tabs>
+
   </card-base>
 </template>
 

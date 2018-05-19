@@ -3,9 +3,12 @@
     :title="title"
     :description="description"
     docs="/projects/thumbnail/">
+
     <p slot="guidance">
       Use the form below to select a thumbnail image for the project.
     </p>
+    <hr class="my-1">
+
     <image-upload-form
       submit-text="Update"
       file-field="avatar"

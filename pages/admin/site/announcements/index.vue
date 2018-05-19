@@ -1,5 +1,6 @@
 <template>
   <card-base :title="title" :description="description">
+
     <b-btn
       :variant="darkMode ? 'dark' : 'success'"
       size="sm"
@@ -10,6 +11,11 @@
       }">
       New
     </b-btn>
+
+    <p slot="guidance">
+      Global announcements can be delivered to all users via this page.
+      Click the <strong>New</strong> button above to create an announcement.
+    </p>
 
     <infinite-loading-table
       ref="table"

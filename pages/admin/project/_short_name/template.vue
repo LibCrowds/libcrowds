@@ -3,11 +3,13 @@
     :title="title"
     :description="description"
     docs="/projects/template/">
+
     <p slot="guidance">
       The template associated with a project will be set during project
       creation. However, on the rare occasion that it is necessary, the
       template can be changed via the form below.
     </p>
+
     <templates-table
       show-details
       :collection-id="project.category_id"
@@ -33,6 +35,7 @@
         </b-btn>
       </template>
     </templates-table>
+
   </card-base>
 </template>
 

@@ -1,5 +1,15 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/content/">
+
+    <p slot="guidance">
+      Content for the About, Take Part and Data pages can be modified using
+      the Markdown forms below. Remember to click the
+      <strong>Update</strong> button to save the changes.
+    </p>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Update"
