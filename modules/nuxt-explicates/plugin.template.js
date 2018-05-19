@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Z_NULL } from 'zlib';
 
 class Explicates {
   constructor (options) {
