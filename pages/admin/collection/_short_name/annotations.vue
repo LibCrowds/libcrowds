@@ -13,10 +13,9 @@
         New
       </b-btn>
       <p slot="guidance">
-        Two AnnotationCollections are currently required for each colleciton
-        microsite, one to store the results and one to store the user tags.
-        To create the AnnotationCollections, click the <strong>New</strong>
-        button above.
+        Each collection microsite requires a set of unique locations for
+        storing annotations, called AnnotationCollections.  To set these up
+        click the <strong>New</strong> button above.
       </p>
       <p slot="guidance">
         The read-only form fields below give the locations of the current

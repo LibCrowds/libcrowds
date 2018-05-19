@@ -1,6 +1,11 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/thumbnail/">
+    <p slot="guidance">
+      Use the form below to select a thumbnail image for the project.
+    </p>
     <image-upload-form
       submit-text="Update"
       file-field="avatar"

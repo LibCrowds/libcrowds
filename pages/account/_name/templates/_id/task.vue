@@ -4,12 +4,15 @@
     :description="description"
     docs="/templates/task/">
     <p slot="guidance">
-      {{ localConfig.brand }} projects are sets of similar tasks, for example,
-      to transcribe all of the titles in a group of images. Use the form below
-      to configure the task for all projects generated using this template. The
-      options shown will vary depending on the task presenter chosen for the
-      collection, which in this case is the <strong>{{ presenter }}</strong>
-      task presenter.
+      {{ localConfig.brand }} projects are sets of similar tasks. For example,
+      a project might be created to transcribe all of the titles in a group of
+      images.
+    </p>
+    <p slot="guidance">
+      Use the form below to configure the task for all projects generated using
+      this template. The options shown will vary depending on the task
+      presenter chosen for the collection, which in this case is the
+      <strong>{{ presenter }}</strong> task presenter.
     </p>
     <hr class="my-1">
 

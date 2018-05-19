@@ -1,6 +1,13 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/filters/">
+    <p slot="guidance">
+      Filters are used to help users more easily locate the types of project
+      that they're interested in. Use the form below to select some filters
+      for the project.
+    </p>
     <b-card-body>
       <span v-if="hasFilters">
         <div

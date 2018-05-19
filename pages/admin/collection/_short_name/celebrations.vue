@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/celebrations/">
     <div class="float-md-right" slot="controls">
       <b-btn
         variant="success"
@@ -17,6 +20,12 @@
         Test project
       </b-btn>
     </div>
+
+    <p slot="guidance">
+      Use the Markdown fields below to configure the celebration screens shown
+      when a project is completed, or when a user has contributed to all
+      available tasks.
+    </p>
 
     <pybossa-form
       submit-text="Update"

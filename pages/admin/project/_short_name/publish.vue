@@ -1,5 +1,13 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/publish/">
+    <p slot="guidance">
+      Projects will be published automatically following generation. However,
+      just in case something goes wrong with the process this page is provided
+      to manually publish the project.
+    </p>
     <b-card-body v-if="project && project.published">
       <b-alert show variant="success">
         This project is already published!
