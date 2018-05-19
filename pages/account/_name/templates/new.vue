@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/new/">
     <p slot="guidance">
       Project templates contain all of the configuration details used to
       generate projects for a collection microsite. Each template can be used

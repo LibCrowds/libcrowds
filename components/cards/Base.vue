@@ -22,13 +22,13 @@
       </b-row>
     </template>
 
-    <template v-if="$slots.guidance">
+    <template v-if="$slots.guidance || docs.length">
       <b-card-body>
         <slot name="guidance"></slot>
         <p v-if="localConfig.docs" class="mb-0">
           <small>
             See the
-            <a :href="localConfig.docs" target="_blank">full documentation</a>
+            <a :href="docsURI" target="_blank">full documentation</a>
             for further guidance.
           </small>
         </p>
@@ -58,6 +58,21 @@ export default {
     description: {
       type: String,
       default: ''
+    },
+    docs: {
+      type: String,
+      default: ''
+    }
+  },
+
+  computed: {
+    docsURI () {
+      if (!localConfig.docs) {
+        return null
+      }
+
+      const base = localConfig.docs.replace(/\/$/, '')
+      return base + this.docs
     }
   }
 }

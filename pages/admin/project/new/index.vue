@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/new/">
     <p slot="guidance">
       The following page contains a form to generate a project from a chosen
       template and volume.

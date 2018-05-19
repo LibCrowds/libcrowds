@@ -1,6 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/redundancy/">
     <p slot="guidance">
       Use the form below to configure when a task is considered complete and
       a final result created.

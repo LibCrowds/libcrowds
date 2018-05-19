@@ -1,5 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/featured/">
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input

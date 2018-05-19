@@ -1,6 +1,10 @@
 <template>
   <div>
-    <card-base :title="title" :description="description">
+    <card-base
+      :title="title"
+      :description="description"
+      docs="/collections/annotations/">
+
       <b-btn
         slot="controls"
         class="float-md-right"
@@ -9,22 +13,25 @@
         v-b-modal="addAnnoCollectionModalId">
         New
       </b-btn>
+
       <p slot="guidance">
-        Two AnnotationCollections are currently required for each colleciton
-        microsite, one to store the results and one to store the user tags.
-        To create the AnnotationCollections, click the <strong>New</strong>
-        button above.
+        Each collection microsite requires a set of unique locations for
+        storing annotations, called AnnotationCollections.  To set these up
+        click the <strong>New</strong> button above.
       </p>
       <p slot="guidance">
         The read-only form fields below give the locations of the current
         AnnotationCollections for this microsite.
       </p>
+      <hr class="my-1">
+
       <pybossa-form
         submit-text="Update"
         :form="form"
         :show-footer="false"
         @success="onSuccess">
       </pybossa-form>
+
     </card-base>
 
      <add-anno-collection-modal
@@ -32,6 +39,7 @@
       :modal-id="addAnnoCollectionModalId"
       @success="onSuccess">
     </add-anno-collection-modal>
+
   </div>
 </template>
 

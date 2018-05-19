@@ -1,5 +1,14 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/presenter/">
+
+    <p slot="guidance">
+      Use the form below to apply global setttings for all project pages
+      within a collection, such as the text for the share modal.
+    </p>
+    <hr class="my-1">
 
     <pybossa-form
       submit-text="Update"

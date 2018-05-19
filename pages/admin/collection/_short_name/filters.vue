@@ -1,6 +1,10 @@
 <template>
   <div>
-    <card-base :title="title" :description="description">
+    <card-base
+      :title="title"
+      :description="description"
+      docs="/celebrations/filters/">
+
       <b-btn
         slot="controls"
         class="float-md-right"
@@ -9,6 +13,12 @@
         v-b-modal="addProjectFilterModalId">
         Add a filter
       </b-btn>
+
+      <p slot="guidance">
+        Tags are used to help users more easily location the types of project
+        that they're interested in. The available tag types for all projects
+        within a collection are managed via this section.
+      </p>
 
       <b-table
         ref="table"
@@ -36,6 +46,7 @@
           </b-btn>
         </template>
       </b-table>
+
     </card-base>
 
     <add-project-filter-modal

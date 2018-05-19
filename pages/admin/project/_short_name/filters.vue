@@ -1,5 +1,15 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/filters/">
+
+    <p slot="guidance">
+      Filters are used to help users more easily locate the types of project
+      that they're interested in. Use the form below to select some filters
+      for the project.
+    </p>
+    <hr class="my-1">
 
     <b-card-body>
       <span v-if="hasFilters">
@@ -17,7 +27,6 @@
           </multiselect>
         </div>
       </span>
-
       <p v-else class="lead my-2 text-center">
         No filters have been enabled for this collection.
       </p>

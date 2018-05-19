@@ -1,6 +1,8 @@
 <template>
-  <card-base :title="title" :description="description">
-
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/templates/parent/">
     <p slot="guidance">
       Use the form below to select the type of parent project from which
       projects using this template must be built.
