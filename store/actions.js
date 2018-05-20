@@ -45,6 +45,11 @@ export default {
       orderby: 'created',
       desc: true
     }).then(data => {
+      if (data && data.length) {
+        for (let item of data) {
+          setCollectionDefaults(item)
+        }
+      }
       commit('SET_ITEM', {
         key: 'publishedCollections', value: data
       })
