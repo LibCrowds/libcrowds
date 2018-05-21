@@ -92,7 +92,7 @@ export default {
         return this.addTag(parts[0])
       }
 
-      return this.searchAnnotations(query).then(r => {
+      return this.search(query).then(r => {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
         } else {
@@ -111,13 +111,13 @@ export default {
      * @param {Boolean} strict
      *   True to use the query as a prefix, false otherwise.
      */
-    searchAnnotations (query, strict = false, contains = null) {
+    search (query, strict = false, contains = null) {
       const safeQuery = query.replace(/[^\w\s&]/gi, '')
       const suffix = strict ? '' : ':*'
       const idParts = this.containerIri.split('/')
       const containerId = idParts[idParts.length - 2]
 
-      return this.$explicates.searchAnnotations({
+      return this.$explicates.search({
         fts: `body::${safeQuery}${suffix}`,
         'collection.id': containerId,
         contains: contains === null ? {} : contains
@@ -173,7 +173,7 @@ export default {
     async checkTagExists (value) {
       let response = null
       try {
-        response = await this.$explicates.searchAnnotations({
+        response = await this.$explicates.search({
           contains: {
             body: {
               value: value

@@ -47,7 +47,7 @@ export default {
       this.message = 'Loading...'
       this.tags = []
 
-      return this.$explicates.searchAnnotations({
+      return this.$explicates.search({
         'collection.id': containerId,
         contains: {
           target: this.getTarget()

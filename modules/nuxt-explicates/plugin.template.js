@@ -136,32 +136,6 @@ class Explicates {
   }
 
   /**
-   * Search for AnnotationCollections.
-   * @param {Object} params
-   *   The query parameters.
-   * @param {Boolean} minimal
-   *   Prefer a minimal container.
-   * @param {Boolean} iris
-   *   Prefer contained IRIs.
-   */
-  searchCollections (params, minimal = false, iris = false) {
-    return this._search('collection', params, minimal, iris)
-  }
-
-  /**
-   * Search for Annotations.
-   * @param {Object} params
-   *   The query parameters.
-   * @param {Boolean} minimal
-   *   Prefer a minimal container.
-   * @param {Boolean} iris
-   *   Prefer contained IRIs.
-   */
-  searchAnnotations (params, minimal = false, iris = false) {
-    return this._search('annotation', params, minimal, iris)
-  }
-
-  /**
    * Perform a search.
    * @param {Object} table
    *   The table to search.
@@ -172,8 +146,8 @@ class Explicates {
    * @param {Boolean} iris
    *   Prefer contained IRIs.
    */
-  _search (table, params, minimal, iris) {
-    const endpoint = '/search/' + table + '/'
+  search (params, minimal = false, iris = false) {
+    const endpoint = '/search/'
     const headers = {
       prefer: this._getPreferHeader(minimal, iris)
     }
