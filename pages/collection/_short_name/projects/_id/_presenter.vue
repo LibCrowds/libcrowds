@@ -61,7 +61,6 @@
 
     <!-- Tutorial modal -->
     <b-modal
-      show
       lazy
       ref="help"
       title="Tutorial"
@@ -81,7 +80,6 @@
 
     <!-- Info modal (currently only for tasks with a manifest, i.e. IIIF) -->
     <b-modal
-      show
       lazy
       ref="info"
       title="Info"
@@ -122,7 +120,6 @@
 
     <!-- Tags modal -->
     <b-modal
-      show
       lazy
       v-if="task"
       ref="tags"
@@ -505,7 +502,6 @@ export default {
      * Show tutorial, unless disabled by the current user.
      */
     showInitialTutorial () {
-      console.log(this.currentUser.info.hide_tutorials)
       if (
         isEmpty(this.currentUser) ||
         !this.currentUser.info.hasOwnProperty('hide_tutorials') ||
