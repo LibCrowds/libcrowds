@@ -83,7 +83,7 @@
                   :key="discussion.id"
                   class="list-unstyled mb-1">
                   <h6 class="mb-0">
-                    <a href="a">
+                    <a :href="getDiscussionUrl(discussion.id)">
                       {{ discussion.attributes.title }}
                     </a>
                   </h6>
@@ -486,6 +486,13 @@ export default {
         })
         console.error(err)
       })
+    },
+
+    /**
+     * Return the URL for a forum discussion.
+     */
+    getDiscussionUrl (id) {
+      return `${localConfig.flarum.url}/d/${id}`
     }
   },
 
