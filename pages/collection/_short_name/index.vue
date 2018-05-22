@@ -416,7 +416,9 @@ export default {
           'filter[q]': `tag:${this.collection.info.forum.tag}`
         }
       }).then(response => {
-        this.forumTags = response.data.slice(0, 5)
+        this.forumDiscussions = response.data.filter(discussion => {
+          return !discussion.attributes.isSticky
+        }).slice(0, 5)
       }).catch(err => {
         // This is most likely a CORS issue with the forum endpoint, if in
         // development use fake forum discussions instead
