@@ -1,6 +1,7 @@
 <template>
   <b-card
     no-body
+    v-if="collection.info.presenter"
     class="project-card"
     :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
@@ -159,7 +160,7 @@ export default {
   },
 
   mounted () {
-    if (process.browser) {
+    if (process.browser && this.collection.info.presenter) {
       const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
         strokeWidth: 4,
         easing: 'easeInOut',
