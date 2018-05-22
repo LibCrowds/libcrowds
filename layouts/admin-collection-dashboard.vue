@@ -52,6 +52,15 @@ export default {
             }
           },
           {
+            label: 'Forum Integration',
+            link: {
+              name: 'admin-collection-short_name-forum',
+              params: {
+                short_name: this.currentCollection.short_name
+              }
+            }
+          },
+          {
             label: 'Celebrations',
             link: {
               name: 'admin-collection-short_name-celebrations',
