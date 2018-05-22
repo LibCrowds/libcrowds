@@ -55,31 +55,140 @@
       </b-container>
     </section>
 
-    <section id="intro" class="social-proof">
+    <section id="social-proof">
       <b-container>
         <b-row>
           <b-col
             v-if="collection.info.forum.tag"
-            class="pb-3 pb-md-4 text-center">
-            <h5>Recent forum posts</h5>
-            <ul>
+            class="pb-3 pb-md-4">
+            <h5 class="text-center">Recent forum posts</h5>
+            <p
+              v-if="loadingSocialProof"
+              class="text-muted text-center">
+              <small>
+                Loading...
+              </small>
+            </p>
+            <p
+              v-else-if="!forumDiscussions.length"
+              class="text-muted text-center">
+              <small>
+                No recent forum posts
+              </small>
+            </p>
+            <ul v-else>
               <li
                 v-for="discussion in forumDiscussions"
                 :key="discussion.id"
-                class="list-unstyled">
+                class="list-unstyled mb-1">
                 <h6>
-                  <a :href="`${localConfig.forum.url}/d/${discussion.id}`">
+                  <a href="a">
                     {{ discussion.attributes.title }}
                   </a>
                 </h6>
+                <p class="text-muted mb-0">
+                  <small>
+                    Updated:
+                    {{ discussion.attributes.lastTime | moment('calendar') }}
+                  </small>
+                </p>
+                <ul class="list-inline text-muted mb-1">
+                  <li class="list-inline-item my-1 mr-2">
+                    <small class="d-flex align-items-center">
+                      <icon name="comment" class="mr-1"></icon>
+                      {{ discussion.attributes.commentsCount }}
+                      comments
+                    </small>
+                  </li>
+                  <li class="list-inline-item my-1">
+                    <small class="d-flex align-items-center">
+                      <icon name="users" class="mr-1"></icon>
+                      {{ discussion.attributes.participantsCount }}
+                      participants
+                    </small>
+                  </li>
+                </ul>
               </li>
             </ul>
-            <b-btn
-              :variant="darkMode ? 'dark' : 'outline-dark'"
-              class="mt-md-2"
-              :href="`${localConfig.flarum.url}/t/${collection.info.forum.tag}`">
-              Visit the forum
-            </b-btn>
+            <div class="text-center">
+              <b-btn
+                :variant="darkMode ? 'dark' : 'outline-dark'"
+                class="mt-md-2"
+                :href="forumUrl">
+                Visit the forum
+              </b-btn>
+            </div>
+          </b-col>
+          <b-col
+            class="pb-3 pb-md-4">
+            <h5 class="text-center">Recent contributions</h5>
+            <p
+              v-if="loadingSocialProof"
+              class="text-muted text-center">
+              <small>
+                Loading...
+              </small>
+            </p>
+            <p
+              v-else-if="!activityFeed.length"
+              class="text-muted text-center">
+              <small>
+                No recent contributions
+              </small>
+            </p>
+            <ul v-else>
+              <li
+                v-for="item in activityFeed"
+                :key="item.id"
+                class="list-unstyled">
+                <h6>
+                  <nuxt-link
+                    :to="{
+                      name: 'collection-short_name-projects',
+                      params: {
+                        short_name: collection.short_name
+                      }
+                    }">
+                    {{ item.project_name }}
+                  </nuxt-link>
+                </h6>
+                <p class="text-muted mb-0">
+                  <small>
+                    Updated:
+                    {{ discussion.attributes.lastTime | moment('calendar') }}
+                  </small>
+                </p>
+                <ul class="list-inline text-muted mb-1">
+                  <li class="list-inline-item my-1 mr-2">
+                    <small class="d-flex align-items-center">
+                      <icon name="comment" class="mr-1"></icon>
+                      {{ discussion.attributes.commentsCount }}
+                      comments
+                    </small>
+                  </li>
+                  <li class="list-inline-item my-1">
+                    <small class="d-flex align-items-center">
+                      <icon name="users" class="mr-1"></icon>
+                      {{ discussion.attributes.participantsCount }}
+                      participants
+                    </small>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <div class="text-center">
+              <b-btn
+                :variant="darkMode ? 'dark' : 'outline-dark'"
+                class="mt-md-2"
+                :to="{
+                  name: 'collection-short_name-projects',
+                  params: {
+                    short_name: collection.short_name
+                  }
+                }">
+                Choose a project
+              </b-btn>
+            </div>
           </b-col>
         </b-row>
       </b-container>
@@ -159,28 +268,6 @@
       </b-jumbotron>
     </section>
 
-    <!-- <section id="results" v-if="collectionConfig.resultsComponent">
-      <b-jumbotron :style="resultsStyle" class="newton-bg">
-        <div class="container py-2 py-md-4 w-75 text-center">
-          <h3 class="display-5">Results</h3>
-          <p class="lead my-2 my-md-3 text-sm-left">
-            As each task is completed,
-            {{ 'contribution' | pluralize }} are
-            analysed and the outcome provided via our results page, making
-            the efforts of our volunteers immediately apparent.
-          </p>
-          <b-btn
-            variant="outline-light"
-            class="my-1"
-            :to="{
-              key: 'collection-short_name-results'
-            }">
-            Browse the results
-          </b-btn>
-        </div>
-      </b-jumbotron>
-    </section> -->
-
     <section id="final-cta" class="opaque-navbar">
       <b-container class="pt-4 pb-3 text-center">
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
@@ -219,6 +306,8 @@ import find from 'lodash/find'
 import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
+import 'vue-awesome/icons/users'
+import 'vue-awesome/icons/comment'
 import localConfig from '@/local.config'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { licenses } from '@/mixins/licenses'
@@ -241,7 +330,9 @@ export default {
     return {
       localConfig: localConfig,
       featured: [],
-      forumDiscussions: []
+      forumDiscussions: [],
+      activityFeed: [],
+      loadingSocialProof: true
     }
   },
 
@@ -320,37 +411,35 @@ export default {
           'filter[q]': `tag:${this.collection.info.forum.tag}`
         }
       }).then(response => {
-        this.forumTags = response.data
+        this.forumTags = response.data.slice(0, 5)
       }).catch(err => {
         // This is most likely a CORS issue with the forum endpoint, if in
         // development use fake forum discussions instead
         if (process.env.NODE_ENV === 'development') {
-          return {
-            forumDiscussions: [
-              {
-                id: '1',
-                attributes: {
-                  title: 'Fake pinned forum topic (only shown in development)',
-                  slug: 'fake-forum-topic-pinned',
-                  commentsCount: 10,
-                  participantsCount: 2,
-                  startTime: '2017-08-17T15:30:05+00:00',
-                  lastTime: '2018-05-04T10:43:47+00:00'
-                }
-              },
-              {
-                id: '2',
-                attributes: {
-                  title: 'Fake forum topic (only shown in development)',
-                  slug: 'fake-forum-topic',
-                  commentsCount: 15,
-                  participantsCount: 4,
-                  startTime: '2018-03-26T23:04:23+00:00',
-                  lastTime: '2018-03-27T00:00:00+00:00'
-                }
+          this.forumDiscussions = [
+            {
+              id: '1',
+              attributes: {
+                title: 'Fake pinned forum topic (only shown in development)',
+                slug: 'fake-forum-topic-pinned',
+                commentsCount: 10,
+                participantsCount: 2,
+                startTime: '2017-08-17T15:30:05+00:00',
+                lastTime: '2018-05-04T10:43:47+00:00'
               }
-            ]
-          }
+            },
+            {
+              id: '2',
+              attributes: {
+                title: 'Fake forum topic (only shown in development)',
+                slug: 'fake-forum-topic',
+                commentsCount: 15,
+                participantsCount: 4,
+                startTime: '2018-03-26T23:04:23+00:00',
+                lastTime: '2018-03-27T00:00:00+00:00'
+              }
+            }
+          ]
         } else {
           this.$notifications.flash({
             status: 'error',
@@ -360,6 +449,27 @@ export default {
             forumDiscussions: []
           }
         }
+      })
+    },
+
+    /**
+     * Load recent activity.
+     */
+    loadActivityFeed () {
+      this.$axios.get('/account').then(data => {
+        this.activityFeed = data.update_feed.map(item => {
+          // Convert UNIX timestamps
+          item.updated = new Date(item.updated * 1000)
+          return item
+        }).filter(item => {
+          return item.action_updated === 'UserContribution'
+        }).slice(0, 5)
+      }).catch(err => {
+        this.$notifications.flash({
+          status: 'error',
+          message: 'Failed to load recent activity'
+        })
+        console.error(err)
       })
     }
   },
@@ -386,6 +496,12 @@ export default {
     tweet () {
       return `Come and play ${this.collection.name} and help enable future ` +
         `research.`
+    },
+
+    forumUrl () {
+      if (this.collection.info.forum.tag) {
+        return `${localConfig.flarum.url}/t/${this.collection.info.forum.tag}`
+      }
     }
   },
 
@@ -396,7 +512,12 @@ export default {
 
   mounted () {
     this.loadFeatured()
-    this.loadForumDiscussions()
+    return Promise.all([
+      this.loadForumDiscussions(),
+      this.loadActivityFeed()
+    ]).finally(() => {
+      this.loadingSocialProof = false
+    })
   }
 }
 </script>
@@ -427,6 +548,10 @@ export default {
       height: 100px;
       width: auto;
     }
+  }
+
+  #social-proof {
+    font-family: $font-family-base;
   }
 
   #site-lead {
@@ -472,7 +597,8 @@ export default {
 
   #intro,
   #final-cta,
-  #social-media {
+  #social-media,
+  #social-proof {
     background: $white;
   }
 
@@ -541,7 +667,8 @@ export default {
   #collection-index {
     #intro,
     #final-cta,
-    #social-media {
+    #social-media,
+    #social-proof {
       background: $gray-900;
       color: $gray-200;
     }
