@@ -60,135 +60,138 @@
         <b-row>
           <b-col
             v-if="collection.info.forum.tag"
-            class="pb-3 pb-md-4">
-            <h5 class="text-center">Recent forum posts</h5>
-            <p
-              v-if="loadingSocialProof"
-              class="text-muted text-center">
-              <small>
-                Loading...
-              </small>
-            </p>
-            <p
-              v-else-if="!forumDiscussions.length"
-              class="text-muted text-center">
-              <small>
-                No recent forum posts
-              </small>
-            </p>
-            <ul v-else>
-              <li
-                v-for="discussion in forumDiscussions"
-                :key="discussion.id"
-                class="list-unstyled mb-1">
-                <h6>
-                  <a href="a">
-                    {{ discussion.attributes.title }}
-                  </a>
-                </h6>
-                <p class="text-muted mb-0">
-                  <small>
-                    Updated:
-                    {{ discussion.attributes.lastTime | moment('calendar') }}
-                  </small>
-                </p>
-                <ul class="list-inline text-muted mb-1">
-                  <li class="list-inline-item my-1 mr-2">
-                    <small class="d-flex align-items-center">
-                      <icon name="comment" class="mr-1"></icon>
-                      {{ discussion.attributes.commentsCount }}
-                      comments
+            class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
+            <span>
+              <h5 class="text-center">Recent forum posts</h5>
+              <p
+                v-if="loadingSocialProof"
+                class="text-muted text-center">
+                <small>
+                  Loading...
+                </small>
+              </p>
+              <p
+                v-else-if="!forumDiscussions.length"
+                class="text-muted text-center">
+                <small>
+                  No recent forum posts
+                </small>
+              </p>
+              <ul v-else>
+                <li
+                  v-for="discussion in forumDiscussions"
+                  :key="discussion.id"
+                  class="list-unstyled mb-1">
+                  <h6 class="mb-0">
+                    <a href="a">
+                      {{ discussion.attributes.title }}
+                    </a>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    <small>
+                      Updated:
+                      {{ discussion.attributes.lastTime | moment('calendar') }}
                     </small>
-                  </li>
-                  <li class="list-inline-item my-1">
-                    <small class="d-flex align-items-center">
-                      <icon name="users" class="mr-1"></icon>
-                      {{ discussion.attributes.participantsCount }}
-                      participants
-                    </small>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div class="text-center">
-              <b-btn
-                :variant="darkMode ? 'dark' : 'outline-dark'"
-                class="mt-md-2"
-                :href="forumUrl">
-                Visit the forum
-              </b-btn>
-            </div>
+                  </p>
+                  <ul class="list-inline text-muted mb-1">
+                    <li class="list-inline-item my-1 mr-2">
+                      <small class="d-flex align-items-center">
+                        <icon name="comment" class="mr-1"></icon>
+                        {{ discussion.attributes.commentsCount }}
+                        comments
+                      </small>
+                    </li>
+                    <li class="list-inline-item my-1">
+                      <small class="d-flex align-items-center">
+                        <icon name="users" class="mr-1"></icon>
+                        {{ discussion.attributes.participantsCount }}
+                        participants
+                      </small>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </span>
+            <span>
+              <div class="text-center">
+                <b-btn
+                  :variant="darkMode ? 'dark' : 'outline-dark'"
+                  class="mt-md-2"
+                  :href="forumUrl">
+                  Visit the forum
+                </b-btn>
+              </div>
+            </span>
           </b-col>
           <b-col
-            class="pb-3 pb-md-4">
-            <h5 class="text-center">Recent contributions</h5>
-            <p
-              v-if="loadingSocialProof"
-              class="text-muted text-center">
-              <small>
-                Loading...
-              </small>
-            </p>
-            <p
-              v-else-if="!activityFeed.length"
-              class="text-muted text-center">
-              <small>
-                No recent contributions
-              </small>
-            </p>
-            <ul v-else>
-              <li
-                v-for="item in activityFeed"
-                :key="item.id"
-                class="list-unstyled">
-                <h6>
-                  <nuxt-link
-                    :to="{
-                      name: 'collection-short_name-projects',
-                      params: {
-                        short_name: collection.short_name
-                      }
-                    }">
-                    {{ item.project_name }}
-                  </nuxt-link>
-                </h6>
-                <p class="text-muted mb-0">
-                  <small>
-                    Updated:
-                    {{ discussion.attributes.lastTime | moment('calendar') }}
-                  </small>
-                </p>
-                <ul class="list-inline text-muted mb-1">
-                  <li class="list-inline-item my-1 mr-2">
-                    <small class="d-flex align-items-center">
-                      <icon name="comment" class="mr-1"></icon>
-                      {{ discussion.attributes.commentsCount }}
-                      comments
+            class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
+            <span>
+              <h5 class="text-center">Recent contributions</h5>
+              <p
+                v-if="loadingSocialProof"
+                class="text-muted text-center">
+                <small>
+                  Loading...
+                </small>
+              </p>
+              <p
+                v-else-if="!activityFeed.length"
+                class="text-muted text-center">
+                <small>
+                  No recent contributions
+                </small>
+              </p>
+              <ul v-else>
+                <li
+                  v-for="item in activityFeed"
+                  :key="item.id"
+                  class="list-unstyled">
+                  <h6 class="mb-0">
+                    <nuxt-link
+                      :to="{
+                        name: 'collection-short_name-projects-id',
+                        params: {
+                          short_name: collection.short_name,
+                          id: item.projectShortName
+                        }
+                      }">
+                      {{ item.projectName }}
+                    </nuxt-link>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    <small>
+                      Updated:
+                      {{ item.updated | moment('calendar') }}
                     </small>
-                  </li>
-                  <li class="list-inline-item my-1">
-                    <small class="d-flex align-items-center">
-                      <icon name="users" class="mr-1"></icon>
-                      {{ discussion.attributes.participantsCount }}
-                      participants
-                    </small>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-            <div class="text-center">
-              <b-btn
-                :variant="darkMode ? 'dark' : 'outline-dark'"
-                class="mt-md-2"
-                :to="{
-                  name: 'collection-short_name-projects',
-                  params: {
-                    short_name: collection.short_name
-                  }
-                }">
-                Choose a project
-              </b-btn>
-            </div>
+                  </p>
+                  <ul class="list-inline text-muted mb-1">
+                    <li class="list-inline-item my-1">
+                      <small class="d-flex align-items-center">
+                        <icon name="users" class="mr-1"></icon>
+                        Join
+                        {{ item.participantsCount }}
+                        volunteers
+                      </small>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </span>
+            <span>
+              <div class="text-center">
+                <b-btn
+                  :variant="darkMode ? 'dark' : 'outline-dark'"
+                  class="mt-md-2"
+                  :to="{
+                    name: 'collection-short_name-projects',
+                    params: {
+                      short_name: collection.short_name
+                    }
+                  }">
+                  Choose a project
+                </b-btn>
+              </div>
+            </span>
           </b-col>
         </b-row>
       </b-container>
@@ -305,6 +308,8 @@
 import find from 'lodash/find'
 import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
+import maxBy from 'lodash/maxBy'
+import groupBy from 'lodash/groupBy'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/comment'
@@ -456,14 +461,24 @@ export default {
      * Load recent activity.
      */
     loadActivityFeed () {
-      this.$axios.get('/account').then(data => {
-        this.activityFeed = data.update_feed.map(item => {
+      this.$axios.$get('/account').then(data => {
+        const contributions = data.update_feed.map(item => {
           // Convert UNIX timestamps
           item.updated = new Date(item.updated * 1000)
           return item
         }).filter(item => {
           return item.action_updated === 'UserContribution'
-        }).slice(0, 5)
+        })
+        const groups = groupBy(contributions, item => item.project_name)
+
+        this.activityFeed = Object.values(groups).map(group => {
+          return {
+            projectName: group[0].project_name,
+            projectShortName: group[0].project_short_name,
+            updated: maxBy(group, 'updated').updated,
+            participantsCount: uniqBy(group, 'name').length
+          }
+        })
       }).catch(err => {
         this.$notifications.flash({
           status: 'error',
@@ -551,7 +566,7 @@ export default {
   }
 
   #social-proof {
-    font-family: $font-family-base;
+    font-family: $headings-font-family;
   }
 
   #site-lead {
