@@ -89,7 +89,7 @@
                   </h6>
                   <p class="text-muted mb-0">
                     <small>
-                      Updated:
+                      Last activity::
                       {{ discussion.attributes.lastTime | moment('calendar') }}
                     </small>
                   </p>
@@ -160,7 +160,7 @@
                   </h6>
                   <p class="text-muted mb-0">
                     <small>
-                      Updated:
+                      Last activity:
                       {{ item.updated | moment('calendar') }}
                     </small>
                   </p>
