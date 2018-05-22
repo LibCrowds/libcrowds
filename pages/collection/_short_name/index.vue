@@ -64,7 +64,7 @@
             <span>
               <h5 class="text-center">Recent forum posts</h5>
               <p
-                v-if="loadingSocialProof"
+                v-if="loadingForumDiscussions"
                 class="text-muted text-center">
                 <small>
                   Loading...
@@ -128,7 +128,7 @@
             <span>
               <h5 class="text-center">Recent contributions</h5>
               <p
-                v-if="loadingSocialProof"
+                v-if="loadingActivityFeed"
                 class="text-muted text-center">
                 <small>
                   Loading...
@@ -337,7 +337,8 @@ export default {
       featured: [],
       forumDiscussions: [],
       activityFeed: [],
-      loadingSocialProof: true
+      loadingActivityFeed: true,
+      loadingForumDiscussions: true
     }
   },
 
@@ -412,48 +413,59 @@ export default {
      * Filters out any stick posts then returns the top five.
      */
     loadForumDiscussions () {
-      const endpoint = `${localConfig.flarum.url}/api/discussions`
-      return this.$axios.$get(endpoint, {
-        params: {
-          'filter[q]': `tag:${this.collection.info.forum.tag}`
-        }
-      }).then(response => {
-        this.forumDiscussions = response.data.filter(discussion => {
-          return !discussion.attributes.isSticky
-        }).slice(0, 5)
-      }).catch(err => {
-        // This is most likely a CORS issue with the forum endpoint, if in
-        // development use fake forum discussions instead
-        if (process.env.NODE_ENV === 'development') {
-          this.forumDiscussions = [
-            {
-              id: '1',
-              attributes: {
-                title: 'Fake forum topic (only shown in development)',
-                slug: 'fake-forum-topic',
-                commentsCount: 10,
-                participantsCount: 2,
-                startTime: '2017-08-17T15:30:05+00:00',
-                lastTime: '2018-05-04T10:43:47+00:00'
-              }
-            }
-          ]
-        } else {
-          this.$notifications.flash({
-            status: 'error',
-            message: `Error loading latest forum discussions: ${err.message}`
-          })
-          return {
-            forumDiscussions: []
+      if (
+        !locaConfig.flarum || 
+        !localConfig.flarum.url || 
+        !this.collection.info.forum.tag
+      ) {
+        return this.$axios.$get(`${localConfig.flarum.url}/api/discussions`, {
+          params: {
+            'filter[q]': `tag:${this.collection.info.forum.tag}`
           }
-        }
-      })
+        }).then(response => {
+          this.forumDiscussions = response.data.filter(discussion => {
+            return !discussion.attributes.isSticky
+          }).slice(0, 5)
+        }).catch(err => {
+          // This is most likely a CORS issue with the forum endpoint, if in
+          // development use fake forum discussions instead
+          if (process.env.NODE_ENV === 'development') {
+            this.forumDiscussions = [
+              {
+                id: '1',
+                attributes: {
+                  title: 'Fake forum topic (only shown in development)',
+                  slug: 'fake-forum-topic',
+                  commentsCount: 10,
+                  participantsCount: 2,
+                  startTime: '2017-08-17T15:30:05+00:00',
+                  lastTime: '2018-05-04T10:43:47+00:00'
+                }
+              }
+            ]
+          } else {
+            this.$notifications.flash({
+              status: 'error',
+              message: `Error loading latest forum discussions: ${err.message}`
+            })
+            return {
+              forumDiscussions: []
+            }
+          }
+        }).finally(() =>{
+          this.loadForumDiscussions = false
+        })
+      }
     },
 
     /**
      * Load recent activity.
+     *
+     * Returns a summary of user contributions for projects belonging to
+     * this collection microsite.
      */
     loadActivityFeed () {
+      let allActivity = []
       this.$axios.$get('/account').then(data => {
         const contributions = data.update_feed.map(item => {
           // Convert UNIX timestamps
@@ -462,8 +474,11 @@ export default {
         }).filter(item => {
           return item.action_updated === 'UserContribution'
         })
+
+        // Group by project
         const groups = groupBy(contributions, item => item.project_name)
 
+        // Collate summaries for each project
         this.activityFeed = Object.values(groups).map(group => {
           return {
             projectName: group[0].project_name,
@@ -478,6 +493,8 @@ export default {
           message: 'Failed to load recent activity'
         })
         console.error(err)
+      }).finally(() => {
+        this.loadingActivityFeed = false
       })
     },
 
@@ -527,12 +544,8 @@ export default {
 
   mounted () {
     this.loadFeatured()
-    return Promise.all([
-      this.loadForumDiscussions(),
-      this.loadActivityFeed()
-    ]).finally(() => {
-      this.loadingSocialProof = false
-    })
+    this.loadForumDiscussions()
+    this.loadActivityFeed()
   }
 }
 </script>
