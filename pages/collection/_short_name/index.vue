@@ -414,7 +414,7 @@ export default {
      */
     loadForumDiscussions () {
       if (
-        !locaConfig.flarum ||
+        !localConfig.flarum ||
         !localConfig.flarum.url ||
         !this.collection.info.forum.tag
       ) {
