@@ -125,7 +125,17 @@ export default {
                 : 'To select a related forum topic Flarum integration ' +
                   'should be enabled in application\'s the main ' +
                   'configuration file',
-              values: this.forumTags ? this.forumTags : []
+              values: this.forumTags ? this.forumTags : [],
+              onChanged: (model, newVal) => {
+                model.info.forum.tag = `${localConfig.flarum.url}/t/${newVal}`
+              }
+            },
+            {
+              model: 'info.forum.url',
+              label: 'Forum URL',
+              type: "input",
+              inputType: "text",
+              visible: false
             }
           ]
         }

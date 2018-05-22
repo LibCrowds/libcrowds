@@ -82,6 +82,7 @@ export const setCollectionDefaults = function (collection) {
     // removed in the next version
     const parts = collection.info.forum.split('/')
     collection.info.forum = {
+      url: typeof collection.info.forum,
       tag: parts[parts.length - 1]
     }
   }

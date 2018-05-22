@@ -1,5 +1,3 @@
-import localConfig from '@/local.config'
-
 /**
  * A mixin for the current collection microsite nav items.
  */
@@ -65,12 +63,11 @@ export const currentMicrositeNavItems = {
       ]
 
       // Add the forum URL if configured
-      if (this.currentCollection.info.forum.tag) {
+      if (this.currentCollection.info.forum.url) {
         items.push({
           label: 'Discuss',
           external: true,
-          link: `${localConfig.flarum.url}/` +
-            this.currentCollection.info.forum.tag
+          link: this.currentCollection.info.forum.url
         })
       }
 
