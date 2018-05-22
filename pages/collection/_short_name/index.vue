@@ -117,7 +117,7 @@
                 <b-btn
                   :variant="darkMode ? 'dark' : 'outline-dark'"
                   class="mt-md-2"
-                  :href="forumUrl">
+                  :href="collection.info.forum.url">
                   Visit the forum
                 </b-btn>
               </div>
@@ -502,7 +502,9 @@ export default {
      * Return the URL for a forum discussion.
      */
     getDiscussionUrl (id) {
-      return `${localConfig.flarum.url}/d/${id}`
+      if (localConfig.flarum && localConfig.flarum.url) {
+        return `${localConfig.flarum.url}/d/${id}`
+      }
     }
   },
 
@@ -528,12 +530,6 @@ export default {
     tweet () {
       return `Come and play ${this.collection.name} and help enable future ` +
         `research.`
-    },
-
-    forumUrl () {
-      if (this.collection.info.forum.tag) {
-        return `${localConfig.flarum.url}/t/${this.collection.info.forum.tag}`
-      }
     }
   },
 
