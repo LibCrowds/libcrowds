@@ -414,8 +414,8 @@ export default {
      */
     loadForumDiscussions () {
       if (
-        !locaConfig.flarum || 
-        !localConfig.flarum.url || 
+        !locaConfig.flarum ||
+        !localConfig.flarum.url ||
         !this.collection.info.forum.tag
       ) {
         return this.$axios.$get(`${localConfig.flarum.url}/api/discussions`, {
@@ -452,7 +452,7 @@ export default {
               forumDiscussions: []
             }
           }
-        }).finally(() =>{
+        }).finally(() => {
           this.loadForumDiscussions = false
         })
       }
@@ -465,7 +465,6 @@ export default {
      * this collection microsite.
      */
     loadActivityFeed () {
-      let allActivity = []
       this.$axios.$get('/account').then(data => {
         const contributions = data.update_feed.map(item => {
           // Convert UNIX timestamps
