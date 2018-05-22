@@ -13,6 +13,13 @@
       disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
+
+      <b-btn
+        slot="footer"
+        variant="link"
+        @click="$emit('tags')">
+        Tag an Item
+      </b-btn>
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
