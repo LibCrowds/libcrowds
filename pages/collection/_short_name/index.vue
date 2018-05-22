@@ -55,7 +55,7 @@
       </b-container>
     </section>
 
-    <section id="social-proof">
+    <section id="social-proof" class="opaque-navbar">
       <b-container>
         <b-row>
           <b-col
