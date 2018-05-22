@@ -474,7 +474,7 @@ export default {
           return item
         }).filter(item => {
           return item.action_updated === 'UserContribution'
-        })
+        }).slice(0, 5)
 
         // Group by project
         const groups = groupBy(contributions, item => item.project_name)
