@@ -408,6 +408,8 @@ export default {
 
     /**
      * Get recent forum posts for the topic linked to this collection.
+     *
+     * Filters out any stick posts then returns the top five.
      */
     loadForumDiscussions () {
       const endpoint = `${localConfig.flarum.url}/api/discussions`
@@ -427,23 +429,12 @@ export default {
             {
               id: '1',
               attributes: {
-                title: 'Fake pinned forum topic (only shown in development)',
-                slug: 'fake-forum-topic-pinned',
+                title: 'Fake forum topic (only shown in development)',
+                slug: 'fake-forum-topic',
                 commentsCount: 10,
                 participantsCount: 2,
                 startTime: '2017-08-17T15:30:05+00:00',
                 lastTime: '2018-05-04T10:43:47+00:00'
-              }
-            },
-            {
-              id: '2',
-              attributes: {
-                title: 'Fake forum topic (only shown in development)',
-                slug: 'fake-forum-topic',
-                commentsCount: 15,
-                participantsCount: 4,
-                startTime: '2018-03-26T23:04:23+00:00',
-                lastTime: '2018-03-27T00:00:00+00:00'
               }
             }
           ]
