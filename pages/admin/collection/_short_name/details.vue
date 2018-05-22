@@ -190,8 +190,8 @@ export default {
     togglePublished () {
       const published = this.currentCollection.info.published
       this.currentCollection.info.published = !published
-      this.$axios.$put(`/api/category/${this.collection.id}`, {
-        info: this.collection.info
+      this.$axios.$put(`/api/category/${this.currentCollection.id}`, {
+        info: this.currentCollection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
         this.$notifications.success({
