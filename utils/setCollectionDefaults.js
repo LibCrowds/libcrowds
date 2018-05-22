@@ -8,7 +8,6 @@ import merge from 'lodash/merge'
  */
 export const setCollectionDefaults = function (collection) {
   const defaults = {
-    forum: null,
     tagline: '',
     background: null,
     license: 'CC0',
@@ -57,7 +56,8 @@ export const setCollectionDefaults = function (collection) {
     annotations: {},
     volumes: [],
     templates: [],
-    project_filters: []
+    project_filters: [],
+    forum: {}
   }
   collection.info = merge(defaults, collection.info)
 
@@ -74,5 +74,10 @@ export const setCollectionDefaults = function (collection) {
   // Ensure templates is an array
   if (!Array.isArray(collection.info.templates)) {
     collection.info.templates = []
+  }
+
+  // Ensure forum is an object (before v.1.0.0-beta.10 it was a string)
+  if (typeof collection.info.forum !== 'object') {
+    collection.info.forum = {}
   }
 }
