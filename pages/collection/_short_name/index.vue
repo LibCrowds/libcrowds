@@ -419,6 +419,7 @@ export default {
         !this.collection.info.forum.tag
       ) {
         this.loadingForumDiscussions = false
+        return
       }
       return this.$axios.$get(`${localConfig.flarum.url}/api/discussions`, {
         params: {
