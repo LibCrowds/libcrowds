@@ -1,7 +1,7 @@
 <template>
   <div id="collection-index">
     <transition appear>
-      <div class="container full-height text-center">
+      <b-container class="full-height text-center">
         <div class="header-content">
           <div class="d-flex justify-content-center align-items-center">
             <img
@@ -38,11 +38,11 @@
             </b-btn>
           </div>
         </div>
-      </div>
+      </b-container>
     </transition>
 
     <section id="intro" class="opaque-navbar">
-      <div class="container py-3 py-md-4 text-center">
+      <b-container class="py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
           {{ collection.description }}
         </p>
@@ -52,26 +52,44 @@
           research at {{ localConfig.company }}.
         </p>
         <hr class="mt-3 w-75">
-        <b-btn
-          :variant="darkMode ? 'dark' : 'outline-dark'"
-          class="mt-md-2"
-          size="lg"
-          :to="{
-            name: 'collection-short_name-about',
-            params: {
-              short_name: collection.short_name
-            }
-          }">
-          Learn More
-        </b-btn>
-      </div>
+      </b-container>
+    </section>
+
+    <section id="intro" class="social-proof">
+      <b-container>
+        <b-row>
+          <b-col
+            v-if="collection.info.forum.tag"
+            class="pb-3 pb-md-4 text-center">
+            <h5>Recent forum posts</h5>
+            <ul>
+              <li
+                v-for="discussion in forumDiscussions"
+                :key="discussion.id"
+                class="list-unstyled">
+                <h6>
+                  <a :href="`${localConfig.forum.url}/d/${discussion.id}`">
+                    {{ discussion.attributes.title }}
+                  </a>
+                </h6>
+              </li>
+            </ul>
+            <b-btn
+              :variant="darkMode ? 'dark' : 'outline-dark'"
+              class="mt-md-2"
+              :href="`${localConfig.flarum.url}/t/${collection.info.forum.tag}`">
+              Visit the forum
+            </b-btn>
+          </b-col>
+        </b-row>
+      </b-container>
     </section>
 
     <section
       id="featured-projects"
       class="opaque-navbar"
       v-if="featured.length">
-      <div class="container w-75 text-center pb-4">
+      <b-container class="w-75 text-center pb-4">
         <div class="row text-lg-left">
           <div class="col-lg-5 text-uppercase py-4">
             <h2 class="display-5 font-weight-bold pt-1">
@@ -108,12 +126,12 @@
           }">
           Browse all projects
         </b-btn>
-      </div>
+      </b-container>
     </section>
 
     <section id="data">
       <b-jumbotron class="code-bg">
-        <div class="container py-2 py-md-4 w-75 text-center">
+        <b-container class="py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
             All datasets generated from the experimental crowdsourcing
@@ -137,7 +155,7 @@
             }">
             Get the data
           </b-btn>
-        </div>
+        </b-container>
       </b-jumbotron>
     </section>
 
@@ -164,7 +182,7 @@
     </section> -->
 
     <section id="final-cta" class="opaque-navbar">
-      <div class="container pt-4 pb-3 text-center">
+      <b-container class="pt-4 pb-3 text-center">
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
           Your contributions will have a direct impact on enabling future
@@ -181,17 +199,17 @@
           }">
           Get Started
         </b-btn>
-      </div>
+      </b-container>
     </section>
 
     <section id="social-media" class="opaque-navbar">
-      <div class="container pb-4 text-center">
+      <b-container class="pb-4 text-center">
         <hr class="mt-0 mb-3">
         <social-media-buttons
           :tweet="tweet"
           :shareUrl="shareUrl">
         </social-media-buttons>
-      </div>
+      </b-container>
     </section>
   </div>
 </template>
@@ -222,7 +240,8 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      featured: []
+      featured: [],
+      forumDiscussions: []
     }
   },
 
@@ -289,6 +308,59 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Get recent forum posts for the topic linked to this collection.
+     */
+    loadForumDiscussions () {
+      const endpoint = `${localConfig.flarum.url}/api/discussions`
+      return this.$axios.$get(endpoint, {
+        params: {
+          'filter[q]': `tag:${this.collection.info.forum.tag}`
+        }
+      }).then(response => {
+        this.forumTags = response.data
+      }).catch(err => {
+        // This is most likely a CORS issue with the forum endpoint, if in
+        // development use fake forum discussions instead
+        if (process.env.NODE_ENV === 'development') {
+          return {
+            forumDiscussions: [
+              {
+                id: '1',
+                attributes: {
+                  title: 'Fake pinned forum topic (only shown in development)',
+                  slug: 'fake-forum-topic-pinned',
+                  commentsCount: 10,
+                  participantsCount: 2,
+                  startTime: '2017-08-17T15:30:05+00:00',
+                  lastTime: '2018-05-04T10:43:47+00:00'
+                }
+              },
+              {
+                id: '2',
+                attributes: {
+                  title: 'Fake forum topic (only shown in development)',
+                  slug: 'fake-forum-topic',
+                  commentsCount: 15,
+                  participantsCount: 4,
+                  startTime: '2018-03-26T23:04:23+00:00',
+                  lastTime: '2018-03-27T00:00:00+00:00'
+                }
+              }
+            ]
+          }
+        } else {
+          this.$notifications.flash({
+            status: 'error',
+            message: `Error loading latest forum discussions: ${err.message}`
+          })
+          return {
+            forumDiscussions: []
+          }
+        }
+      })
     }
   },
 
@@ -324,6 +396,7 @@ export default {
 
   mounted () {
     this.loadFeatured()
+    this.loadForumDiscussions()
   }
 }
 </script>
