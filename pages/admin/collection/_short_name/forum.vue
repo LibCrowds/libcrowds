@@ -133,8 +133,8 @@ export default {
             {
               model: 'info.forum.url',
               label: 'Forum URL',
-              type: "input",
-              inputType: "text",
+              type: 'input',
+              inputType: 'text',
               visible: false
             }
           ]
