@@ -78,6 +78,11 @@ export const setCollectionDefaults = function (collection) {
 
   // Ensure forum is an object (before v.1.0.0-beta.10 it was a string)
   if (typeof collection.info.forum !== 'object') {
-    collection.info.forum = {}
+    // We'll switch over the tag to the new field here but this should be
+    // removed in the next version
+    const parts = collection.info.forum.split('/')
+    collection.info.forum = {
+      tag: parts[parts.length - 1]
+    }
   }
 }
