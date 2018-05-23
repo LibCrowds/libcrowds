@@ -43,7 +43,6 @@
       title="Share"
       size="lg"
       ok-only
-      @shown="whatisgoingon"
       :header-text-variant="darkPresenterModals ? 'white' : null"
       :header-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
@@ -342,10 +341,6 @@ export default {
   },
 
   methods: {
-    whatisgoingon (evt) {
-      console.log(evt)
-    },
-
     /**
      * Load the next set of tasks.
      */
@@ -444,7 +439,6 @@ export default {
      * Show a modal, also tracking the event.
      */
     showModal (name) {
-      console.log('modal shown', name)
       if (this.$ga) {
         this.$ga.event({
           eventCategory: 'Project Toolbar',
