@@ -127,7 +127,7 @@ export default {
                   'configuration file',
               values: this.forumTags ? this.forumTags : [],
               onChanged: (model, newVal) => {
-                model.info.forum.tag = `${localConfig.flarum.url}/t/${newVal}`
+                model.info.forum.url = `${localConfig.flarum.url}/t/${newVal}`
               }
             },
             {
