@@ -109,10 +109,7 @@ export default {
       return {
         endpoint: `/api/category/${this.collection.id}`,
         method: 'put',
-        model: pick(
-          this.collection.info,
-          'info'
-        ),
+        model: pick(this.collection, 'info'),
         schema: {
           fields: [
             {
