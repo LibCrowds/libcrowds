@@ -89,7 +89,7 @@
                   </h6>
                   <p class="text-muted mb-0">
                     <small>
-                      Last activity::
+                      Last activity:
                       {{ discussion.attributes.lastTime | moment('calendar') }}
                     </small>
                   </p>
