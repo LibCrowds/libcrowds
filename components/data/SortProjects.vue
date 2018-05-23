@@ -73,7 +73,9 @@ export default {
      *   The sorting option.
      */
     onInput (value) {
-      this.$emit('input', value)
+      if (value) {
+        this.$emit('input', value)
+      }
     },
 
     /**
