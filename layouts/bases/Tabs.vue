@@ -138,7 +138,7 @@ export default {
     }
 
     @include media-breakpoint-up(sm) {
-      display: block;
+      display: flex;
 
       .nav-link {
         display: block;
