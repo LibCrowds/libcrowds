@@ -16,14 +16,34 @@
       @submit="onSubmit">
     </component>
 
+    <!-- Tutorial modal -->
+    <b-modal
+      lazy
+      ref="help"
+      title="Tutorial"
+      size="lg"
+      ok-only
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      <b-container
+        class="py-2 px-3"
+        v-html="tutorial">
+      </b-container>
+    </b-modal>
+
     <!-- Share model -->
     <b-modal
       lazy
-      ref="share"
       v-if="task"
+      ref="share"
       title="Share"
       size="lg"
       ok-only
+      @shown="whatisgoingon"
       :header-text-variant="darkPresenterModals ? 'white' : null"
       :header-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
@@ -56,25 +76,6 @@
           :tweet="description"
           :shareUrl="shareUrl">
         </social-media-buttons>
-      </b-container>
-    </b-modal>
-
-    <!-- Tutorial modal -->
-    <b-modal
-      lazy
-      ref="help"
-      title="Tutorial"
-      size="lg"
-      ok-only
-      :header-text-variant="darkPresenterModals ? 'white' : null"
-      :header-bg-variant="darkPresenterModals ? 'dark' : null"
-      :body-bg-variant="darkPresenterModals ? 'dark' : null"
-      :body-text-variant="darkPresenterModals ? 'white' : null"
-      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
-      :footer-text-variant="darkPresenterModals ? 'white' : null">
-      <b-container
-        class="py-2 px-3"
-        v-html="tutorial">
       </b-container>
     </b-modal>
 
@@ -243,6 +244,7 @@ export default {
       tagSearchLoading: false,
       foundTags: [],
       selectedTags: [],
+      tutorialShown: false,
       localConfig: localConfig
     }
   },
@@ -340,6 +342,10 @@ export default {
   },
 
   methods: {
+    whatisgoingon (evt) {
+      console.log(evt)
+    },
+
     /**
      * Load the next set of tasks.
      */
@@ -438,6 +444,7 @@ export default {
      * Show a modal, also tracking the event.
      */
     showModal (name) {
+      console.log('modal shown', name)
       if (this.$ga) {
         this.$ga.event({
           eventCategory: 'Project Toolbar',
@@ -500,6 +507,12 @@ export default {
 
     /**
      * Show tutorial, unless disabled by the current user.
+     *
+     * For some bizarre reason (or more likely one I haven't figured out yet),
+     * this function will cause the modal at the top of this page to be
+     * displayed, the refs seem to be ignored! Thought it might be because this
+     * is run from the mounted hook but apparently not. So, just keep the
+     * tutorial modal at the top of this page for now.
      */
     showInitialTutorial () {
       if (
@@ -521,8 +534,7 @@ export default {
 
   watch: {
     task (val) {
-      // Load manifest
-      console.log(val)
+      // Load the manifest, if available
       if (!val.length || !val.info.hasOwnProperty('manifest')) {
         this.manifest = null
       } else {
