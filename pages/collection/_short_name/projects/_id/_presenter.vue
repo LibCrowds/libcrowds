@@ -509,8 +509,7 @@ export default {
      * tutorial modal at the top of this page for now.
      */
     showInitialTutorial () {
-      if (
-        isEmpty(this.currentUser) ||
+      if (typeof this.currentUser.info === 'undefined' ||
         !this.currentUser.info.hasOwnProperty('hide_tutorials') ||
         this.currentUser.info.hide_tutorials === false
       ) {
