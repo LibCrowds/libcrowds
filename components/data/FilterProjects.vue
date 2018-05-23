@@ -10,6 +10,7 @@
         v-model="model[filter.name]"
         :placeholder="`Filter by ${filter.name.toLowerCase()}`"
         :show-labels="false"
+        :show-no-results="false"
         :options="options[filter.name] || []"
         @input="onInput"
         @select="onSelect">

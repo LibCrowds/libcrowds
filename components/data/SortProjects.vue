@@ -7,6 +7,7 @@
       v-model="model"
       placeholder="Sort projects by"
       :show-labels="false"
+      :show-no-results="false"
       :options="sortOptions"
       @input="onInput"
       @select="onSelect">
