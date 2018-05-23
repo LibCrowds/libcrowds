@@ -522,6 +522,7 @@ export default {
   watch: {
     task (val) {
       // Load manifest
+      console.log(val)
       if (!val.length || !val.info.hasOwnProperty('manifest')) {
         this.manifest = null
       } else {

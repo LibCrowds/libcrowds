@@ -265,10 +265,12 @@ export default {
   mounted () {
     this.styleNavbar()
     window.addEventListener('scroll', this.styleNavbar)
+    window.addEventListener('resize', this.styleNavbar)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.styleNavbar)
+    window.addEventListener('resize', this.styleNavbar)
   }
 }
 </script>
