@@ -15,7 +15,8 @@ export const setCollectionDefaults = function (collection) {
     presenter_options: {
       note_button: 'Add a note',
       submit_button: 'Save',
-      share_text: ''
+      share_text: '',
+      extra_tag_link: ''
     },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +

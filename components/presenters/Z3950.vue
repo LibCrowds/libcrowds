@@ -39,6 +39,13 @@
           <img :src="task.info.url" class="img-fluid">
         </b-card>
 
+        <b-btn
+          v-if="extraTagLink.length"
+          variant="link"
+          @click="$emit('tags')">
+          {{ extraTagLink }}
+        </b-btn>
+
       </b-col>
       <b-col lg="6" class="mt-3 mt-lg-0">
         <b-card
@@ -328,6 +335,10 @@ export default {
         return marked(this.collection.info.presenter_options.submit_button)
       }
       return capitalize(this.stage)
+    },
+
+    extraTagLink () {
+      return this.collection.info.presenter_options.extra_tag_link
     },
 
     stage () {
