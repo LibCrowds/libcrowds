@@ -13,6 +13,14 @@
       disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
+      <b-btn
+        v-if="extraTagLink.length"
+        slot="footer"
+        size="sm"
+        variant="link"
+        @click="$emit('tags')">
+        {{ extraTagLink }}
+      </b-btn>
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
@@ -28,12 +36,6 @@ import marked from 'marked'
 import pluralize from 'pluralize'
 
 export default {
-  data () {
-    return {
-      taskTmpl: this.projectTemplate.task
-    }
-  },
-
   props: {
     project: {
       type: Object,
@@ -60,7 +62,7 @@ export default {
     },
 
     taskOpts () {
-      const opts = Object.assign(this.taskTmpl, this.task.info)
+      const opts = Object.assign(this.projectTemplate.task, this.task.info)
 
       // Build the form for transcribe tasks
       if (opts.hasOwnProperty('fields_schema')) {
@@ -87,6 +89,11 @@ export default {
         note: marked(this.collection.info.presenter_options.note_button),
         submit: marked(this.collection.info.presenter_options.submit_button)
       }
+    },
+
+    extraTagLink () {
+      console.log(this.collection.info.presenter_options.extra_tag_link)
+      return this.collection.info.presenter_options.extra_tag_link
     },
 
     toolbarButtons () {

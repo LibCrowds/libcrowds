@@ -64,14 +64,6 @@ export default {
       return this.$store.state.currentCollection
     },
 
-    taskPresenterDisabled () {
-      const templates = this.currentCollection.info.templates
-      const hasTemplates = templates !== 'undefined' && templates.length > 0
-      const volumes = this.currentCollection.info.volumes
-      const hasVolumes = volumes !== 'undefined' && volumes.length > 0
-      return hasTemplates || hasVolumes
-    },
-
     form () {
       return {
         endpoint: `/api/category/${this.currentCollection.id}`,
@@ -147,26 +139,6 @@ export default {
               }),
               hint: 'The license used to release all data produced by ' +
                 'project\'s within the collection microsite'
-            },
-            {
-              model: 'info.presenter',
-              label: 'Task Presenter',
-              type: 'select',
-              disabled: () => this.taskPresenterDisabled,
-              hint: this.taskPresenterDisabled
-                ? 'The task presenter cannot be updated while the ' +
-                  'collection contains templates or volumes'
-                : '',
-              values: [
-                {
-                  id: 'iiif-annotation',
-                  name: 'IIIF Annotation'
-                },
-                {
-                  id: 'z3950',
-                  name: 'Z39.50'
-                }
-              ]
             }
           ]
         }
