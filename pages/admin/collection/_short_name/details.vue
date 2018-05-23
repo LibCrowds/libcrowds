@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import localConfig from '@/local.config'
 import VueFormGenerator from 'vue-form-generator'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { licenses } from '@/mixins/licenses'
@@ -53,39 +52,6 @@ export default {
       title: 'Core Details',
       description: 'Configure the core details for the microsite.'
     }
-  },
-
-  asyncData ({ app, error }) {
-    const forumTagsEndpoint = localConfig.flarum && localConfig.flarum.url
-      ? `${localConfig.flarum.url}/api/tags`
-      : ''
-
-    if (!forumTagsEndpoint) {
-      return {
-        forumTags: []
-      }
-    }
-
-    return app.$axios.$get(forumTagsEndpoint).then(result => {
-      return {
-        forumTags: result.data.map(tag => {
-          return {
-            id: `${localConfig.flarum.url}/t/${tag.attributes.name}`,
-            name: tag.attributes.name
-          }
-        })
-      }
-    }).catch(err => {
-      if (err.message === 'Network Error') {
-        // This is most likely a CORS issue with the forum endpoint
-        console.warn('Network Error: Cannot get forum tags')
-        return {
-          forumTags: []
-        }
-      } else {
-        error(err)
-      }
-    })
   },
 
   components: {
@@ -173,19 +139,6 @@ export default {
               hint: 'Appears on the collection microsite\'s homepage'
             },
             {
-              model: 'info.forum',
-              label: 'Forum URL',
-              type: 'select',
-              disabled: () => !localConfig.flarum || !localConfig.flarum.url,
-              hint: localConfig.flarum && localConfig.flarum.url
-                ? 'Used to provide a link to a particular forum topic in ' +
-                  'the main navigation bar'
-                : 'To select a related forum topic Flarum integration ' +
-                  'should be enabled in application\'s the main ' +
-                  'configuration file',
-              values: this.forumTags ? this.forumTags : []
-            },
-            {
               model: 'info.license',
               label: 'Data Reuse License',
               type: 'select',
@@ -237,8 +190,8 @@ export default {
     togglePublished () {
       const published = this.currentCollection.info.published
       this.currentCollection.info.published = !published
-      this.$axios.$put(`/api/category/${this.collection.id}`, {
-        info: this.collection.info
+      this.$axios.$put(`/api/category/${this.currentCollection.id}`, {
+        info: this.currentCollection.info
       }).then(data => {
         this.$store.dispatch('UPDATE_PUBLISHED_COLLECTIONS', this.$axios)
         this.$notifications.success({
