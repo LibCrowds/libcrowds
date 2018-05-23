@@ -11,7 +11,7 @@
       class="collection-nav-item"
       data-title="Get Started">
 
-      <b-col xl="3" class="d-none d-xl-block">
+      <b-col id="sorting-options" xl="3" class="d-none d-xl-block">
         <b-card
           header="Sorting Options"
           class="options-card mb-2"
@@ -282,3 +282,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+#sorting-options {
+  .multiselect--active {
+    z-index: 4; // Show over the toggle button
+  }
+}
+</style>
