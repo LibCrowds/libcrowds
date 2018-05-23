@@ -5,7 +5,7 @@
     :navbar-brand="navbarBrand"
     :background-image-url="backgroundImageUrl">
 
-    <div id="collection-tabs-layout" class="container mt-2 mb-5">
+    <div id="collection-tabs-layout" class="container mt-sm-2 mb-sm-5">
 
       <b-nav class="nav-unstyled">
         <b-nav-item
@@ -79,6 +79,17 @@ export default {
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+
+  @include media-breakpoint-up(md) {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: inherit;
+    padding-right: inherit;
+  }
 
   &>main {
     background-color: $white;
@@ -117,15 +128,19 @@ export default {
     overflow-x: auto;
     padding: $navbar-padding-y $navbar-padding-x;
     background-color: rgba($gray-300, 0.85);
+    display: none;
 
     .nav-link {
       font-size: $font-size-sm;
-
       transition: opacity 350ms ease;
       color: rgba($gray-700, 0.85);
       display: none;
+    }
 
-      @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(sm) {
+      display: block;
+
+      .nav-link {
         display: block;
       }
     }

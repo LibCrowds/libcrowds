@@ -219,7 +219,9 @@ export default {
     },
 
     /**
-     * Remove navbar transparency if over an opaque-navbar element.
+     * Remove navbar transparency.
+     *
+     * Applies if over an opaque-navbar element, or if on an extra-small screen.
      */
     styleNavbar: throttle(
       function () {
@@ -246,6 +248,12 @@ export default {
             return
           }
         }
+
+        if (window.innerWidth < 576) {
+          this.navbarVariant = null
+          return
+        }
+
         if (this.transparent) {
           this.navbarVariant = 'transparent'
         }
@@ -255,6 +263,7 @@ export default {
   },
 
   mounted () {
+    this.styleNavbar()
     window.addEventListener('scroll', this.styleNavbar)
   },
 
