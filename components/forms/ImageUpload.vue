@@ -131,9 +131,18 @@ export default {
         },
         withCredentials: true
       }).then(response => {
-        this.$notifications.flash(response.data)
+        if (response.data.status && response.data.message) {
+          this.$notifications.flash(response.data)
+        } else {
+          // For API endpoints without flash messages
+          this.$notifications.success({
+            message: 'Image uploaded'
+          })
+        }
       }).catch(err => {
-        this.$nuxt.error(err)
+        this.$notifications.error({
+          message: err.message
+        })
       }).then(() => {
         this.processing = false
       })
