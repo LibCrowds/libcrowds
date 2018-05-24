@@ -90,11 +90,22 @@
       :body-bg-variant="darkPresenterModals ? 'dark' : null"
       :body-text-variant="darkPresenterModals ? 'white' : null"
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
-      :footer-text-variant="darkPresenterModals ? 'white' : null">
-      <b-container class="py-2 px-3" v-if="manifest">
-        <ul v-if="manifest.metadata" class="list-unstyled">
+      :footer-text-variant="darkPresenterModals ? 'white' : null"
+      @show="loadManifest">
+      <b-container class="py-2 px-3" v-if="manifest.loading">
+        <p class="text-center text-muted">
+          Loading...
+        </p>
+      </b-container>
+      <b-container class="py-2 px-3" v-else-if="!manifest.data">
+        <p class="text-center">
+          No additional information is available for this task.
+        </p>
+      </b-container>
+      <b-container class="py-2 px-3" v-else>
+        <ul v-if="manifest.data.metadata" class="list-unstyled">
           <li
-            v-for="item in manifest.metadata"
+            v-for="item in manifest.data.metadata"
             :key="item.label"
             class="mb-1">
             <strong>{{ item.label }}: </strong>
@@ -102,19 +113,18 @@
           </li>
         </ul>
         <div class="text-center">
-          <img v-if="manifest.logo" :src="manifest.logo" class="my-2">
-          <p v-if="manifest.attribution" v-html="manifest.attribution"></p>
+          <img v-if="manifest.data.logo"
+            :src="manifest.data.logo" class="my-2">
+          <p
+            v-if="manifest.data.attribution"
+            v-html="manifest.data.attribution">
+          </p>
           <a
-            v-if="manifest.license"
-            :href="manifest.license"
-            v-html="manifest.license">
+            v-if="manifest.data.license"
+            :href="manifest.data.license"
+            v-html="manifest.data.license">
           </a>
         </div>
-      </b-container>
-      <b-container class="py-2 px-3" v-else>
-        <p class="text-center">
-          No additional information is available for this task.
-        </p>
       </b-container>
     </b-modal>
 
@@ -238,7 +248,11 @@ export default {
   data () {
     return {
       task: null,
-      manifest: null,
+      manifest: {
+        uri: null,
+        data: null,
+        loading: false
+      },
       shareModalId: 'presenter-share-modal',
       tagSearchLoading: false,
       foundTags: [],
@@ -515,6 +529,35 @@ export default {
       ) {
         this.$refs.help.show()
       }
+    },
+
+    /**
+     * Load a manifest into the info modal, if available.
+     */
+    loadManifest () {
+      const currentManifestUri = this.task ? this.task.info.manifest : null
+      if (!currentManifestUri) {
+        this.manifest = {
+          uri: null,
+          data: null,
+          loading: false
+        }
+      } else if (currentManifestUri === this.manifest.uri) {
+        return
+      }
+
+      this.manifest.loading = true
+      this.$axios.$get(currentManifestUrit, {
+        headers: {
+          'Content-type': 'text/plain' // to avoid CORS preflight
+        }
+      }).then(data => {
+        this.manifest = {
+          uri: currentManifestUri,
+          data: data,
+          loading: false
+        }
+      })
     }
   },
 
@@ -523,23 +566,6 @@ export default {
     this.loadTask()
     this.showInitialTutorial()
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', [])
-  },
-
-  watch: {
-    task (val) {
-      // Load the manifest, if available
-      if (!val.length || !val.info.hasOwnProperty('manifest')) {
-        this.manifest = null
-      } else {
-        this.$axios.$get(val.info.manifest, {
-          headers: {
-            'Content-type': 'text/plain' // to avoid CORS preflight
-          }
-        }).then(data => {
-          this.manifest = data
-        })
-      }
-    }
   }
 }
 </script>
