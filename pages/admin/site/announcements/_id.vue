@@ -52,6 +52,7 @@
 import localConfig from '@/local.config'
 import pick from 'lodash/pick'
 import { metaTags } from '@/mixins/metaTags'
+import VueFormGenerator from 'vue-form-generator'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
@@ -89,19 +90,28 @@ export default {
                 model: 'title',
                 label: 'Title',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                placeholder: 'Short titles work best (e.g. New Project Added!)',
+                required: true,
+                validator: VueFormGenerator.validators.string
               },
               {
                 model: 'body',
                 label: 'Content',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                placeholder: 'Add some additional details',
+                required: true,
+                validator: VueFormGenerator.validators.string
               },
               {
                 model: 'info.url',
                 label: 'URL',
                 type: 'input',
-                inputType: 'url'
+                inputType: 'url',
+                required: true,
+                placeholder: 'http://example.com',
+                validator: VueFormGenerator.validators.url
               }
             ]
           }
