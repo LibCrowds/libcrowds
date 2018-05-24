@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import keys from 'lodash/keys'
+import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
+import keys from 'lodash/keys'
 import axios from 'axios'
 import localConfig from '@/local.config'
 import FormBase from '@/components/forms/Base'
@@ -121,8 +122,9 @@ export default {
       for (let field in this.model) {
         formData.append(field, this.model[field])
       }
-      if (!this.model[field]) {
-        this.$notifications.flash({
+      if (isEmpty(formData)) {
+        this.processing = false
+        this.$notifications.error({
           status: 'error',
           message: 'You must provide an image file'
         })
