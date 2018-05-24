@@ -95,7 +95,7 @@ export default {
     onSuccess (data) {
       this.$notifications.success({ message: 'Announcement created' })
       this.$router.push({
-        name: 'admin-site-announcements-id-update',
+        name: 'admin-site-announcements-id',
         params: {
           id: data.id
         }

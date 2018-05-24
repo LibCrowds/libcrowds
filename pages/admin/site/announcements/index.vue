@@ -27,7 +27,7 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'admin-site-announcements-id-update',
+            name: 'admin-site-announcements-id',
             params: {
               id: announcement.item.id
             }
