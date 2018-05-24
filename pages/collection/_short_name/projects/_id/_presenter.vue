@@ -125,6 +125,15 @@
             v-html="manifest.data.license">
           </a>
         </div>
+        <div class="text-center" v-if="manifest.data.related">
+          <b-btn
+            v-for="(related, idx) in toArray(manifest.data.related)" :key="idx"
+            class="m-2"
+            variant="info"
+            :href="related.id || related['@id']">
+            {{ related.label }}
+          </b-btn>
+        </div>
       </b-container>
     </b-modal>
 
@@ -558,6 +567,15 @@ export default {
           loading: false
         }
       })
+    },
+
+    /**
+     * Return the item in an Array if it is not already.
+     * @param {*} item
+     *   The item to check for arrayiness.
+     */
+    toArray (item) {
+      return Array.isArray(item) ? item : [item]
     }
   },
 
