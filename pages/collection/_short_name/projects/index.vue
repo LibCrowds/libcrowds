@@ -97,12 +97,14 @@
           :collection="collection"
           :orderby="sortModel.orderby"
           :desc="sortModel.desc"
-          no-results=""
-          no-more-results=""
-          v-model="projects">
+          :show-no-results="false"
+          v-model="projects"
+          @complete="projectLoadingComplete = true">
         </infinite-load-projects>
 
-        <p class="lead text-center" v-if="allProjectsFiltered">
+        <p
+          class="lead text-center"
+          v-if="allProjectsFiltered && projectLoadingComplete">
           No projects are currently available using the selected filters.
           <br>
           You can use the input fields on the left to change them.
@@ -147,6 +149,7 @@ export default {
       showCompleted: false,
       filter: null,
       filterBy: 'name',
+      projectLoadingComplete: false,
       tableFields: {
         name: {
           label: 'Name'
