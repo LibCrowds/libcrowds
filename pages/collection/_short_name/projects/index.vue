@@ -29,10 +29,6 @@
             @input="reset"
             @select="onSort">
           </sort-projects-data>
-          <toggle-completed-data
-            class="mb-2"
-            v-model="showCompleted">
-          </toggle-completed-data>
           <b-btn
             block
             size="sm"
@@ -124,7 +120,6 @@ import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import SortProjectsData from '@/components/data/SortProjects'
-import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
 import InfiniteLoadProjects from '@/components/infiniteload/Projects'
@@ -147,7 +142,6 @@ export default {
     return {
       title: 'Take Part',
       projects: [],
-      showCompleted: false,
       filter: null,
       filterBy: 'name',
       projectLoadingComplete: false,
@@ -181,7 +175,6 @@ export default {
   components: {
     SortProjectsData,
     FilterProjectsData,
-    ToggleCompletedData,
     ProjectCard,
     InfiniteLoadProjects,
     SocialMediaButtons,

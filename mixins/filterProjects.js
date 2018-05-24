@@ -4,7 +4,6 @@
 export const filterProjects = {
   data () {
     return {
-      showCompleted: true,
       filterModel: {}
     }
   },
@@ -12,7 +11,7 @@ export const filterProjects = {
   computed: {
     filteredProjects () {
       // Check filters
-      let filtered = this.projects.filter(project => {
+      return this.projects.filter(project => {
         for (let key of Object.keys(this.filterModel)) {
           project.info.filters = project.info.filters || {}
           if (project.info.filters[key] !== this.filterModel[key]) {
@@ -20,15 +19,6 @@ export const filterProjects = {
           }
         }
         return true
-      })
-
-      if (this.showCompleted) {
-        return filtered
-      }
-
-      // Filter completed
-      return filtered.filter(project => {
-        return project.overall_progress < 100
       })
     }
   },
