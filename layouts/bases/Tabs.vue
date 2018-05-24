@@ -84,7 +84,7 @@ export default {
   padding-left: 0;
   padding-right: 0;
 
-  @include media-breakpoint-up(md) {
+  @include media-breakpoint-up(sm) {
     margin-right: auto;
     margin-left: auto;
     padding-left: inherit;
