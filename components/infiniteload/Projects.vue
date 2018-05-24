@@ -53,6 +53,7 @@ export default {
 
         if (!data.projects.length) {
           $state.complete()
+          this.$emit('complete')
           return
         }
 

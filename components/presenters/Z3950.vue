@@ -390,6 +390,7 @@ export default {
 
         if (!results.data.length) {
           $state.complete()
+          this.$emit('complete')
           return
         }
 
