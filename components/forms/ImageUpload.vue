@@ -18,7 +18,8 @@
         ref="formfile"
         accept="image/*"
         v-model="model[fileField]"
-        @input="onInput">
+        @input="onInput"
+        :required="true">
       </b-form-file>
     </div>
 
@@ -119,6 +120,13 @@ export default {
       let formData = new FormData()
       for (let field in this.model) {
         formData.append(field, this.model[field])
+      }
+      if (!this.model[field]) {
+        this.$notifications.flash({
+          status: 'error',
+          message: 'You must provide an image file'
+        })
+        return
       }
 
       axios({
