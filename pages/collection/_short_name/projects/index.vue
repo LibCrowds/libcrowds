@@ -99,6 +99,7 @@
           :desc="sortModel.desc"
           :show-no-results="false"
           v-model="projects"
+          :has-new-task="true"
           @complete="projectLoadingComplete = true">
         </infinite-load-projects>
 
