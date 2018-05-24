@@ -28,21 +28,21 @@
 
     </b-table>
 
-    <infinite-load
+    <infinite-load-domain-objects
       ref="infiniteload"
       :all="all"
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
       no-more-results="No more results">
-    </infinite-load>
+    </infinite-load-domain-objects>
 
   </div>
 </template>
 
 <script>
 import merge from 'lodash/merge'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 
 export default {
   data () {
@@ -53,7 +53,7 @@ export default {
   },
 
   components: {
-    InfiniteLoad
+    InfiniteLoadDomainObjects
   },
 
   props: {

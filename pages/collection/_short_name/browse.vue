@@ -113,7 +113,7 @@ import marked from 'marked'
 import 'vue-awesome/icons/arrow-right'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import InfiniteLoadAnnotations from '@/components/InfiniteLoadAnnotations'
+import InfiniteLoadAnnotations from '@/components/infiniteload/Annotations'
 import ItemTagsList from '@/components/lists/ItemTags'
 import SearchTags from '@/components/data/SearchTags'
 
