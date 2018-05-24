@@ -57,14 +57,14 @@ export default {
                 label: 'Name',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Choose a name'
+                hint: 'Choose a name'
               },
               {
                 model: 'description',
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'This appears on the microsite homepage and as ' +
+                hint: 'This appears on the microsite homepage and as ' +
                   'its meta description.'
               }
             ]

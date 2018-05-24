@@ -77,26 +77,30 @@ export default {
                 model: 'name',
                 label: 'Name',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'The name of the project'
               },
               {
                 model: 'short_name',
                 label: 'Short name',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'An identifier for the project (should be a variation' +
+                  ' of the name)'
               },
               {
                 model: 'description',
                 label: 'Description',
                 type: 'textArea',
                 rows: 2,
-                placeholder: 'Short description shown on the project cards'
+                hint: 'A short description shown on the project cards'
               },
               {
                 model: 'pasword',
                 label: 'Password',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'Lock the project and hide it from public view'
               }
             ]
           }

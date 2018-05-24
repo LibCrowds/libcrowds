@@ -40,19 +40,22 @@ export default {
                 model: 'current_password',
                 label: 'Current Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Your current password'
               },
               {
                 model: 'new_password',
                 label: 'New Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Your new password'
               },
               {
                 model: 'confirm',
                 label: 'Confirm New Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Confirmation of your new password'
               }
             ]
           }

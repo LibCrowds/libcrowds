@@ -91,35 +91,36 @@ export default {
                 label: 'Username',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Choose a username'
+                hint: 'Choose a username'
               },
               {
                 model: 'fullname',
                 label: 'Full name',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Enter your full name'
+                hint: 'Your full name'
               },
               {
                 model: 'email_addr',
                 label: 'Email',
                 type: 'input',
                 inputType: 'email',
-                placeholder: 'you@example.com'
+                placeholder: 'you@example.com',
+                hint: 'Your email address'
               },
               {
                 model: 'password',
                 label: 'Password',
                 type: 'input',
                 inputType: 'password',
-                placeholder: 'Choose a password'
+                hint: 'Choose a password'
               },
               {
                 model: 'confirm',
                 label: 'Confirm Password',
                 type: 'input',
                 inputType: 'password',
-                placeholder: 'Confirm your password'
+                hint: 'Confirm your password'
               }
             ]
           }

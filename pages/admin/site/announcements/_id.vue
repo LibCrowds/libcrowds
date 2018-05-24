@@ -91,7 +91,7 @@ export default {
                 label: 'Title',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Short titles work best (e.g. New Project Added!)',
+                hint: 'Short titles work best (e.g. New Project Added!)',
                 required: true,
                 validator: VueFormGenerator.validators.string
               },
@@ -100,7 +100,7 @@ export default {
                 label: 'Content',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Add some additional details',
+                hint: 'Add some additional details',
                 required: true,
                 validator: VueFormGenerator.validators.string
               },
@@ -111,7 +111,8 @@ export default {
                 inputType: 'url',
                 required: true,
                 placeholder: 'http://example.com',
-                validator: VueFormGenerator.validators.url
+                validator: VueFormGenerator.validators.url,
+                hint: 'The URL to navigate to when the announcement is clicked'
               }
             ]
           }

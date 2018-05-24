@@ -55,7 +55,8 @@ export default {
                 model: 'webhook',
                 label: 'Webhook URL',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'The webhook URL used for results analysis'
               }
             ]
           }

@@ -50,14 +50,14 @@ export default {
                 label: 'New Password',
                 type: 'input',
                 inputType: 'password',
-                placeholder: 'Choose a new password'
+                hint: 'Choose a new password'
               },
               {
                 model: 'confirm',
                 label: 'Confirm Password',
                 type: 'input',
                 inputType: 'password',
-                placeholder: 'Confirm your new password'
+                hint: 'Confirm your new password'
               }
             ]
           }
