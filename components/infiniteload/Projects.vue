@@ -102,11 +102,15 @@ export default {
         return
       }
 
+      data.projects = data.projects.filter(p => p.overall_progress !== 100)
+
       // Check each project to see if we can get a task for the current user.
       // Not the most efficient as we have to make an additional call for
-      // each project. We might see if we can update the PYBOSSA API at some
-      // point to accomodate the kinds of joint requests we need here, but this
-      // will do for now!
+      // each project. There could also be a problem with rate limiting if
+      // the user has finished hundreds of projects that are not yet complete,
+      // but hopefully that is unlikely! We might see if we can update the
+      // PYBOSSA API at some point to accomodate the kinds of joint requests
+      // we need here, but this will do for now!
       filter(data.projects, (p, callback) => {
         this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
           callback(null, (
