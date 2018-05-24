@@ -547,7 +547,7 @@ export default {
       }
 
       this.manifest.loading = true
-      this.$axios.$get(currentManifestUrit, {
+      this.$axios.$get(currentManifestUri, {
         headers: {
           'Content-type': 'text/plain' // to avoid CORS preflight
         }
