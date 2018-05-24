@@ -29,10 +29,6 @@
             @input="reset"
             @select="onSort">
           </sort-projects-data>
-          <toggle-completed-data
-            class="mb-2"
-            v-model="showCompleted">
-          </toggle-completed-data>
           <b-btn
             block
             size="sm"
@@ -97,12 +93,15 @@
           :collection="collection"
           :orderby="sortModel.orderby"
           :desc="sortModel.desc"
-          no-results=""
-          no-more-results=""
-          v-model="projects">
+          :show-no-results="false"
+          v-model="projects"
+          :has-new-task="true"
+          @complete="projectLoadingComplete = true">
         </infinite-load-projects>
 
-        <p class="lead text-center" v-if="allProjectsFiltered">
+        <p
+          class="lead text-center"
+          v-if="allProjectsFiltered && projectLoadingComplete">
           No projects are currently available using the selected filters.
           <br>
           You can use the input fields on the left to change them.
@@ -121,10 +120,9 @@ import { computeShareUrl } from '@/mixins/computeShareUrl'
 import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import SortProjectsData from '@/components/data/SortProjects'
-import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
+import InfiniteLoadProjects from '@/components/infiniteload/Projects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectsTable from '@/components/tables/Projects'
@@ -144,9 +142,9 @@ export default {
     return {
       title: 'Take Part',
       projects: [],
-      showCompleted: false,
       filter: null,
       filterBy: 'name',
+      projectLoadingComplete: false,
       tableFields: {
         name: {
           label: 'Name'
@@ -177,7 +175,6 @@ export default {
   components: {
     SortProjectsData,
     FilterProjectsData,
-    ToggleCompletedData,
     ProjectCard,
     InfiniteLoadProjects,
     SocialMediaButtons,

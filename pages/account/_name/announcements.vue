@@ -5,17 +5,17 @@
       :key="announcement.id"
       :announcement="announcement">
     </announcement-card>
-    <infinite-load
+    <infinite-load-domain-objects
       domain-object="announcement"
       :search-params="searchParams"
       v-model="announcements">
-    </infinite-load>
+    </infinite-load-domain-objects>
   </card-base>
 </template>
 
 <script>
 import AnnouncementCard from '@/components/cards/Announcement'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
@@ -38,7 +38,7 @@ export default {
   },
 
   components: {
-    InfiniteLoad,
+    InfiniteLoadDomainObjects,
     AnnouncementCard,
     CardBase
   },

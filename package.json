@@ -21,6 +21,7 @@
     "@nuxtjs/proxy": "^1.1.4",
     "@nuxtjs/pwa": "^2.0.2",
     "@nuxtjs/sentry": "^1.0.3",
+    "async": "^2.6.1",
     "bootstrap": "4.1.1",
     "bootstrap-vue": "^2.0.0-rc.6",
     "capitalize": "^1.0.0",

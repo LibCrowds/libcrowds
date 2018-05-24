@@ -54,6 +54,7 @@ export default {
         response = await this.$explicates.getCollection(iri, this.page)
       } catch (err) {
         $state.complete()
+        this.$emit('complete')
         return
       }
 

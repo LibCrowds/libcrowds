@@ -39,6 +39,7 @@ export default {
         // Loading complete
         if (!data.length) {
           $state.complete()
+          this.$emit('complete')
           return
         }
 

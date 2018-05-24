@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
+import InfiniteLoadProjects from '@/components/infiniteload/Projects'
 
 export default {
   data () {
