@@ -59,6 +59,7 @@
       <b-container>
         <b-row>
           <b-col
+            xs="12" md="6"
             v-if="collection.info.forum.tag"
             class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
             <span>
@@ -124,6 +125,7 @@
             </span>
           </b-col>
           <b-col
+            xs="12" md="6"
             class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
             <span>
               <h5 class="text-center">Recent contributions</h5>
