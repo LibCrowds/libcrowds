@@ -112,6 +112,15 @@
             <span v-html="item.value"></span>
           </li>
         </ul>
+        <div class="text-center" v-if="manifest.data.related">
+          <b-btn
+            v-for="(related, idx) in toArray(manifest.data.related)" :key="idx"
+            class="m-2"
+            variant="info"
+            :href="related.id || related['@id']">
+            {{ related.label }}
+          </b-btn>
+        </div>
         <div class="text-center">
           <img v-if="manifest.data.logo"
             :src="manifest.data.logo" class="my-2">
@@ -124,15 +133,6 @@
             :href="manifest.data.license"
             v-html="manifest.data.license">
           </a>
-        </div>
-        <div class="text-center" v-if="manifest.data.related">
-          <b-btn
-            v-for="(related, idx) in toArray(manifest.data.related)" :key="idx"
-            class="m-2"
-            variant="info"
-            :href="related.id || related['@id']">
-            {{ related.label }}
-          </b-btn>
         </div>
       </b-container>
     </b-modal>
