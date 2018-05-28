@@ -46,7 +46,7 @@ export default {
       this.tags = []
 
       return this.$explicates.search({
-        collection: containerIri,
+        collection: this.containerIri,
         contains: {
           target: this.getTarget()
         }
