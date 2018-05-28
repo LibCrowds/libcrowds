@@ -5,7 +5,9 @@
     :navbar-brand="navbarBrand"
     :background-image-url="backgroundImageUrl">
 
-    <div id="collection-tabs-layout" class="container mt-sm-2 mb-sm-5">
+    <div
+      id="collection-tabs-layout"
+      class="container mt-sm-2 mb-sm-5 d-flex flex-column">
 
       <b-nav class="nav-unstyled">
         <b-nav-item
