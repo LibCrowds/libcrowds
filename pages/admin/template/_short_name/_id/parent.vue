@@ -18,6 +18,7 @@
     <hr class="my-1">
 
     <pybossa-form
+      no-submit
       submit-text="Update"
       :form="form"
       @success="onFormSuccess">
@@ -30,11 +31,12 @@
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionByName ],
 
   data () {
     return {
@@ -81,6 +83,12 @@ export default {
   components: {
     CardBase,
     PybossaForm
+  },
+
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    }
   },
 
   methods: {

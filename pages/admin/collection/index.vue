@@ -37,7 +37,6 @@
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
-import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
@@ -64,7 +63,6 @@ export default {
   },
 
   components: {
-    PybossaForm,
     CardBase,
     InfiniteLoadingTable
   },

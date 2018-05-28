@@ -1,93 +1,39 @@
 <template>
-  <card-base
-    :title="title"
-    :description="description"
-    docs="/templates/introduction/">
-    <b-btn
-      slot="controls"
-      class="float-md-right"
-      size="sm"
-      variant="success"
-      :to="{
-        name: 'admin-template-new'
-      }">
-      New
-    </b-btn>
+  <card-base :title="title" :description="description">
 
     <p slot="guidance">
-      Click the <strong>New</strong> button above to create a new template, or
-      locate a current template by first selecting the collection microsite,
-      below.
+      Each project template is associated with a particular collection
+      microsite. To create or update a template please begin by selecting a
+      collection microsite from the list below.
     </p>
 
-    <b-tabs card @input="onTabChange">
-      <b-tab
-        no-body
-        v-for="(collection, index) in collections"
-        :title="collection.name"
-        :key="collection.id">
-
-        <infinite-loading-table
-          :ref="`table-${index}`"
-          :all="currentUser.admin"
-          :fields="tableFields"
-          :filter="filter"
-          :filter-by="filterBy"
-          :search-params="{
-            category_id: collection.id
-          }"
-          domain-object="category">
-          <template slot="action" slot-scope="project">
-            <b-btn
-              variant="success"
-              size="sm"
-              :to="{
-                name: 'admin-template-short_name-details',
-                params: {
-                  short_name: project.item.short_name
-                }
-              }">
-              Open
-            </b-btn>
-          </template>
-        </infinite-loading-table>
-      </b-tab>
-
-    <b-tabs card>
-      <b-tab
-        no-body
-        v-for="collection in collections"
-        :title="collection.name"
-        :key="collection.id">
-        <templates-table
-          show-details
-          :collection-id="collection.id"
-          :templates="templates">
-          <template slot="action" slot-scope="template">
-            <b-btn
-              variant="success"
-              size="sm"
-              :to="{
-                name: 'admin-template-id',
-                params: {
-                  id: template.item.id
-                }
-              }">
-              Open
-            </b-btn>
-          </template>
-        </templates-table>
-      </b-tab>
-    </b-tabs>
+    <infinite-loading-table
+      ref="table"
+      :fields="tableFields"
+      domain-object="category">
+      <template slot="action" slot-scope="category">
+        <b-btn
+          variant="success"
+          size="sm"
+          exact
+          :to="{
+            name: 'admin-template-short_name',
+            params: {
+              short_name: category.item.short_name
+            }
+          }">
+          Open
+        </b-btn>
+      </template>
+    </infinite-loading-table>
 
   </card-base>
 </template>
 
 <script>
 import { metaTags } from '@/mixins/metaTags'
-import { fetchAll } from '@/utils/fetchAll'
 import CardBase from '@/components/cards/Base'
-import TemplatesTable from '@/components/tables/Templates'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
   layout: 'admin-template-dashboard',
@@ -96,36 +42,24 @@ export default {
 
   data () {
     return {
-      title: 'Project Templates',
-      description: 'Create and manage your project templates.'
-    }
-  },
-
-  asyncData ({ app, params, error }) {
-    const tmplEndpoint = `/lc/admin/templates`
-    return Promise.all([
-      fetchAll(app.$axios, 'category'),
-      app.$axios.$get(tmplEndpoint)
-    ]).then(([categoriesData, tmplData]) => {
-      return {
-        collections: categoriesData,
-        templates: tmplData.templates.map(tmpl => {
-          tmpl._showDetails = false
-          return tmpl
-        })
+      title: 'Choose a Collection',
+      description: 'Manage the project templates for a collection.',
+      tableFields: {
+        name: {
+          label: 'Name'
+        },
+        created: {
+          label: 'Created',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        }
       }
-    })
+    }
   },
 
   components: {
     CardBase,
-    TemplatesTable
-  },
-
-  computed: {
-    currentUser () {
-      return this.$store.state.currentUser
-    }
+    InfiniteLoadingTable
   },
 
   beforeMount () {

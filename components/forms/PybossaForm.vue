@@ -208,11 +208,11 @@ export default {
         return
       }
 
+      this.$emit('submit', this.form.model)
+
       if (this.noSubmit) {
         return
       }
-
-      this.$emit('submit', this.form)
 
       if (!this.confirmation) {
         this.process()

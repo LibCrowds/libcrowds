@@ -37,11 +37,12 @@
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionByName ],
 
   data () {
     return {
@@ -62,6 +63,10 @@ export default {
   },
 
   computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
     currentTemplate () {
       return this.$store.state.currentTemplate
     },

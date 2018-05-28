@@ -158,24 +158,6 @@ export default {
         ]
       }
 
-      // Templates admin
-      if (canBuild) {
-        items['Templates'] = [
-          {
-            label: 'New Template',
-            link: {
-              name: 'admin-template-new'
-            }
-          },
-          {
-            label: 'Open Template',
-            link: {
-              name: 'admin-template'
-            }
-          }
-        ]
-      }
-
       // Collection admin
       if (this.currentUser.admin) {
         items['Collection Admin'] = [
@@ -186,7 +168,7 @@ export default {
             }
           },
           {
-            label: 'Open Collection',
+            label: 'Collections',
             link: {
               name: 'admin-collection'
             }
@@ -196,12 +178,18 @@ export default {
 
       // Site/collection admin
       if (this.currentUser.admin) {
-        items['Site Admin'] = [
+        items['Admin'] = [
           {
             label: 'Dashboard',
             exact: true,
             link: {
               name: 'admin-site'
+            }
+          },
+          {
+            label: 'Project Templates',
+            link: {
+              name: 'admin-template'
             }
           },
           {

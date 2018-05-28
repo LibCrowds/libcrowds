@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/details/">
+
     <p slot="guidance">
       Update the core details for the template below. Note that these changes
       will not apply to projects that have already been created from this
@@ -11,6 +12,7 @@
     <hr class="my-1">
 
     <pybossa-form
+      no-submit
       submit-text="Update"
       :form="form"
       @success="onFormSuccess">
@@ -20,14 +22,16 @@
 </template>
 
 <script>
+import VueFormGenerator from 'vue-form-generator'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionByName ],
 
   data () {
     return {
@@ -52,7 +56,9 @@ export default {
                 label: 'Name',
                 type: 'input',
                 inputType: 'text',
-                hint: 'A name for the template.'
+                hint: 'A name for the template.',
+                required: true,
+                validator: VueFormGenerator.validators.string
               },
               {
                 model: 'description',
@@ -60,7 +66,9 @@ export default {
                 type: 'textArea',
                 rows: 3,
                 hint: 'Appears on the project card shown on the main ' +
-                  'projects page'
+                  'projects page',
+                required: true,
+                validator: VueFormGenerator.validators.string
               }
             ]
           }
@@ -74,6 +82,12 @@ export default {
   components: {
     CardBase,
     PybossaForm
+  },
+
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    }
   },
 
   methods: {
