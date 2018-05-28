@@ -250,7 +250,6 @@ export default {
      */
     onFormSuccess (data) {
       this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
     },
 
     /**

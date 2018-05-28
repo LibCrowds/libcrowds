@@ -118,13 +118,5 @@ export default {
     commit('SET_ITEM', {
       key: 'darkMode', value: !state.darkMode
     })
-  },
-
-  UPDATE_N_PENDING_TEMPLATES: ({ commit }, axios) => {
-    return axios.$get('/lc/admin/templates/pending').then(data => {
-      commit('SET_ITEM', {
-        key: 'nPendingTemplates', value: data.templates.length
-      })
-    })
   }
 }

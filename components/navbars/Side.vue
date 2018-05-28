@@ -233,24 +233,10 @@ export default {
             link: {
               name: 'admin-site-jobs'
             }
-          },
-          {
-            label: 'Pending Templates',
-            link: {
-              name: 'admin-site-templates'
-            },
-            badge: {
-              variant: 'primary',
-              value: this.nPendingTemplates ? this.nPendingTemplates : null
-            }
           }
         ]
       }
       return items
-    },
-
-    nPendingTemplates () {
-      return this.$store.state.nPendingTemplates
     }
   },
 
