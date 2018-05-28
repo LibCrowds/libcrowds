@@ -27,6 +27,7 @@
           :to="{
             name: 'admin-template-short_name-id',
             params: {
+              short_name: currentCollection.short_name,
               id: tmpl.item.id
             }
           }">

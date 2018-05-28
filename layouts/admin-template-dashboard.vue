@@ -12,6 +12,7 @@
         :to="{
           name: 'admin-template-short_name-id-task',
           params: {
+            short_name: currentCollection.short_name,
             id: currentTemplate.id
           }
         }">
@@ -39,24 +40,25 @@ export default {
       return this.$store.state.currentTemplate
     },
 
+    currentTemplate () {
+      return this.$store.state.currentCollection
+    },
+
     taskNotConfigured () {
       const isTaskPage = (
         this.$route.name === 'admin-template-short_name-id-task'
       )
       return (
+        !isEmpty(this.currentCollection) &&
         !isEmpty(this.currentTemplate) &&
         !this.currentTemplate.task &&
         !isTaskPage
       )
     },
 
-    currentUser () {
-      return this.$store.state.currentUser
-    },
-
     navItems () {
       const items = {}
-      if (!isEmpty(this.currentTemplate)) {
+      if (!isEmpty(this.currentTemplate) && !isEmpty(this.currentCollection)) {
         items[this.currentTemplate.name] = [
           {
             label: 'Core Details',
@@ -64,6 +66,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -73,6 +76,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-task',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -82,6 +86,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-redundancy',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -91,6 +96,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-parent',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -100,6 +106,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-analysis',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -109,6 +116,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-tutorial',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -118,6 +126,7 @@ export default {
             link: {
               name: 'admin-template-short_name-id-delete',
               params: {
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }

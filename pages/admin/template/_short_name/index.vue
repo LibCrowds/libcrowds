@@ -10,7 +10,10 @@
       size="sm"
       variant="success"
       :to="{
-        name: 'admin-template-short_name-new'
+        name: 'admin-template-short_name-new',
+        params: {
+          short_name: currentCollection.short_name,
+        }
       }">
       New
     </b-btn>
@@ -36,6 +39,7 @@
           :to="{
             name: 'admin-template-short_name-id',
             params: {
+              short_name: currentCollection.short_name,
               id: template.item.id
             }
           }">

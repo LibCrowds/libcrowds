@@ -118,7 +118,8 @@ export default {
         this.$router.push({
           name: 'admin-template-short_name-id',
           params: {
-            id: this.currentCollection.id
+            short_name: this.currentCollection.short_name,
+            id: formData.id
           }
         })
       }).catch(err => {

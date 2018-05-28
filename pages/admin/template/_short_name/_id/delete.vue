@@ -87,6 +87,7 @@ export default {
      * Delete the template.
      */
     deleteTemplate () {
+      const endpoint = `/api/category/${this.currentCollection.id}`
       const infoClone = JSON.parse(JSON.stringify(this.currentCollection.info))
       infoClone.templates = infoClone.templates.filter(tmpl => {
         return tmpl.id !== this.currentTemplate.id
@@ -99,7 +100,7 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.$axios.$post('/api/category', {
+          return this.$axios.$put(endpoint, {
             info: infoClone
           })
         }

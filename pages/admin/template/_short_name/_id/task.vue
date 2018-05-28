@@ -18,9 +18,8 @@
 
     <b-card-body v-if="!currentCollection.info.presenter">
       <b-alert show variant="warning" class="mb-0">
-        This collection has an invalid, or non-existant task presenter and
-        therefore the task template cannot be updated. Before designing the
-        task, please
+        This collection does not have a task presenter and therefore the
+        task details cannot be updated. Before designing the task, please
         <nuxt-link
           :to="{
             name: 'admin-collection-short_name-presenter',
@@ -262,7 +261,7 @@ export default {
             label: 'Database',
             type: 'select',
             values: this.templateData.z3950_databases.map(db => {
-              return { id: db[0], name: db[1] }
+              return { id: db, name: db }
             }),
             hint: 'The Z39.50 database that to search for matching records.'
           }
@@ -276,7 +275,7 @@ export default {
         endpoint: '',
         method: 'post',
         model: Object.assign(
-          this.templateData.task,
+          this.templateData.task[presenter],
           currentTaskData
         ),
         schema: {
