@@ -71,6 +71,7 @@ export default {
      */
     updateCurrentUser () {
       this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
+      this.$notifications.success({ message: 'Preferences updated' })
     }
   }
 }
