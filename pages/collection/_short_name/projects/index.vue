@@ -20,13 +20,11 @@
           <filter-projects-data
             v-model="filterModel"
             :collection="collection"
-            @input="reset"
             @select="onFilter">
           </filter-projects-data>
           <sort-projects-data
             v-model="sortModel"
             class="mb-2"
-            @input="reset"
             @select="onSort">
           </sort-projects-data>
           <b-btn
@@ -47,37 +45,9 @@
       </b-col>
 
       <b-col xl="9">
-        <card-base
-          title="Projects"
-          description="Choose a project"
-          class="d-xl-none">
-
-          <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
-            <b-form-input
-              v-model="filter"
-              class="search-control"
-              size="sm"
-              :placeholder="`Type to search by ${filterBy}`">
-            </b-form-input>
-          </b-form>
-
-          <projects-table
-            v-if="showProjectsTable"
-            :filter="filter"
-            :filter-by="filterBy"
-            :collection="collection">
-            <template slot="action" slot-scope="project">
-              <project-contrib-button
-                :collection="collection"
-                :project="project.item">
-              </project-contrib-button>
-            </template>
-          </projects-table>
-        </card-base>
-
         <transition-group
           tag="ul"
-          class="list-unstyled d-none d-xl-block"
+          class="list-unstyled"
           name="fade-up">
           <li v-for="project in filteredProjects" :key="project.id">
             <project-card
@@ -117,7 +87,6 @@ import marked from 'marked'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
-import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
 import SortProjectsData from '@/components/data/SortProjects'
 import FilterProjectsData from '@/components/data/FilterProjects'
@@ -125,7 +94,6 @@ import ProjectCard from '@/components/cards/Project'
 import InfiniteLoadProjects from '@/components/infiniteload/Projects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
-import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -134,7 +102,6 @@ export default {
   mixins: [
     fetchCollectionByName,
     computeShareUrl,
-    filterProjects,
     collectionMetaTags
   ],
 
@@ -144,6 +111,7 @@ export default {
       projects: [],
       filter: null,
       filterBy: 'name',
+      filterModel: {},
       projectLoadingComplete: false,
       tableFields: {
         name: {
@@ -167,8 +135,7 @@ export default {
       sortModel: {
         orderby: 'overall_progress',
         desc: true
-      },
-      showProjectsTable: false
+      }
     }
   },
 
@@ -176,11 +143,10 @@ export default {
     SortProjectsData,
     FilterProjectsData,
     ProjectCard,
-    InfiniteLoadProjects,
     SocialMediaButtons,
+    InfiniteLoadProjects,
     InfiniteLoadingTable,
     ProjectContribButton,
-    ProjectsTable,
     CardBase
   },
 
@@ -208,6 +174,21 @@ export default {
     tweet () {
       return `Choose and play ${this.collection.name} and help enable future` +
         `research.`
+    },
+
+    filteredProjects () {
+      // Check filters
+      return this.projects.filter(project => {
+        for (let key of Object.keys(this.filterModel)) {
+          project.info.filters = project.info.filters || {}
+          if (project.info.filters[key] !== this.filterModel[key]) {
+            console.log(project.info.filters[key], this.filterModel[key])
+            return false
+          }
+        }
+        console.log('true')
+        return true
+      })
     }
   },
 
@@ -249,33 +230,26 @@ export default {
     },
 
     /**
-     * Reset the infinite loading table.
-     *
-     * Change the number param if the transition time changes.
+     * Set a filter.
+     * @param {String} type
+     *   The type.
+     * @param {String} value
+     *   The value.
      */
-    reset () {
-      this.$refs.infiniteload.reset(500)
+    updateFilterModel (type, value) {
+      this.filterModel[type] = value
+      // Create a new object to trigger changes
+      this.filterModel = Object.assign({}, this.filterModel)
     },
 
-    /**
-     * Remove the table on large screens.
-     */
-    setTableVisiblity () {
-      this.showProjectsTable = window.innerWidth < 1200
+    clearFilters () {
+      this.filterModel = Object.assign({})
     }
   },
 
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
-
-    // The table won't load while hidden so listen for window size
-    window.addEventListener('resize', this.setTableVisiblity)
-    this.setTableVisiblity()
-  },
-
-  beforeDestroy () {
-    window.removeEventListener('resize', this.setTableVisiblity)
   }
 }
 </script>

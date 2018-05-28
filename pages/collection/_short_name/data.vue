@@ -67,10 +67,8 @@ import marked from 'marked'
 import capitalize from 'capitalize'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
 import SortProjectsData from '@/components/data/SortProjects'
-import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 import DownloadProjectData from '@/components/data/DownloadProjectData'
@@ -81,7 +79,6 @@ export default {
 
   mixins: [
     fetchCollectionByName,
-    filterProjects,
     licenses,
     collectionMetaTags
   ],
@@ -106,7 +103,6 @@ export default {
 
   components: {
     SortProjectsData,
-    FilterProjectsData,
     ProjectsTable,
     CardBase,
     DownloadProjectData,

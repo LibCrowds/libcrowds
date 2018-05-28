@@ -62,6 +62,7 @@
       <div class="mb-0 px-2 pt-1">
         <project-filters-list
           v-if="project.info.filters"
+          class="d-none d-md-block"
           :project-filters="project.info.filters"
           :collection="collection"
           @click="onProjectFilterClick">
@@ -71,18 +72,19 @@
       <div class="progress-container" :id="progressBarId"></div>
 
       <div class="card-footer mt-1 px-2 py-1">
-        <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
+        <span
+          class="card-stat text-muted mb-2 mb-lg-0 mt-lg-0 d-none d-lg-block">
           {{ project.overall_progress }}% complete
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0">
+        <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
           <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
           {{ 'task' | pluralize(project.n_tasks) }}
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0">
+        <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
           <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
-        <div class="footer-buttons">
+        <div class="footer-buttons mt-2 mt-lg-0">
           <b-btn
             block
             v-b-modal="statsModalId"
