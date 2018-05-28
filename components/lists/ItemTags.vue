@@ -42,13 +42,11 @@ export default {
      * Load the item's tags.
      */
     async loadTags () {
-      const idParts = this.containerIri.split('/')
-      const containerId = idParts[idParts.length - 2]
       this.message = 'Loading...'
       this.tags = []
 
       return this.$explicates.search({
-        'collection.id': containerId,
+        collection: containerIri,
         contains: {
           target: this.getTarget()
         }

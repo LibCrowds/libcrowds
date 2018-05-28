@@ -64,15 +64,16 @@ export default {
      */
     search (query, strict = false, contains = null) {
       const safeQuery = query.replace(/[^\w]/gi, '')
-      const suffix = strict ? '' : ':*'
-      const idParts = this.containerIri.split('/')
-      const containerId = idParts[idParts.length - 2]
       const params = {
-        'collection.id': containerId,
+        collection: this.containerIri,
         contains: contains === null ? {} : contains
       }
       if (safeQuery.length) {
-        params.fts = `body::${safeQuery}${suffix}`
+        params.fts = {
+          body: {
+            query: safeQuery
+          }
+        }
       }
       return this.$explicates.search(params)
     },

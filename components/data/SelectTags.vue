@@ -113,13 +113,13 @@ export default {
      */
     search (query, strict = false, contains = null) {
       const safeQuery = query.replace(/[^\w\s&]/gi, '')
-      const suffix = strict ? '' : ':*'
-      const idParts = this.containerIri.split('/')
-      const containerId = idParts[idParts.length - 2]
-
       return this.$explicates.search({
-        fts: `body::${safeQuery}${suffix}`,
-        'collection.id': containerId,
+        collection: this.containerIri,
+        fts: {
+          body: {
+            query: safeQuery
+          }
+        },
         contains: contains === null ? {} : contains
       })
     },
