@@ -40,7 +40,7 @@ export default {
       return this.$store.state.currentTemplate
     },
 
-    currentTemplate () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
