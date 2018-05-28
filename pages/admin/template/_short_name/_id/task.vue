@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/task/">
+
     <p slot="guidance">
       {{ localConfig.brand }} projects are sets of similar tasks. For example,
       a project might be created to transcribe all of the titles in a group of
@@ -12,22 +13,22 @@
       Use the form below to configure the task for all projects generated using
       this template. The options shown will vary depending on the task
       presenter chosen for the collection, which in this case is the
-      <strong>{{ presenter }}</strong> task presenter.
+      <strong>{{ currentCollection.info.presenter }}</strong> task presenter.
     </p>
     <hr class="my-1">
 
-    <b-card-body v-if="!presenter">
+    <b-card-body v-if="!currentCollection.info.presenter">
       <b-alert show variant="warning" class="mb-0">
         This collection has an invalid task presenter and therefore the task
         template cannot be updated. Please contact and administrator.
       </b-alert>
     </b-card-body>
+
     <pybossa-form
       v-else
       no-submit
       submit-text="Update"
-      :form="form"
-      @success="onFormSuccess">
+      :form="form">
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <b-form-group label="Fields Schema">
@@ -132,17 +133,18 @@
 <script>
 import 'vue-awesome/icons/arrow-up'
 import 'vue-awesome/icons/arrow-down'
+import VueFormGenerator from 'vue-form-generator'
 import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 import AddFormFieldModal from '@/components/modals/AddFormField'
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags, fetchCollectionByName ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -179,16 +181,27 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error, redirect, store }) {
-    const endpoint = `/lc/templates/${params.id}/task`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      if (!('presenter' in data)) {
-        return {
-          presenter: null
-        }
+  asyncData ({ app, params, error, store }) {
+    return app.$axios.$get('/lc/admin/templates').then(data => {
+      return {
+        templateData: data
       }
+    }).catch(err => {
+      error(err)
+    })
+  },
 
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
+    form () {
+      const presenter = this.currentCollection.info.presenter
       const fields = {
         'iiif-annotation': [
           {
@@ -196,7 +209,9 @@ export default {
             label: 'Tag',
             type: 'input',
             inputType: 'text',
-            hint: 'Used to group the annotations.'
+            hint: 'Used to group the annotations.',
+            required: true,
+            validator: VueFormGenerator.validators.string
           },
           {
             model: 'objective',
@@ -204,7 +219,9 @@ export default {
             type: 'input',
             inputType: 'text',
             hint: 'Shown at the top of the task sidebar, this is always ' +
-              'visible to volunteers.'
+              'visible to volunteers.',
+            required: true,
+            validator: VueFormGenerator.validators.string
           },
           {
             model: 'guidance',
@@ -234,7 +251,7 @@ export default {
             model: 'database',
             label: 'Database',
             type: 'select',
-            values: data.z3950_databases.map(db => {
+            values: this.templateData.z3950_databases.map(db => {
               return { id: db[0], name: db[1] }
             }),
             hint: 'The Z39.50 database that to search for matching records.'
@@ -242,45 +259,30 @@ export default {
         ]
       }
 
-      let schema = {}
-      try {
-        schema = {
-          fields: fields[data.presenter]
-        }
-      } catch (err) {
-        return {
-          presenter: null
-        }
-      }
-
       return {
-        presenter: data.presenter,
         form: {
-          endpoint: endpoint,
+          endpoint: '',
           method: 'post',
-          model: data.form,
-          schema: schema
+          model: Object.assign(
+            this.templateData.task[presenter],
+            this.currentTemplate.task[presenter]
+          ),
+          schema: {
+            fields: fields[presenter]
+          }
         }
       }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
-  computed: {
-    currentCollection () {
-      return this.$store.state.currentCollection
     },
 
     showFieldsSchemaInput () {
       return (
-        this.presenter === 'iiif-annotation' &&
+        this.currentCollection.info.presenter === 'iiif-annotation' &&
         this.form.model.mode === 'transcribe'
       )
     },
 
     showInstitutionCodesInput () {
-      return this.presenter === 'z3950'
+      return this.currentCollection.info.presenter === 'z3950'
     },
 
     institutionCodeTableItems () {
@@ -394,15 +396,6 @@ export default {
           'flash': 'That code already exists'
         })
       }
-    },
-
-    /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
-     */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
     }
   },
 

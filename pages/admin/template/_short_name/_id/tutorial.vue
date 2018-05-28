@@ -14,7 +14,7 @@
       no-submit
       submit-text="Update"
       :form="form"
-      @success="onFormSuccess">
+      @submit="onSubmit">
       <div slot="bottom">
         <label class="ml-0">
           Tutorial
@@ -33,12 +33,12 @@
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags, fetchCollectionByName ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -50,25 +50,6 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error, store }) {
-    const endpoint = `/lc/templates/${params.id}/update`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      return {
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: {
-            fields: []
-          }
-        }
-      }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
   components: {
     CardBase,
     PybossaForm
@@ -77,17 +58,37 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
+    form () {
+      return {
+        endpoint: '',
+        method: 'post',
+        model: this.currentTemplate,
+        schema: {
+          fields: []
+        }
+      }
     }
   },
 
   methods: {
     /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
+     * Update the current template on form submission.
      */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    onSubmit () {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   }
 }

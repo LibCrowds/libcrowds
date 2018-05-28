@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/analysis/">
+
     <p slot="guidance">
       The form below can be used to configure the analysis process that runs
       when each task is completed. The output of this analysis process is used
@@ -21,7 +22,7 @@
       no-submit
       submit-text="Update"
       :form="form"
-      @success="onFormSuccess">
+      @submit="onSubmit">
       <div slot="bottom" class="form-group mt-1">
         <div class="d-flex">
           <no-ssr>
@@ -150,12 +151,12 @@
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags, fetchCollectionByName ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -165,73 +166,9 @@ export default {
   },
 
   asyncData ({ app, params, error, store }) {
-    const endpoint = `/lc/templates/${params.id}/rules`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    return app.$axios.$get('/lc/admin/templates').then(data => {
       return {
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: {
-            fields: [
-              {
-                model: 'case',
-                label: 'Convert Case',
-                type: 'select',
-                values: [
-                  {
-                    id: '',
-                    name: 'Do not convert'
-                  },
-                  {
-                    id: 'title',
-                    name: 'Titlecase'
-                  },
-                  {
-                    id: 'lower',
-                    name: 'Lowercase'
-                  },
-                  {
-                    id: 'upper',
-                    name: 'Uppercase'
-                  }
-                ],
-                selectOptions: {
-                  hideNoneSelectedText: true
-                },
-                hint: 'Convert the case of transcriptions'
-              },
-              {
-                model: 'whitespace',
-                label: 'Whitespace handling',
-                type: 'select',
-                values: [
-                  {
-                    id: '',
-                    name: 'Do not modify'
-                  },
-                  {
-                    id: 'normalise',
-                    name: 'Normalise'
-                  },
-                  {
-                    id: 'underscore',
-                    name: 'Replace with underscores'
-                  },
-                  {
-                    id: 'full_stop',
-                    name: 'Replace with full stops'
-                  }
-                ],
-                selectOptions: {
-                  hideNoneSelectedText: true
-                },
-                hint: 'Transform any whitespace within transcriptions'
-              }
-            ]
-          }
-        }
+        templateData: data
       }
     }).catch(err => {
       error(err)
@@ -245,19 +182,79 @@ export default {
 
     currentTemplate () {
       return this.$store.state.currentTemplate
+    },
+
+    form () {
+      return {
+        endpoint: '',
+        method: 'post',
+        model: Object.assign(
+          this.templateData.rules,
+          this.currentTemplate.rules
+        ),
+        schema: {
+          fields: [
+            {
+              model: 'case',
+              label: 'Convert Case',
+              type: 'select',
+              values: [
+                {
+                  id: '',
+                  name: 'Do not convert'
+                },
+                {
+                  id: 'title',
+                  name: 'Titlecase'
+                },
+                {
+                  id: 'lower',
+                  name: 'Lowercase'
+                },
+                {
+                  id: 'upper',
+                  name: 'Uppercase'
+                }
+              ],
+              selectOptions: {
+                hideNoneSelectedText: true
+              },
+              hint: 'Convert the case of transcriptions'
+            },
+            {
+              model: 'whitespace',
+              label: 'Whitespace handling',
+              type: 'select',
+              values: [
+                {
+                  id: '',
+                  name: 'Do not modify'
+                },
+                {
+                  id: 'normalise',
+                  name: 'Normalise'
+                },
+                {
+                  id: 'underscore',
+                  name: 'Replace with underscores'
+                },
+                {
+                  id: 'full_stop',
+                  name: 'Replace with full stops'
+                }
+              ],
+              selectOptions: {
+                hideNoneSelectedText: true
+              },
+              hint: 'Transform any whitespace within transcriptions'
+            }
+          ]
+        }
+      }
     }
   },
 
   methods: {
-    /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
-     */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-    },
-
     /**
      * Update model boolean.
      * @param {String} key
@@ -267,6 +264,22 @@ export default {
      */
     updateModelBoolean (key, evt) {
       this.form.model[key] = evt.value
+    },
+
+    /**
+     * Update the current template on form submission.
+     * @param {Object} data
+     *   The data returned from the form.
+     */
+    onSubmit (data) {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   },
 

@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/parent/">
+
     <p slot="guidance">
       Use the form below to select the type of parent project from which
       projects using this template must be built.
@@ -21,7 +22,7 @@
       no-submit
       submit-text="Update"
       :form="form"
-      @success="onFormSuccess">
+      @submit="onSubmit">
     </pybossa-form>
 
   </card-base>
@@ -31,52 +32,17 @@
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
-import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
   layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags, fetchCollectionByName ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
       title: 'Update Parent Template',
       description: 'Select a parent template.'
-    }
-  },
-
-  async asyncData ({ app, params, error, store }) {
-    const tmplEndpoint = `/lc/templates/${params.id}/update`
-    let tmplData = {}
-    let category = {}
-
-    try {
-      tmplData = await app.$axios.$get(tmplEndpoint)
-      const categoryId = tmplData.template.category_id
-      category = await app.$axios.$get(`/api/category/${categoryId}`)
-    } catch (err) {
-      error(err)
-    }
-
-    store.dispatch('UPDATE_CURRENT_TEMPLATE', tmplData.template)
-
-    return {
-      form: {
-        endpoint: tmplEndpoint,
-        method: 'post',
-        model: tmplData.form,
-        schema: {
-          fields: [
-            {
-              model: 'parent_template_id',
-              label: 'Parent Template',
-              type: 'select',
-              values: category.info.templates || [],
-              hint: 'Use the results of a parent project of the selected type.'
-            }
-          ]
-        }
-      }
     }
   },
 
@@ -88,17 +54,45 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
+    form () {
+      return {
+        endpoint: '',
+        method: 'post',
+        model: this.currentTemplate,
+        schema: {
+          fields: [
+            {
+              model: 'parent_template_id',
+              label: 'Parent Template',
+              type: 'select',
+              values: this.currentCollection.info.templates,
+              hint: 'Use the results of a parent project to generate tasks.'
+            }
+          ]
+        }
+      }
     }
   },
 
   methods: {
     /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
+     * Update the current template on form submission.
      */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    onSubmit () {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   }
 }
