@@ -30,6 +30,7 @@
           submit-text="Update"
           show-cancel
           :form="form"
+          @success="onSuccess"
           @cancel="onCancel">
         </pybossa-form>
       </b-tab>
@@ -158,6 +159,18 @@ export default {
      */
     onCancel () {
       this.$router.push({ name: 'admin-site-announcements' })
+    },
+
+    /**
+     * Handle success.
+     * @param {Object} data
+     *   The response data.
+     */
+    onSuccess (data) {
+      this.$notifications.success({ message: 'Announcement updated' })
+      this.$router.push({
+        name: 'admin-site-announcements'
+      })
     },
 
     /**
