@@ -84,7 +84,7 @@
           <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.n_volunteers) }}
         </span>
-        <div class="footer-buttons mt-2 mt-lg-0">
+        <div class="footer-buttons my-1 mt-lg-0">
           <b-btn
             block
             v-b-modal="statsModalId"
