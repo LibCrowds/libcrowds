@@ -185,8 +185,8 @@ export default {
     },
 
     form () {
-      const currentRulesData =  this.currentTemplate.hasOwnProperty('rules')
-        ?  this.currentTemplate.rules
+      const currentRulesData = this.currentTemplate.hasOwnProperty('rules')
+        ? this.currentTemplate.rules
         : {}
 
       return {

@@ -268,8 +268,8 @@ export default {
           }
         ]
       }
-      const currentTaskData =  this.currentTemplate.hasOwnProperty('task')
-        ?  this.currentTemplate.task
+      const currentTaskData = this.currentTemplate.hasOwnProperty('task')
+        ? this.currentTemplate.task
         : {}
 
       return {
