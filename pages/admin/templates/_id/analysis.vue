@@ -151,7 +151,7 @@ import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-templates-dashboard',
 
   mixins: [ metaTags ],
 

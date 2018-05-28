@@ -9,10 +9,7 @@
       size="sm"
       variant="success"
       :to="{
-        name: 'account-name-templates-new',
-        params: {
-          name: currentUser.name
-        }
+        name: 'admin-templates-new'
       }">
       New
     </b-btn>
@@ -38,9 +35,8 @@
               variant="success"
               size="sm"
               :to="{
-                name: 'account-name-templates-id',
+                name: 'admin-templates-id',
                 params: {
-                  name: currentUser.name,
                   id: template.item.id
                 }
               }">
@@ -61,7 +57,7 @@ import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-templates-dashboard',
 
   mixins: [ metaTags ],
 

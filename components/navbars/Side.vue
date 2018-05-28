@@ -164,19 +164,13 @@ export default {
           {
             label: 'New Template',
             link: {
-              name: 'account-name-templates-new',
-              params: {
-                name: this.currentUser.name
-              }
+              name: 'admin-templates-new'
             }
           },
           {
             label: 'Open Template',
             link: {
-              name: 'account-name-templates',
-              params: {
-                name: this.currentUser.name
-              }
+              name: 'admin-templates'
             }
           }
         ]

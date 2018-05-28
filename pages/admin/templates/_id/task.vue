@@ -138,7 +138,7 @@ import PybossaForm from '@/components/forms/PybossaForm'
 import AddFormFieldModal from '@/components/modals/AddFormField'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-templates-dashboard',
 
   mixins: [ metaTags ],
 

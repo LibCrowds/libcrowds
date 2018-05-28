@@ -10,9 +10,8 @@
       This template is incomplete,
       <nuxt-link
         :to="{
-          name: 'account-name-templates-id-task',
+          name: 'aadmin-templates-id-task',
           params: {
-            name: currentUser.name,
             id: currentTemplate.id
           }
         }">
@@ -29,7 +28,7 @@ import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
-  middleware: 'project-management',
+  middleware: 'is-admin',
 
   components: {
     DashboardBase
@@ -41,7 +40,7 @@ export default {
     },
 
     taskNotConfigured () {
-      const isTaskPage = this.$route.name === 'account-name-templates-id-task'
+      const isTaskPage = this.$route.name === 'admin-templates-id-task'
       return (
         !isEmpty(this.currentTemplate) &&
         !this.currentTemplate.task &&
@@ -61,9 +60,8 @@ export default {
             label: 'Core Details',
             exact: true,
             link: {
-              name: 'account-name-templates-id',
+              name: 'admin-templates-id',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -71,9 +69,8 @@ export default {
           {
             label: 'Task',
             link: {
-              name: 'account-name-templates-id-task',
+              name: 'admin-templates-id-task',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -81,9 +78,8 @@ export default {
           {
             label: 'Redundancy',
             link: {
-              name: 'account-name-templates-id-redundancy',
+              name: 'admin-templates-id-redundancy',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -91,9 +87,8 @@ export default {
           {
             label: 'Parent',
             link: {
-              name: 'account-name-templates-id-parent',
+              name: 'admin-templates-id-parent',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -101,9 +96,8 @@ export default {
           {
             label: 'Analysis',
             link: {
-              name: 'account-name-templates-id-analysis',
+              name: 'admin-templates-id-analysis',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -111,9 +105,8 @@ export default {
           {
             label: 'Tutorial',
             link: {
-              name: 'account-name-templates-id-tutorial',
+              name: 'admin-templates-id-tutorial',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }
@@ -121,9 +114,8 @@ export default {
           {
             label: 'Delete',
             link: {
-              name: 'account-name-templates-id-delete',
+              name: 'admin-templates-id-delete',
               params: {
-                name: this.currentUser.name,
                 id: this.currentTemplate.id
               }
             }

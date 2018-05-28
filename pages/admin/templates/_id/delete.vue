@@ -39,7 +39,7 @@ import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-templates-dashboard',
 
   mixins: [ metaTags ],
 
@@ -98,10 +98,7 @@ export default {
       }).then(data => {
         this.$notifications.flash(data)
         this.$router.push({
-          name: 'account-name-templates',
-          params: {
-            name: this.currentUser.name
-          }
+          name: 'admin-templates'
         })
       }).catch(err => {
         if (typeof err === 'object' && err.hasOwnProperty('dismiss')) {
