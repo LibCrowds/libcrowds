@@ -158,24 +158,6 @@ export default {
         ]
       }
 
-      // Collection admin
-      if (this.currentUser.admin) {
-        items['Collection Admin'] = [
-          {
-            label: 'New Collection',
-            link: {
-              name: 'admin-collection-new'
-            }
-          },
-          {
-            label: 'Collections',
-            link: {
-              name: 'admin-collection'
-            }
-          }
-        ]
-      }
-
       // Site/collection admin
       if (this.currentUser.admin) {
         items['Admin'] = [
@@ -190,6 +172,12 @@ export default {
             label: 'Project Templates',
             link: {
               name: 'admin-template'
+            }
+          },
+          {
+            label: 'Collections',
+            link: {
+              name: 'admin-collection'
             }
           },
           {
