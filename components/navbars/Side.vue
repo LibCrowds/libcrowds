@@ -164,13 +164,13 @@ export default {
           {
             label: 'New Template',
             link: {
-              name: 'admin-templates-new'
+              name: 'admin-template-new'
             }
           },
           {
             label: 'Open Template',
             link: {
-              name: 'admin-templates'
+              name: 'admin-template'
             }
           }
         ]

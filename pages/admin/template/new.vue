@@ -34,7 +34,7 @@ import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-templates-dashboard',
+  layout: 'admin-template-dashboard',
 
   mixins: [ metaTags ],
 
@@ -115,7 +115,7 @@ export default {
       if (typeof data.next !== 'undefined') {
         const tmplId = data.next.split('templates/')[1]
         this.$router.push({
-          name: 'admin-templates-id-task',
+          name: 'admin-template-id-task',
           params: {
             id: tmplId
           }

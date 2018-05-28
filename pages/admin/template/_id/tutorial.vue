@@ -33,7 +33,7 @@ import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
-  layout: 'admin-templates-dashboard',
+  layout: 'admin-template-dashboard',
 
   mixins: [ metaTags ],
 

@@ -10,7 +10,7 @@
       This template is incomplete,
       <nuxt-link
         :to="{
-          name: 'aadmin-templates-id-task',
+          name: 'aadmin-template-id-task',
           params: {
             id: currentTemplate.id
           }
@@ -40,7 +40,7 @@ export default {
     },
 
     taskNotConfigured () {
-      const isTaskPage = this.$route.name === 'admin-templates-id-task'
+      const isTaskPage = this.$route.name === 'admin-template-id-task'
       return (
         !isEmpty(this.currentTemplate) &&
         !this.currentTemplate.task &&
@@ -60,7 +60,7 @@ export default {
             label: 'Core Details',
             exact: true,
             link: {
-              name: 'admin-templates-id',
+              name: 'admin-template-id',
               params: {
                 id: this.currentTemplate.id
               }
@@ -69,7 +69,7 @@ export default {
           {
             label: 'Task',
             link: {
-              name: 'admin-templates-id-task',
+              name: 'admin-template-id-task',
               params: {
                 id: this.currentTemplate.id
               }
@@ -78,7 +78,7 @@ export default {
           {
             label: 'Redundancy',
             link: {
-              name: 'admin-templates-id-redundancy',
+              name: 'admin-template-id-redundancy',
               params: {
                 id: this.currentTemplate.id
               }
@@ -87,7 +87,7 @@ export default {
           {
             label: 'Parent',
             link: {
-              name: 'admin-templates-id-parent',
+              name: 'admin-template-id-parent',
               params: {
                 id: this.currentTemplate.id
               }
@@ -96,7 +96,7 @@ export default {
           {
             label: 'Analysis',
             link: {
-              name: 'admin-templates-id-analysis',
+              name: 'admin-template-id-analysis',
               params: {
                 id: this.currentTemplate.id
               }
@@ -105,7 +105,7 @@ export default {
           {
             label: 'Tutorial',
             link: {
-              name: 'admin-templates-id-tutorial',
+              name: 'admin-template-id-tutorial',
               params: {
                 id: this.currentTemplate.id
               }
@@ -114,7 +114,7 @@ export default {
           {
             label: 'Delete',
             link: {
-              name: 'admin-templates-id-delete',
+              name: 'admin-template-id-delete',
               params: {
                 id: this.currentTemplate.id
               }

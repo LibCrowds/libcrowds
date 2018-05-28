@@ -9,16 +9,49 @@
       size="sm"
       variant="success"
       :to="{
-        name: 'admin-templates-new'
+        name: 'admin-template-new'
       }">
       New
     </b-btn>
 
     <p slot="guidance">
       Click the <strong>New</strong> button above to create a new template, or
-      edit one of your current templates by locating it in the table below and
-      clicking <strong>Open</strong>.
+      locate a current template by first selecting the collection microsite,
+      below.
     </p>
+
+    <b-tabs card @input="onTabChange">
+      <b-tab
+        no-body
+        v-for="(collection, index) in collections"
+        :title="collection.name"
+        :key="collection.id">
+
+        <infinite-loading-table
+          :ref="`table-${index}`"
+          :all="currentUser.admin"
+          :fields="tableFields"
+          :filter="filter"
+          :filter-by="filterBy"
+          :search-params="{
+            category_id: collection.id
+          }"
+          domain-object="category">
+          <template slot="action" slot-scope="project">
+            <b-btn
+              variant="success"
+              size="sm"
+              :to="{
+                name: 'admin-template-short_name-details',
+                params: {
+                  short_name: project.item.short_name
+                }
+              }">
+              Open
+            </b-btn>
+          </template>
+        </infinite-loading-table>
+      </b-tab>
 
     <b-tabs card>
       <b-tab
@@ -35,7 +68,7 @@
               variant="success"
               size="sm"
               :to="{
-                name: 'admin-templates-id',
+                name: 'admin-template-id',
                 params: {
                   id: template.item.id
                 }
@@ -57,7 +90,7 @@ import CardBase from '@/components/cards/Base'
 import TemplatesTable from '@/components/tables/Templates'
 
 export default {
-  layout: 'admin-templates-dashboard',
+  layout: 'admin-template-dashboard',
 
   mixins: [ metaTags ],
 
@@ -69,7 +102,7 @@ export default {
   },
 
   asyncData ({ app, params, error }) {
-    const tmplEndpoint = `/lc/users/${params.name}/templates`
+    const tmplEndpoint = `/lc/admin/templates`
     return Promise.all([
       fetchAll(app.$axios, 'category'),
       app.$axios.$get(tmplEndpoint)
