@@ -15,8 +15,7 @@
         v-else
         show variant="warning"
         class="mb-0">
-        You cannot delete this template as a version of it has already been
-        approved.
+        You cannot delete this template as projects are already using it.
       </b-alert>
     </b-card-body>
 
@@ -53,8 +52,10 @@ export default {
 
   asyncData ({ app, params, error, store }) {
     return app.$axios.$get('/api/project', {
-      info: {
-        template_id: params.id
+      parems: {
+        info: {
+          template_id: params.id
+        }
       }
     }).then(data => {
       return {

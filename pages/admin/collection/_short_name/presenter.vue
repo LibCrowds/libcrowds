@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import pick from 'lodash/pick'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
@@ -66,7 +67,9 @@ export default {
 
     taskPresenterDisabled () {
       const templates = this.currentCollection.info.templates
-      const hasTemplates = templates !== 'undefined' && templates.length > 0
+      const hasTemplates = templates !== 'undefined' && templates.filter(t => {
+        return !isEmpty(t.task)
+      }).length > 0
       const volumes = this.currentCollection.info.volumes
       const hasVolumes = volumes !== 'undefined' && volumes.length > 0
       return hasTemplates || hasVolumes
@@ -89,7 +92,7 @@ export default {
               disabled: () => this.taskPresenterDisabled,
               hint: this.taskPresenterDisabled
                 ? 'The task presenter cannot be updated while the ' +
-                  'collection contains templates or volumes'
+                  'collection contains configured templates or volumes'
                 : 'Select the task presenter to be used for all projects ' +
                   'within the collection microsite',
               values: [

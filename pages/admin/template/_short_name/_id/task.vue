@@ -12,15 +12,24 @@
     <p slot="guidance">
       Use the form below to configure the task for all projects generated using
       this template. The options shown will vary depending on the task
-      presenter chosen for the collection, which in this case is the
-      <strong>{{ currentCollection.info.presenter }}</strong> task presenter.
+      presenter chosen for the collection.
     </p>
     <hr class="my-1">
 
     <b-card-body v-if="!currentCollection.info.presenter">
       <b-alert show variant="warning" class="mb-0">
-        This collection has an invalid task presenter and therefore the task
-        template cannot be updated. Please contact and administrator.
+        This collection has an invalid, or non-existant task presenter and
+        therefore the task template cannot be updated. Before designing the
+        task, please
+        <nuxt-link
+          :to="{
+            name: 'admin-collection-short_name-presenter',
+            params: {
+              short_name: currentCollection.short_name
+            }
+          }">
+          set the task presenter.
+        </nuxt-link>
       </b-alert>
     </b-card-body>
 
@@ -28,7 +37,8 @@
       v-else
       no-submit
       submit-text="Update"
-      :form="form">
+      :form="form"
+      @submit="onSubmit">
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <b-form-group label="Fields Schema">
@@ -258,18 +268,19 @@ export default {
           }
         ]
       }
+      const currentTaskData =  this.currentTemplate.hasOwnProperty('task')
+        ?  this.currentTemplate.task
+        : {}
 
       return {
-        form: {
-          endpoint: '',
-          method: 'post',
-          model: Object.assign(
-            this.templateData.task[presenter],
-            this.currentTemplate.task[presenter]
-          ),
-          schema: {
-            fields: fields[presenter]
-          }
+        endpoint: '',
+        method: 'post',
+        model: Object.assign(
+          this.templateData.task,
+          currentTaskData
+        ),
+        schema: {
+          fields: fields[presenter]
         }
       }
     },
@@ -396,6 +407,23 @@ export default {
           'flash': 'That code already exists'
         })
       }
+    },
+
+    /**
+     * Update the current template on form submission.
+     * @param {Object} formData
+     *   The form data.
+     */
+    onSubmit (formData) {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      this.currentTemplate.task = formData
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   },
 

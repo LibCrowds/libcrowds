@@ -185,12 +185,16 @@ export default {
     },
 
     form () {
+      const currentRulesData =  this.currentTemplate.hasOwnProperty('rules')
+        ?  this.currentTemplate.rules
+        : {}
+
       return {
         endpoint: '',
         method: 'post',
         model: Object.assign(
           this.templateData.rules,
-          this.currentTemplate.rules
+          currentRulesData
         ),
         schema: {
           fields: [
@@ -268,11 +272,12 @@ export default {
 
     /**
      * Update the current template on form submission.
-     * @param {Object} data
-     *   The data returned from the form.
+     * @param {Object} formData
+     *   The form data.
      */
-    onSubmit (data) {
+    onSubmit (formData) {
       const endpoint = `/api/category/${this.currentCollection.id}`
+      this.currentTemplate.rules = formData
       return this.$axios.$put(endpoint, {
         info: this.currentCollection.info
       }).then(data => {

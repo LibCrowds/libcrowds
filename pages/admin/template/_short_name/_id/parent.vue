@@ -71,7 +71,9 @@ export default {
               model: 'parent_template_id',
               label: 'Parent Template',
               type: 'select',
-              values: this.currentCollection.info.templates,
+              values: this.currentCollection.info.templates.filter(tmpl => {
+                return tmpl.id !== this.currentTemplate.id
+              }),
               hint: 'Use the results of a parent project to generate tasks.'
             }
           ]
