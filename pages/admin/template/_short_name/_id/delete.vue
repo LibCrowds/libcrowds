@@ -52,7 +52,7 @@ export default {
 
   asyncData ({ app, params, error, store }) {
     return app.$axios.$get('/api/project', {
-      parems: {
+      params: {
         info: {
           template_id: params.id
         }
