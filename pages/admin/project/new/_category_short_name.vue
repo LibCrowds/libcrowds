@@ -178,11 +178,11 @@ export default {
         }
 
         // Check if the collection has a volume not used by this template
-        this.currentCollection.info.volumes.forEach(vol => {
+        for (let vol of this.currentCollection.info.volumes) {
           if (this.isComboAvailable(tmpl, vol)) {
             return true
           }
-        })
+        }
         return false
       })
     },
@@ -195,11 +195,11 @@ export default {
         }
 
         // Check if the collection has a template not used by this volume
-        this.currentCollection.info.templates.forEach(tmpl => {
+        for (let tmpl of this.currentCollection.info.templates) {
           if (this.isComboAvailable(tmpl, vol)) {
             return true
           }
-        })
+        }
         return false
       })
     },
