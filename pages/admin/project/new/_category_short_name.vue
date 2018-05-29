@@ -13,10 +13,12 @@
     </p>
     <p slot="guidance">
       Volumes provide the input source for a project (e.g. the images).
-      The available volumes for each collection are maintained by
-      {{ localConfig.brand }} administrators. One project can be built
-      for each combination of template and volume. Only the available
-      volumes for the selected template will be shown.
+      One project can be built for each combination of template and volume.
+      Only the available volumes for the selected template will be shown.
+    </p>
+    <p slot="guidance">
+      The available templates and volumes for each collection are maintained
+      by {{ localConfig.brand }} administrators.
     </p>
     <hr class="my-1">
 
@@ -32,7 +34,7 @@
           v-model="selectedTemplate"
           label="name"
           track-by="id"
-          :options="templates"
+          :options="availableTemplates"
           @input="selectTemplate">
         </multiselect>
         <div class="hint">
@@ -60,6 +62,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config.js'
 import { metaTags } from '@/mixins/metaTags'
 import { getShortname } from '@/mixins/getShortname'
@@ -101,8 +104,7 @@ export default {
       return {
         endpoint: endpoint,
         formModel: data.form,
-        templates: data.templates,
-        volumes: data.volumes
+        built_projects: data.built_projects
       }
     }).catch(err => {
       error(err)
@@ -115,6 +117,14 @@ export default {
   },
 
   computed: {
+    title () {
+      return `New ${this.currentCollection.name} Project`
+    },
+
+    description () {
+      return `Create a new ${this.currentCollection.name} project`
+    },
+
     currentCollection () {
       return this.$store.state.currentCollection
     },
@@ -152,47 +162,54 @@ export default {
       }
     },
 
-    title () {
-      return `New ${this.currentCollection.name} Project`
-    },
+    availableTemplates () {
+      return this.currentCollection.info.templates.filter(tmpl => {
+        // Check if project built with parent template is complete
+        if (
+          tmpl.parent_template_id &&
+          !this.isParentAvailable(tmpl.parent_template_id)
+        ) {
+          return false
+        }
 
-    description () {
-      return `Create a new ${this.currentCollection.name} project`
+        // Check if the template is available for the selected volume
+        if (!isEmpty(this.selectedVolume)) {
+          return this.isComboAvailable(tmpl, this.selectedVolume)
+        }
+
+        // Check if the collection has a volume not used by this template
+        this.currentCollection.info.volumes.forEach(vol => {
+          if (this.isComboAvailable(tmpl, vol)) {
+            return true
+          }
+        })
+        return false
+      })
     },
 
     availableVolumes () {
-      const tmpl = this.templates.filter(tmpl => {
-        return tmpl.id === this.formModel.template_id
-      })[0] || null
-      if (!tmpl) {
-        return []
-      }
+      return this.currentCollection.info.volumes.filter(vol => {
+        // Check if the volume is available for the selected template
+        if (!isEmpty(this.selectedTemplate)) {
+          return this.isComboAvailable(this.selectedTemplate, vol)
+        }
 
-      return this.volumes.filter(vol => {
-        return tmpl.available_volumes.indexOf(vol.id) > -1
+        // Check if the collection has a template not used by this volume
+        this.currentCollection.info.templates.forEach(tmpl => {
+          if (this.isComboAvailable(tmpl, vol)) {
+            return true
+          }
+        })
+        return false
       })
     },
 
     confirmation () {
-      let msg = `You're about to create a project for
-        ${this.currentCollection.name}.`
-
-      // Add building from parent message, if applicable
-      const tmpl = this.templates.filter(tmpl => {
-        return tmpl.id === this.formModel.template_id
-      })[0] || {}
-      if (tmpl.parent_template_id) {
-        const parentTmpl = this.templates.filter(parentTmpl => {
-          return parentTmpl.id === tmpl.parent_template_id
-        })[0] || 'Unknown'
-        msg += `<br><br>Note that this project will be built from the
-          "${parentTmpl.name}" parent of the same volume.`
-      }
-
-      msg += '<br><br>Once generated, you will be redirected to a settings ' +
-        'page where you can set some filters for the project.' +
-        '<br><br>Click OK to continue.'
-      return msg
+      return `You're about to create a project for
+        ${this.currentCollection.name}.
+        <br><br>Once generated, you will be redirected to a settings
+        page where you can set some filters for the project.
+        <br><br>Click OK to continue.`
     }
   },
 
@@ -204,7 +221,6 @@ export default {
      */
     selectTemplate (tmpl) {
       this.formModel.template_id = tmpl.id
-      this.formModel.volume_id = null
       this.setNameAndShortName()
     },
 
@@ -227,6 +243,43 @@ export default {
       const name = `${tmplName}: ${volName}`
       this.formModel.name = name
       this.formModel.short_name = this.getShortname(name)
+    },
+
+    /**
+     * Check if a combination of template and volume is available.
+     * @param {Object} template
+     *   The template
+     * @param {Object} volume
+     *   The volume
+     */
+    isComboAvailable (template, volume) {
+      for (let builtItem of this.built_projects) {
+        if (
+          builtItem.template_id == template.id &&
+          builtItem.volume_id == volume.id
+        ) {
+          return false
+        }
+      }
+      return true
+    },
+
+    /**
+     * Check if a parent template is linked to a completed project.
+     * @param {Object} templateId
+     *   The template ID.
+     */
+    isParentAvailable (templateId) {
+      for (let builtItem of this.built_projects) {
+        if (
+          builtItem.template_id == templateId &&
+          builtItem.overall_progress == 100 &&
+          builtItem.empty_results == 0
+        ) {
+          return true
+        }
+      }
+      return false
     },
 
     /**

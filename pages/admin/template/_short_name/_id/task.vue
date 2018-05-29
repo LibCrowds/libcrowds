@@ -220,7 +220,36 @@ export default {
             inputType: 'text',
             hint: 'Used to group the annotations.',
             required: true,
-            validator: VueFormGenerator.validators.string
+            validator: (value) => {
+              return new Promise((resolve, reject) => {
+                if (!value.length) {
+                  resolve([ 'This field is required!' ])
+                }
+
+                this.$axios.$get('/api/category', {
+                  params: {
+                    id: this.currentCollection.id,
+                    info: {
+                      templates: [
+                        {
+                          task: {
+                            tag: value
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }).then(data => {
+                  if (data.length) {
+                    resolve([
+                      `The tag should be unique for this collection.`
+                    ])
+                  } else {
+                    resolve()
+                  }
+                })
+              })
+            }
           },
           {
             model: 'objective',
