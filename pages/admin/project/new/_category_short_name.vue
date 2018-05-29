@@ -255,8 +255,8 @@ export default {
     isComboAvailable (template, volume) {
       for (let builtItem of this.built_projects) {
         if (
-          builtItem.template_id == template.id &&
-          builtItem.volume_id == volume.id
+          builtItem.template_id === template.id &&
+          builtItem.volume_id === volume.id
         ) {
           return false
         }
@@ -272,9 +272,9 @@ export default {
     isParentAvailable (templateId) {
       for (let builtItem of this.built_projects) {
         if (
-          builtItem.template_id == templateId &&
-          builtItem.overall_progress == 100 &&
-          builtItem.empty_results == 0
+          builtItem.template_id === templateId &&
+          builtItem.overall_progress === 100 &&
+          builtItem.empty_results === 0
         ) {
           return true
         }
