@@ -70,7 +70,7 @@
                   short_name: project.item.short_name
                 }
               }">
-              {{ currentUser.admin ? 'Open' : 'Pending Approval' }}
+              Open
             </b-btn>
           </template>
         </projects-table>

@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/task/">
+
     <p slot="guidance">
       {{ localConfig.brand }} projects are sets of similar tasks. For example,
       a project might be created to transcribe all of the titles in a group of
@@ -11,22 +12,32 @@
     <p slot="guidance">
       Use the form below to configure the task for all projects generated using
       this template. The options shown will vary depending on the task
-      presenter chosen for the collection, which in this case is the
-      <strong>{{ presenter }}</strong> task presenter.
+      presenter chosen for the collection.
     </p>
     <hr class="my-1">
 
-    <b-card-body v-if="!presenter">
+    <b-card-body v-if="!currentCollection.info.presenter">
       <b-alert show variant="warning" class="mb-0">
-        This collection has an invalid task presenter and therefore the task
-        template cannot be updated. Please contact and administrator.
+        This collection does not have a task presenter and therefore the
+        task details cannot be updated. Before designing the task, please
+        <nuxt-link
+          :to="{
+            name: 'admin-collection-short_name-presenter',
+            params: {
+              short_name: currentCollection.short_name
+            }
+          }">
+          set the task presenter.
+        </nuxt-link>
       </b-alert>
     </b-card-body>
+
     <pybossa-form
       v-else
+      no-submit
       submit-text="Update"
       :form="form"
-      @success="onFormSuccess">
+      @submit="onSubmit">
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <b-form-group label="Fields Schema">
@@ -131,16 +142,18 @@
 <script>
 import 'vue-awesome/icons/arrow-up'
 import 'vue-awesome/icons/arrow-down'
+import VueFormGenerator from 'vue-form-generator'
 import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 import AddFormFieldModal from '@/components/modals/AddFormField'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -177,16 +190,27 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error, redirect, store }) {
-    const endpoint = `/lc/templates/${params.id}/task`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      if (!('presenter' in data)) {
-        return {
-          presenter: null
-        }
+  asyncData ({ app, params, error, store }) {
+    return app.$axios.$get('/lc/admin/templates').then(data => {
+      return {
+        templateData: data
       }
+    }).catch(err => {
+      error(err)
+    })
+  },
 
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
+    form () {
+      const presenter = this.currentCollection.info.presenter
       const fields = {
         'iiif-annotation': [
           {
@@ -194,7 +218,38 @@ export default {
             label: 'Tag',
             type: 'input',
             inputType: 'text',
-            hint: 'Used to group the annotations.'
+            hint: 'Used to group the annotations.',
+            required: true,
+            validator: (value) => {
+              return new Promise((resolve, reject) => {
+                if (!value.length) {
+                  resolve([ 'This field is required!' ])
+                }
+
+                this.$axios.$get('/api/category', {
+                  params: {
+                    id: this.currentCollection.id,
+                    info: {
+                      templates: [
+                        {
+                          task: {
+                            tag: value
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }).then(data => {
+                  if (data.length) {
+                    resolve([
+                      `The tag should be unique for this collection.`
+                    ])
+                  } else {
+                    resolve()
+                  }
+                })
+              })
+            }
           },
           {
             model: 'objective',
@@ -202,7 +257,9 @@ export default {
             type: 'input',
             inputType: 'text',
             hint: 'Shown at the top of the task sidebar, this is always ' +
-              'visible to volunteers.'
+              'visible to volunteers.',
+            required: true,
+            validator: VueFormGenerator.validators.string
           },
           {
             model: 'guidance',
@@ -232,49 +289,39 @@ export default {
             model: 'database',
             label: 'Database',
             type: 'select',
-            values: data.z3950_databases.map(db => {
-              return { id: db[0], name: db[1] }
+            values: this.templateData.z3950_databases.map(db => {
+              return { id: db, name: db }
             }),
             hint: 'The Z39.50 database that to search for matching records.'
           }
         ]
       }
-
-      let schema = {}
-      try {
-        schema = {
-          fields: fields[data.presenter]
-        }
-      } catch (err) {
-        return {
-          presenter: null
-        }
-      }
+      const currentTaskData = this.currentTemplate.hasOwnProperty('task')
+        ? this.currentTemplate.task
+        : {}
 
       return {
-        presenter: data.presenter,
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: schema
+        endpoint: '',
+        method: 'post',
+        model: Object.assign(
+          this.templateData.task[presenter],
+          currentTaskData
+        ),
+        schema: {
+          fields: fields[presenter]
         }
       }
-    }).catch(err => {
-      error(err)
-    })
-  },
+    },
 
-  computed: {
     showFieldsSchemaInput () {
       return (
-        this.presenter === 'iiif-annotation' &&
+        this.currentCollection.info.presenter === 'iiif-annotation' &&
         this.form.model.mode === 'transcribe'
       )
     },
 
     showInstitutionCodesInput () {
-      return this.presenter === 'z3950'
+      return this.currentCollection.info.presenter === 'z3950'
     },
 
     institutionCodeTableItems () {
@@ -391,13 +438,20 @@ export default {
     },
 
     /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
+     * Update the current template on form submission.
+     * @param {Object} formData
+     *   The form data.
      */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+    onSubmit (formData) {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      this.currentTemplate.task = formData
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   },
 

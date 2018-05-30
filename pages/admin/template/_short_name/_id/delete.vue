@@ -15,8 +15,7 @@
         v-else
         show variant="warning"
         class="mb-0">
-        You cannot delete this template as a version of it has already been
-        approved.
+        You cannot delete this template as projects are already using it.
       </b-alert>
     </b-card-body>
 
@@ -37,11 +36,12 @@
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -51,17 +51,24 @@ export default {
   },
 
   asyncData ({ app, params, error, store }) {
-    const endpoint = `/lc/templates/${params.id}/delete`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
+    return app.$axios.$get('/api/project', {
+      params: {
+        info: {
+          template_id: params.id
+        }
+      }
+    }).then(data => {
       return {
-        canDelete: data.can_delete,
-        csrf: data.csrf
+        canDelete: data.length === 0
       }
     })
   },
 
   computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
     currentTemplate () {
       return this.$store.state.currentTemplate
     },
@@ -80,7 +87,11 @@ export default {
      * Delete the template.
      */
     deleteTemplate () {
-      const endpoint = `/lc/templates/${this.currentTemplate.id}/delete`
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      const infoClone = JSON.parse(JSON.stringify(this.currentCollection.info))
+      infoClone.templates = infoClone.templates.filter(tmpl => {
+        return tmpl.id !== this.currentTemplate.id
+      })
       this.$swal({
         title: `Delete Template`,
         text: `Are you sure you want to delete this template?`,
@@ -89,19 +100,16 @@ export default {
         reverseButtons: true,
         showLoaderOnConfirm: true,
         preConfirm: () => {
-          return this.$axios.$get(endpoint).then(data => {
-            return this.$axios.$post(endpoint, {
-              csrf: data.csrf
-            })
+          return this.$axios.$put(endpoint, {
+            info: infoClone
           })
         }
       }).then(data => {
-        this.$notifications.flash(data)
-        this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+        this.$notifications.success({ message: 'Template deleted' })
         this.$router.push({
-          name: 'account-name-templates',
+          name: 'admin-template-short_name',
           params: {
-            name: this.currentUser.name
+            short_name: this.currentCollection.short_name
           }
         })
       }).catch(err => {

@@ -182,11 +182,9 @@ export default {
         for (let key of Object.keys(this.filterModel)) {
           project.info.filters = project.info.filters || {}
           if (project.info.filters[key] !== this.filterModel[key]) {
-            console.log(project.info.filters[key], this.filterModel[key])
             return false
           }
         }
-        console.log('true')
         return true
       })
     }

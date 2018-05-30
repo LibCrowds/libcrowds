@@ -3,6 +3,7 @@
     :title="title"
     :description="description"
     docs="/templates/tutorial/">
+
     <p slot="guidance">
       Use the form below to update the tutorial shown when the project first
       loads.
@@ -10,9 +11,10 @@
     <hr class="my-1">
 
     <pybossa-form
+      no-submit
       submit-text="Update"
       :form="form"
-      @success="onFormSuccess">
+      @submit="onSubmit">
       <div slot="bottom">
         <label class="ml-0">
           Tutorial
@@ -31,11 +33,12 @@
 import { metaTags } from '@/mixins/metaTags'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
+import { fetchCollectionAndTmpl } from '@/mixins/fetchCollectionAndTmpl'
 
 export default {
-  layout: 'templates-dashboard',
+  layout: 'admin-template-dashboard',
 
-  mixins: [ metaTags ],
+  mixins: [ metaTags, fetchCollectionAndTmpl ],
 
   data () {
     return {
@@ -47,39 +50,45 @@ export default {
     }
   },
 
-  asyncData ({ app, params, error, store }) {
-    const endpoint = `/lc/templates/${params.id}/update`
-    return app.$axios.$get(endpoint).then(data => {
-      store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      return {
-        form: {
-          endpoint: endpoint,
-          method: 'post',
-          model: data.form,
-          schema: {
-            fields: []
-          }
-        }
-      }
-    }).catch(err => {
-      error(err)
-    })
-  },
-
   components: {
     CardBase,
     PybossaForm
   },
 
+  computed: {
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
+    currentTemplate () {
+      return this.$store.state.currentTemplate
+    },
+
+    form () {
+      return {
+        endpoint: '',
+        method: 'post',
+        model: this.currentTemplate,
+        schema: {
+          fields: []
+        }
+      }
+    }
+  },
+
   methods: {
     /**
-     * Update the current template on form submission success.
-     * @param {Object} data
-     *   The data returned from the form.
+     * Update the current template on form submission.
      */
-    onFormSuccess (data) {
-      this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', data.template)
-      this.$store.dispatch('UPDATE_N_PENDING_TEMPLATES', this.$axios)
+    onSubmit () {
+      const endpoint = `/api/category/${this.currentCollection.id}`
+      return this.$axios.$put(endpoint, {
+        info: this.currentCollection.info
+      }).then(data => {
+        this.$notifications.success({ message: 'Template updated' })
+      }).catch(err => {
+        this.$notifications.error({ message: err.messag })
+      })
     }
   }
 }

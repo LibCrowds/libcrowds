@@ -158,56 +158,26 @@ export default {
         ]
       }
 
-      // Templates admin
-      if (canBuild) {
-        items['Templates'] = [
-          {
-            label: 'New Template',
-            link: {
-              name: 'account-name-templates-new',
-              params: {
-                name: this.currentUser.name
-              }
-            }
-          },
-          {
-            label: 'Open Template',
-            link: {
-              name: 'account-name-templates',
-              params: {
-                name: this.currentUser.name
-              }
-            }
-          }
-        ]
-      }
-
-      // Collection admin
-      if (this.currentUser.admin) {
-        items['Collection Admin'] = [
-          {
-            label: 'New Collection',
-            link: {
-              name: 'admin-collection-new'
-            }
-          },
-          {
-            label: 'Open Collection',
-            link: {
-              name: 'admin-collection'
-            }
-          }
-        ]
-      }
-
       // Site/collection admin
       if (this.currentUser.admin) {
-        items['Site Admin'] = [
+        items['Admin'] = [
           {
             label: 'Dashboard',
             exact: true,
             link: {
               name: 'admin-site'
+            }
+          },
+          {
+            label: 'Project Templates',
+            link: {
+              name: 'admin-template'
+            }
+          },
+          {
+            label: 'Collections',
+            link: {
+              name: 'admin-collection'
             }
           },
           {
@@ -233,24 +203,10 @@ export default {
             link: {
               name: 'admin-site-jobs'
             }
-          },
-          {
-            label: 'Pending Templates',
-            link: {
-              name: 'admin-site-templates'
-            },
-            badge: {
-              variant: 'primary',
-              value: this.nPendingTemplates ? this.nPendingTemplates : null
-            }
           }
         ]
       }
       return items
-    },
-
-    nPendingTemplates () {
-      return this.$store.state.nPendingTemplates
     }
   },
 

@@ -25,9 +25,9 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'account-name-templates-id',
+            name: 'admin-template-short_name-id',
             params: {
-              name: currentUser.name,
+              short_name: currentCollection.short_name,
               id: tmpl.item.id
             }
           }">

@@ -1,16 +1,11 @@
 <template>
   <card-base :title="title" :description="description">
 
-    <b-btn
-      slot="controls"
-      variant="success"
-      class="float-md-right"
-      size="sm"
-      :to="{
-        name: 'admin-collection-new'
-      }">
-      New
-    </b-btn>
+    <p slot="guidance">
+      Each project template is associated with a particular collection
+      microsite. To create or update a template please begin by selecting a
+      collection microsite from the list below.
+    </p>
 
     <infinite-loading-table
       ref="table"
@@ -22,7 +17,7 @@
           size="sm"
           exact
           :to="{
-            name: 'admin-collection-short_name-details',
+            name: 'admin-template-short_name',
             params: {
               short_name: category.item.short_name
             }
@@ -41,14 +36,14 @@ import CardBase from '@/components/cards/Base'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 
 export default {
-  layout: 'admin-collection-dashboard',
+  layout: 'admin-template-dashboard',
 
   mixins: [ metaTags ],
 
   data () {
     return {
-      title: 'Open Collection',
-      description: 'Manage the collection microsites.',
+      title: 'Choose a Collection',
+      description: 'Manage the project templates for a collection.',
       tableFields: {
         name: {
           label: 'Name'
@@ -68,7 +63,7 @@ export default {
   },
 
   beforeMount () {
-    this.$store.dispatch('UPDATE_CURRENT_COLLECTION', {})
+    this.$store.dispatch('UPDATE_CURRENT_TEMPLATE', {})
   }
 }
 </script>

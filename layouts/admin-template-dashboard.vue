@@ -3,18 +3,6 @@
 
     <b-alert
       show
-      v-if="currentTemplate.pending"
-      variant="secondary"
-      slot="message"
-      class="text-center mb-0">
-      This template is currently pending approval.
-      <br>
-      It can still be updated and, if approved, any updates will be pushed out
-      to all projects using the template.
-    </b-alert>
-
-    <b-alert
-      show
       variant="secondary"
       slot="message"
       class="text-center mb-0"
@@ -22,9 +10,9 @@
       This template is incomplete,
       <nuxt-link
         :to="{
-          name: 'account-name-templates-id-task',
+          name: 'admin-template-short_name-id-task',
           params: {
-            name: currentUser.name,
+            short_name: currentCollection.short_name,
             id: currentTemplate.id
           }
         }">
@@ -41,7 +29,7 @@ import localConfig from '@/local.config'
 import DashboardBase from '@/layouts/bases/Dashboard'
 
 export default {
-  middleware: 'project-management',
+  middleware: 'is-admin',
 
   components: {
     DashboardBase
@@ -52,30 +40,33 @@ export default {
       return this.$store.state.currentTemplate
     },
 
+    currentCollection () {
+      return this.$store.state.currentCollection
+    },
+
     taskNotConfigured () {
-      const isTaskPage = this.$route.name === 'account-name-templates-id-task'
+      const isTaskPage = (
+        this.$route.name === 'admin-template-short_name-id-task'
+      )
       return (
+        !isEmpty(this.currentCollection) &&
         !isEmpty(this.currentTemplate) &&
         !this.currentTemplate.task &&
         !isTaskPage
       )
     },
 
-    currentUser () {
-      return this.$store.state.currentUser
-    },
-
     navItems () {
       const items = {}
-      if (!isEmpty(this.currentTemplate)) {
+      if (!isEmpty(this.currentTemplate) && !isEmpty(this.currentCollection)) {
         items[this.currentTemplate.name] = [
           {
             label: 'Core Details',
             exact: true,
             link: {
-              name: 'account-name-templates-id',
+              name: 'admin-template-short_name-id',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -83,9 +74,9 @@ export default {
           {
             label: 'Task',
             link: {
-              name: 'account-name-templates-id-task',
+              name: 'admin-template-short_name-id-task',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -93,9 +84,9 @@ export default {
           {
             label: 'Redundancy',
             link: {
-              name: 'account-name-templates-id-redundancy',
+              name: 'admin-template-short_name-id-redundancy',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -103,9 +94,9 @@ export default {
           {
             label: 'Parent',
             link: {
-              name: 'account-name-templates-id-parent',
+              name: 'admin-template-short_name-id-parent',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -113,9 +104,9 @@ export default {
           {
             label: 'Analysis',
             link: {
-              name: 'account-name-templates-id-analysis',
+              name: 'admin-template-short_name-id-analysis',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -123,9 +114,9 @@ export default {
           {
             label: 'Tutorial',
             link: {
-              name: 'account-name-templates-id-tutorial',
+              name: 'admin-template-short_name-id-tutorial',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }
@@ -133,9 +124,9 @@ export default {
           {
             label: 'Delete',
             link: {
-              name: 'account-name-templates-id-delete',
+              name: 'admin-template-short_name-id-delete',
               params: {
-                name: this.currentUser.name,
+                short_name: this.currentCollection.short_name,
                 id: this.currentTemplate.id
               }
             }

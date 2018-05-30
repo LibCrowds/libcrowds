@@ -187,7 +187,6 @@ export default {
         'task',
         'rules',
         'tutorial',
-        'pending',
         '_original',
         '_showDetails'
       ]
