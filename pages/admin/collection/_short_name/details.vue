@@ -4,7 +4,11 @@
     :description="description"
     docs="/collections/details/">
 
-    <div slot="controls" class="d-flex align-items-center float-md-right">
+    <div slot="controls"
+      class="d-flex align-items-center float-md-right"
+      v-b-tooltip
+      title="Publishing disabled until configuration complete"
+      :triggers="canPublish ? [] : ['hover']">
       <label class="mr-1 mb-0 toggle-label">
         <strong>Published</strong>
       </label>
@@ -13,6 +17,7 @@
           :value="currentCollection.info.published"
           :sync="true"
           :labels="true"
+          :disabled="!canPublish"
           class="mb-0"
           @change="togglePublished">
         </toggle-button>
@@ -143,6 +148,14 @@ export default {
           ]
         }
       }
+    },
+
+    canPublish () {
+      const info = this.currentCollection.info
+      if (!info.presenter) {
+        return false
+      }
+      return true
     }
   },
 

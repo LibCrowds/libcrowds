@@ -1,5 +1,26 @@
 <template>
   <dashboard-base :nav-items="navItems">
+
+    <b-alert
+      show
+      variant="secondary"
+      slot="message"
+      class="text-center"
+      v-if="missingPresenter">
+      The collection microsite cannot be published until the task presenter
+      has been configured; visit the
+      <nuxt-link
+        :to="{
+          name: 'admin-collection-short_name-presenter',
+          params: {
+            short_name: currentCollection.short_name
+          }
+        }">
+        Task Presenter settings
+      </nuxt-link>
+      page.
+    </b-alert>
+
   </dashboard-base>
 </template>
 
@@ -18,6 +39,16 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    missingPresenter () {
+      if (
+        !isEmpty(this.currentCollection) &&
+        !this.currentCollection.info.presenter
+      ) {
+        return true
+      }
+      return false
     },
 
     navItems () {
