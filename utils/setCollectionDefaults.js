@@ -42,7 +42,7 @@ export const setCollectionDefaults = function (collection) {
         'interest, then click on an item to view additional details and ' +
         'a link to the source.'
     },
-    pubished: false,
+    published: false,
     celebrations: {
       confetti: 'heart',
       user: '# Horay!\n\n' +
