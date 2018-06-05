@@ -92,7 +92,6 @@ export default {
     },
 
     extraTagLink () {
-      console.log(this.collection.info.presenter_options.extra_tag_link)
       return this.collection.info.presenter_options.extra_tag_link
     },
 
