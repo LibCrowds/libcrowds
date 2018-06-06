@@ -39,7 +39,7 @@
     "libcrowds-viewer": "^5.0.1",
     "lodash": "^4.17.4",
     "moment": "^2.19.1",
-    "nuxt": "1.4.0",
+    "nuxt": "1.4.1",
     "nuxt-flarum": "^1.1.6",
     "progressbar.js": "^1.0.1",
     "query-string": "^6.0.0",
