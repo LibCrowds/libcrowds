@@ -26,10 +26,6 @@ export default {
       const params = Object.assign({}, this.searchParams)
       params.offset = this.value.length
 
-      if (this.all) {
-        params.all = 1
-      }
-
       try {
         // Get the data
         let data = await this.$axios.$get(`/api/${this.domainObject}`, {
@@ -116,10 +112,6 @@ export default {
     noMoreResults: {
       type: String,
       default: 'No more results'
-    },
-    all: {
-      type: Boolean,
-      default: true
     }
   },
 
