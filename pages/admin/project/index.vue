@@ -10,41 +10,53 @@
       </b-form-input>
     </b-form>
 
-    <b-tabs card @input="onTabChange">
-      <b-tab
-        no-body
-        v-for="(collection, index) in collections"
-        :title="collection.name"
-        :key="collection.id">
+    <b-button-toolbar
+      key-nav
+      justify
+      :class="darkMode ? 'bg-dark border-bottom' : 'bg-light border-bottom'"
+      aria-label="Toolbar with button groups">
+      <b-input-group  size="sm" class="m-1" prepend="Collection">
+        <b-form-select
+          :options="collectionOptions"
+          v-model="collectionIdFilter"
+          class="pr-3">
+        </b-form-select>
+      </b-input-group>
+      <b-form-checkbox
+        class="d-flex align-items-center m-1"
+        v-model="showCompleted">
+        Show completed
+      </b-form-checkbox>
+    </b-button-toolbar>
 
-        <infinite-loading-table
-          :ref="`table-${index}`"
-          :fields="tableFields"
-          :filter="filter"
-          :filter-by="filterBy"
-          :search-params="{
-            category_id: collection.id,
-            stats: 1,
-            all: currentUser.admin
-          }"
-          domain-object="project">
-          <template slot="action" slot-scope="project">
-            <b-btn
-              variant="success"
-              size="sm"
-              :to="{
-                name: 'admin-project-short_name-details',
-                params: {
-                  short_name: project.item.short_name
-                }
-              }">
-              Open
-            </b-btn>
-          </template>
-        </infinite-loading-table>
-      </b-tab>
+    <infinite-loading-table
+      :fields="tableFields"
+      :filter="filter"
+      :filter-by="filterBy"
+      :search-params="{
+        category_id: collectionIdFilter && collectionIdFilter > 0
+          ? collectionIdFilter
+          : null,
+        published: collectionIdFilter !== 0,
+        stats: 1,
+        all: currentUser.admin ? 1 : 0
+      }"
+      domain-object="project">
+      <template slot="action" slot-scope="project">
+        <b-btn
+          variant="success"
+          size="sm"
+          :to="{
+            name: 'admin-project-short_name-details',
+            params: {
+              short_name: project.item.short_name
+            }
+          }">
+          Open
+        </b-btn>
+      </template>
+    </infinite-loading-table>
 
-    </b-tabs>
   </card-base>
 </template>
 
@@ -78,7 +90,9 @@ export default {
           label: 'Progress',
           class: 'text-center d-none d-lg-table-cell'
         }
-      }
+      },
+      collectionIdFilter: null,
+      showCompleted: false
     }
   },
 
@@ -88,30 +102,16 @@ export default {
   },
 
   computed: {
-    collections () {
-      const published = this.$store.state.publishedCollections
-      const collections = JSON.parse(JSON.stringify(published))
-      return collections
-    },
-
     currentUser () {
       return this.$store.state.currentUser
-    }
-  },
+    },
 
-  methods: {
-    /**
-     * Handle tab change.
-     * @param {Number} index
-     *   The tab index.
-     */
-    onTabChange (index) {
-      this.filter = null
-      let table = this.$refs[`table-${index}`]
-      if (Array.isArray(table)) {
-        table = table[0]
-      }
-      table.reset()
+    collectionOptions () {
+      const items = this.$store.state.publishedCollections.map(collection => {
+        return { text: collection.name, value: collection.id }
+      })
+      items.push({ text: 'Draft', value: 0 })
+      return items
     }
   },
 
