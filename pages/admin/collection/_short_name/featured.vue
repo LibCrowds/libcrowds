@@ -24,10 +24,15 @@
       to be constantly updated.
     </p>
 
-    <projects-table
+    <infinite-loading-table
       :filter="filter"
       :filter-by="filterBy"
-      :collection="collection">
+      :fields="projectTableFields"
+      :search-params="{
+        category_id: collection.id,
+        stats: 1
+      }"
+      domain-object="project">
       <template slot="action" slot-scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
@@ -36,7 +41,7 @@
           {{ getButtonText(project.item.featured) }}
         </b-btn>
       </template>
-    </projects-table>
+    </infinite-loading-table>
 
   </card-base>
 </template>
@@ -44,7 +49,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -58,12 +63,22 @@ export default {
       description: `Choose the projects that appear on the microsite's
         homepage.`,
       filter: null,
-      filterBy: 'name'
+      filterBy: 'name',
+      projectTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        'stats.overall_progress': {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell'
+        }
+      }
     }
   },
 
   components: {
-    ProjectsTable,
+    InfiniteLoadingTable,
     CardBase
   },
 

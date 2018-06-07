@@ -44,17 +44,22 @@
 
         <!-- Projects downloads tab -->
         <b-tab title="Projects" no-body>
-          <projects-table
+          <infinite-loading-table
             ref="projects-table"
             :filter="filter"
             :filter-by="filterBy"
-            :collection="currentCollection">
+            :fields="projectTableFields"
+            :search-params="{
+              category_id: currentCollection.id,
+              stats: 1
+            }"
+            domain-object="project">
             <template slot="action" slot-scope="project">
               <download-project-data
                 :project="project.item">
               </download-project-data>
             </template>
-          </projects-table>
+          </infinite-loading-table>
         </b-tab>
 
       </b-tabs>
@@ -69,7 +74,7 @@ import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { licenses } from '@/mixins/licenses'
 import SortProjectsData from '@/components/data/SortProjects'
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 import DownloadProjectData from '@/components/data/DownloadProjectData'
 import DownloadAnnotationData from '@/components/data/DownloadAnnotationData'
@@ -97,13 +102,23 @@ export default {
           label: 'Actions',
           class: 'text-center'
         }
+      },
+      projectTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        'stats.overall_progress': {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell'
+        }
       }
     }
   },
 
   components: {
     SortProjectsData,
-    ProjectsTable,
+    InfiniteLoadingTable,
     CardBase,
     DownloadProjectData,
     DownloadAnnotationData
@@ -153,7 +168,9 @@ export default {
       this.filter = null
       const table = this.$refs['projects-table']
       if (typeof table !== 'undefined') {
-        table.reset()
+        this.$nextTick(() => {
+          table.reset()
+        })
       }
     }
   },

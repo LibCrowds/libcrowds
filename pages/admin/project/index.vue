@@ -17,15 +17,15 @@
         :title="collection.name"
         :key="collection.id">
 
-        <!-- Don't use project-table as we need access to owner details -->
         <infinite-loading-table
           :ref="`table-${index}`"
-          :all="currentUser.admin"
           :fields="tableFields"
           :filter="filter"
           :filter-by="filterBy"
           :search-params="{
-            category_id: collection.id
+            category_id: collection.id,
+            stats: 1,
+            all: currentUser.admin
           }"
           domain-object="project">
           <template slot="action" slot-scope="project">
@@ -44,38 +44,6 @@
         </infinite-loading-table>
       </b-tab>
 
-      <!-- Draft projects -->
-      <b-tab
-        no-body
-        title="Draft"
-        key="draft">
-        <projects-table
-          :ref="`table-${collections.length}`"
-          :fields="draftTableFields"
-          :filter="filter"
-          :filter-by="filterBy"
-          :collection="{
-            id: 'draft',
-            name: 'Draft',
-            short_name: 'draft'
-          }">
-          <template slot="action" slot-scope="project">
-            <b-btn
-              :disabled="!currentUser.admin"
-              variant="success"
-              size="sm"
-              :to="{
-                name: 'admin-project-short_name-details',
-                params: {
-                  short_name: project.item.short_name
-                }
-              }">
-              Open
-            </b-btn>
-          </template>
-        </projects-table>
-      </b-tab>
-
     </b-tabs>
   </card-base>
 </template>
@@ -83,7 +51,6 @@
 <script>
 import { metaTags } from '@/mixins/metaTags'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
-import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -101,22 +68,15 @@ export default {
         name: {
           label: 'Name',
           sortable: true
-        }
-      },
-      draftTableFields: {
-        name: {
-          label: 'Name',
-          sortable: true
-        },
-        owner: {
-          label: 'Owner',
-          class: 'text-center',
-          sortable: true
         },
         created: {
           label: 'Created',
-          class: 'text-center',
+          class: 'text-center d-none d-lg-table-cell',
           sortable: true
+        },
+        'stats.overall_progress': {
+          label: 'Progress',
+          class: 'text-center d-none d-lg-table-cell'
         }
       }
     }
@@ -124,8 +84,7 @@ export default {
 
   components: {
     InfiniteLoadingTable,
-    CardBase,
-    ProjectsTable
+    CardBase
   },
 
   computed: {
