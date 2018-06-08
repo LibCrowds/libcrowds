@@ -55,9 +55,7 @@ export default {
   data () {
     return {
       title: 'Template',
-      description: 'Choose the template associated with this project.',
-      filter: null,
-      filterBy: 'name'
+      description: 'Choose the template associated with this project.'
     }
   },
 

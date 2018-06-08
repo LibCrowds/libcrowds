@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import uniqBy from 'lodash/uniqBy'
+
 export default {
   methods: {
     /**
@@ -25,31 +27,32 @@ export default {
     async infiniteLoadDomainObjects ($state) {
       const params = Object.assign({}, this.searchParams)
       params.offset = this.value.length
+      let data = null
 
       try {
-        // Get the data
-        let data = await this.$axios.$get(`/api/${this.domainObject}`, {
+        data = await this.$axios.$get(`/api/${this.domainObject}`, {
           params: params
         })
-
-        // Loading complete
-        if (!data.length) {
-          $state.complete()
-          this.$emit('complete')
-          return
-        }
-
-        // Add the _showDetails flag
-        data = data.map(item => {
-          item._showDetails = false
-          return item
-        })
-
-        this.$emit('input', this.value.concat(data))
-        $state.loaded()
       } catch (err) {
         this.$nuxt.error(err)
       }
+
+      // Loading complete
+      if (!data.length) {
+        $state.complete()
+        this.$emit('complete')
+        return
+      }
+
+      // Add the _showDetails flag
+      data = data.map(item => {
+        item._showDetails = false
+        return item
+      })
+
+      // Load unique by ID, in case multiple loads were running asynchronously
+      this.$emit('input', uniqBy(this.value.concat(data), 'id'))
+      $state.loaded()
     },
 
     /**
@@ -60,17 +63,6 @@ export default {
       this.$nextTick(() => {
         this.page = 1
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-      })
-    },
-
-    /**
-     * Trigger a manual load.
-     */
-    load () {
-      this.$nextTick(() => {
-        if (!this.$refs.infiniteload.isLoading) {
-          this.$refs.infiniteload.attemptLoad()
-        }
       })
     }
   },

@@ -6,10 +6,10 @@
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
-        v-model="filter"
+        v-model="searchString"
         class="search-control"
         size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
+        :placeholder="`Type to search by ${searchKeys.join(', ')}`">
       </b-form-input>
     </b-form>
 
@@ -22,8 +22,8 @@
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
-      :filter="filter"
-      :filter-by="filterBy"
+      :search-string="searchString"
+      :search-keys="searchKeys"
       domain-object="category">
       <template slot="action" slot-scope="collection">
         <b-btn
@@ -68,9 +68,9 @@ export default {
         }
       },
       searchParams: {},
-      updatedCollectionId: null,
-      filter: null,
-      filterBy: 'name'
+      searchString: null,
+      searchKeys: ['name'],
+      updatedCollectionId: null
     }
   },
 

@@ -6,10 +6,10 @@
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
-        v-model="filter"
+        v-model="searchString"
         class="search-control"
         size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
+        :placeholder="`Type to search by ${searchKeys.join(', ')}`">
       </b-form-input>
     </b-form>
 
@@ -25,12 +25,13 @@
     </p>
 
     <infinite-loading-table
-      :filter="filter"
-      :filter-by="filterBy"
       :fields="projectTableFields"
+      :search-string="searchString"
+      :search-keys="searchKeys"
       :search-params="{
         category_id: collection.id,
-        stats: 1
+        stats: 1,
+        all: 1
       }"
       domain-object="project">
       <template slot="action" slot-scope="project">
@@ -62,8 +63,8 @@ export default {
       title: 'Featured',
       description: `Choose the projects that appear on the microsite's
         homepage.`,
-      filter: null,
-      filterBy: 'name',
+      searchString: null,
+      searchKeys: ['name'],
       projectTableFields: {
         name: {
           label: 'Name',

@@ -35,9 +35,7 @@ export default {
   data () {
     return {
       title: 'Webhooks',
-      description: `Manage the project's webhooks.`,
-      filter: null,
-      filterBy: 'name'
+      description: `Manage the project's webhooks.`
     }
   },
 

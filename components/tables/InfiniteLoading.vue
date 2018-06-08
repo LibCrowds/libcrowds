@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
+import Fuse from 'fuse.js'
 import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 
 export default {
@@ -64,13 +64,13 @@ export default {
       type: Object,
       default: () => ({})
     },
-    filter: {
+    searchString: {
       type: String,
-      default: null
+      default: ''
     },
-    filterBy: {
-      type: String,
-      default: null
+    searchKeys: {
+      type: Array,
+      default: () => ([])
     },
     fields: {
       type: Object,
@@ -95,25 +95,42 @@ export default {
     },
 
     mergedParams () {
-      return merge({}, this.searchParams, this.sortParams)
+      const params = JSON.parse(JSON.stringify(this.searchParams))
+      return Object.assign({}, params, this.sortParams)
+    },
+
+    // http://fusejs.io/
+    fuse () {
+      return new Fuse(this.items, {
+        shouldSort: true,
+        tokenize: true,
+        matchAllTokens: true,
+        findAllMatches: true,
+        threshold: 0,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: this.searchKeys
+      })
     },
 
     filteredItems () {
-      if (!this.filter || !this.filterBy) {
-        return this.items
+      if (
+        this.searchKeys &&
+        this.searchString &&
+        this.searchKeys.length &&
+        this.searchString.length
+      ) {
+        return this.fuse.search(this.searchString)
       }
-
-      return this.items.filter(item => {
-        const value = this.filter.toUpperCase()
-        const cell = item[this.filterBy]
-        return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
-      })
+      return this.items
     }
   },
 
   methods: {
     /**
-     * Handle sort change.
+     * Handle table sort change.
      */
     onSortChange (value) {
       this.sortParams = {
@@ -127,14 +144,6 @@ export default {
      */
     reset () {
       this.$refs.infiniteload.reset()
-    }
-  },
-
-  watch: {
-    filteredItems (val) {
-      if (val.length !== this.items.length) {
-        this.$refs.infiniteload.load()
-      }
     }
   }
 }

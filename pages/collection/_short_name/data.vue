@@ -15,10 +15,10 @@
 
       <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
         <b-form-input
-          v-model="filter"
+          v-model="searchString"
           class="search-control"
           size="sm"
-          :placeholder="`Type to search by ${filterBy}`">
+          :placeholder="`Type to search by ${searchKeys.join(', ')}`">
         </b-form-input>
       </b-form>
 
@@ -46,12 +46,13 @@
         <b-tab title="Projects" no-body>
           <infinite-loading-table
             ref="projects-table"
-            :filter="filter"
-            :filter-by="filterBy"
+            :search-string="searchString"
+            :search-keys="searchKeys"
             :fields="projectTableFields"
             :search-params="{
               category_id: currentCollection.id,
-              stats: 1
+              stats: 1,
+              all: 1
             }"
             domain-object="project">
             <template slot="action" slot-scope="project">
@@ -91,8 +92,8 @@ export default {
   data () {
     return {
       title: 'Data',
-      filter: null,
-      filterBy: 'name',
+      searchString: null,
+      searchKeys: ['name'],
       annotationTableFields: {
         scope: {
           label: 'Scope',

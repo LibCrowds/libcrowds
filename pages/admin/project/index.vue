@@ -3,11 +3,11 @@
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
-        v-model="filter"
-        class="search-control"
-        size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
-      </b-form-input>
+          v-model="searchString"
+          class="search-control"
+          size="sm"
+          :placeholder="`Type to search by ${searchKeys.join(', ')}`">
+        </b-form-input>
     </b-form>
 
     <b-button-toolbar
@@ -30,8 +30,8 @@
 
     <infinite-loading-table
       :fields="tableFields"
-      :filter="filter"
-      :filter-by="filterBy"
+      :search-string="searchString"
+      :search-keys="searchKeys"
       :search-params="{
         category_id: collectionIdFilter && collectionIdFilter > 0
           ? collectionIdFilter
@@ -73,8 +73,8 @@ export default {
     return {
       title: 'Open Project',
       description: 'Manage your projects',
-      filter: null,
-      filterBy: 'name',
+      searchString: null,
+      searchKeys: ['name'],
       tableFields: {
         name: {
           label: 'Name',

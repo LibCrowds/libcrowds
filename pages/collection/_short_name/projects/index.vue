@@ -109,8 +109,8 @@ export default {
     return {
       title: 'Take Part',
       projects: [],
-      filter: null,
-      filterBy: 'name',
+      searchString: null,
+      searchKeys: ['name'],
       filterModel: {},
       projectLoadingComplete: false,
       tableFields: {
