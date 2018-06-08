@@ -13,8 +13,7 @@
     <b-button-toolbar
       key-nav
       justify
-      :class="darkMode ? 'bg-dark border-bottom' : 'bg-light border-bottom'"
-      aria-label="Toolbar with button groups">
+      :class="darkMode ? 'bg-dark border-bottom' : 'bg-light border-bottom'">
       <b-input-group  size="sm" class="m-1" prepend="Collection">
         <b-form-select
           :options="collectionOptions"
