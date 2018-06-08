@@ -21,11 +21,6 @@
           class="pr-3">
         </b-form-select>
       </b-input-group>
-      <b-form-checkbox
-        class="d-flex align-items-center m-1"
-        v-model="showCompleted">
-        Show completed
-      </b-form-checkbox>
     </b-button-toolbar>
 
     <infinite-loading-table
@@ -90,8 +85,7 @@ export default {
           class: 'text-center d-none d-lg-table-cell'
         }
       },
-      collectionIdFilter: null,
-      showCompleted: false
+      collectionIdFilter: null
     }
   },
 
