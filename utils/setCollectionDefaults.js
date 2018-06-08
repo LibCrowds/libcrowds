@@ -1,5 +1,4 @@
 import localConfig from '@/local.config'
-import merge from 'lodash/merge'
 
 /**
  * Set the info field defaults for a collection.
@@ -60,7 +59,7 @@ export const setCollectionDefaults = function (collection) {
     project_filters: [],
     forum: {}
   }
-  collection.info = merge(defaults, collection.info)
+  collection.info = Object.assign(defaults, collection.info)
 
   // Ensure project_filters is an array
   if (!Array.isArray(collection.info.project_filters)) {
