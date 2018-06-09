@@ -108,10 +108,8 @@ export default {
 
   computed: {
     mergedFields () {
-      const fields = Object.assign(
-        JSON.parse(JSON.stringify(this.defaultFields),
-        this.extraFields)
-      )
+      const defaultsCopy = JSON.parse(JSON.stringify(this.defaultFields))
+      const fields = Object.assign(defaultsCopy, this.extraFields)
       if (this.showDetails) {
         fields.n_ongoing_projects = {
           label: 'Ongoing Projects',
