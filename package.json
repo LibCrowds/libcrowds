@@ -51,7 +51,7 @@
     "vue-awesome": "^2.3.3",
     "vue-chartist": "^2.1.1",
     "vue-clickaway": "^2.1.0",
-    "vue-confetti": "^0.3.3",
+    "vue-confetti": "^0.4.0",
     "vue-form-generator": "^2.1.1",
     "vue-gravatar": "^1.1.4",
     "vue-infinite-loading": "^2.2.1",
