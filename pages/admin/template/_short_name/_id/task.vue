@@ -86,48 +86,6 @@
           </template>
         </b-table>
       </div>
-
-      <div v-if="showInstitutionCodesInput" slot="bottom">
-        <b-form-group label="Institution Codes">
-          <b-input-group class="mt-1">
-            <b-form-input
-              ref="institution-code-input"
-              placeholder="Enter a MARC institution code">
-            </b-form-input>
-            <b-input-group-append>
-              <b-btn
-                variant="success"
-                @click="addInstitutionCode">
-                Add
-              </b-btn>
-            </b-input-group-append>
-          </b-input-group>
-          <div slot="description">
-            The institutions that you trust to have created or transcribed
-            quality records. The search results will be limited to those with
-            one of the given institution codes in MARC fields 040$a or 040$c.
-          </div>
-        </b-form-group>
-        <b-table
-          responsive
-          striped
-          hover
-          outlined
-          show-empty
-          empty-text="Add instutution codes using the input field below"
-          :dark="darkMode"
-          :items="institutionCodeTableItems"
-          :fields="institutionTableFields">
-          <template slot="actions" slot-scope="institution">
-            <b-btn
-              variant="warning"
-              size="sm"
-              @click="removeInstitutionCode(institution.item.code)">
-              Remove
-            </b-btn>
-          </template>
-        </b-table>
-      </div>
     </pybossa-form>
 
     <add-form-field-modal
@@ -174,15 +132,6 @@ export default {
         type: {
           label: 'Type',
           class: 'text-center'
-        },
-        actions: {
-          label: 'Actions',
-          class: 'text-center'
-        }
-      },
-      institutionTableFields: {
-        code: {
-          label: 'Code'
         },
         actions: {
           label: 'Actions',
@@ -302,6 +251,15 @@ export default {
               return { id: db, name: db }
             }),
             hint: 'The Z39.50 database that to search for matching records.'
+          },
+          {
+            model: 'institutions',
+            label: 'Institution Codes',
+            type: 'array',
+            hint: 'The institutions that you trust to have created or ' +
+              'transcribed quality records. The search results will be ' +
+              'limited to those with one of the given institution codes in ' +
+              'MARC fields 040$a or 040$c.'
           }
         ]
       }
@@ -327,20 +285,6 @@ export default {
         this.currentCollection.info.presenter === 'iiif-annotation' &&
         this.form.model.mode === 'transcribe'
       )
-    },
-
-    showInstitutionCodesInput () {
-      return this.currentCollection.info.presenter === 'z3950'
-    },
-
-    showRejectionReasons () {
-      return this.currentCollection.info.presenter === 'iiif-annotation'
-    },
-
-    institutionCodeTableItems () {
-      return this.form.model.institutions.map(item => {
-        return { code: item }
-      })
     }
   },
 
@@ -414,36 +358,6 @@ export default {
      */
     isLast (arr, elem) {
       return arr.indexOf(elem) === arr.length - 1
-    },
-
-    /**
-     * Remove an institution code.
-     * @param {String} code
-     *  The array.
-     */
-    removeInstitutionCode (code) {
-      const clone = JSON.parse(JSON.stringify(this.form.model.institutions))
-      this.form.model.institutions = clone.filter(inst => {
-        return code !== inst
-      })
-    },
-
-    /**
-     * Add an institution code.
-     */
-    addInstitutionCode () {
-      const elem = this.$refs['institution-code-input'].$el
-      const codes = this.form.model.institutions
-      if (elem.value.length && codes.indexOf(elem.value) < 0) {
-        this.form.model.institutions.push(elem.value)
-        elem.value = ''
-        elem.focus()
-      } else if (codes.indexOf(elem.value) > -1) {
-        this.$notifications.flash({
-          'status': 'warning',
-          'flash': 'That code already exists'
-        })
-      }
     },
 
     /**
