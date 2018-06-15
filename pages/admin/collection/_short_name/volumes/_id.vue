@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import VueFormGenerator from 'vue-form-generator'
 import localConfig from '@/local.config'
 import { metaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
