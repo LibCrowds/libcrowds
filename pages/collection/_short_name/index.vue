@@ -145,37 +145,27 @@
               </p>
               <ul v-else>
                 <li
-                  v-for="item in activityFeed"
-                  :key="item.id"
+                  v-for="(item, index) in activityFeed"
+                  :key="index"
                   class="list-unstyled">
                   <h6 class="mb-0">
+                    {{ item.name }} contributed to
                     <nuxt-link
                       :to="{
                         name: 'collection-short_name-projects-id',
                         params: {
                           short_name: collection.short_name,
-                          id: item.projectShortName
+                          id: item.project_id
                         }
                       }">
-                      {{ item.projectName }}
+                      {{ item.project_name }}
                     </nuxt-link>
                   </h6>
-                  <p class="text-muted mb-0">
-                    <small>
-                      Last activity:
+                  <p class="text-muted mt-0 mb-1">
+                    <small class="text-muted">
                       {{ item.updated | moment('calendar') }}
                     </small>
                   </p>
-                  <ul class="list-inline text-muted mb-1">
-                    <li class="list-inline-item my-1">
-                      <small class="d-flex align-items-center">
-                        <icon name="users" class="mr-1"></icon>
-                        Join
-                        {{ item.participantsCount }}
-                        volunteers
-                      </small>
-                    </li>
-                  </ul>
                 </li>
               </ul>
             </span>
@@ -310,8 +300,6 @@
 import find from 'lodash/find'
 import sortBy from 'lodash/sortBy'
 import uniqBy from 'lodash/uniqBy'
-import maxBy from 'lodash/maxBy'
-import groupBy from 'lodash/groupBy'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/comment'
@@ -455,26 +443,16 @@ export default {
      */
     loadActivityFeed () {
       this.$axios.$get('/account').then(data => {
-        const contributions = data.update_feed.map(item => {
+        this.activityFeed = data.update_feed.map(item => {
           // Convert UNIX timestamps
           item.updated = new Date(item.updated * 1000)
           return item
         }).filter(item => {
-          return item.action_updated === 'UserContribution'
+          return (
+            item.action_updated === 'UserContribution' &&
+            item.category_id === this.collection.id
+          )
         }).slice(0, 5)
-
-        // Group by project
-        const groups = groupBy(contributions, item => item.project_name)
-
-        // Collate summaries for each project
-        this.activityFeed = Object.values(groups).map(group => {
-          return {
-            projectName: group[0].project_name,
-            projectShortName: group[0].project_short_name,
-            updated: maxBy(group, 'updated').updated,
-            participantsCount: uniqBy(group, 'name').length
-          }
-        })
       }).catch(err => {
         this.$notifications.flash({
           status: 'error',
