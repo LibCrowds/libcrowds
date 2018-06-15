@@ -179,8 +179,8 @@
               </b-btn>
               <b-btn
                 variant="dark"
-                @click="onSkip">
-                Skip / Not Found
+                @click="$emit('reject')">
+                {{ rejectButtonText }}
               </b-btn>
               <b-btn
                 v-if="stage !== 'results'"
@@ -324,6 +324,13 @@ export default {
 
     shareText () {
       return marked(this.collection.info.presenter_options.share_text)
+    },
+
+    rejectButtonText () {
+      const customText = this.collection.info.presenter_options.reject_button
+      return typeof customText === 'undefined'
+        ? 'Skip / Not Found'
+        : marked(customText)
     },
 
     noteButtonText () {
