@@ -38,6 +38,7 @@
       submit-text="Update"
       :form="form"
       @submit="onSubmit">
+
       <div v-if="showFieldsSchemaInput" slot="bottom">
         <div class="d-flex align-items-center justify-content-between my-1">
           <b-form-group label="Fields Schema">
@@ -140,6 +141,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/arrow-up'
 import 'vue-awesome/icons/arrow-down'
 import VueFormGenerator from 'vue-form-generator'
@@ -282,6 +284,13 @@ export default {
             },
             hint: 'Select mode is used to mark up areas of an image, ' +
               'whereas Transcribe mode is used to transcribe specified fields.'
+          },
+          {
+            model: 'rejection',
+            label: 'Reasons for Rejection',
+            type: 'array',
+            hint: 'These reasons will be added to a dropdown list from ' +
+              'which volunteers can specify why a task is invalid.'
           }
         ],
         'z3950': [
@@ -324,6 +333,10 @@ export default {
       return this.currentCollection.info.presenter === 'z3950'
     },
 
+    showRejectionReasons () {
+      return this.currentCollection.info.presenter === 'iiif-annotation'
+    },
+
     institutionCodeTableItems () {
       return this.form.model.institutions.map(item => {
         return { code: item }
@@ -362,11 +375,9 @@ export default {
      */
     moveItemUp (arr, elem) {
       const idx = arr.indexOf(elem)
-      const clonedArray = JSON.parse(JSON.stringify(arr))
       if (idx > 0) {
-        clonedArray[idx] = clonedArray.splice(idx - 1, 1, clonedArray[idx])[0]
+        arr.splice(idx - 1, 0, arr.splice(idx, 1)[0])
       }
-      this.form.model.fields_schema = clonedArray
     },
 
     /**
@@ -378,11 +389,9 @@ export default {
      */
     moveItemDown (arr, elem) {
       const idx = arr.indexOf(elem)
-      const clonedArray = JSON.parse(JSON.stringify(arr))
-      if (idx < clonedArray.length) {
-        clonedArray[idx] = clonedArray.splice(idx + 1, 1, clonedArray[idx])[0]
+      if (idx < arr.length) {
+        arr.splice(idx + 1, 0, arr.splice(idx, 1)[0])
       }
-      this.form.model.fields_schema = clonedArray
     },
 
     /**
