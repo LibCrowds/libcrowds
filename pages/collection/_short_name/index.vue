@@ -152,10 +152,11 @@
                     {{ item.name }} contributed to
                     <nuxt-link
                       :to="{
-                        name: 'collection-short_name-projects-id',
+                        name: 'collection-short_name-projects-id-presenter',
                         params: {
                           short_name: collection.short_name,
-                          id: item.project_id
+                          id: item.project_id,
+                          presenter: collection.info.presenter
                         }
                       }">
                       {{ item.project_name }}
