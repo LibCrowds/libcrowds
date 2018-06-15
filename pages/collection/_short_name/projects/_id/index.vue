@@ -13,7 +13,7 @@ export default {
     }
   },
 
-  beforeCreate () {
+  beforeMount () {
     const projectId = this.$route.params.id
     if (!this.collection.info.presenter) {
       this.$router.push({
