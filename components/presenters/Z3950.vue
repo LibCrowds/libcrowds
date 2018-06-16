@@ -179,8 +179,8 @@
               </b-btn>
               <b-btn
                 variant="dark"
-                @click="$emit('reject')">
-                {{ rejectButtonText }}
+                @click="$emit('reject')"
+                v-html="rejectButtonText">
               </b-btn>
               <b-btn
                 v-if="stage !== 'results'"
