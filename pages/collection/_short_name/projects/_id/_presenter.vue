@@ -240,7 +240,7 @@
       <b-container class="py-2">
         <span v-html="rejectModalText"></span>
         <b-form-select
-          :value="null"
+          v-model="rejectedReason"
           :options="rejectOptions">
         </b-form-select>
       </b-container>
@@ -385,19 +385,20 @@ export default {
     },
 
     rejectOptions () {
-      const defaults = [{
+      let opts = [{
         value: 'invalid-task',
         text: 'Invalid Task'
       }]
       if (Array.isArray(this.currentTemplate.task.rejection)) {
-        return defaults.join(this.currentTemplate.task.rejection.map(item => {
+        opts = this.currentTemplate.task.rejection.map(item => {
           return {
             value: item.replace(/\s+/g, '-').toLowerCase(),
             text: item
           }
-        }))
+        })
       }
-      return defaults
+      this.rejectedReason = opts[0]['value']
+      return opts
     },
 
     darkPresenterModals () {
