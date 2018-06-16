@@ -6,22 +6,25 @@
       <b-col>
         <b-btn-group>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('help')">
-            <icon name="question-circle"></icon>
+            <icon name="question-circle" class="mr-1"></icon>
+            <small>Help</small>
           </b-btn>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('share')">
-            <icon name="share-alt"></icon>
+            <icon name="share-alt" class="mr-1"></icon>
+            <small>Share</small>
           </b-btn>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('tags')">
-            <icon name="tags"></icon>
+            <icon name="tags" class="mr-1"></icon>
+            <small>Add Tags</small>
           </b-btn>
         </b-btn-group>
       </b-col>
