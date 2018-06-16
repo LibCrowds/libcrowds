@@ -530,7 +530,6 @@ export default {
           this.submit({
             control_number: '',
             reference: '',
-            form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
         }
