@@ -8,11 +8,8 @@ node_js:
 before_install:
 # Remove the line below once node 9 moves to LTS (and npm 5 is standard)
 - npm install -g npm@5
-- npm install -g greenkeeper-lockfile@1
 install:
 - npm install
-before_script:
-- greenkeeper-lockfile-update
 script:
 - cp local.config.js.tmpl local.config.js
 - npm run build

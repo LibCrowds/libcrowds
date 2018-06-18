@@ -6,22 +6,25 @@
       <b-col>
         <b-btn-group>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('help')">
-            <icon name="question-circle"></icon>
+            <icon name="question-circle" class="mr-1"></icon>
+            <small>Help</small>
           </b-btn>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('share')">
-            <icon name="share-alt"></icon>
+            <icon name="share-alt" class="mr-1"></icon>
+            <small>Share</small>
           </b-btn>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('tags')">
-            <icon name="tags"></icon>
+            <icon name="tags" class="mr-1"></icon>
+            <small>Add Tags</small>
           </b-btn>
         </b-btn-group>
       </b-col>
@@ -179,8 +182,8 @@
               </b-btn>
               <b-btn
                 variant="dark"
-                @click="onSkip">
-                Skip / Not Found
+                @click="$emit('reject')"
+                v-html="rejectButtonText">
               </b-btn>
               <b-btn
                 v-if="stage !== 'results'"
@@ -324,6 +327,13 @@ export default {
 
     shareText () {
       return marked(this.collection.info.presenter_options.share_text)
+    },
+
+    rejectButtonText () {
+      const customText = this.collection.info.presenter_options.reject_button
+      return typeof customText === 'undefined'
+        ? 'Skip / Not Found'
+        : marked(customText)
     },
 
     noteButtonText () {
@@ -523,7 +533,6 @@ export default {
           this.submit({
             control_number: '',
             reference: '',
-            form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
         }

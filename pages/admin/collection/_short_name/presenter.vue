@@ -27,6 +27,19 @@
           The text to be used for the share modal, above the URL field.
         </div>
       </div>
+      <div class="form-group" slot="bottom">
+        <label class="ml-0">
+          Reject text
+        </label>
+        <markdown-editor
+          v-model="currentCollection.info.presenter_options.reject_text"
+          data-size="sm"
+          :configs="markdownConfig">
+        </markdown-editor>
+        <div class="hint">
+          The text to be used for the reject modal, above the options input.
+        </div>
+      </div>
     </pybossa-form>
 
   </card-base>
@@ -119,6 +132,13 @@ export default {
               type: 'input',
               inputType: 'text',
               hint: 'The text to be used for the submit button.'
+            },
+            {
+              model: 'info.presenter_options.reject_button',
+              label: 'Reject button',
+              type: 'input',
+              inputType: 'text',
+              hint: 'The text to be used for the reject button.'
             },
             {
               model: 'info.presenter_options.extra_tag_link',

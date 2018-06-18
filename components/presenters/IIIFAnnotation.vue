@@ -13,14 +13,23 @@
       disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
-      <b-btn
-        v-if="extraTagLink.length"
-        slot="footer"
-        size="sm"
-        variant="link"
-        @click="$emit('tags')">
-        {{ extraTagLink }}
-      </b-btn>
+      <b-btn-group slot="footer" class="mb-1 d-flex">
+        <b-btn
+          v-if="extraTagLink.length"
+          class="m-0"
+          size="sm"
+          variant="link"
+          @click="$emit('tags')">
+          {{ extraTagLink }}
+        </b-btn>
+        <b-btn
+          size="sm"
+          class="m-0"
+          variant="link"
+          @click="$emit('reject')">
+          {{ rejectButtonText }}
+        </b-btn>
+      </b-btn-group>
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
@@ -93,6 +102,13 @@ export default {
 
     extraTagLink () {
       return this.collection.info.presenter_options.extra_tag_link
+    },
+
+    rejectButtonText () {
+      const customText = this.collection.info.presenter_options.reject_button
+      return typeof customText === 'undefined'
+        ? 'Reject'
+        : marked(customText)
     },
 
     toolbarButtons () {

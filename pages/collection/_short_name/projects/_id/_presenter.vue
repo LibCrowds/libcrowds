@@ -13,7 +13,8 @@
       @info="showModal('info')"
       @share="showModal('share')"
       @tags="showModal('tags')"
-      @submit="onSubmit">
+      @reject="showModal('reject')"
+      @submit="submit">
     </component>
 
     <!-- Tutorial modal -->
@@ -50,7 +51,7 @@
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null">
       <b-container :id="shareModalId" class="py-2">
-        <span v-html="shareText"></span>
+        <span v-html="shareModalText"></span>
         <b-input-group-append class="mb-2 d-flex">
           <b-form-input
             id="share-input"
@@ -205,7 +206,7 @@
           :container-iri="currentCollection.info.annotations.tags"
           :source-iri="task.info.url"
           :scope-iri="task.info.manifest"
-          type="Image">  <!-- TODO: Replace with content check -->
+          type="Image">
         </select-tags>
       </b-container>
       <b-container class="py-2 px-3" v-else>
@@ -217,8 +218,31 @@
           To help resolve this, please let us know by contacting
           <a :href="`mailto:${localConfig.email}`">
             {{ localConfig.email }}
-          </a>.
+          </a>
         </p>
+      </b-container>
+    </b-modal>
+
+    <!-- Reject model -->
+    <b-modal
+      lazy
+      v-if="task"
+      ref="reject"
+      title="Reject"
+      size="lg"
+      @ok="reject"
+      :header-text-variant="darkPresenterModals ? 'white' : null"
+      :header-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-bg-variant="darkPresenterModals ? 'dark' : null"
+      :body-text-variant="darkPresenterModals ? 'white' : null"
+      :footer-bg-variant="darkPresenterModals ? 'dark' : null"
+      :footer-text-variant="darkPresenterModals ? 'white' : null">
+      <b-container class="py-2">
+        <span v-html="rejectModalText"></span>
+        <b-form-select
+          v-model="rejectedReason"
+          :options="rejectOptions">
+        </b-form-select>
       </b-container>
     </b-modal>
 
@@ -267,7 +291,8 @@ export default {
       foundTags: [],
       selectedTags: [],
       tutorialShown: false,
-      localConfig: localConfig
+      localConfig: localConfig,
+      rejectedReason: null
     }
   },
 
@@ -348,8 +373,32 @@ export default {
       return this.$store.state.currentUser
     },
 
-    shareText () {
+    shareModalText () {
       return marked(this.currentCollection.info.presenter_options.share_text)
+    },
+
+    rejectModalText () {
+      const text = this.currentCollection.info.presenter_options.reject_text
+      if (typeof text !== 'undefined') {
+        return marked(text)
+      }
+    },
+
+    rejectOptions () {
+      let opts = [{
+        value: 'invalid-task',
+        text: 'Invalid Task'
+      }]
+      if (Array.isArray(this.currentTemplate.task.reject)) {
+        opts = this.currentTemplate.task.reject.map(item => {
+          return {
+            value: item.replace(/\s+/g, '-').toLowerCase(),
+            text: item
+          }
+        })
+      }
+      this.rejectedReason = opts[0]['value']
+      return opts
     },
 
     darkPresenterModals () {
@@ -474,7 +523,7 @@ export default {
     },
 
     /**
-     * Handle the submit event.
+     * Submit the task.
      * @param {String|Number} projectId
      *   The project ID.
      * @param {String|Number} taskId
@@ -482,7 +531,7 @@ export default {
      * @param {Object} answer
      *   The answer data.
      */
-    onSubmit (projectId, taskId, answer) {
+    submit (projectId, taskId, answer) {
       const taskrun = JSON.stringify({
         'project_id': projectId,
         'task_id': taskId,
@@ -501,6 +550,15 @@ export default {
         }
       }).catch(err => {
         this.$nuxt.error(err)
+      })
+    },
+
+    /**
+     * Reject the task.
+     */
+    reject () {
+      this.submit(this.currentProject.id, this.task.id, {
+        reject: this.rejectedReason
       })
     },
 
