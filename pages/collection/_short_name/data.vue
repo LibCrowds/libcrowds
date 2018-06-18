@@ -63,6 +63,27 @@
           </infinite-loading-table>
         </b-tab>
 
+        <!-- Reports tab -->
+        <b-tab title="Reports" no-body active>
+          <b-table
+            responsive
+            striped
+            hover
+            show-empty
+            :dark="darkMode"
+            :items="reportsTableItems"
+            :fields="reportsTableFields">
+            <template slot="action" slot-scope="row">
+              <b-btn
+                size="sm"
+                variant="success"
+                @click="reportProgress">
+                Progress Report
+              </b-btn>
+            </template>
+          </b-table>
+        </b-tab>
+
       </b-tabs>
     </card-base>
   </div>
@@ -74,6 +95,7 @@ import capitalize from 'capitalize'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { licenses } from '@/mixins/licenses'
+import { exportFile } from '@/mixins/exportFile'
 import SortProjectsData from '@/components/data/SortProjects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
@@ -86,7 +108,8 @@ export default {
   mixins: [
     fetchCollectionByName,
     licenses,
-    collectionMetaTags
+    collectionMetaTags,
+    exportFile
   ],
 
   data () {
@@ -113,7 +136,20 @@ export default {
           label: 'Progress',
           class: 'text-center d-none d-md-table-cell'
         }
-      }
+      },
+      reportsTableFields: {
+        name: {
+          label: 'Progress',
+          sortable: true
+        },
+        action: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      },
+      reportsTableItems: [
+        { name: 'Progress' }
+      ]
     }
   },
 
@@ -173,6 +209,21 @@ export default {
           table.reset()
         })
       }
+    },
+
+    /**
+     * Export progress report.
+     */
+    reportProgress () {
+      const shortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${shortName}/progress`
+      this.$axios.$get(endpoint, {
+        params: {
+          csv: 1
+        }
+      }).then(data => {
+        this.exportFile(data.progress, `${shortName}_progress`, 'csv')
+      })
     }
   },
 

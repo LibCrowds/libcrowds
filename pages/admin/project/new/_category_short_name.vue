@@ -3,6 +3,16 @@
     :title="title"
     :description="description"
     docs="/projects/new/">
+
+    <b-btn
+      slot="controls"
+      class="float-md-right"
+      size="sm"
+      variant="success"
+      @click="reportProgress">
+      Progress Report
+    </b-btn>
+
     <p slot="guidance">
       Use the form below to create a project from a chosen template and volume.
     </p>
@@ -18,7 +28,9 @@
     </p>
     <p slot="guidance">
       The available templates and volumes for each collection are maintained
-      by {{ localConfig.brand }} administrators.
+      by {{ localConfig.brand }} administrators. You can view a progress
+      report for all volumes and templates via the
+      <strong>Progress Report</strong> button above.
     </p>
     <hr class="my-1">
 
@@ -66,13 +78,14 @@ import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config.js'
 import { metaTags } from '@/mixins/metaTags'
 import { getShortname } from '@/mixins/getShortname'
+import { exportFile } from '@/mixins/exportFile'
 import CardBase from '@/components/cards/Base'
 import PybossaForm from '@/components/forms/PybossaForm'
 
 export default {
   layout: 'admin-project-dashboard',
 
-  mixins: [ metaTags, getShortname ],
+  mixins: [ metaTags, getShortname, exportFile ],
 
   data () {
     return {
@@ -291,6 +304,21 @@ export default {
         params: {
           short_name: data.form.short_name
         }
+      })
+    },
+
+    /**
+     * Export progress report.
+     */
+    reportProgress () {
+      const shortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${shortName}/progress`
+      this.$axios.$get(endpoint, {
+        params: {
+          csv: 1
+        }
+      }).then(data => {
+        this.exportFile(data.progress, `${shortName}_progress`, 'csv')
       })
     }
   },
