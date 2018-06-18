@@ -235,7 +235,7 @@ export default {
               'whereas Transcribe mode is used to transcribe specified fields.'
           },
           {
-            model: 'rejection',
+            model: 'reject',
             label: 'Reasons for Rejection',
             type: 'array',
             hint: 'These reasons will be added to a dropdown list from ' +

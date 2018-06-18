@@ -389,8 +389,8 @@ export default {
         value: 'invalid-task',
         text: 'Invalid Task'
       }]
-      if (Array.isArray(this.currentTemplate.task.rejection)) {
-        opts = this.currentTemplate.task.rejection.map(item => {
+      if (Array.isArray(this.currentTemplate.task.reject)) {
+        opts = this.currentTemplate.task.reject.map(item => {
           return {
             value: item.replace(/\s+/g, '-').toLowerCase(),
             text: item
@@ -558,7 +558,7 @@ export default {
      */
     reject () {
       this.submit(this.currentProject.id, this.task.id, {
-        rejected: this.rejectedReason
+        reject: this.rejectedReason
       })
     },
 
