@@ -106,7 +106,7 @@
                       <small class="d-flex align-items-center">
                         <icon name="users" class="mr-1"></icon>
                         {{ discussion.attributes.participantsCount }}
-                        participants
+                        {{ 'participant' | pluralize(discussion.attributes.participantsCount) }}
                       </small>
                     </li>
                   </ul>
