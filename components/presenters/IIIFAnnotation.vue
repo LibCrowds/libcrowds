@@ -26,8 +26,8 @@
           size="sm"
           class="m-0"
           variant="link"
-          @click="$emit('reject')">
-          {{ rejectButtonText }}
+          @click="$emit('reject')"
+          v-html="rejectButtonText">
         </b-btn>
       </b-btn-group>
     </libcrowds-viewer>
