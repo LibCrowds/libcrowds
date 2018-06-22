@@ -1,4 +1,5 @@
 const path = require('path')
+const axios = require('axios')
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
   ? require('./test/test.local.config')
@@ -131,6 +132,7 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/sitemap',
     ['bootstrap-vue/nuxt', { css: false }],
     ['modules/nuxt-explicates/module.js', localConfig.explicates]
   ],
@@ -170,6 +172,34 @@ const config = {
     ],
     scrollBehavior: () => {
       return { x: 0, y: 0 }
+    }
+  },
+  sitemap: {
+    exclude: [
+      '/help/**',
+      '/admin/**',
+      '/account/**'
+    ],
+    routes () {
+      let routes = []
+      return axios.get(localConfig.pybossaHost + '/api/category', {
+        params: {
+          info: 'published::true',
+          limit: 100,
+          orderby: 'created',
+          desc: 1
+        }
+      }).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+          routes = routes.concat([
+            '/collection/' + res.data[i].short_name,
+            '/collection/' + res.data[i].short_name + '/projects/',
+            '/collection/' + res.data[i].short_name + '/about/',
+            '/collection/' + res.data[i].short_name + '/data/'
+          ])
+        }
+        return routes
+      })
     }
   }
 }
