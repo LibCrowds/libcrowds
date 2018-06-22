@@ -96,7 +96,6 @@ import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { licenses } from '@/mixins/licenses'
 import { exportFile } from '@/mixins/exportFile'
-import SortProjectsData from '@/components/data/SortProjects'
 import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 import DownloadProjectData from '@/components/data/DownloadProjectData'
@@ -154,7 +153,6 @@ export default {
   },
 
   components: {
-    SortProjectsData,
     InfiniteLoadingTable,
     CardBase,
     DownloadProjectData,
