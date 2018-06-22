@@ -114,11 +114,21 @@ export default {
      * Reset the loaded items.
      */
     reset () {
-      console.log('resetting')
       this.$emit('input', [])
       this.$nextTick(() => {
         this.items = []
         this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+      })
+    },
+
+    /**
+     * Trigger a manual load.
+     */
+    load () {
+      this.$nextTick(() => {
+        if (!this.$refs.infiniteload.isLoading) {
+          this.$refs.infiniteload.attemptLoad()
+        }
       })
     },
 
