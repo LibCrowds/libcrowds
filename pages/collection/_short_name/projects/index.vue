@@ -11,9 +11,9 @@
       class="collection-nav-item"
       data-title="Get Started">
 
-      <b-col id="sorting-options" xl="3" class="d-none d-xl-block">
+      <b-col id="filter-card" xl="3" class="d-none d-xl-block">
         <b-card
-          header="Sorting Options"
+          header="Filters"
           class="options-card mb-2"
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
@@ -22,11 +22,16 @@
             :collection="collection"
             @select="onFilter">
           </filter-projects-data>
-          <sort-projects-data
-            v-model="sortModel"
-            class="mb-2"
-            @select="onSort">
-          </sort-projects-data>
+          <b-form
+            :class="darkMode ? 'mb-2 form-dark' : 'mb-2'">
+            <b-form-input
+              ref="search"
+              v-model="searchString"
+              class="search-control"
+              size="sm"
+              :placeholder="`Type to search by ${searchKeys.join(', ')}`">
+            </b-form-input>
+          </b-form>
           <b-btn
             block
             size="sm"
@@ -58,23 +63,24 @@
           </li>
         </transition-group>
 
-        <infinite-load-projects
+        <infinite-load-domain-objects
           ref="infiniteload"
-          :collection="collection"
-          :orderby="sortModel.orderby"
-          :desc="sortModel.desc"
-          :show-no-results="false"
+          domain-object="project"
           v-model="projects"
-          :has-new-task="true"
+          :search-params="params"
+          :search-string="searchString"
+          :search-keys="searchKeys"
+          no-results=""
+          no-more-results=""
           @complete="projectLoadingComplete = true">
-        </infinite-load-projects>
+        </infinite-load-domain-objects>
 
         <p
           class="lead text-center"
-          v-if="allProjectsFiltered && projectLoadingComplete">
-          No projects are currently available using the selected filters.
+          v-if="projectLoadingComplete && this.projects.length === 0">
+          No projects are currently available.
           <br>
-          You can use the input fields on the left to change them.
+          Try clearing any selected filters on the left of the screen.
         </p>
 
       </b-col>
@@ -84,15 +90,15 @@
 
 <script>
 import marked from 'marked'
+import asyncFilter from 'async/filter'
+import isEmpty from 'lodash/isEmpty'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import SortProjectsData from '@/components/data/SortProjects'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoadProjects from '@/components/infiniteload/Projects'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import CardBase from '@/components/cards/Base'
 
@@ -132,20 +138,15 @@ export default {
           class: 'text-center'
         }
       },
-      sortModel: {
-        orderby: 'overall_progress',
-        desc: true
-      }
+      validProjectIds: new Set()
     }
   },
 
   components: {
-    SortProjectsData,
     FilterProjectsData,
     ProjectCard,
     SocialMediaButtons,
-    InfiniteLoadProjects,
-    InfiniteLoadingTable,
+    InfiniteLoadDomainObjects,
     ProjectContribButton,
     CardBase
   },
@@ -163,10 +164,6 @@ export default {
       return marked(this.collection.info.content.projects)
     },
 
-    allProjectsFiltered () {
-      return this.projects.length > 0 && this.filteredProjects.length === 0
-    },
-
     description () {
       return `Choose a ${this.collection.name} project to take part in.`
     },
@@ -177,8 +174,9 @@ export default {
     },
 
     filteredProjects () {
-      // Check filters
-      return this.projects.filter(project => {
+      let filtered = this.projects.filter(project => {
+        return Number(project.stats.overall_progress) < 100
+      }).filter(project => {
         for (let key of Object.keys(this.filterModel)) {
           project.info.filters = project.info.filters || {}
           if (project.info.filters[key] !== this.filterModel[key]) {
@@ -187,6 +185,19 @@ export default {
         }
         return true
       })
+
+      this.filterProjectsForUser(filtered)
+      return filtered
+    },
+
+    params () {
+      return {
+        category_id: this.collection.id,
+        stats: 1,
+        all: 1,
+        orderby: 'created',
+        desc: 1
+      }
     }
   },
 
@@ -212,22 +223,6 @@ export default {
     },
 
     /**
-     * Track sorting.
-     * @param {String} value
-     *   The sorting value.
-     */
-    onSort (value) {
-      if (this.$ga) {
-        this.$ga.event({
-          eventCategory: 'Sorts',
-          eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
-          eventLabel: this.collection.name,
-          eventValue: 1
-        })
-      }
-    },
-
-    /**
      * Set a filter.
      * @param {String} type
      *   The type.
@@ -240,20 +235,63 @@ export default {
       this.filterModel = Object.assign({}, this.filterModel)
     },
 
+    /**
+     * Clear the current filters.
+     */
     clearFilters () {
+      this.$refs.search.$el.value = ''
       this.filterModel = Object.assign({})
+    },
+
+    /**
+     * Filter projects where a new task is available for the current user.
+     *
+     * Check each project to see if we can get a task for the current user.
+     * Not the most efficient as we have to make an additional call for
+     * each project. There could also be a problem with rate limiting if
+     * the user has finished hundreds of projects that are not yet complete,
+     * but hopefully that is unlikely! We might see if we can update the
+     * PYBOSSA API at some point to filter these out in the same request.
+     * @param {Array} projects
+     *   The projects.
+     */
+    filterProjectsForUser (projects) {
+      asyncFilter(projects, (p, callback) => {
+        if (this.validProjectIds.has(p.id)) {
+          callback(null, true)
+          return
+        }
+        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
+          if (!isEmpty(data) && !data.info.hasOwnProperty('error')) {
+            this.validProjectIds.add(p.id)
+            callback(null, true)
+          } else {
+            callback(null, false)
+          }
+        }).catch(err => {
+          this.$nuxt.error(err)
+        })
+      })
     }
   },
 
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
+  },
+
+  watch: {
+    searchString () {
+      if (!this.projectLoadingComplete) {
+        this.$refs.infiniteload.load()
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss">
-#sorting-options {
+#filter-card {
   .multiselect--active {
     z-index: 4; // Show over the toggle button
   }

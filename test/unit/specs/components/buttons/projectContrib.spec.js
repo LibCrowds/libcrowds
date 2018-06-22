@@ -30,7 +30,9 @@ describe('ProjectContrib button', () => {
 
   it('is disabled when project is completed', () => {
     let completedProject = {
-      overall_progress: 100
+      stats: {
+        overall_progress: 100
+      }
     }
     wrapper.setProps({
       project: completedProject
