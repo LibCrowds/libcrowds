@@ -46,7 +46,7 @@
         <h4 v-else class="card-title mb-1 px-2 pt-2">
           {{ project.name }}
         </h4>
-        <div>
+        <div v-if="hasStats">
           <b-btn
             v-b-modal="statsModalId"
             class="project-stats-btn d-none d-lg-block"
@@ -73,14 +73,19 @@
 
       <div class="card-footer mt-1 px-2 py-1">
         <span
+          v-if="hasStats"
           class="card-stat text-muted mb-2 mb-lg-0 mt-lg-0 d-none d-lg-block">
           {{ project.stats.overall_progress }}% complete
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
+        <span
+          v-if="hasStats"
+          class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
           <icon name="tasks"></icon> {{ project.stats.n_tasks | intComma }}
           {{ 'task' | pluralize(project.stats.n_tasks) }}
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
+        <span
+          v-if="hasStats"
+          class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
           <icon name="users"></icon>Join {{ project.stats.n_volunteers | intComma }}
           {{ 'volunteer' | pluralize(project.stats.n_volunteers) }}
         </span>
@@ -102,6 +107,7 @@
     </div>
 
     <project-stats-modal
+      v-if="hasStats"
       :project="project"
       :collection="collection"
       :modal-id="statsModalId">
@@ -147,8 +153,14 @@ export default {
   },
 
   computed: {
+    hasStats () {
+      return this.project.hasOwnProperty('stats')
+    },
+
     projectIncomplete () {
-      return Number(this.project.stats.overall_progress) < 100
+      return this.hasStats
+        ? this.project.stats.overall_progress < 100
+        : 0
     }
   },
 
@@ -162,7 +174,10 @@ export default {
   },
 
   mounted () {
-    if (process.browser && this.collection.info.presenter) {
+    if (
+      process.browser &&
+      this.hasStats
+    ) {
       const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
         strokeWidth: 4,
         easing: 'easeInOut',
