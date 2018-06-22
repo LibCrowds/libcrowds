@@ -298,9 +298,6 @@
 </template>
 
 <script>
-import find from 'lodash/find'
-import sortBy from 'lodash/sortBy'
-import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
 import 'vue-awesome/icons/users'
 import 'vue-awesome/icons/comment'
@@ -338,16 +335,15 @@ export default {
      * Load featured projects.
      *
      * If there are no featured projects for this collection then load
-     * the three most recent projects instead.
+     * the three most recently created incomplete projects instead.
      */
     loadFeatured () {
-      let projects = []
-
       this.$axios.$get('/api/project', {
         params: {
           category_id: this.collection.id,
           featured: true,
-          all: 1
+          all: 1,
+          stats: 1
         }
       }).then(projectsData => {
         if (!projectsData.length) {
@@ -357,42 +353,18 @@ export default {
               category_id: this.collection.id,
               orderby: 'created',
               desc: 1,
-              limit: 3,
-              all: 1
+              limit: 100,
+              all: 1,
+              stats: 1
             }
           })
         } else {
           return projectsData
         }
       }).then(projectsData => {
-        if (!projectsData.length) {
-          // No projects yet
-          this.featured = []
-          return
-        }
-
-        projects = projectsData
-
-        // Get stats
-        return this.$axios.$get('/api/projectstats', {
-          params: {
-            project_id: projectsData.map(project => project.id).toString()
-          }
-        })
-      }).then(statsData => {
-        // Sort by ID and deduplicate to deal with the issue of multiple
-        // project stats potentially appearing for a single project
-        // https://github.com/LibCrowds/libcrowds/issues/526
-        const sortedStats = sortBy(statsData, [stat => stat.id])
-        const dedupedStats = uniqBy(sortedStats, 'project_id')
-
-        // Merge the project into the stats rather than the other way around
-        // so that project ID is given preference
-        this.featured = dedupedStats.map(projectStats => {
-          return Object.assign(projectStats, find(projects, {
-            id: projectStats.project_id
-          }))
-        })
+        this.featured = projectsData.filter(project => {
+          return Number(project.stats.overall_progress) < 100
+        }).slice(0, 3)
       }).catch(err => {
         this.$nuxt.error(err)
       })
