@@ -43,7 +43,9 @@ export default {
 
   computed: {
     disabled () {
-      return Number(this.project.overall_progress) >= 100
+      return this.project.hasOwnProperty('stats')
+        ? Number(this.project.stats.overall_progress) >= 100
+        : false
     }
   }
 }
