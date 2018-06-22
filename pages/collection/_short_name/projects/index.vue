@@ -23,7 +23,7 @@
             @select="onFilter">
           </filter-projects-data>
           <b-form
-            :class="darkMode ? 'mb-2 form-dark' : 'my-2'">
+            :class="darkMode ? 'mb-2 form-dark' : 'mb-2'">
             <b-form-input
               ref="search"
               v-model="searchString"
@@ -70,16 +70,17 @@
           :search-params="params"
           :search-string="searchString"
           :search-keys="searchKeys"
-          :show-no-results="false"
+          no-results=""
+          no-more-results=""
           @complete="projectLoadingComplete = true">
         </infinite-load-domain-objects>
 
         <p
           class="lead text-center"
-          v-if="allProjectsFiltered && projectLoadingComplete">
-          No projects are currently available using the selected filters.
+          v-if="projectLoadingComplete && this.projects.length === 0">
+          No projects are currently available.
           <br>
-          You can use the input fields on the left to change them.
+          Try clearing any selected filters on the left of the screen.
         </p>
 
       </b-col>
@@ -161,10 +162,6 @@ export default {
 
     pageContent () {
       return marked(this.collection.info.content.projects)
-    },
-
-    allProjectsFiltered () {
-      return this.projects.length > 0 && this.filteredProjects.length === 0
     },
 
     description () {
@@ -268,7 +265,6 @@ export default {
           if (!isEmpty(data) && !data.info.hasOwnProperty('error')) {
             this.validProjectIds.add(p.id)
             callback(null, true)
-            return
           } else {
             callback(null, false)
           }
