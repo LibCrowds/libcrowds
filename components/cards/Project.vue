@@ -74,15 +74,15 @@
       <div class="card-footer mt-1 px-2 py-1">
         <span
           class="card-stat text-muted mb-2 mb-lg-0 mt-lg-0 d-none d-lg-block">
-          {{ project.overall_progress }}% complete
+          {{ project.stats.overall_progress }}% complete
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
-          <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
-          {{ 'task' | pluralize(project.n_tasks) }}
+          <icon name="tasks"></icon> {{ project.stats.n_tasks | intComma }}
+          {{ 'task' | pluralize(project.stats.n_tasks) }}
         </span>
         <span class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
-          <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
-          {{ 'volunteer' | pluralize(project.n_volunteers) }}
+          <icon name="users"></icon>Join {{ project.stats.n_volunteers | intComma }}
+          {{ 'volunteer' | pluralize(project.stats.n_volunteers) }}
         </span>
         <div class="footer-buttons my-1 mt-lg-0">
           <b-btn
@@ -148,7 +148,7 @@ export default {
 
   computed: {
     projectIncomplete () {
-      return Number(this.project.overall_progress) < 100
+      return Number(this.project.stats.overall_progress) < 100
     }
   },
 
@@ -175,7 +175,7 @@ export default {
           height: '100%'
         }
       })
-      bar.animate(this.project.overall_progress / 100)
+      bar.animate(this.project.stats.overall_progress / 100)
     }
   }
 }
