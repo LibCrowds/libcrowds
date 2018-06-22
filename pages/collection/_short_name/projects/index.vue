@@ -11,9 +11,9 @@
       class="collection-nav-item"
       data-title="Get Started">
 
-      <b-col id="sorting-options" xl="3" class="d-none d-xl-block">
+      <b-col id="filter-card" xl="3" class="d-none d-xl-block">
         <b-card
-          header="Sorting Options"
+          header="Filters"
           class="options-card mb-2"
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
@@ -22,6 +22,16 @@
             :collection="collection"
             @select="onFilter">
           </filter-projects-data>
+          <b-form
+            :class="darkMode ? 'my-2 form-dark' : 'my-2'">
+            <b-form-input
+              ref="search"
+              v-model="searchString"
+              class="search-control"
+              size="sm"
+              :placeholder="`Type to search by ${searchKeys.join(', ')}`">
+            </b-form-input>
+          </b-form>
           <b-btn
             block
             size="sm"
@@ -58,6 +68,8 @@
           domain-object="project"
           v-model="projects"
           :search-params="params"
+          :search-string="searchString"
+          :search-keys="searchKeys"
           :show-no-results="false"
           @complete="projectLoadingComplete = true">
         </infinite-load-domain-objects>
@@ -242,6 +254,7 @@ export default {
     },
 
     clearFilters () {
+      this.$refs.search.$el.value = ''
       this.filterModel = Object.assign({})
     }
   },
@@ -254,7 +267,7 @@ export default {
 </script>
 
 <style lang="scss">
-#sorting-options {
+#filter-card {
   .multiselect--active {
     z-index: 4; // Show over the toggle button
   }
