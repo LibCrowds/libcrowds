@@ -23,7 +23,7 @@
             @select="onFilter">
           </filter-projects-data>
           <b-form
-            :class="darkMode ? 'my-2 form-dark' : 'my-2'">
+            :class="darkMode ? 'mb-2 form-dark' : 'my-2'">
             <b-form-input
               ref="search"
               v-model="searchString"
@@ -136,7 +136,8 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
-      }
+      },
+      validProjectIds: new Set()
     }
   },
 
@@ -188,23 +189,7 @@ export default {
         return true
       })
 
-      // Check each project to see if we can get a task for the current user.
-      // Not the most efficient as we have to make an additional call for
-      // each project. There could also be a problem with rate limiting if
-      // the user has finished hundreds of projects that are not yet complete,
-      // but hopefully that is unlikely! We might see if we can update the
-      // PYBOSSA API at some point to filter these out in the same request.
-      asyncFilter(filtered, (p, callback) => {
-        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
-          callback(null, (
-            !isEmpty(data) &&
-            !data.info.hasOwnProperty('error')
-          ))
-        }).catch(err => {
-          this.$nuxt.error(err)
-        })
-      })
-
+      this.filterProjectsForUser(filtered)
       return filtered
     },
 
@@ -253,9 +238,44 @@ export default {
       this.filterModel = Object.assign({}, this.filterModel)
     },
 
+    /**
+     * Clear the current filters.
+     */
     clearFilters () {
       this.$refs.search.$el.value = ''
       this.filterModel = Object.assign({})
+    },
+
+    /**
+     * Filter projects where a new task is available for the current user.
+     *
+     * Check each project to see if we can get a task for the current user.
+     * Not the most efficient as we have to make an additional call for
+     * each project. There could also be a problem with rate limiting if
+     * the user has finished hundreds of projects that are not yet complete,
+     * but hopefully that is unlikely! We might see if we can update the
+     * PYBOSSA API at some point to filter these out in the same request.
+     * @param {Array} projects
+     *   The projects.
+     */
+    filterProjectsForUser (projects) {
+      asyncFilter(projects, (p, callback) => {
+        if (this.validProjectIds.has(p.id)) {
+          callback(null, true)
+          return
+        }
+        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
+          if (!isEmpty(data) && !data.info.hasOwnProperty('error')) {
+            this.validProjectIds.add(p.id)
+            callback(null, true)
+            return
+          } else {
+            callback(null, false)
+          }
+        }).catch(err => {
+          this.$nuxt.error(err)
+        })
+      })
     }
   },
 
