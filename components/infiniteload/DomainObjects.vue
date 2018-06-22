@@ -15,55 +15,13 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js'
 import uniqBy from 'lodash/uniqBy'
 
 export default {
-  methods: {
-    /**
-     * Handler to infinitely load domain objects.
-     * @param {Object} $state
-     *   The vue-inifinite-loading state.
-     */
-    async infiniteLoadDomainObjects ($state) {
-      const params = Object.assign({}, this.searchParams)
-      params.offset = this.value.length
-      let data = null
-
-      try {
-        data = await this.$axios.$get(`/api/${this.domainObject}`, {
-          params: params
-        })
-      } catch (err) {
-        this.$nuxt.error(err)
-      }
-
-      // Loading complete
-      if (!data.length) {
-        $state.complete()
-        this.$emit('complete')
-        return
-      }
-
-      // Add the _showDetails flag
-      data = data.map(item => {
-        item._showDetails = false
-        return item
-      })
-
-      // Load unique by ID, in case multiple loads were running asynchronously
-      this.$emit('input', uniqBy(this.value.concat(data), 'id'))
-      $state.loaded()
-    },
-
-    /**
-     * Reset the loaded items.
-     */
-    reset () {
-      this.$emit('input', [])
-      this.$nextTick(() => {
-        this.page = 1
-        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
-      })
+  data () {
+    return {
+      items: []
     }
   },
 
@@ -97,6 +55,14 @@ export default {
       type: Object,
       default: () => ({})
     },
+    searchString: {
+      type: String,
+      default: ''
+    },
+    searchKeys: {
+      type: Array,
+      default: () => ([])
+    },
     noResults: {
       type: String,
       default: 'No results'
@@ -107,12 +73,113 @@ export default {
     }
   },
 
+  methods: {
+    /**
+     * Handler to infinitely load domain objects.
+     * @param {Object} $state
+     *   The vue-inifinite-loading state.
+     */
+    async infiniteLoadDomainObjects ($state) {
+      const params = Object.assign({}, this.searchParams)
+      params.offset = this.items.length
+      let data = null
+
+      try {
+        data = await this.$axios.$get(`/api/${this.domainObject}`, {
+          params: params
+        })
+      } catch (err) {
+        this.$nuxt.error(err)
+      }
+
+      // Loading complete
+      if (!data.length) {
+        $state.complete()
+        this.$emit('complete')
+        return
+      }
+
+      // Add the _showDetails flag
+      data = data.map(item => {
+        item._showDetails = false
+        return item
+      })
+
+      // Get unique by ID, in case multiple loads were running asynchronously
+      this.items = uniqBy(this.items.concat(data), 'id')
+      $state.loaded()
+    },
+
+    /**
+     * Reset the loaded items.
+     */
+    reset () {
+      console.log('resetting')
+      this.$emit('input', [])
+      this.$nextTick(() => {
+        this.items = []
+        this.$refs.infiniteload.$emit('$InfiniteLoading:reset')
+      })
+    },
+
+    /**
+     * Apply fuzzy search.
+     * @param {Array} items
+     *   The items to search.
+     */
+    search (items) {
+      if (
+        this.searchKeys &&
+        this.searchString &&
+        this.searchKeys.length &&
+        this.searchString.length
+      ) {
+        return this.fuse.search(this.searchString)
+      }
+      return items
+    },
+
+    /**
+     * Emit the loaded and possibly filtered items.
+     */
+    emitItems () {
+      const filteredItems = this.search(this.items)
+      this.$emit('input', filteredItems)
+    }
+  },
+
+  computed: {
+    fuse () {
+      return new Fuse(this.items, {
+        shouldSort: true,
+        tokenize: true,
+        matchAllTokens: true,
+        findAllMatches: true,
+        threshold: 0,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: this.searchKeys
+      })
+    }
+  },
+
   watch: {
     'searchParams': {
       handler: function (val, oldVal) {
         this.reset()
       },
       deep: true
+    },
+    searchKeys () {
+      this.emitItems()
+    },
+    searchString () {
+      this.emitItems()
+    },
+    items () {
+      this.emitItems()
     }
   }
 }

@@ -6,7 +6,7 @@
       show-empty
       :outlined="outlined"
       :dark="darkMode"
-      :items="filteredItems"
+      :items="items"
       :fields="tableFields"
       @sort-changed="onSortChange">
 
@@ -33,6 +33,8 @@
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
+      :search-keys="searchKeys"
+      :search-string="searchString"
       no-more-results="No more results">
     </infinite-load-domain-objects>
 
@@ -40,7 +42,6 @@
 </template>
 
 <script>
-import Fuse from 'fuse.js'
 import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 
 export default {
@@ -97,34 +98,6 @@ export default {
     mergedParams () {
       const params = JSON.parse(JSON.stringify(this.searchParams))
       return Object.assign({}, params, this.sortParams)
-    },
-
-    // http://fusejs.io/
-    fuse () {
-      return new Fuse(this.items, {
-        shouldSort: true,
-        tokenize: true,
-        matchAllTokens: true,
-        findAllMatches: true,
-        threshold: 0,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: this.searchKeys
-      })
-    },
-
-    filteredItems () {
-      if (
-        this.searchKeys &&
-        this.searchString &&
-        this.searchKeys.length &&
-        this.searchString.length
-      ) {
-        return this.fuse.search(this.searchString)
-      }
-      return this.items
     }
   },
 
