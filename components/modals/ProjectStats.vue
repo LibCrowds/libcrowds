@@ -10,91 +10,32 @@
     :footer-bg-variant="darkMode ? 'dark' : null"
     :footer-text-variant="darkMode ? 'white' : null"
     title="Project Stats"
-    size="lg"
-    @shown="fetchData">
+    size="lg">
 
     <div class="p-2">
-      <p
-        v-if="loading"
-        class="lead mb-0">
-        Loading stats...
-      </p>
-
-      <p
-        v-else-if="project.overall_progress == 0"
-        class="lead mb-0">
-        Sorry, not enough tasks have been completed to generate statistics
-        for this project.
-      </p>
-
-      <span v-else>
-        <card-base
-          title="Proportion of Authenticated Users"
-          :description="proportionAuthDescription"
-          class="mb-3 card-overflow">
-          <b-card-body
-            :bg-variant="darkMode ? 'dark' : null"
-            :text-variant="darkMode ? 'white' : null">
-            <pie-chart
-              v-if="userStats.authenticated && userStats.anonymous"
-              :chart-data="proportionAuthData">
-            </pie-chart>
-          </b-card-body>
-        </card-base>
-
-        <card-base
-          title="Daily Contributions"
-          :description="dailyContributionsDescriptions"
-          class="mb-3 card-overflow">
-          <b-card-body
-            :bg-variant="darkMode ? 'dark' : null"
-            :text-variant="darkMode ? 'white' : null">
-            <line-chart
-              v-if="projectStats.dayStats"
-              unit="contribution"
-              :chart-data="dailyContributionsData">
-            </line-chart>
-          </b-card-body>
-        </card-base>
-
-        <card-base
-          title="Hourly Contributions"
-          :description="hourlyContributionsDescription"
-          class="mb-3 card-overflow">
-          <b-card-body
-            :bg-variant="darkMode ? 'dark' : null"
-            :text-variant="darkMode ? 'white' : null">
-            <line-chart
-              v-if="projectStats.hourStats"
-              unit="contribution"
-              :chart-data="hourlyContributionsData">
-            </line-chart>
-          </b-card-body>
-        </card-base>
-
-        <card-base
-          title="Top Authenticated Users"
-          :description="topUsersDescription"
-          class="mb-3 card-overflow">
-          <b-card-body
-            :bg-variant="darkMode ? 'dark' : null"
-            :text-variant="darkMode ? 'white' : null">
-            <bar-chart
-              v-if="userStats.authenticated"
-              unit="contribution"
-              :chart-data="topUsersData">
-            </bar-chart>
-          </b-card-body>
-        </card-base>
-
-      </span>
+      <card-base
+        v-for="(chart, index) in charts"
+        v-if="chart.data"
+        :key="index"
+        :title="chart.title"
+        :description="chart.description"
+        class="mb-3 card-overflow">
+        <b-card-body
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null">
+          <component
+            :is="chart.type"
+            :chart-data="chart.data"
+            :unit="chart.unit">
+          </component>
+        </b-card-body>
+      </card-base>
     </div>
   </b-modal>
 </template>
 
 <script>
 import moment from 'moment'
-import pluralize from 'pluralize'
 import 'vue-awesome/icons/clock-o'
 import LineChart from '@/components/charts/Line'
 import BarChart from '@/components/charts/Bar'
@@ -102,14 +43,6 @@ import PieChart from '@/components/charts/Pie'
 import CardBase from '@/components/cards/Base'
 
 export default {
-  data () {
-    return {
-      userStats: {},
-      projectStats: {},
-      loading: true
-    }
-  },
-
   components: {
     LineChart,
     BarChart,
@@ -132,69 +65,92 @@ export default {
     }
   },
 
-  methods: {
-    /**
-     * Fetch the stats.
-     */
-    fetchData () {
-      this.$axios.$get(`/project/${this.project.short_name}/stats`, {
-        params: {
-          short_name: this.project.short_name
-        }
-      }).then(data => {
-        this.userStats = data.userStats || {}
-        this.projectStats = data.projectStats || {}
-        if (this.$ga) {
-          this.$ga.event({
-            eventCategory: 'Statistics',
-            eventAction: 'view',
-            eventLabel: this.project.name,
-            eventValue: 1
-          })
-        }
-        this.loading = false
-      }).catch(err => {
-        this.$nuxt.error(err)
-      })
-    }
-  },
-
   computed: {
     currentUser () {
       return this.$store.state.currentUser
     },
 
+    charts () {
+      return [
+        {
+          title: 'Top Users',
+          description: `Authenticated users with the most contributions over
+            the past two weeks`,
+          data: this.topUsersData,
+          type: BarChart,
+          unit: 'user'
+        },
+        {
+          title: 'Daily Contributions',
+          description: `Daily contributions over the past two weeks`,
+          data: this.dailyContributionsData,
+          type: LineChart,
+          unit: 'contribution'
+        },
+        {
+          title: 'Hourly Contributions',
+          description: `Hourly contributions over the past two weeks`,
+          data: this.hourlyContributionsData,
+          type: LineChart,
+          unit: 'contribution'
+        },
+        {
+          title: 'Proportion Authenticated',
+          description: `Proportion of authenticated users over the past two
+            weeks`,
+          data: this.proportionAuthData,
+          type: PieChart,
+          unit: 'user'
+        }
+      ]
+    },
+
     dailyContributionsData () {
+      const datesStats = this.project.stats.info.dates_stats
+      if (typeof datesStats === 'undefined') {
+        return null
+      }
       return {
-        labels: this.projectStats.dayStats[0].values.map(value => {
+        labels: datesStats[0].values.map(value => {
           return moment(new Date(value[0])).format('DD MMM')
         }),
         series: [
-          this.projectStats.dayStats[0].values.map(value => value[1])
+          datesStats[0].values.map(value => value[1])
         ]
       }
     },
 
     hourlyContributionsData () {
-      let d = {
-        labels: this.projectStats.hourStats[0].values.map(value => value[0]),
+      const hoursStats = this.project.stats.info.hours_stats
+      if (typeof hoursStats === 'undefined') {
+        return null
+      }
+      return {
+        labels: hoursStats[0].values.map(value => value[0]),
         series: [
-          this.projectStats.hourStats[0].values.map(value => value[1])
+          hoursStats[0].values.map(value => value[1])
         ]
       }
-      return d
     },
 
     topUsersData () {
+      const usersStats = this.project.stats.info.users_stats
+      if (typeof usersStats === 'undefined') {
+        return null
+      }
       return {
-        labels: this.userStats.authenticated.top5.map(stat => stat.name),
+        labels: usersStats.auth.top5.map(stat => stat.name),
         series: [
-          this.userStats.authenticated.top5.map(stat => stat.tasks)
+          usersStats.auth.top5.map(stat => stat.tasks)
         ]
       }
     },
 
     proportionAuthData () {
+      const usersStats = this.project.stats.info.users_stats
+      if (typeof usersStats === 'undefined') {
+        return null
+      }
       return {
         labels: [
           'Authenticated Volunteers',
@@ -203,33 +159,14 @@ export default {
         series: [
           {
             meta: 'Authenticated Volunteers:',
-            value: this.userStats.anonymous.taskruns
+            value: usersStats.n_anon
           },
           {
             meta: 'Anonymous Volunteers:',
-            value: this.userStats.authenticated.taskruns
+            value: usersStats.n_auth
           }
         ]
       }
-    },
-
-    dailyContributionsDescription () {
-      const unit = pluralize('contribution')
-      return `Daily ${unit} over the past two weeks`
-    },
-
-    hourlyContributionsDescription () {
-      const unit = pluralize('contribution')
-      return `Hourly ${unit} over the past two weeks`
-    },
-
-    proportionAuthDescription () {
-      return `Proportion of authenticated users contributing over the past
-        two weeks`
-    },
-
-    topUsersDescription () {
-      return 'The users with the most contributions over the past two weeks'
     }
   }
 }
