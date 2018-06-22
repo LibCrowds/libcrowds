@@ -22,11 +22,6 @@
             :collection="collection"
             @select="onFilter">
           </filter-projects-data>
-          <sort-projects-data
-            v-model="sortModel"
-            class="mb-2"
-            @select="onSort">
-          </sort-projects-data>
           <b-btn
             block
             size="sm"
@@ -58,16 +53,14 @@
           </li>
         </transition-group>
 
-        <infinite-load-projects
+        <infinite-load-domain-objects
           ref="infiniteload"
-          :collection="collection"
-          :orderby="sortModel.orderby"
-          :desc="sortModel.desc"
-          :show-no-results="false"
+          domain-object="project"
           v-model="projects"
-          :has-new-task="true"
+          :search-params="params"
+          :show-no-results="false"
           @complete="projectLoadingComplete = true">
-        </infinite-load-projects>
+        </infinite-load-domain-objects>
 
         <p
           class="lead text-center"
@@ -84,15 +77,15 @@
 
 <script>
 import marked from 'marked'
+import asyncFilter from 'async/filter'
+import isEmpty from 'lodash/isEmpty'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import SortProjectsData from '@/components/data/SortProjects'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoadProjects from '@/components/infiniteload/Projects'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import CardBase from '@/components/cards/Base'
 
@@ -131,21 +124,15 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
-      },
-      sortModel: {
-        orderby: 'overall_progress',
-        desc: true
       }
     }
   },
 
   components: {
-    SortProjectsData,
     FilterProjectsData,
     ProjectCard,
     SocialMediaButtons,
-    InfiniteLoadProjects,
-    InfiniteLoadingTable,
+    InfiniteLoadDomainObjects,
     ProjectContribButton,
     CardBase
   },
@@ -177,8 +164,9 @@ export default {
     },
 
     filteredProjects () {
-      // Check filters
-      return this.projects.filter(project => {
+      let filtered = this.projects.filter(project => {
+        return Number(project.stats.overall_progress) < 100
+      }).filter(project => {
         for (let key of Object.keys(this.filterModel)) {
           project.info.filters = project.info.filters || {}
           if (project.info.filters[key] !== this.filterModel[key]) {
@@ -187,6 +175,35 @@ export default {
         }
         return true
       })
+
+      // Check each project to see if we can get a task for the current user.
+      // Not the most efficient as we have to make an additional call for
+      // each project. There could also be a problem with rate limiting if
+      // the user has finished hundreds of projects that are not yet complete,
+      // but hopefully that is unlikely! We might see if we can update the
+      // PYBOSSA API at some point to filter these out in the same request.
+      asyncFilter(filtered, (p, callback) => {
+        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
+          callback(null, (
+            !isEmpty(data) &&
+            !data.info.hasOwnProperty('error')
+          ))
+        }).catch(err => {
+          this.$nuxt.error(err)
+        })
+      })
+
+      return filtered
+    },
+
+    params () {
+      return {
+        category_id: this.collection.id,
+        stats: 1,
+        all: 1,
+        orderby: 'created',
+        desc: 1
+      }
     }
   },
 
@@ -205,22 +222,6 @@ export default {
         this.$ga.event({
           eventCategory: 'Filters',
           eventAction: `${typeStr}:${nameStr}`,
-          eventLabel: this.collection.name,
-          eventValue: 1
-        })
-      }
-    },
-
-    /**
-     * Track sorting.
-     * @param {String} value
-     *   The sorting value.
-     */
-    onSort (value) {
-      if (this.$ga) {
-        this.$ga.event({
-          eventCategory: 'Sorts',
-          eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
           eventLabel: this.collection.name,
           eventValue: 1
         })
