@@ -101,10 +101,6 @@ export default {
       return !isEmpty(this.currentUser)
     },
 
-    publishedCollections () {
-      return this.$store.state.publishedCollections
-    },
-
     sideNavClass () {
       return {
         'side-nav': true,
@@ -125,20 +121,6 @@ export default {
       if (this.currentMicrositeNavItems.length) {
         items[''] = this.currentMicrositeNavItems
       }
-
-      // Collection hompage nav items
-      items['Collections'] = this.publishedCollections.map(coll => {
-        return {
-          label: coll.name,
-          activeClass: 'active-unstyled',
-          link: {
-            name: 'collection-short_name',
-            params: {
-              short_name: coll.short_name
-            }
-          }
-        }
-      })
 
       // Project admin
       if (canBuild) {
