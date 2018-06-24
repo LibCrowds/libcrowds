@@ -46,7 +46,7 @@ export default {
       try {
         response = await this.$explicates.search({
           collection: this.containerIri,
-          limit: 1,
+          limit: 20,
           offset: this.value.length
         })
       } catch (err) {
