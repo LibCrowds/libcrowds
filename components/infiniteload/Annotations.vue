@@ -16,12 +16,6 @@
 
 <script>
 export default {
-  data () {
-    return {
-      page: 0
-    }
-  },
-
   props: {
     value: {
       type: Array,
@@ -48,18 +42,24 @@ export default {
      *   The vue-inifinite-loading state.
      */
     async infiniteLoadAnnotations ($state) {
-      const iri = this.containerIri
       let response = null
       try {
-        response = await this.$explicates.getCollection(iri, this.page)
+        response = await this.$explicates.search({
+          collection: this.containerIri,
+          limit: 1,
+          offset: this.value.length
+        })
       } catch (err) {
+        this.$nuxt.error(err)
+      }
+
+      if (!response.data.hasOwnProperty('first')) {
         $state.complete()
         this.$emit('complete')
         return
       }
 
-      this.page++
-      this.$emit('input', this.value.concat(response.data.items))
+      this.$emit('input', this.value.concat(response.data.first.items))
       $state.loaded()
     },
 

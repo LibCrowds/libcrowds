@@ -31,6 +31,7 @@
       </div>
 
       <infinite-load-annotations
+        ref="infiniteload"
         v-model="tagAnnotations"
         :container-iri="currentCollection.info.annotations.tags"
         no-results="It looks like nothing has been tagged yet!"
@@ -43,11 +44,12 @@
     </p>
 
     <b-modal
-      lazy
       ref="previewModal"
+      id="preview-modal"
       title=""
       size="lg"
       hide-footer
+      hide-header
       :header-bg-variant="darkMode ? 'dark' : 'light'"
       :body-bg-variant="darkMode ? 'dark' : 'light'"
       :footer-bg-variant="darkMode ? 'dark' : 'light'"
@@ -55,27 +57,32 @@
       :body-text-variant="darkMode ? 'white' : null"
       :footer-text-variant="darkMode ? 'white' : null"
       :header-border-variant="darkMode ? 'dark' : 'light'"
-      @hidden="selectedImageData = {}">
+      @hidden="selectedItem = {}">
       <b-container
         fluid
         class="bg-muted"
-        v-if="selectedImageData.url">
+        v-if="selectedItem.url">
+        <b-btn
+          class="fixed-close"
+          @click="$refs.previewModal.hide()">
+          <icon name="times"></icon>
+        </b-btn>
         <b-row>
           <b-col xs="12" lg="6" class="text-center">
               <img
-                :src="selectedImageData.thumbnail"
-                class="img-fluid pb-4 px-4 pt-1">
+                :src="selectedItem.thumbnail"
+                class="img-fluid m-4">
           </b-col>
           <b-col
             xs="12"
             class="d-lg-flex justify-content-between flex-column
-              my-2 mb-4 text-center text-lg-left">
+              m-4 text-center text-lg-left">
             <div class="mb-3">
               <h5>
-                {{ selectedImageData.title }}
+                {{ selectedItem.title }}
               </h5>
               <p class="text-muted">
-                {{ selectedImageData.description }}
+                {{ selectedItem.description }}
               </p>
             </div>
             <div></div>
@@ -83,8 +90,8 @@
               <b-btn
                 :variant="darkMode ? 'secondary' : 'outline-dark'"
                 size="lg"
-                :disabled="!selectedImageData.link"
-                :href="selectedImageData.link" target="_blank">
+                :disabled="!selectedItem.link"
+                :href="selectedItem.link" target="_blank">
                 <span class="d-flex align-items-center">
                   <icon name="arrow-right" class="mr-1"></icon>
                   Open the viewer
@@ -95,8 +102,8 @@
               <h6 class="mb-1">Tags:</h6>
               <item-tags-list
                 :container-iri="currentCollection.info.annotations.tags"
-                :source-iri="selectedImageData.url"
-                :scope-iri="selectedImageData.manifest"
+                :source-iri="selectedItem.url"
+                :scope-iri="selectedItem.manifest"
                 type="Image">
               </item-tags-list>
             </div>
@@ -110,6 +117,7 @@
 
 <script>
 import marked from 'marked'
+import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/arrow-right'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
@@ -127,7 +135,7 @@ export default {
       title: 'Browse',
       tagAnnotations: [],
       selectedTags: [],
-      selectedImageData: {}
+      selectedItem: {}
     }
   },
 
@@ -176,6 +184,8 @@ export default {
       return Object.keys(data).map(key => {
         return {
           url: key,
+          title: `${this.currentCollection.name} image`,
+          description: 'Used in a project on this platform',
           tags: data[key].tags,
           manifest: data[key].manifest,
           thumbnail: data[key].thumbnail
@@ -200,13 +210,6 @@ export default {
             const b = new Set(selectedTagValues)
             const intersection = new Set([...a].filter(x => b.has(x)))
             return b.size === 0 || intersection.size > 0
-
-            // Uncomment below if we decide to switch to AND style queries
-            //
-            // const isSuperset = selectedTagValues.every((val) => {
-            //   return itemElem.tags.indexOf(val) >= 0
-            // })
-            // return selectedTagValues.length === 0 || isSuperset
           }
         }
       }
@@ -244,27 +247,14 @@ export default {
      *   The item.
      */
     loadMetadata (item) {
-      return new Promise((resolve, reject) => {
-        if (!item.manifest.length) {
-          resolve({
-            title: `${this.currentCollection.name} image`,
-            description: 'Used in one of the projects on this platform'
-          })
-          return
-        }
+      if (!item.manifest.length) {
+        return
+      }
 
-        this.$axios.$get(item.manifest, {
-          headers: {
-            'Content-type': 'text/plain' // to avoid CORS preflight
-          }
-        }).then(data => {
-          resolve({
-            title: data.label,
-            description: data.description
-          })
-        }).catch(err => {
-          reject(err)
-        })
+      return this.$axios.$get(item.manifest, {
+        headers: {
+          'Content-type': 'text/plain' // to avoid CORS preflight
+        }
       })
     },
 
@@ -274,22 +264,13 @@ export default {
     *   The item.
     */
     loadViewerLink (item) {
-      return new Promise((resolve, reject) => {
-        this.$axios.$get('/api/task', {
-          params: {
-            info: {
-              url: item.url
-            }
-          }
-        }).then(data => {
-          if (data.length) {
-            resolve(data[0].info.link)
-          } else {
-            reject(new Error('Related link not be found'))
-          }
-        }).catch(err => {
-          reject(err)
-        })
+      return this.$axios.$get('/api/task', {
+        params: {
+          info: {
+            url: item.url
+          },
+          limit: 1
+        }
       })
     },
 
@@ -297,26 +278,20 @@ export default {
      * Show a preview of the selected item.
      *
      * Collect the additional metadata before loading it into the modal.
-     * @param {Object} item
+     * @param {Object} url
      *   The selected item.
      */
     showPreview (item) {
-      const loadMetadataPromise = this.loadMetadata(item)
-      const loadViewerLinkPromise = this.loadViewerLink(item)
-      Promise.all([loadMetadataPromise, loadViewerLinkPromise]).then(values => {
-        item.title = values[0].title
-        item.description = values[0].description
-        item.link = values[1]
-        this.selectedImageData = item
+      const loadMdPromise = this.loadMetadata(item)
+      const loadLinkPromise = this.loadViewerLink(item)
+      Promise.all([loadMdPromise, loadLinkPromise]).then(values => {
+        if (values[0].label && values[0].description) {
+          item.title = values[0].label
+          item.description = values[0].description
+        }
+        item.link = values[1][0].info.link
+        this.selectedItem = item
         this.$refs.previewModal.show()
-      }).catch(err => {
-        console.error(err)
-        this.$notifications.error({
-          message: `Sorry, we're having trouble loading the additional metadata
-            required to display the preview for this item. We will get this
-            fixed as soon as possible. In the meantime, you can continue using
-            the rest of the platform as normal.`
-        })
       })
     },
 
@@ -328,6 +303,7 @@ export default {
     updateFilters (tags) {
       this.selectedTags = tags
       this.$refs.grid.filter('filterByTag')
+      this.$refs.infiniteload.load()
     }
   },
 
@@ -354,6 +330,23 @@ export default {
 
     @include media-breakpoint-up(xl) {
       width: 18%;
+    }
+  }
+}
+
+#preview-modal {
+  .fixed-close {
+    color: $gray-600;
+    background: transparent;
+    border: none;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+
+    &:hover {
+      color: $gray-600;
+      background: transparent;
+      border: none;
     }
   }
 }
