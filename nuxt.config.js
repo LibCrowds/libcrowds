@@ -12,13 +12,31 @@ const config = {
     meta: [] // Options pushed below depending on configuration
   },
   css: [
-    '~/assets/style/main.scss',
+    '~/assets/style/settings.scss',
+    'bootstrap/scss/bootstrap.scss',
+    'chartist/dist/scss/chartist.scss',
+    '~/assets/style/_cards.scss',
+    '~/assets/style/_charts.scss',
+    '~/assets/style/_code.scss',
+    '~/assets/style/_confetti.scss',
+    '~/assets/style/_fonts.scss',
+    '~/assets/style/_forms.scss',
+    '~/assets/style/_images.scss',
+    '~/assets/style/_labels.scss',
+    '~/assets/style/_modals.scss',
+    '~/assets/style/_tables.scss',
+    '~/assets/style/_buttons.scss',
+    '~/assets/style/_tabs.scss',
+    '~/assets/style/_scrollbar.scss',
+    '~/assets/style/_overflows.scss',
+    '~/assets/style/_badges.scss',
     'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css',
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.css',
     'vue-multiselect/dist/vue-multiselect.min.css',
     'simplemde/dist/simplemde.min.css',
-    'libcrowds-viewer/dist/scss/main.scss'
+    'libcrowds-viewer/dist/scss/main.scss',
+    'croppie/croppie'
   ],
   build: {
     vendor: [
@@ -99,7 +117,12 @@ const config = {
     },
 
     styleResources: {
-      scss: './assets/style/settings.scss'
+      scss: [
+        './assets/style/settings.scss',
+        './node_modules/bootstrap/scss/_functions.scss',
+        './node_modules/bootstrap/scss/_variables.scss',
+        './node_modules/bootstrap/scss/_mixins.scss'
+      ]
     }
   },
   plugins: [
