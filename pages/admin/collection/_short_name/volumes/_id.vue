@@ -68,6 +68,7 @@ import { getShortname } from '@/mixins/getShortname'
 import ImageUploadForm from '@/components/forms/ImageUpload'
 import PybossaForm from '@/components/forms/PybossaForm'
 import CardBase from '@/components/cards/Base'
+import VueFormGenerator from 'vue-form-generator'
 
 export default {
   layout: 'admin-collection-dashboard',
@@ -139,7 +140,9 @@ export default {
                 }
               },
               hint: 'The name of the volume',
-              disabled: this.hasProjects
+              disabled: this.hasProjects,
+              required: true,
+              validator: VueFormGenerator.validators.string
             },
             {
               model: 'short_name',
@@ -148,7 +151,9 @@ export default {
               inputType: 'text',
               hint: 'An identifier used, for example, in the file names of ' +
                 ' volume-level downloads',
-              disabled: this.hasProjects
+              disabled: this.hasProjects,
+              required: true,
+              validator: VueFormGenerator.validators.string
             },
             {
               type: 'select',
@@ -184,7 +189,9 @@ export default {
             inputType: 'text',
             placeholder: 'https://host/prefix/identifier/manifest.json',
             hint: 'A IIIF manifest URI',
-            disabled: this.hasProjects
+            disabled: this.hasProjects,
+            required: true,
+            validator: VueFormGenerator.validators.string
           }
         ],
         flickr: [
@@ -194,7 +201,9 @@ export default {
             type: 'input',
             inputType: 'text',
             hint: 'A Flickr album ID',
-            disabled: this.hasProjects
+            disabled: this.hasProjects,
+            required: true,
+            validator: VueFormGenerator.validators.string
           }
         ],
         gdocs: [
@@ -206,7 +215,9 @@ export default {
             placeholder: 'https://docs.google.com/spreadsheets/d/key/edit' +
               '?usp=sharing',
             hint: 'A shareable Google Docs spreadsheet URL',
-            disabled: this.hasProjects
+            disabled: this.hasProjects,
+            required: true,
+            validator: VueFormGenerator.validators.string
           }
         ]
         // TODO: Add S3, dropbox and maybe csv/gdocs
