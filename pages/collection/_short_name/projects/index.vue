@@ -11,28 +11,27 @@
       class="collection-nav-item"
       data-title="Get Started">
 
-      <b-col xl="3" class="d-none d-xl-block">
+      <b-col id="filter-card" xl="3" class="d-none d-xl-block">
         <b-card
-          header="Sorting Options"
+          header="Filters"
           class="options-card mb-2"
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <filter-projects-data
-            v-model="tagModel"
+            v-model="filterModel"
             :collection="collection"
-            @input="reset"
             @select="onFilter">
           </filter-projects-data>
-          <sort-projects-data
-            v-model="sortModel"
-            class="mb-2"
-            @input="reset"
-            @select="onSort">
-          </sort-projects-data>
-          <toggle-completed-data
-            class="mb-2"
-            v-model="showCompleted">
-          </toggle-completed-data>
+          <b-form
+            :class="darkMode ? 'mb-2 form-dark' : 'mb-2'">
+            <b-form-input
+              ref="search"
+              v-model="searchString"
+              class="search-control"
+              size="sm"
+              :placeholder="`Type to search by ${searchKeys.join(', ')}`">
+            </b-form-input>
+          </b-form>
           <b-btn
             block
             size="sm"
@@ -51,61 +50,37 @@
       </b-col>
 
       <b-col xl="9">
-        <card-base
-          title="Projects"
-          description="Choose a project"
-          class="d-xl-none">
-
-          <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
-            <b-form-input
-              v-model="filter"
-              class="search-control"
-              size="sm"
-              :placeholder="`Type to search by ${filterBy}`">
-            </b-form-input>
-          </b-form>
-
-          <projects-table
-            v-if="showProjectsTable"
-            :filter="filter"
-            :filter-by="filterBy"
-            :collection="collection">
-            <template slot="action" slot-scope="project">
-              <project-contrib-button
-                :collection="collection"
-                :project="project.item">
-              </project-contrib-button>
-            </template>
-          </projects-table>
-        </card-base>
-
         <transition-group
           tag="ul"
-          class="list-unstyled d-none d-xl-block"
+          class="list-unstyled"
           name="fade-up">
           <li v-for="project in filteredProjects" :key="project.id">
             <project-card
               :collection="collection"
               :project="project"
-              @tagclick="updateTagModel">
+              @filter="updateFilterModel">
             </project-card>
           </li>
         </transition-group>
 
-        <infinite-load-projects
+        <infinite-load-domain-objects
           ref="infiniteload"
-          :collection="collection"
-          :orderby="sortModel.orderby"
-          :desc="sortModel.desc"
+          domain-object="project"
+          v-model="projects"
+          :search-params="params"
+          :search-string="searchString"
+          :search-keys="searchKeys"
           no-results=""
           no-more-results=""
-          v-model="projects">
-        </infinite-load-projects>
+          @complete="projectLoadingComplete = true">
+        </infinite-load-domain-objects>
 
-        <p class="lead text-center" v-if="allProjectsFiltered">
-          No projects are currently available using the selected filters.
+        <p
+          class="lead text-center"
+          v-if="projectLoadingComplete && this.projects.length === 0">
+          No projects are currently available.
           <br>
-          You can use the input fields on the left to change them.
+          Try clearing any selected filters on the left of the screen.
         </p>
 
       </b-col>
@@ -115,19 +90,16 @@
 
 <script>
 import marked from 'marked'
+import asyncFilter from 'async/filter'
+import isEmpty from 'lodash/isEmpty'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { computeShareUrl } from '@/mixins/computeShareUrl'
-import { filterProjects } from '@/mixins/filterProjects'
 import SocialMediaButtons from '@/components/buttons/SocialMedia'
-import SortProjectsData from '@/components/data/SortProjects'
-import ToggleCompletedData from '@/components/data/ToggleCompleted'
 import FilterProjectsData from '@/components/data/FilterProjects'
 import ProjectCard from '@/components/cards/Project'
-import InfiniteLoadProjects from '@/components/InfiniteLoadProjects'
-import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
-import ProjectsTable from '@/components/tables/Projects'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -136,7 +108,6 @@ export default {
   mixins: [
     fetchCollectionByName,
     computeShareUrl,
-    filterProjects,
     collectionMetaTags
   ],
 
@@ -144,9 +115,10 @@ export default {
     return {
       title: 'Take Part',
       projects: [],
-      showCompleted: false,
-      filter: null,
-      filterBy: 'name',
+      searchString: null,
+      searchKeys: ['name'],
+      filterModel: {},
+      projectLoadingComplete: false,
       tableFields: {
         name: {
           label: 'Name'
@@ -166,24 +138,16 @@ export default {
           class: 'text-center'
         }
       },
-      sortModel: {
-        orderby: 'overall_progress',
-        desc: true
-      },
-      showProjectsTable: false
+      validProjectIds: new Set()
     }
   },
 
   components: {
-    SortProjectsData,
     FilterProjectsData,
-    ToggleCompletedData,
     ProjectCard,
-    InfiniteLoadProjects,
     SocialMediaButtons,
-    InfiniteLoadingTable,
+    InfiniteLoadDomainObjects,
     ProjectContribButton,
-    ProjectsTable,
     CardBase
   },
 
@@ -200,10 +164,6 @@ export default {
       return marked(this.collection.info.content.projects)
     },
 
-    allProjectsFiltered () {
-      return this.projects.length > 0 && this.filteredProjects.length === 0
-    },
-
     description () {
       return `Choose a ${this.collection.name} project to take part in.`
     },
@@ -211,6 +171,33 @@ export default {
     tweet () {
       return `Choose and play ${this.collection.name} and help enable future` +
         `research.`
+    },
+
+    filteredProjects () {
+      let filtered = this.projects.filter(project => {
+        return Number(project.stats.overall_progress) < 100
+      }).filter(project => {
+        for (let key of Object.keys(this.filterModel)) {
+          project.info.filters = project.info.filters || {}
+          if (project.info.filters[key] !== this.filterModel[key]) {
+            return false
+          }
+        }
+        return true
+      })
+
+      this.filterProjectsForUser(filtered)
+      return filtered
+    },
+
+    params () {
+      return {
+        category_id: this.collection.id,
+        stats: 1,
+        all: 1,
+        orderby: 'created',
+        desc: 1
+      }
     }
   },
 
@@ -236,49 +223,77 @@ export default {
     },
 
     /**
-     * Track sorting.
+     * Set a filter.
+     * @param {String} type
+     *   The type.
      * @param {String} value
-     *   The sorting value.
+     *   The value.
      */
-    onSort (value) {
-      if (this.$ga) {
-        this.$ga.event({
-          eventCategory: 'Sorts',
-          eventAction: `${value.orderby}_${value.desc ? 'desc' : 'asc'}`,
-          eventLabel: this.collection.name,
-          eventValue: 1
-        })
-      }
+    updateFilterModel (type, value) {
+      this.filterModel[type] = value
+      // Create a new object to trigger changes
+      this.filterModel = Object.assign({}, this.filterModel)
     },
 
     /**
-     * Reset the infinite loading table.
+     * Clear the current filters.
+     */
+    clearFilters () {
+      this.$refs.search.$el.value = ''
+      this.filterModel = Object.assign({})
+    },
+
+    /**
+     * Filter projects where a new task is available for the current user.
      *
-     * Change the number param if the transition time changes.
+     * Check each project to see if we can get a task for the current user.
+     * Not the most efficient as we have to make an additional call for
+     * each project. There could also be a problem with rate limiting if
+     * the user has finished hundreds of projects that are not yet complete,
+     * but hopefully that is unlikely! We might see if we can update the
+     * PYBOSSA API at some point to filter these out in the same request.
+     * @param {Array} projects
+     *   The projects.
      */
-    reset () {
-      this.$refs.infiniteload.reset(500)
-    },
-
-    /**
-     * Remove the table on large screens.
-     */
-    setTableVisiblity () {
-      this.showProjectsTable = window.innerWidth < 1200
+    filterProjectsForUser (projects) {
+      asyncFilter(projects, (p, callback) => {
+        if (this.validProjectIds.has(p.id)) {
+          callback(null, true)
+          return
+        }
+        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
+          if (!isEmpty(data) && !data.info.hasOwnProperty('error')) {
+            this.validProjectIds.add(p.id)
+            callback(null, true)
+          } else {
+            callback(null, false)
+          }
+        }).catch(err => {
+          this.$nuxt.error(err)
+        })
+      })
     }
   },
 
   mounted () {
     const nodes = document.querySelectorAll('.collection-nav-item')
     this.$store.dispatch('UPDATE_COLLECTION_NAV_ITEMS', nodes)
-
-    // The table won't load while hidden so listen for window size
-    window.addEventListener('resize', this.setTableVisiblity)
-    this.setTableVisiblity()
   },
 
-  beforeDestroy () {
-    window.removeEventListener('resize', this.setTableVisiblity)
+  watch: {
+    searchString () {
+      if (!this.projectLoadingComplete) {
+        this.$refs.infiniteload.load()
+      }
+    }
   }
 }
 </script>
+
+<style lang="scss">
+#filter-card {
+  .multiselect--active {
+    z-index: 4; // Show over the toggle button
+  }
+}
+</style>

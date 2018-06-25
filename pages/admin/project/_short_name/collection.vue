@@ -1,20 +1,29 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/collection/">
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
-        v-model="filter"
+        v-model="searchString"
         class="search-control"
         size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
+        :placeholder="`Type to search by ${searchKeys.join(', ')}`">
       </b-form-input>
     </b-form>
+
+    <p slot="guidance">
+      The collection microsite associated with a project will be set during
+      project creation. However, on the rare occasion that it is necessary, it
+      can be changed via the form below.
+    </p>
 
     <infinite-loading-table
       ref="table"
       :fields="tableFields"
-      :filter="filter"
-      :filter-by="filterBy"
+      :search-string="searchString"
+      :search-keys="searchKeys"
       domain-object="category">
       <template slot="action" slot-scope="collection">
         <b-btn
@@ -26,6 +35,7 @@
         </b-btn>
       </template>
     </infinite-loading-table>
+
   </card-base>
 </template>
 
@@ -58,9 +68,9 @@ export default {
         }
       },
       searchParams: {},
-      updatedCollectionId: null,
-      filter: null,
-      filterBy: 'name'
+      searchString: null,
+      searchKeys: ['name'],
+      updatedCollectionId: null
     }
   },
 

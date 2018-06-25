@@ -1,0 +1,19 @@
+.custom-scrollbar,
+.modal-body {
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $gray-400;
+    outline: 1px solid $gray-200;
+  }
+}
+
+.dark-mode {
+  .custom-scrollbar::-webkit-scrollbar-thumb,
+  .modal-body::-webkit-scrollbar-thumb {
+    background-color: $gray-800;
+    outline: 1px solid $gray-600;
+  }
+}

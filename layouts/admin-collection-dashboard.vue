@@ -1,5 +1,26 @@
 <template>
   <dashboard-base :nav-items="navItems">
+
+    <b-alert
+      show
+      variant="secondary"
+      slot="message"
+      class="text-center"
+      v-if="missingPresenter">
+      The collection microsite cannot be published until the task presenter
+      has been configured; visit the
+      <nuxt-link
+        :to="{
+          name: 'admin-collection-short_name-presenter',
+          params: {
+            short_name: currentCollection.short_name
+          }
+        }">
+        Task Presenter settings
+      </nuxt-link>
+      page.
+    </b-alert>
+
   </dashboard-base>
 </template>
 
@@ -18,6 +39,16 @@ export default {
   computed: {
     currentCollection () {
       return this.$store.state.currentCollection
+    },
+
+    missingPresenter () {
+      if (
+        !isEmpty(this.currentCollection) &&
+        !this.currentCollection.info.presenter
+      ) {
+        return true
+      }
+      return false
     },
 
     navItems () {
@@ -43,6 +74,24 @@ export default {
             }
           },
           {
+            label: 'Annotations',
+            link: {
+              name: 'admin-collection-short_name-annotations',
+              params: {
+                short_name: this.currentCollection.short_name
+              }
+            }
+          },
+          {
+            label: 'Forum Integration',
+            link: {
+              name: 'admin-collection-short_name-forum',
+              params: {
+                short_name: this.currentCollection.short_name
+              }
+            }
+          },
+          {
             label: 'Celebrations',
             link: {
               name: 'admin-collection-short_name-celebrations',
@@ -52,9 +101,9 @@ export default {
             }
           },
           {
-            label: 'Tags',
+            label: 'Project Filters',
             link: {
-              name: 'admin-collection-short_name-tags',
+              name: 'admin-collection-short_name-filters',
               params: {
                 short_name: this.currentCollection.short_name
               }

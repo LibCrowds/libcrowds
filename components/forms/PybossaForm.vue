@@ -208,11 +208,11 @@ export default {
         return
       }
 
+      this.$emit('submit', this.form.model)
+
       if (this.noSubmit) {
         return
       }
-
-      this.$emit('submit', this.form)
 
       if (!this.confirmation) {
         this.process()
@@ -269,7 +269,7 @@ export default {
     },
 
     /**
-     * Submit the form the event wasn't triggered via a textarea.
+     * Submit the form if the event wasn't triggered via a textarea.
      * @param {Object} evt
      *   The event.
      */

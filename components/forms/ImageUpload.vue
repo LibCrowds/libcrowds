@@ -18,7 +18,8 @@
         ref="formfile"
         accept="image/*"
         v-model="model[fileField]"
-        @input="onInput">
+        @input="onInput"
+        :required="true">
       </b-form-file>
     </div>
 
@@ -26,8 +27,9 @@
 </template>
 
 <script>
-import keys from 'lodash/keys'
+import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
+import keys from 'lodash/keys'
 import axios from 'axios'
 import localConfig from '@/local.config'
 import FormBase from '@/components/forms/Base'
@@ -120,6 +122,14 @@ export default {
       for (let field in this.model) {
         formData.append(field, this.model[field])
       }
+      if (isEmpty(formData)) {
+        this.processing = false
+        this.$notifications.error({
+          status: 'error',
+          message: 'You must provide an image file'
+        })
+        return
+      }
 
       axios({
         baseURL: localConfig.pybossaHost,
@@ -131,9 +141,18 @@ export default {
         },
         withCredentials: true
       }).then(response => {
-        this.$notifications.flash(response.data)
+        if (response.data.status && response.data.message) {
+          this.$notifications.flash(response.data)
+        } else {
+          // For API endpoints without flash messages
+          this.$notifications.success({
+            message: 'Image uploaded'
+          })
+        }
       }).catch(err => {
-        this.$nuxt.error(err)
+        this.$notifications.error({
+          message: err.message
+        })
       }).then(() => {
         this.processing = false
       })
@@ -197,7 +216,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~croppie/croppie';
 .image-upload {
   .custom-file {
     width: 100%;

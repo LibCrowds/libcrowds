@@ -6,13 +6,9 @@
       show-empty
       :outlined="outlined"
       :dark="darkMode"
-      :items="filteredItems"
+      :items="items"
       :fields="tableFields"
       @sort-changed="onSortChange">
-
-      <template slot="nTags" slot-scope="data">
-        {{ Object.keys(data.item.info.tags || {}).length }}
-      </template>
 
       <template slot="created" slot-scope="data">
         {{ data.item.created | moment('calendar') }}
@@ -32,21 +28,21 @@
 
     </b-table>
 
-    <infinite-load
+    <infinite-load-domain-objects
       ref="infiniteload"
-      :all="all"
       :domain-object="domainObject"
       v-model="items"
       :search-params="mergedParams"
+      :search-keys="searchKeys"
+      :search-string="searchString"
       no-more-results="No more results">
-    </infinite-load>
+    </infinite-load-domain-objects>
 
   </div>
 </template>
 
 <script>
-import merge from 'lodash/merge'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 
 export default {
   data () {
@@ -57,7 +53,7 @@ export default {
   },
 
   components: {
-    InfiniteLoad
+    InfiniteLoadDomainObjects
   },
 
   props: {
@@ -69,13 +65,13 @@ export default {
       type: Object,
       default: () => ({})
     },
-    filter: {
+    searchString: {
       type: String,
-      default: null
+      default: ''
     },
-    filterBy: {
-      type: String,
-      default: null
+    searchKeys: {
+      type: Array,
+      default: () => ([])
     },
     fields: {
       type: Object,
@@ -84,10 +80,6 @@ export default {
     outlined: {
       type: Boolean,
       default: false
-    },
-    all: {
-      type: Boolean,
-      default: true
     }
   },
 
@@ -104,25 +96,14 @@ export default {
     },
 
     mergedParams () {
-      return merge({}, this.searchParams, this.sortParams)
-    },
-
-    filteredItems () {
-      if (!this.filter || !this.filterBy) {
-        return this.items
-      }
-
-      return this.items.filter(item => {
-        const value = this.filter.toUpperCase()
-        const cell = item[this.filterBy]
-        return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
-      })
+      const params = JSON.parse(JSON.stringify(this.searchParams))
+      return Object.assign({}, params, this.sortParams)
     }
   },
 
   methods: {
     /**
-     * Handle sort change.
+     * Handle table sort change.
      */
     onSortChange (value) {
       this.sortParams = {
@@ -136,14 +117,6 @@ export default {
      */
     reset () {
       this.$refs.infiniteload.reset()
-    }
-  },
-
-  watch: {
-    filteredItems (val) {
-      if (val.length !== this.items.length) {
-        this.$refs.infiniteload.load()
-      }
     }
   }
 }

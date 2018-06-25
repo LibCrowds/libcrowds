@@ -13,6 +13,23 @@
       disable-modals
       @submit="onSubmit"
       @toolbarbtnclick="onToolbarBtnClick">
+      <b-btn-group slot="footer" class="mb-1 d-flex">
+        <b-btn
+          v-if="extraTagLink.length"
+          class="m-0"
+          size="sm"
+          variant="link"
+          @click="$emit('tags')">
+          {{ extraTagLink }}
+        </b-btn>
+        <b-btn
+          size="sm"
+          class="m-0"
+          variant="link"
+          @click="$emit('reject')"
+          v-html="rejectButtonText">
+        </b-btn>
+      </b-btn-group>
     </libcrowds-viewer>
 
     <p class="mb-0 text-white d-flex align-items-center
@@ -28,12 +45,6 @@ import marked from 'marked'
 import pluralize from 'pluralize'
 
 export default {
-  data () {
-    return {
-      taskTmpl: this.projectTemplate.task
-    }
-  },
-
   props: {
     project: {
       type: Object,
@@ -43,8 +54,8 @@ export default {
       type: Object,
       required: true
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     projectTemplate: {
@@ -60,27 +71,26 @@ export default {
     },
 
     taskOpts () {
-      return this.tasks.map(task => {
-        const opts = Object.assign(this.taskTmpl, task.info)
+      const opts = Object.assign(this.projectTemplate.task, this.task.info)
 
-        // Build the form for transcribe tasks
-        if (opts.hasOwnProperty('fields_schema')) {
-          opts['form'] = {
-            model: opts.fields_schema.reduce((obj, item) => {
-              obj[item.model] = ''
-              return obj
-            }, {}),
-            schema: {
-              fields: opts.fields_schema
-            }
+      // Build the form for transcribe tasks
+      if (opts.hasOwnProperty('fields_schema')) {
+        opts['form'] = {
+          model: opts.fields_schema.reduce((obj, item) => {
+            obj[item.model] = ''
+            return obj
+          }, {}),
+          schema: {
+            fields: opts.fields_schema
           }
         }
+      }
 
-        // Add the task ID
-        opts.id = task.id
+      // Add the task ID
+      opts.id = this.task.id
 
-        return opts
-      })
+      // LibCrowds viewer currently requires an Array of options
+      return [opts]
     },
 
     sidebarButtons () {
@@ -90,17 +100,28 @@ export default {
       }
     },
 
+    extraTagLink () {
+      return this.collection.info.presenter_options.extra_tag_link
+    },
+
+    rejectButtonText () {
+      const customText = this.collection.info.presenter_options.reject_button
+      return typeof customText === 'undefined'
+        ? 'Reject'
+        : marked(customText)
+    },
+
     toolbarButtons () {
       return {
         browse: false,
-        'share-alt': 'Share'
+        'share-alt': 'Share',
+        'tags': 'Add Tags'
       }
     },
 
     showViewer () {
       return (
         this.projectTemplateIsValid(this.projectTemplate) &&
-        this.tasks.length &&
         this.taskOpts.length
       )
     }
@@ -128,6 +149,8 @@ export default {
         this.$emit('help')
       } else if (key === 'info') {
         this.$emit('info')
+      } else if (key === 'tags') {
+        this.$emit('tags')
       }
     },
 

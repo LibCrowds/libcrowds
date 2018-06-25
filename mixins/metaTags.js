@@ -1,6 +1,25 @@
 import localConfig from '@/local.config'
 
 /**
+ * Return social media profile structured metadata.
+ */
+function socialProfileSchema () {
+  const social = typeof localConfig.social === 'undefined'
+    ? []
+    : localConfig.social
+  return {
+    innerHTML: `{
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": "${localConfig.brand}",
+      "url": "${localConfig.libcrowdsHost}",
+      "sameAs": [${social.map(item => `"${item}"`)}]
+    }`,
+    type: 'application/ld+json'
+  }
+}
+
+/**
  * Return the metadata for social media cards.
  * @param {Object} metadata
  *   The required metadata.
@@ -108,7 +127,11 @@ export const metaTags = {
           image: image,
           imageAlt: `${localConfig.brand} image`
         })
-      ]
+      ],
+      script: [
+        socialProfileSchema()
+      ],
+      __dangerouslyDisableSanitizers: ['script']
     }
   }
 }
@@ -146,7 +169,11 @@ export const collectionMetaTags = {
           image: image,
           imageAlt: `${collection.name} image`
         })
-      ]
+      ],
+      script: [
+        socialProfileSchema()
+      ],
+      __dangerouslyDisableSanitizers: ['script']
     }
   }
 }
@@ -161,14 +188,18 @@ export const projectMetaTags = {
     let image = project.info && project.info.thumbnail_url
       ? project.info.thumbnail_url
       : null
-    const projectRoute = this.$router.resolve({
-      name: 'collection-short_name-projects-id-presenter',
+    const projectRouteData = {
+      name: 'collection-short_name-projects-id',
       params: {
         short_name: collection.short_name,
-        id: project.id,
-        presenter: collection.info.presenter
+        id: project.id
       }
-    })
+    }
+    if (collection.info.presenter) {
+      projectRouteData.name = projectRouteData.name + '-presenter'
+      projectRouteData.params.presenter = collection.info.presenter
+    }
+    const projectRoute = this.$router.resolve(projectRouteData)
     const url = localConfig.libcrowdsHost + projectRoute.href
 
     if (image && image.indexOf('/uploads') === 0) {
@@ -191,7 +222,11 @@ export const projectMetaTags = {
           image: image,
           imageAlt: `${project.name} image`
         })
-      ]
+      ],
+      script: [
+        socialProfileSchema()
+      ],
+      __dangerouslyDisableSanitizers: ['script']
     }
   }
 }

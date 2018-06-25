@@ -1,5 +1,15 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/template/">
+
+    <p slot="guidance">
+      The template associated with a project will be set during project
+      creation. However, on the rare occasion that it is necessary, the
+      template can be changed via the form below.
+    </p>
+
     <templates-table
       show-details
       :collection-id="project.category_id"
@@ -15,9 +25,9 @@
           variant="success"
           size="sm"
           :to="{
-            name: 'account-name-templates-id',
+            name: 'admin-template-short_name-id',
             params: {
-              name: currentUser.name,
+              short_name: currentCollection.short_name,
               id: tmpl.item.id
             }
           }">
@@ -25,6 +35,7 @@
         </b-btn>
       </template>
     </templates-table>
+
   </card-base>
 </template>
 
@@ -44,9 +55,7 @@ export default {
   data () {
     return {
       title: 'Template',
-      description: 'Choose the template associated with this project.',
-      filter: null,
-      filterBy: 'name'
+      description: 'Choose the template associated with this project.'
     }
   },
 

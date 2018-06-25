@@ -6,16 +6,25 @@
       <b-col>
         <b-btn-group>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('help')">
-            <icon name="question-circle"></icon>
+            <icon name="question-circle" class="mr-1"></icon>
+            <small>Help</small>
           </b-btn>
           <b-btn
-            class="d-flex"
+            class="d-flex align-items-center"
             variant="outline-primary"
             @click="$emit('share')">
-            <icon name="share-alt"></icon>
+            <icon name="share-alt" class="mr-1"></icon>
+            <small>Share</small>
+          </b-btn>
+          <b-btn
+            class="d-flex align-items-center"
+            variant="outline-primary"
+            @click="$emit('tags')">
+            <icon name="tags" class="mr-1"></icon>
+            <small>Add Tags</small>
           </b-btn>
         </b-btn-group>
       </b-col>
@@ -29,9 +38,16 @@
           no-body
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null"
-          v-if="currentTask" >
-          <img :src="currentTask.info.url" class="img-fluid">
+          v-if="task" >
+          <img :src="task.info.url" class="img-fluid">
         </b-card>
+
+        <b-btn
+          v-if="extraTagLink.length"
+          variant="link"
+          @click="$emit('tags')">
+          {{ extraTagLink }}
+        </b-btn>
 
       </b-col>
       <b-col lg="6" class="mt-3 mt-lg-0">
@@ -166,8 +182,8 @@
               </b-btn>
               <b-btn
                 variant="dark"
-                @click="onSkip">
-                Skip / Not Found
+                @click="$emit('reject')"
+                v-html="rejectButtonText">
               </b-btn>
               <b-btn
                 v-if="stage !== 'results'"
@@ -197,6 +213,7 @@
 import 'vue-awesome/icons/question-circle'
 import 'vue-awesome/icons/info-circle'
 import 'vue-awesome/icons/share-alt'
+import 'vue-awesome/icons/tags'
 import marked from 'marked'
 import capitalize from 'capitalize'
 import isEmpty from 'lodash/isEmpty'
@@ -279,8 +296,8 @@ export default {
       type: Object,
       required: true
     },
-    tasks: {
-      type: Array,
+    task: {
+      type: Object,
       required: true
     },
     projectTemplate: {
@@ -298,10 +315,6 @@ export default {
       return this.$store.state.currentUser
     },
 
-    currentTask () {
-      return this.tasks[0]
-    },
-
     buttons () {
       return {
         like: !isEmpty(this.currentUser)
@@ -316,6 +329,13 @@ export default {
       return marked(this.collection.info.presenter_options.share_text)
     },
 
+    rejectButtonText () {
+      const customText = this.collection.info.presenter_options.reject_button
+      return typeof customText === 'undefined'
+        ? 'Skip / Not Found'
+        : marked(customText)
+    },
+
     noteButtonText () {
       return marked(this.collection.info.presenter_options.note_button)
     },
@@ -325,6 +345,10 @@ export default {
         return marked(this.collection.info.presenter_options.submit_button)
       }
       return capitalize(this.stage)
+    },
+
+    extraTagLink () {
+      return this.collection.info.presenter_options.extra_tag_link
     },
 
     stage () {
@@ -376,6 +400,7 @@ export default {
 
         if (!results.data.length) {
           $state.complete()
+          this.$emit('complete')
           return
         }
 
@@ -508,7 +533,6 @@ export default {
           this.submit({
             control_number: '',
             reference: '',
-            form: this.searchForm.model,
             comments: this.$refs.comments.value
           })
         }
@@ -542,7 +566,7 @@ export default {
      *   The answer.
      */
     submit (answer) {
-      this.$emit('submit', this.project.id, this.currentTask.id, answer)
+      this.$emit('submit', this.project.id, this.task.id, answer)
       this.reset()
     },
 

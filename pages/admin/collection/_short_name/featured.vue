@@ -1,12 +1,15 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/featured/">
 
     <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
       <b-form-input
-        v-model="filter"
+        v-model="searchString"
         class="search-control"
         size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
+        :placeholder="`Type to search by ${searchKeys.join(', ')}`">
       </b-form-input>
     </b-form>
 
@@ -21,10 +24,16 @@
       to be constantly updated.
     </p>
 
-    <projects-table
-      :filter="filter"
-      :filter-by="filterBy"
-      :collection="collection">
+    <infinite-loading-table
+      :fields="projectTableFields"
+      :search-string="searchString"
+      :search-keys="searchKeys"
+      :search-params="{
+        category_id: collection.id,
+        stats: 1,
+        all: 1
+      }"
+      domain-object="project">
       <template slot="action" slot-scope="project">
         <b-btn
           :variant="project.item.featured ? 'warning' : 'success'"
@@ -33,7 +42,7 @@
           {{ getButtonText(project.item.featured) }}
         </b-btn>
       </template>
-    </projects-table>
+    </infinite-loading-table>
 
   </card-base>
 </template>
@@ -41,7 +50,7 @@
 <script>
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import { metaTags } from '@/mixins/metaTags'
-import ProjectsTable from '@/components/tables/Projects'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -54,13 +63,23 @@ export default {
       title: 'Featured',
       description: `Choose the projects that appear on the microsite's
         homepage.`,
-      filter: null,
-      filterBy: 'name'
+      searchString: null,
+      searchKeys: ['name'],
+      projectTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        'stats.overall_progress': {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell'
+        }
+      }
     }
   },
 
   components: {
-    ProjectsTable,
+    InfiniteLoadingTable,
     CardBase
   },
 

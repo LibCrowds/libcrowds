@@ -1,5 +1,9 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/admin/user-management/">
+
     <div slot="controls" class="d-flex align-items-center float-md-right">
       <b-btn
         variant="success"
@@ -13,6 +17,7 @@
       Use the search box below to locate users by name in order to view
       their details or assign admin rights.
     </p>
+    <hr class="my-1">
 
     <pybossa-form
       ref="search"
