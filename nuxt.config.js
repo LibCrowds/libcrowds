@@ -117,12 +117,7 @@ const config = {
     },
 
     styleResources: {
-      scss: [
-        './assets/style/settings.scss',
-        './node_modules/bootstrap/scss/_functions.scss',
-        './node_modules/bootstrap/scss/_variables.scss',
-        './node_modules/bootstrap/scss/_mixins.scss'
-      ]
+      scss: 'assets/style/settings.scss'
     }
   },
   plugins: [
