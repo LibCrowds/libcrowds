@@ -36,7 +36,7 @@ const config = {
     'vue-multiselect/dist/vue-multiselect.min.css',
     'simplemde/dist/simplemde.min.css',
     'libcrowds-viewer/dist/scss/main.scss',
-    'croppie/croppie'
+    'croppie/croppie.css'
   ],
   build: {
     vendor: [
