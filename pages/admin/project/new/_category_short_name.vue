@@ -115,9 +115,35 @@ export default {
     const endpoint = `/lc/projects/${params.category_short_name}/new`
     return app.$axios.$get(endpoint).then(data => {
       return {
-        endpoint: endpoint,
-        formModel: data.form,
-        built_projects: data.built_projects
+        built_projects: data.built_projects,
+        form: {
+          endpoint: endpoint,
+          method: 'post',
+          model: data.form,
+          schema: {
+            fields: [
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Name',
+                model: 'name',
+                placeholder: 'Your Project Name',
+                hint: 'The name of the project (generated according to the ' +
+                  'chosen template and volume).'
+              },
+              {
+                type: 'input',
+                inputType: 'text',
+                label: 'Short name',
+                model: 'short_name',
+                placeholder: 'your_project_name',
+                hint: 'An identifier used, for example, in the names of any ' +
+                  'downloadable files (generated according to the ' +
+                  'chosen template and volume).'
+              }
+            ]
+          }
+        }
       }
     }).catch(err => {
       error(err)
@@ -140,39 +166,6 @@ export default {
 
     currentCollection () {
       return this.$store.state.currentCollection
-    },
-
-    form () {
-      return {
-        endpoint: this.endpoint,
-        method: 'post',
-        model: this.formModel,
-        schema: {
-          fields: [
-            {
-              type: 'input',
-              inputType: 'text',
-              label: 'Name',
-              model: 'name',
-              readonly: true,
-              placeholder: 'Your Project Name',
-              hint: 'The name of the project (generated according to the ' +
-                'chosen template and volume).'
-            },
-            {
-              type: 'input',
-              inputType: 'text',
-              label: 'Short name',
-              model: 'short_name',
-              readonly: true,
-              placeholder: 'your_project_name',
-              hint: 'An identifier used, for example, in the names of any ' +
-                'downloadable files (generated according to the ' +
-                'chosen template and volume).'
-            }
-          ]
-        }
-      }
     },
 
     availableTemplates () {
@@ -233,7 +226,7 @@ export default {
      *   The template.
      */
     selectTemplate (tmpl) {
-      this.formModel.template_id = tmpl.id
+      this.form.model.template_id = tmpl.id
       this.setNameAndShortName()
     },
 
@@ -243,7 +236,7 @@ export default {
      *   The volume.
      */
     selectVolume (volume) {
-      this.formModel.volume_id = volume.id
+      this.form.model.volume_id = volume.id
       this.setNameAndShortName()
     },
 
@@ -254,8 +247,8 @@ export default {
       const tmplName = this.selectedTemplate.name || ''
       const volName = this.selectedVolume.name || ''
       const name = `${tmplName}: ${volName}`
-      this.formModel.name = name
-      this.formModel.short_name = this.getShortname(name)
+      this.form.model.name = name
+      this.form.model.short_name = this.getShortname(name)
     },
 
     /**
