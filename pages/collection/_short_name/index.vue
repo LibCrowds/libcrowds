@@ -55,7 +55,10 @@
       </b-container>
     </section>
 
-    <section id="social-proof" class="opaque-navbar">
+    <section
+      v-if="localConfig.flarum.url && collection.info.forum.tag"
+      id="social-proof"
+      class="opaque-navbar">
       <b-container>
         <b-row>
           <b-col
@@ -118,7 +121,7 @@
                 <b-btn
                   :variant="darkMode ? 'dark' : 'outline-dark'"
                   class="mt-md-2"
-                  :href="collection.info.forum.url">
+                  :href="`${localConfig.flarum.url}/t/${collection.info.forum.tag}`">
                   Visit the forum
                 </b-btn>
               </div>
