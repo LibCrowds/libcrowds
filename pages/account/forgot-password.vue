@@ -43,7 +43,8 @@ export default {
                 label: 'Email',
                 type: 'input',
                 inputType: 'email',
-                placeholder: 'you@example.com'
+                placeholder: 'you@example.com',
+                hint: 'Please enter your email address'
               }
             ]
           }

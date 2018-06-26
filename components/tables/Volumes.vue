@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import merge from 'lodash/merge'
 import SmallAvatar from '@/components/avatars/Small'
 
 export default {
@@ -109,7 +108,8 @@ export default {
 
   computed: {
     mergedFields () {
-      const fields = merge({}, this.defaultFields, this.extraFields)
+      const defaultsCopy = JSON.parse(JSON.stringify(this.defaultFields))
+      const fields = Object.assign(defaultsCopy, this.extraFields)
       if (this.showDetails) {
         fields.n_ongoing_projects = {
           label: 'Ongoing Projects',

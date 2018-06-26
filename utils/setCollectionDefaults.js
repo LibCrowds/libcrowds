@@ -1,5 +1,4 @@
 import localConfig from '@/local.config'
-import merge from 'lodash/merge'
 
 /**
  * Set the info field defaults for a collection.
@@ -8,7 +7,6 @@ import merge from 'lodash/merge'
  */
 export const setCollectionDefaults = function (collection) {
   const defaults = {
-    forum: null,
     tagline: '',
     background: null,
     license: 'CC0',
@@ -16,7 +14,8 @@ export const setCollectionDefaults = function (collection) {
     presenter_options: {
       note_button: 'Add a note',
       submit_button: 'Save',
-      share_text: ''
+      share_text: '',
+      extra_tag_link: ''
     },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +
@@ -36,9 +35,13 @@ export const setCollectionDefaults = function (collection) {
         '## Custom datasets' +
         'Custom datasets are configured by administrators and provide a ' +
         'view of all of the final annotations data within the collection.',
-      projects: ''
+      projects: '',
+      browse: `Browse items from the projects hosted on ${collection.name}.` +
+        '\n\nYou can use the search box to locate items of particular ' +
+        'interest, then click on an item to view additional details and ' +
+        'a link to the source.'
     },
-    pubished: false,
+    published: false,
     celebrations: {
       confetti: 'heart',
       user: '# Horay!\n\n' +
@@ -50,15 +53,17 @@ export const setCollectionDefaults = function (collection) {
         'This project is now complete.\n\n The data will be processed ' +
         'and used to directly enabled future research.'
     },
+    annotations: {},
     volumes: [],
     templates: [],
-    export_formats: []
+    project_filters: [],
+    forum: {}
   }
-  collection.info = merge(defaults, collection.info)
+  collection.info = Object.assign(defaults, collection.info)
 
-  // Ensure tags is an array
-  if (!Array.isArray(collection.info.tags)) {
-    collection.info.tags = []
+  // Ensure project_filters is an array
+  if (!Array.isArray(collection.info.project_filters)) {
+    collection.info.project_filters = []
   }
 
   // Ensure volumes is an array
@@ -71,8 +76,14 @@ export const setCollectionDefaults = function (collection) {
     collection.info.templates = []
   }
 
-  // Ensure export_formats is an array
-  if (!Array.isArray(collection.info.export_formats)) {
-    collection.info.export_formats = []
+  // Ensure forum is an object (before v.1.0.0-beta.10 it was a string)
+  if (typeof collection.info.forum !== 'object') {
+    // We'll switch over the tag to the new field here but this should be
+    // removed in the next version
+    const parts = collection.info.forum.split('/')
+    collection.info.forum = {
+      url: typeof collection.info.forum,
+      tag: parts[parts.length - 1]
+    }
   }
 }

@@ -102,7 +102,7 @@ export const routes = [
   {
     path: '/admin/site/announcements/:id/update',
     component: jest.fn(),
-    name: 'admin-site-announcements-id-update'
+    name: 'admin-site-announcements-id'
   },
   {
     path: '/admin/project/:short_name/thumbnail',

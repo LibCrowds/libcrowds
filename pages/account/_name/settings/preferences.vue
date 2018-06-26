@@ -7,6 +7,7 @@
       <div slot="bottom" class="d-flex">
         <no-ssr>
           <toggle-button
+            v-if="currentUser.info"
             v-model="currentUser.info.hide_tutorials"
             :labels="true"
             class="mb-0">
@@ -70,6 +71,7 @@ export default {
      */
     updateCurrentUser () {
       this.$store.dispatch('UPDATE_CURRENT_USER', this.$axios)
+      this.$notifications.success({ message: 'Preferences updated' })
     }
   }
 }

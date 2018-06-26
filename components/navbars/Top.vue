@@ -22,7 +22,7 @@
       </b-link>
 
       <!-- Main menu -->
-      <b-navbar-nav class="main-nav-menu d-none d-lg-flex">
+      <b-navbar-nav class="main-nav-menu d-none d-xl-flex">
         <b-nav-item
           v-for="(item, index) in currentMicrositeNavItems"
           :key="index"
@@ -219,7 +219,9 @@ export default {
     },
 
     /**
-     * Remove navbar transparency if over an opaque-navbar element.
+     * Remove navbar transparency.
+     *
+     * Applies if over an opaque-navbar element, or if on an extra-small screen.
      */
     styleNavbar: throttle(
       function () {
@@ -246,6 +248,12 @@ export default {
             return
           }
         }
+
+        if (window.innerWidth < 576) {
+          this.navbarVariant = null
+          return
+        }
+
         if (this.transparent) {
           this.navbarVariant = 'transparent'
         }
@@ -255,11 +263,14 @@ export default {
   },
 
   mounted () {
+    this.styleNavbar()
     window.addEventListener('scroll', this.styleNavbar)
+    window.addEventListener('resize', this.styleNavbar)
   },
 
   destroyed () {
     window.removeEventListener('scroll', this.styleNavbar)
+    window.addEventListener('resize', this.styleNavbar)
   }
 }
 </script>

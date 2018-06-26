@@ -1,14 +1,14 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/volume/">
 
-    <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
-      <b-form-input
-        v-model="filter"
-        class="search-control"
-        size="sm"
-        :placeholder="`Type to search by ${filterBy}`">
-      </b-form-input>
-    </b-form>
+    <p slot="guidance">
+      The volume associated with a project will be set during project
+      creation. However, on the rare occasion that it is necessary, the
+      volume can be changed via the form below.
+    </p>
 
     <volumes-table :volumes="volumes">
       <template slot="action" slot-scope="vol">
@@ -20,6 +20,7 @@
         </b-btn>
       </template>
     </volumes-table>
+
   </card-base>
 </template>
 
@@ -39,9 +40,7 @@ export default {
   data () {
     return {
       title: 'Volume',
-      description: 'Choose the volume associated with this project.',
-      filter: null,
-      filterBy: 'name'
+      description: 'Choose the volume associated with this project.'
     }
   },
 
@@ -61,21 +60,6 @@ export default {
 
     currentVolumeId () {
       return this.project.info.volume_id
-    },
-
-    /**
-     * Filter volumes.
-     */
-    filteredVolumes () {
-      if (!this.filter) {
-        return this.volumes
-      }
-
-      return this.volumes.filter(volume => {
-        const value = this.filter.toUpperCase()
-        const cell = volume[this.filterBy]
-        return JSON.stringify(cell).toUpperCase().indexOf(value) > -1
-      })
     }
   },
 

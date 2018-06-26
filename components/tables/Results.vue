@@ -42,19 +42,19 @@
 
     </b-table>
 
-    <infinite-load
+    <infinite-load-domain-objects
       domain-object="result"
       v-model="items"
       :search-params="mergedParams"
       no-more-results="No more results">
-    </infinite-load>
+    </infinite-load-domain-objects>
 
   </div>
 </template>
 
 <script>
 import isEmpty from 'lodash/isEmpty'
-import InfiniteLoad from '@/components/InfiniteLoad'
+import InfiniteLoadDomainObjects from '@/components/infiniteload/DomainObjects'
 
 export default {
   data () {
@@ -86,7 +86,7 @@ export default {
   },
 
   components: {
-    InfiniteLoad
+    InfiniteLoadDomainObjects
   },
 
   props: {

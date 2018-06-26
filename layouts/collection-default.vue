@@ -28,7 +28,7 @@ export default {
       ) {
         return this.currentCollection.info.background
       }
-      return '~/assets/img/app-background.jpg'
+      return require('~/assets/img/app-background.jpg')
     }
   }
 }

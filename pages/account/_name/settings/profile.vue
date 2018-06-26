@@ -42,19 +42,22 @@ export default {
                 model: 'fullname',
                 label: 'Full name',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'Your full name'
               },
               {
                 model: 'name',
                 label: 'Username',
                 type: 'input',
-                inputType: 'text'
+                inputType: 'text',
+                hint: 'Your username'
               },
               {
                 model: 'email_addr',
                 label: 'Email',
                 type: 'input',
-                inputType: 'email'
+                inputType: 'email',
+                hint: 'Your email address'
               }
             ]
           }

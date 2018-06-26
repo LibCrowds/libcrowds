@@ -151,11 +151,7 @@ export default {
      */
     onSidebarItemClick (route) {
       const isDashboard = (
-        typeof route.name === 'string' &&
-        (
-          route.name.indexOf('admin-') === 0 ||
-          route.name.indexOf('account-name-templates-') === 0
-        )
+        typeof route.name === 'string' && route.name.indexOf('admin-') === 0
       )
       if (window.innerWidth < 576) {
         this.showSideNav = false

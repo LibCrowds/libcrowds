@@ -10,13 +10,11 @@ $gray-100:                         #f7f7f7;
 $gray-1000:                        #1A1D21;
 $gray-1100:                        #14171A;
 $gray-1200:                        #0D1012;
-
 $grays: (
   "1000": $gray-1000,
   "1100": $gray-1100,
   "1200": $gray-1200
 );
-
 $blue:                             #2589BD !default;
 $indigo:                           #6610f2 !default;
 $purple:                           #8c52a4 !default;
@@ -28,11 +26,8 @@ $green:                            #408E40 !default;
 $teal:                             #20c997 !default;
 $cyan:                             #03B5AA !default;
 $dark:                             $gray-1000;
-
 $info:                             $purple;
-
 $body-color:                       #202B35;
-
 $white:                            #FFFFFF;
 $black:                            #000000;
 $twitter:                          #00ACEE;

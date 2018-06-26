@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import VueFormGenerator from 'vue-form-generator'
 import localConfig from '@/local.config'
 import PybossaForm from '@/components/forms/PybossaForm'
 import { metaTags } from '@/mixins/metaTags'
@@ -40,19 +41,28 @@ export default {
                 model: 'current_password',
                 label: 'Current Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Your current password',
+                required: true,
+                validator: VueFormGenerator.validators.string
               },
               {
                 model: 'new_password',
                 label: 'New Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Your new password',
+                required: true,
+                validator: VueFormGenerator.validators.string
               },
               {
                 model: 'confirm',
                 label: 'Confirm New Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: 'Confirmation of your new password',
+                required: true,
+                validator: VueFormGenerator.validators.string
               }
             ]
           }

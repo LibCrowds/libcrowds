@@ -1,6 +1,7 @@
 <template>
   <b-card
     no-body
+    v-if="collection.info.presenter"
     class="project-card"
     :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
@@ -45,7 +46,7 @@
         <h4 v-else class="card-title mb-1 px-2 pt-2">
           {{ project.name }}
         </h4>
-        <div>
+        <div v-if="hasStats">
           <b-btn
             v-b-modal="statsModalId"
             class="project-stats-btn d-none d-lg-block"
@@ -59,29 +60,36 @@
         {{ project.description }}
       </p>
       <div class="mb-0 px-2 pt-1">
-        <project-tags-list
-          v-if="project.info.tags"
-          :tags="project.info.tags"
+        <project-filters-list
+          v-if="project.info.filters"
+          class="d-none d-md-block"
+          :project-filters="project.info.filters"
           :collection="collection"
-          @tag-click="onTagClick">
-        </project-tags-list>
+          @click="onProjectFilterClick">
+        </project-filters-list>
       </div>
 
       <div class="progress-container" :id="progressBarId"></div>
 
       <div class="card-footer mt-1 px-2 py-1">
-        <span class="card-stat text-muted mb-2 mb-lg-0 mt-1 mt-lg-0">
-          {{ project.overall_progress }}% complete
+        <span
+          v-if="hasStats"
+          class="card-stat text-muted mb-2 mb-lg-0 mt-lg-0 d-none d-lg-block">
+          {{ project.stats.overall_progress }}% complete
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0">
-          <icon name="tasks"></icon> {{ project.n_tasks | intComma }}
-          {{ 'task' | pluralize(project.n_tasks) }}
+        <span
+          v-if="hasStats"
+          class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
+          <icon name="tasks"></icon> {{ project.stats.n_tasks | intComma }}
+          {{ 'task' | pluralize(project.stats.n_tasks) }}
         </span>
-        <span class="card-stat text-muted mb-2 mb-lg-0">
-          <icon name="users"></icon>Join {{ project.n_volunteers | intComma }}
-          {{ 'volunteer' | pluralize(project.n_volunteers) }}
+        <span
+          v-if="hasStats"
+          class="card-stat text-muted mb-2 mb-lg-0 d-none d-lg-block">
+          <icon name="users"></icon>Join {{ project.stats.n_volunteers | intComma }}
+          {{ 'volunteer' | pluralize(project.stats.n_volunteers) }}
         </span>
-        <div class="footer-buttons">
+        <div class="footer-buttons my-1 mt-lg-0">
           <b-btn
             block
             v-b-modal="statsModalId"
@@ -99,6 +107,7 @@
     </div>
 
     <project-stats-modal
+      v-if="hasStats"
       :project="project"
       :collection="collection"
       :modal-id="statsModalId">
@@ -115,7 +124,7 @@ import ProgressBar from 'progressbar.js'
 import ProjectAvatar from '@/components/avatars/Project'
 import ProjectContribButton from '@/components/buttons/ProjectContrib'
 import ProjectStatsModal from '@/components/modals/ProjectStats'
-import ProjectTagsList from '@/components/lists/ProjectTags'
+import ProjectFiltersList from '@/components/lists/ProjectFilters'
 
 export default {
   data () {
@@ -140,26 +149,35 @@ export default {
     ProjectStatsModal,
     ProjectContribButton,
     ProjectAvatar,
-    ProjectTagsList
+    ProjectFiltersList
   },
 
   computed: {
+    hasStats () {
+      return this.project.hasOwnProperty('stats')
+    },
+
     projectIncomplete () {
-      return Number(this.project.overall_progress) < 100
+      return this.hasStats
+        ? this.project.stats.overall_progress < 100
+        : 0
     }
   },
 
   methods: {
     /**
-     * Handle a tag click.
+     * Handle a project filters click.
      */
-    onTagClick (type, value) {
-      this.$emit('tagclick', type, value)
+    onProjectFilterClick (type, value) {
+      this.$emit('filter', type, value)
     }
   },
 
   mounted () {
-    if (process.browser) {
+    if (
+      process.browser &&
+      this.hasStats
+    ) {
       const bar = new ProgressBar.Line(`#${this.progressBarId}`, {
         strokeWidth: 4,
         easing: 'easeInOut',
@@ -172,7 +190,7 @@ export default {
           height: '100%'
         }
       })
-      bar.animate(this.project.overall_progress / 100)
+      bar.animate(this.project.stats.overall_progress / 100)
     }
   }
 }

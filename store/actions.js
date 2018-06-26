@@ -45,6 +45,11 @@ export default {
       orderby: 'created',
       desc: true
     }).then(data => {
+      if (data && data.length) {
+        for (let item of data) {
+          setCollectionDefaults(item)
+        }
+      }
       commit('SET_ITEM', {
         key: 'publishedCollections', value: data
       })
@@ -112,14 +117,6 @@ export default {
   TOGGLE_DARK_MODE: ({ commit, state }) => {
     commit('SET_ITEM', {
       key: 'darkMode', value: !state.darkMode
-    })
-  },
-
-  UPDATE_N_PENDING_TEMPLATES: ({ commit }, axios) => {
-    return axios.$get('/lc/admin/templates/pending').then(data => {
-      commit('SET_ITEM', {
-        key: 'nPendingTemplates', value: data.templates.length
-      })
     })
   }
 }

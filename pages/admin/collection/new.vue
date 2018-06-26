@@ -1,10 +1,25 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/collections/new/">
+
+    <p slot="guidance">
+      Collection microsites comprise a set of themed pages that encapsulate
+      a set of similar projects. Use the form below to choose a name and
+      brief description, then click <strong>Create</strong>. Following
+      creation you will be taken to the new microsite's admin page, where
+      various additional details can be configured before the microsite is
+      made public.
+    </p>
+    <hr class="my-1">
+
     <pybossa-form
       :form="form"
       submit-text="Create"
       @success="onSuccess">
     </pybossa-form>
+
   </card-base>
 </template>
 
@@ -42,14 +57,14 @@ export default {
                 label: 'Name',
                 type: 'input',
                 inputType: 'text',
-                placeholder: 'Choose a name'
+                hint: 'Choose a name'
               },
               {
                 model: 'description',
                 label: 'Description',
                 type: 'textArea',
                 rows: 3,
-                placeholder: 'This appears on the microsite homepage and as ' +
+                hint: 'This appears on the microsite homepage and as ' +
                   'its meta description.'
               }
             ]

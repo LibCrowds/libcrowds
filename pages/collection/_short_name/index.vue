@@ -1,7 +1,7 @@
 <template>
   <div id="collection-index">
     <transition appear>
-      <div class="container full-height text-center">
+      <b-container class="full-height text-center">
         <div class="header-content">
           <div class="d-flex justify-content-center align-items-center">
             <img
@@ -38,11 +38,11 @@
             </b-btn>
           </div>
         </div>
-      </div>
+      </b-container>
     </transition>
 
     <section id="intro" class="opaque-navbar">
-      <div class="container py-3 py-md-4 text-center">
+      <b-container class="py-3 py-md-4 text-center">
         <p id="site-lead" class="mb-0 px-1">
           {{ collection.description }}
         </p>
@@ -52,26 +52,149 @@
           research at {{ localConfig.company }}.
         </p>
         <hr class="mt-3 w-75">
-        <b-btn
-          :variant="darkMode ? 'dark' : 'outline-dark'"
-          class="mt-md-2"
-          size="lg"
-          :to="{
-            name: 'collection-short_name-about',
-            params: {
-              short_name: collection.short_name
-            }
-          }">
-          Learn More
-        </b-btn>
-      </div>
+      </b-container>
+    </section>
+
+    <section id="social-proof" class="opaque-navbar">
+      <b-container>
+        <b-row>
+          <b-col
+            xs="12" md="6"
+            v-if="collection.info.forum.tag"
+            class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
+            <span>
+              <h5 class="text-center">Recent forum posts</h5>
+              <p
+                v-if="loadingForumDiscussions"
+                class="text-muted text-center">
+                <small>
+                  Loading...
+                </small>
+              </p>
+              <p
+                v-else-if="!forumDiscussions.length"
+                class="text-muted text-center">
+                <small>
+                  No recent forum posts
+                </small>
+              </p>
+              <ul v-else>
+                <li
+                  v-for="discussion in forumDiscussions"
+                  :key="discussion.id"
+                  class="list-unstyled mb-1">
+                  <h6 class="mb-0">
+                    <a :href="getDiscussionUrl(discussion.id)">
+                      {{ discussion.attributes.title }}
+                    </a>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    <small>
+                      Last activity:
+                      {{ discussion.attributes.lastTime | moment('calendar') }}
+                    </small>
+                  </p>
+                  <ul class="list-inline text-muted mb-1">
+                    <li class="list-inline-item my-1 mr-2">
+                      <small class="d-flex align-items-center">
+                        <icon name="comment" class="mr-1"></icon>
+                        {{ discussion.attributes.commentsCount }}
+                        comments
+                      </small>
+                    </li>
+                    <li class="list-inline-item my-1">
+                      <small class="d-flex align-items-center">
+                        <icon name="users" class="mr-1"></icon>
+                        {{ discussion.attributes.participantsCount }}
+                        {{ 'participant' | pluralize(discussion.attributes.participantsCount) }}
+                      </small>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </span>
+            <span>
+              <div class="text-center">
+                <b-btn
+                  :variant="darkMode ? 'dark' : 'outline-dark'"
+                  class="mt-md-2"
+                  :href="collection.info.forum.url">
+                  Visit the forum
+                </b-btn>
+              </div>
+            </span>
+          </b-col>
+          <b-col
+            xs="12" md="6"
+            class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
+            <span>
+              <h5 class="text-center">Recent contributions</h5>
+              <p
+                v-if="loadingActivityFeed"
+                class="text-muted text-center">
+                <small>
+                  Loading...
+                </small>
+              </p>
+              <p
+                v-else-if="!activityFeed.length"
+                class="text-muted text-center">
+                <small>
+                  No recent contributions
+                </small>
+              </p>
+              <ul v-else>
+                <li
+                  v-for="(item, index) in activityFeed"
+                  :key="index"
+                  class="list-unstyled">
+                  <h6 class="mb-0">
+                    {{ item.name }} contributed to
+                    <nuxt-link
+                      :to="{
+                        name: 'collection-short_name-projects-id-presenter',
+                        params: {
+                          short_name: collection.short_name,
+                          id: item.project_id,
+                          presenter: collection.info.presenter
+                        }
+                      }">
+                      {{ item.project_name }}
+                    </nuxt-link>
+                  </h6>
+                  <p class="text-muted mt-0 mb-1">
+                    <small class="text-muted">
+                      {{ item.updated | moment('calendar') }}
+                    </small>
+                  </p>
+                </li>
+              </ul>
+            </span>
+            <span>
+              <div class="text-center">
+                <b-btn
+                  :variant="darkMode ? 'dark' : 'outline-dark'"
+                  class="mt-md-2"
+                  :to="{
+                    name: 'collection-short_name-projects',
+                    params: {
+                      short_name: collection.short_name
+                    }
+                  }">
+                  Choose a project
+                </b-btn>
+              </div>
+            </span>
+          </b-col>
+        </b-row>
+      </b-container>
     </section>
 
     <section
       id="featured-projects"
       class="opaque-navbar"
       v-if="featured.length">
-      <div class="container w-75 text-center pb-4">
+      <b-container class="w-75 text-center pb-4">
         <div class="row text-lg-left">
           <div class="col-lg-5 text-uppercase py-4">
             <h2 class="display-5 font-weight-bold pt-1">
@@ -108,12 +231,12 @@
           }">
           Browse all projects
         </b-btn>
-      </div>
+      </b-container>
     </section>
 
     <section id="data">
       <b-jumbotron class="code-bg">
-        <div class="container py-2 py-md-4 w-75 text-center">
+        <b-container class="py-2 py-md-4 w-75 text-center">
           <h3 class="display-5">Open Data</h3>
           <p class="lead my-2 my-md-3 text-sm-left">
             All datasets generated from the experimental crowdsourcing
@@ -137,34 +260,12 @@
             }">
             Get the data
           </b-btn>
-        </div>
+        </b-container>
       </b-jumbotron>
     </section>
 
-    <!-- <section id="results" v-if="collectionConfig.resultsComponent">
-      <b-jumbotron :style="resultsStyle" class="newton-bg">
-        <div class="container py-2 py-md-4 w-75 text-center">
-          <h3 class="display-5">Results</h3>
-          <p class="lead my-2 my-md-3 text-sm-left">
-            As each task is completed,
-            {{ 'contribution' | pluralize }} are
-            analysed and the outcome provided via our results page, making
-            the efforts of our volunteers immediately apparent.
-          </p>
-          <b-btn
-            variant="outline-light"
-            class="my-1"
-            :to="{
-              key: 'collection-short_name-results'
-            }">
-            Browse the results
-          </b-btn>
-        </div>
-      </b-jumbotron>
-    </section> -->
-
     <section id="final-cta" class="opaque-navbar">
-      <div class="container pt-4 pb-3 text-center">
+      <b-container class="pt-4 pb-3 text-center">
         <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
         <p class="lead my-3">
           Your contributions will have a direct impact on enabling future
@@ -181,26 +282,25 @@
           }">
           Get Started
         </b-btn>
-      </div>
+      </b-container>
     </section>
 
     <section id="social-media" class="opaque-navbar">
-      <div class="container pb-4 text-center">
+      <b-container class="pb-4 text-center">
         <hr class="mt-0 mb-3">
         <social-media-buttons
           :tweet="tweet"
           :shareUrl="shareUrl">
         </social-media-buttons>
-      </div>
+      </b-container>
     </section>
   </div>
 </template>
 
 <script>
-import find from 'lodash/find'
-import sortBy from 'lodash/sortBy'
-import uniqBy from 'lodash/uniqBy'
 import 'vue-awesome/icons/star'
+import 'vue-awesome/icons/users'
+import 'vue-awesome/icons/comment'
 import localConfig from '@/local.config'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { licenses } from '@/mixins/licenses'
@@ -222,7 +322,11 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      featured: []
+      featured: [],
+      forumDiscussions: [],
+      activityFeed: [],
+      loadingActivityFeed: true,
+      loadingForumDiscussions: true
     }
   },
 
@@ -231,16 +335,15 @@ export default {
      * Load featured projects.
      *
      * If there are no featured projects for this collection then load
-     * the three most recent projects instead.
+     * the three most recently created incomplete projects instead.
      */
     loadFeatured () {
-      let projects = []
-
       this.$axios.$get('/api/project', {
         params: {
           category_id: this.collection.id,
           featured: true,
-          all: 1
+          all: 1,
+          stats: 1
         }
       }).then(projectsData => {
         if (!projectsData.length) {
@@ -250,45 +353,97 @@ export default {
               category_id: this.collection.id,
               orderby: 'created',
               desc: 1,
-              limit: 3,
-              all: 1
+              limit: 100,
+              all: 1,
+              stats: 1
             }
           })
         } else {
           return projectsData
         }
       }).then(projectsData => {
-        if (!projectsData.length) {
-          // No projects yet
-          this.featured = []
-          return
-        }
-
-        projects = projectsData
-
-        // Get stats
-        return this.$axios.$get('/api/projectstats', {
-          params: {
-            project_id: projectsData.map(project => project.id).toString()
-          }
-        })
-      }).then(statsData => {
-        // Sort by ID and deduplicate to deal with the issue of multiple
-        // project stats potentially appearing for a single project
-        // https://github.com/LibCrowds/libcrowds/issues/526
-        const sortedStats = sortBy(statsData, [stat => stat.id])
-        const dedupedStats = uniqBy(sortedStats, 'project_id')
-
-        // Merge the project into the stats rather than the other way around
-        // so that project ID is given preference
-        this.featured = dedupedStats.map(projectStats => {
-          return Object.assign(projectStats, find(projects, {
-            id: projectStats.project_id
-          }))
-        })
+        this.featured = projectsData.filter(project => {
+          return Number(project.stats.overall_progress) < 100
+        }).slice(0, 3)
       }).catch(err => {
         this.$nuxt.error(err)
       })
+    },
+
+    /**
+     * Get recent forum posts for the topic linked to this collection.
+     *
+     * Filters out any stick posts then returns the top five.
+     */
+    loadForumDiscussions () {
+      if (
+        !localConfig.flarum ||
+        !localConfig.flarum.url ||
+        !this.collection.info.forum.tag
+      ) {
+        this.loadingForumDiscussions = false
+        return
+      }
+      return this.$axios.$get(`${localConfig.flarum.url}/api/discussions`, {
+        params: {
+          'filter[q]': `tag:${this.collection.info.forum.tag}`
+        }
+      }).then(response => {
+        this.forumDiscussions = response.data.filter(discussion => {
+          return !discussion.attributes.isSticky
+        }).slice(0, 5)
+      }).catch(err => {
+        // This is most likely a CORS issue with the forum endpoint
+        if (process.env.NODE_ENV !== 'development') {
+          this.$notifications.flash({
+            status: 'error',
+            message: `Error loading latest forum discussions: ${err.message}`
+          })
+        }
+        return {
+          forumDiscussions: []
+        }
+      }).finally(() => {
+        this.loadingForumDiscussions = false
+      })
+    },
+
+    /**
+     * Load recent activity.
+     *
+     * Returns a summary of user contributions for projects belonging to
+     * this collection microsite.
+     */
+    loadActivityFeed () {
+      this.$axios.$get('/account').then(data => {
+        this.activityFeed = data.update_feed.map(item => {
+          // Convert UNIX timestamps
+          item.updated = new Date(item.updated * 1000)
+          return item
+        }).filter(item => {
+          return (
+            item.action_updated === 'UserContribution' &&
+            item.category_id === this.collection.id
+          )
+        }).slice(0, 5)
+      }).catch(err => {
+        this.$notifications.flash({
+          status: 'error',
+          message: 'Failed to load recent activity'
+        })
+        console.error(err)
+      }).finally(() => {
+        this.loadingActivityFeed = false
+      })
+    },
+
+    /**
+     * Return the URL for a forum discussion.
+     */
+    getDiscussionUrl (id) {
+      if (localConfig.flarum && localConfig.flarum.url) {
+        return `${localConfig.flarum.url}/d/${id}`
+      }
     }
   },
 
@@ -324,6 +479,8 @@ export default {
 
   mounted () {
     this.loadFeatured()
+    this.loadForumDiscussions()
+    this.loadActivityFeed()
   }
 }
 </script>
@@ -354,6 +511,10 @@ export default {
       height: 100px;
       width: auto;
     }
+  }
+
+  #social-proof {
+    font-family: $headings-font-family;
   }
 
   #site-lead {
@@ -399,7 +560,8 @@ export default {
 
   #intro,
   #final-cta,
-  #social-media {
+  #social-media,
+  #social-proof {
     background: $white;
   }
 
@@ -468,7 +630,8 @@ export default {
   #collection-index {
     #intro,
     #final-cta,
-    #social-media {
+    #social-media,
+    #social-proof {
       background: $gray-900;
       color: $gray-200;
     }

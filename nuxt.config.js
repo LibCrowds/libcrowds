@@ -1,4 +1,5 @@
 const path = require('path')
+const axios = require('axios')
 const nodeExternals = require('webpack-node-externals')
 const localConfig = process.env.NODE_ENV === 'testing'
   ? require('./test/test.local.config')
@@ -11,13 +12,31 @@ const config = {
     meta: [] // Options pushed below depending on configuration
   },
   css: [
-    '~/assets/style/main.scss',
+    '~/assets/style/settings.scss',
+    'bootstrap/scss/bootstrap.scss',
+    'chartist/dist/scss/chartist.scss',
+    '~/assets/style/_cards.scss',
+    '~/assets/style/_charts.scss',
+    '~/assets/style/_code.scss',
+    '~/assets/style/_confetti.scss',
+    '~/assets/style/_fonts.scss',
+    '~/assets/style/_forms.scss',
+    '~/assets/style/_images.scss',
+    '~/assets/style/_labels.scss',
+    '~/assets/style/_modals.scss',
+    '~/assets/style/_tables.scss',
+    '~/assets/style/_buttons.scss',
+    '~/assets/style/_tabs.scss',
+    '~/assets/style/_scrollbar.scss',
+    '~/assets/style/_overflows.scss',
+    '~/assets/style/_badges.scss',
     'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css',
     'cookieconsent/build/cookieconsent.min.css',
     'izitoast/dist/css/iziToast.css',
     'vue-multiselect/dist/vue-multiselect.min.css',
     'simplemde/dist/simplemde.min.css',
-    'libcrowds-viewer/dist/scss/main.scss'
+    'libcrowds-viewer/dist/scss/main.scss',
+    'croppie/croppie.css'
   ],
   build: {
     vendor: [
@@ -98,7 +117,7 @@ const config = {
     },
 
     styleResources: {
-      scss: './assets/style/settings.scss'
+      scss: 'assets/style/settings.scss'
     }
   },
   plugins: [
@@ -111,7 +130,6 @@ const config = {
     { src: '~/plugins/modernizr', ssr: false },
     { src: '~/plugins/notifications', ssr: false },
     { src: '~/plugins/nuxt-client-init', ssr: false },
-    { src: '~/plugins/velocity', ssr: false },
     { src: '~/plugins/vue-awesome' },
     { src: '~/plugins/vue-chartist', ssr: false },
     { src: '~/plugins/vue-clickaway', ssr: false },
@@ -119,6 +137,8 @@ const config = {
     { src: '~/plugins/vue-form-generator' },
     { src: '~/plugins/vue-gravatar' },
     { src: '~/plugins/vue-infinite-loading', ssr: false },
+    { src: '~/plugins/vue-images-loaded', ssr: false },
+    { src: '~/plugins/vue-isotope', ssr: false },
     { src: '~/plugins/vue-moment' },
     { src: '~/plugins/vue-multiselect' },
     { src: '~/plugins/vue-prevent-parent-scroll' },
@@ -130,7 +150,9 @@ const config = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    ['bootstrap-vue/nuxt', { css: false }]
+    '@nuxtjs/sitemap',
+    ['bootstrap-vue/nuxt', { css: false }],
+    ['modules/nuxt-explicates/module.js', localConfig.explicates]
   ],
   axios: {
     baseURL: localConfig.pybossaHost,
@@ -168,6 +190,34 @@ const config = {
     ],
     scrollBehavior: () => {
       return { x: 0, y: 0 }
+    }
+  },
+  sitemap: {
+    exclude: [
+      '/help/**',
+      '/admin/**',
+      '/account/**'
+    ],
+    routes () {
+      let routes = []
+      return axios.get(localConfig.pybossaHost + '/api/category', {
+        params: {
+          info: 'published::true',
+          limit: 100,
+          orderby: 'created',
+          desc: 1
+        }
+      }).then(res => {
+        for (let i = 0; i < res.data.length; i++) {
+          routes = routes.concat([
+            '/collection/' + res.data[i].short_name,
+            '/collection/' + res.data[i].short_name + '/projects/',
+            '/collection/' + res.data[i].short_name + '/about/',
+            '/collection/' + res.data[i].short_name + '/data/'
+          ])
+        }
+        return routes
+      })
     }
   }
 }

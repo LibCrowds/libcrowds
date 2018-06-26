@@ -50,15 +50,24 @@ export const currentMicrositeNavItems = {
               short_name: this.currentCollection.short_name
             }
           }
+        },
+        {
+          label: 'Browse',
+          link: {
+            name: 'collection-short_name-browse',
+            params: {
+              short_name: this.currentCollection.short_name
+            }
+          }
         }
       ]
 
       // Add the forum URL if configured
-      if (this.currentCollection.info.forum) {
+      if (this.currentCollection.info.forum.url) {
         items.push({
           label: 'Discuss',
           external: true,
-          link: this.currentCollection.info.forum
+          link: this.currentCollection.info.forum.url
         })
       }
 

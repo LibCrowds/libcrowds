@@ -93,13 +93,16 @@ export default {
                 model: 'email',
                 label: 'Email',
                 type: 'input',
-                inputType: 'email'
+                inputType: 'email',
+                placeholder: 'you@example.com',
+                hint: 'Your email address'
               },
               {
                 model: 'password',
                 label: 'Password',
                 type: 'input',
-                inputType: 'password'
+                inputType: 'password',
+                hint: `Your ${localConfig.brand} password`
               }
             ]
           }

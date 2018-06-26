@@ -1,5 +1,9 @@
 <template>
-  <card-base :title="title" :description="description">
+  <card-base
+    :title="title"
+    :description="description"
+    docs="/projects/results/">
+
     <div slot="controls" class="float-md-right">
       <b-btn
         variant="success"
@@ -10,6 +14,14 @@
         Analyse All
       </b-btn>
     </div>
+
+    <p slot="guidance">
+      This page lists all of the raw results data that has been generated for
+      the project. It can be used to monitor the outcome of the automated
+      results analysis process, or to trigger analysis for particular
+      sets of tasks.
+    </p>
+
     <b-alert
       v-if="!validWebhook && !loading"
       show
@@ -37,6 +49,7 @@
         </b-btn>
       </template>
     </results-table>
+
   </card-base>
 </template>
 

@@ -8,7 +8,7 @@ exports[`Top navbar renders correctly when signed in and has collection 1`] = `
       <!---->
     </svg>
     <p class="mb-0">Menu</p>
-  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-xl-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
         Home
       </a></li><li class="nav-item"><a href="#/collection/playbills/about" target="_self" class="nav-link">
         About
@@ -64,7 +64,7 @@ exports[`Top navbar renders correctly when signed in and no collection 1`] = `
       <!---->
     </svg>
     <p class="mb-0">Menu</p>
-  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul></span>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-xl-flex"></ul></span>
   <ul right="" class="navbar-nav top-navbar-right">
     <!---->
     <div id="announcements-list">
@@ -116,7 +116,7 @@ exports[`Top navbar renders correctly when signed out and has collection 1`] = `
       <!---->
     </svg>
     <p class="mb-0">Menu</p>
-  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-xl-flex"><li class="nav-item"><a href="#/collection/playbills" target="_self" class="nav-link">
         Home
       </a></li><li class="nav-item"><a href="#/collection/playbills/about" target="_self" class="nav-link">
         About
@@ -140,7 +140,7 @@ exports[`Top navbar renders correctly when signed out and no collection 1`] = `
       <!---->
     </svg>
     <p class="mb-0">Menu</p>
-  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul></span>
+  </button> <span class="top-navbar-left"><!----> <ul class="navbar-nav main-nav-menu d-none d-xl-flex"></ul></span>
   <ul right="" class="navbar-nav top-navbar-right">
     <a href="#/account/signin?next=%2F" target="_self" class="btn px-2 border-0 btn-outline-dark">
       <p class="mb-0">Sign in</p>
@@ -161,7 +161,7 @@ exports[`Top navbar renders correctly with props 1`] = `
     </svg>
     <p class="mb-0">Menu</p>
   </button> <span class="top-navbar-left"><a href="#" target="_self" class="navbar-brand d-none d-lg-block ml-1 mr-2"><span>Foo</span></a>
-  <ul class="navbar-nav main-nav-menu d-none d-lg-flex"></ul>
+  <ul class="navbar-nav main-nav-menu d-none d-xl-flex"></ul>
   </span>
   <ul right="" class="navbar-nav top-navbar-right">
     <a href="#/account/signin?next=%2F" target="_self" class="btn px-2 border-0 btn-outline-dark">

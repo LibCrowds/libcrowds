@@ -15,10 +15,10 @@
 
       <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
         <b-form-input
-          v-model="filter"
+          v-model="searchString"
           class="search-control"
           size="sm"
-          :placeholder="`Type to search by ${filterBy}`">
+          :placeholder="`Type to search by ${searchKeys.join(', ')}`">
         </b-form-input>
       </b-form>
 
@@ -31,113 +31,94 @@
             hover
             show-empty
             :dark="darkMode"
-            :items="motivations"
-            :fields="collectionTableFields">
-            <template slot="action" slot-scope="motivation">
-              <b-btn
-                variant="success"
-                size="sm"
-                v-b-modal="collectionDataModalId"
-                @click="collectionDownload = motivation.item">
-                Download
-              </b-btn>
+            :items="annotationTableItems"
+            :fields="annotationTableFields">
+            <template slot="action" slot-scope="row">
+              <download-annotation-data
+                :container-iri="row.item.iri"
+                :scope="row.item.scope">
+              </download-annotation-data>
             </template>
           </b-table>
         </b-tab>
 
         <!-- Projects downloads tab -->
         <b-tab title="Projects" no-body>
-          <projects-table
-            :filter="filter"
-            :filter-by="filterBy"
-            :collection="collection"
-            ref="projects-table">
+          <infinite-loading-table
+            ref="projects-table"
+            :search-string="searchString"
+            :search-keys="searchKeys"
+            :fields="projectTableFields"
+            :search-params="{
+              category_id: currentCollection.id,
+              stats: 1,
+              all: 1
+            }"
+            domain-object="project">
             <template slot="action" slot-scope="project">
+              <download-project-data
+                :project="project.item">
+              </download-project-data>
+            </template>
+          </infinite-loading-table>
+        </b-tab>
+
+        <!-- Reports tab -->
+        <b-tab title="Reports" no-body active>
+          <b-table
+            responsive
+            striped
+            hover
+            show-empty
+            :dark="darkMode"
+            :items="reportsTableItems"
+            :fields="reportsTableFields">
+            <template slot="action" slot-scope="row">
               <b-btn
-                :variant="darkMode ? 'dark' : 'success'"
                 size="sm"
-                v-b-modal="projectDataModalId"
-                @click="projectDownload = project.item">
-                Download
+                variant="success"
+                @click="reportProgress">
+                Progress Report
               </b-btn>
             </template>
-          </projects-table>
+          </b-table>
         </b-tab>
 
       </b-tabs>
-
     </card-base>
-
-    <data-modal
-      lazy
-      v-if="projectDownload"
-      :items="projectDownloadItems"
-      :endpoint="`/project/${projectDownload.short_name}/tasks/export`"
-      :filename-prefix="projectDownload.short_name"
-      :event-label="projectDownload.name"
-      :modal-id="projectDataModalId">
-    </data-modal>
-
-    <data-modal
-      lazy
-      v-if="collectionDownload"
-      :items="collectionDownloadItems"
-      :endpoint="`/lc/categories/${collection.short_name}/export`"
-      :filename-prefix="collectionDownload.type"
-      :event-label="collectionDownload.type"
-      :modal-id="collectionDataModalId">
-    </data-modal>
-
   </div>
 </template>
 
 <script>
 import marked from 'marked'
-import localConfig from '@/local.config'
+import capitalize from 'capitalize'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
-import { filterProjects } from '@/mixins/filterProjects'
 import { licenses } from '@/mixins/licenses'
-import { getShortname } from '@/mixins/getShortname'
-import SortProjectsData from '@/components/data/SortProjects'
-import ToggleCompletedData from '@/components/data/ToggleCompleted'
-import FilterProjectsData from '@/components/data/FilterProjects'
-import ProjectsTable from '@/components/tables/Projects'
-import DataModal from '@/components/modals/Data'
+import { exportFile } from '@/mixins/exportFile'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
+import DownloadProjectData from '@/components/data/DownloadProjectData'
+import DownloadAnnotationData from '@/components/data/DownloadAnnotationData'
 
 export default {
   layout: 'collection-tabs',
 
   mixins: [
     fetchCollectionByName,
-    filterProjects,
     licenses,
     collectionMetaTags,
-    getShortname
+    exportFile
   ],
 
   data () {
     return {
-      localConfig: localConfig,
       title: 'Data',
-      filter: null,
-      filterBy: 'name',
-      projectDownload: null,
-      collectionDownload: null,
-      projectDataModalId: 'project-data-download-modal',
-      collectionDataModalId: 'collection-data-download-modal',
-      projectDownloadItems: [
-        { dataset: 'Tasks', type: 'task', format: 'csv' },
-        { dataset: 'Tasks', type: 'task', format: 'json' },
-        { dataset: 'Contributions', type: 'task_run', format: 'csv' },
-        { dataset: 'Contributions', type: 'task_run', format: 'json' },
-        { dataset: 'Results', type: 'result', format: 'csv' },
-        { dataset: 'Results', type: 'result', format: 'json' }
-      ],
-      collectionTableFields: {
-        name: {
-          label: 'Motivation',
+      searchString: null,
+      searchKeys: ['name'],
+      annotationTableFields: {
+        scope: {
+          label: 'Scope',
           sortable: true
         },
         action: {
@@ -145,37 +126,53 @@ export default {
           class: 'text-center'
         }
       },
-      motivations: [
-        { name: 'Describing', type: 'describing' },
-        { name: 'Tagging', type: 'tagging' },
-        { name: 'Commenting', type: 'commenting' }
+      projectTableFields: {
+        name: {
+          label: 'Name',
+          sortable: true
+        },
+        'stats.overall_progress': {
+          label: 'Progress',
+          class: 'text-center d-none d-md-table-cell'
+        }
+      },
+      reportsTableFields: {
+        name: {
+          label: 'Progress',
+          sortable: true
+        },
+        action: {
+          label: 'Actions',
+          class: 'text-center'
+        }
+      },
+      reportsTableItems: [
+        { name: 'Progress' }
       ]
     }
   },
 
   components: {
-    SortProjectsData,
-    FilterProjectsData,
-    ToggleCompletedData,
-    ProjectsTable,
-    DataModal,
-    CardBase
+    InfiniteLoadingTable,
+    CardBase,
+    DownloadProjectData,
+    DownloadAnnotationData
   },
 
   computed: {
     pageContent () {
-      return marked(this.collection.info.content.data)
+      return marked(this.currentCollection.info.content.data)
     },
 
-    collection () {
+    currentCollection () {
       return this.$store.state.currentCollection
     },
 
     description () {
-      if (this.collection.license) {
-        return `All datasets generated from ${this.collection.name}
+      if (this.currentCollection.license) {
+        return `All datasets generated from ${this.currentCollection.name}
           projects are made available under a
-          ${this.dataLicenses[this.collection.license].name} license.`
+          ${this.dataLicenses[this.currentCollection.license].name} license.`
       }
       return 'Download all task and contribution data.'
     },
@@ -184,19 +181,17 @@ export default {
       return this.$store.state.currentUser
     },
 
-    collectionDownloadItems () {
-      return [
-        {
-          dataset: 'Annotations',
-          type: this.collectionDownload.type,
-          format: 'csv'
-        },
-        {
-          dataset: 'Annotations',
-          type: this.collectionDownload.type,
-          format: 'json'
+    annotationCollections () {
+      return this.currentCollection.info.annotations
+    },
+
+    annotationTableItems () {
+      return Object.keys(this.annotationCollections).map(key => {
+        return {
+          scope: capitalize(key),
+          iri: this.annotationCollections[key]
         }
-      ]
+      })
     }
   },
 
@@ -208,8 +203,25 @@ export default {
       this.filter = null
       const table = this.$refs['projects-table']
       if (typeof table !== 'undefined') {
-        table.reset()
+        this.$nextTick(() => {
+          table.reset()
+        })
       }
+    },
+
+    /**
+     * Export progress report.
+     */
+    reportProgress () {
+      const shortName = this.currentCollection.short_name
+      const endpoint = `/lc/categories/${shortName}/progress`
+      this.$axios.$get(endpoint, {
+        params: {
+          csv: 1
+        }
+      }).then(data => {
+        this.exportFile(data.progress, `${shortName}_progress`, 'csv')
+      })
     }
   },
 

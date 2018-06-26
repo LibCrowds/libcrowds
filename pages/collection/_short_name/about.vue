@@ -1,6 +1,6 @@
 <template>
   <div id="collection-about">
-    <h1 class="text-center">About {{ collection.name }}</h1>
+    <h1 class="text-center">{{ title }}</h1>
     <span v-if="pageContent">
       <span v-html="pageContent"></span>
       <hr class="mx-0">
@@ -35,7 +35,6 @@ export default {
 
   data () {
     return {
-      title: 'About',
       localConfig: localConfig
     }
   },
@@ -49,8 +48,12 @@ export default {
       return marked(this.collection.info.content.about)
     },
 
+    title () {
+      return `About ${this.collection.name}`
+    },
+
     description () {
-      return `Learn more about ${this.collection.info.brand}.`
+      return `Learn more about ${this.collection.name}.`
     }
   },
 

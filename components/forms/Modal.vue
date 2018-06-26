@@ -84,7 +84,26 @@ export default {
     onShown () {
       this.$refs.modal.$el.querySelector('.form-control').focus()
       this.$emit('shown')
+    },
+
+    /**
+     * Submit the form if the event wasn't triggered via a textarea.
+     * @param {Object} evt
+     *   The event.
+     */
+    handleKeyup (evt) {
+      if (evt.keyCode === 13 && evt.target.type !== 'textarea') {
+        this.submit(evt)
+      }
     }
+  },
+
+  mounted () {
+    this.$refs.form.$el.addEventListener('keypress', this.handleKeyup)
+  },
+
+  beforeDestroy () {
+    this.$refs.form.$el.removeEventListener('keypress', this.handleKeyup)
   }
 }
 </script>
