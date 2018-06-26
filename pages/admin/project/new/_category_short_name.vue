@@ -226,7 +226,9 @@ export default {
      *   The template.
      */
     selectTemplate (tmpl) {
-      this.form.model.template_id = tmpl.id
+      this.form.model.template_id = typeof tmpl === 'undefined'
+        ? ''
+        : tmpl.id
       this.setNameAndShortName()
     },
 
@@ -236,7 +238,9 @@ export default {
      *   The volume.
      */
     selectVolume (volume) {
-      this.form.model.volume_id = volume.id
+      this.form.model.volume_id = typeof volume === 'undefined'
+        ? ''
+        : volume.id
       this.setNameAndShortName()
     },
 
