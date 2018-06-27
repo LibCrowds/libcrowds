@@ -74,7 +74,6 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import localConfig from '@/local.config.js'
 import { metaTags } from '@/mixins/metaTags'
 import { getShortname } from '@/mixins/getShortname'
@@ -90,8 +89,8 @@ export default {
   data () {
     return {
       localConfig: localConfig,
-      selectedTemplate: {},
-      selectedVolume: {}
+      selectedTemplate: null,
+      selectedVolume: null
     }
   },
 
@@ -179,7 +178,7 @@ export default {
         }
 
         // Check if the template is available for the selected volume
-        if (!isEmpty(this.selectedVolume)) {
+        if (!this.selectedVolume) {
           return this.isComboAvailable(tmpl, this.selectedVolume)
         }
 
@@ -196,7 +195,7 @@ export default {
     availableVolumes () {
       return this.currentCollection.info.volumes.filter(vol => {
         // Check if the volume is available for the selected template
-        if (!isEmpty(this.selectedTemplate)) {
+        if (!this.selectedTemplate) {
           return this.isComboAvailable(this.selectedTemplate, vol)
         }
 
@@ -226,7 +225,7 @@ export default {
      *   The template.
      */
     selectTemplate (tmpl) {
-      this.form.model.template_id = tmpl.id
+      this.form.model.template_id = tmpl ? tmpl.id : ''
       this.setNameAndShortName()
     },
 
@@ -236,7 +235,7 @@ export default {
      *   The volume.
      */
     selectVolume (volume) {
-      this.form.model.volume_id = volume.id
+      this.form.model.volume_id = volume ? volume.id : ''
       this.setNameAndShortName()
     },
 
@@ -244,8 +243,12 @@ export default {
      * Pre-fill the name and short name.
      */
     setNameAndShortName () {
-      const tmplName = this.selectedTemplate.name || ''
-      const volName = this.selectedVolume.name || ''
+      const tmplName = this.selectedTemplate
+        ? this.selectedTemplate.name
+        : ''
+      const volName = this.selectedVolume
+        ? this.selectedVolume.name
+        : ''
       const name = `${tmplName}: ${volName}`
       this.form.model.name = name
       this.form.model.short_name = this.getShortname(name)
@@ -261,6 +264,8 @@ export default {
     isComboAvailable (template, volume) {
       for (let builtItem of this.built_projects) {
         if (
+          template &&
+          volume &&
           builtItem.template_id === template.id &&
           builtItem.volume_id === volume.id
         ) {

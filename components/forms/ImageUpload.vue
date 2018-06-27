@@ -27,7 +27,6 @@
 </template>
 
 <script>
-import isEmpty from 'lodash/isEmpty'
 import intersection from 'lodash/intersection'
 import keys from 'lodash/keys'
 import axios from 'axios'
@@ -122,7 +121,7 @@ export default {
       for (let field in this.model) {
         formData.append(field, this.model[field])
       }
-      if (isEmpty(formData)) {
+      if (!this.file) {
         this.processing = false
         this.$notifications.error({
           status: 'error',
