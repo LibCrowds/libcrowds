@@ -593,21 +593,17 @@ export default {
      * Load a manifest into the info modal, if available.
      */
     loadManifest () {
-      const currentManifestUri = this.task ? this.task.info.manifest : null
-      if (!currentManifestUri) {
+      const manifestUri = this.task ? this.task.info.manifest : null
+      if (!manifestUri) {
         this.manifest = {}
       } else if (
-        currentManifestUri === this.manifest['id'] ||
-        currentManifestUri === this.manifest['@id']
+        manifestUri === this.manifest['id'] ||
+        manifestUri === this.manifest['@id']
       ) {
         return
       }
 
-      this.$axios.$get(currentManifestUri, {
-        headers: {
-          'Content-type': 'text/plain' // to avoid CORS preflight
-        }
-      }).then(data => {
+      this.$axios.$get(`/lc/tasks/${this.task.id}/manifest`).then(data => {
         this.manifest = data
       })
     },
