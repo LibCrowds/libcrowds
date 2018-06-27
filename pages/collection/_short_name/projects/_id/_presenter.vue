@@ -93,29 +93,24 @@
       :footer-bg-variant="darkPresenterModals ? 'dark' : null"
       :footer-text-variant="darkPresenterModals ? 'white' : null"
       @show="loadManifest">
-      <b-container class="py-2 px-3" v-if="manifest.loading">
+      <b-container class="py-2 px-3" v-if="Object.keys(manifest).length === 0">
         <p class="text-center text-muted">
-          Loading...
-        </p>
-      </b-container>
-      <b-container class="py-2 px-3" v-else-if="!manifest.data">
-        <p class="text-center">
-          No additional information is available for this task.
+          No additional information is available for this item.
         </p>
       </b-container>
       <b-container class="py-2 px-3" v-else>
-        <ul v-if="manifest.data.metadata" class="list-unstyled">
+        <ul v-if="manifest.metadata" class="list-unstyled">
           <li
-            v-for="item in manifest.data.metadata"
+            v-for="item in manifest.metadata"
             :key="item.label"
             class="mb-1">
             <strong>{{ item.label }}: </strong>
             <span v-html="item.value"></span>
           </li>
         </ul>
-        <div class="text-center" v-if="manifest.data.related">
+        <div class="text-center" v-if="manifest.related">
           <b-btn
-            v-for="(related, idx) in toArray(manifest.data.related)" :key="idx"
+            v-for="(related, idx) in toArray(manifest.related)" :key="idx"
             class="m-2"
             variant="info"
             :href="related.id || related['@id']">
@@ -123,16 +118,16 @@
           </b-btn>
         </div>
         <div class="text-center">
-          <img v-if="manifest.data.logo"
-            :src="manifest.data.logo" class="my-2">
+          <img v-if="manifest.logo"
+            :src="manifest.logo" class="my-2">
           <p
-            v-if="manifest.data.attribution"
-            v-html="manifest.data.attribution">
+            v-if="manifest.attribution"
+            v-html="manifest.attribution">
           </p>
           <a
-            v-if="manifest.data.license"
-            :href="manifest.data.license"
-            v-html="manifest.data.license">
+            v-if="manifest.license"
+            :href="manifest.license"
+            v-html="manifest.license">
           </a>
         </div>
       </b-container>
@@ -281,11 +276,7 @@ export default {
   data () {
     return {
       task: null,
-      manifest: {
-        uri: null,
-        data: null,
-        loading: false
-      },
+      manifest: {},
       shareModalId: 'presenter-share-modal',
       tagSearchLoading: false,
       foundTags: [],
@@ -604,26 +595,20 @@ export default {
     loadManifest () {
       const currentManifestUri = this.task ? this.task.info.manifest : null
       if (!currentManifestUri) {
-        this.manifest = {
-          uri: null,
-          data: null,
-          loading: false
-        }
-      } else if (currentManifestUri === this.manifest.uri) {
+        this.manifest = {}
+      } else if (
+        currentManifestUri === this.manifest['id'] ||
+        currentManifestUri === this.manifest['@id']
+      ) {
         return
       }
 
-      this.manifest.loading = true
       this.$axios.$get(currentManifestUri, {
         headers: {
-          'Content-type': 'text/plain' // to avoid CORS preflight
+           'Content-type': 'text/plain' // to avoid CORS preflight
         }
       }).then(data => {
-        this.manifest = {
-          uri: currentManifestUri,
-          data: data,
-          loading: false
-        }
+        this.manifest = data
       })
     },
 
