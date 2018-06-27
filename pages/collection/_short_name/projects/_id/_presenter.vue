@@ -605,7 +605,7 @@ export default {
 
       this.$axios.$get(currentManifestUri, {
         headers: {
-           'Content-type': 'text/plain' // to avoid CORS preflight
+          'Content-type': 'text/plain' // to avoid CORS preflight
         }
       }).then(data => {
         this.manifest = data
