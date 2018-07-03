@@ -5,7 +5,7 @@
     <div class="header">
       <b-btn
         variant="link"
-        class="d-flex align-items-center float-right"
+        class="d-flex align-items-center"
         @click="$emit('close')">
         Close<icon name="times" class="ml-1"></icon>
       </b-btn>
@@ -292,6 +292,10 @@ export default {
       min-width: $sidebar-width;
       width: $sidebar-width;
     }
+
+    .header {
+      opacity: 1;
+    }
   }
 
   h4 {
@@ -314,6 +318,8 @@ export default {
     min-height: $top-navbar-height;
     border-bottom: 1px solid $gray-300;
     background: $gray-100;
+    opacity: 0;
+    transition: opacity 200ms;
   }
 
   #side-nav-items {

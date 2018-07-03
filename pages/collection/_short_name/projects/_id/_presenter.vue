@@ -36,7 +36,7 @@
       </b-container>
     </b-modal>
 
-    <!-- Share model -->
+    <!-- Share modal -->
     <b-modal
       lazy
       v-if="task"
@@ -218,12 +218,12 @@
       </b-container>
     </b-modal>
 
-    <!-- Reject model -->
+    <!-- Reject modal -->
     <b-modal
       lazy
       v-if="task"
       ref="reject"
-      title="Reject"
+      title="Report an issue"
       size="lg"
       @ok="reject"
       :header-text-variant="darkPresenterModals ? 'white' : null"
