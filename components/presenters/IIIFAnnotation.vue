@@ -171,7 +171,8 @@ export default {
     /**
      * Check the submission before processing.
      *
-     * This can be used, for example, to make sure we have n annotations.
+     * This can be used to make sure we have n annotations. For now it is
+     * set to 1 by default but could be made into a config option in future.
      */
     checkSubmission (taskData) {
       const nAnnotations = taskData.annotations.filter(annotation => {
@@ -179,7 +180,7 @@ export default {
       }).length
       const mode = taskData.mode
       const tag = taskData.tag
-      const nRequired = this.project.info.annotations_required || 1
+      const nRequired = 1
 
       const showConfirm = (htmlMessage) => {
         return new Promise((resolve, reject) => {
@@ -219,7 +220,7 @@ export default {
           }).catch(err => {
             console.info(err)
           })
-        } else if (mode === 'transcribe' && nAnnotations < 1) {
+        } else if (mode === 'transcribe' && nAnnotations < nRequired) {
           return showConfirm(
             `You have not added any transcriptions.<br>
             Are you sure you want to submit this answer?`
