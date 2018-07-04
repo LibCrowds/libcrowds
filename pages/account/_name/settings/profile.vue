@@ -57,6 +57,7 @@ export default {
                 label: 'Email',
                 type: 'input',
                 inputType: 'email',
+                autocomplete: 'email',
                 hint: 'Your email address'
               }
             ]

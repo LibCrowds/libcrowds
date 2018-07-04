@@ -43,6 +43,7 @@ export default {
                 label: 'Email',
                 type: 'input',
                 inputType: 'email',
+                autocomplete: 'email',
                 placeholder: 'you@example.com',
                 hint: 'Please enter your email address'
               }
