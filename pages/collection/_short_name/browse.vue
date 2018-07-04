@@ -132,7 +132,7 @@ export default {
 
   data () {
     return {
-      title: 'Browse',
+      title: 'Browse Tags',
       tagAnnotations: [],
       selectedTags: [],
       selectedItem: {}
