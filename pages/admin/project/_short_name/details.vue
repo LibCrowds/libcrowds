@@ -15,19 +15,6 @@
       <div slot="bottom" class="d-flex form-group mt-1">
         <no-ssr>
           <toggle-button
-            :value="form.model.protect"
-            :sync="true"
-            :labels="true"
-            @change="updateModelBoolean('protect', $event)">
-          </toggle-button>
-        </no-ssr>
-        <label class="ml-1">
-          Require a password
-        </label>
-      </div>
-      <div slot="bottom" class="d-flex form-group mt-1">
-        <no-ssr>
-          <toggle-button
             :value="form.model.allow_anonymous_contributors"
             :sync="true"
             :labels="true"
