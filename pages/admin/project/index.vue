@@ -36,14 +36,14 @@
         all: currentUser.admin ? 1 : 0
       }"
       domain-object="project">
-      <template slot="action" slot-scope="project">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
           :to="{
             name: 'admin-project-short_name-details',
             params: {
-              short_name: project.item.short_name
+              short_name: row.item.short_name
             }
           }">
           Open

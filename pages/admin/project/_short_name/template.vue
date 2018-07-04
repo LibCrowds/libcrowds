@@ -14,12 +14,12 @@
       show-details
       :collection-id="project.category_id"
       :templates="currentCollection.info.templates">
-      <template slot="action" slot-scope="tmpl">
+      <template slot="action" slot-scope="row">
         <b-btn
-          :variant="tmpl.item.id !== currentTmplId ? 'success' : 'warning'"
+          :variant="row.item.id !== currentTmplId ? 'success' : 'warning'"
           size="sm"
-          @click="updateTemplate(tmpl.item)">
-          {{ tmpl.item.id !== currentTmplId ? 'Select' : 'Deselect' }}
+          @click="updateTemplate(row.item)">
+          {{ row.item.id !== currentTmplId ? 'Select' : 'Deselect' }}
         </b-btn>
         <b-btn
           variant="success"
@@ -28,7 +28,7 @@
             name: 'admin-template-short_name-id',
             params: {
               short_name: currentCollection.short_name,
-              id: tmpl.item.id
+              id: row.item.id
             }
           }">
           Edit

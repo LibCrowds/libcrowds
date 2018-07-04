@@ -11,7 +11,7 @@
       ref="table"
       :fields="tableFields"
       domain-object="category">
-      <template slot="action" slot-scope="category">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
@@ -19,7 +19,7 @@
           :to="{
             name: 'admin-template-short_name',
             params: {
-              short_name: category.item.short_name
+              short_name: row.item.short_name
             }
           }">
           Open

@@ -16,7 +16,7 @@
       :fields="tableFields"
       :search-params="tableSearchParams"
       domain-object="category">
-      <template slot="action" slot-scope="category">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
@@ -24,7 +24,7 @@
           :to="{
             name: 'admin-project-new-category_short_name',
             params: {
-              category_short_name: category.item.short_name
+              category_short_name: row.item.short_name
             }
           }">
           Select

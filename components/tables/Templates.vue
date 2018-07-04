@@ -9,18 +9,18 @@
     :items="filteredItems"
     :fields="mergedFields">
 
-    <template slot="actions" slot-scope="tmpl">
+    <template slot="actions" slot-scope="row">
       <b-btn
         v-if="showDetails"
         variant="info"
         size="sm"
-        @click.stop="tmpl.toggleDetails">
-        {{ tmpl.detailsShowing ? 'Hide' : 'Show' }} Details
+        @click.stop="row.toggleDetails">
+        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
       </b-btn>
-      <slot name="action" :item="tmpl.item"></slot>
+      <slot name="action" :item="row.item"></slot>
     </template>
 
-    <template slot="row-details" slot-scope="tmpl">
+    <template slot="row-details" slot-scope="row">
       <b-card
         :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
@@ -28,25 +28,25 @@
         <h5>Project Details</h5>
         <ul class="list-unstyled">
           <li
-            v-for="(key, index) in getProjectKeys(tmpl.item)"
-            :class="getHighlightCls(tmpl.item, key)"
+            v-for="(key, index) in getProjectKeys(row.item)"
+            :class="getHighlightCls(row.item, key)"
             :key="index">
             <strong>{{ key }}:</strong>
-            {{ tmpl.item[key] }}
+            {{ row.item[key] }}
           </li>
         </ul>
 
         <h5 class="mt-3">Task Details</h5>
-        <ul class="list-unstyled" v-if="tmpl.item.task">
+        <ul class="list-unstyled" v-if="row.item.task">
           <li
-            v-for="(key, index) in Object.keys(tmpl.item.task)"
-            :class="getHighlightCls(tmpl.item, key, 'task')"
+            v-for="(key, index) in Object.keys(row.item.task)"
+            :class="getHighlightCls(row.item, key, 'task')"
             :key="index">
             <strong>{{ key }}:</strong>
             <template v-if="key === 'fields_schema'">
               <ul>
                 <li
-                  v-for="(field, index) in tmpl.item.task[key]"
+                  v-for="(field, index) in row.item.task[key]"
                   :key="index">
                   <strong>{{ field.model }}:</strong>
                   <ul>
@@ -63,35 +63,35 @@
             <template v-else-if="key === 'institutions'">
               <ul>
                 <li
-                  v-for="code in tmpl.item.task[key]"
+                  v-for="code in row.item.task[key]"
                   :key="code">
                   {{ code }}
                 </li>
               </ul>
             </template>
             <template v-else>
-              {{ tmpl.item.task[key] }}
+              {{ row.item.task[key] }}
             </template>
           </li>
         </ul>
         <p v-else>None</p>
 
         <h5 class="mt-3">Analysis Rules</h5>
-        <ul class="list-unstyled" v-if="tmpl.item.rules">
+        <ul class="list-unstyled" v-if="row.item.rules">
           <li
-            v-for="(key, index) in Object.keys(tmpl.item.rules)"
-            :class="getHighlightCls(tmpl.item, key, 'rules')"
+            v-for="(key, index) in Object.keys(row.item.rules)"
+            :class="getHighlightCls(row.item, key, 'rules')"
             :key="index">
             <strong>{{ key }}:</strong>
-            {{ tmpl.item.rules[key] }}
+            {{ row.item.rules[key] }}
           </li>
         </ul>
         <p v-else>None</p>
         <h5 class="mt-3">Tutorial</h5>
         <div
-          v-if="tmpl.item.tutorial"
-          :class="getHighlightCls(tmpl.item, 'tutorial')"
-          v-html="marked(tmpl.item.tutorial)">
+          v-if="row.item.tutorial"
+          :class="getHighlightCls(row.item, 'tutorial')"
+          v-html="marked(row.item.tutorial)">
         </div>
         <p v-else>None</p>
 

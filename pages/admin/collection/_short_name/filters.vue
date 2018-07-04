@@ -30,18 +30,18 @@
         class="border-left-0 border-right-0 border-bottom-0"
         :items="currentCollection.info.project_filters"
         :fields="tableFields">
-        <template slot="color" slot-scope="filter">
+        <template slot="color" slot-scope="row">
           <div
-            :style="`background-color: ${filter.item.color};`"
+            :style="`background-color: ${row.item.color};`"
             class="p-1 text-white">
-            <strong>{{ filter.item.color }}</strong>
+            <strong>{{ row.item.color }}</strong>
           </div>
         </template>
-        <template slot="actions" slot-scope="filter">
+        <template slot="actions" slot-scope="row">
           <b-btn
             variant="warning"
             size="sm"
-            @click="removeProjectFilter(filter.item)">
+            @click="removeProjectFilter(row.item)">
             Remove
           </b-btn>
         </template>

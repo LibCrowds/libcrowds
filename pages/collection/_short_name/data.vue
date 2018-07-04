@@ -55,9 +55,9 @@
               all: 1
             }"
             domain-object="project">
-            <template slot="action" slot-scope="project">
+            <template slot="action" slot-scope="row">
               <download-project-data
-                :project="project.item">
+                :project="row.item">
               </download-project-data>
             </template>
           </infinite-loading-table>

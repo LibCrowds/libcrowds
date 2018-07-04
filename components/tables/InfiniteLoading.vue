@@ -10,16 +10,16 @@
       :fields="tableFields"
       @sort-changed="onSortChange">
 
-      <template slot="created" slot-scope="data">
-        {{ data.item.created | moment('calendar') }}
+      <template slot="created" slot-scope="row">
+        {{ row.item.created | moment('calendar') }}
       </template>
 
-      <template slot="updated" slot-scope="data">
-        {{ data.item.updated | moment('calendar') }}
+      <template slot="updated" slot-scope="row">
+        {{ row.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="last_activity" slot-scope="data">
-        {{ data.item.updated | moment('calendar') }}
+      <template slot="last_activity" slot-scope="row">
+        {{ row.item.updated | moment('calendar') }}
       </template>
 
       <template slot="actions" slot-scope="row">

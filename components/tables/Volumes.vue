@@ -9,38 +9,38 @@
     :items="filteredItems"
     :fields="mergedFields">
 
-    <template slot="name" slot-scope="volume">
+    <template slot="name" slot-scope="row">
       <div class="d-flex flex-row align-items-center">
         <small-avatar
           class="mr-1"
-          :info="volume.item">
+          :info="row.item">
         </small-avatar>
-        <a :href="volume.item.source" target="_blank">
-          {{ volume.item.name }}
+        <a :href="row.item.source" target="_blank">
+          {{ row.item.name }}
         </a>
       </div>
     </template>
 
-    <template slot="actions" slot-scope="volume">
+    <template slot="actions" slot-scope="row">
       <b-btn
         v-if="showDetails"
         variant="info"
         size="sm"
         block
-        @click="volume.toggleDetails">
-        {{ volume.detailsShowing ? 'Hide' : 'Show' }} Projects
+        @click="row.toggleDetails">
+        {{ row.detailsShowing ? 'Hide' : 'Show' }} Projects
       </b-btn>
-      <slot name="action" :item="volume.item"></slot>
+      <slot name="action" :item="row.item"></slot>
     </template>
 
-    <template slot="row-details" slot-scope="volume">
+    <template slot="row-details" slot-scope="row">
       <b-card
         :bg-variant="darkMode ? 'dark' : null"
         :text-variant="darkMode ? 'white' : null">
         <h5>Projects</h5>
-        <template v-if="volume.item.projects.length">
+        <template v-if="row.item.projects.length">
           <ul class="list-unstyled mb-0">
-            <li v-for="project in volume.item.projects" :key="project.id">
+            <li v-for="project in row.item.projects" :key="project.id">
               <strong>{{ project.name }}:</strong>
               {{ project.overall_progress }}% complete
             </li>

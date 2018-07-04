@@ -35,8 +35,8 @@
               :dark="darkMode"
               :items="projects"
               :fields="tableFields">
-              <template slot="overall_progress" slot-scope="project">
-                {{ project.item.overall_progress }}%
+              <template slot="overall_progress" slot-scope="row">
+                {{ row.item.overall_progress }}%
               </template>
             </b-table>
           </b-card>

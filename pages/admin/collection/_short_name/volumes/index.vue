@@ -32,11 +32,11 @@
     </p>
 
     <volumes-table :volumes="volumes">
-      <template slot="action" slot-scope="volume">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="warning"
           size="sm"
-          @click="deleteVolume(volume.item.id, $event)">
+          @click="deleteVolume(row.item.id, $event)">
           Delete
         </b-btn>
         <b-btn
@@ -46,7 +46,7 @@
             name: 'admin-collection-short_name-volumes-id',
             params: {
               short_name: collection.short_name,
-              id: volume.item.id
+              id: row.item.id
             }
           }">
           Update

@@ -34,12 +34,12 @@
         all: 1
       }"
       domain-object="project">
-      <template slot="action" slot-scope="project">
+      <template slot="action" slot-scope="row">
         <b-btn
-          :variant="project.item.featured ? 'warning' : 'success'"
+          :variant="row.item.featured ? 'warning' : 'success'"
           size="sm"
-          @click="toggleFeatured(project.item)">
-          {{ getButtonText(project.item.featured) }}
+          @click="toggleFeatured(row.item)">
+          {{ getButtonText(row.item.featured) }}
         </b-btn>
       </template>
     </infinite-loading-table>

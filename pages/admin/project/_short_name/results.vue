@@ -39,12 +39,12 @@
         all: 1
       }"
       domain-object="result">
-      <template slot="action" slot-scope="result">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
           :disabled="!validWebhook"
-          @click="analyse(result.item, $event)">
+          @click="analyse(row.item, $event)">
           Analyse
         </b-btn>
       </template>

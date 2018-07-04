@@ -61,26 +61,26 @@
           :dark="darkMode"
           :items="form.model.fields_schema"
           :fields="schemaTableFields">
-          <template slot="actions" slot-scope="field">
+          <template slot="actions" slot-scope="row">
             <b-btn
               variant="warning"
               size="sm"
-              @click="removeFormField(field.item.model)">
+              @click="removeFormField(row.item.model)">
               Remove
             </b-btn>
             <b-btn
               variant="secondary"
               class="mx-1"
               size="sm"
-              :disabled="isFirst(form.model.fields_schema, field.item)"
-              @click="moveItemUp(form.model.fields_schema, field.item)">
+              :disabled="isFirst(form.model.fields_schema, row.item)"
+              @click="moveItemUp(form.model.fields_schema, row.item)">
               <icon name="arrow-up"></icon>
             </b-btn>
             <b-btn
               variant="secondary"
               size="sm"
-              :disabled="isLast(form.model.fields_schema, field.item)"
-              @click="moveItemDown(form.model.fields_schema, field.item)">
+              :disabled="isLast(form.model.fields_schema, row.item)"
+              @click="moveItemDown(form.model.fields_schema, row.item)">
               <icon name="arrow-down"></icon>
             </b-btn>
           </template>
