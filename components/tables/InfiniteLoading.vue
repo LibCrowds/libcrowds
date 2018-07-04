@@ -22,8 +22,27 @@
         {{ data.item.updated | moment('calendar') }}
       </template>
 
-      <template slot="actions" slot-scope="data">
-        <slot name="action" :item="data.item"></slot>
+      <template slot="actions" slot-scope="row">
+        <b-btn
+          v-if="showDetails"
+          variant="info"
+          size="sm"
+          @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-btn>
+        <slot name="action" :item="row.item"></slot>
+      </template>
+
+      <template slot="row-details" slot-scope="row">
+        <b-card
+          :bg-variant="darkMode ? 'dark' : null"
+          :text-variant="darkMode ? 'white' : null">
+          <ul class="list-unstyled">
+            <li v-for="(key, index) in Object.keys(row.item)" :key="index">
+              <strong>{{ key }}: </strong>{{ row.item[key] }}
+            </li>
+          </ul>
+        </b-card>
       </template>
 
     </b-table>
@@ -78,6 +97,10 @@ export default {
       default: () => ({})
     },
     outlined: {
+      type: Boolean,
+      default: false
+    },
+    showDetails: {
       type: Boolean,
       default: false
     }
