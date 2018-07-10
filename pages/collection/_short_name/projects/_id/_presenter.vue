@@ -591,6 +591,8 @@ export default {
 
     /**
      * Load a manifest into the info modal, if available.
+     *
+     * Loading via a backend function to avoid CORS issues.
      */
     loadManifest () {
       const manifestUri = this.task ? this.task.info.manifest : null
