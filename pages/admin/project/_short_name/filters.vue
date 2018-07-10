@@ -20,7 +20,7 @@
           <label>{{ tag.name | capitalize }}</label>
           <multiselect
             :id="tag.name"
-            v-model="selections[tag.name]"
+            v-model="project.info.filters[tag.name]"
             :options="options[tag.name] || []"
             :taggable="true"
             @tag="addFilter">
@@ -62,7 +62,6 @@ export default {
       title: 'Project Filters',
       description: 'Set the filters used to help locate the project',
       processing: false,
-      selections: {},
       options: {}
     }
   },
@@ -122,19 +121,11 @@ export default {
       } else {
         this.options[name] = [value]
       }
-
-      if (Array.isArray(this.selections[name])) {
-        this.selections[name] = value
-      } else {
-        this.selections[name] = value
-      }
+      this.project.info.filters[name] = value
     }
   },
 
   mounted () {
-    // Populate with the project's current filters
-    this.selections = this.project.info.filters
-
     // Get all current filters for the collection.
     const catShortName = this.currentCollection.short_name
     const endpoint = `/lc/categories/${catShortName}/project-filters`
