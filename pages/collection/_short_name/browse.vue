@@ -75,8 +75,9 @@
           </b-col>
           <b-col
             xs="12"
+            lg="6"
             class="d-lg-flex justify-content-between flex-column
-              m-4 text-center text-lg-left">
+              my-4 text-center text-lg-left">
             <div class="mb-3">
               <h5>
                 {{ selectedItem.title }}
@@ -92,10 +93,13 @@
               <b-btn
                 v-for="(related, idx) in selectedItem.related"
                 :key="idx"
-                class="m-2"
-                variant="info"
-                :href="related.id || related['@id']">
-                {{ related.label }}
+                :variant="darkMode ? 'secondary' : 'outline-dark'"
+                size="lg"
+                :href="related.id || related['@id']" target="_blank">
+                <span class="d-flex align-items-center">
+                  <icon name="arrow-right" class="mr-1"></icon>
+                  {{ related.label }}
+                </span>
               </b-btn>
             </div>
             <div>
