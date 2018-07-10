@@ -169,14 +169,6 @@ export default {
 
     availableTemplates () {
       return this.currentCollection.info.templates.filter(tmpl => {
-        // Check if project built with parent template is complete
-        if (
-          tmpl.parent_template_id &&
-          !this.isParentAvailable(tmpl.parent_template_id)
-        ) {
-          return false
-        }
-
         // Check if the template is available for the selected volume
         if (this.selectedVolume) {
           return this.isComboAvailable(tmpl, this.selectedVolume)
@@ -272,6 +264,9 @@ export default {
           return false
         }
       }
+      if (template.parent_template_id) {
+        return this.isParentAvailable(template.parent_template_id, volume)
+      }
       return true
     },
 
@@ -279,13 +274,16 @@ export default {
      * Check if a parent template is linked to a completed project.
      * @param {Object} templateId
      *   The template ID.
+     * @param {Object} volume
+     *   The volume
      */
-    isParentAvailable (templateId) {
+    isParentAvailable (templateId, volume) {
       for (let builtItem of this.built_projects) {
         if (
           builtItem.template_id === templateId &&
           builtItem.overall_progress === 100 &&
-          builtItem.empty_results === 0
+          builtItem.empty_results === 0 &&
+          builtItem.volume_id === volume.id
         ) {
           return true
         }
