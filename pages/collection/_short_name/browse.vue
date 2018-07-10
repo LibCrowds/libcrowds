@@ -86,16 +86,16 @@
               </p>
             </div>
             <div></div>
-            <div class="mb-3 text-center text-lg-left">
+            <div
+              class="mb-3 text-center text-lg-left"
+              v-if="selectedItem.related">
               <b-btn
-                :variant="darkMode ? 'secondary' : 'outline-dark'"
-                size="lg"
-                :disabled="!selectedItem.link"
-                :href="selectedItem.link" target="_blank">
-                <span class="d-flex align-items-center">
-                  <icon name="arrow-right" class="mr-1"></icon>
-                  Open the viewer
-                </span>
+                v-for="(related, idx) in selectedItem.related"
+                :key="idx"
+                class="m-2"
+                variant="info"
+                :href="related.id || related['@id']">
+                {{ related.label }}
               </b-btn>
             </div>
             <div>
@@ -240,56 +240,26 @@ export default {
     },
 
     /**
-     * Lookup additional metadata for an item.
-     *
-     * Use the IIIF manifest if available, otherwise revert to basic defaults.
-     * @param {Object} item
-     *   The item.
-     */
-    loadMetadata (item) {
-      if (!item.manifest.length) {
-        return
-      }
-
-      return this.$axios.$get(item.manifest, {
-        headers: {
-          'Content-type': 'text/plain' // to avoid CORS preflight
-        }
-      })
-    },
-
-    /**
-    * Lookup the matching shareable link for an item.
-    * @param {Object} item
-    *   The item.
-    */
-    loadViewerLink (item) {
-      return this.$axios.$get('/api/task', {
-        params: {
-          info: {
-            url: item.url
-          },
-          limit: 1
-        }
-      })
-    },
-
-    /**
      * Show a preview of the selected item.
      *
      * Collect the additional metadata before loading it into the modal.
-     * @param {Object} url
+     * @param {Object} item
      *   The selected item.
      */
     showPreview (item) {
-      const loadMdPromise = this.loadMetadata(item)
-      const loadLinkPromise = this.loadViewerLink(item)
-      Promise.all([loadMdPromise, loadLinkPromise]).then(values => {
-        if (values[0].label && values[0].description) {
-          item.title = values[0].label
-          item.description = values[0].description
+      this.$axios.$get(`/lc/proxy/`, {
+        params: {
+          url: item.manifest
         }
-        item.link = values[1][0].info.link
+      }).then(data => {
+        item.title = data.label
+        item.description = data.description
+        item.related = data.hasOwnProperty('related')
+          ? Array.isArray(data.related)
+            ? data.related
+            : [data.related]
+          : []
+      }).finally(() => {
         this.selectedItem = item
         this.$refs.previewModal.show()
       })
