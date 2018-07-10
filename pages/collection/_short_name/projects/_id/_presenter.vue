@@ -605,7 +605,11 @@ export default {
         return
       }
 
-      this.$axios.$get(`/lc/tasks/${this.task.id}/manifest`).then(data => {
+      this.$axios.$get(`/lc/proxy/`, {
+        params: {
+          url: manifestUri
+        }
+      }).then(data => {
         this.manifest = data
       })
     },
