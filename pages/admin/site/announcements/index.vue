@@ -22,14 +22,14 @@
       :fields="tableFields"
       :search-params="searchParams"
       domain-object="announcement">
-      <template slot="action" slot-scope="announcement">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
           :to="{
             name: 'admin-site-announcements-id',
             params: {
-              id: announcement.item.id
+              id: row.item.id
             }
           }">
           Edit
@@ -37,7 +37,7 @@
         <b-btn
           variant="warning"
           size="sm"
-          @click="deleteAnnouncement(announcement.item.id)">
+          @click="deleteAnnouncement(row.item.id)">
           Remove
         </b-btn>
       </template>

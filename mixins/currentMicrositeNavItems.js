@@ -65,7 +65,7 @@ export const currentMicrositeNavItems = {
           }
         },
         {
-          label: 'Browse',
+          label: 'Browse Tags',
           link: {
             name: 'collection-short_name-browse',
             params: {

@@ -67,27 +67,27 @@
       :dark="darkMode"
       :items="tableItems"
       :fields="tableFields">
-      <template slot="action" slot-scope="user">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="info"
           size="sm"
-          @click.stop="user.toggleDetails">
-          {{ user.detailsShowing ? 'Hide' : 'Show' }} Details
+          @click.stop="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-btn>
         <b-btn
-          :variant="user.item.admin ? 'warning' : 'success'"
+          :variant="row.item.admin ? 'warning' : 'success'"
           size="sm"
-          @click="toggleAdmin(user.item)">
-          {{ user.item.admin ? 'Revoke admin rights' : 'Grant admin rights' }}
+          @click="toggleAdmin(row.item)">
+          {{ row.item.admin ? 'Revoke admin rights' : 'Grant admin rights' }}
         </b-btn>
       </template>
-      <template slot="row-details" slot-scope="user">
+      <template slot="row-details" slot-scope="row">
         <b-card
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
           <ul class="list-unstyled">
-            <li v-for="(key, index) in Object.keys(user.item)" :key="index">
-              <strong>{{ key }}: </strong>{{ user.item[key] }}
+            <li v-for="(key, index) in Object.keys(row.item)" :key="index">
+              <strong>{{ key }}: </strong>{{ row.item[key] }}
             </li>
           </ul>
         </b-card>

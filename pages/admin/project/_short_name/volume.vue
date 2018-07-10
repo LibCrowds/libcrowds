@@ -11,12 +11,12 @@
     </p>
 
     <volumes-table :volumes="volumes">
-      <template slot="action" slot-scope="vol">
+      <template slot="action" slot-scope="row">
         <b-btn
-          :variant="vol.item.id !== currentVolumeId ? 'success' : 'warning'"
+          :variant="row.item.id !== currentVolumeId ? 'success' : 'warning'"
           size="sm"
-          @click="updateVolume(vol.item)">
-          {{ vol.item.id !== currentVolumeId ? 'Select' : 'Deselect' }}
+          @click="updateVolume(row.item)">
+          {{ row.item.id !== currentVolumeId ? 'Select' : 'Deselect' }}
         </b-btn>
       </template>
     </volumes-table>

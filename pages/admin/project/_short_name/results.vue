@@ -27,28 +27,28 @@
       show
       variant="danger"
       class="mb-0">
-      Results analysis is currently disabled as the project's webhook is
-      invalid.
+      Results analysis cannot currently be triggered via this page as the
+      project's webhook is invalid.
     </b-alert>
 
-    <results-table
-      :project="currentProject">
-      <template slot="action" slot-scope="result">
-        <b-btn
-          variant="info"
-          size="sm"
-          @click="showDetails(result.item)">
-          {{ result.item._showDetails ? 'Hide Details' : 'Show Details' }}
-        </b-btn>
+    <infinite-loading-table
+      show-details
+      :fields="tableFields"
+      :search-params="{
+        project_id: currentProject.id,
+        all: 1
+      }"
+      domain-object="result">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
           :disabled="!validWebhook"
-          @click="analyse(result.item, $event)">
+          @click="analyse(row.item, $event)">
           Analyse
         </b-btn>
       </template>
-    </results-table>
+    </infinite-loading-table>
 
   </card-base>
 </template>
@@ -56,7 +56,7 @@
 <script>
 import { fetchProjectAndCollection } from '@/mixins/fetchProjectAndCollection'
 import { metaTags } from '@/mixins/metaTags'
-import ResultsTable from '@/components/tables/Results'
+import InfiniteLoadingTable from '@/components/tables/InfiniteLoading'
 import CardBase from '@/components/cards/Base'
 
 export default {
@@ -69,12 +69,22 @@ export default {
       title: 'Results',
       description: 'Check the project\'s results.',
       loading: true,
-      validWebhook: false
+      validWebhook: false,
+      tableFields: {
+        id: {
+          label: 'ID'
+        },
+        created: {
+          label: 'created',
+          class: 'text-center d-none d-md-table-cell',
+          sortable: true
+        }
+      }
     }
   },
 
   components: {
-    ResultsTable,
+    InfiniteLoadingTable,
     CardBase
   },
 
@@ -139,15 +149,6 @@ export default {
       }).catch(err => {
         this.$nuxt.error(err)
       })
-    },
-
-    /**
-     * Show the details for a result.
-     * @param {Object} result
-     *   The result.
-     */
-    showDetails (result) {
-      result._showDetails = !result._showDetails
     }
   },
 

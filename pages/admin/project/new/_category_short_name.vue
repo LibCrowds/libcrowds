@@ -178,7 +178,7 @@ export default {
         }
 
         // Check if the template is available for the selected volume
-        if (!this.selectedVolume) {
+        if (this.selectedVolume) {
           return this.isComboAvailable(tmpl, this.selectedVolume)
         }
 
@@ -195,7 +195,7 @@ export default {
     availableVolumes () {
       return this.currentCollection.info.volumes.filter(vol => {
         // Check if the volume is available for the selected template
-        if (!this.selectedTemplate) {
+        if (this.selectedTemplate) {
           return this.isComboAvailable(this.selectedTemplate, vol)
         }
 

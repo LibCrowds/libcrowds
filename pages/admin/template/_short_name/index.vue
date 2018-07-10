@@ -32,7 +32,7 @@
       class="border-left-0 border-right-0 border-bottom-0"
       :items="currentCollection.info.templates"
       :fields="tableFields">
-      <template slot="actions" slot-scope="template">
+      <template slot="actions" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
@@ -40,7 +40,7 @@
             name: 'admin-template-short_name-id',
             params: {
               short_name: currentCollection.short_name,
-              id: template.item.id
+              id: row.item.id
             }
           }">
           Open

@@ -133,7 +133,10 @@ export default {
      */
     onSubmit () {
       const modelClone = Object.assign({}, this.form.model)
-      if (!this.form.model.type === 'input') {
+      if (this.form.model.type === 'input') {
+        // Add name attribute to any input fields
+        this.form.model['inputName'] = this.form.model.model
+      } else {
         delete modelClone['inputType']
       }
       this.$emit('submit', this.form.model)

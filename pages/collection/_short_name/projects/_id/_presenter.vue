@@ -591,6 +591,8 @@ export default {
 
     /**
      * Load a manifest into the info modal, if available.
+     *
+     * Loading via a backend function to avoid CORS issues.
      */
     loadManifest () {
       const manifestUri = this.task ? this.task.info.manifest : null
@@ -603,7 +605,11 @@ export default {
         return
       }
 
-      this.$axios.$get(`/lc/tasks/${this.task.id}/manifest`).then(data => {
+      this.$axios.$get(`/lc/proxy/`, {
+        params: {
+          url: manifestUri
+        }
+      }).then(data => {
         this.manifest = data
       })
     },

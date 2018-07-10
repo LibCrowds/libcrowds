@@ -25,12 +25,12 @@
       :search-string="searchString"
       :search-keys="searchKeys"
       domain-object="category">
-      <template slot="action" slot-scope="collection">
+      <template slot="action" slot-scope="row">
         <b-btn
           variant="success"
           size="sm"
-          :disabled="collection.item.id == project.category_id"
-          @click="setCollection(collection.item)">
+          :disabled="row.item.id == project.category_id"
+          @click="setCollection(row.item)">
           Select
         </b-btn>
       </template>
