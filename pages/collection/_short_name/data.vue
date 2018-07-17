@@ -64,7 +64,7 @@
         </b-tab>
 
         <!-- Reports tab -->
-        <b-tab title="Reports" no-body active>
+        <b-tab title="Reports" no-body>
           <b-table
             responsive
             striped
