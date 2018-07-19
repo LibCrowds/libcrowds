@@ -151,40 +151,9 @@
       <b-container
         class="py-2 px-3"
         v-if="currentCollection.info.annotations.tags">
-        <p>
-          The tags added below will help researchers locate items of
-          particular interest by being used to generate keywords that can
-          be searched via the
-          <nuxt-link
-            :to="{
-              name: 'collection-short_name-browse',
-              params: {
-                short_name: currentCollection.short_name
-              }
-            }">
-            Browse
-          </nuxt-link> page.
-        </p>
-        <p>
-          For programmatic research purposes the data will also be available
-          via the API at
-          <a :href="currentCollection.info.annotations.tags" target="_blank">
-            {{ currentCollection.info.annotations.tags }}
-          </a>
-        </p>
-        <p>
-          Tags can be added by anyone but, once confirmed, can only be deleted
-          by administrators. If you have spotted a tag that you think is
-          incorrect or should be removed for any reason please contact
-          <a :href="`mailto:${localConfig.email}`">
-            {{ localConfig.email }}.
-          </a>
-        </p>
-        <p>
-          By default, a new tag will be added for each word. To create tags
-          that comprise multiple words please follow the convention of adding
-          a hyphen between words (e.g. my-long-tag).
-        </p>
+
+        <span v-html="tagsModalText"></span>
+
         <p>
           <h6 class="mb-1">Current tags:</h6>
           <item-tags-list
@@ -370,6 +339,13 @@ export default {
 
     rejectModalText () {
       const text = this.currentCollection.info.presenter_options.reject_text
+      if (typeof text !== 'undefined') {
+        return marked(text)
+      }
+    },
+
+    tagsModalText () {
+      const text = this.currentCollection.info.presenter_options.tags_text
       if (typeof text !== 'undefined') {
         return marked(text)
       }
