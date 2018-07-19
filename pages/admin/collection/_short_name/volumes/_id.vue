@@ -191,7 +191,13 @@ export default {
             hint: 'A IIIF manifest URI',
             disabled: this.hasProjects,
             required: true,
-            validator: VueFormGenerator.validators.string
+            validator: (value) => {
+              if (!value || !value.length) {
+                return 'This field is required!'
+              } if (localConfig.https && !value.startsWith('https://')) {
+                return 'The HTTPS scheme must be used'
+              }
+            }
           }
         ],
         flickr: [
