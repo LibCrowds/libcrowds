@@ -5,7 +5,7 @@
     :bg-variant="darkMode ? 'dark' : null"
     :text-variant="darkMode ? 'white' : null">
 
-    <template slot="header">
+    <template slot="header" v-if="!noHeader">
       <b-row
         class="mb-0 d-flex align-items-center">
         <b-col>
@@ -62,6 +62,10 @@ export default {
     docs: {
       type: String,
       default: ''
+    },
+    noHeader: {
+      type: Boolean,
+      default: false
     }
   },
 

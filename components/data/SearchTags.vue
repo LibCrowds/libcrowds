@@ -2,6 +2,7 @@
   <multiselect
     v-model="selectedTags"
     track-by="id"
+    ref="multi"
     placeholder="Type to search"
     open-direction="bottom"
     :options="foundTags"
@@ -118,6 +119,16 @@ export default {
       const tagsClone = JSON.parse(JSON.stringify(this.selectedTags))
       tagsClone.push(tag)
       this.$emit('change', tagsClone)
+    },
+
+    /**
+     * Select a tag programatically.
+     * @param {Object} tag
+     *   The tag.
+     */
+    externalSelectTag (tag) {
+      this.$refs.multi.value.push(tag)
+      this.selectTag(tag)
     },
 
     /**
