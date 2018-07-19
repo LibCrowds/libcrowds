@@ -322,7 +322,6 @@ export default {
     updateFilters (tags) {
       this.currentTab = 1
       this.selectedTags = tags
-      console.log(this.selectedTags)
       this.$refs.grid.filter('filterByTag')
       this.$refs.infiniteload.load()
     },
