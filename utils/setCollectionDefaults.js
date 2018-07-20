@@ -15,7 +15,9 @@ export const setCollectionDefaults = function (collection) {
       note_button: 'Add a note',
       submit_button: 'Save',
       share_text: '',
-      extra_tag_link: ''
+      extra_tag_link: '',
+      reject_text: '',
+      tags_text: ''
     },
     content: {
       about: `${collection.name} is part of the ${localConfig.brand} ` +

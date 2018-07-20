@@ -395,6 +395,7 @@ export default {
         this.forumDiscussions = response.data.filter(discussion => {
           return !discussion.attributes.isSticky
         }).slice(0, 5)
+        this.loadingForumDiscussions = false
       }).catch(err => {
         // This is most likely a CORS issue with the forum endpoint
         if (process.env.NODE_ENV !== 'development') {
@@ -403,11 +404,8 @@ export default {
             message: `Error loading latest forum discussions: ${err.message}`
           })
         }
-        return {
-          forumDiscussions: []
-        }
-      }).finally(() => {
         this.loadingForumDiscussions = false
+        this.forumDiscussions = []
       })
     },
 
@@ -424,19 +422,19 @@ export default {
           item.updated = new Date(item.updated * 1000)
           return item
         }).filter(item => {
+          this.loadingActivityFeed = false
           return (
             item.action_updated === 'UserContribution' &&
             item.category_id === this.collection.id
           )
         }).slice(0, 5)
       }).catch(err => {
+        this.loadingActivityFeed = false
         this.$notifications.flash({
           status: 'error',
           message: 'Failed to load recent activity'
         })
         console.error(err)
-      }).finally(() => {
-        this.loadingActivityFeed = false
       })
     },
 

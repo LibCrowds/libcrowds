@@ -40,6 +40,19 @@
           The text to be used for the reject modal, above the options input.
         </div>
       </div>
+      <div class="form-group" slot="bottom">
+        <label class="ml-0">
+          Tags text
+        </label>
+        <markdown-editor
+          v-model="currentCollection.info.presenter_options.tags_text"
+          data-size="sm"
+          :configs="markdownConfig">
+        </markdown-editor>
+        <div class="hint">
+          The text to be used for the tags modal.
+        </div>
+      </div>
     </pybossa-form>
 
   </card-base>

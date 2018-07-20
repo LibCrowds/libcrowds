@@ -159,7 +159,10 @@ const config = {
     browserBaseURL: localConfig.pybossaHost,
     credentials: true,
     retry: true,
-    proxy: true
+    proxy: true,
+    https: localConfig.hasOwnProperty('https')
+      ? localConfig.https
+      : false
   },
   proxy: {
     '/api/': localConfig.pybossaHost,

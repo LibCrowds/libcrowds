@@ -6,38 +6,64 @@
       <hr class="mx-0">
     </span>
 
-    <div v-if="hasTagAnnotations">
-      <search-tags
-        :container-iri="currentCollection.info.annotations.tags"
-        @change="updateFilters"
-        class="mb-2">
-      </search-tags>
+    <search-tags
+      :container-iri="currentCollection.info.annotations.tags"
+      ref="searchtags"
+      slot="controls"
+      @change="updateFilters"
+      class="mb-3">
+    </search-tags>
 
-      <div class="img-grid">
-        <no-ssr>
-          <isotope
-            ref="grid"
-            v-images-loaded:on.progress="setGridLayout"
-            :options="imageGridOptions"
-            :list="uniqueImageData">
-            <img
-              v-for="(item, index) in uniqueImageData"
-              :key="index"
-              :src="item.thumbnail"
-              class="img-grid-item img-fluid my-1"
-              @click="showPreview(item)">
-          </isotope>
-        </no-ssr>
-      </div>
+    <card-base no-header>
+      <b-tabs card v-model="currentTab" @input="onTabsChange">
+        <b-tab title="Tags" no-body active>
+          <b-table
+            responsive
+            striped
+            hover
+            show-empty
+            :dark="darkMode"
+            :items="uniqueTags"
+            :fields="tagTableFields">
+            <template slot="action" slot-scope="row">
+              <b-btn
+                variant="success"
+                size="sm"
+                @click="selectTag(row.item)">
+                View Images
+              </b-btn>
+            </template>
+          </b-table>
+        </b-tab>
+        <b-tab title="Images" no-body>
+          <div class="img-grid">
+            <no-ssr>
+              <isotope
+                ref="grid"
+                v-images-loaded:on.progress="setGridLayout"
+                :options="imageGridOptions"
+                :list="uniqueImageData">
+                <img
+                  v-for="(item, index) in uniqueImageData"
+                  :key="index"
+                  :src="item.thumbnail"
+                  class="img-grid-item img-fluid my-1"
+                  @click="showPreview(item)">
+              </isotope>
+            </no-ssr>
+          </div>
+        </b-tab>
+      </b-tabs>
+    </card-base>
 
-      <infinite-load-annotations
-        ref="infiniteload"
-        v-model="tagAnnotations"
-        :container-iri="currentCollection.info.annotations.tags"
-        no-results="It looks like nothing has been tagged yet!"
-        no-more-results="">
-      </infinite-load-annotations>
-    </div>
+    <infinite-load-annotations
+      ref="infiniteload"
+      v-if="hasTagAnnotations"
+      v-model="tagAnnotations"
+      :container-iri="currentCollection.info.annotations.tags"
+      no-results="It looks like nothing has been tagged yet!"
+      no-more-results="">
+    </infinite-load-annotations>
 
     <p class="lead text-center" v-else>
       Sorry, user tags haven't been configured for this collection yet.
@@ -120,6 +146,7 @@
 </template>
 
 <script>
+import uniqBy from 'lodash/uniqBy'
 import marked from 'marked'
 import 'vue-awesome/icons/times'
 import 'vue-awesome/icons/arrow-right'
@@ -128,6 +155,7 @@ import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
 import InfiniteLoadAnnotations from '@/components/infiniteload/Annotations'
 import ItemTagsList from '@/components/lists/ItemTags'
 import SearchTags from '@/components/data/SearchTags'
+import CardBase from '@/components/cards/Base'
 
 export default {
   layout: 'collection-tabs',
@@ -139,14 +167,25 @@ export default {
       title: 'Browse Tags',
       tagAnnotations: [],
       selectedTags: [],
-      selectedItem: {}
+      selectedItem: {},
+      tagTableFields: {
+        'body.value': {
+          label: 'Name'
+        },
+        action: {
+          label: 'Action',
+          class: 'text-center'
+        }
+      },
+      currentTab: 0
     }
   },
 
   components: {
     InfiniteLoadAnnotations,
     ItemTagsList,
-    SearchTags
+    SearchTags,
+    CardBase
   },
 
   computed: {
@@ -164,6 +203,10 @@ export default {
 
     hasTagAnnotations () {
       return this.currentCollection.info.annotations.hasOwnProperty('tags')
+    },
+
+    uniqueTags () {
+      return uniqBy(this.tagAnnotations, 'body.value')
     },
 
     uniqueImageData () {
@@ -263,7 +306,9 @@ export default {
             ? data.related
             : [data.related]
           : []
-      }).finally(() => {
+        this.selectedItem = item
+        this.$refs.previewModal.show()
+      }).catch(() => {
         this.selectedItem = item
         this.$refs.previewModal.show()
       })
@@ -275,9 +320,23 @@ export default {
      *   The selected tags.
      */
     updateFilters (tags) {
+      this.currentTab = 1
       this.selectedTags = tags
       this.$refs.grid.filter('filterByTag')
       this.$refs.infiniteload.load()
+    },
+
+    /**
+     * Add a tag to the search box.
+     * @param {Object} tag
+     *   The tag.
+     */
+    selectTag (tag) {
+      this.$refs.searchtags.externalSelectTag(tag)
+    },
+
+    onTabsChange () {
+      this.setGridLayout()
     }
   },
 
@@ -290,8 +349,11 @@ export default {
 
 <style lang="scss">
 .img-grid {
+  overflow: auto;
+
   .img-grid-item {
     cursor: pointer;
+    padding: 5px;
     width: 100%;
 
     @include media-breakpoint-up(md) {
