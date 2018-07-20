@@ -138,7 +138,7 @@
       lazy
       v-if="task"
       ref="tags"
-      title="Tags"
+      title="Add your tags"
       size="lg"
       ok-only
       :header-text-variant="darkPresenterModals ? 'white' : null"
