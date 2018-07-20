@@ -35,7 +35,7 @@
             </template>
           </b-table>
         </b-tab>
-        <b-tab title="Images">
+        <b-tab title="Images" no-body>
           <div class="img-grid">
             <no-ssr>
               <isotope
@@ -349,8 +349,11 @@ export default {
 
 <style lang="scss">
 .img-grid {
+  overflow: auto;
+
   .img-grid-item {
     cursor: pointer;
+    padding: 5px;
     width: 100%;
 
     @include media-breakpoint-up(md) {

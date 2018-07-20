@@ -137,7 +137,10 @@ export default {
      *   The tag.
      */
     removeTag (tag) {
-      this.$emit('change', this.selectedTags)
+      let tClone = JSON.parse(JSON.stringify(this.selectedTags)).filter(t => {
+        return t.id !== tag.id
+      })
+      this.$emit('change', tClone)
     }
   },
 
