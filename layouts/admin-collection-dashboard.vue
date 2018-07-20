@@ -101,6 +101,15 @@ export default {
             }
           },
           {
+            label: 'Item Tags',
+            link: {
+              name: 'admin-collection-short_name-tags',
+              params: {
+                short_name: this.currentCollection.short_name
+              }
+            }
+          },
+          {
             label: 'Project Filters',
             link: {
               name: 'admin-collection-short_name-filters',

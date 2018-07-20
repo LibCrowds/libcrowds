@@ -15,7 +15,16 @@
 </template>
 
 <script>
+import uniqBy from 'lodash/uniqBy'
+import Fuse from 'fuse.js'
+
 export default {
+  data () {
+    return {
+      items: []
+    }
+  },
+
   props: {
     value: {
       type: Array,
@@ -32,6 +41,14 @@ export default {
     noMoreResults: {
       type: String,
       default: 'No more results'
+    },
+    searchString: {
+      type: String,
+      default: ''
+    },
+    searchKeys: {
+      type: Array,
+      default: () => ([])
     }
   },
 
@@ -43,24 +60,48 @@ export default {
      */
     async infiniteLoadAnnotations ($state) {
       let response = null
+      const limit = 20
       try {
         response = await this.$explicates.search({
           collection: this.containerIri,
-          limit: 20,
-          offset: this.value.length
+          limit: limit,
+          offset: this.items.length
         })
       } catch (err) {
         this.$nuxt.error(err)
       }
 
-      if (!response.data.hasOwnProperty('first')) {
+      if (response.data.hasOwnProperty('first')) {
+        this.items = uniqBy(this.items.concat(response.data.first.items), 'id')
+      }
+
+      if (
+        !response.data.hasOwnProperty('first') ||
+        response.data.first.items.length < limit
+      ) {
         $state.complete()
         this.$emit('complete')
         return
       }
 
-      this.$emit('input', this.value.concat(response.data.first.items))
       $state.loaded()
+    },
+
+    /**
+     * Apply fuzzy search.
+     * @param {Array} items
+     *   The items to search.
+     */
+    search (items) {
+      if (
+        this.searchKeys &&
+        this.searchString &&
+        this.searchKeys.length &&
+        this.searchString.length
+      ) {
+        return this.fuse.search(this.searchString)
+      }
+      return items
     },
 
     /**
@@ -83,6 +124,43 @@ export default {
           this.$refs.infiniteload.attemptLoad()
         }
       })
+    },
+
+    /**
+     * Emit the loaded and possibly filtered items.
+     */
+    emitItems () {
+      const filteredItems = this.search(this.items)
+      this.$emit('input', filteredItems)
+    }
+  },
+
+  computed: {
+    fuse () {
+      return new Fuse(this.items, {
+        shouldSort: true,
+        tokenize: true,
+        matchAllTokens: true,
+        findAllMatches: true,
+        threshold: 0,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: this.searchKeys
+      })
+    }
+  },
+
+  watch: {
+    searchKeys () {
+      this.emitItems()
+    },
+    searchString () {
+      this.emitItems()
+    },
+    items () {
+      this.emitItems()
     }
   }
 }
