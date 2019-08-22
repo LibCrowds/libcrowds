@@ -171,7 +171,7 @@ export default {
           }
         }
       })
-      return projectsData.data.length < 1
+      return projectsData.length < 1
     }
   }
 }
