@@ -215,3 +215,8 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+.cc-suspended {
+  display: none;
+}
+</style>
