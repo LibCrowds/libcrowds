@@ -55,11 +55,13 @@
           class="list-unstyled"
           name="fade-up">
           <li v-for="project in filteredProjects" :key="project.id">
-            <project-card
-              :collection="collection"
-              :project="project"
-              @filter="updateFilterModel">
-            </project-card>
+              <project-card
+                v-if="project.current_user_can_contribute"
+                :collection="collection"
+                :project="project"
+                @filter="updateFilterModel"
+                >
+              </project-card>
           </li>
         </transition-group>
 
@@ -90,7 +92,6 @@
 
 <script>
 import marked from 'marked'
-import asyncFilter from 'async/filter'
 import isEmpty from 'lodash/isEmpty'
 import { collectionMetaTags } from '@/mixins/metaTags'
 import { fetchCollectionByName } from '@/mixins/fetchCollectionByName'
@@ -137,8 +138,7 @@ export default {
           label: 'Action',
           class: 'text-center'
         }
-      },
-      validProjectIds: new Set()
+      }
     }
   },
 
@@ -175,8 +175,15 @@ export default {
 
     filteredProjects () {
       let filtered = this.projects.filter(project => {
-        return Number(project.stats.overall_progress) < 100
+        return (
+          project.stats &&
+          // hide completed tasks
+          Number(project.stats.overall_progress) < 100 &&
+          // GN: hide projects without tasks
+          project.stats.n_tasks > 0
+        )
       }).filter(project => {
+        // filtering by fields selected by the user (filterModel)
         for (let key of Object.keys(this.filterModel)) {
           project.info.filters = project.info.filters || {}
           if (project.info.filters[key] !== this.filterModel[key]) {
@@ -253,26 +260,29 @@ export default {
      * but hopefully that is unlikely! We might see if we can update the
      * PYBOSSA API at some point to filter these out in the same request.
      * @param {Array} projects
-     *   The projects.
+     *   pre-filtered projects.
      */
     filterProjectsForUser (projects) {
-      asyncFilter(projects, (p, callback) => {
-        if (this.validProjectIds.has(p.id)) {
-          callback(null, true)
-          return
-        }
-        this.$axios.$get(`/api/project/${p.id}/newtask`).then(data => {
+      projects.forEach(project => {
+        let cond = project.current_user_can_contribute
+        // project.current_user_can_contribute is initially undefined
+        // if defined, we skip
+        if (cond === 0 || cond === 1) return
+
+        // otherwise we set it to 0 by default
+        // then send a /newtask request and set to 1 if response is not empty
+        project.current_user_can_contribute = 0
+
+        this.$axios.$get(`/api/project/${project.id}/newtask`).then(data => {
           if (!isEmpty(data) && !data.info.hasOwnProperty('error')) {
-            this.validProjectIds.add(p.id)
-            callback(null, true)
-          } else {
-            callback(null, false)
+            project.current_user_can_contribute = 1
           }
         }).catch(err => {
           this.$nuxt.error(err)
         })
       })
     }
+
   },
 
   mounted () {
