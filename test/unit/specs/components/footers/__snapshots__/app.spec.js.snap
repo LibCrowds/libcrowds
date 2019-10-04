@@ -7,7 +7,7 @@ exports[`App footer renders correctly 1`] = `
       <a href="#/" class="router-link-exact-active router-link-active">
         Part of the My Brand crowdsourcing platform
       </a>
-      <p class="my-2">&copy; My Company, 2018</p>
+      <p class="my-2">&copy; My Company, 2019</p>
       <ul class="list-inline mt-2 mb-0">
         <li class="list-inline-item mx-1">
           <a href="https://twitter.com/mytwitterhandle" class="text-muted">
