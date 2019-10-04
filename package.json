@@ -25,7 +25,7 @@
     "@nuxtjs/sitemap": "^0.1.1",
     "async": "^2.6.1",
     "babel-polyfill": "^6.26.0",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "bootstrap-vue": "^2.0.0-rc.6",
     "capitalize": "^1.0.0",
     "chartist-plugin-tooltips": "0.0.17",
