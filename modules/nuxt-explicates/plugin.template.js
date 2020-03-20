@@ -158,6 +158,20 @@ class Explicates {
   }
 
   /**
+   * Suggests tags
+   */
+  suggestTags (params, minimal = false, iris = false) {
+    const endpoint = '/tags/'
+    const headers = {
+      prefer: this._getPreferHeader(minimal, iris)
+    }
+    return this.client.get(endpoint, {
+      params: params,
+      headers: headers
+    })
+  }
+
+  /**
    * Return the Prefer header.
    * @param {Boolean} minimal
    *   Prefer a minimal container.
