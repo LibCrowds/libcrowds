@@ -214,11 +214,11 @@ export default {
      * @param {String} value
      *   The tag value.
      * @param {String} id
-     *   The multiselect item id.
-     * @param {Boolean} isNew
-     *   New if adding a new tag, false if selecting.
+     *   The multiselect item id
+     *   (the explicates annotation id if user selected existing tag one)
+     *   (if user pressed space or selected new tag => null/undefined)
      */
-    async addTag (value, id, isNew = true) {
+    async addTag (value, id) {
       value = (value || '').trim()
 
       if (!value) {
@@ -228,9 +228,14 @@ export default {
       }
 
       const exists = await this.checkTagExists(value)
+
+      if (id) {
+        // we unselect that tag as we want to create a new one instead
+        this.selectedTags.pop()
+      }
+
       if (exists) {
         this.$notifications.info({ message: 'Tag already exists' })
-        this.selectedTags.pop()
         return
       }
 
@@ -240,9 +245,7 @@ export default {
       return this.$explicates.createAnnotation(iri, newTag).then(r => {
         this.$notifications.success({ message: 'Tag added' })
         this.tagsLoading = false
-        if (isNew) {
-          this.selectedTags.push(r.data)
-        }
+        this.selectedTags.push(r.data)
       }).catch(err => {
         this.handleError(err)
       })
@@ -253,8 +256,9 @@ export default {
      * @param {Object} tag
      *   The tag.
      */
-    selectTag (tag) {
-      this.addTag(tag.body.value, false)
+    selectTag (tag, id) {
+      // create a new tag in the DB and select it
+      this.addTag(tag.body.value, tag.id)
     },
 
     /**
