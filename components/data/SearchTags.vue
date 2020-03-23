@@ -119,7 +119,6 @@ export default {
         You can still continue using the result of the application as normal.`
       this.tagsLoading = false
       this.$emit('error', err)
-      console.error(err)
       this.$notifications.error({ message: errorMessage })
     },
 

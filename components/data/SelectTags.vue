@@ -82,6 +82,8 @@ export default {
      */
     searchTags (query) {
       if (!query || !query.length) {
+        this.foundTags = []
+        this.tagsLoading = false
         return
       }
 
@@ -93,7 +95,9 @@ export default {
       }
 
       // return this.search(query).then(r => {
-      return this.suggestTags(query).then(r => {
+      let ret = this.suggestTags(query)
+
+      ret.then(r => {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
         } else {
@@ -103,6 +107,8 @@ export default {
       }).catch(err => {
         this.handleError(err)
       })
+
+      return ret
     },
 
     /**
@@ -283,7 +289,6 @@ export default {
         You can still continue using the result of the application as normal.`
       this.tagsLoading = false
       this.$emit('error', err)
-      console.error(err)
       this.$notifications.error({ message: errorMessage })
     }
   }

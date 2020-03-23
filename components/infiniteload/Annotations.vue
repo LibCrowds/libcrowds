@@ -16,7 +16,7 @@
 </template>
 
 <script>
-// import uniqBy from 'lodash/uniqBy'
+import uniqBy from 'lodash/uniqBy'
 import Fuse from 'fuse.js'
 
 export default {
@@ -62,11 +62,11 @@ export default {
      */
     async infiniteLoadAnnotations ($state) {
       let response = null
-      // const limit = 20
-      const limit = 100
+      const limit = 20
+      // const limit = 100
       try {
-        // response = await this.$explicates.search({
-        response = await this.$explicates.suggestTags({
+        response = await this.$explicates.search({
+        // response = await this.$explicates.suggestTags({
           collection: this.containerIri,
           limit: limit,
           offset: this.offset
@@ -76,8 +76,8 @@ export default {
       }
 
       if (response.data.hasOwnProperty('first')) {
-        // this.items = uniqBy(this.items.concat(response.data.first.items), 'id')
-        this.items = this.items.concat(response.data.first.items)
+        this.items = uniqBy(this.items.concat(response.data.first.items), 'id')
+        // this.items = this.items.concat(response.data.first.items)
         this.offset += response.data.first.items.length
       }
 

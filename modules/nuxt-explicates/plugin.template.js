@@ -162,12 +162,9 @@ class Explicates {
    */
   suggestTags (params, minimal = false, iris = false) {
     const endpoint = '/tags/'
-    const headers = {
-      prefer: this._getPreferHeader(minimal, iris)
-    }
     return this.client.get(endpoint, {
       params: params,
-      headers: headers
+      headers: {}
     })
   }
 
@@ -228,6 +225,10 @@ export default (ctx, inject) => {
     baseURL: '<%= options.baseURL %>',
     accept: '<%= options.accept %>'
   }
+
+  // GN: 'text/plain' to avoid unnecessary preflight request (OPTION)
+  // when doing GET.
+  options.accept = 'text/plain'
 
   // Create a new Explicates instance
   const explicates = new Explicates(options)
