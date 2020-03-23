@@ -18,8 +18,8 @@
     @tag="addTag"
     @select="selectTag"
     @remove="removeTag"
-    @search-change="searchTags">
-  </multiselect>
+    @search-change="searchTags"
+  ></multiselect>
 </template>
 
 <script>
@@ -82,6 +82,8 @@ export default {
      */
     searchTags (query) {
       if (!query || !query.length) {
+        this.foundTags = []
+        this.tagsLoading = false
         return
       }
 
@@ -92,7 +94,10 @@ export default {
         return this.addTag(parts[0])
       }
 
-      return this.search(query).then(r => {
+      // return this.search(query).then(r => {
+      let ret = this.suggestTags(query)
+
+      ret.then(r => {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
         } else {
@@ -102,6 +107,8 @@ export default {
       }).catch(err => {
         this.handleError(err)
       })
+
+      return ret
     },
 
     /**
@@ -121,6 +128,21 @@ export default {
           }
         },
         contains: contains === null ? {} : contains
+      })
+    },
+
+    /**
+     * Search for current tag Annotations.
+     * @param {String} query
+     *   The query string.
+     * @param {Boolean} strict
+     *   True to use the query as a prefix, false otherwise.
+     */
+    suggestTags (query, strict = false, contains = null) {
+      const safeQuery = query.replace(/[^\w\s&]/gi, '')
+      return this.$explicates.suggestTags({
+        collection: this.containerIri,
+        q: safeQuery
       })
     },
 
@@ -197,6 +219,14 @@ export default {
      *   New if adding a new tag, false if selecting.
      */
     async addTag (value, id, isNew = true) {
+      value = (value || '').trim()
+
+      if (!value) {
+        this.$notifications.info({ message: 'Tag is empty' })
+        // if (isNew) this.selectedTags.pop()
+        return
+      }
+
       const exists = await this.checkTagExists(value)
       if (exists) {
         this.$notifications.info({ message: 'Tag already exists' })
@@ -259,7 +289,6 @@ export default {
         You can still continue using the result of the application as normal.`
       this.tagsLoading = false
       this.$emit('error', err)
-      console.error(err)
       this.$notifications.error({ message: errorMessage })
     }
   }
