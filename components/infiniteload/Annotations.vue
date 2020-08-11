@@ -3,7 +3,8 @@
     <infinite-loading
       ref="infiniteload"
       class="infinite-loading"
-      @infinite="infiniteLoadAnnotations">
+      @infinite="infiniteLoadAnnotations"
+    >
       <span slot="no-results">
         <span v-if="noResults">{{ noResults }}</span>
       </span>
@@ -21,7 +22,8 @@ import Fuse from 'fuse.js'
 export default {
   data () {
     return {
-      items: []
+      items: [],
+      offset: 0
     }
   },
 
@@ -61,11 +63,13 @@ export default {
     async infiniteLoadAnnotations ($state) {
       let response = null
       const limit = 20
+      // const limit = 100
       try {
         response = await this.$explicates.search({
+        // response = await this.$explicates.suggestTags({
           collection: this.containerIri,
           limit: limit,
-          offset: this.items.length
+          offset: this.offset
         })
       } catch (err) {
         this.$nuxt.error(err)
@@ -73,6 +77,8 @@ export default {
 
       if (response.data.hasOwnProperty('first')) {
         this.items = uniqBy(this.items.concat(response.data.first.items), 'id')
+        // this.items = this.items.concat(response.data.first.items)
+        this.offset += response.data.first.items.length
       }
 
       if (

@@ -16,8 +16,8 @@
     no-result="No tags found, try changing the search query"
     @select="selectTag"
     @remove="removeTag"
-    @search-change="searchTags">
-  </multiselect>
+    @search-change="searchTags"
+  ></multiselect>
 </template>
 
 <script>
@@ -44,7 +44,8 @@ export default {
      *   The query string.
      */
     searchTags (query) {
-      return this.search(query).then(r => {
+      // return this.search(query).then(r => {
+      return this.suggestTags(query).then(r => {
         if (r.data.total > 0) {
           this.foundTags = r.data.first.items
         } else {
@@ -80,6 +81,21 @@ export default {
     },
 
     /**
+     * Search for current tag Annotations.
+     * @param {String} query
+     *   The query string.
+     * @param {Boolean} strict
+     *   True to use the query as a prefix, false otherwise.
+     */
+    suggestTags (query, strict = false, contains = null) {
+      const safeQuery = query.replace(/[^\w\s&]/gi, '')
+      return this.$explicates.suggestTags({
+        collection: this.containerIri,
+        q: safeQuery
+      })
+    },
+
+    /**
      * Get the label to display for a tag.
      * @param {Object} tag
      *   The tag.
@@ -103,7 +119,6 @@ export default {
         You can still continue using the result of the application as normal.`
       this.tagsLoading = false
       this.$emit('error', err)
-      console.error(err)
       this.$notifications.error({ message: errorMessage })
     },
 
