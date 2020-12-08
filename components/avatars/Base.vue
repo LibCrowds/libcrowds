@@ -6,7 +6,8 @@
       :class="imgClass"
       :style="imgStyle"
       v-b-tooltip
-      :title="tooltip"
+      :title="tooltip" 
+      :alt="alt-image"
       :triggers="tooltipTriggers"
       @error="handleError">
     </img>
