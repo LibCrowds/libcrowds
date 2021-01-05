@@ -4,7 +4,7 @@
       :src="src"
       img-class="img-thumbnail rounded-circle"
       :img-style="style"
-      :alt-tag="altTag"
+      :alt="altTag"
       :tooltip="user.name"
       :tooltip-triggers="tooltipTriggers">
       <v-gravatar

@@ -16,21 +16,21 @@
             <a
               :href="`https://twitter.com/${localConfig.twitter}`"
               class="text-muted">
-              <icon name="twitter"></icon>
+              <icon name="twitter"><span class="sr-only">Twitter</span></icon>
             </a>
           </li>
           <li
             v-if="localConfig.email"
             class="list-inline-item mx-1">
             <a :href="`mailto:${localConfig.email}`" class="text-muted">
-              <icon name="envelope"></icon>
+              <icon name="envelope"><span class="sr-only">Email</span></icon>
            </a>
           </li>
           <li
             v-if="localConfig.github"
             class="list-inline-item mx-1">
             <a :href="localConfig.github" class="text-muted">
-              <icon name="github"></icon>
+              <icon name="github"><span class="sr-only">GitHub</span></icon>
             </a>
           </li>
         </ul>
