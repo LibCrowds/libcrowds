@@ -33,14 +33,14 @@
             class="list-inline-item mx-1">
             <a :href="localConfig.github" class="text-muted">
               <icon name="github"></icon>
-              <span class="sr-only">Github</span>
+              <span class="sr-only">GitHub</span>
             </a>
           </li>
         </ul>
       </section>
 
       <section class="d-none d-lg-block" v-if="localConfig.footer">
-        <h5 class="list-title">{{ localConfig.footer.title }}</h5>
+        <h5 class="list-title"  style="color: #fff;">{{ localConfig.footer.title }}</h5>
         <ul class="list-unstyled">
           <li
             v-for="(item, index) in localConfig.footer.items"

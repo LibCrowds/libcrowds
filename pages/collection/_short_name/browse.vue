@@ -47,6 +47,7 @@
                   v-for="(item, index) in uniqueImageData"
                   :key="index"
                   :src="item.thumbnail"
+                  :alt="item"
                   class="img-grid-item img-fluid my-1"
                   @click="showPreview(item)">
               </isotope>

@@ -1,13 +1,13 @@
 <template>
-  <div class="social-media-buttons">
-
+  <div class="social-media-buttons"> 
+ 
       <b-btn
         v-b-tooltip
         title="Share on Facebook"
         variant="facebook"
         :size="size"
         @click="share('Facebook', facebookUrl, 980, 620)">
-        <icon name="facebook"></icon>
+        <icon name="facebook" class="sr-only"></icon>
       </b-btn>
 
       <b-btn
@@ -16,7 +16,7 @@
         variant="twitter"
         :size="size"
         @click="share('Twitter', twitterUrl, 450, 550)">
-        <icon name="twitter"></icon>
+        <icon name="twitter" class="sr-only"></icon>
       </b-btn>
 
       <b-btn
@@ -25,7 +25,7 @@
         variant="googleplus"
         :size="size"
         @click="share('Google Plus', googleplusUrl, 510, 725)">
-        <icon name="google-plus"></icon>
+        <icon name="google-plus" class="sr-only"></icon>
       </b-btn>
 
       <b-btn
@@ -34,7 +34,7 @@
         variant="linkedin"
         :size="size"
         @click="share('LinkedIn', linkedinUrl, 510, 520)">
-        <icon name="linkedin"></icon>
+        <icon name="linkedin" class="sr-only" ></icon>
       </b-btn>
 
   </div>
@@ -46,6 +46,9 @@ import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
+import { locale } from 'moment'
+
+
 
 export default {
   data () {

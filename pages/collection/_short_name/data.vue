@@ -14,6 +14,7 @@
       :description="description">
 
       <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
+        <label class="sr-only">Type to search by Name</label>
         <b-form-input
           v-model="searchString"
           class="search-control"

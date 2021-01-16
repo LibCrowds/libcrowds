@@ -15,9 +15,9 @@
       <div class="collection-card-img main-app-bg" :style="cardBgStyle">
       </div>
       <div class="card-body">
-        <h4 class="card-title">
+        <h3 class="card-title">
           {{ collection.name }}
-        </h4>
+        </h3>
         <hr class="my-1">
         <p class="card-text" v-if="collection.info">
           {{ collection.info.tagline }}
@@ -138,4 +138,3 @@ export default {
     justify-content: flex-end;
   }
 }
-</style>

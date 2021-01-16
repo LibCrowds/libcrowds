@@ -8,6 +8,7 @@
               id="collection-logo"
               v-if="hasLogo"
               class="d-inline-block"
+              alt="British Library"
               :src="collection.info.logo">
             <span
               class="mr-2 d-none d-lg-inline-block"
