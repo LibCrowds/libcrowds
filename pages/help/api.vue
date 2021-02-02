@@ -18,7 +18,7 @@
       <p>
         Rather than replicating the documentation here please refer to the
         official
-        <a target="_blank" href="http://docs.pybossa.com/api/">
+        <a target="_blank" href="https://docs.pybossa.com/api/intro/">
           PYBOSSA API documentation
         </a>
         for details.
