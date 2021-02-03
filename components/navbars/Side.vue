@@ -49,6 +49,7 @@
             :value="dark"
             :labels="true"
             class="mb-0"
+            color="#333"
             @change="toggleDarkMode">
           </toggle-button>
         </no-ssr> 
@@ -201,7 +202,7 @@ export default {
       this.$store.dispatch('TOGGLE_DARK_MODE')
     },
 
-    /**
+    /**    
      * Restrict body content to avoid multiple scroll bars.
      */
     restrictBody () {
@@ -358,7 +359,7 @@ export default {
       }
 
       &.active:not(.active-unstyled) {
-        color: $blue;
+        color: #046496;
       }
     }
   }
