@@ -34,7 +34,8 @@
         variant="linkedin"
         :size="size"
         @click="share('LinkedIn', linkedinUrl, 510, 520)">
-        <icon name="linkedin" class="sr-only" ></icon>
+        <icon name="linkedin" ></icon>
+        <span class="sr-only" >linkedin</span>
       </b-btn>
 
   </div>
@@ -46,10 +47,7 @@ import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
-import { locale } from 'moment'
-
-
-
+// import { locale } from 'moment'
 export default {
   data () {
     return {
