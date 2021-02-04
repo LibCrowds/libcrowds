@@ -202,9 +202,9 @@ export default {
       this.$store.dispatch('TOGGLE_DARK_MODE')
     },
 
-    /**    
-     * Restrict body content to avoid multiple scroll bars.
-     */
+    /**
+    * Restrict body content to avoid multiple scroll bars.
+    */
     restrictBody () {
       const sidebar = this.$refs.sidebar
       let height = '100%'
