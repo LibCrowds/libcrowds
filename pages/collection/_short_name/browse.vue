@@ -5,13 +5,14 @@
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
-
+ <label for="searchtags" class="sr-only">Type to search</label>
     <search-tags
       :container-iri="currentCollection.info.annotations.tags"
       ref="searchtags"
       slot="controls"
       @change="updateFilters"
-      class="mb-3">
+      class="mb-3"
+      id="searchtags">
     </search-tags>
 
     <card-base no-header>
@@ -387,4 +388,7 @@ export default {
     }
   }
 }
+
+a {
+    color: #035f59 !important;}
 </style>
