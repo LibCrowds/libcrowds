@@ -5,19 +5,20 @@
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
- <label for="searchtags" class="sr-only">Type to search</label>
+ 
     <search-tags
       :container-iri="currentCollection.info.annotations.tags"
       ref="searchtags"
       slot="controls"
       @change="updateFilters"
       class="mb-3"
-      id="searchtags">
+      >
     </search-tags>
 
     <card-base no-header>
       <b-tabs card v-model="currentTab" @input="onTabsChange">
-        <b-tab title="Tags" no-body active>
+        <b-tab  no-body active>
+          <template #title > <span style="color: #035f59 !important;"><strong>Tags</strong></span></template>
           <b-table
             responsive
             striped
@@ -36,7 +37,8 @@
             </template>
           </b-table>
         </b-tab>
-        <b-tab title="Images" no-body>
+        <b-tab no-body>
+          <template #title > <span style="color: #035f59 !important;"><strong>Images</strong></span></template>
           <div class="img-grid">
             <no-ssr>
               <isotope
@@ -389,6 +391,6 @@ export default {
   }
 }
 
-a {
-    color: #035f59 !important;}
+// a {
+//     color: #035f59 !important;}
 </style>
