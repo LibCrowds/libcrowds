@@ -4,7 +4,7 @@
       v-for="(filter, index) in collection.info.project_filters"
       :key="index"
       class="mb-2">
-      <label for='filter.name' class="sr-only">{{ filter.name }}</label>
+      <label for="Language" class="sr-only">{{ filter.name }}</label>
       <multiselect
         :id="filter.name"
         v-model="model[filter.name]"
