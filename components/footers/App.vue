@@ -8,14 +8,14 @@
           @click.native="scrollIfCurrent">
           Part of the {{ localConfig.brand }} crowdsourcing platform
         </nuxt-link>
-        <p v-html="copyright" class="my-2"></p>
+        <p v-html="copyright" class="my-2 text-white"></p>
         <ul class="list-inline mt-2 mb-0">
           <li
             v-if="localConfig.twitter"
             class="list-inline-item mx-1">
             <a
               :href="`https://twitter.com/${localConfig.twitter}`"
-              class="text-muted">
+             >
               <icon name="twitter"></icon>
               <span class="sr-only">Twitter</span>
             </a>
@@ -23,7 +23,7 @@
           <li
             v-if="localConfig.email"
             class="list-inline-item mx-1">
-            <a :href="`mailto:${localConfig.email}`" class="text-muted">
+            <a :href="`mailto:${localConfig.email}`" >
               <icon name="envelope"></icon>
               <span class="sr-only">Email</span>
            </a>
@@ -31,7 +31,7 @@
           <li
             v-if="localConfig.github"
             class="list-inline-item mx-1">
-            <a :href="localConfig.github" class="text-muted">
+            <a :href="localConfig.github">
               <icon name="github"></icon>
               <span class="sr-only">GitHub</span>
             </a>
@@ -40,7 +40,7 @@
       </section>
 
       <section class="d-none d-lg-block" v-if="localConfig.footer">
-        <h5 class="list-title"  style="color: #fff;">{{ localConfig.footer.title }}</h5>
+        <h5 class="list-title text-white" >{{ localConfig.footer.title }}</h5>
         <ul class="list-unstyled">
           <li
             v-for="(item, index) in localConfig.footer.items"
@@ -54,7 +54,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title">Collections</h5>
+        <h5 class="list-title text-white">Collections</h5>
         <ul class="list-unstyled">
           <li
             v-for="collection in collections.slice(0, 5)"
@@ -75,7 +75,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title">Help</h5>
+        <h5 class="list-title text-white">Help</h5>
         <ul class="list-unstyled">
           <li class="list-item" v-if="localConfig.docs">
             <a :href="localConfig.docs" target="_blank">Docs</a>

@@ -15,9 +15,9 @@
       <div class="collection-card-img main-app-bg" :style="cardBgStyle">
       </div>
       <div class="card-body">
-        <h3 class="card-title">
+        <h2 class="card-title">
           {{ collection.name }}
-        </h3>
+        </h2>
         <hr class="my-1">
         <p class="card-text" v-if="collection.info">
           {{ collection.info.tagline }}

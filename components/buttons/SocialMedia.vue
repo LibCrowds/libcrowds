@@ -7,7 +7,8 @@
         variant="facebook"
         :size="size"
         @click="share('Facebook', facebookUrl, 980, 620)">
-        <icon name="facebook" class="sr-only"></icon>
+        <icon name="facebook"></icon>
+        <span class="sr-only">facebook</span>
       </b-btn>
 
       <b-btn
@@ -16,7 +17,8 @@
         variant="twitter"
         :size="size"
         @click="share('Twitter', twitterUrl, 450, 550)">
-        <icon name="twitter" class="sr-only"></icon>
+        <icon name="twitter"></icon>
+        <span class="sr-only">twitter</span>
       </b-btn>
 
       <b-btn
@@ -25,7 +27,8 @@
         variant="googleplus"
         :size="size"
         @click="share('Google Plus', googleplusUrl, 510, 725)">
-        <icon name="google-plus" class="sr-only"></icon>
+        <icon name="google-plus"></icon>
+        <span class="sr-only">google-plus</span>
       </b-btn>
 
       <b-btn

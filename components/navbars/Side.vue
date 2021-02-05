@@ -14,7 +14,7 @@
     <div id="side-nav-items" class="custom-scrollbar" v-prevent-parent-scroll>
 
       <div v-for="(items, key, index) in sideNavItems" :key="key">
-       <h4  v-if="item !== null">{{ key }}</h4>
+       <!-- <h4  v-if="item !== null">{{ key }}</h4> -->
         <b-nav>
           <b-nav-item
             v-for="(item, index) in items"
@@ -41,15 +41,14 @@
       </div>
 
       <div class="d-flex align-items-center justify-content-between my-2 px-2">
-        <label class="mr-1 mb-0 toggle-label text-secondary">
+        <label class="mr-1 mb-0 toggle-label">
           <strong>Activate dark mode</strong>
         </label>
         <no-ssr>
           <toggle-button
             :value="dark"
             :labels="true"
-            class="mb-0"
-            color="#333"
+            class="mb-0 text-dark"
             @change="toggleDarkMode">
           </toggle-button>
         </no-ssr> 
@@ -390,4 +389,8 @@ export default {
     }
   }
 }
+.v-switch-label{
+  color:#000 !important
+}
+
 </style>

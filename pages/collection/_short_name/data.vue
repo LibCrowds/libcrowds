@@ -14,9 +14,10 @@
       :description="description">
 
       <b-form slot="controls" :class="darkMode ? 'form-dark' : null">
-        <label class="sr-only">Type to search by Name</label>
+        <label for="Type to search" class="sr-only">Type to search by Name</label>
         <b-form-input
           v-model="searchString"
+          id="Type to search"
           class="search-control"
           size="sm"
           :placeholder="`Type to search by ${searchKeys.join(', ')}`">
