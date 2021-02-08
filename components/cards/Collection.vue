@@ -94,7 +94,7 @@ export default {
   }
 
   .collection-card-img {
-    height: 250px;
+    height: 250px i !important;
     width: auto;
     overflow: hidden;
     position: relative;
@@ -137,4 +137,9 @@ export default {
     flex-direction: row;
     justify-content: flex-end;
   }
+}
+
+
+.collection-card a {
+  color : #000 i !important
 }

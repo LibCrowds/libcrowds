@@ -365,4 +365,15 @@ export default {
     }
   }
 }
+
+
+.collection-card .collection-card-img[data-v-5ce82525] {
+    height: 250px;
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 </style>
