@@ -113,7 +113,7 @@ export default {
     }
 
     &.btn-twitter {
-      background: $twitter;
+      background: #06678c;
 
       @include hover-focus {
         background: darken($twitter, 5%);
@@ -129,7 +129,7 @@ export default {
     }
 
     &.btn-googleplus {
-      background: $googleplus;
+      background: #c51e09;
 
       @include hover-focus {
         background: darken($googleplus, 5%);

@@ -5,7 +5,7 @@
       <span v-html="pageContent"></span>
       <hr class="mx-0">
     </span>
- 
+    <label for ="searchTags" class="sr-only">searchTags</label>
     <search-tags
       :container-iri="currentCollection.info.annotations.tags"
       ref="searchtags"
@@ -17,8 +17,8 @@
 
     <card-base no-header>
       <b-tabs card v-model="currentTab" @input="onTabsChange">
-        <b-tab  no-body active>
-          <template #title > <span style="color: #035f59 !important;"><strong>Tags</strong></span></template>
+          <b-tab title="Tags" no-body active>
+          <!-- <template #title > <span style="color: #035f59 !important;"><strong>Tags</strong></span></template> -->
           <b-table
             responsive
             striped
@@ -37,8 +37,8 @@
             </template>
           </b-table>
         </b-tab>
-        <b-tab no-body>
-          <template #title > <span style="color: #035f59 !important;"><strong>Images</strong></span></template>
+        <b-tab title="Images" no-body>
+          <!-- <template #title > <span style="color: #035f59 !important;"><strong>Images</strong></span></template> -->
           <div class="img-grid">
             <no-ssr>
               <isotope
