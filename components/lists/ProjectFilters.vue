@@ -40,7 +40,7 @@ export default {
 
       let color = this.darkMode || !filter || !filter.color
         ? '#868e96'
-        : rgb(9, 105, 158,)
+        : '#699E7D'
 
       return {
         backgroundColor: color,
