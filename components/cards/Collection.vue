@@ -12,7 +12,13 @@
           short_name: collection.short_name
         }
       }">
-      <div class="collection-card-img main-app-bg" :style="cardBgStyle">
+      <div class="collection-card-img main-app-bg" :style="cardBgStyle" style=" height: 250px i !important;
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;">
       </div>
       <div class="card-body">
         <h2 class="card-title">
@@ -141,5 +147,5 @@ export default {
 
 
 .collection-card a {
-  color : #000 i !important
+  color : #000  !important
 }
