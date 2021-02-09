@@ -21,9 +21,9 @@
     background-repeat: no-repeat;">
       </div>
       <div class="card-body">
-        <h2 class="card-title text-dark">
+        <h3 class="card-title text-dark">
           {{ collection.name }}
-        </h2>
+        </h3>
         <hr class="my-1">
         <p class="card-text text-muted" v-if="collection.info">
           {{ collection.info.tagline }}
