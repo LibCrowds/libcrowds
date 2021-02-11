@@ -40,7 +40,7 @@
       </section>
 
       <section class="d-none d-lg-block" v-if="localConfig.footer">
-        <h5 class="list-title text-white" >{{ localConfig.footer.title }}</h5>
+        <p class="list-title text-white" >{{ localConfig.footer.title }}</p>
         <ul class="list-unstyled">
           <li
             v-for="(item, index) in localConfig.footer.items"
@@ -54,7 +54,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title text-white">Collections</h5>
+        <p class="list-title text-white">Collections</p>
         <ul class="list-unstyled">
           <li
             v-for="collection in collections.slice(0, 5)"
@@ -75,7 +75,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title text-white">Help</h5>
+        <p class="list-title text-white">Help</p>
         <ul class="list-unstyled">
           <li class="list-item" v-if="localConfig.docs">
             <a :href="localConfig.docs" target="_blank">Docs</a>

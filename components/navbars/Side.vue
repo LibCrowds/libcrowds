@@ -34,7 +34,6 @@
           </b-nav-item>
           <li
             v-if="index !== sideNavItems.length"
-            role="seperator"
             class="divider">
           </li>
         </b-nav>
