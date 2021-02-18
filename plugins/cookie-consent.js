@@ -17,7 +17,7 @@ export default ({ app }) => {
           },
         button: {
           background: '#06547c'
-                 }
+        }
       }
     })
   }
