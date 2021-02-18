@@ -1,6 +1,6 @@
 <template>
-  <div class="social-media-buttons">
-
+  <div class="social-media-buttons"> 
+ 
       <b-btn
         v-b-tooltip
         title="Share on Facebook"
@@ -8,6 +8,7 @@
         :size="size"
         @click="share('Facebook', facebookUrl, 980, 620)">
         <icon name="facebook"></icon>
+        <span class="sr-only">facebook</span>
       </b-btn>
 
       <b-btn
@@ -17,6 +18,7 @@
         :size="size"
         @click="share('Twitter', twitterUrl, 450, 550)">
         <icon name="twitter"></icon>
+        <span class="sr-only">twitter</span>
       </b-btn>
 
       <b-btn
@@ -26,6 +28,7 @@
         :size="size"
         @click="share('Google Plus', googleplusUrl, 510, 725)">
         <icon name="google-plus"></icon>
+        <span class="sr-only">google-plus</span>
       </b-btn>
 
       <b-btn
@@ -34,7 +37,8 @@
         variant="linkedin"
         :size="size"
         @click="share('LinkedIn', linkedinUrl, 510, 520)">
-        <icon name="linkedin"></icon>
+        <icon name="linkedin" ></icon>
+        <span class="sr-only" >linkedin</span>
       </b-btn>
 
   </div>
@@ -46,7 +50,7 @@ import 'vue-awesome/icons/facebook'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/google-plus'
 import 'vue-awesome/icons/linkedin'
-
+// import { locale } from 'moment'
 export default {
   data () {
     return {
@@ -109,7 +113,7 @@ export default {
     }
 
     &.btn-twitter {
-      background: $twitter;
+      background: #06678c;
 
       @include hover-focus {
         background: darken($twitter, 5%);
@@ -125,7 +129,7 @@ export default {
     }
 
     &.btn-googleplus {
-      background: $googleplus;
+      background: #c51e09;
 
       @include hover-focus {
         background: darken($googleplus, 5%);

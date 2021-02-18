@@ -102,6 +102,7 @@
 
     <!-- Sign in/sign up -->
     <b-navbar-nav right class="top-navbar-right" v-else>
+     <li class="navbar-nav top-navbar-right">     
       <b-btn
         variant="outline-dark"
         class="px-2 border-0"
@@ -113,6 +114,8 @@
         }">
         <p class="mb-0">Sign in</p>
       </b-btn>
+     </li>
+     <li class="navbar-nav top-navbar-right"> 
       <b-btn
         :variant="navbarVariant === 'transparent' ? 'outline-dark' : 'success'"
         class="px-2 border-0"
@@ -121,6 +124,7 @@
         }">
         <p class="mb-0">Sign up</p>
       </b-btn>
+      </li>
     </b-navbar-nav>
   </b-navbar>
 </template>
@@ -540,4 +544,28 @@ export default {
     margin: 0.5rem 0;
   }
 }
+
+</style>
+<!-- Addition css for Contrast Errors fixes -->
+<style> 
+  #app-right { background: rgba(0, 0, 0, 0.01);}
+  #collection-about a, #collection-data a, h6 a, #collection-projects a, #collection-browse a, .card-base a  {color: #03757a;}
+  footer h5{color: #8C959D;}
+  footer section p {color: #8C959D;}
+  a.btn.btn-success, button.btn.btn-success {color: #fff!important  ;background:#307e30;}
+  #app-right .jumbotron.code-bg { background: rgba(0, 0, 0, 0.01);}
+
+
+  .btn-primary {
+    color: #FFFFFF;
+    background-color: #104967 !important;
+    border-color: #104967 !important;
+    }
+
+
+   .btn-primary:hover {
+      color: #FFFFFF;
+      background-color: #104967 !important;
+      border-color: #104967 !important;
+    }
 </style>

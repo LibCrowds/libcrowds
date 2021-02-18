@@ -31,6 +31,7 @@
       </p>
       <div class="text-center my-3">
         <iframe
+          title="cookies"
           width="640"
           height="386"
           src="https://www.youtube.com/embed/TBR-xtJVq7E"

@@ -17,6 +17,7 @@
     @select="selectTag"
     @remove="removeTag"
     @search-change="searchTags"
+    id="searchTags"
   ></multiselect>
 </template>
 

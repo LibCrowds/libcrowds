@@ -14,11 +14,12 @@ export default ({ app }) => {
       palette: {
         popup: {
           background: 'rgba(0,0,0,0.8)'
-        },
+          },
         button: {
-          background: '#2589bd'
-        }
+          background: '#06547c'
+                 }
       }
     })
   }
 }
+  

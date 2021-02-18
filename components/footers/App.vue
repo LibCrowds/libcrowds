@@ -8,36 +8,54 @@
           @click.native="scrollIfCurrent">
           Part of the {{ localConfig.brand }} crowdsourcing platform
         </nuxt-link>
-        <p v-html="copyright" class="my-2"></p>
+        <p v-html="copyright" class="my-2 text-white"></p>
         <ul class="list-inline mt-2 mb-0">
           <li
             v-if="localConfig.twitter"
             class="list-inline-item mx-1">
             <a
               :href="`https://twitter.com/${localConfig.twitter}`"
+<<<<<<< HEAD
               class="text-muted">
               <icon name="twitter"><span class="sr-only">Twitter</span></icon>
+=======
+             >
+              <icon name="twitter"></icon>
+              <span class="sr-only">Twitter</span>
+>>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
             </a>
           </li>
           <li
             v-if="localConfig.email"
             class="list-inline-item mx-1">
+<<<<<<< HEAD
             <a :href="`mailto:${localConfig.email}`" class="text-muted">
               <icon name="envelope"><span class="sr-only">Email</span></icon>
+=======
+            <a :href="`mailto:${localConfig.email}`" >
+              <icon name="envelope"></icon>
+              <span class="sr-only">Email</span>
+>>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
            </a>
           </li>
           <li
             v-if="localConfig.github"
             class="list-inline-item mx-1">
+<<<<<<< HEAD
             <a :href="localConfig.github" class="text-muted">
               <icon name="github"><span class="sr-only">GitHub</span></icon>
+=======
+            <a :href="localConfig.github">
+              <icon name="github"></icon>
+              <span class="sr-only">GitHub</span>
+>>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
             </a>
           </li>
         </ul>
       </section>
 
       <section class="d-none d-lg-block" v-if="localConfig.footer">
-        <h5 class="list-title">{{ localConfig.footer.title }}</h5>
+        <p class="list-title text-white" >{{ localConfig.footer.title }}</p>
         <ul class="list-unstyled">
           <li
             v-for="(item, index) in localConfig.footer.items"
@@ -51,7 +69,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title">Collections</h5>
+        <p class="list-title text-white">Collections</p>
         <ul class="list-unstyled">
           <li
             v-for="collection in collections.slice(0, 5)"
@@ -72,7 +90,7 @@
       </section>
 
       <section class="d-none d-lg-block">
-        <h5 class="list-title">Help</h5>
+        <p class="list-title text-white">Help</p>
         <ul class="list-unstyled">
           <li class="list-item" v-if="localConfig.docs">
             <a :href="localConfig.docs" target="_blank">Docs</a>

@@ -353,4 +353,7 @@ export default {
     }
   }
 }
+
+.badge-list .badge {
+    background-color: #035f59 !important;}
 </style>

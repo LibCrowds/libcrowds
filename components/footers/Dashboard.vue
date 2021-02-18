@@ -11,6 +11,7 @@
             :href="`https://twitter.com/${localConfig.twitter}`"
             class="text-muted">
             <icon name="twitter"></icon>
+            <span class="sr-only">Twitter</span>
           </a>
         </li>
         <li
@@ -18,6 +19,7 @@
           class="list-inline-item mx-1">
           <a :href="`mailto:${localConfig.email}`" class="text-muted">
             <icon name="envelope"></icon>
+            <span class="sr-only">Email</span>
           </a>
         </li>
         <li
@@ -25,6 +27,7 @@
           class="list-inline-item mx-1">
           <a :href="localConfig.github" class="text-muted">
             <icon name="github"></icon>
+            <span class="sr-only">GitHub</span>
           </a>
         </li>
       </ul>
