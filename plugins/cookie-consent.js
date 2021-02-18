@@ -16,7 +16,7 @@ export default ({ app }) => {
           background: 'rgba(0,0,0,0.8)'
         },
         button: {
-          background: '#06547c'
+          background: '#2589bd'
         }
       }
     })
