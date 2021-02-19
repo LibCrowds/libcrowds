@@ -13,9 +13,13 @@ export default ({ app }) => {
         popup: {
           background: 'rgba(0,0,0,0.8)'},
         button: {
+<<<<<<< HEAD
           background: '#06547c'}
+=======
+          background: '#2589bd'
+        }
+>>>>>>> 9f419f31ec46b2d018153edea9080d73508a060d
       }
     })
   }
 }
-  
