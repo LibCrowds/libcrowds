@@ -16,6 +16,7 @@ export default ({ app }) => {
           background: '#2589bd'
         }
       }
-    })
+    });
   }
+  
 };
