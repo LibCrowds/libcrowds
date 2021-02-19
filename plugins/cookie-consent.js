@@ -11,10 +11,11 @@ export default ({ app }) => {
         href: window.location.origin + cookiesPolicy},
       palette: {
         popup: {
-                    background: 'rgba(0,0,0,0.8)'},
+          background: 'rgba(0,0,0,0.8)'},
         button: {
-          background: '#2589bd'}
+          background: '#2589bd'
+        }
       }
     })
   }
-}
+};
