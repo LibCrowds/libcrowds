@@ -15,40 +15,34 @@
             class="list-inline-item mx-1">
             <a
               :href="`https://twitter.com/${localConfig.twitter}`"
-<<<<<<< HEAD
               class="text-muted">
               <icon name="twitter"><span class="sr-only">Twitter</span></icon>
-=======
-             >
-              <icon name="twitter"></icon>
+                     <icon name="twitter"></icon>
               <span class="sr-only">Twitter</span>
->>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
+
             </a>
           </li>
           <li
             v-if="localConfig.email"
             class="list-inline-item mx-1">
-<<<<<<< HEAD
             <a :href="`mailto:${localConfig.email}`" class="text-muted">
               <icon name="envelope"><span class="sr-only">Email</span></icon>
-=======
+
             <a :href="`mailto:${localConfig.email}`" >
               <icon name="envelope"></icon>
               <span class="sr-only">Email</span>
->>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
            </a>
           </li>
           <li
             v-if="localConfig.github"
             class="list-inline-item mx-1">
-<<<<<<< HEAD
+
             <a :href="localConfig.github" class="text-muted">
               <icon name="github"><span class="sr-only">GitHub</span></icon>
-=======
+
             <a :href="localConfig.github">
               <icon name="github"></icon>
               <span class="sr-only">GitHub</span>
->>>>>>> ca8e4d8a9e0c47f1d57d49ae3b6a6d22a2ffed51
             </a>
           </li>
         </ul>
