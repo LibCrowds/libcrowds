@@ -14,20 +14,14 @@
             v-if="localConfig.twitter"
             class="list-inline-item mx-1">
             <a
-              :href="`https://twitter.com/${localConfig.twitter}`"
-              class="text-muted">
-              <icon name="twitter"><span class="sr-only">Twitter</span></icon>
-                     <icon name="twitter"></icon>
+              :href="`https://twitter.com/${localConfig.twitter}`">
+              <icon name="twitter"></icon>
               <span class="sr-only">Twitter</span>
-
             </a>
           </li>
           <li
             v-if="localConfig.email"
             class="list-inline-item mx-1">
-            <a :href="`mailto:${localConfig.email}`" class="text-muted">
-              <icon name="envelope"><span class="sr-only">Email</span></icon>
-
             <a :href="`mailto:${localConfig.email}`" >
               <icon name="envelope"></icon>
               <span class="sr-only">Email</span>
@@ -36,10 +30,6 @@
           <li
             v-if="localConfig.github"
             class="list-inline-item mx-1">
-
-            <a :href="localConfig.github" class="text-muted">
-              <icon name="github"><span class="sr-only">GitHub</span></icon>
-
             <a :href="localConfig.github">
               <icon name="github"></icon>
               <span class="sr-only">GitHub</span>
