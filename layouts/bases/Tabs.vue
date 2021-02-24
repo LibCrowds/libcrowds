@@ -18,7 +18,7 @@
             <span>{{ item.text }}</span>
           </transition>
         </b-nav-item>
-        <b-nav-item id="hidden-item">&nbsp;</b-nav-item>
+        <!-- <b-nav-item id="hidden-item">&nbsp;</b-nav-item> -->
 
         <slot name="right"></slot>
 

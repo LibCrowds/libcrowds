@@ -9,7 +9,7 @@
       <b-row
         class="mb-0 d-flex align-items-center">
         <b-col>
-          <h6 v-if="title.length" class="mb-0">{{ title }}</h6>
+          <p v-if="title.length" class="mb-0">{{ title }}</p>
           <p v-if="description.length" class="text-muted mb-0">
             <small>
               {{ description }}

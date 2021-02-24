@@ -17,18 +17,22 @@
           class="options-card mb-2"
           :bg-variant="darkMode ? 'dark' : null"
           :text-variant="darkMode ? 'white' : null">
+           <label for="Filter by language" class="sr-only">Filter by language</label>
           <filter-projects-data
             v-model="filterModel"
             :collection="collection"
-            @select="onFilter">
+            @select="onFilter"
+            id="Filter by language">
           </filter-projects-data>
           <b-form
             :class="darkMode ? 'mb-2 form-dark' : 'mb-2'">
+             <label for="Type to search" class="sr-only">Type to search by Name</label>
             <b-form-input
               ref="search"
               v-model="searchString"
               class="search-control"
               size="sm"
+              id="Type to search"
               :placeholder="`Type to search by ${searchKeys.join(', ')}`">
             </b-form-input>
           </b-form>
