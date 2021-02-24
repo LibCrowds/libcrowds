@@ -7,14 +7,11 @@ export default ({ app }) => {
     const cookiesPolicy = app.router.resolve({ name: 'help-cookies' }).href
     window.cookieconsent.initialise({
       content: {
-        message: 'This website uses cookies to ensure you get the best ' +
-                  'experience (mmm...cookies).',
-        href: window.location.origin + cookiesPolicy
-      },
+        message: 'This website uses cookies to ensure you get the best ' + 'experience (mmm...cookies).',
+        href: window.location.origin + cookiesPolicy},
       palette: {
         popup: {
-          background: 'rgba(0,0,0,0.8)'
-        },
+          background: 'rgba(0,0,0,0.8)'},
         button: {
           background: '#2589bd'
         }

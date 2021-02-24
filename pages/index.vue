@@ -3,7 +3,7 @@
     <div id="app-hero" class="main-app-bg">
       <div class="container">
         <span class="d-none d-md-flex"></span>
-        <p id="site-tagline">{{ title }}</p>
+        <h1 id="site-tagline">{{ title }}</h1>
         <div class="stat-row d-none d-md-flex">
           <div class="stat-circle">
             <span class="stat">
@@ -50,14 +50,15 @@
         </b-card-group>
       </div>
     </section>
+    
 
     <section id="top-users">
       <div class="container py-4">
         <div class="row">
           <div class="col-lg-5 mx-auto pt-2 text-center">
-            <h3 class="text-uppercase font-weight-bold">
+            <h4 class="text-uppercase font-weight-bold">
               Most Active Volunteers
-            </h3>
+            </h4>
             <hr class="my-2">
             <p class="text-uppercase lead pb-lg-2">
               To date, our top {{ top10Users.length }} volunteers have made
@@ -74,8 +75,8 @@
             <img
               :src="wreathSrc"
               alt="An image of a wreath"
-              class="img-fluid">
-            </img>
+              class="img-fluid" />
+          
             <span id="wreath"></span>
           </div>
         </div>
@@ -363,5 +364,16 @@ export default {
       }
     }
   }
+}
+
+
+.collection-card .collection-card-img[data-v-5ce82525] {
+    height: 250px;
+    width: auto;
+    overflow: hidden;
+    position: relative;
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 </style>

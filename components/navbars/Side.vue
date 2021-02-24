@@ -14,7 +14,7 @@
     <div id="side-nav-items" class="custom-scrollbar" v-prevent-parent-scroll>
 
       <div v-for="(items, key, index) in sideNavItems" :key="key">
-        <h4>{{ key }}</h4>
+       <!-- <h4  v-if="item !== null">{{ key }}</h4> -->
         <b-nav>
           <b-nav-item
             v-for="(item, index) in items"
@@ -34,24 +34,23 @@
           </b-nav-item>
           <li
             v-if="index !== sideNavItems.length"
-            role="seperator"
             class="divider">
           </li>
         </b-nav>
       </div>
 
       <div class="d-flex align-items-center justify-content-between my-2 px-2">
-        <label class="mr-1 mb-0 toggle-label text-secondary">
+        <label class="mr-1 mb-0 toggle-label">
           <strong>Activate dark mode</strong>
         </label>
         <no-ssr>
           <toggle-button
             :value="dark"
             :labels="true"
-            class="mb-0"
+            class="mb-0 text-dark"
             @change="toggleDarkMode">
           </toggle-button>
-        </no-ssr>
+        </no-ssr> 
       </div>
 
     </div>
@@ -202,8 +201,8 @@ export default {
     },
 
     /**
-     * Restrict body content to avoid multiple scroll bars.
-     */
+    * Restrict body content to avoid multiple scroll bars.
+    */
     restrictBody () {
       const sidebar = this.$refs.sidebar
       let height = '100%'
@@ -358,7 +357,7 @@ export default {
       }
 
       &.active:not(.active-unstyled) {
-        color: $blue;
+        color: #046496;
       }
     }
   }
@@ -389,4 +388,8 @@ export default {
     }
   }
 }
+.v-switch-label{
+  color:#000 !important
+}
+
 </style>

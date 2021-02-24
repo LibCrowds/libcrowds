@@ -8,6 +8,7 @@
               id="collection-logo"
               v-if="hasLogo"
               class="d-inline-block"
+              alt="British Library"
               :src="collection.info.logo">
             <span
               class="mr-2 d-none d-lg-inline-block"
@@ -47,10 +48,10 @@
           {{ collection.description }}
         </p>
         <hr class="my-3 w-75">
-        <p class="lead mb-0 px-1">
+        <h3 class="lead mb-0 px-1">
           Your contributions will have a direct impact on enabling future
           research at {{ localConfig.company }}.
-        </p>
+        </h3>
         <hr class="mt-3 w-75">
       </b-container>
     </section>
@@ -66,7 +67,7 @@
             v-if="collection.info.forum.tag"
             class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
             <span>
-              <h5 class="text-center">Recent forum posts</h5>
+              <h4 class="text-center">Recent forum posts</h4>
               <p
                 v-if="loadingForumDiscussions"
                 class="text-muted text-center">
@@ -86,11 +87,11 @@
                   v-for="discussion in forumDiscussions"
                   :key="discussion.id"
                   class="list-unstyled mb-1">
-                  <h6 class="mb-0">
+                  <h5 class="mb-0">
                     <a :href="getDiscussionUrl(discussion.id)">
                       {{ discussion.attributes.title }}
                     </a>
-                  </h6>
+                  </h5>
                   <p class="text-muted mb-0">
                     <small>
                       Last activity:
@@ -131,7 +132,7 @@
             xs="12" md="6"
             class="pb-3 pb-md-4 d-flex flex-column justify-content-between">
             <span>
-              <h5 class="text-center">Recent contributions</h5>
+              <h4 class="text-center">Recent contributions</h4>
               <p
                 v-if="loadingActivityFeed"
                 class="text-muted text-center">
@@ -151,7 +152,7 @@
                   v-for="(item, index) in activityFeed"
                   :key="index"
                   class="list-unstyled">
-                  <h6 class="mb-0">
+                  <h5 class="mb-0">
                     {{ item.name }} contributed to
                     <nuxt-link
                       :to="{
@@ -164,7 +165,7 @@
                       }">
                       {{ item.project_name }}
                     </nuxt-link>
-                  </h6>
+                  </h5>
                   <p class="text-muted mt-0 mb-1">
                     <small class="text-muted">
                       {{ item.updated | moment('calendar') }}
@@ -200,9 +201,9 @@
       <b-container class="w-75 text-center pb-4">
         <div class="row text-lg-left">
           <div class="col-lg-5 text-uppercase py-4">
-            <h2 class="display-5 font-weight-bold pt-1">
+            <h6 class="display-5 font-weight-bold pt-1">
               Featured Projects
-            </h2>
+            </h6>
             <hr class="wide">
             <p class="mr-lg-6">
               Choose from some of our current favourites.
@@ -240,7 +241,7 @@
     <section id="data">
       <b-jumbotron class="code-bg">
         <b-container class="py-2 py-md-4 w-75 text-center">
-          <h3 class="display-5">Open Data</h3>
+          <h6 class="display-5">Open Data</h6>
           <p class="lead my-2 my-md-3 text-sm-left">
             All datasets generated from the experimental crowdsourcing
             projects hosted by {{ collection.brand }} are made available under a
@@ -269,7 +270,7 @@
 
     <section id="final-cta" class="opaque-navbar">
       <b-container class="pt-4 pb-3 text-center">
-        <h3 class="display-5 text-uppercase mb-0">Get Involved</h3>
+        <h6 class="display-5 text-uppercase mb-0">Get Involved</h6>
         <p class="lead my-3">
           Your contributions will have a direct impact on enabling future
           research at {{ localConfig.company }}.
