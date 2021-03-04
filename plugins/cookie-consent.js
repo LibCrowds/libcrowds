@@ -13,7 +13,7 @@ export default ({ app }) => {
         popup: {
           background: 'rgba(0,0,0,0.8)'},
         button: {
-          background: '#2589bd'
+          background: '#0552b1'
         }
       }
     })

@@ -12,24 +12,18 @@
           short_name: collection.short_name
         }
       }">
-      <div class="collection-card-img main-app-bg" :style="cardBgStyle" style=" height: 250px !important;
-    width: auto;
-    overflow: hidden;
-    position: relative;
-    background-position: top center;
-    background-size: cover;
-    background-repeat: no-repeat;">
+      <div class="collection-card-img main-app-bg" :style="cardBgStyle">
       </div>
       <div class="card-body">
-        <h3 class="card-title text-dark">
+        <h4 class="card-title">
           {{ collection.name }}
-        </h3>
+        </h4>
         <hr class="my-1">
-        <p class="card-text text-muted" v-if="collection.info">
+        <p class="card-text" v-if="collection.info">
           {{ collection.info.tagline }}
         </p>
       </div>
-      <div class="card-footer text-muted">
+      <div class="card-footer">
         <icon label="Enter Website">
           <icon name="arrow-right"></icon>
           <icon name="circle-thin" scale="2"></icon>
@@ -100,7 +94,7 @@ export default {
   }
 
   .collection-card-img {
-    height: 250px i !important;
+    height: 250px;
     width: auto;
     overflow: hidden;
     position: relative;
@@ -144,8 +138,4 @@ export default {
     justify-content: flex-end;
   }
 }
-
-
-.collection-card a {
-  color : #000  !important
-}
+</style>
